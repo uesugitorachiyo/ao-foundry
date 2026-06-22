@@ -86,7 +86,7 @@ func TestStatusSummarizesRegistry(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"AO Foundry", "8 repos", "ao-foundry", "ready: 8"} {
+	for _, want := range []string{"AO Foundry", "10 repos", "ao-foundry", "ready: 10"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("status output missing %q: %s", want, out)
 		}
@@ -500,8 +500,8 @@ func TestRepoHealthJSONReportsLocalOnlyHealth(t *testing.T) {
 		t.Fatalf("unexpected health identity: %#v", health)
 	}
 	repos := health["repos"].([]any)
-	if len(repos) != 8 {
-		t.Fatalf("expected 8 repo health entries, got %d", len(repos))
+	if len(repos) != 10 {
+		t.Fatalf("expected 10 repo health entries, got %d", len(repos))
 	}
 }
 
@@ -598,6 +598,75 @@ func TestRepoHealthReportsUnavailableGitHubReaderUnknown(t *testing.T) {
 	}
 	if !foundUnknown {
 		t.Fatalf("expected unknown GitHub Actions check, got %#v", health.Repos[0].Checks)
+	}
+}
+
+func TestRepoBoardJSONClassifiesPortfolio(t *testing.T) {
+	clean := initTempGitRepo(t)
+	dirty := initTempGitRepo(t)
+	if err := os.WriteFile(filepath.Join(dirty, "dirty.txt"), []byte("dirty\n"), 0o644); err != nil {
+		t.Fatalf("write dirty file: %v", err)
+	}
+	registry := Registry{
+		SchemaVersion: "ao.foundry.registry.v0.1",
+		FoundryID:     "board-fixture",
+		Name:          "Board Fixture",
+		Repos: []Repo{
+			boardFixtureRepo("ao2", "AO2", "execution-engine", clean),
+			boardFixtureRepo("ao-forge", "AO Forge", "factory-brain", dirty),
+			boardFixtureRepo("ao-conductor", "AO Conductor", "workflow-conductor", clean),
+		},
+	}
+	registryPath := writeRegistryFixture(t, registry)
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"repo", "board", "--registry", registryPath, "--json"}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for dirty board; stdout=%s", stdout.String())
+	}
+	var board RepoBoard
+	if err := json.Unmarshal(stdout.Bytes(), &board); err != nil {
+		t.Fatalf("board output is not JSON: %v; output=%s", err, stdout.String())
+	}
+	if board.SchemaVersion != repoBoardSchema || board.RegistryID != "board-fixture" || board.Status != "blocked" {
+		t.Fatalf("unexpected board identity/status: %#v", board)
+	}
+	entries := map[string]RepoBoardEntry{}
+	for _, entry := range board.Repos {
+		entries[entry.RepoID] = entry
+	}
+	if entries["ao2"].Tier != "active-spine" || entries["ao2"].Recommendation != "advance" {
+		t.Fatalf("expected ao2 active spine advance, got %#v", entries["ao2"])
+	}
+	if entries["ao-forge"].Tier != "blocked-hygiene" || entries["ao-forge"].Recommendation != "clean-worktree" {
+		t.Fatalf("expected dirty ao-forge hygiene blocker, got %#v", entries["ao-forge"])
+	}
+	if entries["ao-conductor"].Tier != "candidate-demote" || entries["ao-conductor"].Recommendation != "freeze-or-archive" {
+		t.Fatalf("expected ao-conductor demotion candidate, got %#v", entries["ao-conductor"])
+	}
+}
+
+func TestRepoBoardTextReportsNextActions(t *testing.T) {
+	clean := initTempGitRepo(t)
+	registry := Registry{
+		SchemaVersion: "ao.foundry.registry.v0.1",
+		FoundryID:     "board-text-fixture",
+		Name:          "Board Text Fixture",
+		Repos: []Repo{
+			boardFixtureRepo("ao-foundry", "AO Foundry", "operations-factory", clean),
+			boardFixtureRepo("agy-swarms", "agy-swarms", "agent-orchestrator", clean),
+		},
+	}
+	registryPath := writeRegistryFixture(t, registry)
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"repo", "board", "--registry", registryPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	out := stdout.String()
+	for _, want := range []string{"repo board: 2 repos status=ready", "ao-foundry", "active-spine", "agy-swarms", "candidate-demote", "next_action="} {
+		if !strings.Contains(out, want) {
+			t.Fatalf("board text missing %q: %s", want, out)
+		}
 	}
 }
 
@@ -2617,6 +2686,39 @@ func writeHealthRegistry(t *testing.T, workspace, branch string, readinessFiles 
 			},
 		},
 	}
+	data, err := json.MarshalIndent(registry, "", "  ")
+	if err != nil {
+		t.Fatalf("marshal registry: %v", err)
+	}
+	path := filepath.Join(t.TempDir(), "registry.json")
+	if err := os.WriteFile(path, append(data, '\n'), 0o644); err != nil {
+		t.Fatalf("write registry: %v", err)
+	}
+	return path
+}
+
+func boardFixtureRepo(id, name, role, workspace string) Repo {
+	return Repo{
+		ID:                id,
+		Name:              name,
+		Role:              role,
+		DelegatesTo:       "ao-forge",
+		Workspace:         workspace,
+		Branches:          []string{"main"},
+		EvidenceSources:   []EvidenceSource{{Kind: "readiness", Location: "README.md", Owner: id}},
+		AllowedAutomation: []string{"read-health"},
+		ReadinessSignals:  []ReadinessSignal{{Name: "fixture", Status: "ready", Source: "git status"}},
+		Health: HealthReaderConfig{
+			RequireCleanWorktree: true,
+			VerificationCommands: []string{"git status"},
+			AllowNetworkRead:     false,
+			GitHubActions:        false,
+		},
+	}
+}
+
+func writeRegistryFixture(t *testing.T, registry Registry) string {
+	t.Helper()
 	data, err := json.MarshalIndent(registry, "", "  ")
 	if err != nil {
 		t.Fatalf("marshal registry: %v", err)

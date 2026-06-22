@@ -73,6 +73,29 @@
       ]
     },
     {
+      "id": "ao-operator",
+      "name": "AO Operator",
+      "role": "operator-command",
+      "delegates_to": "ao-foundry",
+      "workspace": "../ao-operator",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "operator-plans",
+          "location": "docs/plans",
+          "owner": "ao-operator"
+        }
+      ],
+      "allowed_automation": ["read-status", "summarize"],
+      "readiness_signals": [
+        {
+          "name": "operator-supporting-surface",
+          "status": "ready",
+          "source": "supporting product surface; do not expand until active spine is clean"
+        }
+      ]
+    },
+    {
       "id": "ao2",
       "name": "AO2",
       "role": "execution-engine",
@@ -92,6 +115,29 @@
           "name": "sdd-cli",
           "status": "ready",
           "source": "ao2 sdd --help"
+        }
+      ]
+    },
+    {
+      "id": "codex-cron",
+      "name": "codex-cron",
+      "role": "operations-factory",
+      "delegates_to": "ao-foundry",
+      "workspace": "../codex-cron",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "scheduler-status",
+          "location": "codex-cron doctor",
+          "owner": "codex-cron"
+        }
+      ],
+      "allowed_automation": ["read-schedule", "tick-local"],
+      "readiness_signals": [
+        {
+          "name": "durable-scheduler",
+          "status": "ready",
+          "source": "active spine scheduler for overnight Foundry loops"
         }
       ]
     },

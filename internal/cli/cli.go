@@ -25,6 +25,7 @@ const (
 	goalReadinessSchema = "ao.foundry.goal-readiness-audit.v0.1"
 	runSchema           = "ao.foundry.run.v0.1"
 	repoHealthSchema    = "ao.foundry.repo-health.v0.1"
+	repoBoardSchema     = "ao.foundry.repo-board.v0.1"
 	loopLeaseSchema     = "ao.foundry.loop-lease.v0.1"
 	forgePacketSchema   = "ao.forge.factory-packet.v0.1"
 	pulseEventSchema    = "ao.foundry.pulse-event.v0.1"
@@ -516,6 +517,26 @@ type RepoHealthCheck struct {
 	Detail string `json:"detail"`
 }
 
+type RepoBoard struct {
+	SchemaVersion string           `json:"schema_version"`
+	RegistryID    string           `json:"registry_id"`
+	Status        string           `json:"status"`
+	Repos         []RepoBoardEntry `json:"repos"`
+	NextActions   []string         `json:"next_actions"`
+}
+
+type RepoBoardEntry struct {
+	RepoID         string   `json:"repo_id"`
+	Name           string   `json:"name"`
+	Role           string   `json:"role"`
+	Tier           string   `json:"tier"`
+	Workspace      string   `json:"workspace"`
+	HealthStatus   string   `json:"health_status"`
+	CurrentBranch  string   `json:"current_branch,omitempty"`
+	Recommendation string   `json:"recommendation"`
+	NextActions    []string `json:"next_actions"`
+}
+
 type FoundryRun struct {
 	SchemaVersion string           `json:"schema_version"`
 	RunID         string           `json:"run_id"`
@@ -665,6 +686,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry run ingest --registry <path> --task <path> --packet <forge-packet.json> --out <foundry-run.json>")
 	fmt.Fprintln(w, "  foundry run inspect --run <path> [--json]")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
+	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
 	fmt.Fprintln(w, "  foundry loop lease acquire --goal-run <path> --lease <path>")
 	fmt.Fprintln(w, "  foundry loop lease release --lease <path>")
@@ -1046,15 +1068,27 @@ func runRunInspect(args []string, stdout, stderr io.Writer) int {
 }
 
 func runRepo(args []string, stdout, stderr io.Writer) int {
-	if len(args) == 0 || args[0] != "health" {
-		fmt.Fprintln(stderr, "repo: expected subcommand health")
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "repo: expected subcommand health or board")
 		return 2
 	}
+	switch args[0] {
+	case "health":
+		return runRepoHealth(args[1:], stdout, stderr)
+	case "board":
+		return runRepoBoard(args[1:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "repo: unknown subcommand %q\n", args[0])
+		return 2
+	}
+}
+
+func runRepoHealth(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("repo health", stderr)
 	registryPath := fs.String("registry", "", "registry path")
 	repoID := fs.String("repo", "", "repo id")
 	jsonOut := fs.Bool("json", false, "emit JSON health report")
-	if !parseFlags(fs, args[1:], stderr) {
+	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
 	report, err := buildRepoHealthReport(*registryPath, *repoID)
@@ -1075,6 +1109,42 @@ func runRepo(args []string, stdout, stderr io.Writer) int {
 	}
 	if report.Status == "blocked" {
 		fmt.Fprintln(stderr, "repo: health blocked")
+		return 1
+	}
+	return 0
+}
+
+func runRepoBoard(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("repo board", stderr)
+	registryPath := fs.String("registry", "", "registry path")
+	jsonOut := fs.Bool("json", false, "emit JSON board")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	board, err := buildRepoBoard(*registryPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "repo: %v\n", err)
+		return 2
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, board); err != nil {
+			fmt.Fprintf(stderr, "repo: marshal board: %v\n", err)
+			return 2
+		}
+	} else {
+		fmt.Fprintf(stdout, "repo board: %d repos status=%s\n", len(board.Repos), board.Status)
+		for _, repo := range board.Repos {
+			fmt.Fprintf(stdout, "- %s tier=%s health=%s recommendation=%s\n", repo.RepoID, repo.Tier, repo.HealthStatus, repo.Recommendation)
+			for _, action := range repo.NextActions {
+				fmt.Fprintf(stdout, "  next_action=%s\n", action)
+			}
+		}
+		for _, action := range board.NextActions {
+			fmt.Fprintf(stdout, "next_action=%s\n", action)
+		}
+	}
+	if board.Status == "blocked" {
+		fmt.Fprintln(stderr, "repo: board blocked")
 		return 1
 	}
 	return 0
@@ -2955,6 +3025,123 @@ func buildRepoHealthReport(registryPath, repoID string) (RepoHealthReport, error
 		}
 	}
 	return report, nil
+}
+
+func buildRepoBoard(registryPath string) (RepoBoard, error) {
+	registry, err := loadRegistry(registryPath)
+	if err != nil {
+		return RepoBoard{}, err
+	}
+	healthReport, err := buildRepoHealthReport(registryPath, "")
+	if err != nil {
+		return RepoBoard{}, err
+	}
+	healthByRepo := map[string]RepoHealth{}
+	for _, health := range healthReport.Repos {
+		healthByRepo[health.RepoID] = health
+	}
+	board := RepoBoard{
+		SchemaVersion: repoBoardSchema,
+		RegistryID:    registry.FoundryID,
+		Status:        "ready",
+		Repos:         make([]RepoBoardEntry, 0, len(registry.Repos)),
+		NextActions:   []string{},
+	}
+	for _, repo := range registry.Repos {
+		health := healthByRepo[repo.ID]
+		if !healthConfigured(repo.Health) {
+			health = readRepoHealth(repoWithBoardHealth(repo))
+		}
+		entry := classifyRepoBoardEntry(repo, health)
+		board.Repos = append(board.Repos, entry)
+		board.NextActions = append(board.NextActions, entry.NextActions...)
+		if entry.Tier == "blocked-hygiene" {
+			board.Status = "blocked"
+		}
+	}
+	if len(board.NextActions) == 0 {
+		board.NextActions = append(board.NextActions, "advance active-spine repos; freeze or archive demotion candidates before expanding scope")
+	}
+	return board, nil
+}
+
+func classifyRepoBoardEntry(repo Repo, health RepoHealth) RepoBoardEntry {
+	tier := repoBoardTier(repo)
+	recommendation := repoBoardRecommendation(tier)
+	nextActions := repoBoardNextActions(repo, tier)
+	if health.Status == "blocked" {
+		tier = "blocked-hygiene"
+		recommendation = "clean-worktree"
+		nextActions = append([]string{}, health.NextActions...)
+		if len(nextActions) == 0 {
+			nextActions = append(nextActions, "clear local hygiene blockers before strategy work")
+		}
+	}
+	return RepoBoardEntry{
+		RepoID:         repo.ID,
+		Name:           repo.Name,
+		Role:           repo.Role,
+		Tier:           tier,
+		Workspace:      repo.Workspace,
+		HealthStatus:   health.Status,
+		CurrentBranch:  health.CurrentBranch,
+		Recommendation: recommendation,
+		NextActions:    nextActions,
+	}
+}
+
+func repoBoardTier(repo Repo) string {
+	switch repo.ID {
+	case "ao2", "ao-forge", "ao-covenant", "ao2-control-plane", "codex-cron", "ao-foundry":
+		return "active-spine"
+	case "ao-command", "ao-operator", "ao-runtime", "ao-control-plane", "financial-services-profile", "secure-agent-profile":
+		return "supporting"
+	case "ao-conductor", "agy-swarms", "ai-teams", "ao-covenant-stub-20260617", "memory-ext":
+		return "candidate-demote"
+	default:
+		switch repo.Role {
+		case "execution-engine", "factory-brain", "policy-kernel", "evidence-observer", "operations-factory", "scheduler":
+			return "active-spine"
+		case "agent-orchestrator", "workflow-conductor":
+			return "candidate-demote"
+		default:
+			return "supporting"
+		}
+	}
+}
+
+func repoBoardRecommendation(tier string) string {
+	switch tier {
+	case "active-spine":
+		return "advance"
+	case "candidate-demote":
+		return "freeze-or-archive"
+	case "blocked-hygiene":
+		return "clean-worktree"
+	default:
+		return "hold-supporting"
+	}
+}
+
+func repoBoardNextActions(repo Repo, tier string) []string {
+	switch tier {
+	case "active-spine":
+		return []string{fmt.Sprintf("%s: keep in the active Foundry spine and maintain release/security evidence", repo.ID)}
+	case "candidate-demote":
+		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
+	default:
+		return []string{fmt.Sprintf("%s: keep supporting, but do not expand until the active spine is clean", repo.ID)}
+	}
+}
+
+func repoWithBoardHealth(repo Repo) Repo {
+	repo.Health = HealthReaderConfig{
+		RequireCleanWorktree: true,
+		VerificationCommands: []string{"git status"},
+		AllowNetworkRead:     false,
+		GitHubActions:        false,
+	}
+	return repo
 }
 
 func buildEvalResult(runPath, scorecardPath string) (EvalResult, error) {

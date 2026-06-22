@@ -28,6 +28,7 @@ This first slice provides:
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run --out <dir>`
+  - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
 
 ## Boundary Rule
@@ -71,6 +72,19 @@ Forge-brief, Forge-packet, policy-gate, optional live Forge attempt,
 control-plane readback, run, eval, trace, demo, release dry-run, competitive
 audit, and a final `pulse-event.json` summary. It is a scheduler and evidence
 loop only; live implementation remains delegated to AO Forge.
+
+## Portfolio Board
+
+When the sibling AO repositories are checked out next to AO Foundry, use the
+read-only repo board to classify the portfolio and surface hygiene blockers:
+
+```sh
+go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json
+```
+
+The board reports active-spine, supporting, candidate-demote, and
+blocked-hygiene entries. It exits non-zero when a registered sibling checkout is
+dirty or otherwise blocked so cleanup happens before new strategy work.
 
 ## Public Documents
 
