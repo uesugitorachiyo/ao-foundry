@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-ao2-loop-decision-v0.1.schema.json",
+  "title": "AO Foundry AO2 loop decision v0.1",
+  "type": "object",
+  "required": ["schema_version", "event_loop"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "ao2.pulse-event-loop-decision.v1"
+    },
+    "event_loop": {
+      "type": "object",
+      "required": ["action", "reason", "next_task_id", "freshness"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["stop", "continue"]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "next_task_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "freshness": {
+          "type": "object",
+          "required": ["schema_version", "status", "forge_live_packet", "control_plane_readback", "explanation"],
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "ao.foundry.pulse-freshness-summary.v0.1"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["ready", "blocked"]
+            },
+            "forge_live_packet": {
+              "type": "string",
+              "enum": ["not_provided", "ready", "stale", "blocked", "failed"]
+            },
+            "control_plane_readback": {
+              "type": "string",
+              "enum": ["not_provided", "ready", "stale", "blocked"]
+            },
+            "explanation": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

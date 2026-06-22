@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "fixture",
+  "name": "Fixture",
+  "repos": [
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "delegates_to": "ao-forge",
+      "workspace": ".",
+      "branches": ["main"],
+      "evidence_sources": [
+        { "kind": "readiness", "location": "README.md", "owner": "ao-foundry" }
+      ],
+      "allowed_automation": ["readiness-audit"],
+      "readiness_signals": [
+        { "name": "tests", "status": "ready", "source": "go test ./..." }
+      ]
+    }
+  ]
+}

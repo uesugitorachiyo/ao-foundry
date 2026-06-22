@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-eval-scorecard-v0.1.schema.json",
+  "title": "AO Foundry Eval Scorecard v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scorecard_id", "threshold", "dimensions"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.eval-scorecard.v0.1" },
+    "scorecard_id": { "type": "string", "minLength": 1 },
+    "threshold": { "type": "integer", "minimum": 1 },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/dimension" }
+    }
+  },
+  "$defs": {
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "max_score"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "max_score": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

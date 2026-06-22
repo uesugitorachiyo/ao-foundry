@@ -1,0 +1,191 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "local-ao-stack",
+  "name": "Local AO Stack",
+  "repos": [
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao-foundry",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "readiness-audit",
+          "location": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+          "owner": "ao-foundry"
+        }
+      ],
+      "allowed_automation": ["readiness-audit", "forge-brief"],
+      "readiness_signals": [
+        {
+          "name": "foundry-tests",
+          "status": "ready",
+          "source": "go test ./..."
+        }
+      ]
+    },
+    {
+      "id": "ao-forge",
+      "name": "AO Forge",
+      "role": "factory-brain",
+      "delegates_to": "ao2",
+      "workspace": "../ao-forge",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "forge-packet",
+          "location": "examples/packets/ao-foundry-bootstrap.factory-packet.json",
+          "owner": "ao-forge"
+        }
+      ],
+      "allowed_automation": ["plan", "gate", "run-local"],
+      "readiness_signals": [
+        {
+          "name": "forge-tests",
+          "status": "ready",
+          "source": "go test ./..."
+        }
+      ]
+    },
+    {
+      "id": "ao-command",
+      "name": "AO Command",
+      "role": "operator-command",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao-command",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "operator-status",
+          "location": "operator-summary",
+          "owner": "ao-command"
+        }
+      ],
+      "allowed_automation": ["read-status", "summarize"],
+      "readiness_signals": [
+        {
+          "name": "command-surface",
+          "status": "ready",
+          "source": "registered for read-only operator workflows"
+        }
+      ]
+    },
+    {
+      "id": "ao2",
+      "name": "AO2",
+      "role": "execution-engine",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao2",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "sdd-run",
+          "location": "examples/runs/ao-foundry-bootstrap.sdd-run.yaml",
+          "owner": "ao2"
+        }
+      ],
+      "allowed_automation": ["sdd-plan", "sdd-dispatch", "dry-run"],
+      "readiness_signals": [
+        {
+          "name": "sdd-cli",
+          "status": "ready",
+          "source": "ao2 sdd --help"
+        }
+      ]
+    },
+    {
+      "id": "ao2-control-plane",
+      "name": "AO2 Control Plane",
+      "role": "evidence-observer",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao2-control-plane",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "readback",
+          "location": "optional-control-plane-readback",
+          "owner": "ao2-control-plane"
+        }
+      ],
+      "allowed_automation": ["read-evidence", "report-retention"],
+      "readiness_signals": [
+        {
+          "name": "observer-boundary",
+          "status": "ready",
+          "source": "control plane is not required for local v0.1"
+        }
+      ]
+    },
+    {
+      "id": "ao-covenant",
+      "name": "AO Covenant",
+      "role": "policy-kernel",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao-covenant",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "gate-result",
+          "location": "examples/gates/ao-foundry-bootstrap.gate.json",
+          "owner": "ao-covenant"
+        }
+      ],
+      "allowed_automation": ["evaluate-local-plan", "fail-closed"],
+      "readiness_signals": [
+        {
+          "name": "covenant-binary",
+          "status": "ready",
+          "source": "local build for Forge gate"
+        }
+      ]
+    },
+    {
+      "id": "agy-swarms",
+      "name": "agy-swarms",
+      "role": "agent-orchestrator",
+      "delegates_to": "ao-forge",
+      "workspace": "../agy-swarms",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "help-output",
+          "location": "agy-swarms --help",
+          "owner": "agy-swarms"
+        }
+      ],
+      "allowed_automation": ["preflight", "local-run"],
+      "readiness_signals": [
+        {
+          "name": "agy-cli",
+          "status": "ready",
+          "source": "uv run --project ../agy-swarms agy-swarms --help"
+        }
+      ]
+    },
+    {
+      "id": "ao-conductor",
+      "name": "AO Conductor",
+      "role": "workflow-conductor",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao-conductor",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "workflow-state",
+          "location": "registered-workflow-surface",
+          "owner": "ao-conductor"
+        }
+      ],
+      "allowed_automation": ["read-workflow", "summarize-next-step"],
+      "readiness_signals": [
+        {
+          "name": "conductor-registration",
+          "status": "ready",
+          "source": "registered in Foundry local stack"
+        }
+      ]
+    }
+  ]
+}

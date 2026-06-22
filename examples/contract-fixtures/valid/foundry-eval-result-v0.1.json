@@ -1,0 +1,20 @@
+{
+  "schema_version": "ao.foundry.eval-result.v0.1",
+  "scorecard_id": "bootstrap",
+  "run_id": "foundry-run-ao-foundry-bootstrap-35af7ff60b32",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "threshold": 100,
+  "dimensions": [
+    {
+      "name": "correctness",
+      "score": 10,
+      "max_score": 10,
+      "status": "pass",
+      "reason": "run completed with passed status",
+      "evidence": "examples/packets/ao-foundry-bootstrap.factory-packet.json"
+    }
+  ],
+  "next_actions": []
+}

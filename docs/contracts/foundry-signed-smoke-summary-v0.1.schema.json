@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-signed-smoke-summary-v0.1.schema.json",
+  "title": "AO Foundry signed smoke summary v0.1",
+  "type": "object",
+  "required": ["schema_version", "status", "pulse_id", "pulse_status", "release_safe", "evidence", "explanation"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "ao.foundry.signed-smoke-summary.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "pulse_id": { "type": "string", "minLength": 1 },
+    "pulse_status": { "type": "string", "enum": ["ready", "blocked"] },
+    "release_safe": { "type": "boolean" },
+    "evidence": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "schema_version"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "schema_version": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "explanation": { "type": "string", "minLength": 1 }
+  }
+}

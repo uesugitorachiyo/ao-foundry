@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.release-manifest.v0.1",
+  "status": "ready",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "checks": ["registry fixture valid"]
+}

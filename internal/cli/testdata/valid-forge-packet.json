@@ -1,0 +1,70 @@
+{
+  "schema_version": "ao.forge.factory-packet.v0.1",
+  "status": "passed",
+  "objective": {
+    "text": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+    "workspace": "../ao-foundry",
+    "release_mode": false
+  },
+  "factory_plan": {
+    "plan_id": "forge-plan-ao-foundry-bootstrap",
+    "workcell_count": 2
+  },
+  "policy_decisions": [
+    {
+      "decision_id": "covenant-local-allow",
+      "target": "factory-plan",
+      "decision": "allow",
+      "explanation": "Covenant gate allowed the local-only AO Foundry bootstrap plan.",
+      "source": "ao-forge"
+    }
+  ],
+  "workcells": [
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-execute",
+      "kind": "execute",
+      "workspace": "../ao-foundry",
+      "executor": "agy-swarms",
+      "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+      "max_repairs": 1,
+      "status": "passed",
+      "depends_on": [],
+      "ao2_run": "live",
+      "summary": "Implemented the AO Foundry bootstrap surface."
+    },
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-verify",
+      "kind": "verify",
+      "workspace": "../ao-foundry",
+      "executor": "ao2",
+      "task": "go test ./...",
+      "max_repairs": 0,
+      "status": "passed",
+      "depends_on": ["foundry-ao-foundry-bootstrap-execute"],
+      "ao2_run": "live",
+      "summary": "Verification passed."
+    }
+  ],
+  "evidence": [
+    {
+      "label": "verification output",
+      "schema_version": "ao.foundry.verification-output.v0.1",
+      "status": "passed",
+      "path": "internal/cli/testdata/run-evidence.txt",
+      "sha256": "4773ecd66884d0ccddf4be899d01bcfbf3abdd64d232c61fa36a8e7d5b1a232f"
+    }
+  ],
+  "trust_boundary": {
+    "local_first": true,
+    "mutates_releases": false,
+    "stores_credentials": false,
+    "control_plane_approves_work": false
+  },
+  "next_actions": [
+    {
+      "action_id": "inspect-foundry-run",
+      "description": "Inspect the durable AO Foundry run record.",
+      "required": true
+    }
+  ]
+}

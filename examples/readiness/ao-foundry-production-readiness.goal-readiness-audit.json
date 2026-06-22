@@ -1,0 +1,40 @@
+{
+  "schema_version": "ao.foundry.goal-readiness-audit.v0.1",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "goal_id": "ao-foundry-production-readiness",
+  "checks": [
+    {
+      "name": "goal_run_valid",
+      "status": "pass",
+      "score": 20,
+      "reason": "GoalRun contract is valid"
+    },
+    {
+      "name": "goal_phase_active",
+      "status": "pass",
+      "score": 20,
+      "reason": "GoalRun phase is active"
+    },
+    {
+      "name": "evidence_paths_durable",
+      "status": "pass",
+      "score": 20,
+      "reason": "GoalRun evidence paths are durable and public-safe"
+    },
+    {
+      "name": "evidence_hashes_match",
+      "status": "pass",
+      "score": 20,
+      "reason": "GoalRun evidence digests match referenced files"
+    },
+    {
+      "name": "production_readiness_ready",
+      "status": "pass",
+      "score": 20,
+      "reason": "registry/task production readiness is 100"
+    }
+  ],
+  "next_actions": []
+}

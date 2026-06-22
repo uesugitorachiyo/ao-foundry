@@ -1,0 +1,27 @@
+{
+  "schema_version": "ao.foundry.task.v0.1",
+  "task_id": "ao-foundry-bootstrap",
+  "title": "Bootstrap AO Foundry v0.1 from the AO Forge one-shot kit",
+  "objective": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+  "priority": "high",
+  "state": "queued",
+  "target_repos": ["ao-foundry", "ao-forge", "ao2", "ao-covenant", "agy-swarms", "ao-conductor"],
+  "required_delegations": [
+    {
+      "delegate_to": "ao-forge",
+      "reason": "AO Forge owns governed single-run planning, gating, execution, and packet evidence."
+    }
+  ],
+  "acceptance": [
+    "README explains Foundry as the operations factory above Forge",
+    "design, contracts, examples, runbook, CLI, and tests are present",
+    "CLI validates valid examples and rejects malformed registry and task records",
+    "public files avoid local paths, credential-like strings, and non-public coordination notes"
+  ],
+  "verification": ["go test ./..."],
+  "safety": {
+    "local_only": true,
+    "allowed_write_roots": ["../ao-foundry"],
+    "forbidden_actions": ["push", "tag", "publish-release", "upload-artifacts", "mutate-sibling-repos"]
+  }
+}

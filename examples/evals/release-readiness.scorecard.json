@@ -1,0 +1,17 @@
+{
+  "schema_version": "ao.foundry.eval-scorecard.v0.1",
+  "scorecard_id": "release-readiness",
+  "threshold": 100,
+  "dimensions": [
+    { "name": "correctness", "max_score": 10 },
+    { "name": "verification_strength", "max_score": 10 },
+    { "name": "evidence_completeness", "max_score": 10 },
+    { "name": "policy_safety", "max_score": 10 },
+    { "name": "replayability", "max_score": 10 },
+    { "name": "recovery_behavior", "max_score": 10 },
+    { "name": "cost_budget", "max_score": 10 },
+    { "name": "latency_budget", "max_score": 10 },
+    { "name": "operator_clarity", "max_score": 10 },
+    { "name": "public_safety_cleanliness", "max_score": 10 }
+  ]
+}

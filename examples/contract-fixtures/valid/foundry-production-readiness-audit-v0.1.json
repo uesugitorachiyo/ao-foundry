@@ -1,0 +1,12 @@
+{
+  "schema_version": "ao.foundry.production-readiness-audit.v0.1",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "checks": [
+    { "name": "registry_valid", "status": "pass", "score": 20, "reason": "registry contract is valid" }
+  ],
+  "next_actions": []
+}

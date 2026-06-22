@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-production-readiness-audit-v0.1.schema.json",
+  "title": "AO Foundry Production Readiness Audit v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "score",
+    "max_score",
+    "registry_id",
+    "task_id",
+    "checks",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.production-readiness-audit.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "max_score": { "const": 100 },
+    "registry_id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": { "const": "ready" }
+        }
+      },
+      "then": {
+        "properties": {
+          "score": { "const": 100 },
+          "next_actions": { "maxItems": 0 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "score", "reason"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "fail"] },
+        "score": { "type": "integer", "enum": [0, 20] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

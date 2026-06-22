@@ -1,0 +1,106 @@
+{
+  "schema_version": "ao.forge.factory-packet.v0.1",
+  "status": "passed",
+  "objective": {
+    "text": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+    "workspace": "../ao-foundry",
+    "release_mode": false
+  },
+  "factory_plan": {
+    "plan_id": "forge-plan-fc142fc6833e",
+    "workcell_count": 2
+  },
+  "policy_decisions": [
+    {
+      "decision_id": "allow-local-plan",
+      "target": "factory-plan",
+      "decision": "allow",
+      "explanation": "The plan is local-first, does not allow network access, and does not mutate releases. Covenant binary version check passed.",
+      "source": "live-covenant-adapter"
+    }
+  ],
+  "workcells": [
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-execute",
+      "kind": "execute",
+      "workspace": "../ao-foundry",
+      "executor": "agy-swarms",
+      "max_repairs": 1,
+      "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+      "status": "passed",
+      "depends_on": [],
+      "ao2_run": "live",
+      "summary": "Governed run started by ao2"
+    },
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-verify",
+      "kind": "verify",
+      "workspace": "../ao-foundry",
+      "executor": "ao2",
+      "task": "go test ./...",
+      "status": "passed",
+      "depends_on": [
+        "foundry-ao-foundry-bootstrap-execute"
+      ],
+      "ao2_run": "live",
+      "summary": "Governed run started by ao2"
+    }
+  ],
+  "evidence": [
+    {
+      "label": "factory plan",
+      "schema_version": "ao.forge.factory-plan.v0.1",
+      "status": "planned",
+      "path": "docs/evidence/pulse/local-live-smoke/factory-plan.json",
+      "sha256": "1f504ef552b8042ebc9e7cd6b44b7047df79322f1b8122420d6cabef41f2cc75"
+    },
+    {
+      "label": "covenant policy decision",
+      "schema_version": "ao.forge.covenant-gate-result.v0.1",
+      "status": "allowed",
+      "path": "docs/evidence/pulse/local-live-smoke/gate-result.json",
+      "sha256": "49c2b45f21eab1feca6cd077dc9f1a13b27c6694ba7669cec67f129d226a1111"
+    },
+    {
+      "label": "ao2 run summary",
+      "schema_version": "ao2.run/v1",
+      "status": "accepted",
+      "path": "docs/evidence/pulse/local-live-smoke/ao2-run-summary.json",
+      "sha256": "d297bb96cda4079a332adb2feb94f21cca0ead15734d46e998d7144f1f4a4ee2"
+    },
+    {
+      "label": "workcell foundry-ao-foundry-bootstrap-execute evidence",
+      "schema_version": "ao2.workcell-evidence.v1",
+      "status": "passed",
+      "path": "docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-execute-evidence.json",
+      "sha256": "5b45e2bc106acfdc1314020baf14144eef7fd5ba70122a07f176a72b1b87245d"
+    },
+    {
+      "label": "workcell foundry-ao-foundry-bootstrap-verify evidence",
+      "schema_version": "ao2.workcell-evidence.v1",
+      "status": "passed",
+      "path": "docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-verify-evidence.json",
+      "sha256": "3a9d218ad02bbf2b7ccbfcf11fca5d8dfd88a09e1f7412ef473504ac9ba6d792"
+    },
+    {
+      "label": "control plane readback receipt",
+      "schema_version": "ao2.cp-ingest-receipt.v1",
+      "status": "passed",
+      "path": "docs/evidence/pulse/local-live-smoke/control-plane-receipt.json",
+      "sha256": "479dda96691a27770bf0f2e3fd2df935a2cca40a9e771ffdb30caf01def4cd7a"
+    }
+  ],
+  "trust_boundary": {
+    "local_first": true,
+    "mutates_releases": false,
+    "stores_credentials": false,
+    "control_plane_approves_work": false
+  },
+  "next_actions": [
+    {
+      "action_id": "close-factory-packet",
+      "description": "Review the factory packet and live evidence.",
+      "required": false
+    }
+  ]
+}

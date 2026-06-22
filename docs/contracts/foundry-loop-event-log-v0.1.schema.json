@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-loop-event-log-v0.1.schema.json",
+  "title": "AO Foundry Loop Event Log v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "goal_id", "events"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.loop-event-log.v0.1" },
+    "goal_id": { "type": "string", "minLength": 1 },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/event" }
+    }
+  },
+  "$defs": {
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "time_utc", "kind", "status", "detail"],
+      "properties": {
+        "event_id": { "type": "string", "minLength": 1 },
+        "time_utc": { "type": "string", "format": "date-time" },
+        "kind": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "blocked", "unknown"] },
+        "detail": { "type": "string" }
+      }
+    }
+  }
+}

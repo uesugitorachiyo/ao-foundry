@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "clean-clone",
+  "name": "Clean Clone AO Foundry",
+  "repos": [
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "delegates_to": "ao-forge",
+      "workspace": ".",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "readiness-audit",
+          "location": "tmp/clean-clone-readiness.json",
+          "owner": "ao-foundry"
+        }
+      ],
+      "allowed_automation": ["readiness-audit", "release-dry-run"],
+      "readiness_signals": [
+        {
+          "name": "public-fixtures",
+          "status": "ready",
+          "source": "go test ./..."
+        }
+      ]
+    }
+  ]
+}

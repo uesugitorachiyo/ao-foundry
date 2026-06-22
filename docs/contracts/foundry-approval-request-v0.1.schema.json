@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-approval-request-v0.1.schema.json",
+  "title": "AO Foundry Approval Request v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "task_sha256", "requested_side_effects", "reason"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.approval-request.v0.1" },
+    "task_id": { "type": "string", "minLength": 1 },
+    "task_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "requested_side_effects": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "reason": { "type": "string", "minLength": 1 }
+  }
+}

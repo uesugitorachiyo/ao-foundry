@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "digest-mismatch",
+  "objective": "Demonstrate evidence digest rejection.",
+  "acceptance_criteria": ["digest mismatch is rejected"],
+  "allowed_scope": ["../ao-foundry"],
+  "stop_conditions": ["evidence digest mismatch"],
+  "current_phase": "verification",
+  "next_task": "Reject stale evidence digest.",
+  "continuation_prompt": "Regenerate evidence before continuing.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Only delegate implementation through AO Forge after goal readiness reaches 100.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "stale readiness audit",
+        "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "ao.foundry.loop-lease.v0.1",
+  "goal_id": "ao-foundry-production-readiness",
+  "lease_id": "loop-lease-example",
+  "acquired_at_utc": "2026-06-22T00:00:00Z",
+  "expires_at_utc": "2026-06-22T08:00:00Z",
+  "status": "active"
+}

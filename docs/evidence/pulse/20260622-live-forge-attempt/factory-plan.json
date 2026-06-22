@@ -1,0 +1,56 @@
+{
+  "schema_version": "ao.forge.factory-plan.v0.1",
+  "plan_id": "forge-plan-fc142fc6833e",
+  "objective": {
+    "text": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+    "workspace": "../ao-foundry",
+    "release_mode": false
+  },
+  "constraints": {
+    "local_first": true,
+    "allow_network": false,
+    "allow_release_mutation": false,
+    "require_control_plane_readback": false
+  },
+  "execution_enabled": false,
+  "policy_gate": {
+    "required": true,
+    "status": "not_requested",
+    "explanation": "Slice 0.2 creates deterministic plans only; Covenant gate execution is introduced in slice 0.3."
+  },
+  "workcells": [
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-execute",
+      "kind": "execute",
+      "workspace": "../ao-foundry",
+      "executor": "agy-swarms",
+      "max_repairs": 1,
+      "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+      "status": "planned",
+      "depends_on": []
+    },
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-verify",
+      "kind": "verify",
+      "workspace": "../ao-foundry",
+      "executor": "ao2",
+      "task": "go test ./...",
+      "status": "planned",
+      "depends_on": [
+        "foundry-ao-foundry-bootstrap-execute"
+      ]
+    }
+  ],
+  "expected_evidence": [
+    "AO Forge factory packet",
+    "AO Foundry verification output",
+    "public-safety scan"
+  ],
+  "next_actions": [
+    {
+      "action_id": "run-covenant-gate",
+      "description": "Implement or invoke the Covenant gate before AO2 execution is enabled.",
+      "required": true
+    }
+  ]
+}

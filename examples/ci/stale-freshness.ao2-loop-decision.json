@@ -1,0 +1,15 @@
+{
+  "schema_version": "ao2.pulse-event-loop-decision.v1",
+  "event_loop": {
+    "action": "stop",
+    "reason": "Foundry derived next task \"refresh-forge-live-packet\" from stale production freshness evidence.",
+    "next_task_id": "refresh-forge-live-packet",
+    "freshness": {
+      "schema_version": "ao.foundry.pulse-freshness-summary.v0.1",
+      "status": "blocked",
+      "forge_live_packet": "stale",
+      "control_plane_readback": "not_provided",
+      "explanation": "operator-provided production freshness evidence is stale; rerun signed smoke before treating the pulse as production-ready"
+    }
+  }
+}

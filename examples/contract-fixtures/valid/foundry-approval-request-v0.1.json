@@ -1,0 +1,7 @@
+{
+  "schema_version": "ao.foundry.approval-request.v0.1",
+  "task_id": "network-read-task",
+  "task_sha256": "99c0592382147b18497d245f2fe576310d9f365c367c7868f56a6dcf2870cf8d",
+  "requested_side_effects": ["network access", "non-local execution"],
+  "reason": "Human approval is required before AO Foundry may delegate non-local side effects."
+}

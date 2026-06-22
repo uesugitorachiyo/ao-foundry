@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-signed-smoke-preflight-v0.1.schema.json",
+  "title": "AO Foundry signed smoke preflight v0.1",
+  "type": "object",
+  "required": ["schema_version", "status", "workspace", "checks", "next_actions"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "ao.foundry.signed-smoke-preflight.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "workspace": { "type": "string", "minLength": 1 },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "path", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["pass", "fail"] },
+          "path": { "type": "string" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

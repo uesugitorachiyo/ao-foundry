@@ -1,0 +1,9 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-summary.v0.1",
+  "status": "unsupported",
+  "pulse_id": "pulse-signed-smoke",
+  "pulse_status": "ready",
+  "release_safe": true,
+  "evidence": [],
+  "explanation": "Invalid fixture uses an unsupported status and missing evidence."
+}

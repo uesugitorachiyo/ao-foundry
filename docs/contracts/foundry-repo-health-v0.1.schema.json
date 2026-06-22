@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-repo-health-v0.1.schema.json",
+  "title": "AO Foundry Repo Health v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "status", "repos", "next_actions"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.repo-health.v0.1" },
+    "registry_id": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "repos": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/repo_health" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "repo_health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_id", "workspace", "status", "checks", "next_actions"],
+      "properties": {
+        "repo_id": { "type": "string", "minLength": 1 },
+        "workspace": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ready", "blocked"] },
+        "current_branch": { "type": "string" },
+        "checks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/check" }
+        },
+        "next_actions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "detail"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "blocked", "unknown"] },
+        "detail": { "type": "string" }
+      }
+    }
+  }
+}

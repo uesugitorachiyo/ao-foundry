@@ -1,0 +1,7 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-result.v0.1",
+  "status": "ready",
+  "pulse_event": "tmp/pulse-live/pulse-event.json",
+  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "control_plane_readback": "tmp/pulse-live/control-plane-readback.json"
+}

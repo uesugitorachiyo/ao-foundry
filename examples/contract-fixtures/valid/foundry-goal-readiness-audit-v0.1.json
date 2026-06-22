@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.goal-readiness-audit.v0.1",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "goal_id": "ao-foundry-production-readiness",
+  "checks": [
+    { "name": "goal_run_valid", "status": "pass", "score": 20, "reason": "GoalRun contract is valid" }
+  ],
+  "next_actions": []
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "ao.foundry.task.v0.1",
+  "task_id": "fixture",
+  "title": "Fixture task",
+  "objective": "Validate the task schema fixture.",
+  "priority": "normal",
+  "state": "queued",
+  "target_repos": ["ao-foundry"],
+  "required_delegations": [
+    { "delegate_to": "ao-forge", "reason": "Governed work is delegated to AO Forge." }
+  ],
+  "acceptance": ["Fixture validates"],
+  "verification": ["go test ./..."],
+  "safety": {
+    "local_only": true,
+    "allow_network": false,
+    "allow_release_mutation": false,
+    "allowed_write_roots": ["../ao-foundry"],
+    "forbidden_actions": ["push", "tag", "publish-release"]
+  }
+}

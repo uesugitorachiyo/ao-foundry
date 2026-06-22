@@ -1,0 +1,91 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+    inputs:
+      signed_smoke:
+        description: "Run signed AO2 control-plane smoke on a prepared runner with sibling AO repos"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      runner:
+        description: "Runner label for the prepared AO workspace"
+        required: true
+        default: "ubuntu-latest"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: Go tests
+        run: go test ./...
+      - name: JSON fixtures
+        shell: bash
+        run: jq empty docs/contracts/*.json examples/**/*.json
+      - name: Public safety scan
+        shell: bash
+        run: |
+          pattern="ghp""_|github""_pat_|BEGIN ""RSA|BEGIN ""OPENSSH|ANTI""GRAVITY|private ""handoff"
+          ! rg -n "$pattern" README.md docs examples internal cmd
+      - name: Release dry-run
+        run: go run ./cmd/foundry release dry-run --out tmp/release-manifest.json
+      - name: Release manifest schema validation
+        run: go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json
+      - name: Contract fixture schema validation
+        run: go run ./cmd/foundry contract fixtures validate
+      - name: Freshness regression tests
+        shell: bash
+        run: go test ./internal/cli -run 'TestPulseRunBlocksStaleForgeLivePacket|TestPulseRunBlocksStaleControlPlaneReadback|TestPulseRunBlocksControlPlaneReadbackDigestMismatch' -v
+      - name: Signed-smoke freshness fixture
+        shell: bash
+        run: go test ./internal/cli -run TestSignedSmokeFreshnessCIFixtureValidates -v
+      - name: Stale control-plane freshness fixture
+        shell: bash
+        run: go test ./internal/cli -run TestStaleControlPlaneReadbackCIFixtureValidates -v
+      - name: Stale freshness decision fixture
+        shell: bash
+        run: go test ./internal/cli -run TestStaleFreshnessDerivedDecisionCIFixtureValidates -v
+      - name: Stale control-plane decision fixture
+        shell: bash
+        run: go test ./internal/cli -run TestStaleControlPlaneDerivedDecisionCIFixtureValidates -v
+      - name: Pulse smoke
+        shell: bash
+        run: |
+          go run ./cmd/foundry pulse run --out tmp/pulse-smoke
+          go run ./cmd/foundry pulse summarize-signed-smoke --pulse tmp/pulse-smoke/pulse-event.json --out tmp/pulse-smoke/signed-smoke-summary.json
+          go run ./cmd/foundry trace inspect --trace tmp/pulse-smoke/pulse.trace.jsonl
+
+  signed-smoke:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.signed_smoke == 'true' }}
+    runs-on: ${{ inputs.runner }}
+    env:
+      AO2_CP_API_TOKEN: ${{ secrets.AO2_CP_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: Verify prepared sibling AO workspace
+        shell: bash
+        run: |
+          test -d ../ao-forge
+          test -d ../ao-covenant
+          test -x ../ao2-control-plane/target/debug/ao2-cp-server
+      - name: Generate signed smoke script
+        shell: bash
+        run: go run ./cmd/foundry pulse signed-smoke-script --out tmp/signed-smoke.sh
+      - name: Run signed smoke
+        shell: bash
+        run: bash tmp/signed-smoke.sh

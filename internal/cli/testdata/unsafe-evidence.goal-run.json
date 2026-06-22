@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "unsafe-evidence",
+  "objective": "Demonstrate evidence path rejection.",
+  "acceptance_criteria": ["unsafe evidence is rejected"],
+  "allowed_scope": ["../ao-foundry"],
+  "stop_conditions": ["unsafe evidence path"],
+  "current_phase": "verification",
+  "next_task": "Reject unsafe evidence path.",
+  "continuation_prompt": "Fix evidence paths before continuing.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Only delegate implementation through AO Forge after goal readiness reaches 100.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "unsafe evidence",
+        "path": "tmp/unsafe-evidence.json",
+        "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4"
+      }
+    ]
+  }
+}

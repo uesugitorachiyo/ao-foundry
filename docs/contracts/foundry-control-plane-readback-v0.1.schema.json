@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-control-plane-readback-v0.1.schema.json",
+  "title": "AO Foundry Control-Plane Readback v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "source", "explanation"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.control-plane-readback.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "unavailable", "blocked", "stale"] },
+    "source": { "type": "string", "minLength": 1 },
+    "receipt_schema_version": { "type": "string", "minLength": 1 },
+    "explanation": { "type": "string", "minLength": 1 }
+  }
+}

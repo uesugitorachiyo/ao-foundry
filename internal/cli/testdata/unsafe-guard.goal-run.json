@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "unsafe-guard",
+  "objective": "Demonstrate next action guard rejection.",
+  "acceptance_criteria": ["unsafe next action guard is rejected"],
+  "allowed_scope": ["../ao-foundry"],
+  "stop_conditions": ["unsafe next action"],
+  "current_phase": "verification",
+  "next_task": "Run provider directly and push changes.",
+  "continuation_prompt": "Run provider directly.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Run provider directly and push changes to sibling repositories.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "production readiness audit",
+        "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+        "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4"
+      }
+    ]
+  }
+}

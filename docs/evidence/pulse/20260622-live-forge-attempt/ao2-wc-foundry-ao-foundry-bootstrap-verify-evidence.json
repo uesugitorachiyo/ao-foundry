@@ -1,0 +1,8 @@
+{
+  "schema_version": "ao2.workcell-evidence.v1",
+  "spec_sha256": "421b0110a26c4a1a4ebce5a6dabf01cd8919446855255330e260fb1d38a482c5",
+  "status": "passed",
+  "stderr": "",
+  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-fc142fc6833e\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-fc142fc6833e-sdd-run.yaml\nrun_id=run-19f006c2-0aca-4dcf-8ace-137b848f775a\nstatus=Accepted\nevidence_pack=../ao-foundry/.ao2/runs/run-19f006c2-0aca-4dcf-8ace-137b848f775a/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-19f006c2-0aca-4dcf-8ace-137b848f775a/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-19f006c2-0aca-4dcf-8ace-137b848f775a/sdd-task-graph.json\n",
+  "workcell_id": "foundry-ao-foundry-bootstrap-verify"
+}

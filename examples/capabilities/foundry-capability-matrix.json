@@ -1,0 +1,29 @@
+{
+  "schema_version": "ao.foundry.capability-matrix.v0.1",
+  "capabilities": [
+    {
+      "capability": "durable workflow state",
+      "status": "supported",
+      "foundry": "GoalRun, run records, loop leases",
+      "evidence": "docs/contracts/foundry-goal-run-v0.1.schema.json"
+    },
+    {
+      "capability": "traces and evals",
+      "status": "supported",
+      "foundry": "local trace spans and eval scorecards",
+      "evidence": "docs/contracts/foundry-trace-v0.1.schema.json"
+    },
+    {
+      "capability": "crews and flows",
+      "status": "partial",
+      "foundry": "delegates governed execution to AO Forge workcells",
+      "evidence": "docs/contracts/foundry-task-v0.1.schema.json"
+    },
+    {
+      "capability": "hosted dashboard",
+      "status": "out-of-scope",
+      "foundry": "local CLI and public-safe evidence only",
+      "evidence": "README.md"
+    }
+  ]
+}

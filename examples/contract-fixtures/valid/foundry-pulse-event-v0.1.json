@@ -1,0 +1,34 @@
+{
+  "schema_version": "ao.foundry.pulse-event.v0.1",
+  "pulse_id": "pulse-example",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "goal_id": "ao-foundry-production-readiness",
+  "artifacts": [
+    {
+      "name": "production_readiness_audit",
+      "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "schema_version": "ao.foundry.production-readiness-audit.v0.1",
+      "status": "ready"
+    }
+  ],
+  "checks": [
+    {
+      "name": "production_readiness_ready",
+      "status": "pass",
+      "reason": "production readiness is 100/100"
+    }
+  ],
+  "freshness_summary": {
+    "schema_version": "ao.foundry.pulse-freshness-summary.v0.1",
+    "status": "ready",
+    "forge_live_packet": "not_provided",
+    "control_plane_readback": "not_provided",
+    "explanation": "no operator-provided production freshness evidence was bundled; local public pulse remains runnable without live credentials"
+  },
+  "next_action": "continue with governed AO Forge live execution when an executor is available"
+}

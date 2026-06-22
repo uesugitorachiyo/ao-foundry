@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.foundry.control-plane-readback.v0.1",
+  "status": "unavailable",
+  "source": "not-provided",
+  "explanation": "control-plane readback was not provided."
+}

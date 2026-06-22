@@ -1,0 +1,13 @@
+{
+  "schema_version": "ao.foundry.loop-event-log.v0.1",
+  "goal_id": "ao-foundry-production-readiness",
+  "events": [
+    {
+      "event_id": "event-1",
+      "time_utc": "2026-06-22T00:00:00Z",
+      "kind": "preflight",
+      "status": "pass",
+      "detail": "loop preflight passed"
+    }
+  ]
+}

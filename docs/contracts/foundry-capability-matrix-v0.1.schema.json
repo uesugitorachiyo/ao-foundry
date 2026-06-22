@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-capability-matrix-v0.1.schema.json",
+  "title": "AO Foundry Capability Matrix v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "capabilities"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.capability-matrix.v0.1" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "status", "foundry", "evidence"],
+      "properties": {
+        "capability": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["supported", "partial", "out-of-scope"] },
+        "foundry": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

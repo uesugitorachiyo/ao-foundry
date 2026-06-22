@@ -1,0 +1,10 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-ingest.v0.1",
+  "status": "unsupported",
+  "result": "tmp/pulse-live/signed-smoke-result.json",
+  "result_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "pulse_event": "tmp/pulse-live/pulse-event.json",
+  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "control_plane_readback": "tmp/pulse-live/control-plane-readback.json",
+  "explanation": "Invalid fixture uses an unsupported status."
+}

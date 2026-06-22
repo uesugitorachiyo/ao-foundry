@@ -1,0 +1,24 @@
+{
+  "schema_version": "ao.foundry.task.v0.1",
+  "task_id": "network-read-task",
+  "title": "Approved network read fixture",
+  "objective": "Read public CI metadata for an AO Foundry health check without mutating repositories.",
+  "priority": "normal",
+  "state": "queued",
+  "target_repos": ["ao-foundry"],
+  "required_delegations": [
+    {
+      "delegate_to": "ao-forge",
+      "reason": "AO Forge owns governed execution after Foundry validates approval."
+    }
+  ],
+  "acceptance": ["Approval gates bind the task digest and requested network read side effect"],
+  "verification": ["go test ./..."],
+  "safety": {
+    "local_only": false,
+    "allow_network": true,
+    "allow_release_mutation": false,
+    "allowed_write_roots": ["../ao-foundry"],
+    "forbidden_actions": ["release-mutation-without-approval"]
+  }
+}

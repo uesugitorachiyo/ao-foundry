@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.approval-decision.v0.1",
+  "task_id": "network-read-task",
+  "task_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "requested_side_effects": ["network access", "non-local execution"],
+  "approved_side_effects": ["network access", "non-local execution"],
+  "expires_at_utc": "2027-01-01T00:00:00Z",
+  "operator": "local-operator",
+  "reason": "Digest mismatch fixture.",
+  "decision": "approved"
+}

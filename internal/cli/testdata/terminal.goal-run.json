@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "terminal-goal",
+  "objective": "Demonstrate terminal phase readiness blocking.",
+  "acceptance_criteria": ["terminal phases do not continue"],
+  "allowed_scope": ["../ao-foundry"],
+  "stop_conditions": ["terminal phase"],
+  "current_phase": "complete",
+  "next_task": "No further task should run.",
+  "continuation_prompt": "Do not continue a terminal goal.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Only delegate implementation through AO Forge after goal readiness reaches 100.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "production readiness audit",
+        "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+        "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4"
+      }
+    ]
+  }
+}

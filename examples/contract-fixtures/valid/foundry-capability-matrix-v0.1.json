@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.capability-matrix.v0.1",
+  "capabilities": [
+    {
+      "capability": "durable workflow state",
+      "status": "supported",
+      "foundry": "GoalRun and run records",
+      "evidence": "docs/contracts/foundry-goal-run-v0.1.schema.json"
+    }
+  ]
+}

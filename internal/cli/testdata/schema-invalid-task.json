@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.task.v0.1",
+  "task_id": "schema-invalid-task",
+  "title": "Schema invalid task",
+  "objective": "Exercise task schema parity validation.",
+  "priority": "urgent",
+  "state": "invented",
+  "target_repos": ["ao-forge"],
+  "required_delegations": [
+    {
+      "delegate_to": "ao-forge",
+      "reason": ""
+    }
+  ],
+  "acceptance": ["reject invalid task enums"],
+  "verification": ["go test ./..."],
+  "safety": {
+    "local_only": true,
+    "allowed_write_roots": ["../ao-foundry"],
+    "forbidden_actions": [""]
+  }
+}

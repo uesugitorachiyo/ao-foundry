@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-signed-smoke-result-v0.1.schema.json",
+  "title": "AO Foundry signed smoke result v0.1",
+  "type": "object",
+  "required": ["schema_version", "status", "pulse_event", "forge_live_packet", "control_plane_readback"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "ao.foundry.signed-smoke-result.v0.1" },
+    "status": { "type": "string", "enum": ["ready"] },
+    "pulse_event": { "type": "string", "minLength": 1 },
+    "forge_live_packet": { "type": "string", "minLength": 1 },
+    "control_plane_readback": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "ao.foundry.run.v0.1",
+  "run_id": "foundry-run-example",
+  "task_id": "ao-foundry-bootstrap",
+  "registry_id": "local-ao-stack",
+  "status": "passed",
+  "delegated_to": "ao-forge",
+  "forge_packet": {
+    "path": "examples/packets/ao-foundry-bootstrap.factory-packet.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "status": "passed"
+  },
+  "evidence": [
+    {
+      "label": "verification output",
+      "path": "examples/evidence/ao-foundry-bootstrap.verification.txt",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "schema_version": "ao.foundry.verification-output.v0.1",
+      "status": "passed"
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "covenant-local-allow",
+      "target": "factory-plan",
+      "decision": "allow",
+      "explanation": "Covenant gate allowed the local-only plan.",
+      "source": "ao-forge"
+    }
+  ],
+  "next_actions": [
+    {
+      "action_id": "inspect-foundry-run",
+      "description": "Inspect the durable AO Foundry run record.",
+      "required": true
+    }
+  ]
+}

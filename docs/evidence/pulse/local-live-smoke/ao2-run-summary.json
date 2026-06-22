@@ -1,0 +1,11 @@
+{
+  "control_plane_role": "read_only_observer",
+  "factory_v3_drives_workflow": false,
+  "mutates_ao_artifacts": false,
+  "plan_id": "forge-plan-fc142fc6833e",
+  "schema_version": "ao2.run/v1",
+  "spec_sha256": "acc7fb545fafdcd4a322cbcb327d3b2bf69f8d19057f52aea376a05b7558d587",
+  "status": "accepted",
+  "target_repo": "../ao-foundry",
+  "task_count": 2
+}

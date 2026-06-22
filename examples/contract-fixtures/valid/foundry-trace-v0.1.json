@@ -1,0 +1,15 @@
+{
+  "schema_version": "ao.foundry.trace.v0.1",
+  "trace_id": "trace-example",
+  "span_id": "span-example",
+  "component": "foundry",
+  "operation": "readiness.audit",
+  "status": "passed",
+  "started_at": "2026-06-22T00:00:00Z",
+  "ended_at": "2026-06-22T00:00:00Z",
+  "duration_ms": 0,
+  "attributes": {
+    "task": "ao-foundry-bootstrap"
+  },
+  "evidence_refs": ["examples/tasks/ao-foundry-bootstrap.foundry-task.json"]
+}

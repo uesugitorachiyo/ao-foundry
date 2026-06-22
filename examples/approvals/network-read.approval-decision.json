@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.approval-decision.v0.1",
+  "task_id": "network-read-task",
+  "task_sha256": "99c0592382147b18497d245f2fe576310d9f365c367c7868f56a6dcf2870cf8d",
+  "requested_side_effects": ["network access", "non-local execution"],
+  "approved_side_effects": ["network access", "non-local execution"],
+  "expires_at_utc": "2027-01-01T00:00:00Z",
+  "operator": "local-operator",
+  "reason": "Allow a read-only public network health check fixture.",
+  "decision": "approved"
+}

@@ -1,0 +1,165 @@
+# AO2 Pulse Event Loop For AO Foundry
+
+AO Foundry should use an AO2 Pulse-style loop as a scheduler, not as an
+authority boundary. The scheduler may trigger a Foundry readiness audit and
+select the next queued task, but Foundry must still delegate governed execution
+to AO Forge.
+
+## v0.1 Loop
+
+```text
+load registry and task
+-> foundry readiness audit
+-> foundry goal readiness
+-> if score < 100, stop and report blockers
+-> if score = 100, foundry next
+-> create a Forge factory brief
+-> delegate execution to AO Forge
+-> retain the Forge packet and policy gate summary
+-> record Forge packet in a Foundry run record
+-> score the run with local evals
+-> inspect a local trace
+-> write a pulse-event summary
+```
+
+Run the local clean-clone-safe pulse:
+
+```sh
+go run ./cmd/foundry pulse run --out tmp/pulse
+go run ./cmd/foundry pulse freshness --pulse tmp/pulse/pulse-event.json
+go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
+go run ./cmd/ao status
+go run ./cmd/ao run --out tmp/ao-pulse
+```
+
+The command writes `tmp/pulse/pulse-event.json` plus the generated readiness,
+GoalRun, Forge brief, Forge packet, policy gate, live Forge attempt,
+control-plane readback, run, eval, trace, demo, release dry-run, and competitive
+audit artifacts. The loop exits non-zero and still writes a blocked event when a
+readiness gate fails. The command also prints an operator status line such as
+`freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
+The same values are recorded in `pulse-event.json` under `freshness_summary`.
+
+Derive the next AO2 loop decision from the pulse output:
+
+```sh
+go run ./cmd/foundry pulse derive-next \
+  --pulse tmp/pulse/pulse-event.json \
+  --audit tmp/pulse/competitive-audit.json \
+  --out tmp/pulse/ao2-loop-decision.json
+```
+
+The derived decision includes `event_loop.freshness` from the pulse event.
+Blocked freshness takes precedence over generic failed checks: stale Forge live
+packets derive `refresh-forge-live-packet`, stale control-plane readbacks derive
+`refresh-control-plane-readback`, and other production-evidence freshness
+failures derive `resolve-production-evidence-freshness`. If freshness is not
+blocked, the decision uses the first failed pulse check for blocked events, then
+competitive audit next actions for ready events, and finally the pulse
+`next_action` text.
+
+To bundle externally produced production evidence:
+
+```sh
+go run ./cmd/foundry pulse run --out tmp/pulse \
+  --forge-live-packet path/to/factory-packet.json \
+  --control-plane-receipt path/to/control-plane-receipt.json
+```
+
+## Signed Control-Plane Smoke
+
+Use this local operator smoke when the AO sibling repositories are checked out
+next to AO Foundry and the AO Forge/Covenant binaries can be built locally. The
+token value is an operator-provided local secret with at least 32 characters; do
+not commit it or copy it into evidence.
+
+```sh
+AO2_CP_API_TOKEN=<local-token> ../ao2-control-plane/target/debug/ao2-cp-server --bind 127.0.0.1:18746 \
+  --data-dir tmp/control-plane
+```
+
+In another shell, build temporary local tools, create the Foundry pulse brief,
+run AO Forge against the local control-plane observer, and rerun the Foundry
+pulse from the live packet:
+
+```sh
+go run ./cmd/foundry pulse signed-smoke-preflight --workspace .. \
+  --out tmp/signed-smoke-preflight.json
+go run ./cmd/foundry pulse run --out tmp/pulse
+mkdir -p tmp/live-tools
+(cd ../ao-forge && go build -o ../ao-foundry/tmp/live-tools/forge ./cmd/forge)
+(cd ../ao-covenant && go build -o ../ao-foundry/tmp/live-tools/covenant ./cmd/covenant)
+tmp/live-tools/forge plan \
+  --brief tmp/pulse/forge-brief.json \
+  --out docs/evidence/pulse/local-live-smoke/factory-plan.json
+tmp/live-tools/forge gate \
+  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
+  --covenant tmp/live-tools/covenant \
+  --out docs/evidence/pulse/local-live-smoke/gate-result.json
+AO2_CP_API_TOKEN=<local-token> tmp/live-tools/forge run \
+  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
+  --gate-result docs/evidence/pulse/local-live-smoke/gate-result.json \
+  --out docs/evidence/pulse/local-live-smoke/factory-packet.json \
+  --control-plane http://127.0.0.1:18746 \
+  --live --non-interactive --no-dashboard
+go run ./cmd/foundry pulse run \
+  --out tmp/pulse-live \
+  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json
+go run ./cmd/foundry pulse ingest-signed-smoke \
+  --result tmp/pulse-live/signed-smoke-result.json \
+  --out tmp/pulse-live/signed-smoke-ingest.json
+go run ./cmd/foundry pulse run \
+  --out tmp/pulse-live-bundled \
+  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json \
+  --signed-smoke-result tmp/pulse-live/signed-smoke-result.json
+go run ./cmd/foundry pulse summarize-signed-smoke \
+  --pulse tmp/pulse-live-bundled/pulse-event.json \
+  --out tmp/pulse-live-bundled/signed-smoke-summary.json
+go run ./cmd/foundry pulse signed-smoke-cleanup
+```
+
+The final `tmp/pulse-live/pulse-event.json` should report
+`forge_live_attempt=passed`, `control_plane_readback=ready`, and
+`freshness_summary.status=ready`. The bundled
+`tmp/pulse-live-bundled/pulse-event.json` should also include a
+`signed_smoke_ingest` artifact. The summary omits source paths, digests, tokens,
+server logs, and runtime scratch details. Stop the local control-plane server
+after the smoke completes. `foundry pulse signed-smoke-cleanup` removes signed
+smoke scratch under `tmp/` while preserving local audit evidence under
+`docs/evidence/pulse/local-live-smoke`.
+
+CI keeps a public-safe fixture for the successful signed-smoke freshness shape
+at `examples/ci/signed-smoke-freshness.pulse-event.json`. Validate it locally
+without credentials:
+
+```sh
+go test ./internal/cli -run TestSignedSmokeFreshnessCIFixtureValidates -v
+```
+
+Operator-provided live packets older than 24h are treated as stale production
+evidence. Rerun the signed smoke before using an older packet in readiness
+scoring.
+
+Control-plane readback receipts older than 24h are also treated as stale.
+Foundry compares discovered receipt digests against the Forge packet evidence
+before scoring the readback as ready.
+
+## Stop Conditions
+
+- Registry or task contract validation fails.
+- A target repository is not registered.
+- Any target readiness signal is not `ready`.
+- The task does not delegate governed work to AO Forge.
+- The task is not local-only.
+- Verification commands are missing.
+- GoalRun evidence uses unsafe paths.
+- GoalRun evidence digests are missing or stale.
+- GoalRun phase is terminal.
+- GoalRun next-action guard allows direct provider execution or sibling repo mutation.
+
+## Next Loop Hardening
+
+The next production-readiness slice should connect this local pulse bundle to a
+real AO Forge live execution packet when an executor is available. The same
+command should continue to refuse direct provider execution, preserve blocked
+events, and keep delegated implementation inside AO Forge.

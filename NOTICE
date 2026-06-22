@@ -1,0 +1,9 @@
+AO Foundry
+
+This product includes software developed by AO Foundry contributors.
+
+The project is licensed under Apache-2.0.
+
+This repository includes examples, schemas, and local evidence intended for
+demonstration and verification. It does not include credentials, private
+coordination material, or release automation that publishes artifacts.

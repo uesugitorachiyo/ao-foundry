@@ -1,0 +1,58 @@
+{
+  "schema_version": "ao.foundry.pulse-event.v0.1",
+  "pulse_id": "pulse-signed-smoke-freshness-ci",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "goal_id": "ao-foundry-production-readiness",
+  "artifacts": [
+    {
+      "name": "forge_live_attempt",
+      "path": "examples/ci/forge-live-attempt.ready.json",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "schema_version": "ao.foundry.forge-live-attempt.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "control_plane_readback",
+      "path": "examples/ci/control-plane-readback.ready.json",
+      "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "schema_version": "ao.foundry.control-plane-readback.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "signed_smoke_ingest",
+      "path": "examples/ci/signed-smoke-ingest.ready.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "schema_version": "ao.foundry.signed-smoke-ingest.v0.1",
+      "status": "ready"
+    }
+  ],
+  "checks": [
+    {
+      "name": "forge_live_attempt",
+      "status": "pass",
+      "reason": "operator-provided AO Forge live packet is fresh"
+    },
+    {
+      "name": "control_plane_readback",
+      "status": "pass",
+      "reason": "operator-provided control-plane readback is fresh"
+    },
+    {
+      "name": "signed_smoke_ingest",
+      "status": "pass",
+      "reason": "signed smoke result is validated and bundled"
+    }
+  ],
+  "freshness_summary": {
+    "schema_version": "ao.foundry.pulse-freshness-summary.v0.1",
+    "status": "ready",
+    "forge_live_packet": "ready",
+    "control_plane_readback": "ready",
+    "explanation": "operator-provided AO Forge live packet and control-plane readback are fresh"
+  },
+  "next_action": "continue with governed AO Forge live execution when an executor is available"
+}

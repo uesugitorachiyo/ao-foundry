@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-trace-v0.1.schema.json",
+  "title": "AO Foundry Trace Span v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "trace_id",
+    "span_id",
+    "component",
+    "operation",
+    "status",
+    "started_at",
+    "ended_at",
+    "duration_ms",
+    "attributes",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.trace.v0.1" },
+    "trace_id": { "type": "string", "minLength": 1 },
+    "span_id": { "type": "string", "minLength": 1 },
+    "parent_span_id": { "type": "string" },
+    "component": {
+      "type": "string",
+      "enum": ["foundry", "forge", "covenant", "ao2", "scheduler", "approval", "eval"]
+    },
+    "operation": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["running", "passed", "failed"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "ended_at": { "type": "string", "format": "date-time" },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "problem": { "type": "string" }
+  }
+}

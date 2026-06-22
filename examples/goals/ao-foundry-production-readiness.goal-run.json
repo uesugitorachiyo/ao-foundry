@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "ao-foundry-production-readiness",
+  "objective": "Advance AO Foundry to production-readiness 100% while preserving AO Forge as the governed execution boundary.",
+  "acceptance_criteria": [
+    "Foundry has measurable production-readiness audits",
+    "Foundry has durable GoalRun-style loop records",
+    "Foundry delegates governed implementation runs to AO Forge"
+  ],
+  "allowed_scope": ["../ao-foundry"],
+  "stop_conditions": [
+    "production readiness is below 100",
+    "evidence digest verification fails",
+    "a requested action would mutate sibling repositories"
+  ],
+  "current_phase": "verification",
+  "next_task": "Add guarded Foundry GoalRun update audits after readiness is verified.",
+  "continuation_prompt": "Run foundry goal readiness, inspect blockers, and implement the next SDD slice without replacing AO Forge.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Only delegate implementation through AO Forge after goal readiness reaches 100.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "production readiness audit",
+        "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+        "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4"
+      }
+    ]
+  }
+}

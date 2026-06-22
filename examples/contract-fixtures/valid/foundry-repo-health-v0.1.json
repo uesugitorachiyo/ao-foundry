@@ -1,0 +1,17 @@
+{
+  "schema_version": "ao.foundry.repo-health.v0.1",
+  "registry_id": "local-ao-stack",
+  "status": "ready",
+  "repos": [
+    {
+      "repo_id": "ao-foundry",
+      "workspace": ".",
+      "status": "ready",
+      "checks": [
+        { "name": "health_config", "status": "unknown", "detail": "repo has no configured health readers" }
+      ],
+      "next_actions": []
+    }
+  ],
+  "next_actions": []
+}

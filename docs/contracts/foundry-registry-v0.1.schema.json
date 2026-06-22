@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-registry-v0.1.schema.json",
+  "title": "AO Foundry Registry v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "foundry_id", "name", "repos"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.registry.v0.1" },
+    "foundry_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "repos": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/repo" }
+    }
+  },
+  "$defs": {
+    "repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "role",
+        "delegates_to",
+        "workspace",
+        "branches",
+        "evidence_sources",
+        "allowed_automation",
+        "readiness_signals"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": [
+            "operations-factory",
+            "factory-brain",
+            "operator-command",
+            "execution-engine",
+            "evidence-observer",
+            "policy-kernel",
+            "agent-orchestrator",
+            "workflow-conductor"
+          ]
+        },
+        "delegates_to": { "type": "string", "minLength": 1 },
+        "workspace": { "type": "string", "minLength": 1 },
+        "branches": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "evidence_sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidence_source" }
+        },
+        "allowed_automation": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "readiness_signals": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/readiness_signal" }
+        },
+        "health": { "$ref": "#/$defs/health_reader_config" }
+      }
+    },
+    "evidence_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "location", "owner"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "location": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 }
+      }
+    },
+    "readiness_signal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "source"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ready", "blocked", "unknown"] },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "health_reader_config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_clean_worktree",
+        "verification_commands",
+        "readiness_files",
+        "require_tags",
+        "allow_network_read",
+        "github_actions"
+      ],
+      "properties": {
+        "require_clean_worktree": { "type": "boolean" },
+        "verification_commands": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "readiness_files": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "require_tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "allow_network_read": { "type": "boolean" },
+        "github_actions": { "type": "boolean" }
+      }
+    }
+  }
+}

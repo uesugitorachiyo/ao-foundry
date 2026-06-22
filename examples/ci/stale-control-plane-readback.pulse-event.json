@@ -1,0 +1,46 @@
+{
+  "schema_version": "ao.foundry.pulse-event.v0.1",
+  "pulse_id": "pulse-stale-control-plane-readback-ci",
+  "status": "blocked",
+  "score": 0,
+  "max_score": 100,
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "goal_id": "ao-foundry-production-readiness",
+  "artifacts": [
+    {
+      "name": "forge_live_attempt",
+      "path": "examples/ci/forge-live-attempt.ready.json",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "schema_version": "ao.foundry.forge-live-attempt.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "control_plane_readback",
+      "path": "examples/ci/control-plane-readback.stale.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "schema_version": "ao.foundry.control-plane-readback.v0.1",
+      "status": "stale"
+    }
+  ],
+  "checks": [
+    {
+      "name": "forge_live_attempt",
+      "status": "pass",
+      "reason": "operator-provided AO Forge live packet is fresh"
+    },
+    {
+      "name": "control_plane_readback",
+      "status": "fail",
+      "reason": "operator-provided control-plane readback receipt is older than 24h; rerun signed smoke before using it as production-readiness evidence"
+    }
+  ],
+  "freshness_summary": {
+    "schema_version": "ao.foundry.pulse-freshness-summary.v0.1",
+    "status": "blocked",
+    "forge_live_packet": "ready",
+    "control_plane_readback": "stale",
+    "explanation": "operator-provided production freshness evidence is stale; rerun signed smoke before treating the pulse as production-ready"
+  },
+  "next_action": "resolve pulse blockers and rerun"
+}

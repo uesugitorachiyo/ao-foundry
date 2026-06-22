@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.goal-run.v0.1",
+  "goal_id": "ao-foundry-production-readiness",
+  "objective": "Keep AO Foundry production readiness moving through public-safe local loops.",
+  "acceptance_criteria": ["Readiness evidence remains current"],
+  "allowed_scope": ["README.md"],
+  "stop_conditions": ["Do not replace AO Forge"],
+  "current_phase": "verification",
+  "next_task": "ao-foundry-bootstrap",
+  "continuation_prompt": "Run Foundry readiness checks before delegating to AO Forge.",
+  "loop_owner": "ao-foundry",
+  "next_action_guard": "Delegate governed implementation through AO Forge.",
+  "last_iteration": {
+    "evidence": [
+      {
+        "label": "readme",
+        "path": "README.md",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  }
+}

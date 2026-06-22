@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-competitive-readiness-audit-v0.1.schema.json",
+  "title": "AO Foundry Competitive Readiness Audit v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "score", "max_score", "categories", "next_actions"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.competitive-readiness-audit.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "max_score": { "const": 100 },
+    "categories": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/category" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "score", "max_score", "checks", "next_actions"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ready", "blocked"] },
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "checks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/check" }
+        },
+        "next_actions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "reason"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "fail"] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

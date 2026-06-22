@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-signed-smoke-ingest-v0.1.schema.json",
+  "title": "AO Foundry signed smoke ingest v0.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "result",
+    "result_sha256",
+    "pulse_event",
+    "forge_live_packet",
+    "control_plane_readback",
+    "explanation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "ao.foundry.signed-smoke-ingest.v0.1" },
+    "status": { "type": "string", "enum": ["ready"] },
+    "result": { "type": "string", "minLength": 1 },
+    "result_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "pulse_event": { "type": "string", "minLength": 1 },
+    "forge_live_packet": { "type": "string", "minLength": 1 },
+    "control_plane_readback": { "type": "string", "minLength": 1 },
+    "explanation": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "ao.foundry.competitive-readiness-audit.v0.1",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "categories": [
+    {
+      "id": "public_safety",
+      "status": "ready",
+      "score": 5,
+      "max_score": 5,
+      "checks": [
+        {
+          "name": "public_files_scan_clean",
+          "status": "pass",
+          "reason": "public safety scan has no matches"
+        }
+      ],
+      "next_actions": []
+    }
+  ],
+  "next_actions": []
+}

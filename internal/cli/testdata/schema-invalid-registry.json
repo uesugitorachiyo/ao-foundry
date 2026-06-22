@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "schema-invalid",
+  "name": "Schema Invalid Registry",
+  "repos": [
+    {
+      "id": "ao-forge",
+      "name": "AO Forge",
+      "role": "executor-everything",
+      "delegates_to": "ao2",
+      "workspace": "../ao-forge",
+      "branches": [],
+      "evidence_sources": [
+        {
+          "kind": "forge-packet",
+          "location": "",
+          "owner": "ao-forge"
+        }
+      ],
+      "allowed_automation": [""],
+      "readiness_signals": [
+        {
+          "name": "forge-tests",
+          "status": "ready",
+          "source": "go test ./..."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "ao2.workcell-evidence.v1",
+  "spec_sha256": "dbe43f0f7681046107ae55af2598558749d5d2636947c86a5d703c61cc7eab92",
+  "status": "passed",
+  "stderr": "",
+  "stdout": "{\n  \"status\": \"succeeded\",\n  \"spent_tokens\": 40,\n  \"spent_usd\": 0.0,\n  \"states\": {\n    \"worker_0\": \"succeeded\",\n    \"worker_1\": \"succeeded\"\n  }\n}\n",
+  "workcell_id": "foundry-ao-foundry-bootstrap-execute"
+}

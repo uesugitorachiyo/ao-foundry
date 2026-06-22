@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-eval-result-v0.1.schema.json",
+  "title": "AO Foundry Eval Result v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scorecard_id", "run_id", "status", "score", "max_score", "threshold", "dimensions", "next_actions"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.eval-result.v0.1" },
+    "scorecard_id": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "score": { "type": "integer", "minimum": 0 },
+    "max_score": { "type": "integer", "minimum": 1 },
+    "threshold": { "type": "integer", "minimum": 1 },
+    "dimensions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dimension" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "score", "max_score", "status", "reason"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "status": { "type": "string", "enum": ["pass", "fail"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "string" }
+      }
+    }
+  }
+}

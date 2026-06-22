@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-forge-live-attempt-v0.1.schema.json",
+  "title": "AO Foundry Forge Live Attempt v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "source", "explanation"],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.forge-live-attempt.v0.1" },
+    "status": { "type": "string", "enum": ["passed", "blocked", "failed", "stale"] },
+    "source": { "type": "string", "minLength": 1 },
+    "packet_schema_version": { "type": "string", "minLength": 1 },
+    "packet_status": { "type": "string", "minLength": 1 },
+    "explanation": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-preflight.v0.1",
+  "status": "unsupported",
+  "workspace": "..",
+  "checks": [],
+  "next_actions": []
+}

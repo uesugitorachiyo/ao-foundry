@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "blocked-local-ao-stack",
+  "name": "Blocked Local AO Stack",
+  "repos": [
+    {
+      "id": "ao-forge",
+      "name": "AO Forge",
+      "role": "factory-brain",
+      "delegates_to": "ao2",
+      "workspace": "../ao-forge",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "forge-packet",
+          "location": "examples/packets/blocked.factory-packet.json",
+          "owner": "ao-forge"
+        }
+      ],
+      "allowed_automation": ["plan", "gate", "run-local"],
+      "readiness_signals": [
+        {
+          "name": "forge-tests",
+          "status": "blocked",
+          "source": "go test ./..."
+        }
+      ]
+    }
+  ]
+}

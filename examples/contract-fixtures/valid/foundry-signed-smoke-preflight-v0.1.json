@@ -1,0 +1,16 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-preflight.v0.1",
+  "status": "ready",
+  "workspace": "..",
+  "checks": [
+    {
+      "name": "ao-forge",
+      "status": "pass",
+      "path": "../ao-forge",
+      "reason": "AO Forge checkout is available."
+    }
+  ],
+  "next_actions": [
+    "run signed control-plane smoke"
+  ]
+}
