@@ -5,7 +5,7 @@
   "objective": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
   "priority": "high",
   "state": "queued",
-  "target_repos": ["ao-foundry", "ao-forge", "ao2", "ao-covenant", "agy-swarms", "ao-conductor"],
+  "target_repos": ["ao-foundry", "ao-forge", "ao2", "ao-covenant", "ao-conductor"],
   "required_delegations": [
     {
       "delegate_to": "ao-forge",

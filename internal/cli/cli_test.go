@@ -86,7 +86,7 @@ func TestStatusSummarizesRegistry(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"AO Foundry", "10 repos", "ao-foundry", "ready: 10"} {
+	for _, want := range []string{"AO Foundry", "10 repos", "ao-foundry", "ready: 9, blocked: 0"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("status output missing %q: %s", want, out)
 		}
@@ -663,7 +663,7 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"repo board: 2 repos status=ready", "ao-foundry", "active-spine", "agy-swarms", "candidate-demote", "next_action="} {
+	for _, want := range []string{"repo board: 2 repos status=ready", "ao-foundry", "active-spine", "agy-swarms", "candidate-demote", "subscription ends", "next_action="} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("board text missing %q: %s", want, out)
 		}

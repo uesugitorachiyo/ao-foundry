@@ -17,11 +17,10 @@ Run the local checks before planning:
 git status --short --branch
 go test ./...
 ../ao2/target/debug/ao2 sdd --help
-uv run --project ../agy-swarms agy-swarms --help
 ```
 
 Preflight should confirm a clean AO Forge worktree, passing Forge tests, an AO2
-SDD command surface, and an available agy-swarms CLI.
+SDD command surface, and no dependency on out-of-scope orchestrator tooling.
 
 ## SDD Plan
 
