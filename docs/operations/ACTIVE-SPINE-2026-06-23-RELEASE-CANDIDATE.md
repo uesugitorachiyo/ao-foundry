@@ -12,8 +12,8 @@ Pulse status: ready
 | Repository | Role | Status | Evidence |
 | --- | --- | --- | --- |
 | AO2 | execution-engine | ready | `npm run release:readiness:static`, `npm run verify`, main CI run 28044688155, Production Readiness Ops run 28041937429, PR #194 merged |
-| AO2 Control Plane | evidence-observer | ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run 28045992781, Production Readiness Ops run 28041937507, PR #66 merged |
-| AO Foundry | operations-factory | ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry contract fixtures validate`, `go run ./cmd/foundry release dry-run --out tmp/release-manifest.json`, `go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json`, main CI run 28048717678, Production Readiness Ops run 28042567314, PR #35 merged |
+| AO2 Control Plane | evidence-observer | ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run 28050638200, Production Readiness Ops run 28051422824, PR #67 merged |
+| AO Foundry | operations-factory | ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry contract fixtures validate`, `go run ./cmd/foundry release dry-run --out tmp/release-manifest.json`, `go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json`, main CI run 28049572884, Production Readiness Ops run 28049664250, PR #36 merged |
 
 ## Gates
 
