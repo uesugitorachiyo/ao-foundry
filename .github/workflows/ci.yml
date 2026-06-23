@@ -34,7 +34,7 @@ jobs:
         run: go test ./...
       - name: JSON fixtures
         shell: bash
-        run: jq empty docs/contracts/*.json examples/**/*.json
+        run: jq empty docs/contracts/*.json examples/**/*.json docs/evidence/pulse/**/*.json
       - name: Public safety scan
         shell: bash
         run: |
