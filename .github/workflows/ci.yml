@@ -46,6 +46,13 @@ jobs:
         run: go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json
       - name: Contract fixture schema validation
         run: go run ./cmd/foundry contract fixtures validate
+      - name: Readiness snapshot parity
+        shell: bash
+        run: |
+          mkdir -p tmp
+          go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json > tmp/readiness-snapshot.md
+          sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md > tmp/readme-readiness-snapshot.md
+          diff -u tmp/readme-readiness-snapshot.md tmp/readiness-snapshot.md
       - name: Freshness regression tests
         shell: bash
         run: go test ./internal/cli -run 'TestPulseRunBlocksStaleForgeLivePacket|TestPulseRunBlocksStaleControlPlaneReadback|TestPulseRunBlocksControlPlaneReadbackDigestMismatch' -v

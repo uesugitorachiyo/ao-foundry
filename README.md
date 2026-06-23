@@ -25,6 +25,7 @@ This first slice provides:
   - `foundry task validate --task <path>`
   - `foundry next --registry <path> --task <path>`
   - `foundry readiness audit --registry <path> --task <path> [--out <path>]`
+  - `foundry readiness snapshot --ledger <path> [--out <markdown>]`
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run --out <dir>`
@@ -60,6 +61,7 @@ go run ./cmd/foundry registry validate --registry examples/registry/local-ao-sta
 go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry next --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json
+go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
@@ -91,19 +93,21 @@ repositories are intentionally excluded from the active registry.
 
 ## Verified Active Stack Snapshot
 
+<!-- foundry:active-stack-readiness:start -->
 Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, CLI build, registry/task validation, repo board |
-| AO Forge | Ready | License policy, GoalRun fixtures, Go tests/vet/build, production-readiness schemas, actionlint |
-| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness `100`, `26/26` gates |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json` |
+| AO Forge | Ready | license policy, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint |
+| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 26/26 gates, main CI run `28001691822` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, main CI run `28001004295` |
-| ao2-control-plane | Ready | License policy, fmt, Python guard tests, Cargo tests/clippy/deny/audit, release build, main CI run `28000068167` |
-| AO Covenant | Ready | AO2-stack policy and trust-boundary docs merged through PR #45 |
+| AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run `28000068167` |
+| AO Covenant | Ready | AO2-stack policy docs, trust-boundary docs, PR #45 merged, main CI run `28002711646` |
 
 The machine-readable source for this snapshot is
 [`examples/readiness/active-stack-readiness.ledger.json`](examples/readiness/active-stack-readiness.ledger.json).
+<!-- foundry:active-stack-readiness:end -->
 
 No active readiness path depends on `ao-operator`, `ao-runtime`,
 `ao-control-plane`, `ao-conductor`, `agy-swarms`, or `codex-cron`.

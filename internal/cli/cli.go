@@ -537,6 +537,32 @@ type RepoBoardEntry struct {
 	NextActions    []string `json:"next_actions"`
 }
 
+type ActiveStackReadinessLedger struct {
+	SchemaVersion         string                           `json:"schema_version"`
+	RegistryID            string                           `json:"registry_id"`
+	GeneratedFromRegistry string                           `json:"generated_from_registry"`
+	LastSweepDate         string                           `json:"last_sweep_date"`
+	Status                string                           `json:"status"`
+	Repositories          []ActiveStackReadinessRepository `json:"repositories"`
+	NextActions           []string                         `json:"next_actions"`
+}
+
+type ActiveStackReadinessRepository struct {
+	ID                   string       `json:"id"`
+	Name                 string       `json:"name"`
+	Role                 string       `json:"role"`
+	Status               string       `json:"status"`
+	CI                   *ReadinessCI `json:"ci,omitempty"`
+	VerificationEvidence []string     `json:"verification_evidence"`
+	Notes                []string     `json:"notes,omitempty"`
+}
+
+type ReadinessCI struct {
+	Status string `json:"status"`
+	RunID  string `json:"run_id,omitempty"`
+	URL    string `json:"url,omitempty"`
+}
+
 type FoundryRun struct {
 	SchemaVersion string           `json:"schema_version"`
 	RunID         string           `json:"run_id"`
@@ -680,6 +706,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry task validate --task <path>")
 	fmt.Fprintln(w, "  foundry next --registry <path> --task <path>")
 	fmt.Fprintln(w, "  foundry readiness audit --registry <path> --task <path> [--out <path>]")
+	fmt.Fprintln(w, "  foundry readiness snapshot --ledger <path> [--out <markdown>]")
 	fmt.Fprintln(w, "  foundry goal validate --goal-run <path>")
 	fmt.Fprintln(w, "  foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
@@ -870,16 +897,28 @@ func runNext(args []string, stdout, stderr io.Writer) int {
 }
 
 func runReadiness(args []string, stdout, stderr io.Writer) int {
-	if len(args) == 0 || args[0] != "audit" {
-		fmt.Fprintln(stderr, "readiness: expected subcommand audit")
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "readiness: expected subcommand audit or snapshot")
 		return 2
 	}
+	switch args[0] {
+	case "audit":
+		return runReadinessAudit(args[1:], stdout, stderr)
+	case "snapshot":
+		return runReadinessSnapshot(args[1:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "readiness: unknown subcommand %q\n", args[0])
+		return 2
+	}
+}
+
+func runReadinessAudit(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("readiness audit", stderr)
 	registryPath := fs.String("registry", "", "registry path")
 	taskPath := fs.String("task", "", "task path")
 	outPath := fs.String("out", "", "audit output path")
 	tracePath := fs.String("trace", "", "trace output path")
-	if !parseFlags(fs, args[1:], stderr) {
+	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
 	audit, err := buildReadinessAudit(*registryPath, *taskPath)
@@ -901,6 +940,32 @@ func runReadiness(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	writeTraceSpan(*tracePath, "foundry", "readiness.audit", "passed", map[string]string{"registry": *registryPath, "task": *taskPath}, []string{*registryPath, *taskPath}, "")
+	return 0
+}
+
+func runReadinessSnapshot(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("readiness snapshot", stderr)
+	ledgerPath := fs.String("ledger", "", "active stack readiness ledger path")
+	outPath := fs.String("out", "", "markdown output path")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	ledger, err := loadActiveStackReadinessLedger(*ledgerPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness: %v\n", err)
+		return 2
+	}
+	snapshot := renderActiveStackReadinessSnapshot(*ledgerPath, ledger)
+	if *outPath != "" {
+		if err := writeTextFile(*outPath, snapshot); err != nil {
+			fmt.Fprintf(stderr, "readiness: write snapshot: %v\n", err)
+			return 2
+		}
+	}
+	if _, err := io.WriteString(stdout, snapshot); err != nil {
+		fmt.Fprintf(stderr, "readiness: write output: %v\n", err)
+		return 2
+	}
 	return 0
 }
 
@@ -2044,6 +2109,26 @@ func loadFoundryRun(path string) (FoundryRun, error) {
 	return run, validateFoundryRun(run)
 }
 
+func loadActiveStackReadinessLedger(path string) (ActiveStackReadinessLedger, error) {
+	var ledger ActiveStackReadinessLedger
+	if strings.TrimSpace(path) == "" {
+		return ledger, errors.New("missing --ledger")
+	}
+	if err := readJSONFile(path, &ledger); err != nil {
+		return ledger, err
+	}
+	if ledger.SchemaVersion != "ao.foundry.active-stack-readiness.v0.1" {
+		return ledger, errors.New("invalid active stack readiness schema_version")
+	}
+	if ledger.RegistryID == "" || ledger.GeneratedFromRegistry == "" || ledger.LastSweepDate == "" || ledger.Status == "" {
+		return ledger, errors.New("active stack readiness ledger requires registry_id, generated_from_registry, last_sweep_date, and status")
+	}
+	if len(ledger.Repositories) == 0 {
+		return ledger, errors.New("active stack readiness ledger requires repositories")
+	}
+	return ledger, nil
+}
+
 func loadEvalScorecard(path string) (EvalScorecard, error) {
 	var scorecard EvalScorecard
 	if path == "" {
@@ -2129,6 +2214,13 @@ func writeJSONFile(path string, value any) error {
 	}
 	defer file.Close()
 	return writeJSON(file, value)
+}
+
+func writeTextFile(path, value string) error {
+	if err := os.MkdirAll(parentDir(path), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(path, []byte(value), 0o644)
 }
 
 func writeJSON(w io.Writer, value any) error {
@@ -2700,6 +2792,57 @@ func buildReadinessAudit(registryPath, taskPath string) (ReadinessAudit, error) 
 
 	audit.finalize()
 	return audit, nil
+}
+
+func renderActiveStackReadinessSnapshot(ledgerPath string, ledger ActiveStackReadinessLedger) string {
+	var b strings.Builder
+	b.WriteString("<!-- foundry:active-stack-readiness:start -->\n")
+	fmt.Fprintf(&b, "Last local sweep: %s.\n\n", ledger.LastSweepDate)
+	b.WriteString("| Repository | Current status | Verification evidence |\n")
+	b.WriteString("| --- | --- | --- |\n")
+	for _, repo := range ledger.Repositories {
+		fmt.Fprintf(&b, "| %s | %s | %s |\n", escapeMarkdownCell(repo.Name), titleStatus(repo.Status), escapeMarkdownCell(formatReadinessEvidence(repo)))
+	}
+	b.WriteString("\n")
+	b.WriteString("The machine-readable source for this snapshot is\n")
+	fmt.Fprintf(&b, "[`%s`](%s).\n", ledgerPath, ledgerPath)
+	b.WriteString("<!-- foundry:active-stack-readiness:end -->\n")
+	return b.String()
+}
+
+func formatReadinessEvidence(repo ActiveStackReadinessRepository) string {
+	evidence := make([]string, 0, len(repo.VerificationEvidence)+1)
+	for _, item := range repo.VerificationEvidence {
+		evidence = append(evidence, formatEvidenceItem(item))
+	}
+	if repo.CI != nil && repo.CI.RunID != "" {
+		evidence = append(evidence, "main CI run `"+repo.CI.RunID+"`")
+	}
+	return strings.Join(evidence, ", ")
+}
+
+func formatEvidenceItem(item string) string {
+	switch {
+	case strings.HasPrefix(item, "go "),
+		strings.HasPrefix(item, "npm "),
+		strings.HasPrefix(item, "cargo "),
+		strings.HasPrefix(item, "python "),
+		strings.HasPrefix(item, "python3 "):
+		return "`" + item + "`"
+	default:
+		return item
+	}
+}
+
+func titleStatus(status string) string {
+	if status == "" {
+		return ""
+	}
+	return strings.ToUpper(status[:1]) + status[1:]
+}
+
+func escapeMarkdownCell(value string) string {
+	return strings.ReplaceAll(value, "|", "\\|")
 }
 
 func readinessCheck(name string, pass bool, reason string) ReadinessCheck {

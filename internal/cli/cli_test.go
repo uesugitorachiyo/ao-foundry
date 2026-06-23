@@ -734,6 +734,22 @@ func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 	}
 }
 
+func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"readiness", "snapshot", "--ledger", "examples/readiness/active-stack-readiness.ledger.json"}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	readme, err := os.ReadFile(repoPath("README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	want := readmeBlock(t, string(readme), "<!-- foundry:active-stack-readiness:start -->", "<!-- foundry:active-stack-readiness:end -->")
+	if stdout.String() != want {
+		t.Fatalf("snapshot output does not match README block\nwant:\n%s\ngot:\n%s", want, stdout.String())
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)
@@ -2659,6 +2675,22 @@ func readPulseArtifactJSON(t *testing.T, artifact map[string]any) map[string]any
 		t.Fatalf("artifact is not JSON: %v", err)
 	}
 	return decoded
+}
+
+func readmeBlock(t *testing.T, text, startMarker, endMarker string) string {
+	t.Helper()
+	start := strings.Index(text, startMarker)
+	if start < 0 {
+		t.Fatalf("README missing start marker %q", startMarker)
+	}
+	end := strings.Index(text, endMarker)
+	if end < 0 {
+		t.Fatalf("README missing end marker %q", endMarker)
+	}
+	if end <= start {
+		t.Fatalf("README marker order is invalid")
+	}
+	return text[start:end+len(endMarker)] + "\n"
 }
 
 func assertPulseFreshnessSummary(t *testing.T, event map[string]any, wantStatus, wantForgeLivePacket, wantControlPlaneReadback string) {
