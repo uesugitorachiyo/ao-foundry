@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28025353263",
-        "Production Readiness Ops run 28025508423",
-        "PR #14 merged",
+        "main CI run 28026152149",
+        "Production Readiness Ops run 28026243635",
+        "PR #16 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
