@@ -50,7 +50,15 @@ require_tool() {
 require_tool gh
 require_tool jq
 
-protection="$(gh api "repos/$REPO/branches/$BRANCH/protection")"
+# Emits mode=limited when the token can read branch metadata but cannot read
+# the full branch protection endpoint.
+mode="full"
+if protection="$(gh api "repos/$REPO/branches/$BRANCH/protection" 2>/tmp/ao-foundry-branch-protection.err)"; then
+  :
+else
+  mode="limited"
+  protection="$(gh api "repos/$REPO/branches/$BRANCH")"
+fi
 
 check_jq() {
   local name="$1"
@@ -62,13 +70,19 @@ check_jq() {
   fi
 }
 
-check_jq "required_status_checks_strict" '.required_status_checks.strict == true'
-check_jq "enforce_admins" '.enforce_admins.enabled == true'
-check_jq "required_linear_history" '.required_linear_history.enabled == true'
-check_jq "allow_force_pushes_disabled" '.allow_force_pushes.enabled == false'
-check_jq "allow_deletions_disabled" '.allow_deletions.enabled == false'
+if [[ "$mode" == "full" ]]; then
+  check_jq "required_status_checks_strict" '.required_status_checks.strict == true'
+  check_jq "enforce_admins" '.enforce_admins.enabled == true'
+  check_jq "required_linear_history" '.required_linear_history.enabled == true'
+  check_jq "allow_force_pushes_disabled" '.allow_force_pushes.enabled == false'
+  check_jq "allow_deletions_disabled" '.allow_deletions.enabled == false'
+  actual_checks="$(printf '%s' "$protection" | jq -r '.required_status_checks.contexts[]?' | sort)"
+else
+  check_jq "branch_protected" '.protected == true'
+  check_jq "required_status_checks_enforced" '.protection.required_status_checks.enforcement_level == "everyone"'
+  actual_checks="$(printf '%s' "$protection" | jq -r '.protection.required_status_checks.contexts[]?' | sort)"
+fi
 
-actual_checks="$(printf '%s' "$protection" | jq -r '.required_status_checks.contexts[]?' | sort)"
 expected_checks="$(printf '%s\n' "${REQUIRED_CHECKS[@]}" | sort)"
 if [[ "$actual_checks" != "$expected_checks" ]]; then
   echo "branch_protection=failed check=required_status_checks" >&2
@@ -80,6 +94,7 @@ if [[ "$actual_checks" != "$expected_checks" ]]; then
 fi
 
 echo "branch_protection=passed"
+echo "mode=$mode"
 echo "repo=$REPO"
 echo "branch=$BRANCH"
 printf 'required_check=%s\n' "${REQUIRED_CHECKS[@]}"
