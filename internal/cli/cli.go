@@ -791,7 +791,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry readiness audit --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry readiness snapshot --ledger <path> [--out <markdown>]")
 	fmt.Fprintln(w, "  foundry readiness evidence-check --ledger <path> --github-runs-report <path> [--check-current-repo]")
-	fmt.Fprintln(w, "  foundry readiness ledger-refresh-proposal --ledger <path> --github-runs-report <path> --out <markdown>")
+	fmt.Fprintln(w, "  foundry readiness ledger-refresh-proposal --ledger <path> --github-runs-report <path> [--out <markdown>] [--apply --readme <path>] [--fail-on-non-current-update]")
 	fmt.Fprintln(w, "  foundry goal validate --goal-run <path>")
 	fmt.Fprintln(w, "  foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
@@ -1101,11 +1101,19 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 	ledgerPath := fs.String("ledger", "", "active stack readiness ledger path")
 	reportPath := fs.String("github-runs-report", "", "active stack GitHub runs report path")
 	outPath := fs.String("out", "", "ledger refresh proposal markdown output path")
+	readmePath := fs.String("readme", "", "README path to refresh when --apply is set")
+	apply := fs.Bool("apply", false, "apply report run IDs to the ledger and README snapshot")
+	failOnNonCurrentUpdate := fs.Bool("fail-on-non-current-update", false, "fail when proposal has update rows outside the current repository")
+	currentRepo := fs.String("current-repo", "ao-foundry", "current repository id")
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
-	if strings.TrimSpace(*outPath) == "" {
+	if strings.TrimSpace(*outPath) == "" && !*apply && !*failOnNonCurrentUpdate {
 		fmt.Fprintln(stderr, "readiness ledger-refresh-proposal: missing --out")
+		return 2
+	}
+	if *apply && strings.TrimSpace(*readmePath) == "" {
+		fmt.Fprintln(stderr, "readiness ledger-refresh-proposal: missing --readme for --apply")
 		return 2
 	}
 	ledger, err := loadActiveStackReadinessLedger(*ledgerPath)
@@ -1118,12 +1126,36 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 		fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: %v\n", err)
 		return 2
 	}
-	proposal := renderActiveStackLedgerRefreshProposal(*ledgerPath, *reportPath, ledger, report)
-	if err := writeTextFile(*outPath, proposal); err != nil {
-		fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: write proposal: %v\n", err)
-		return 2
+	rows := activeStackLedgerRefreshRows(ledger, report)
+	if *failOnNonCurrentUpdate {
+		if problems := nonCurrentUpdateProblems(rows, *currentRepo); len(problems) > 0 {
+			for _, problem := range problems {
+				fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: %s\n", problem)
+			}
+			return 1
+		}
 	}
-	fmt.Fprintf(stdout, "ledger_refresh_proposal=%s\n", *outPath)
+	if *apply {
+		updated, changes := applyActiveStackLedgerRefresh(ledger, report)
+		if err := writeJSONFile(*ledgerPath, updated); err != nil {
+			fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: write ledger: %v\n", err)
+			return 2
+		}
+		if err := refreshReadmeActiveStackSnapshot(*readmePath, *ledgerPath, updated); err != nil {
+			fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: refresh README: %v\n", err)
+			return 2
+		}
+		fmt.Fprintln(stdout, "ledger_refresh_apply=ready")
+		fmt.Fprintf(stdout, "changes=%d\n", len(changes))
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		proposal := renderActiveStackLedgerRefreshProposal(*ledgerPath, *reportPath, rows)
+		if err := writeTextFile(*outPath, proposal); err != nil {
+			fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: write proposal: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "ledger_refresh_proposal=%s\n", *outPath)
+	}
 	return 0
 }
 
@@ -2570,28 +2602,81 @@ func githubRepositoryID(repository string) string {
 	return strings.TrimSpace(parts[len(parts)-1])
 }
 
-func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport) string {
-	var b strings.Builder
+type ActiveStackLedgerRefreshRow struct {
+	Repository string
+	Workflow   string
+	RunID      string
+	Action     string
+	Run        ActiveStackGithubRun
+}
+
+func activeStackLedgerRefreshRows(ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport) []ActiveStackLedgerRefreshRow {
+	var rows []ActiveStackLedgerRefreshRow
 	ledgerRepos := map[string]ActiveStackReadinessRepository{}
 	for _, repo := range ledger.Repositories {
 		ledgerRepos[repo.ID] = repo
 	}
+	for _, repoReport := range report.Repositories {
+		repoID := githubRepositoryID(repoReport.Repository)
+		ledgerRepo, ok := ledgerRepos[repoID]
+		if !ok {
+			rows = append(rows,
+				ledgerRefreshRow(repoID, "ci.yml", repoReport.LatestCI, "missing_repository"),
+				ledgerRefreshRow(repoID, "production-readiness-ops.yml", repoReport.LatestOps, "missing_repository"),
+			)
+			continue
+		}
+		rows = append(rows,
+			classifyLedgerRefreshRow(ledgerRepo, "ci.yml", repoReport.LatestCI),
+			classifyLedgerRefreshRow(ledgerRepo, "production-readiness-ops.yml", repoReport.LatestOps),
+		)
+	}
+	return rows
+}
+
+func classifyLedgerRefreshRow(repo ActiveStackReadinessRepository, workflow string, run ActiveStackGithubRun) ActiveStackLedgerRefreshRow {
+	action := "already_recorded"
+	if run.Status != "completed" || run.Conclusion != "success" {
+		action = "blocked"
+	} else if strings.TrimSpace(run.RunID) == "" || !activeStackRepoEvidenceContainsRun(repo, strings.TrimSpace(run.RunID)) {
+		action = "update"
+	}
+	return ledgerRefreshRow(repo.ID, workflow, run, action)
+}
+
+func ledgerRefreshRow(repoID, workflow string, run ActiveStackGithubRun, action string) ActiveStackLedgerRefreshRow {
+	return ActiveStackLedgerRefreshRow{
+		Repository: repoID,
+		Workflow:   workflow,
+		RunID:      strings.TrimSpace(run.RunID),
+		Action:     action,
+		Run:        run,
+	}
+}
+
+func nonCurrentUpdateProblems(rows []ActiveStackLedgerRefreshRow, currentRepo string) []string {
+	var problems []string
+	for _, row := range rows {
+		if row.Action == "update" && row.Repository != currentRepo {
+			problems = append(problems, fmt.Sprintf("%s %s has update row for run %s", row.Repository, row.Workflow, row.RunID))
+		}
+		if row.Action == "blocked" || row.Action == "missing_repository" {
+			problems = append(problems, fmt.Sprintf("%s %s has %s row", row.Repository, row.Workflow, row.Action))
+		}
+	}
+	return problems
+}
+
+func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, rows []ActiveStackLedgerRefreshRow) string {
+	var b strings.Builder
 	fmt.Fprintln(&b, "# Active Stack Ledger Refresh Proposal")
 	fmt.Fprintln(&b)
 	fmt.Fprintf(&b, "Generated from: %s\n\n", reportPath)
 	fmt.Fprintf(&b, "Ledger target: %s\n\n", ledgerPath)
 	fmt.Fprintln(&b, "| Repository | Workflow | Latest run | Action |")
 	fmt.Fprintln(&b, "| --- | --- | --- | --- |")
-	for _, repoReport := range report.Repositories {
-		repoID := githubRepositoryID(repoReport.Repository)
-		ledgerRepo, ok := ledgerRepos[repoID]
-		if !ok {
-			fmt.Fprintf(&b, "| %s | ci.yml | %s | missing_repository |\n", repoID, strings.TrimSpace(repoReport.LatestCI.RunID))
-			fmt.Fprintf(&b, "| %s | production-readiness-ops.yml | %s | missing_repository |\n", repoID, strings.TrimSpace(repoReport.LatestOps.RunID))
-			continue
-		}
-		writeLedgerRefreshProposalRow(&b, ledgerRepo, "ci.yml", repoReport.LatestCI)
-		writeLedgerRefreshProposalRow(&b, ledgerRepo, "production-readiness-ops.yml", repoReport.LatestOps)
+	for _, row := range rows {
+		fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", row.Repository, row.Workflow, row.RunID, row.Action)
 	}
 	fmt.Fprintln(&b)
 	fmt.Fprintln(&b, "## Apply")
@@ -2602,15 +2687,98 @@ func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, ledge
 	return b.String()
 }
 
-func writeLedgerRefreshProposalRow(b *strings.Builder, repo ActiveStackReadinessRepository, workflow string, run ActiveStackGithubRun) {
-	runID := strings.TrimSpace(run.RunID)
-	action := "already_recorded"
-	if run.Status != "completed" || run.Conclusion != "success" {
-		action = "blocked"
-	} else if runID == "" || !activeStackRepoEvidenceContainsRun(repo, runID) {
-		action = "update"
+func applyActiveStackLedgerRefresh(ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport) (ActiveStackReadinessLedger, []string) {
+	var changes []string
+	for _, repoReport := range report.Repositories {
+		repoID := githubRepositoryID(repoReport.Repository)
+		for i := range ledger.Repositories {
+			if ledger.Repositories[i].ID != repoID {
+				continue
+			}
+			if repoReport.LatestCI.Status == "completed" && repoReport.LatestCI.Conclusion == "success" {
+				if applyCIRefresh(&ledger.Repositories[i], repoReport.LatestCI) {
+					changes = append(changes, repoID+" ci.yml")
+				}
+				if pr := pullRequestNumber(repoReport.LatestCI.DisplayName); pr != "" {
+					if replaceOrAppendEvidence(&ledger.Repositories[i], regexp.MustCompile(`^PR #\d+ merged$`), "PR #"+pr+" merged") {
+						changes = append(changes, repoID+" pr")
+					}
+				}
+			}
+			if repoReport.LatestOps.Status == "completed" && repoReport.LatestOps.Conclusion == "success" {
+				if replaceOrAppendEvidence(&ledger.Repositories[i], regexp.MustCompile(`^Production Readiness Ops run \d+$`), "Production Readiness Ops run "+strings.TrimSpace(repoReport.LatestOps.RunID)) {
+					changes = append(changes, repoID+" production-readiness-ops.yml")
+				}
+			}
+		}
 	}
-	fmt.Fprintf(b, "| %s | %s | %s | %s |\n", repo.ID, workflow, runID, action)
+	return ledger, changes
+}
+
+func applyCIRefresh(repo *ActiveStackReadinessRepository, run ActiveStackGithubRun) bool {
+	runID := strings.TrimSpace(run.RunID)
+	if runID == "" {
+		return false
+	}
+	if repo.ID != "ao-foundry" && repo.CI != nil && repo.CI.RunID != "" {
+		if repo.CI.RunID == runID {
+			return false
+		}
+		repo.CI.RunID = runID
+		return true
+	}
+	return replaceOrAppendEvidence(repo, regexp.MustCompile(`^main CI run \d+$`), "main CI run "+runID)
+}
+
+func replaceOrAppendEvidence(repo *ActiveStackReadinessRepository, pattern *regexp.Regexp, value string) bool {
+	for i, evidence := range repo.VerificationEvidence {
+		if pattern.MatchString(evidence) {
+			if evidence == value {
+				return false
+			}
+			repo.VerificationEvidence[i] = value
+			return true
+		}
+	}
+	repo.VerificationEvidence = append(repo.VerificationEvidence, value)
+	return true
+}
+
+func pullRequestNumber(title string) string {
+	match := regexp.MustCompile(`\(#(\d+)\)`).FindStringSubmatch(title)
+	if len(match) != 2 {
+		return ""
+	}
+	return match[1]
+}
+
+func refreshReadmeActiveStackSnapshot(readmePath, ledgerPath string, ledger ActiveStackReadinessLedger) error {
+	data, err := os.ReadFile(readmePath)
+	if err != nil {
+		return err
+	}
+	snapshot := renderActiveStackReadinessSnapshot(ledgerPath, ledger)
+	updated, err := replaceMarkedBlock(string(data), "<!-- foundry:active-stack-readiness:start -->", "<!-- foundry:active-stack-readiness:end -->", strings.TrimSuffix(snapshot, "\n"))
+	if err != nil {
+		return err
+	}
+	return writeTextFile(readmePath, updated)
+}
+
+func replaceMarkedBlock(text, startMarker, endMarker, replacement string) (string, error) {
+	start := strings.Index(text, startMarker)
+	if start < 0 {
+		return "", fmt.Errorf("missing start marker %q", startMarker)
+	}
+	end := strings.Index(text, endMarker)
+	if end < 0 {
+		return "", fmt.Errorf("missing end marker %q", endMarker)
+	}
+	if end <= start {
+		return "", errors.New("marker order is invalid")
+	}
+	end += len(endMarker)
+	return text[:start] + replacement + text[end:], nil
 }
 
 func validateReleaseCandidateLedger(ledger ReleaseCandidateLedger) error {
