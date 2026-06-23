@@ -1000,6 +1000,89 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
 	}
 }
 
+func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ledger-refresh-proposal.md")
+	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": false,
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-foundry",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999991",
+        "url": "https://github.com/uesugitorachiyo/ao-foundry/actions/runs/99999999991"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999992",
+        "url": "https://github.com/uesugitorachiyo/ao-foundry/actions/runs/99999999992"
+      }
+    },
+    {
+      "repository": "uesugitorachiyo/ao-forge",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017583706"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017685064"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "ledger-refresh-proposal",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ledger_refresh_proposal="+outPath) {
+		t.Fatalf("expected proposal output path, got %q", stdout.String())
+	}
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read proposal: %v", err)
+	}
+	proposal := string(data)
+	for _, want := range []string{
+		"# Active Stack Ledger Refresh Proposal",
+		"Generated from: " + reportPath,
+		"| ao-foundry | ci.yml | 99999999991 | update |",
+		"| ao-foundry | production-readiness-ops.yml | 99999999992 | update |",
+		"| ao-forge | ci.yml | 28017583706 | already_recorded |",
+		"Update examples/readiness/active-stack-readiness.ledger.json",
+		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
+	} {
+		if !strings.Contains(proposal, want) {
+			t.Fatalf("proposal missing %q:\n%s", want, proposal)
+		}
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)
@@ -1509,6 +1592,8 @@ func TestProductionReadinessOpsWorkflowRunsBranchProtectionVerifier(t *testing.T
 		"scripts/verify-branch-protection.sh",
 		"scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
 		"go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
+		"actions/upload-artifact",
+		"active-stack-github-runs-report",
 	} {
 		if !strings.Contains(workflow, want) {
 			t.Fatalf("production readiness ops workflow missing %q", want)
@@ -1600,6 +1685,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"covenant policy spine --json",
 		"covenant.policy-spine-result.v1",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
+		"go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry release candidate notes --ledger examples/readiness/active-spine-release-candidate.ledger.json",
 		"diff -u",
 		"workflow_dispatch signed_smoke=true",

@@ -25,6 +25,12 @@ jobs:
       - name: Collect active-stack GitHub run evidence
         shell: bash
         run: scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
+      - name: Upload active-stack GitHub runs report
+        uses: actions/upload-artifact@v6
+        with:
+          name: active-stack-github-runs-report
+          path: tmp/active-stack-github-runs-report.json
+          if-no-files-found: error
       - name: Enforce active-stack ledger evidence freshness
         shell: bash
         run: go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json
