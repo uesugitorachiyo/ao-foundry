@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28030312346",
-        "Production Readiness Ops run 28030389247",
-        "PR #22 merged",
+        "main CI run 28033034458",
+        "Production Readiness Ops run 28033107461",
+        "PR #25 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -98,7 +98,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28016224096"
+        "run_id": "28034439773"
       },
       "verification_evidence": [
         "license policy",
@@ -110,8 +110,8 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 28027361070",
-        "PR #63 merged"
+        "Production Readiness Ops run 28035142216",
+        "PR #64 merged"
       ]
     },
     {
