@@ -152,7 +152,7 @@ Last local sweep: 2026-06-23.
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, Production Readiness Ops run 28029275150, PR #14 merged, main CI run `28018015778` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, Production Readiness Ops run 28029871033, PR #192 merged, main CI run `28019192996` |
 | AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, active stack handoff readback gate, Production Readiness Ops run 28027361070, PR #63 merged, main CI run `28016224096` |
-| AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28006538855, branch protection verifier, Production Readiness Ops run 28020887257, PR #49 merged, main CI run `28020877698` |
+| AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28032666961, branch protection verifier, Production Readiness Ops run 28032771767, PR #49 merged, main CI run `28020877698` |
 
 Release handoff gates:
 
@@ -160,7 +160,7 @@ Release handoff gates:
 | --- | --- | --- | --- |
 | foundry-release-candidate | Ready | Yes | `go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json`, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json` |
 | forge-release-candidate-handoff | Ready | Yes | `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`, ao-forge main CI run 28031670382, ao-forge Release Preview run 28031669750, ao-forge Production Readiness Ops run 28031808511 |
-| covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28020877698, ao-covenant Release Readiness run 28006538855, ao-covenant Production Readiness Ops run 28020887257 |
+| covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28020877698, ao-covenant Release Readiness run 28032666961, ao-covenant Production Readiness Ops run 28032771767 |
 | signed-smoke-release-gate | Manual Required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, freshness_summary.status=ready, signed_smoke_summary=ready, release_safe=true, tmp/release-promotion.live.json |
 
 The machine-readable source for this snapshot is

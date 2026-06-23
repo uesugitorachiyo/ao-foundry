@@ -126,9 +126,9 @@
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
-        "Release Readiness run 28006538855",
+        "Release Readiness run 28032666961",
         "branch protection verifier",
-        "Production Readiness Ops run 28020887257",
+        "Production Readiness Ops run 28032771767",
         "PR #49 merged"
       ]
     }
@@ -166,8 +166,8 @@
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
           "ao-covenant main CI run 28020877698",
-          "ao-covenant Release Readiness run 28006538855",
-          "ao-covenant Production Readiness Ops run 28020887257"
+          "ao-covenant Release Readiness run 28032666961",
+          "ao-covenant Production Readiness Ops run 28032771767"
         ]
       },
       {
