@@ -890,6 +890,7 @@ func TestActiveStackReadinessLedgerIncludesReleaseHandoffChain(t *testing.T) {
 	required := map[string][]string{
 		"foundry-release-candidate": {
 			"go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+			"go run ./cmd/foundry release candidate active-stack-parity --ledger examples/readiness/active-spine-release-candidate.ledger.json --readiness-ledger examples/readiness/active-stack-readiness.ledger.json",
 		},
 		"forge-release-candidate-handoff": {
 			"forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
@@ -2093,6 +2094,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 	checklist := string(data)
 	for _, want := range []string{
 		"go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+		"go run ./cmd/foundry release candidate active-stack-parity --ledger examples/readiness/active-spine-release-candidate.ledger.json --readiness-ledger examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json",
 		"forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
 		"covenant policy spine --json",
@@ -3052,6 +3054,57 @@ func TestReleaseCandidateNotesRenderPromotionHandoff(t *testing.T) {
 	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
 		if strings.Contains(notes, excluded) {
 			t.Fatalf("release candidate notes contain excluded scope %q:\n%s", excluded, notes)
+		}
+	}
+}
+
+func TestReleaseCandidateActiveStackParityPassesForCurrentLedger(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "candidate", "active-stack-parity",
+		"--ledger", "examples/readiness/active-spine-release-candidate.ledger.json",
+		"--readiness-ledger", "examples/readiness/active-stack-readiness.ledger.json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	for _, want := range []string{
+		"release_candidate_active_stack_parity=ready",
+		"candidate=active-spine-2026-06-23",
+		"repos_checked=3",
+	} {
+		if !strings.Contains(stdout.String(), want) {
+			t.Fatalf("expected stdout to contain %q, got %q", want, stdout.String())
+		}
+	}
+}
+
+func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
+	tmp := t.TempDir()
+	candidatePath := filepath.Join(tmp, "candidate.json")
+	data, err := os.ReadFile(repoPath("examples/readiness/active-spine-release-candidate.ledger.json"))
+	if err != nil {
+		t.Fatalf("read candidate: %v", err)
+	}
+	stale := strings.ReplaceAll(string(data), "main CI run 28034439773", "main CI run 28016224096")
+	if err := os.WriteFile(candidatePath, []byte(stale), 0o644); err != nil {
+		t.Fatalf("write stale candidate: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "candidate", "active-stack-parity",
+		"--ledger", candidatePath,
+		"--readiness-ledger", "examples/readiness/active-stack-readiness.ledger.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned 0, want failure; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	for _, want := range []string{
+		"release candidate active-stack parity: ao2-control-plane missing active-stack evidence \"main CI run 28034439773\"",
+		"release candidate active-stack parity: ao2-control-plane has stale evidence \"main CI run 28016224096\"",
+	} {
+		if !strings.Contains(stderr.String(), want) {
+			t.Fatalf("expected stderr to contain %q, got %q", want, stderr.String())
 		}
 	}
 }

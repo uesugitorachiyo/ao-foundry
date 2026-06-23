@@ -858,6 +858,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry release dry-run --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release handoff --candidate <path> --signed-smoke-summary <path> --promotion-out <path> --notes-out <markdown> --manifest-out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release candidate validate --ledger <path>")
+	fmt.Fprintln(w, "  foundry release candidate active-stack-parity --ledger <path> --readiness-ledger <path>")
 	fmt.Fprintln(w, "  foundry release candidate notes --ledger <path> --promotion <path> --out <markdown>")
 	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
@@ -2042,7 +2043,7 @@ func runReleaseHandoff(args []string, stdout, stderr io.Writer) int {
 
 func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "release candidate: expected subcommand validate or notes")
+		fmt.Fprintln(stderr, "release candidate: expected subcommand validate, active-stack-parity, or notes")
 		return 2
 	}
 	switch args[0] {
@@ -2063,6 +2064,34 @@ func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
 		if gate, ok := releaseCandidateGateByName(ledger, "signed_smoke_release_gate"); ok {
 			fmt.Fprintf(stdout, "signed_smoke=%s\n", gate.Status)
 		}
+		return 0
+	case "active-stack-parity":
+		fs := newFlagSet("release candidate active-stack-parity", stderr)
+		ledgerPath := fs.String("ledger", "", "release candidate ledger path")
+		readinessLedgerPath := fs.String("readiness-ledger", "", "active-stack readiness ledger path")
+		if !parseFlags(fs, args[1:], stderr) {
+			return 2
+		}
+		candidate, err := loadReleaseCandidateLedger(*ledgerPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release candidate active-stack parity: %v\n", err)
+			return 2
+		}
+		readiness, err := loadActiveStackReadinessLedger(*readinessLedgerPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release candidate active-stack parity: %v\n", err)
+			return 2
+		}
+		issues, reposChecked := checkReleaseCandidateActiveStackParity(candidate, readiness)
+		if len(issues) > 0 {
+			for _, issue := range issues {
+				fmt.Fprintf(stderr, "release candidate active-stack parity: %s\n", issue)
+			}
+			return 1
+		}
+		fmt.Fprintln(stdout, "release_candidate_active_stack_parity=ready")
+		fmt.Fprintf(stdout, "candidate=%s\n", candidate.CandidateID)
+		fmt.Fprintf(stdout, "repos_checked=%d\n", reposChecked)
 		return 0
 	case "notes":
 		fs := newFlagSet("release candidate notes", stderr)
@@ -3221,6 +3250,93 @@ func validateReleaseCandidateLedger(ledger ReleaseCandidateLedger) error {
 		return errors.New("signed_smoke_release_gate must be required before promotion")
 	}
 	return nil
+}
+
+func checkReleaseCandidateActiveStackParity(candidate ReleaseCandidateLedger, readiness ActiveStackReadinessLedger) ([]string, int) {
+	readinessRepos := map[string]ActiveStackReadinessRepository{}
+	for _, repo := range readiness.Repositories {
+		readinessRepos[repo.ID] = repo
+	}
+	var issues []string
+	reposChecked := 0
+	for _, candidateRepo := range candidate.ActiveSpine {
+		readinessRepo, ok := readinessRepos[candidateRepo.ID]
+		if !ok {
+			issues = append(issues, fmt.Sprintf("%s missing from active-stack readiness ledger", candidateRepo.ID))
+			continue
+		}
+		reposChecked++
+		required := releaseCandidateRequiredActiveStackEvidence(readinessRepo)
+		for _, requiredEvidence := range required {
+			if !releaseCandidateEvidenceContains(candidateRepo.Evidence, requiredEvidence) {
+				issues = append(issues, fmt.Sprintf("%s missing active-stack evidence %q", candidateRepo.ID, requiredEvidence))
+			}
+			for _, staleEvidence := range releaseCandidateStaleEvidenceFor(candidateRepo.Evidence, requiredEvidence) {
+				issues = append(issues, fmt.Sprintf("%s has stale evidence %q", candidateRepo.ID, staleEvidence))
+			}
+		}
+	}
+	sort.Strings(issues)
+	return issues, reposChecked
+}
+
+func releaseCandidateRequiredActiveStackEvidence(repo ActiveStackReadinessRepository) []string {
+	var required []string
+	seen := map[string]bool{}
+	add := func(evidence string) {
+		evidence = strings.TrimSpace(evidence)
+		if evidence == "" || seen[evidence] {
+			return
+		}
+		seen[evidence] = true
+		required = append(required, evidence)
+	}
+	if repo.CI != nil && strings.TrimSpace(repo.CI.RunID) != "" {
+		add("main CI run " + strings.TrimSpace(repo.CI.RunID))
+	}
+	for _, evidence := range repo.VerificationEvidence {
+		if releaseCandidateEvidenceKind(evidence) != "" {
+			add(evidence)
+		}
+	}
+	return required
+}
+
+func releaseCandidateEvidenceContains(evidence []string, want string) bool {
+	for _, item := range evidence {
+		if item == want {
+			return true
+		}
+	}
+	return false
+}
+
+func releaseCandidateStaleEvidenceFor(candidateEvidence []string, requiredEvidence string) []string {
+	requiredKind := releaseCandidateEvidenceKind(requiredEvidence)
+	if requiredKind == "" {
+		return nil
+	}
+	var stale []string
+	for _, evidence := range candidateEvidence {
+		if releaseCandidateEvidenceKind(evidence) == requiredKind && evidence != requiredEvidence {
+			stale = append(stale, evidence)
+		}
+	}
+	return stale
+}
+
+func releaseCandidateEvidenceKind(evidence string) string {
+	evidence = strings.TrimSpace(evidence)
+	switch {
+	case regexp.MustCompile(`^main CI run [0-9]+$`).MatchString(evidence):
+		return "main-ci"
+	case regexp.MustCompile(`^Production Readiness Ops run [0-9]+$`).MatchString(evidence):
+		return "production-readiness-ops"
+	case regexp.MustCompile(`^PR #[0-9]+ merged$`).MatchString(evidence):
+		return "merged-pr"
+	default:
+		return ""
+	}
 }
 
 func releaseCandidateGateByName(ledger ReleaseCandidateLedger, name string) (ReleaseCandidateGate, bool) {
