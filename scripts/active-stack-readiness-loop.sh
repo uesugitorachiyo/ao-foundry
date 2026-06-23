@@ -17,7 +17,7 @@ Runs the local-only active stack readiness loop:
   registry validate
   readiness snapshot README parity
   repo board
-  release candidate validate
+  release handoff
   loop preflight
 EOF
 }
@@ -112,9 +112,14 @@ check_readiness_snapshot_parity
 run_check "repo_board" \
   "active sibling portfolio is ready" \
   go run ./cmd/foundry repo board --registry "$REGISTRY" --json
-run_check "release_candidate_validate" \
-  "active-spine release candidate ledger validates" \
-  go run ./cmd/foundry release candidate validate --ledger "$RELEASE_CANDIDATE_LEDGER"
+run_check "release_handoff" \
+  "active-spine release handoff validates candidate, promotion, notes, and manifest" \
+  go run ./cmd/foundry release handoff \
+    --candidate "$RELEASE_CANDIDATE_LEDGER" \
+    --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json \
+    --promotion-out "$TMPDIR/release-promotion.fixture.json" \
+    --notes-out "$TMPDIR/release-candidate.md" \
+    --manifest-out "$TMPDIR/release-manifest.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

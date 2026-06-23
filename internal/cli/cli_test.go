@@ -689,7 +689,7 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 		"registry validate",
 		"readiness snapshot",
 		"repo board",
-		"release candidate validate",
+		"release handoff",
 		"loop preflight",
 		"first_failing_check",
 	} {
@@ -731,6 +731,7 @@ func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testin
 		"uesugitorachiyo/ao-covenant",
 		"latest_ci",
 		"latest_ops",
+		"readiness evidence-check",
 	} {
 		if !strings.Contains(scriptText, want) {
 			t.Fatalf("active stack GitHub runs report script missing %q", want)
@@ -948,6 +949,52 @@ func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
 		if !strings.Contains(stdout.String(), required) {
 			t.Fatalf("snapshot missing release handoff detail %q:\n%s", required, stdout.String())
 		}
+	}
+}
+
+func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
+	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-forge",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999999",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/99999999999"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017685064",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28017685064"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "evidence-check",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for stale run evidence; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "ao-forge latest_ci run 99999999999 is not recorded") {
+		t.Fatalf("expected stale ao-forge CI evidence error, got %q", stderr.String())
 	}
 }
 
@@ -1429,6 +1476,7 @@ func TestCIWorkflowRunsPulseSmoke(t *testing.T) {
 	workflow := string(data)
 	for _, want := range []string{
 		"go run ./cmd/foundry contract fixtures validate",
+		"go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json",
 		"go test ./internal/cli -run 'TestPulseRunBlocksStaleForgeLivePacket|TestPulseRunBlocksStaleControlPlaneReadback|TestPulseRunBlocksControlPlaneReadbackDigestMismatch' -v",
 		"go test ./internal/cli -run TestSignedSmokeFreshnessCIFixtureValidates -v",
 		"go test ./internal/cli -run TestStaleControlPlaneReadbackCIFixtureValidates -v",
@@ -1457,6 +1505,8 @@ func TestProductionReadinessOpsWorkflowRunsBranchProtectionVerifier(t *testing.T
 		"cron:",
 		"GH_TOKEN: ${{ github.token }}",
 		"scripts/verify-branch-protection.sh",
+		"scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
+		"go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
 	} {
 		if !strings.Contains(workflow, want) {
 			t.Fatalf("production readiness ops workflow missing %q", want)
@@ -1543,6 +1593,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 	checklist := string(data)
 	for _, want := range []string{
 		"go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+		"go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json",
 		"forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
 		"covenant policy spine --json",
 		"covenant.policy-spine-result.v1",
@@ -2499,6 +2550,49 @@ func TestReleaseCandidateNotesRenderPromotionHandoff(t *testing.T) {
 		if strings.Contains(notes, excluded) {
 			t.Fatalf("release candidate notes contain excluded scope %q:\n%s", excluded, notes)
 		}
+	}
+}
+
+func TestReleaseHandoffRunsCandidatePromotionNotesAndManifest(t *testing.T) {
+	outDir := t.TempDir()
+	promotionPath := filepath.Join(outDir, "release-promotion.json")
+	notesPath := filepath.Join(outDir, "release-candidate.md")
+	manifestPath := filepath.Join(outDir, "release-manifest.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "handoff",
+		"--candidate", "examples/readiness/active-spine-release-candidate.ledger.json",
+		"--signed-smoke-summary", "examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json",
+		"--promotion-out", promotionPath,
+		"--notes-out", notesPath,
+		"--manifest-out", manifestPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	for _, want := range []string{
+		"release_handoff=ready",
+		"candidate=active-spine-2026-06-23",
+		"release_safe=true",
+		"release_promotion=" + promotionPath,
+		"release_candidate_notes=" + notesPath,
+		"release_manifest=" + manifestPath,
+	} {
+		if !strings.Contains(stdout.String(), want) {
+			t.Fatalf("release handoff stdout missing %q: %s", want, stdout.String())
+		}
+	}
+	for _, path := range []string{promotionPath, notesPath, manifestPath} {
+		if _, err := os.Stat(path); err != nil {
+			t.Fatalf("expected release handoff artifact %s: %v", path, err)
+		}
+	}
+	notes, err := os.ReadFile(notesPath)
+	if err != nil {
+		t.Fatalf("read notes: %v", err)
+	}
+	if !strings.Contains(string(notes), "Release safe: true") || !strings.Contains(string(notes), "Signed smoke pulse: pulse-signed-smoke") {
+		t.Fatalf("release handoff notes missing promotion evidence:\n%s", string(notes))
 	}
 }
 

@@ -26,7 +26,10 @@ This first slice provides:
   - `foundry next --registry <path> --task <path>`
   - `foundry readiness audit --registry <path> --task <path> [--out <path>]`
   - `foundry readiness snapshot --ledger <path> [--out <markdown>]`
+  - `foundry readiness evidence-check --ledger <path> --github-runs-report <path>`
+  - `foundry release handoff --candidate <path> --signed-smoke-summary <path> --promotion-out <path> --notes-out <markdown> --manifest-out <manifest.json>`
   - `foundry release candidate validate --ledger <path>`
+  - `foundry release candidate notes --ledger <path> --promotion <path> --out <markdown>`
   - `foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>`
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
@@ -66,6 +69,7 @@ go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack
 go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json
 go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json
 go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json
+go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
@@ -108,7 +112,10 @@ Use `scripts/active-stack-github-runs-report.sh` after each readiness PR merge t
 collect the latest successful `ci.yml` and `production-readiness-ops.yml` run IDs
 for the six active repositories. The script is read-only, uses `gh run list`,
 and writes `ao.foundry.active-stack-github-runs-report.v0.1` JSON for ledger
-refreshes.
+refreshes. Add `--ledger examples/readiness/active-stack-readiness.ledger.json
+--enforce-ledger` to fail when sibling repository run evidence is newer than the
+ledger records; Foundry's own latest run is skipped by default to avoid a
+self-referential main-branch gate.
 
 ## Verified Active Stack Snapshot
 
@@ -117,7 +124,7 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, main CI run 28022111281, Production Readiness Ops run 28022217985, PR #8 merged, signed-smoke release promotion release_safe=true |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, main CI run 28022687894, Production Readiness Ops run 28022791102, PR #9 merged, signed-smoke release promotion release_safe=true |
 | AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28011603944, Production Readiness Ops run 28017685064, PR #129 merged, main CI run `28017583706` |
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, Production Readiness Ops run 28018093029, PR #14 merged, main CI run `28018015778` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, Production Readiness Ops run 28019892957, PR #192 merged, main CI run `28019192996` |
@@ -128,7 +135,7 @@ Release handoff gates:
 
 | Gate | Current status | Required before promotion | Evidence |
 | --- | --- | --- | --- |
-| foundry-release-candidate | Ready | Yes | `go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json` |
+| foundry-release-candidate | Ready | Yes | `go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json`, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json` |
 | forge-release-candidate-handoff | Ready | Yes | `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`, ao-forge main CI run 28017583706, ao-forge Release Preview run 28011603944, ao-forge Production Readiness Ops run 28017685064 |
 | covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28020877698, ao-covenant Release Readiness run 28006538855, ao-covenant Production Readiness Ops run 28020887257 |
 | signed-smoke-release-gate | Manual Required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, freshness_summary.status=ready, signed_smoke_summary=ready, release_safe=true, tmp/release-promotion.live.json |
