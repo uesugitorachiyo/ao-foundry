@@ -3,7 +3,7 @@
 Status: ready
 
 Release safe: true
-Signed smoke pulse: pulse-signed-smoke
+Signed smoke pulse: pulse-bf475cb4e3a8
 Signed smoke summary: ready
 Pulse status: ready
 

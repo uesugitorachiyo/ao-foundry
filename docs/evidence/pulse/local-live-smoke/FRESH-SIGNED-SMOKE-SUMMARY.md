@@ -5,6 +5,8 @@ that is safe to keep in public repository evidence.
 
 ## Result
 
+- checked_at=2026-06-23T20:41:41Z
+- signed_smoke_pulse_id=pulse-bf475cb4e3a8
 - preflight=ready
 - factory_packet=passed
 - pulse_status=ready
@@ -15,6 +17,7 @@ that is safe to keep in public repository evidence.
 - signed_smoke_summary=ready
 - release_promotion=ready
 - release_safe=true
+- live_handoff=ready
 
 ## Evidence
 

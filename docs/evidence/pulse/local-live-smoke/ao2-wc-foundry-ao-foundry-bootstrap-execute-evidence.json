@@ -3,6 +3,6 @@
   "spec_sha256": "87ce15fd64aeb488f49e9492b59c04b6ff8dc2c8cbe003cd6c5b351dc23a1dd8",
   "status": "passed",
   "stderr": "",
-  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-a4b30137e1ad\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-a4b30137e1ad-sdd-run.yaml\nrun_id=run-6e206cb6-e4be-4d21-b41b-da32813bda0e\nstatus=Rejected\nevidence_pack=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/sdd-task-graph.json\n",
+  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-a4b30137e1ad\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-a4b30137e1ad-sdd-run.yaml\nrun_id=run-88290306-fb06-4b1c-8168-79b3c2ed2131\nstatus=Rejected\nevidence_pack=../ao-foundry/.ao2/runs/run-88290306-fb06-4b1c-8168-79b3c2ed2131/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-88290306-fb06-4b1c-8168-79b3c2ed2131/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-88290306-fb06-4b1c-8168-79b3c2ed2131/sdd-task-graph.json\n",
   "workcell_id": "foundry-ao-foundry-bootstrap-execute"
 }

@@ -30,9 +30,9 @@ Create the first public-safe AO Foundry SDD package, contracts, examples, minima
 | factory plan | ao.forge.factory-plan.v0.1 | planned | docs/evidence/pulse/local-live-smoke/factory-plan.json | bd89963be8fb11489f33de20fc0a65518e06596a6d1c88c3de3fecc8e92ba46e |
 | covenant policy decision | ao.forge.covenant-gate-result.v0.1 | allowed | docs/evidence/pulse/local-live-smoke/gate-result.json | 061fe1d4147de58d2ba236542a768b3294cb576f66be75b14e558825ac77725d |
 | ao2 run summary | ao2.run/v1 | accepted | docs/evidence/pulse/local-live-smoke/ao2-run-summary.json | db125c3b38ebd2dad097cd207857ded3ecb57ea9349a63106bc39c519290617a |
-| workcell foundry-ao-foundry-bootstrap-execute evidence | ao2.workcell-evidence.v1 | passed | docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-execute-evidence.json | dda6871472f0b9f89d1bb8833c873bcb5567ece2f5df4409b654830dc3f73aad |
-| workcell foundry-ao-foundry-bootstrap-verify evidence | ao2.workcell-evidence.v1 | passed | docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-verify-evidence.json | ed642052985914218f68a222680a08060b9412bd08fe621696fe9dff1df38b77 |
-| control plane readback receipt | ao2.cp-ingest-receipt.v1 | passed | docs/evidence/pulse/local-live-smoke/control-plane-receipt.json | d928a86ebc09b821bc9ee8842941947fdb94e166c8d3b6d0d7d22c1d63fc185f |
+| workcell foundry-ao-foundry-bootstrap-execute evidence | ao2.workcell-evidence.v1 | passed | docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-execute-evidence.json | 72bd9121c81f9d49fd1c567adabf647463e9a0498d8ee09da7408339d25106a2 |
+| workcell foundry-ao-foundry-bootstrap-verify evidence | ao2.workcell-evidence.v1 | passed | docs/evidence/pulse/local-live-smoke/ao2-wc-foundry-ao-foundry-bootstrap-verify-evidence.json | 9aca1d1a01c5cc3de3675dd861c4f4e34746b4a0d7a6d16612240d0eebb4f6b5 |
+| control plane readback receipt | ao2.cp-ingest-receipt.v1 | passed | docs/evidence/pulse/local-live-smoke/control-plane-receipt.json | 0d099fe8df108985fba91af5b6059b68ccbe7c162fdbbe624d08bb72d4871109 |
 
 ## Trust Boundary
 
