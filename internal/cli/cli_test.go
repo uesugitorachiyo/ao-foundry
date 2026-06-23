@@ -726,6 +726,8 @@ func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
 	for _, want := range []string{
 		"gh api",
 		"branches/$BRANCH/protection",
+		"branches/$BRANCH\"",
+		"mode=limited",
 		"test (ubuntu-latest)",
 		"test (macos-latest)",
 		"test (windows-latest)",

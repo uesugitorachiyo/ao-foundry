@@ -24,3 +24,10 @@ push, merge, edit repository settings, or mutate branch protection.
 The same verifier also runs from
 `.github/workflows/production-readiness-ops.yml` on manual dispatch and a daily
 schedule, using the repository-scoped `GITHUB_TOKEN` as `GH_TOKEN`.
+
+When the token can read the full branch protection endpoint, the verifier runs in
+`mode=full` and checks strict status checks, admin enforcement, linear history,
+force-push protection, deletion protection, and required check names. When
+GitHub Actions restricts the built-in token from that endpoint, the verifier
+falls back to `mode=limited` through branch metadata and still checks that
+`main` is protected for everyone with the required CI matrix contexts.
