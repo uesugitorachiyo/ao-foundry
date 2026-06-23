@@ -2130,6 +2130,75 @@ func TestReleaseDryRunExcludesRuntimeScratchAndEvidence(t *testing.T) {
 	}
 }
 
+func TestReleaseCandidateLedgerValidatesActiveSpine(t *testing.T) {
+	ledgerPath := "examples/readiness/active-spine-release-candidate.ledger.json"
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"release", "candidate", "validate", "--ledger", ledgerPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	for _, want := range []string{
+		"release_candidate=active-spine-2026-06-23",
+		"status=ready",
+		"repos=3",
+		"signed_smoke=manual_required",
+	} {
+		if !strings.Contains(stdout.String(), want) {
+			t.Fatalf("expected stdout to contain %q, got %q", want, stdout.String())
+		}
+	}
+
+	schema, err := readArbitraryJSON(repoPath("docs/contracts/foundry-release-candidate-v0.1.schema.json"))
+	if err != nil {
+		t.Fatalf("read schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("schema root is not object")
+	}
+	ledger, err := readArbitraryJSON(repoPath(ledgerPath))
+	if err != nil {
+		t.Fatalf("read ledger: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, ledger, "$"); err != nil {
+		t.Fatalf("release candidate ledger should satisfy schema: %v", err)
+	}
+	ledgerObject, ok := ledger.(map[string]any)
+	if !ok {
+		t.Fatalf("ledger root is not object")
+	}
+	repos, ok := ledgerObject["active_spine"].([]any)
+	if !ok {
+		t.Fatalf("active_spine is not an array")
+	}
+	gotRepos := map[string]bool{}
+	for _, rawRepo := range repos {
+		repo, ok := rawRepo.(map[string]any)
+		if !ok {
+			t.Fatalf("active_spine item is not object: %#v", rawRepo)
+		}
+		id, _ := repo["id"].(string)
+		gotRepos[id] = true
+		if repo["status"] != "ready" {
+			t.Fatalf("repo %s status = %v, want ready", id, repo["status"])
+		}
+	}
+	for _, wantRepo := range []string{"ao2", "ao2-control-plane", "ao-foundry"} {
+		if !gotRepos[wantRepo] {
+			t.Fatalf("active spine missing repo %s: %#v", wantRepo, gotRepos)
+		}
+	}
+	if len(gotRepos) != 3 {
+		t.Fatalf("active spine repo count = %d, want 3: %#v", len(gotRepos), gotRepos)
+	}
+	renderedLedger := fmt.Sprintf("%v", ledgerObject)
+	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(renderedLedger, excluded) {
+			t.Fatalf("release candidate ledger should exclude out-of-scope repo %s", excluded)
+		}
+	}
+}
+
 func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 	outDir := t.TempDir()
 	var stdout, stderr bytes.Buffer

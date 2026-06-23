@@ -1,0 +1,23 @@
+{
+  "schema_version": "invalid",
+  "candidate_id": "active-spine-2026-06-23",
+  "status": "ready",
+  "active_spine": [
+    {
+      "id": "ao2",
+      "name": "AO2",
+      "role": "execution-engine",
+      "status": "ready",
+      "evidence": ["npm run verify"]
+    }
+  ],
+  "gates": [
+    {
+      "name": "signed_smoke_release_gate",
+      "status": "manual_required",
+      "required_before_promotion": true,
+      "evidence": ["docs/operations/SIGNED-SMOKE-RELEASE-GATE.md"]
+    }
+  ],
+  "next_actions": ["Run signed-smoke workflow before release promotion"]
+}

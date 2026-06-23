@@ -253,6 +253,30 @@ type ReleaseFileEntry struct {
 	SHA256 string `json:"sha256"`
 }
 
+type ReleaseCandidateLedger struct {
+	SchemaVersion string                 `json:"schema_version"`
+	CandidateID   string                 `json:"candidate_id"`
+	Status        string                 `json:"status"`
+	ActiveSpine   []ReleaseCandidateRepo `json:"active_spine"`
+	Gates         []ReleaseCandidateGate `json:"gates"`
+	NextActions   []string               `json:"next_actions"`
+}
+
+type ReleaseCandidateRepo struct {
+	ID       string   `json:"id"`
+	Name     string   `json:"name"`
+	Role     string   `json:"role"`
+	Status   string   `json:"status"`
+	Evidence []string `json:"evidence"`
+}
+
+type ReleaseCandidateGate struct {
+	Name                    string   `json:"name"`
+	Status                  string   `json:"status"`
+	RequiredBeforePromotion bool     `json:"required_before_promotion"`
+	Evidence                []string `json:"evidence"`
+}
+
 type CompetitiveReadinessAudit struct {
 	SchemaVersion string                     `json:"schema_version"`
 	Status        string                     `json:"status"`
@@ -729,6 +753,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry demo script --out <markdown>")
 	fmt.Fprintln(w, "  foundry release manifest --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release dry-run --out <manifest.json>")
+	fmt.Fprintln(w, "  foundry release candidate validate --ledger <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
 	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--signed-smoke-result <path>] --out <dir>")
@@ -1641,7 +1666,7 @@ func runDemo(args []string, stdout, stderr io.Writer) int {
 
 func runRelease(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "release: expected subcommand manifest or dry-run")
+		fmt.Fprintln(stderr, "release: expected subcommand manifest, dry-run, candidate, or validate-manifest")
 		return 2
 	}
 	switch args[0] {
@@ -1679,8 +1704,40 @@ func runRelease(args []string, stdout, stderr io.Writer) int {
 		}
 		fmt.Fprintf(stdout, "release manifest valid: %s\n", *manifestPath)
 		return 0
+	case "candidate":
+		return runReleaseCandidate(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "release: unknown subcommand %q\n", args[0])
+		return 2
+	}
+}
+
+func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "release candidate: expected subcommand validate")
+		return 2
+	}
+	switch args[0] {
+	case "validate":
+		fs := newFlagSet("release candidate validate", stderr)
+		ledgerPath := fs.String("ledger", "", "release candidate ledger path")
+		if !parseFlags(fs, args[1:], stderr) {
+			return 2
+		}
+		ledger, err := loadReleaseCandidateLedger(*ledgerPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release candidate: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "release_candidate=%s\n", ledger.CandidateID)
+		fmt.Fprintf(stdout, "status=%s\n", ledger.Status)
+		fmt.Fprintf(stdout, "repos=%d\n", len(ledger.ActiveSpine))
+		if gate, ok := releaseCandidateGateByName(ledger, "signed_smoke_release_gate"); ok {
+			fmt.Fprintf(stdout, "signed_smoke=%s\n", gate.Status)
+		}
+		return 0
+	default:
+		fmt.Fprintf(stderr, "release candidate: unknown subcommand %q\n", args[0])
 		return 2
 	}
 }
@@ -2127,6 +2184,106 @@ func loadActiveStackReadinessLedger(path string) (ActiveStackReadinessLedger, er
 		return ledger, errors.New("active stack readiness ledger requires repositories")
 	}
 	return ledger, nil
+}
+
+func loadReleaseCandidateLedger(path string) (ReleaseCandidateLedger, error) {
+	var ledger ReleaseCandidateLedger
+	if strings.TrimSpace(path) == "" {
+		return ledger, errors.New("missing --ledger")
+	}
+	if err := readJSONFile(path, &ledger); err != nil {
+		return ledger, err
+	}
+	return ledger, validateReleaseCandidateLedger(ledger)
+}
+
+func validateReleaseCandidateLedger(ledger ReleaseCandidateLedger) error {
+	if ledger.SchemaVersion != "ao.foundry.release-candidate.v0.1" {
+		return errors.New("invalid release candidate schema_version")
+	}
+	if strings.TrimSpace(ledger.CandidateID) == "" {
+		return errors.New("release candidate requires candidate_id")
+	}
+	if ledger.Status != "ready" {
+		return errors.New("release candidate status must be ready")
+	}
+	expectedRepos := map[string]bool{
+		"ao2":               false,
+		"ao2-control-plane": false,
+		"ao-foundry":        false,
+	}
+	if len(ledger.ActiveSpine) != len(expectedRepos) {
+		return fmt.Errorf("release candidate active spine must include exactly %d repositories", len(expectedRepos))
+	}
+	for _, repo := range ledger.ActiveSpine {
+		if _, ok := expectedRepos[repo.ID]; !ok {
+			return fmt.Errorf("release candidate includes non-spine repository %q", repo.ID)
+		}
+		if expectedRepos[repo.ID] {
+			return fmt.Errorf("release candidate duplicates repository %q", repo.ID)
+		}
+		expectedRepos[repo.ID] = true
+		if strings.TrimSpace(repo.Name) == "" || strings.TrimSpace(repo.Role) == "" {
+			return fmt.Errorf("release candidate repository %q requires name and role", repo.ID)
+		}
+		if repo.Status != "ready" {
+			return fmt.Errorf("release candidate repository %q must be ready", repo.ID)
+		}
+		if len(repo.Evidence) == 0 {
+			return fmt.Errorf("release candidate repository %q requires evidence", repo.ID)
+		}
+		for _, evidence := range repo.Evidence {
+			if strings.TrimSpace(evidence) == "" {
+				return fmt.Errorf("release candidate repository %q has blank evidence", repo.ID)
+			}
+		}
+	}
+	for repoID, seen := range expectedRepos {
+		if !seen {
+			return fmt.Errorf("release candidate missing repository %q", repoID)
+		}
+	}
+	if len(ledger.Gates) == 0 {
+		return errors.New("release candidate requires gates")
+	}
+	for _, gate := range ledger.Gates {
+		if strings.TrimSpace(gate.Name) == "" {
+			return errors.New("release candidate gate requires name")
+		}
+		switch gate.Status {
+		case "ready", "manual_required", "blocked":
+		default:
+			return fmt.Errorf("release candidate gate %q has invalid status %q", gate.Name, gate.Status)
+		}
+		if len(gate.Evidence) == 0 {
+			return fmt.Errorf("release candidate gate %q requires evidence", gate.Name)
+		}
+		for _, evidence := range gate.Evidence {
+			if strings.TrimSpace(evidence) == "" {
+				return fmt.Errorf("release candidate gate %q has blank evidence", gate.Name)
+			}
+		}
+	}
+	signedSmokeGate, ok := releaseCandidateGateByName(ledger, "signed_smoke_release_gate")
+	if !ok {
+		return errors.New("release candidate requires signed_smoke_release_gate")
+	}
+	if signedSmokeGate.Status != "manual_required" {
+		return errors.New("signed_smoke_release_gate must be manual_required until promotion evidence is attached")
+	}
+	if !signedSmokeGate.RequiredBeforePromotion {
+		return errors.New("signed_smoke_release_gate must be required before promotion")
+	}
+	return nil
+}
+
+func releaseCandidateGateByName(ledger ReleaseCandidateLedger, name string) (ReleaseCandidateGate, bool) {
+	for _, gate := range ledger.Gates {
+		if gate.Name == name {
+			return gate, true
+		}
+	}
+	return ReleaseCandidateGate{}, false
 }
 
 func loadEvalScorecard(path string) (EvalScorecard, error) {
@@ -2806,6 +2963,8 @@ func renderActiveStackReadinessSnapshot(ledgerPath string, ledger ActiveStackRea
 	b.WriteString("\n")
 	b.WriteString("The machine-readable source for this snapshot is\n")
 	fmt.Fprintf(&b, "[`%s`](%s).\n", ledgerPath, ledgerPath)
+	b.WriteString("The AO2 active-spine release candidate ledger is\n")
+	b.WriteString("[`examples/readiness/active-spine-release-candidate.ledger.json`](examples/readiness/active-spine-release-candidate.ledger.json).\n")
 	b.WriteString("<!-- foundry:active-stack-readiness:end -->\n")
 	return b.String()
 }
@@ -5001,6 +5160,7 @@ func publicSchemaNames() []string {
 		"foundry-production-readiness-audit-v0.1",
 		"foundry-pulse-event-v0.1",
 		"foundry-registry-v0.1",
+		"foundry-release-candidate-v0.1",
 		"foundry-release-manifest-v0.1",
 		"foundry-repo-health-v0.1",
 		"foundry-run-v0.1",

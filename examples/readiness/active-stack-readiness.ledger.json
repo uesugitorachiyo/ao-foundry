@@ -107,6 +107,7 @@
   "next_actions": [
     "Keep README readiness snapshot parity enforced in CI",
     "Signed-smoke release gate policy documented",
-    "Add active-spine release-candidate checklist"
+    "Active-spine release-candidate ledger validated in CI",
+    "Run signed-smoke workflow before release promotion"
   ]
 }

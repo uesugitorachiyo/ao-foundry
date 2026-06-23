@@ -1,0 +1,83 @@
+{
+  "schema_version": "ao.foundry.release-candidate.v0.1",
+  "candidate_id": "active-spine-2026-06-23",
+  "status": "ready",
+  "active_spine": [
+    {
+      "id": "ao2",
+      "name": "AO2",
+      "role": "execution-engine",
+      "status": "ready",
+      "evidence": [
+        "npm run release:readiness:static",
+        "npm run verify",
+        "main CI run 28001004295"
+      ]
+    },
+    {
+      "id": "ao2-control-plane",
+      "name": "AO2 Control Plane",
+      "role": "evidence-observer",
+      "status": "ready",
+      "evidence": [
+        "license policy",
+        "cargo fmt --all --check",
+        "Python guard tests",
+        "cargo test --workspace",
+        "cargo clippy --workspace --all-targets -- -D warnings",
+        "cargo deny check bans licenses sources",
+        "cargo audit --deny warnings",
+        "cargo build --release -p ao2-cp-server",
+        "main CI run 28000068167"
+      ]
+    },
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "status": "ready",
+      "evidence": [
+        "go test ./...",
+        "go vet ./...",
+        "go build ./cmd/foundry ./cmd/ao",
+        "go run ./cmd/foundry contract fixtures validate",
+        "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
+        "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "name": "signed_smoke_release_gate",
+      "status": "manual_required",
+      "required_before_promotion": true,
+      "evidence": [
+        "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md",
+        "workflow_dispatch signed_smoke=true",
+        "freshness_summary.status=ready",
+        "release_safe=true"
+      ]
+    },
+    {
+      "name": "release_manifest_dry_run",
+      "status": "ready",
+      "required_before_promotion": false,
+      "evidence": [
+        "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
+        "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json"
+      ]
+    },
+    {
+      "name": "readiness_snapshot_parity",
+      "status": "ready",
+      "required_before_promotion": false,
+      "evidence": [
+        "go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json"
+      ]
+    }
+  ],
+  "next_actions": [
+    "Run signed-smoke workflow before release promotion",
+    "Attach release-candidate ledger to release notes"
+  ]
+}

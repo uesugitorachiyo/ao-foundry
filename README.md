@@ -26,6 +26,7 @@ This first slice provides:
   - `foundry next --registry <path> --task <path>`
   - `foundry readiness audit --registry <path> --task <path> [--out <path>]`
   - `foundry readiness snapshot --ledger <path> [--out <markdown>]`
+  - `foundry release candidate validate --ledger <path>`
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run --out <dir>`
@@ -62,6 +63,7 @@ go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.fo
 go run ./cmd/foundry next --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json
 go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json
+go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
@@ -107,6 +109,8 @@ Last local sweep: 2026-06-23.
 
 The machine-readable source for this snapshot is
 [`examples/readiness/active-stack-readiness.ledger.json`](examples/readiness/active-stack-readiness.ledger.json).
+The AO2 active-spine release candidate ledger is
+[`examples/readiness/active-spine-release-candidate.ledger.json`](examples/readiness/active-spine-release-candidate.ledger.json).
 <!-- foundry:active-stack-readiness:end -->
 
 No active readiness path depends on `ao-operator`, `ao-runtime`,
@@ -126,6 +130,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Run schema](docs/contracts/foundry-run-v0.1.schema.json)
 - [Production readiness audit schema](docs/contracts/foundry-production-readiness-audit-v0.1.schema.json)
 - [Active stack readiness schema](docs/contracts/foundry-active-stack-readiness-v0.1.schema.json)
+- [Release candidate schema](docs/contracts/foundry-release-candidate-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)
 - [Goal readiness audit schema](docs/contracts/foundry-goal-readiness-audit-v0.1.schema.json)
 - [Pulse event schema](docs/contracts/foundry-pulse-event-v0.1.schema.json)

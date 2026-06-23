@@ -44,6 +44,8 @@ jobs:
         run: go run ./cmd/foundry release dry-run --out tmp/release-manifest.json
       - name: Release manifest schema validation
         run: go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json
+      - name: Release candidate ledger validation
+        run: go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json
       - name: Contract fixture schema validation
         run: go run ./cmd/foundry contract fixtures validate
       - name: Readiness snapshot parity
