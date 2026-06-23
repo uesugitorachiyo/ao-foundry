@@ -37,3 +37,14 @@ jobs:
       - name: Enforce active-stack ledger evidence freshness
         shell: bash
         run: go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json
+      - name: Build active-stack production readiness rollup
+        shell: bash
+        run: go run ./cmd/foundry readiness rollup --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-production-readiness-rollup.json --markdown-out tmp/active-stack-production-readiness-rollup.md
+      - name: Upload active-stack production readiness rollup
+        uses: actions/upload-artifact@v6
+        with:
+          name: active-stack-production-readiness-rollup
+          path: |
+            tmp/active-stack-production-readiness-rollup.json
+            tmp/active-stack-production-readiness-rollup.md
+          if-no-files-found: error

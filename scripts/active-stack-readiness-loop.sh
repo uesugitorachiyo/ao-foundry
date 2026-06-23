@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REGISTRY="examples/registry/local-ao-stack.foundry-registry.json"
 LEDGER="examples/readiness/active-stack-readiness.ledger.json"
+GITHUB_RUNS_REPORT="tmp/active-stack-github-runs-report.json"
+ROLLUP_OUT="tmp/active-stack-production-readiness-rollup.json"
+ROLLUP_MARKDOWN_OUT="tmp/active-stack-production-readiness-rollup.md"
 RELEASE_CANDIDATE_LEDGER="examples/readiness/active-spine-release-candidate.ledger.json"
 GOAL_RUN="examples/goals/ao-foundry-production-readiness.goal-run.json"
 TASK="examples/tasks/ao-foundry-bootstrap.foundry-task.json"
@@ -11,11 +14,12 @@ OUT="tmp/active-stack-readiness-loop.json"
 
 usage() {
   cat <<'EOF'
-usage: scripts/active-stack-readiness-loop.sh [--registry <path>] [--ledger <path>] [--out <path>]
+usage: scripts/active-stack-readiness-loop.sh [--registry <path>] [--ledger <path>] [--github-runs-report <path>] [--out <path>]
 
 Runs the local-only active stack readiness loop:
   registry validate
   readiness snapshot README parity
+  production readiness rollup when a GitHub runs report exists
   repo board
   release handoff
   loop preflight
@@ -30,6 +34,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --ledger)
       LEDGER="${2:?missing --ledger value}"
+      shift 2
+      ;;
+    --github-runs-report)
+      GITHUB_RUNS_REPORT="${2:?missing --github-runs-report value}"
       shift 2
       ;;
     --out)
@@ -105,10 +113,36 @@ check_readiness_snapshot_parity() {
   fi
 }
 
+check_readiness_rollup() {
+  local report_path output
+  if [[ "$GITHUB_RUNS_REPORT" = /* ]]; then
+    report_path="$GITHUB_RUNS_REPORT"
+  else
+    report_path="$ROOT/$GITHUB_RUNS_REPORT"
+  fi
+  if [[ ! -f "$report_path" ]]; then
+    add_check "readiness_rollup" "passed" "production readiness rollup skipped because GitHub runs report is absent" ""
+    return
+  fi
+  if output="$(
+    cd "$ROOT" &&
+    go run ./cmd/foundry readiness rollup \
+      --ledger "$LEDGER" \
+      --github-runs-report "$GITHUB_RUNS_REPORT" \
+      --out "$ROLLUP_OUT" \
+      --markdown-out "$ROLLUP_MARKDOWN_OUT"
+  )"; then
+    add_check "readiness_rollup" "passed" "active-stack production readiness rollup is ready" "$output"
+  else
+    add_check "readiness_rollup" "failed" "active-stack production readiness rollup is ready" "$output"
+  fi
+}
+
 run_check "registry_validate" \
   "active registry validates" \
   go run ./cmd/foundry registry validate --registry "$REGISTRY"
 check_readiness_snapshot_parity
+check_readiness_rollup
 run_check "repo_board" \
   "active sibling portfolio is ready" \
   go run ./cmd/foundry repo board --registry "$REGISTRY" --json
