@@ -47,9 +47,9 @@
         "go run ./cmd/foundry contract fixtures validate",
         "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
         "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
-        "main CI run 28047564484",
+        "main CI run 28048717678",
         "Production Readiness Ops run 28042567314",
-        "PR #34 merged"
+        "PR #35 merged"
       ]
     }
   ],
