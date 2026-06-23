@@ -20,7 +20,8 @@
         "go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json",
         "go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json",
         "go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json",
-        "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json"
+        "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json",
+        "scripts/verify-branch-protection.sh"
       ]
     },
     {
