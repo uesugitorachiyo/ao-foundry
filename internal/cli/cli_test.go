@@ -3787,7 +3787,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 		"ao-command":        "28029275150",
 		"ao2":               "28029871033",
 		"ao2-control-plane": "28027361070",
-		"ao-covenant":       "28020887257",
+		"ao-covenant":       "28032771767",
 	}
 	for repo, runID := range ciOverrides {
 		ciRuns[repo] = runID
