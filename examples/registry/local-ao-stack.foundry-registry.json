@@ -73,29 +73,6 @@
       ]
     },
     {
-      "id": "ao-operator",
-      "name": "AO Operator",
-      "role": "operator-command",
-      "delegates_to": "ao2",
-      "workspace": "../ao-operator",
-      "branches": ["main"],
-      "evidence_sources": [
-        {
-          "kind": "archive-status",
-          "location": "docs/operations/AO-OPERATOR-DEPRECATION.md",
-          "owner": "ao-foundry"
-        }
-      ],
-      "allowed_automation": ["archive-read"],
-      "readiness_signals": [
-        {
-          "name": "archive-handoff",
-          "status": "ready",
-          "source": "deprecated by Foundry portfolio decision and replaced by ao2 plus ao2-control-plane; keep as reference-only"
-        }
-      ]
-    },
-    {
       "id": "ao2",
       "name": "AO2",
       "role": "execution-engine",

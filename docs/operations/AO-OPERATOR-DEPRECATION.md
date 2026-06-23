@@ -10,9 +10,9 @@ The replacement path is:
 
 ## Foundry Policy
 
-Foundry tracks `ao-operator` as reference-only until it can be removed from the
-active local stack registry entirely. Foundry must not register `ao-runtime` or
-`ao-control-plane` as active or supporting stack repos.
+Foundry no longer tracks `ao-operator` in the active local stack registry.
+Foundry must not register `ao-operator`, `ao-runtime`, or `ao-control-plane` as
+active or supporting stack repos.
 
 New work should route to `ao2` or `ao2-control-plane`. Do not add product,
 marketing, adapter, runtime, or control-plane scope to the deprecated repos.
