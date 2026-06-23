@@ -1204,6 +1204,66 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
 	}
 }
 
+func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T) {
+	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": true,
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-foundry",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999994",
+        "display_title": "Self window (#100)"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "in_progress",
+        "conclusion": "",
+        "run_id": "99999999995"
+      }
+    },
+    {
+      "repository": "uesugitorachiyo/ao-forge",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017583706"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017685064"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "ledger-refresh-proposal",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--fail-on-non-current-update",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("current-repo self window should not fail; code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)

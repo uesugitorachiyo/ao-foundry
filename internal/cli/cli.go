@@ -2657,6 +2657,9 @@ func ledgerRefreshRow(repoID, workflow string, run ActiveStackGithubRun, action 
 func nonCurrentUpdateProblems(rows []ActiveStackLedgerRefreshRow, currentRepo string) []string {
 	var problems []string
 	for _, row := range rows {
+		if row.Repository == currentRepo {
+			continue
+		}
 		if row.Action == "update" && row.Repository != currentRepo {
 			problems = append(problems, fmt.Sprintf("%s %s has update row for run %s", row.Repository, row.Workflow, row.RunID))
 		}
