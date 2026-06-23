@@ -197,16 +197,16 @@
       "evidence_sources": [
         {
           "kind": "archive-status",
-          "location": "subscription-ending-archive",
+          "location": "../agy-swarms/docs/archive-handoff.md",
           "owner": "agy-swarms"
         }
       ],
       "allowed_automation": ["archive-read"],
       "readiness_signals": [
         {
-          "name": "subscription-exit",
-          "status": "unknown",
-          "source": "subscription ending this week; freeze/archive and keep out of active AO spine work"
+          "name": "archive-handoff",
+          "status": "ready",
+          "source": "archive handoff captured; keep as reference-only and out of active AO spine work"
         }
       ]
     },

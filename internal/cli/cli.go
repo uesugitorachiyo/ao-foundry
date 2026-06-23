@@ -3129,7 +3129,7 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 		return []string{fmt.Sprintf("%s: keep in the active Foundry spine and maintain release/security evidence", repo.ID)}
 	case "candidate-demote":
 		if repo.ID == "agy-swarms" {
-			return []string{"agy-swarms: freeze/archive before subscription ends; extract only reusable ideas and keep it out of active AO spine work"}
+			return []string{"agy-swarms: archived for active AO spine work; use docs/archive-handoff.md as reference and do not add new product scope"}
 		}
 		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
 	default:
