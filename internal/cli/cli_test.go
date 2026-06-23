@@ -978,8 +978,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031808511",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28031808511"
+        "run_id": "28037052612",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28037052612"
       }
     }
   ],
@@ -1037,13 +1037,13 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031670382"
+        "run_id": "28036941430"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031808511"
+        "run_id": "28037052612"
       }
     }
   ],
@@ -1076,7 +1076,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
 		"Generated from: " + reportPath,
 		"| ao-foundry | ci.yml | 99999999991 | update |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | update |",
-		"| ao-forge | ci.yml | 28031670382 | already_recorded |",
+		"| ao-forge | ci.yml | 28036941430 | already_recorded |",
 		"Update examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
 	} {
@@ -1202,13 +1202,13 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031670382"
+        "run_id": "28036941430"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031808511"
+        "run_id": "28037052612"
       }
     }
   ],
@@ -1237,7 +1237,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
 	for _, want := range []string{
 		"| ao-foundry | ci.yml | 99999999991 | ignored_current_refresh_loop |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_refresh_loop |",
-		"| ao-forge | ci.yml | 28031670382 | already_recorded |",
+		"| ao-forge | ci.yml | 28036941430 | already_recorded |",
 	} {
 		if !strings.Contains(proposal, want) {
 			t.Fatalf("proposal missing %q:\n%s", want, proposal)
@@ -1270,7 +1270,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031808511"
+        "run_id": "28037052612"
       }
     }
   ],
@@ -1327,13 +1327,13 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031670382"
+        "run_id": "28036941430"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28031808511"
+        "run_id": "28037052612"
       }
     }
   ],
@@ -3828,7 +3828,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	t.Helper()
 	ciRuns := map[string]string{
 		"ao-foundry":        "99999999991",
-		"ao-forge":          "28031670382",
+		"ao-forge":          "28036941430",
 		"ao-command":        "28018015778",
 		"ao2":               "28019192996",
 		"ao2-control-plane": "28034439773",
@@ -3836,7 +3836,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
-		"ao-forge":          "28031808511",
+		"ao-forge":          "28037052612",
 		"ao-command":        "28029275150",
 		"ao2":               "28029871033",
 		"ao2-control-plane": "28035142216",
