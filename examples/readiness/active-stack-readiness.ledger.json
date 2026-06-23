@@ -95,17 +95,64 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28002711646"
+        "run_id": "28006385705"
       },
       "verification_evidence": [
-        "AO2-stack policy docs",
-        "trust-boundary docs",
-        "PR #45 merged"
+        "covenant policy spine --json",
+        "covenant.policy-spine-result.v1",
+        "Release Readiness run 28006538855",
+        "PR #46 merged"
       ]
     }
   ],
+  "release_handoff": {
+    "status": "ready",
+    "gates": [
+      {
+        "name": "foundry-release-candidate",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+          "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json"
+        ]
+      },
+      {
+        "name": "forge-release-candidate-handoff",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
+          "ao-forge main CI run 28005757281",
+          "ao-forge Release Preview run 28005757247"
+        ]
+      },
+      {
+        "name": "covenant-policy-spine",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "covenant policy spine --json",
+          "covenant.policy-spine-result.v1",
+          "ao-covenant main CI run 28006385705",
+          "ao-covenant Release Readiness run 28006538855"
+        ]
+      },
+      {
+        "name": "signed-smoke-release-gate",
+        "status": "manual_required",
+        "required_before_promotion": true,
+        "evidence": [
+          "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md",
+          "workflow_dispatch signed_smoke=true",
+          "release_safe=true"
+        ]
+      }
+    ]
+  },
   "next_actions": [
     "Keep README readiness snapshot parity enforced in CI",
+    "Keep release handoff gates attached to the active-stack readiness ledger",
     "Signed-smoke release gate policy documented",
     "Active-spine release-candidate ledger validated in CI",
     "Run signed-smoke workflow before release promotion"

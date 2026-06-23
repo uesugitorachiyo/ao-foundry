@@ -734,6 +734,69 @@ func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 	}
 }
 
+func TestActiveStackReadinessLedgerIncludesReleaseHandoffChain(t *testing.T) {
+	ledger, err := readArbitraryJSON("examples/readiness/active-stack-readiness.ledger.json")
+	if err != nil {
+		t.Fatalf("read active stack readiness ledger: %v", err)
+	}
+	ledgerObject, ok := ledger.(map[string]any)
+	if !ok {
+		t.Fatalf("ledger is not an object: %#v", ledger)
+	}
+	handoff, ok := ledgerObject["release_handoff"].(map[string]any)
+	if !ok {
+		t.Fatalf("ledger release_handoff missing or not object: %#v", ledgerObject["release_handoff"])
+	}
+	if handoff["status"] != "ready" {
+		t.Fatalf("release_handoff status = %#v, want ready", handoff["status"])
+	}
+	gates, ok := handoff["gates"].([]any)
+	if !ok {
+		t.Fatalf("release_handoff gates missing or not array: %#v", handoff["gates"])
+	}
+	required := map[string][]string{
+		"foundry-release-candidate": {
+			"go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+		},
+		"forge-release-candidate-handoff": {
+			"forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
+		},
+		"covenant-policy-spine": {
+			"covenant policy spine --json",
+			"covenant.policy-spine-result.v1",
+		},
+	}
+	seen := map[string]bool{}
+	for _, rawGate := range gates {
+		gate, ok := rawGate.(map[string]any)
+		if !ok {
+			t.Fatalf("release_handoff gate is not object: %#v", rawGate)
+		}
+		name, _ := gate["name"].(string)
+		evidence, ok := gate["evidence"].([]any)
+		if !ok {
+			t.Fatalf("release_handoff gate %q evidence missing or not array: %#v", name, gate["evidence"])
+		}
+		for requiredName, requiredEvidence := range required {
+			if name != requiredName {
+				continue
+			}
+			seen[requiredName] = true
+			evidenceText := fmt.Sprintf("%v", evidence)
+			for _, want := range requiredEvidence {
+				if !strings.Contains(evidenceText, want) {
+					t.Fatalf("release_handoff gate %q evidence missing %q: %#v", name, want, evidence)
+				}
+			}
+		}
+	}
+	for requiredName := range required {
+		if !seen[requiredName] {
+			t.Fatalf("release_handoff missing gate %q: %#v", requiredName, gates)
+		}
+	}
+}
+
 func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"readiness", "snapshot", "--ledger", "examples/readiness/active-stack-readiness.ledger.json"}, &stdout, &stderr)
@@ -747,6 +810,16 @@ func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
 	want := readmeBlock(t, string(readme), "<!-- foundry:active-stack-readiness:start -->", "<!-- foundry:active-stack-readiness:end -->")
 	if stdout.String() != want {
 		t.Fatalf("snapshot output does not match README block\nwant:\n%s\ngot:\n%s", want, stdout.String())
+	}
+	for _, required := range []string{
+		"Release handoff gates:",
+		"foundry-release-candidate",
+		"forge-release-candidate-handoff",
+		"covenant-policy-spine",
+	} {
+		if !strings.Contains(stdout.String(), required) {
+			t.Fatalf("snapshot missing release handoff detail %q:\n%s", required, stdout.String())
+		}
 	}
 }
 
@@ -1306,6 +1379,33 @@ func TestSignedSmokeReleaseGatePolicyExists(t *testing.T) {
 	}
 	if !strings.Contains(string(ledger), "Signed-smoke release gate policy documented") {
 		t.Fatalf("active stack readiness ledger missing signed-smoke policy next action")
+	}
+}
+
+func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
+	data, err := os.ReadFile(repoPath("docs/operations/RELEASE-CHECKLIST.md"))
+	if err != nil {
+		t.Fatalf("read release checklist: %v", err)
+	}
+	checklist := string(data)
+	for _, want := range []string{
+		"go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
+		"forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
+		"covenant policy spine --json",
+		"covenant.policy-spine-result.v1",
+		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
+		"diff -u",
+		"workflow_dispatch signed_smoke=true",
+		"release_safe=true",
+	} {
+		if !strings.Contains(checklist, want) {
+			t.Fatalf("release checklist missing active-stack handoff item %q", want)
+		}
+	}
+	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(checklist, excluded) {
+			t.Fatalf("release checklist contains excluded scope %q", excluded)
+		}
 	}
 }
 
