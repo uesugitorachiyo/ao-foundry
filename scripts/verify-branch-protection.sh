@@ -5,7 +5,7 @@ REPO="uesugitorachiyo/ao-foundry"
 BRANCH="main"
 REQUIRED_CHECKS=(
   "test (ubuntu-latest)"
-  "test (macos-latest)"
+  "test (macos-26)"
   "test (windows-latest)"
 )
 

@@ -773,7 +773,7 @@ func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
 		"branches/$BRANCH\"",
 		"mode=limited",
 		"test (ubuntu-latest)",
-		"test (macos-latest)",
+		"test (macos-26)",
 		"test (windows-latest)",
 		"enforce_admins",
 		"required_linear_history",
@@ -793,6 +793,24 @@ func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
 	}
 	if !strings.Contains(readmeText, "scripts/verify-branch-protection.sh") {
 		t.Fatalf("README does not document branch protection verifier")
+	}
+}
+
+func TestCIWorkflowPinsMacOSRunner(t *testing.T) {
+	data, err := os.ReadFile(repoPath(".github/workflows/ci.yml"))
+	if err != nil {
+		t.Fatalf("read CI workflow: %v", err)
+	}
+	workflow := string(data)
+	for _, want := range []string{
+		"os: [ubuntu-latest, macos-26, windows-latest]",
+	} {
+		if !strings.Contains(workflow, want) {
+			t.Fatalf("CI workflow missing pinned macOS runner detail %q", want)
+		}
+	}
+	if strings.Contains(workflow, "macos-latest") {
+		t.Fatalf("CI workflow still uses moving macOS runner label")
 	}
 }
 
