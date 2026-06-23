@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28026152149",
-        "Production Readiness Ops run 28026243635",
-        "PR #16 merged",
+        "main CI run 28026817561",
+        "Production Readiness Ops run 28026892603",
+        "PR #18 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -51,7 +51,7 @@
         "production-readiness schemas",
         "actionlint",
         "Release Preview run 28011603944",
-        "Production Readiness Ops run 28017685064",
+        "Production Readiness Ops run 28027282325",
         "PR #129 merged"
       ]
     },
@@ -155,7 +155,7 @@
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
           "ao-forge main CI run 28017583706",
           "ao-forge Release Preview run 28011603944",
-          "ao-forge Production Readiness Ops run 28017685064"
+          "ao-forge Production Readiness Ops run 28027282325"
         ]
       },
       {

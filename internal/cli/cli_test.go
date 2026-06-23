@@ -975,8 +975,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28017685064",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28017685064"
+        "run_id": "28027282325",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28027282325"
       }
     }
   ],
@@ -1040,7 +1040,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28017685064"
+        "run_id": "28027282325"
       }
     }
   ],
@@ -1205,7 +1205,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28017685064"
+        "run_id": "28027282325"
       }
     }
   ],
@@ -1267,7 +1267,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28017685064"
+        "run_id": "28027282325"
       }
     }
   ],
@@ -1330,7 +1330,7 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28017685064"
+        "run_id": "28027282325"
       }
     }
   ],
