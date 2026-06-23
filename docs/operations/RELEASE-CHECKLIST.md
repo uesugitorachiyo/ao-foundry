@@ -32,7 +32,9 @@
     `go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json > tmp/readiness-snapshot.md`,
     then `diff -u tmp/readiness-snapshot.md <(sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md)`.
 17. Before promotion, run the signed-smoke workflow with
-    `workflow_dispatch signed_smoke=true` and require `release_safe=true`.
+    `workflow_dispatch signed_smoke=true`, require `release_safe=true`, and
+    download the `signed-smoke-release-evidence` artifact for the public-safe
+    summary and release-promotion JSON.
 18. Confirm no release step requires credentials, remote services, sibling
    repositories, tags, pushes, uploads, or publishing.
 
