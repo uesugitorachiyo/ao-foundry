@@ -5,6 +5,14 @@ replace AO Forge. Foundry coordinates many repositories, goals, branches, CI
 signals, release trains, evidence queues, and overnight advancement loops, then
 delegates each individual governed implementation run to AO Forge.
 
+## AO Stack Architecture
+
+This repository is part of the AO agent orchestration stack. Start with the
+central architecture guide at
+[uesugitorachiyo/ao-architecture](https://github.com/uesugitorachiyo/ao-architecture);
+the AO Foundry-specific architecture page is
+[ao-foundry](https://github.com/uesugitorachiyo/ao-architecture/tree/main/ao-foundry).
+
 AO Forge remains the trusted factory brain for one governed run. AO Foundry owns
 the higher-level operating view: what work is queued, which repository is ready,
 which evidence is waiting, which branch or release train is blocked, and what
