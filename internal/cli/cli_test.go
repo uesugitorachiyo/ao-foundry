@@ -757,6 +757,15 @@ func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 		if repo["status"] != "ready" {
 			t.Fatalf("ledger repo %s is not ready: %#v", id, repo)
 		}
+		if id == "ao-foundry" {
+			ci, ok := repo["ci"].(map[string]any)
+			if !ok {
+				t.Fatalf("ao-foundry ledger entry has no ci object: %#v", repo)
+			}
+			if _, hasRunID := ci["run_id"]; hasRunID {
+				t.Fatalf("ao-foundry ledger entry must not self-reference a mutable main CI run: %#v", ci)
+			}
+		}
 		delete(active, id)
 	}
 	if len(active) != 0 {
