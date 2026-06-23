@@ -4034,6 +4034,9 @@ func signedSmokeExecutableCheck(name, path string) SignedSmokeCheck {
 			Reason: fmt.Sprintf("%s executable is required", filepath.ToSlash(path)),
 		}
 	}
+	if os.PathSeparator == '\\' && strings.EqualFold(filepath.Ext(path), ".exe") {
+		return SignedSmokeCheck{Name: name, Status: "ready", Path: filepath.ToSlash(path), Reason: "executable is available"}
+	}
 	if info.Mode()&0o111 == 0 {
 		return SignedSmokeCheck{
 			Name:   name,
