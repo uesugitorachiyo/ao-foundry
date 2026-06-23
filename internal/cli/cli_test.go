@@ -978,8 +978,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28042017044",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28042017044"
+        "run_id": "28056174653",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28056174653"
       }
     }
   ],
@@ -1043,7 +1043,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28042017044"
+        "run_id": "28056174653"
       }
     }
   ],
@@ -1208,7 +1208,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28042017044"
+        "run_id": "28056174653"
       }
     }
   ],
@@ -1270,7 +1270,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28042017044"
+        "run_id": "28056174653"
       }
     }
   ],
@@ -1333,7 +1333,7 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28042017044"
+        "run_id": "28056174653"
       }
     }
   ],
@@ -3836,7 +3836,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
-		"ao-forge":          "28042017044",
+		"ao-forge":          "28056174653",
 		"ao-command":        "28049279592",
 		"ao2":               "28054451606",
 		"ao2-control-plane": "28051422824",
