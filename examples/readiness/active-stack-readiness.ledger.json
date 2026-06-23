@@ -78,14 +78,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28053626014"
+        "run_id": "28064655500"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28054451606",
-        "PR #195 merged"
+        "Production Readiness Ops run 28065310069",
+        "PR #196 merged"
       ]
     },
     {
@@ -95,7 +95,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28050638200"
+        "run_id": "28063002384"
       },
       "verification_evidence": [
         "license policy",
@@ -107,8 +107,8 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 28051422824",
-        "PR #67 merged"
+        "Production Readiness Ops run 28063009187",
+        "PR #68 merged"
       ]
     },
     {
