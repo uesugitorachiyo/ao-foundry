@@ -131,7 +131,7 @@ jobs:
           pattern="ghp""_|github""_pat_|BEGIN ""RSA|BEGIN ""OPENSSH|AO2_CP_API_TOKEN|local-signed-smoke-token|api""_key|access""_token"
           ! rg -n "$pattern" tmp/pulse-live/signed-smoke-summary.json tmp/release-promotion.live.json
       - name: Upload signed-smoke release evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: signed-smoke-release-evidence
           path: |
