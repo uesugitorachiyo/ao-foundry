@@ -24,9 +24,9 @@
         "scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28021453116",
-        "Production Readiness Ops run 28021576778",
-        "PR #7 merged",
+        "main CI run 28022111281",
+        "Production Readiness Ops run 28022217985",
+        "PR #8 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
