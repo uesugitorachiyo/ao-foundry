@@ -2709,7 +2709,8 @@ func currentRepoCIIsReadinessEvidenceRefresh(rows []ActiveStackLedgerRefreshRow,
 			continue
 		}
 		title := strings.ToLower(strings.TrimSpace(row.Run.DisplayName))
-		return strings.Contains(title, "refresh") && strings.Contains(title, "readiness evidence")
+		return strings.Contains(title, "refresh") &&
+			(strings.Contains(title, "readiness evidence") || strings.Contains(title, "foundry evidence"))
 	}
 	return false
 }

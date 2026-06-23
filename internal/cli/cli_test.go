@@ -1158,6 +1158,15 @@ func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T)
 }
 
 func TestReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *testing.T) {
+	testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t, "Refresh Foundry readiness evidence (#99)")
+}
+
+func TestReadinessLedgerRefreshProposalIgnoresCurrentRepoFoundryEvidenceRefreshLoop(t *testing.T) {
+	testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t, "Refresh Foundry evidence after loop guard (#99)")
+}
+
+func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *testing.T, displayTitle string) {
+	t.Helper()
 	outPath := filepath.Join(t.TempDir(), "ledger-refresh-proposal.md")
 	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
 	report := `{
@@ -1175,7 +1184,7 @@ func TestReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "status": "completed",
         "conclusion": "success",
         "run_id": "99999999991",
-        "display_title": "Refresh Foundry readiness evidence (#99)"
+        "display_title": "` + displayTitle + `"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
