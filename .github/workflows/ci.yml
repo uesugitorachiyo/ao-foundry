@@ -104,15 +104,20 @@ jobs:
           if [ ! -d ../ao-covenant ]; then
             git clone --depth 1 https://github.com/uesugitorachiyo/ao-covenant.git ../ao-covenant
           fi
+          if [ ! -d ../ao2 ]; then
+            git clone --depth 1 https://github.com/uesugitorachiyo/ao2.git ../ao2
+          fi
           if [ ! -d ../ao2-control-plane ]; then
             git clone --depth 1 https://github.com/uesugitorachiyo/ao2-control-plane.git ../ao2-control-plane
           fi
+          (cd ../ao2 && cargo build -p ao2-cli)
           (cd ../ao2-control-plane && cargo build -p ao2-cp-server)
       - name: Verify signed-smoke workspace
         shell: bash
         run: |
           test -d ../ao-forge
           test -d ../ao-covenant
+          test -x ../ao2/target/debug/ao2
           test -x ../ao2-control-plane/target/debug/ao2-cp-server
       - name: Generate signed smoke script
         shell: bash
