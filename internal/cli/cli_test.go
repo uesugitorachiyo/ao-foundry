@@ -1636,7 +1636,13 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 		"--forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json",
 		"tmp/pulse-live/signed-smoke-result.json",
 		"ao.foundry.signed-smoke-result.v0.1",
+		"--signed-smoke-result tmp/pulse-live/signed-smoke-result.json",
+		"go run ./cmd/foundry pulse summarize-signed-smoke --pulse tmp/pulse-live/pulse-event.json --out tmp/pulse-live/signed-smoke-summary.json",
+		"go run ./cmd/foundry release promotion validate",
+		"--signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json",
 		"signed_smoke_result=tmp/pulse-live/signed-smoke-result.json",
+		"signed_smoke_summary=tmp/pulse-live/signed-smoke-summary.json",
+		"release_promotion=tmp/release-promotion.live.json",
 	} {
 		if !strings.Contains(script, want) {
 			t.Fatalf("signed smoke script missing %q", want)

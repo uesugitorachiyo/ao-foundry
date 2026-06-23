@@ -1,8 +1,8 @@
 {
   "schema_version": "ao2.workcell-evidence.v1",
-  "spec_sha256": "dbe43f0f7681046107ae55af2598558749d5d2636947c86a5d703c61cc7eab92",
+  "spec_sha256": "87ce15fd64aeb488f49e9492b59c04b6ff8dc2c8cbe003cd6c5b351dc23a1dd8",
   "status": "passed",
   "stderr": "",
-  "stdout": "{\n  \"status\": \"succeeded\",\n  \"spent_tokens\": 40,\n  \"spent_usd\": 0.0,\n  \"states\": {\n    \"worker_0\": \"succeeded\",\n    \"worker_1\": \"succeeded\"\n  }\n}\n",
+  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-a4b30137e1ad\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-a4b30137e1ad-sdd-run.yaml\nrun_id=run-6e206cb6-e4be-4d21-b41b-da32813bda0e\nstatus=Rejected\nevidence_pack=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-6e206cb6-e4be-4d21-b41b-da32813bda0e/sdd-task-graph.json\n",
   "workcell_id": "foundry-ao-foundry-bootstrap-execute"
 }

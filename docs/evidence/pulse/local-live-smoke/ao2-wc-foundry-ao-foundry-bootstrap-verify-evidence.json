@@ -1,8 +1,8 @@
 {
   "schema_version": "ao2.workcell-evidence.v1",
-  "spec_sha256": "421b0110a26c4a1a4ebce5a6dabf01cd8919446855255330e260fb1d38a482c5",
+  "spec_sha256": "5d5b60e18e5be5f80cf98a461ed45d8799aa7eb95478a5903030fd65ca9dfbe9",
   "status": "passed",
   "stderr": "",
-  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-fc142fc6833e\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-fc142fc6833e-sdd-run.yaml\nrun_id=run-93958be3-f4e5-455d-af1e-2364f4a9d581\nstatus=Accepted\nevidence_pack=../ao-foundry/.ao2/runs/run-93958be3-f4e5-455d-af1e-2364f4a9d581/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-93958be3-f4e5-455d-af1e-2364f4a9d581/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-93958be3-f4e5-455d-af1e-2364f4a9d581/sdd-task-graph.json\n",
+  "stdout": "status=governed_provider_run_started\nschema_version=ao2.run/v1\nplan_id=forge-plan-a4b30137e1ad\ntarget_repo=../ao-foundry\nworkflow=../ao-foundry/.ao2/generated-workflows/forge-plan-a4b30137e1ad-sdd-run.yaml\nrun_id=run-12fe529c-43ef-46cb-a4ad-1c31269b3094\nstatus=Accepted\nevidence_pack=../ao-foundry/.ao2/runs/run-12fe529c-43ef-46cb-a4ad-1c31269b3094/evidence-pack/evidence-pack.json\nreport=../ao-foundry/.ao2/runs/run-12fe529c-43ef-46cb-a4ad-1c31269b3094/report/index.html\nsdd_task_graph=../ao-foundry/.ao2/runs/run-12fe529c-43ef-46cb-a4ad-1c31269b3094/sdd-task-graph.json\n",
   "workcell_id": "foundry-ao-foundry-bootstrap-verify"
 }

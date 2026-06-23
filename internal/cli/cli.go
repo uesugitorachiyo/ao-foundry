@@ -4442,7 +4442,18 @@ cat > tmp/pulse-live/signed-smoke-result.json <<'JSON'
 }
 JSON
 
+go run ./cmd/foundry pulse run \
+  --out tmp/pulse-live \
+  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json \
+  --signed-smoke-result tmp/pulse-live/signed-smoke-result.json
+
+go run ./cmd/foundry pulse summarize-signed-smoke --pulse tmp/pulse-live/pulse-event.json --out tmp/pulse-live/signed-smoke-summary.json
+
+go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json
+
 printf 'signed_smoke_result=tmp/pulse-live/signed-smoke-result.json\n'
+printf 'signed_smoke_summary=tmp/pulse-live/signed-smoke-summary.json\n'
+printf 'release_promotion=tmp/release-promotion.live.json\n'
 `
 	if err := os.MkdirAll(parentDir(path), 0o755); err != nil {
 		return err

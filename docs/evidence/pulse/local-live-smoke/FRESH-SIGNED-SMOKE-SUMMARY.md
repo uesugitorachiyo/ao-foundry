@@ -13,6 +13,8 @@ that is safe to keep in public repository evidence.
 - control_plane_readback=ready
 - signed_smoke_ingest=ready
 - signed_smoke_summary=ready
+- release_promotion=ready
+- release_safe=true
 
 ## Evidence
 
@@ -20,6 +22,8 @@ that is safe to keep in public repository evidence.
 - `docs/evidence/pulse/local-live-smoke/gate-result.json`
 - `docs/evidence/pulse/local-live-smoke/factory-packet.json`
 - `docs/evidence/pulse/local-live-smoke/control-plane-receipt.json`
+- `tmp/pulse-live/signed-smoke-summary.json` (public-safe local summary)
+- `tmp/release-promotion.live.json` (local release-promotion handoff)
 
 Runtime scratch files, local server logs, tokens, absolute local paths, and
 temporary tool binaries are intentionally excluded from this summary.

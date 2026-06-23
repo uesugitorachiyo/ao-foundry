@@ -1,12 +1,12 @@
 {
   "schema_version": "ao.forge.covenant-gate-result.v0.1",
   "status": "allowed",
-  "plan_id": "forge-plan-fc142fc6833e",
+  "plan_id": "forge-plan-a4b30137e1ad",
   "execution_enabled": false,
   "decision": {
     "schema_version": "ao.forge.covenant-decision-fixture.v0.1",
     "decision_id": "allow-local-plan",
-    "target_plan_id": "forge-plan-fc142fc6833e",
+    "target_plan_id": "forge-plan-a4b30137e1ad",
     "decision": "allow",
     "explanation": "The plan is local-first, does not allow network access, and does not mutate releases. Covenant binary version check passed.",
     "source": "live-covenant-adapter"
