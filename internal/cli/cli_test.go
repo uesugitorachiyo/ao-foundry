@@ -1157,6 +1157,85 @@ func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T)
 	}
 }
 
+func TestReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ledger-refresh-proposal.md")
+	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": false,
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-foundry",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999991",
+        "display_title": "Refresh Foundry readiness evidence (#99)"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999992"
+      }
+    },
+    {
+      "repository": "uesugitorachiyo/ao-forge",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017583706"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017685064"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "ledger-refresh-proposal",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--out", outPath,
+		"--fail-on-non-current-update",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read proposal: %v", err)
+	}
+	proposal := string(data)
+	for _, want := range []string{
+		"| ao-foundry | ci.yml | 99999999991 | ignored_current_refresh_loop |",
+		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_refresh_loop |",
+		"| ao-forge | ci.yml | 28017583706 | already_recorded |",
+	} {
+		if !strings.Contains(proposal, want) {
+			t.Fatalf("proposal missing %q:\n%s", want, proposal)
+		}
+	}
+	if strings.Contains(proposal, "| ao-foundry | ci.yml | 99999999991 | update |") {
+		t.Fatalf("current repo evidence refresh loop must not stay actionable:\n%s", proposal)
+	}
+}
+
 func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
 	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
 	report := `{

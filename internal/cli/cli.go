@@ -1127,6 +1127,7 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 		return 2
 	}
 	rows := activeStackLedgerRefreshRows(ledger, report)
+	rows = suppressCurrentRepoRefreshLoopRows(rows, *currentRepo)
 	if *failOnNonCurrentUpdate {
 		if problems := nonCurrentUpdateProblems(rows, *currentRepo); len(problems) > 0 {
 			for _, problem := range problems {
@@ -1136,7 +1137,7 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 		}
 	}
 	if *apply {
-		updated, changes := applyActiveStackLedgerRefresh(ledger, report)
+		updated, changes := applyActiveStackLedgerRefresh(ledger, report, rows)
 		if err := writeJSONFile(*ledgerPath, updated); err != nil {
 			fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: write ledger: %v\n", err)
 			return 2
@@ -2670,6 +2671,49 @@ func nonCurrentUpdateProblems(rows []ActiveStackLedgerRefreshRow, currentRepo st
 	return problems
 }
 
+func suppressCurrentRepoRefreshLoopRows(rows []ActiveStackLedgerRefreshRow, currentRepo string) []ActiveStackLedgerRefreshRow {
+	if !onlyCurrentRepoRowsNeedRefresh(rows, currentRepo) || !currentRepoCIIsReadinessEvidenceRefresh(rows, currentRepo) {
+		return rows
+	}
+	filtered := make([]ActiveStackLedgerRefreshRow, len(rows))
+	copy(filtered, rows)
+	for i := range filtered {
+		if filtered[i].Repository == currentRepo && filtered[i].Action == "update" {
+			filtered[i].Action = "ignored_current_refresh_loop"
+		}
+	}
+	return filtered
+}
+
+func onlyCurrentRepoRowsNeedRefresh(rows []ActiveStackLedgerRefreshRow, currentRepo string) bool {
+	currentNeedsRefresh := false
+	for _, row := range rows {
+		switch row.Action {
+		case "update":
+			if row.Repository != currentRepo {
+				return false
+			}
+			currentNeedsRefresh = true
+		case "blocked", "missing_repository":
+			if row.Repository != currentRepo {
+				return false
+			}
+		}
+	}
+	return currentNeedsRefresh
+}
+
+func currentRepoCIIsReadinessEvidenceRefresh(rows []ActiveStackLedgerRefreshRow, currentRepo string) bool {
+	for _, row := range rows {
+		if row.Repository != currentRepo || row.Workflow != "ci.yml" {
+			continue
+		}
+		title := strings.ToLower(strings.TrimSpace(row.Run.DisplayName))
+		return strings.Contains(title, "refresh") && strings.Contains(title, "readiness evidence")
+	}
+	return false
+}
+
 func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, rows []ActiveStackLedgerRefreshRow) string {
 	var b strings.Builder
 	fmt.Fprintln(&b, "# Active Stack Ledger Refresh Proposal")
@@ -2690,15 +2734,19 @@ func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, rows 
 	return b.String()
 }
 
-func applyActiveStackLedgerRefresh(ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport) (ActiveStackReadinessLedger, []string) {
+func applyActiveStackLedgerRefresh(ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport, rows []ActiveStackLedgerRefreshRow) (ActiveStackReadinessLedger, []string) {
 	var changes []string
+	actions := map[string]string{}
+	for _, row := range rows {
+		actions[row.Repository+" "+row.Workflow] = row.Action
+	}
 	for _, repoReport := range report.Repositories {
 		repoID := githubRepositoryID(repoReport.Repository)
 		for i := range ledger.Repositories {
 			if ledger.Repositories[i].ID != repoID {
 				continue
 			}
-			if repoReport.LatestCI.Status == "completed" && repoReport.LatestCI.Conclusion == "success" {
+			if actions[repoID+" ci.yml"] == "update" && repoReport.LatestCI.Status == "completed" && repoReport.LatestCI.Conclusion == "success" {
 				if applyCIRefresh(&ledger.Repositories[i], repoReport.LatestCI) {
 					changes = append(changes, repoID+" ci.yml")
 				}
@@ -2708,7 +2756,7 @@ func applyActiveStackLedgerRefresh(ledger ActiveStackReadinessLedger, report Act
 					}
 				}
 			}
-			if repoReport.LatestOps.Status == "completed" && repoReport.LatestOps.Conclusion == "success" {
+			if actions[repoID+" production-readiness-ops.yml"] == "update" && repoReport.LatestOps.Status == "completed" && repoReport.LatestOps.Conclusion == "success" {
 				if replaceOrAppendEvidence(&ledger.Repositories[i], regexp.MustCompile(`^Production Readiness Ops run \d+$`), "Production Readiness Ops run "+strings.TrimSpace(repoReport.LatestOps.RunID)) {
 					changes = append(changes, repoID+" production-readiness-ops.yml")
 				}
