@@ -11,9 +11,9 @@
       "evidence": [
         "npm run release:readiness:static",
         "npm run verify",
-        "main CI run 28040918370",
+        "main CI run 28044688155",
         "Production Readiness Ops run 28041937429",
-        "PR #193 merged"
+        "PR #194 merged"
       ]
     },
     {
@@ -30,9 +30,9 @@
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
-        "main CI run 28040905721",
+        "main CI run 28045992781",
         "Production Readiness Ops run 28041937507",
-        "PR #65 merged"
+        "PR #66 merged"
       ]
     },
     {
@@ -47,9 +47,9 @@
         "go run ./cmd/foundry contract fixtures validate",
         "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
         "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
-        "main CI run 28037484365",
-        "Production Readiness Ops run 28037557468",
-        "PR #28 merged"
+        "main CI run 28042487444",
+        "Production Readiness Ops run 28042567314",
+        "PR #32 merged"
       ]
     }
   ],
