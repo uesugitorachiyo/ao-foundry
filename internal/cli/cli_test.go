@@ -3829,7 +3829,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	ciRuns := map[string]string{
 		"ao-foundry":        "99999999991",
 		"ao-forge":          "28036941430",
-		"ao-command":        "28018015778",
+		"ao-command":        "28038021084",
 		"ao2":               "28019192996",
 		"ao2-control-plane": "28034439773",
 		"ao-covenant":       "28020877698",
@@ -3837,7 +3837,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
 		"ao-forge":          "28037052612",
-		"ao-command":        "28029275150",
+		"ao-command":        "28038107702",
 		"ao2":               "28029871033",
 		"ao2-control-plane": "28035142216",
 		"ao-covenant":       "28032771767",
