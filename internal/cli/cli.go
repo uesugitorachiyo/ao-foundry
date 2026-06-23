@@ -785,6 +785,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry release manifest --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release dry-run --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release candidate validate --ledger <path>")
+	fmt.Fprintln(w, "  foundry release candidate notes --ledger <path> --promotion <path> --out <markdown>")
 	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
@@ -1748,7 +1749,7 @@ func runRelease(args []string, stdout, stderr io.Writer) int {
 
 func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "release candidate: expected subcommand validate")
+		fmt.Fprintln(stderr, "release candidate: expected subcommand validate or notes")
 		return 2
 	}
 	switch args[0] {
@@ -1769,6 +1770,45 @@ func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
 		if gate, ok := releaseCandidateGateByName(ledger, "signed_smoke_release_gate"); ok {
 			fmt.Fprintf(stdout, "signed_smoke=%s\n", gate.Status)
 		}
+		return 0
+	case "notes":
+		fs := newFlagSet("release candidate notes", stderr)
+		ledgerPath := fs.String("ledger", "", "release candidate ledger path")
+		promotionPath := fs.String("promotion", "", "release promotion ledger path")
+		outPath := fs.String("out", "", "release candidate notes markdown output path")
+		if !parseFlags(fs, args[1:], stderr) {
+			return 2
+		}
+		if strings.TrimSpace(*outPath) == "" {
+			fmt.Fprintln(stderr, "release candidate notes: missing --out")
+			return 2
+		}
+		candidate, err := loadReleaseCandidateLedger(*ledgerPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release candidate notes: %v\n", err)
+			return 2
+		}
+		promotion, err := loadReleasePromotionLedger(*promotionPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release candidate notes: %v\n", err)
+			return 2
+		}
+		if promotion.CandidateID != candidate.CandidateID {
+			fmt.Fprintf(stderr, "release candidate notes: promotion candidate %q does not match %q\n", promotion.CandidateID, candidate.CandidateID)
+			return 2
+		}
+		notes := renderReleaseCandidateNotes(candidate, promotion)
+		if err := os.MkdirAll(parentDir(*outPath), 0o755); err != nil {
+			fmt.Fprintf(stderr, "release candidate notes: mkdir output parent: %v\n", err)
+			return 2
+		}
+		if err := os.WriteFile(*outPath, []byte(notes), 0o644); err != nil {
+			fmt.Fprintf(stderr, "release candidate notes: write notes: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "release_candidate_notes=%s\n", *outPath)
+		fmt.Fprintf(stdout, "candidate=%s\n", candidate.CandidateID)
+		fmt.Fprintf(stdout, "release_safe=%t\n", promotion.ReleaseSafe)
 		return 0
 	default:
 		fmt.Fprintf(stderr, "release candidate: unknown subcommand %q\n", args[0])
@@ -2404,6 +2444,35 @@ func loadSignedSmokeSummary(path string) (SignedSmokeSummary, error) {
 		return summary, err
 	}
 	return summary, validateSignedSmokeSummary(summary)
+}
+
+func loadReleasePromotionLedger(path string) (ReleasePromotionLedger, error) {
+	var ledger ReleasePromotionLedger
+	if strings.TrimSpace(path) == "" {
+		return ledger, errors.New("missing --promotion")
+	}
+	if err := readJSONFile(path, &ledger); err != nil {
+		return ledger, err
+	}
+	if ledger.SchemaVersion != "ao.foundry.release-promotion.v0.1" {
+		return ledger, errors.New("invalid release promotion schema_version")
+	}
+	if strings.TrimSpace(ledger.CandidateID) == "" {
+		return ledger, errors.New("release promotion requires candidate_id")
+	}
+	if ledger.Status != "ready" {
+		return ledger, errors.New("release promotion status must be ready")
+	}
+	if !ledger.ReleaseSafe {
+		return ledger, errors.New("release promotion must be release_safe")
+	}
+	if strings.TrimSpace(ledger.SignedSmokePulseID) == "" || ledger.SignedSmokeSummaryStatus != "ready" || ledger.PulseStatus != "ready" {
+		return ledger, errors.New("release promotion requires ready signed-smoke and pulse evidence")
+	}
+	if len(ledger.Evidence) == 0 {
+		return ledger, errors.New("release promotion requires evidence")
+	}
+	return ledger, nil
 }
 
 func validateSignedSmokeSummary(summary SignedSmokeSummary) error {
@@ -4655,6 +4724,45 @@ func buildSignedSmokeSummary(pulsePath string) (SignedSmokeSummary, error) {
 		summary.Status = "blocked"
 	}
 	return summary, nil
+}
+
+func renderReleaseCandidateNotes(candidate ReleaseCandidateLedger, promotion ReleasePromotionLedger) string {
+	var b strings.Builder
+	fmt.Fprintf(&b, "# Active Spine Release Candidate: %s\n\n", candidate.CandidateID)
+	fmt.Fprintf(&b, "Status: %s\n\n", candidate.Status)
+	fmt.Fprintf(&b, "Release safe: %t\n", promotion.ReleaseSafe)
+	fmt.Fprintf(&b, "Signed smoke pulse: %s\n", promotion.SignedSmokePulseID)
+	fmt.Fprintf(&b, "Signed smoke summary: %s\n", promotion.SignedSmokeSummaryStatus)
+	fmt.Fprintf(&b, "Pulse status: %s\n\n", promotion.PulseStatus)
+
+	b.WriteString("## Active Spine\n\n")
+	b.WriteString("| Repository | Role | Status | Evidence |\n")
+	b.WriteString("| --- | --- | --- | --- |\n")
+	for _, repo := range candidate.ActiveSpine {
+		fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", escapeMarkdownCell(repo.Name), escapeMarkdownCell(repo.Role), escapeMarkdownCell(repo.Status), escapeMarkdownCell(formatEvidenceItems(repo.Evidence)))
+	}
+
+	b.WriteString("\n## Gates\n\n")
+	b.WriteString("| Gate | Status | Required before promotion | Evidence |\n")
+	b.WriteString("| --- | --- | --- | --- |\n")
+	for _, gate := range candidate.Gates {
+		fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", escapeMarkdownCell(gate.Name), escapeMarkdownCell(gate.Status), boolStatus(gate.RequiredBeforePromotion), escapeMarkdownCell(formatEvidenceItems(gate.Evidence)))
+	}
+
+	b.WriteString("\n## Promotion Evidence\n\n")
+	b.WriteString("| Evidence | Status | Schema |\n")
+	b.WriteString("| --- | --- | --- |\n")
+	for _, item := range promotion.Evidence {
+		fmt.Fprintf(&b, "| %s | %s | %s |\n", escapeMarkdownCell(item.Name), escapeMarkdownCell(item.Status), escapeMarkdownCell(item.SchemaVersion))
+	}
+
+	b.WriteString("\n## Tag plan\n\n")
+	fmt.Fprintf(&b, "- Candidate tag: `%s`\n", candidate.CandidateID)
+	b.WriteString("- Promote only after the signed-smoke summary is fresh for the promotion window.\n")
+	for _, action := range promotion.NextActions {
+		fmt.Fprintf(&b, "- %s\n", action)
+	}
+	return b.String()
 }
 
 func validateSignedSmokeResultPath(path string) error {

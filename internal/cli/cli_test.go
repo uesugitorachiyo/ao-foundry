@@ -1547,6 +1547,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"covenant policy spine --json",
 		"covenant.policy-spine-result.v1",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
+		"go run ./cmd/foundry release candidate notes --ledger examples/readiness/active-spine-release-candidate.ledger.json",
 		"diff -u",
 		"workflow_dispatch signed_smoke=true",
 		"release_safe=true",
@@ -2454,6 +2455,49 @@ func TestReleaseCandidateLedgerValidatesActiveSpine(t *testing.T) {
 	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
 		if strings.Contains(renderedLedger, excluded) {
 			t.Fatalf("release candidate ledger should exclude out-of-scope repo %s", excluded)
+		}
+	}
+}
+
+func TestReleaseCandidateNotesRenderPromotionHandoff(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "active-spine-notes.md")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "candidate", "notes",
+		"--ledger", "examples/readiness/active-spine-release-candidate.ledger.json",
+		"--promotion", "examples/contract-fixtures/valid/foundry-release-promotion-v0.1.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "release_candidate_notes="+outPath) {
+		t.Fatalf("expected notes output path, got %q", stdout.String())
+	}
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read notes: %v", err)
+	}
+	notes := string(data)
+	for _, want := range []string{
+		"# Active Spine Release Candidate: active-spine-2026-06-23",
+		"Status: ready",
+		"Release safe: true",
+		"Signed smoke pulse: pulse-signed-smoke",
+		"| AO2 | execution-engine | ready |",
+		"| AO2 Control Plane | evidence-observer | ready |",
+		"| AO Foundry | operations-factory | ready |",
+		"Tag plan",
+		"active-spine-2026-06-23",
+		"Promote only the bound active-spine candidate",
+	} {
+		if !strings.Contains(notes, want) {
+			t.Fatalf("release candidate notes missing %q:\n%s", want, notes)
+		}
+	}
+	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(notes, excluded) {
+			t.Fatalf("release candidate notes contain excluded scope %q:\n%s", excluded, notes)
 		}
 	}
 }
