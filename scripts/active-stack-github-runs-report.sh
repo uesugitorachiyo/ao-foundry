@@ -4,13 +4,18 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="tmp/active-stack-github-runs-report.json"
 BRANCH="main"
+LEDGER=""
+ENFORCE_LEDGER=false
 
 usage() {
   cat <<'EOF'
-usage: scripts/active-stack-github-runs-report.sh [--branch <branch>] [--out <path>]
+usage: scripts/active-stack-github-runs-report.sh [--branch <branch>] [--out <path>] [--ledger <path>] [--enforce-ledger]
 
 Writes a read-only active-stack GitHub Actions evidence report with the latest
 ci.yml and production-readiness-ops.yml run for each active repository.
+
+When --enforce-ledger is set, also runs:
+  go run ./cmd/foundry readiness evidence-check --ledger <path> --github-runs-report <out>
 EOF
 }
 
@@ -23,6 +28,14 @@ while [[ $# -gt 0 ]]; do
     --out)
       OUT="${2:?missing --out value}"
       shift 2
+      ;;
+    --ledger)
+      LEDGER="${2:?missing --ledger value}"
+      shift 2
+      ;;
+    --enforce-ledger)
+      ENFORCE_LEDGER=true
+      shift
       ;;
     -h|--help)
       usage
@@ -40,6 +53,14 @@ if [[ "$OUT" = /* ]]; then
   OUT_PATH="$OUT"
 else
   OUT_PATH="$ROOT/$OUT"
+fi
+
+if [[ -n "$LEDGER" && "$LEDGER" = /* ]]; then
+  LEDGER_PATH="$LEDGER"
+elif [[ -n "$LEDGER" ]]; then
+  LEDGER_PATH="$ROOT/$LEDGER"
+else
+  LEDGER_PATH=""
 fi
 
 TMPDIR="$(mktemp -d)"
@@ -147,3 +168,12 @@ print(f"status={status}")
 if status != "ready":
     sys.exit(1)
 PY
+
+if [[ "$ENFORCE_LEDGER" == true ]]; then
+  if [[ -z "$LEDGER_PATH" ]]; then
+    echo "missing --ledger for --enforce-ledger" >&2
+    exit 2
+  fi
+  cd "$ROOT"
+  go run ./cmd/foundry readiness evidence-check --ledger "$LEDGER_PATH" --github-runs-report "$OUT_PATH"
+fi

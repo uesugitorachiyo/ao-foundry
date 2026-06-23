@@ -15,6 +15,16 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: false
       - name: Verify branch protection
         shell: bash
         run: scripts/verify-branch-protection.sh
+      - name: Collect active-stack GitHub run evidence
+        shell: bash
+        run: scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
+      - name: Enforce active-stack ledger evidence freshness
+        shell: bash
+        run: go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json

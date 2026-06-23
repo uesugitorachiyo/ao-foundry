@@ -618,6 +618,32 @@ type ReadinessCI struct {
 	URL    string `json:"url,omitempty"`
 }
 
+type ActiveStackGithubRunsReport struct {
+	SchemaVersion string                            `json:"schema_version"`
+	Status        string                            `json:"status"`
+	Branch        string                            `json:"branch"`
+	GeneratedAt   string                            `json:"generated_at"`
+	Repositories  []ActiveStackGithubRunsRepository `json:"repositories"`
+	NextActions   []string                          `json:"next_actions"`
+}
+
+type ActiveStackGithubRunsRepository struct {
+	Repository string               `json:"repository"`
+	LatestCI   ActiveStackGithubRun `json:"latest_ci"`
+	LatestOps  ActiveStackGithubRun `json:"latest_ops"`
+}
+
+type ActiveStackGithubRun struct {
+	Workflow    string `json:"workflow"`
+	Status      string `json:"status"`
+	Conclusion  string `json:"conclusion"`
+	RunID       string `json:"run_id"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	HeadSHA     string `json:"head_sha,omitempty"`
+	DisplayName string `json:"display_title,omitempty"`
+	URL         string `json:"url,omitempty"`
+}
+
 type FoundryRun struct {
 	SchemaVersion string           `json:"schema_version"`
 	RunID         string           `json:"run_id"`
@@ -762,6 +788,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry next --registry <path> --task <path>")
 	fmt.Fprintln(w, "  foundry readiness audit --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry readiness snapshot --ledger <path> [--out <markdown>]")
+	fmt.Fprintln(w, "  foundry readiness evidence-check --ledger <path> --github-runs-report <path> [--check-current-repo]")
 	fmt.Fprintln(w, "  foundry goal validate --goal-run <path>")
 	fmt.Fprintln(w, "  foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
@@ -784,6 +811,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry demo script --out <markdown>")
 	fmt.Fprintln(w, "  foundry release manifest --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release dry-run --out <manifest.json>")
+	fmt.Fprintln(w, "  foundry release handoff --candidate <path> --signed-smoke-summary <path> --promotion-out <path> --notes-out <markdown> --manifest-out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release candidate validate --ledger <path>")
 	fmt.Fprintln(w, "  foundry release candidate notes --ledger <path> --promotion <path> --out <markdown>")
 	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
@@ -956,7 +984,7 @@ func runNext(args []string, stdout, stderr io.Writer) int {
 
 func runReadiness(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "readiness: expected subcommand audit or snapshot")
+		fmt.Fprintln(stderr, "readiness: expected subcommand audit, snapshot, or evidence-check")
 		return 2
 	}
 	switch args[0] {
@@ -964,6 +992,8 @@ func runReadiness(args []string, stdout, stderr io.Writer) int {
 		return runReadinessAudit(args[1:], stdout, stderr)
 	case "snapshot":
 		return runReadinessSnapshot(args[1:], stdout, stderr)
+	case "evidence-check":
+		return runReadinessEvidenceCheck(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "readiness: unknown subcommand %q\n", args[0])
 		return 2
@@ -1023,6 +1053,40 @@ func runReadinessSnapshot(args []string, stdout, stderr io.Writer) int {
 	if _, err := io.WriteString(stdout, snapshot); err != nil {
 		fmt.Fprintf(stderr, "readiness: write output: %v\n", err)
 		return 2
+	}
+	return 0
+}
+
+func runReadinessEvidenceCheck(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("readiness evidence-check", stderr)
+	ledgerPath := fs.String("ledger", "", "active stack readiness ledger path")
+	reportPath := fs.String("github-runs-report", "", "active stack GitHub runs report path")
+	currentRepo := fs.String("current-repo", "ao-foundry", "current repository id")
+	checkCurrentRepo := fs.Bool("check-current-repo", false, "require current repository evidence to match the latest report run IDs")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	ledger, err := loadActiveStackReadinessLedger(*ledgerPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness evidence-check: %v\n", err)
+		return 2
+	}
+	report, err := loadActiveStackGithubRunsReport(*reportPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness evidence-check: %v\n", err)
+		return 2
+	}
+	result := checkActiveStackGithubRunEvidence(ledger, report, *currentRepo, *checkCurrentRepo)
+	if len(result.Problems) > 0 {
+		for _, problem := range result.Problems {
+			fmt.Fprintf(stderr, "readiness evidence-check: %s\n", problem)
+		}
+		return 1
+	}
+	fmt.Fprintln(stdout, "readiness_evidence=ready")
+	fmt.Fprintf(stdout, "repositories_checked=%d\n", result.Checked)
+	if result.SkippedCurrentRepo {
+		fmt.Fprintf(stdout, "current_repo_skipped=%s\n", *currentRepo)
 	}
 	return 0
 }
@@ -1699,7 +1763,7 @@ func runDemo(args []string, stdout, stderr io.Writer) int {
 
 func runRelease(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "release: expected subcommand manifest, dry-run, candidate, promotion, or validate-manifest")
+		fmt.Fprintln(stderr, "release: expected subcommand manifest, dry-run, handoff, candidate, promotion, or validate-manifest")
 		return 2
 	}
 	switch args[0] {
@@ -1737,6 +1801,8 @@ func runRelease(args []string, stdout, stderr io.Writer) int {
 		}
 		fmt.Fprintf(stdout, "release manifest valid: %s\n", *manifestPath)
 		return 0
+	case "handoff":
+		return runReleaseHandoff(args[1:], stdout, stderr)
 	case "candidate":
 		return runReleaseCandidate(args[1:], stdout, stderr)
 	case "promotion":
@@ -1745,6 +1811,71 @@ func runRelease(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "release: unknown subcommand %q\n", args[0])
 		return 2
 	}
+}
+
+func runReleaseHandoff(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("release handoff", stderr)
+	candidatePath := fs.String("candidate", "", "release candidate ledger path")
+	summaryPath := fs.String("signed-smoke-summary", "", "signed-smoke summary path")
+	promotionOut := fs.String("promotion-out", "", "release promotion ledger output path")
+	notesOut := fs.String("notes-out", "", "release candidate notes markdown output path")
+	manifestOut := fs.String("manifest-out", "", "release manifest output path")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	for flagName, value := range map[string]string{
+		"--promotion-out": *promotionOut,
+		"--notes-out":     *notesOut,
+		"--manifest-out":  *manifestOut,
+	} {
+		if strings.TrimSpace(value) == "" {
+			fmt.Fprintf(stderr, "release handoff: missing %s\n", flagName)
+			return 2
+		}
+	}
+	candidate, err := loadReleaseCandidateLedger(*candidatePath)
+	if err != nil {
+		fmt.Fprintf(stderr, "release handoff: %v\n", err)
+		return 2
+	}
+	promotion, err := buildReleasePromotionLedger(*candidatePath, *summaryPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "release handoff: %v\n", err)
+		return 2
+	}
+	if promotion.CandidateID != candidate.CandidateID {
+		fmt.Fprintf(stderr, "release handoff: promotion candidate %q does not match %q\n", promotion.CandidateID, candidate.CandidateID)
+		return 2
+	}
+	if err := writeJSONFile(*promotionOut, promotion); err != nil {
+		fmt.Fprintf(stderr, "release handoff: write promotion ledger: %v\n", err)
+		return 2
+	}
+	notes := renderReleaseCandidateNotes(candidate, promotion)
+	if err := writeTextFile(*notesOut, notes); err != nil {
+		fmt.Fprintf(stderr, "release handoff: write notes: %v\n", err)
+		return 2
+	}
+	manifest, err := buildReleaseManifest(true)
+	if err != nil {
+		fmt.Fprintf(stderr, "release handoff: %v\n", err)
+		return 2
+	}
+	if err := writeJSONFile(*manifestOut, manifest); err != nil {
+		fmt.Fprintf(stderr, "release handoff: write manifest: %v\n", err)
+		return 2
+	}
+	if err := validateReleaseManifestFile(*manifestOut); err != nil {
+		fmt.Fprintf(stderr, "release handoff: %v\n", err)
+		return 2
+	}
+	fmt.Fprintln(stdout, "release_handoff=ready")
+	fmt.Fprintf(stdout, "candidate=%s\n", candidate.CandidateID)
+	fmt.Fprintf(stdout, "release_safe=%t\n", promotion.ReleaseSafe)
+	fmt.Fprintf(stdout, "release_promotion=%s\n", *promotionOut)
+	fmt.Fprintf(stdout, "release_candidate_notes=%s\n", *notesOut)
+	fmt.Fprintf(stdout, "release_manifest=%s\n", *manifestOut)
+	return 0
 }
 
 func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
@@ -2302,6 +2433,26 @@ func loadActiveStackReadinessLedger(path string) (ActiveStackReadinessLedger, er
 	return ledger, nil
 }
 
+func loadActiveStackGithubRunsReport(path string) (ActiveStackGithubRunsReport, error) {
+	var report ActiveStackGithubRunsReport
+	if strings.TrimSpace(path) == "" {
+		return report, errors.New("missing --github-runs-report")
+	}
+	if err := readJSONFile(path, &report); err != nil {
+		return report, err
+	}
+	if report.SchemaVersion != "ao.foundry.active-stack-github-runs-report.v0.1" {
+		return report, errors.New("invalid active stack GitHub runs report schema_version")
+	}
+	if report.Status != "ready" {
+		return report, fmt.Errorf("GitHub runs report status must be ready, got %q", report.Status)
+	}
+	if len(report.Repositories) == 0 {
+		return report, errors.New("GitHub runs report requires repositories")
+	}
+	return report, nil
+}
+
 func loadReleaseCandidateLedger(path string) (ReleaseCandidateLedger, error) {
 	var ledger ReleaseCandidateLedger
 	if strings.TrimSpace(path) == "" {
@@ -2311,6 +2462,76 @@ func loadReleaseCandidateLedger(path string) (ReleaseCandidateLedger, error) {
 		return ledger, err
 	}
 	return ledger, validateReleaseCandidateLedger(ledger)
+}
+
+type ActiveStackGithubEvidenceCheck struct {
+	Checked            int
+	SkippedCurrentRepo bool
+	Problems           []string
+}
+
+func checkActiveStackGithubRunEvidence(ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport, currentRepo string, checkCurrentRepo bool) ActiveStackGithubEvidenceCheck {
+	result := ActiveStackGithubEvidenceCheck{}
+	ledgerRepos := map[string]ActiveStackReadinessRepository{}
+	for _, repo := range ledger.Repositories {
+		ledgerRepos[repo.ID] = repo
+	}
+	for _, repoReport := range report.Repositories {
+		repoID := githubRepositoryID(repoReport.Repository)
+		if repoID == "" {
+			result.Problems = append(result.Problems, fmt.Sprintf("report repository %q has no repository id", repoReport.Repository))
+			continue
+		}
+		ledgerRepo, ok := ledgerRepos[repoID]
+		if !ok {
+			result.Problems = append(result.Problems, fmt.Sprintf("%s is not recorded in active stack readiness ledger", repoID))
+			continue
+		}
+		if repoID == currentRepo && !checkCurrentRepo {
+			result.SkippedCurrentRepo = true
+			continue
+		}
+		result.Checked++
+		result.Problems = append(result.Problems, checkGithubRunEvidence(ledgerRepo, "latest_ci", repoReport.LatestCI)...)
+		result.Problems = append(result.Problems, checkGithubRunEvidence(ledgerRepo, "latest_ops", repoReport.LatestOps)...)
+	}
+	return result
+}
+
+func checkGithubRunEvidence(repo ActiveStackReadinessRepository, kind string, run ActiveStackGithubRun) []string {
+	var problems []string
+	runID := strings.TrimSpace(run.RunID)
+	if run.Status != "completed" || run.Conclusion != "success" {
+		problems = append(problems, fmt.Sprintf("%s %s is %s/%s", repo.ID, kind, run.Status, run.Conclusion))
+	}
+	if runID == "" {
+		problems = append(problems, fmt.Sprintf("%s %s has no run_id", repo.ID, kind))
+		return problems
+	}
+	if !activeStackRepoEvidenceContainsRun(repo, runID) {
+		problems = append(problems, fmt.Sprintf("%s %s run %s is not recorded in readiness ledger evidence", repo.ID, kind, runID))
+	}
+	return problems
+}
+
+func activeStackRepoEvidenceContainsRun(repo ActiveStackReadinessRepository, runID string) bool {
+	if repo.CI != nil && repo.CI.RunID == runID {
+		return true
+	}
+	for _, evidence := range repo.VerificationEvidence {
+		if strings.Contains(evidence, runID) {
+			return true
+		}
+	}
+	return false
+}
+
+func githubRepositoryID(repository string) string {
+	parts := strings.Split(strings.TrimSpace(repository), "/")
+	if len(parts) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(parts[len(parts)-1])
 }
 
 func validateReleaseCandidateLedger(ledger ReleaseCandidateLedger) error {

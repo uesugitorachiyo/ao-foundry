@@ -11,17 +11,22 @@
    `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json`.
 8. Generate the active-spine release-candidate notes:
    `go run ./cmd/foundry release candidate notes --ledger examples/readiness/active-spine-release-candidate.ledger.json --promotion examples/contract-fixtures/valid/foundry-release-promotion-v0.1.json --out docs/operations/ACTIVE-SPINE-2026-06-23-RELEASE-CANDIDATE.md`.
-9. Confirm AO Forge can validate its release-candidate handoff fixture:
+9. Run the consolidated Foundry release handoff:
+   `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`.
+10. Collect active-stack GitHub run evidence and enforce sibling ledger freshness:
+    `scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json`,
+    then `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`.
+11. Confirm AO Forge can validate its release-candidate handoff fixture:
    `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`.
-10. Confirm AO Covenant can emit the AO2-first policy-spine artifact:
+12. Confirm AO Covenant can emit the AO2-first policy-spine artifact:
    `covenant policy spine --json`; validate the captured output against
    `covenant.policy-spine-result.v1`.
-11. Regenerate and compare the active-stack README snapshot:
+13. Regenerate and compare the active-stack README snapshot:
     `go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json > tmp/readiness-snapshot.md`,
     then `diff -u tmp/readiness-snapshot.md <(sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md)`.
-12. Before promotion, run the signed-smoke workflow with
+14. Before promotion, run the signed-smoke workflow with
     `workflow_dispatch signed_smoke=true` and require `release_safe=true`.
-13. Confirm no release step requires credentials, remote services, sibling
+15. Confirm no release step requires credentials, remote services, sibling
    repositories, tags, pushes, uploads, or publishing.
 
 This checklist prepares a release candidate only. It does not publish artifacts.
