@@ -106,6 +106,7 @@
   ],
   "next_actions": [
     "Keep README readiness snapshot parity enforced in CI",
-    "Decide signed-smoke release-gate policy"
+    "Signed-smoke release gate policy documented",
+    "Add active-spine release-candidate checklist"
   ]
 }

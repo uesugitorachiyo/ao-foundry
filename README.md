@@ -117,6 +117,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [AO Foundry v0.1 Design](docs/design/AO-FOUNDRY-V0.1.md)
 - [One-Shot Factory Run](docs/operations/ONE-SHOT-FACTORY-RUN.md)
 - [AO2 Pulse Event Loop](docs/operations/AO2-PULSE-EVENT-LOOP.md)
+- [Signed-smoke release gate](docs/operations/SIGNED-SMOKE-RELEASE-GATE.md)
 - [Production Readiness SDD](docs/sdd/AO-FOUNDRY-PRODUCTION-READINESS-SDD.md)
 - [Pulse Golden Loop SDD](docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md)
 - [Pulse Production Adapters SDD](docs/sdd/AO-FOUNDRY-PULSE-PRODUCTION-ADAPTERS-SDD.md)

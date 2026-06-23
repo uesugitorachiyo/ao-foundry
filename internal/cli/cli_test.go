@@ -1271,6 +1271,44 @@ func TestSignedSmokeEvidenceRetentionPolicyExists(t *testing.T) {
 	}
 }
 
+func TestSignedSmokeReleaseGatePolicyExists(t *testing.T) {
+	data, err := os.ReadFile(repoPath("docs/operations/SIGNED-SMOKE-RELEASE-GATE.md"))
+	if err != nil {
+		t.Fatalf("read signed-smoke release gate policy: %v", err)
+	}
+	policy := string(data)
+	for _, want := range []string{
+		"Manual release gate",
+		"not required for pull_request or push CI",
+		"required before release promotion",
+		"workflow_dispatch",
+		"signed_smoke=true",
+		"AO2_CP_API_TOKEN",
+		"freshness_summary.status=ready",
+		"release_safe=true",
+		"older than 24h",
+		"docs/operations/SIGNED-SMOKE-EVIDENCE-RETENTION.md",
+	} {
+		if !strings.Contains(policy, want) {
+			t.Fatalf("signed-smoke release gate policy missing %q", want)
+		}
+	}
+	readme, err := os.ReadFile(repoPath("README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	if !strings.Contains(string(readme), "Signed-smoke release gate") || !strings.Contains(string(readme), "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md") {
+		t.Fatalf("README missing signed-smoke release gate link")
+	}
+	ledger, err := os.ReadFile(repoPath("examples/readiness/active-stack-readiness.ledger.json"))
+	if err != nil {
+		t.Fatalf("read active stack readiness ledger: %v", err)
+	}
+	if !strings.Contains(string(ledger), "Signed-smoke release gate policy documented") {
+		t.Fatalf("active stack readiness ledger missing signed-smoke policy next action")
+	}
+}
+
 func TestFreshSignedSmokeRunSummaryIsPublicSafe(t *testing.T) {
 	data, err := os.ReadFile(repoPath("docs/evidence/pulse/local-live-smoke/FRESH-SIGNED-SMOKE-SUMMARY.md"))
 	if err != nil {
