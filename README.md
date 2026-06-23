@@ -102,6 +102,9 @@ Last local sweep: 2026-06-23.
 | ao2-control-plane | Ready | License policy, fmt, Python guard tests, Cargo tests/clippy/deny/audit, release build, main CI run `28000068167` |
 | AO Covenant | Ready | AO2-stack policy and trust-boundary docs merged through PR #45 |
 
+The machine-readable source for this snapshot is
+[`examples/readiness/active-stack-readiness.ledger.json`](examples/readiness/active-stack-readiness.ledger.json).
+
 No active readiness path depends on `ao-operator`, `ao-runtime`,
 `ao-control-plane`, `ao-conductor`, `agy-swarms`, or `codex-cron`.
 
@@ -117,6 +120,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Task schema](docs/contracts/foundry-task-v0.1.schema.json)
 - [Run schema](docs/contracts/foundry-run-v0.1.schema.json)
 - [Production readiness audit schema](docs/contracts/foundry-production-readiness-audit-v0.1.schema.json)
+- [Active stack readiness schema](docs/contracts/foundry-active-stack-readiness-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)
 - [Goal readiness audit schema](docs/contracts/foundry-goal-readiness-audit-v0.1.schema.json)
 - [Pulse event schema](docs/contracts/foundry-pulse-event-v0.1.schema.json)

@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.active-stack-readiness.v0.1",
+  "registry_id": "local-ao-stack",
+  "generated_from_registry": "examples/registry/local-ao-stack.foundry-registry.json",
+  "last_sweep_date": "2026-06-23",
+  "status": "ready",
+  "repositories": [
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "status": "ready",
+      "ci": {
+        "status": "success",
+        "run_id": "28003704084",
+        "url": "https://github.com/uesugitorachiyo/ao-foundry/actions/runs/28003704084"
+      },
+      "verification_evidence": ["go test ./..."]
+    }
+  ],
+  "next_actions": ["Keep ledger aligned with the active registry"]
+}

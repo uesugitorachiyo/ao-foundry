@@ -4842,6 +4842,7 @@ func jsonValuesEqual(left, right any) bool {
 func publicSchemaNames() []string {
 	return []string{
 		"foundry-ao2-loop-decision-v0.1",
+		"foundry-active-stack-readiness-v0.1",
 		"foundry-approval-decision-v0.1",
 		"foundry-approval-request-v0.1",
 		"foundry-capability-matrix-v0.1",

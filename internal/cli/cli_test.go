@@ -672,6 +672,68 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 	}
 }
 
+func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-active-stack-readiness-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read active stack readiness schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("active stack readiness schema is not an object: %#v", schema)
+	}
+	ledger, err := readArbitraryJSON("examples/readiness/active-stack-readiness.ledger.json")
+	if err != nil {
+		t.Fatalf("read active stack readiness ledger: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, ledger, "$"); err != nil {
+		t.Fatalf("active stack readiness ledger failed schema: %v", err)
+	}
+	registry, err := loadRegistry(registryFixture())
+	if err != nil {
+		t.Fatalf("load registry: %v", err)
+	}
+	ledgerObject, ok := ledger.(map[string]any)
+	if !ok {
+		t.Fatalf("ledger is not an object: %#v", ledger)
+	}
+	if ledgerObject["registry_id"] != registry.FoundryID || ledgerObject["status"] != "ready" {
+		t.Fatalf("unexpected ledger identity/status: %#v", ledgerObject)
+	}
+	active := map[string]bool{}
+	for _, repo := range registry.Repos {
+		active[repo.ID] = true
+	}
+	entries, ok := ledgerObject["repositories"].([]any)
+	if !ok {
+		t.Fatalf("ledger repositories are not an array: %#v", ledgerObject["repositories"])
+	}
+	if len(entries) != len(active) {
+		t.Fatalf("ledger has %d repositories, registry has %d", len(entries), len(active))
+	}
+	for _, entry := range entries {
+		repo, ok := entry.(map[string]any)
+		if !ok {
+			t.Fatalf("ledger repository is not an object: %#v", entry)
+		}
+		id, ok := repo["id"].(string)
+		if !ok || !active[id] {
+			t.Fatalf("ledger contains non-registry repo: %#v", repo)
+		}
+		if repo["status"] != "ready" {
+			t.Fatalf("ledger repo %s is not ready: %#v", id, repo)
+		}
+		delete(active, id)
+	}
+	if len(active) != 0 {
+		t.Fatalf("ledger missing registry repos: %#v", active)
+	}
+	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(fmt.Sprintf("%v", ledgerObject), excluded) {
+			t.Fatalf("ledger contains excluded repo %q: %#v", excluded, ledgerObject)
+		}
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)
@@ -1654,10 +1716,11 @@ func TestContractFixturesValidateAgainstSchemas(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
 	}
 	output := stdout.String()
+	fixtureCount := fmt.Sprintf("%d", len(publicSchemaNames()))
 	for _, want := range []string{
 		"contract_fixtures=valid",
-		"valid_fixtures=25",
-		"invalid_fixtures=25",
+		"valid_fixtures=" + fixtureCount,
+		"invalid_fixtures=" + fixtureCount,
 	} {
 		if !strings.Contains(output, want) {
 			t.Fatalf("expected output to contain %q, got %q", want, output)

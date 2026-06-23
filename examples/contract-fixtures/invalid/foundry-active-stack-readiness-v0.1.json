@@ -1,0 +1,9 @@
+{
+  "schema_version": "invalid",
+  "registry_id": "local-ao-stack",
+  "generated_from_registry": "examples/registry/local-ao-stack.foundry-registry.json",
+  "last_sweep_date": "2026-06-23",
+  "status": "ready",
+  "repositories": [],
+  "next_actions": []
+}
