@@ -11,7 +11,8 @@
       "role": "operations-factory",
       "status": "ready",
       "ci": {
-        "status": "success"
+        "status": "success",
+        "run_id": "28006997211"
       },
       "verification_evidence": [
         "go test ./...",
@@ -19,7 +20,8 @@
         "go build ./cmd/foundry ./cmd/ao",
         "go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json",
         "go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json",
-        "go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json"
+        "go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json",
+        "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json"
       ]
     },
     {
@@ -27,15 +29,21 @@
       "name": "AO Forge",
       "role": "factory-brain",
       "status": "ready",
-      "ci": { "status": "success" },
+      "ci": {
+        "status": "success",
+        "run_id": "28011603731"
+      },
       "verification_evidence": [
         "license policy",
+        "license policy required in branch protection",
         "GoalRun fixtures",
         "go test ./...",
         "go vet ./...",
         "go build",
         "production-readiness schemas",
-        "actionlint"
+        "actionlint",
+        "Release Preview run 28011603944",
+        "PR #127 merged"
       ]
     },
     {
@@ -45,13 +53,15 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28001691822"
+        "run_id": "28012700399"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
         "release dry-run chain",
         "production readiness 100",
-        "26/26 gates"
+        "30/30 gates",
+        "license policy required in branch protection",
+        "PR #13 merged"
       ]
     },
     {
@@ -61,11 +71,13 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28001004295"
+        "run_id": "28010971882"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
-        "npm run verify"
+        "npm run verify",
+        "native AO2 runtime evidence tests",
+        "PR #191 merged"
       ]
     },
     {
@@ -75,7 +87,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28000068167"
+        "run_id": "28009244900"
       },
       "verification_evidence": [
         "license policy",
@@ -85,7 +97,9 @@
         "cargo clippy --workspace --all-targets -- -D warnings",
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
-        "cargo build --release -p ao2-cp-server"
+        "cargo build --release -p ao2-cp-server",
+        "active stack handoff readback gate",
+        "PR #62 merged"
       ]
     },
     {
@@ -95,13 +109,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28006385705"
+        "run_id": "28012201163"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
         "Release Readiness run 28006538855",
-        "PR #46 merged"
+        "branch protection verifier",
+        "PR #47 merged"
       ]
     }
   ],
@@ -123,8 +138,8 @@
         "required_before_promotion": true,
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
-          "ao-forge main CI run 28005757281",
-          "ao-forge Release Preview run 28005757247"
+          "ao-forge main CI run 28011603731",
+          "ao-forge Release Preview run 28011603944"
         ]
       },
       {
@@ -134,7 +149,7 @@
         "evidence": [
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
-          "ao-covenant main CI run 28006385705",
+          "ao-covenant main CI run 28012201163",
           "ao-covenant Release Readiness run 28006538855"
         ]
       },
@@ -155,6 +170,7 @@
     "Keep release handoff gates attached to the active-stack readiness ledger",
     "Signed-smoke release gate policy documented",
     "Active-spine release-candidate ledger validated in CI",
+    "Run active-stack readiness loop before each release-readiness sweep",
     "Run signed-smoke workflow before release promotion"
   ]
 }
