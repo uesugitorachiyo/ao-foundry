@@ -2068,6 +2068,7 @@ func TestSignedSmokeReleaseGatePolicyExists(t *testing.T) {
 		"required before release promotion",
 		"workflow_dispatch",
 		"signed_smoke=true",
+		"Go 1.26",
 		"AO2_CP_API_TOKEN",
 		"freshness_summary.status=ready",
 		"release_safe=true",
@@ -2177,6 +2178,16 @@ func TestCIWorkflowHasManualSignedSmoke(t *testing.T) {
 		if !strings.Contains(workflow, want) {
 			t.Fatalf("CI workflow missing manual signed-smoke detail %q", want)
 		}
+	}
+	signedSmokeStart := strings.Index(workflow, "\n  signed-smoke:")
+	if signedSmokeStart < 0 {
+		t.Fatalf("CI workflow missing signed-smoke job")
+	}
+	if !strings.Contains(workflow[:signedSmokeStart], "go-version-file: go.mod") {
+		t.Fatalf("CI workflow regular test job should use Foundry go.mod")
+	}
+	if !strings.Contains(workflow[signedSmokeStart:], "go-version: \"1.26\"") {
+		t.Fatalf("CI workflow signed-smoke job should use Go 1.26 for sibling AO tools")
 	}
 }
 
