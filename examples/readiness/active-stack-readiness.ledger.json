@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28051909135",
-        "Production Readiness Ops run 28052003152",
-        "PR #37 merged",
+        "main CI run 28054699582",
+        "Production Readiness Ops run 28054793631",
+        "PR #38 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -126,9 +126,9 @@
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
-        "Release Readiness run 28048266398",
+        "Release Readiness run 28055013267",
         "branch protection verifier",
-        "Production Readiness Ops run 28048382580",
+        "Production Readiness Ops run 28055014809",
         "PR #51 merged"
       ]
     }
@@ -167,8 +167,8 @@
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
           "ao-covenant main CI run 28048024016",
-          "ao-covenant Release Readiness run 28048266398",
-          "ao-covenant Production Readiness Ops run 28048382580"
+          "ao-covenant Release Readiness run 28055013267",
+          "ao-covenant Production Readiness Ops run 28055014809"
         ]
       },
       {
