@@ -96,6 +96,52 @@
       ]
     },
     {
+      "id": "ao-runtime",
+      "name": "AO Runtime",
+      "role": "execution-engine",
+      "delegates_to": "ao-operator",
+      "workspace": "../ao-runtime",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "runtime-status",
+          "location": "README.md",
+          "owner": "ao-runtime"
+        }
+      ],
+      "allowed_automation": ["read-status", "summarize"],
+      "readiness_signals": [
+        {
+          "name": "runtime-supporting-surface",
+          "status": "ready",
+          "source": "supporting execution engine under AO Operator; keep evidence visible without expanding active Foundry scope"
+        }
+      ]
+    },
+    {
+      "id": "ao-control-plane",
+      "name": "AO Control Plane",
+      "role": "evidence-observer",
+      "delegates_to": "ao-operator",
+      "workspace": "../ao-control-plane",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "control-plane-status",
+          "location": "README.md",
+          "owner": "ao-control-plane"
+        }
+      ],
+      "allowed_automation": ["read-status", "summarize"],
+      "readiness_signals": [
+        {
+          "name": "control-plane-supporting-surface",
+          "status": "ready",
+          "source": "future typed state layer; supporting only and not required for first product trial"
+        }
+      ]
+    },
+    {
       "id": "ao2",
       "name": "AO2",
       "role": "execution-engine",

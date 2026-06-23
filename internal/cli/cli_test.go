@@ -86,7 +86,7 @@ func TestStatusSummarizesRegistry(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"AO Foundry", "10 repos", "ao-foundry", "ready: 10"} {
+	for _, want := range []string{"AO Foundry", "12 repos", "ao-foundry", "ready: 12"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("status output missing %q: %s", want, out)
 		}
@@ -500,8 +500,8 @@ func TestRepoHealthJSONReportsLocalOnlyHealth(t *testing.T) {
 		t.Fatalf("unexpected health identity: %#v", health)
 	}
 	repos := health["repos"].([]any)
-	if len(repos) != 10 {
-		t.Fatalf("expected 10 repo health entries, got %d", len(repos))
+	if len(repos) != 12 {
+		t.Fatalf("expected 12 repo health entries, got %d", len(repos))
 	}
 }
 
