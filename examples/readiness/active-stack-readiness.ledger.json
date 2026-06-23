@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28027834300",
+        "main CI run 28029016696",
         "Production Readiness Ops run 28027968419",
-        "PR #20 merged",
+        "PR #21 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -70,7 +70,7 @@
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
-        "Production Readiness Ops run 28018093029",
+        "Production Readiness Ops run 28029275150",
         "PR #14 merged"
       ]
     },
@@ -87,7 +87,7 @@
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28019892957",
+        "Production Readiness Ops run 28029871033",
         "PR #192 merged"
       ]
     },

@@ -28,6 +28,7 @@ This first slice provides:
   - `foundry readiness snapshot --ledger <path> [--out <markdown>]`
   - `foundry readiness evidence-check --ledger <path> --github-runs-report <path>`
   - `foundry readiness ledger-refresh-proposal --ledger <path> --github-runs-report <path> --out <markdown>`
+  - `foundry readiness rollup --ledger <path> --github-runs-report <path> --out <json> --markdown-out <markdown>`
   - `foundry release handoff --candidate <path> --signed-smoke-summary <path> --promotion-out <path> --notes-out <markdown> --manifest-out <manifest.json>`
   - `foundry release candidate validate --ledger <path>`
   - `foundry release candidate notes --ledger <path> --promotion <path> --out <markdown>`
@@ -77,6 +78,7 @@ go run ./cmd/foundry pulse run --out tmp/pulse
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
 go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-ledger-refresh-proposal.md
+go run ./cmd/foundry readiness rollup --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-production-readiness-rollup.json --markdown-out tmp/active-stack-production-readiness-rollup.md
 go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --apply --readme README.md
 scripts/verify-branch-protection.sh
 go run ./cmd/ao status
@@ -130,6 +132,14 @@ runs from a readiness-evidence refresh PR, the proposal marks them
 `ignored_current_refresh_loop` so the automation does not keep opening
 ledger-only refresh PRs for its own bookkeeping.
 
+Use `foundry readiness rollup` after the GitHub runs report exists to produce
+the final `ao.foundry.active-stack-production-readiness-rollup.v0.1` JSON and
+markdown summary. The rollup fails on sibling evidence drift, missing active
+repositories, failed or in-progress sibling runs, blocked release-handoff gates,
+and stale non-current run updates. It records the signed-smoke release gate as a
+`promotion_manual_gate`; that manual gate does not block readiness, but it
+remains required before promotion.
+
 ## Verified Active Stack Snapshot
 
 <!-- foundry:active-stack-readiness:start -->
@@ -137,10 +147,10 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, main CI run 28027834300, Production Readiness Ops run 28027968419, PR #20 merged, signed-smoke release promotion release_safe=true |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, main CI run 28029016696, Production Readiness Ops run 28027968419, PR #21 merged, signed-smoke release promotion release_safe=true |
 | AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28011603944, Production Readiness Ops run 28027282325, PR #129 merged, main CI run `28017583706` |
-| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, Production Readiness Ops run 28018093029, PR #14 merged, main CI run `28018015778` |
-| AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, Production Readiness Ops run 28019892957, PR #192 merged, main CI run `28019192996` |
+| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, Production Readiness Ops run 28029275150, PR #14 merged, main CI run `28018015778` |
+| AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, Production Readiness Ops run 28029871033, PR #192 merged, main CI run `28019192996` |
 | AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, active stack handoff readback gate, Production Readiness Ops run 28027361070, PR #63 merged, main CI run `28016224096` |
 | AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28006538855, branch protection verifier, Production Readiness Ops run 28020887257, PR #49 merged, main CI run `28020877698` |
 
@@ -177,6 +187,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Run schema](docs/contracts/foundry-run-v0.1.schema.json)
 - [Production readiness audit schema](docs/contracts/foundry-production-readiness-audit-v0.1.schema.json)
 - [Active stack readiness schema](docs/contracts/foundry-active-stack-readiness-v0.1.schema.json)
+- [Active stack production readiness rollup schema](docs/contracts/foundry-active-stack-production-readiness-rollup-v0.1.schema.json)
 - [Release candidate schema](docs/contracts/foundry-release-candidate-v0.1.schema.json)
 - [Release promotion schema](docs/contracts/foundry-release-promotion-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)

@@ -688,6 +688,8 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 		"schema_version",
 		"registry validate",
 		"readiness snapshot",
+		"readiness rollup",
+		"active-stack-production-readiness-rollup",
 		"repo board",
 		"release handoff",
 		"loop preflight",
@@ -1352,6 +1354,145 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
 	}
 }
 
+func TestReadinessRollupReportsReadyAndManualPromotionGate(t *testing.T) {
+	dir := t.TempDir()
+	reportPath := filepath.Join(dir, "active-stack-github-runs-report.json")
+	outPath := filepath.Join(dir, "active-stack-production-readiness-rollup.json")
+	markdownPath := filepath.Join(dir, "active-stack-production-readiness-rollup.md")
+	writeActiveStackGithubRunsReportForTest(t, reportPath, nil)
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "rollup",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--out", outPath,
+		"--markdown-out", markdownPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "readiness_rollup="+outPath) || !strings.Contains(stdout.String(), "status=ready") {
+		t.Fatalf("expected rollup output path and ready status, got %q", stdout.String())
+	}
+
+	var rollup map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read rollup: %v", err)
+	}
+	if err := json.Unmarshal(data, &rollup); err != nil {
+		t.Fatalf("unmarshal rollup: %v", err)
+	}
+	if rollup["schema_version"] != "ao.foundry.active-stack-production-readiness-rollup.v0.1" || rollup["status"] != "ready" {
+		t.Fatalf("unexpected rollup identity/status: %#v", rollup)
+	}
+	if !rollupRowsContain(t, rollup["release_handoff"], "name", "signed-smoke-release-gate", "classification", "promotion_manual_gate") {
+		t.Fatalf("signed-smoke gate was not classified as a manual promotion gate: %#v", rollup["release_handoff"])
+	}
+	if !rollupRowsContain(t, rollup["drift"], "repository", "ao-foundry", "action", "ignored_current_refresh_loop") {
+		t.Fatalf("current repo refresh row was not suppressed in drift: %#v", rollup["drift"])
+	}
+	if !rollupRowsContain(t, rollup["drift"], "repository", "ao-forge", "action", "already_recorded") {
+		t.Fatalf("sibling recorded evidence missing from drift: %#v", rollup["drift"])
+	}
+
+	markdown, err := os.ReadFile(markdownPath)
+	if err != nil {
+		t.Fatalf("read markdown rollup: %v", err)
+	}
+	for _, want := range []string{
+		"# Active Stack Production Readiness Rollup",
+		"Status: ready",
+		"| signed-smoke-release-gate | manual_required | promotion_manual_gate |",
+		"| ao-foundry | ci.yml | 99999999991 | ignored_current_refresh_loop |",
+	} {
+		if !strings.Contains(string(markdown), want) {
+			t.Fatalf("markdown rollup missing %q:\n%s", want, string(markdown))
+		}
+	}
+}
+
+func TestReadinessRollupBlocksNonCurrentRunUpdate(t *testing.T) {
+	dir := t.TempDir()
+	reportPath := filepath.Join(dir, "active-stack-github-runs-report.json")
+	outPath := filepath.Join(dir, "active-stack-production-readiness-rollup.json")
+	writeActiveStackGithubRunsReportForTest(t, reportPath, map[string]string{"ao-forge": "99999999993"})
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "rollup",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for non-current update; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "ao-forge ci.yml has update row") {
+		t.Fatalf("expected non-current update failure, got %q", stderr.String())
+	}
+
+	var rollup map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read blocked rollup: %v", err)
+	}
+	if err := json.Unmarshal(data, &rollup); err != nil {
+		t.Fatalf("unmarshal blocked rollup: %v", err)
+	}
+	if rollup["status"] != "blocked" {
+		t.Fatalf("expected blocked rollup, got %#v", rollup)
+	}
+	if rollup["blocked_repositories"] != float64(1) {
+		t.Fatalf("expected one blocked repository, got %#v", rollup["blocked_repositories"])
+	}
+	if !rollupRowsContain(t, rollup["repositories"], "id", "ao-forge", "status", "blocked") {
+		t.Fatalf("ao-forge repository row was not blocked: %#v", rollup["repositories"])
+	}
+}
+
+func TestReadinessRollupAllowsCurrentRepoSelfWindow(t *testing.T) {
+	dir := t.TempDir()
+	reportPath := filepath.Join(dir, "active-stack-github-runs-report.json")
+	outPath := filepath.Join(dir, "active-stack-production-readiness-rollup.json")
+	writeActiveStackGithubRunsReportForTest(t, reportPath, map[string]string{"ao-foundry": "28027834300"})
+	rewriteActiveStackGithubRunsReportForTest(t, reportPath, func(report *ActiveStackGithubRunsReport) {
+		report.CurrentRepoSkipped = true
+		for i := range report.Repositories {
+			if report.Repositories[i].Repository != "uesugitorachiyo/ao-foundry" {
+				continue
+			}
+			report.Repositories[i].LatestOps.Status = "in_progress"
+			report.Repositories[i].LatestOps.Conclusion = ""
+			report.Repositories[i].LatestOps.RunID = "99999999995"
+		}
+	})
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "rollup",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("current repo self window should not fail; code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+
+	var rollup map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read self-window rollup: %v", err)
+	}
+	if err := json.Unmarshal(data, &rollup); err != nil {
+		t.Fatalf("unmarshal self-window rollup: %v", err)
+	}
+	if !rollupRowsContain(t, rollup["drift"], "repository", "ao-foundry", "action", "ignored_current_self_window") {
+		t.Fatalf("current repo self window was not visible as ignored drift: %#v", rollup["drift"])
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)
@@ -1862,8 +2003,10 @@ func TestProductionReadinessOpsWorkflowRunsBranchProtectionVerifier(t *testing.T
 		"scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
 		"go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
 		"go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --fail-on-non-current-update",
+		"go run ./cmd/foundry readiness rollup --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-production-readiness-rollup.json --markdown-out tmp/active-stack-production-readiness-rollup.md",
 		"actions/upload-artifact",
 		"active-stack-github-runs-report",
+		"active-stack-production-readiness-rollup",
 	} {
 		if !strings.Contains(workflow, want) {
 			t.Fatalf("production readiness ops workflow missing %q", want)
@@ -3626,6 +3769,94 @@ func copyFileForTest(t *testing.T, from, to string) {
 	if err := os.WriteFile(to, data, 0o644); err != nil {
 		t.Fatalf("write %s: %v", to, err)
 	}
+}
+
+func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverrides map[string]string) {
+	t.Helper()
+	ciRuns := map[string]string{
+		"ao-foundry":        "99999999991",
+		"ao-forge":          "28017583706",
+		"ao-command":        "28018015778",
+		"ao2":               "28019192996",
+		"ao2-control-plane": "28016224096",
+		"ao-covenant":       "28020877698",
+	}
+	opsRuns := map[string]string{
+		"ao-foundry":        "28027968419",
+		"ao-forge":          "28027282325",
+		"ao-command":        "28029275150",
+		"ao2":               "28029871033",
+		"ao2-control-plane": "28027361070",
+		"ao-covenant":       "28020887257",
+	}
+	for repo, runID := range ciOverrides {
+		ciRuns[repo] = runID
+	}
+	report := ActiveStackGithubRunsReport{
+		SchemaVersion:      "ao.foundry.active-stack-github-runs-report.v0.1",
+		Status:             "ready",
+		Branch:             "main",
+		CurrentRepo:        "ao-foundry",
+		CurrentRepoSkipped: false,
+		GeneratedAt:        "2026-06-23T12:00:00Z",
+	}
+	for _, repo := range []string{"ao-foundry", "ao-forge", "ao-command", "ao2", "ao2-control-plane", "ao-covenant"} {
+		displayTitle := ""
+		if repo == "ao-foundry" {
+			displayTitle = "Refresh Foundry readiness evidence (#99)"
+		}
+		report.Repositories = append(report.Repositories, ActiveStackGithubRunsRepository{
+			Repository: "uesugitorachiyo/" + repo,
+			LatestCI: ActiveStackGithubRun{
+				Workflow:    "ci.yml",
+				Status:      "completed",
+				Conclusion:  "success",
+				RunID:       ciRuns[repo],
+				DisplayName: displayTitle,
+				URL:         "https://github.com/uesugitorachiyo/" + repo + "/actions/runs/" + ciRuns[repo],
+			},
+			LatestOps: ActiveStackGithubRun{
+				Workflow:   "production-readiness-ops.yml",
+				Status:     "completed",
+				Conclusion: "success",
+				RunID:      opsRuns[repo],
+				URL:        "https://github.com/uesugitorachiyo/" + repo + "/actions/runs/" + opsRuns[repo],
+			},
+		})
+	}
+	mustWriteJSONForTest(t, path, report)
+}
+
+func rewriteActiveStackGithubRunsReportForTest(t *testing.T, path string, mutate func(*ActiveStackGithubRunsReport)) {
+	t.Helper()
+	var report ActiveStackGithubRunsReport
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read report: %v", err)
+	}
+	if err := json.Unmarshal(data, &report); err != nil {
+		t.Fatalf("unmarshal report: %v", err)
+	}
+	mutate(&report)
+	mustWriteJSONForTest(t, path, report)
+}
+
+func rollupRowsContain(t *testing.T, raw any, matchKey, matchValue, assertKey, assertValue string) bool {
+	t.Helper()
+	rows, ok := raw.([]any)
+	if !ok {
+		t.Fatalf("rollup field is not an array: %#v", raw)
+	}
+	for _, rawRow := range rows {
+		row, ok := rawRow.(map[string]any)
+		if !ok {
+			t.Fatalf("rollup row is not an object: %#v", rawRow)
+		}
+		if row[matchKey] == matchValue && row[assertKey] == assertValue {
+			return true
+		}
+	}
+	return false
 }
 
 func assertPulseFreshnessSummary(t *testing.T, event map[string]any, wantStatus, wantForgeLivePacket, wantControlPlaneReadback string) {

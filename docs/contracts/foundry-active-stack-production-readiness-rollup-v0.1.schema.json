@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-active-stack-production-readiness-rollup-v0.1.schema.json",
+  "title": "AO Foundry Active Stack Production Readiness Rollup v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "ledger",
+    "github_runs_report",
+    "active_repositories",
+    "ready_repositories",
+    "blocked_repositories",
+    "current_repo",
+    "current_repo_skipped",
+    "repositories",
+    "release_handoff",
+    "drift",
+    "manual_promotion_gates",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.active-stack-production-readiness-rollup.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "ledger": { "type": "string", "minLength": 1 },
+    "github_runs_report": { "type": "string", "minLength": 1 },
+    "active_repositories": { "type": "integer", "minimum": 0 },
+    "ready_repositories": { "type": "integer", "minimum": 0 },
+    "blocked_repositories": { "type": "integer", "minimum": 0 },
+    "current_repo": { "type": "string", "minLength": 1 },
+    "current_repo_skipped": { "type": "boolean" },
+    "repositories": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/repository" }
+    },
+    "release_handoff": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/release_handoff_gate" }
+    },
+    "drift": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/drift_row" }
+    },
+    "manual_promotion_gates": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "problems": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ready", "blocked"] },
+        "latest_ci_run_id": { "type": "string", "minLength": 1 },
+        "latest_ci_status": { "type": "string", "minLength": 1 },
+        "latest_ops_run_id": { "type": "string", "minLength": 1 },
+        "latest_ops_status": { "type": "string", "minLength": 1 }
+      }
+    },
+    "release_handoff_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "required_before_promotion", "classification"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ready", "manual_required", "blocked"] },
+        "required_before_promotion": { "type": "boolean" },
+        "classification": {
+          "type": "string",
+          "enum": ["ready", "promotion_manual_gate", "manual_gate", "blocked"]
+        }
+      }
+    },
+    "drift_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "workflow", "action"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "workflow": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "action": {
+          "type": "string",
+          "enum": [
+            "already_recorded",
+            "update",
+            "blocked",
+            "missing_repository",
+            "ignored_current_refresh_loop",
+            "ignored_current_self_window"
+          ]
+        }
+      }
+    }
+  }
+}

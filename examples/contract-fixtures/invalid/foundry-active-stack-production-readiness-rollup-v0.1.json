@@ -1,0 +1,16 @@
+{
+  "schema_version": "ao.foundry.active-stack-production-readiness-rollup.v0.1",
+  "status": "maybe",
+  "ledger": "examples/readiness/active-stack-readiness.ledger.json",
+  "github_runs_report": "tmp/active-stack-github-runs-report.json",
+  "active_repositories": 1,
+  "ready_repositories": 1,
+  "blocked_repositories": 0,
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": false,
+  "repositories": [],
+  "release_handoff": [],
+  "drift": [],
+  "manual_promotion_gates": [],
+  "next_actions": []
+}

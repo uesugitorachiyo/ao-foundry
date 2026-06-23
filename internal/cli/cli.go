@@ -646,6 +646,47 @@ type ActiveStackGithubRun struct {
 	URL         string `json:"url,omitempty"`
 }
 
+type ActiveStackProductionReadinessRollup struct {
+	SchemaVersion        string                        `json:"schema_version"`
+	Status               string                        `json:"status"`
+	Ledger               string                        `json:"ledger"`
+	GithubRunsReport     string                        `json:"github_runs_report"`
+	ActiveRepositories   int                           `json:"active_repositories"`
+	ReadyRepositories    int                           `json:"ready_repositories"`
+	BlockedRepositories  int                           `json:"blocked_repositories"`
+	CurrentRepo          string                        `json:"current_repo"`
+	CurrentRepoSkipped   bool                          `json:"current_repo_skipped"`
+	Repositories         []ActiveStackRollupRepository `json:"repositories"`
+	ReleaseHandoff       []ActiveStackRollupGate       `json:"release_handoff"`
+	Drift                []ActiveStackRollupDriftRow   `json:"drift"`
+	ManualPromotionGates []string                      `json:"manual_promotion_gates"`
+	Problems             []string                      `json:"problems,omitempty"`
+	NextActions          []string                      `json:"next_actions"`
+}
+
+type ActiveStackRollupRepository struct {
+	ID              string `json:"id"`
+	Status          string `json:"status"`
+	LatestCIRunID   string `json:"latest_ci_run_id,omitempty"`
+	LatestCIStatus  string `json:"latest_ci_status,omitempty"`
+	LatestOpsRunID  string `json:"latest_ops_run_id,omitempty"`
+	LatestOpsStatus string `json:"latest_ops_status,omitempty"`
+}
+
+type ActiveStackRollupGate struct {
+	Name                    string `json:"name"`
+	Status                  string `json:"status"`
+	RequiredBeforePromotion bool   `json:"required_before_promotion"`
+	Classification          string `json:"classification"`
+}
+
+type ActiveStackRollupDriftRow struct {
+	Repository string `json:"repository"`
+	Workflow   string `json:"workflow"`
+	RunID      string `json:"run_id,omitempty"`
+	Action     string `json:"action"`
+}
+
 type FoundryRun struct {
 	SchemaVersion string           `json:"schema_version"`
 	RunID         string           `json:"run_id"`
@@ -792,6 +833,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry readiness snapshot --ledger <path> [--out <markdown>]")
 	fmt.Fprintln(w, "  foundry readiness evidence-check --ledger <path> --github-runs-report <path> [--check-current-repo]")
 	fmt.Fprintln(w, "  foundry readiness ledger-refresh-proposal --ledger <path> --github-runs-report <path> [--out <markdown>] [--apply --readme <path>] [--fail-on-non-current-update]")
+	fmt.Fprintln(w, "  foundry readiness rollup --ledger <path> --github-runs-report <path> [--out <json>] [--markdown-out <markdown>]")
 	fmt.Fprintln(w, "  foundry goal validate --goal-run <path>")
 	fmt.Fprintln(w, "  foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
@@ -987,7 +1029,7 @@ func runNext(args []string, stdout, stderr io.Writer) int {
 
 func runReadiness(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "readiness: expected subcommand audit, snapshot, evidence-check, or ledger-refresh-proposal")
+		fmt.Fprintln(stderr, "readiness: expected subcommand audit, snapshot, evidence-check, ledger-refresh-proposal, or rollup")
 		return 2
 	}
 	switch args[0] {
@@ -999,6 +1041,8 @@ func runReadiness(args []string, stdout, stderr io.Writer) int {
 		return runReadinessEvidenceCheck(args[1:], stdout, stderr)
 	case "ledger-refresh-proposal":
 		return runReadinessLedgerRefreshProposal(args[1:], stdout, stderr)
+	case "rollup":
+		return runReadinessRollup(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "readiness: unknown subcommand %q\n", args[0])
 		return 2
@@ -1156,6 +1200,55 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 			return 2
 		}
 		fmt.Fprintf(stdout, "ledger_refresh_proposal=%s\n", *outPath)
+	}
+	return 0
+}
+
+func runReadinessRollup(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("readiness rollup", stderr)
+	ledgerPath := fs.String("ledger", "", "active stack readiness ledger path")
+	reportPath := fs.String("github-runs-report", "", "active stack GitHub runs report path")
+	outPath := fs.String("out", "", "production readiness rollup JSON output path")
+	markdownOutPath := fs.String("markdown-out", "", "production readiness rollup markdown output path")
+	currentRepo := fs.String("current-repo", "ao-foundry", "current repository id")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	rollup, err := buildActiveStackProductionReadinessRollup(*ledgerPath, *reportPath, *currentRepo)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness rollup: %v\n", err)
+		return 2
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := writeJSONFile(*outPath, rollup); err != nil {
+			fmt.Fprintf(stderr, "readiness rollup: write rollup: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "readiness_rollup=%s\n", *outPath)
+	} else {
+		data, err := json.MarshalIndent(rollup, "", "  ")
+		if err != nil {
+			fmt.Fprintf(stderr, "readiness rollup: marshal rollup: %v\n", err)
+			return 2
+		}
+		if _, err := stdout.Write(append(data, '\n')); err != nil {
+			fmt.Fprintf(stderr, "readiness rollup: write output: %v\n", err)
+			return 2
+		}
+	}
+	if strings.TrimSpace(*markdownOutPath) != "" {
+		if err := writeTextFile(*markdownOutPath, renderActiveStackProductionReadinessRollupMarkdown(rollup)); err != nil {
+			fmt.Fprintf(stderr, "readiness rollup: write markdown rollup: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "readiness_rollup_markdown=%s\n", *markdownOutPath)
+	}
+	fmt.Fprintf(stdout, "status=%s\n", rollup.Status)
+	if rollup.Status != "ready" {
+		for _, problem := range rollup.Problems {
+			fmt.Fprintf(stderr, "readiness rollup: %s\n", problem)
+		}
+		return 1
 	}
 	return 0
 }
@@ -2685,6 +2778,20 @@ func suppressCurrentRepoRefreshLoopRows(rows []ActiveStackLedgerRefreshRow, curr
 	return filtered
 }
 
+func suppressCurrentRepoSelfWindowRows(rows []ActiveStackLedgerRefreshRow, currentRepo string, currentRepoSkipped bool) []ActiveStackLedgerRefreshRow {
+	if !currentRepoSkipped {
+		return rows
+	}
+	filtered := make([]ActiveStackLedgerRefreshRow, len(rows))
+	copy(filtered, rows)
+	for i := range filtered {
+		if filtered[i].Repository == currentRepo && filtered[i].Action == "blocked" {
+			filtered[i].Action = "ignored_current_self_window"
+		}
+	}
+	return filtered
+}
+
 func onlyCurrentRepoRowsNeedRefresh(rows []ActiveStackLedgerRefreshRow, currentRepo string) bool {
 	currentNeedsRefresh := false
 	for _, row := range rows {
@@ -2713,6 +2820,209 @@ func currentRepoCIIsReadinessEvidenceRefresh(rows []ActiveStackLedgerRefreshRow,
 			(strings.Contains(title, "readiness evidence") || strings.Contains(title, "foundry evidence"))
 	}
 	return false
+}
+
+func buildActiveStackProductionReadinessRollup(ledgerPath, reportPath, currentRepo string) (ActiveStackProductionReadinessRollup, error) {
+	ledger, err := loadActiveStackReadinessLedger(ledgerPath)
+	if err != nil {
+		return ActiveStackProductionReadinessRollup{}, err
+	}
+	report, err := loadActiveStackGithubRunsReport(reportPath)
+	if err != nil {
+		return ActiveStackProductionReadinessRollup{}, err
+	}
+	rollup := ActiveStackProductionReadinessRollup{
+		SchemaVersion:      "ao.foundry.active-stack-production-readiness-rollup.v0.1",
+		Status:             "ready",
+		Ledger:             ledgerPath,
+		GithubRunsReport:   reportPath,
+		ActiveRepositories: len(ledger.Repositories),
+		CurrentRepo:        currentRepo,
+		CurrentRepoSkipped: report.CurrentRepoSkipped,
+	}
+	problems := map[string]bool{}
+	addProblem := func(problem string) {
+		problem = strings.TrimSpace(problem)
+		if problem != "" && !problems[problem] {
+			problems[problem] = true
+			rollup.Problems = append(rollup.Problems, problem)
+		}
+	}
+
+	reportRepos := map[string]ActiveStackGithubRunsRepository{}
+	for _, repoReport := range report.Repositories {
+		repoID := githubRepositoryID(repoReport.Repository)
+		if repoID != "" {
+			reportRepos[repoID] = repoReport
+		}
+	}
+	for _, repo := range ledger.Repositories {
+		row := ActiveStackRollupRepository{ID: repo.ID, Status: repo.Status}
+		if repoReport, ok := reportRepos[repo.ID]; ok {
+			row.LatestCIRunID = strings.TrimSpace(repoReport.LatestCI.RunID)
+			row.LatestCIStatus = githubRunRollupStatus(repoReport.LatestCI)
+			row.LatestOpsRunID = strings.TrimSpace(repoReport.LatestOps.RunID)
+			row.LatestOpsStatus = githubRunRollupStatus(repoReport.LatestOps)
+		} else {
+			row.Status = "blocked"
+			addProblem(fmt.Sprintf("%s is missing from GitHub runs report", repo.ID))
+		}
+		if repo.Status != "ready" {
+			row.Status = "blocked"
+			addProblem(fmt.Sprintf("%s readiness ledger status is %s", repo.ID, repo.Status))
+		}
+		rollup.Repositories = append(rollup.Repositories, row)
+	}
+
+	if ledger.Status != "ready" {
+		addProblem(fmt.Sprintf("active stack readiness ledger status is %s", ledger.Status))
+	}
+	evidence := checkActiveStackGithubRunEvidence(ledger, report, currentRepo, false)
+	rollup.CurrentRepoSkipped = rollup.CurrentRepoSkipped || evidence.SkippedCurrentRepo
+	for _, problem := range evidence.Problems {
+		addProblem(problem)
+	}
+	rows := suppressCurrentRepoRefreshLoopRows(activeStackLedgerRefreshRows(ledger, report), currentRepo)
+	rows = suppressCurrentRepoSelfWindowRows(rows, currentRepo, report.CurrentRepoSkipped)
+	for _, problem := range nonCurrentUpdateProblems(rows, currentRepo) {
+		addProblem(problem)
+	}
+	for _, row := range rows {
+		if row.Repository == currentRepo && (row.Action == "blocked" || row.Action == "missing_repository") {
+			addProblem(fmt.Sprintf("%s %s has %s row", row.Repository, row.Workflow, row.Action))
+		}
+		if (row.Action == "update" && row.Repository != currentRepo) || row.Action == "blocked" || row.Action == "missing_repository" {
+			markRollupRepositoryBlocked(&rollup, row.Repository)
+		}
+		rollup.Drift = append(rollup.Drift, ActiveStackRollupDriftRow{
+			Repository: row.Repository,
+			Workflow:   row.Workflow,
+			RunID:      row.RunID,
+			Action:     row.Action,
+		})
+	}
+
+	if ledger.ReleaseHandoff.Status != "ready" {
+		addProblem(fmt.Sprintf("release handoff status is %s", ledger.ReleaseHandoff.Status))
+	}
+	for _, gate := range ledger.ReleaseHandoff.Gates {
+		classification := classifyReleaseHandoffGate(gate)
+		rollup.ReleaseHandoff = append(rollup.ReleaseHandoff, ActiveStackRollupGate{
+			Name:                    gate.Name,
+			Status:                  gate.Status,
+			RequiredBeforePromotion: gate.RequiredBeforePromotion,
+			Classification:          classification,
+		})
+		switch classification {
+		case "ready":
+		case "promotion_manual_gate":
+			rollup.ManualPromotionGates = append(rollup.ManualPromotionGates, gate.Name)
+		default:
+			addProblem(fmt.Sprintf("release handoff gate %s is %s", gate.Name, gate.Status))
+		}
+	}
+
+	recountRollupRepositories(&rollup)
+	if len(rollup.Problems) > 0 {
+		rollup.Status = "blocked"
+		rollup.NextActions = append(rollup.NextActions, rollup.Problems...)
+	} else {
+		rollup.NextActions = []string{
+			"Keep active-stack readiness evidence current after each readiness PR merge.",
+			"Run the signed-smoke release gate manually before promotion.",
+		}
+	}
+	return rollup, nil
+}
+
+func markRollupRepositoryBlocked(rollup *ActiveStackProductionReadinessRollup, repoID string) {
+	for i := range rollup.Repositories {
+		if rollup.Repositories[i].ID == repoID {
+			rollup.Repositories[i].Status = "blocked"
+			return
+		}
+	}
+}
+
+func recountRollupRepositories(rollup *ActiveStackProductionReadinessRollup) {
+	rollup.ReadyRepositories = 0
+	rollup.BlockedRepositories = 0
+	for _, repo := range rollup.Repositories {
+		if repo.Status == "ready" {
+			rollup.ReadyRepositories++
+		} else {
+			rollup.BlockedRepositories++
+		}
+	}
+}
+
+func githubRunRollupStatus(run ActiveStackGithubRun) string {
+	status := strings.TrimSpace(run.Status)
+	conclusion := strings.TrimSpace(run.Conclusion)
+	if status == "" && conclusion == "" {
+		return ""
+	}
+	if conclusion == "" {
+		return status
+	}
+	return status + "/" + conclusion
+}
+
+func classifyReleaseHandoffGate(gate ReleaseHandoffGate) string {
+	switch gate.Status {
+	case "ready":
+		return "ready"
+	case "manual_required":
+		if gate.RequiredBeforePromotion {
+			return "promotion_manual_gate"
+		}
+		return "manual_gate"
+	default:
+		return "blocked"
+	}
+}
+
+func renderActiveStackProductionReadinessRollupMarkdown(rollup ActiveStackProductionReadinessRollup) string {
+	var b strings.Builder
+	fmt.Fprintln(&b, "# Active Stack Production Readiness Rollup")
+	fmt.Fprintln(&b)
+	fmt.Fprintf(&b, "Status: %s\n\n", rollup.Status)
+	fmt.Fprintf(&b, "Ledger: %s\n\n", rollup.Ledger)
+	fmt.Fprintf(&b, "GitHub runs report: %s\n\n", rollup.GithubRunsReport)
+	fmt.Fprintf(&b, "Repositories: %d ready / %d active\n\n", rollup.ReadyRepositories, rollup.ActiveRepositories)
+	fmt.Fprintln(&b, "| Repository | Status | Latest CI | Latest Ops |")
+	fmt.Fprintln(&b, "| --- | --- | --- | --- |")
+	for _, repo := range rollup.Repositories {
+		fmt.Fprintf(&b, "| %s | %s | %s %s | %s %s |\n",
+			escapeMarkdownCell(repo.ID),
+			escapeMarkdownCell(repo.Status),
+			escapeMarkdownCell(repo.LatestCIRunID),
+			escapeMarkdownCell(repo.LatestCIStatus),
+			escapeMarkdownCell(repo.LatestOpsRunID),
+			escapeMarkdownCell(repo.LatestOpsStatus),
+		)
+	}
+	fmt.Fprintln(&b)
+	fmt.Fprintln(&b, "| Gate | Status | Classification |")
+	fmt.Fprintln(&b, "| --- | --- | --- |")
+	for _, gate := range rollup.ReleaseHandoff {
+		fmt.Fprintf(&b, "| %s | %s | %s |\n", escapeMarkdownCell(gate.Name), escapeMarkdownCell(gate.Status), escapeMarkdownCell(gate.Classification))
+	}
+	fmt.Fprintln(&b)
+	fmt.Fprintln(&b, "| Repository | Workflow | Latest run | Action |")
+	fmt.Fprintln(&b, "| --- | --- | --- | --- |")
+	for _, row := range rollup.Drift {
+		fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", escapeMarkdownCell(row.Repository), escapeMarkdownCell(row.Workflow), escapeMarkdownCell(row.RunID), escapeMarkdownCell(row.Action))
+	}
+	if len(rollup.NextActions) > 0 {
+		fmt.Fprintln(&b)
+		fmt.Fprintln(&b, "## Next Actions")
+		fmt.Fprintln(&b)
+		for _, action := range rollup.NextActions {
+			fmt.Fprintf(&b, "- %s\n", action)
+		}
+	}
+	return b.String()
 }
 
 func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, rows []ActiveStackLedgerRefreshRow) string {
@@ -5979,6 +6289,7 @@ func jsonValuesEqual(left, right any) bool {
 func publicSchemaNames() []string {
 	return []string{
 		"foundry-ao2-loop-decision-v0.1",
+		"foundry-active-stack-production-readiness-rollup-v0.1",
 		"foundry-active-stack-readiness-v0.1",
 		"foundry-approval-decision-v0.1",
 		"foundry-approval-request-v0.1",

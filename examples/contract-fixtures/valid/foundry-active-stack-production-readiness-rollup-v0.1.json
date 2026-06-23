@@ -1,0 +1,41 @@
+{
+  "schema_version": "ao.foundry.active-stack-production-readiness-rollup.v0.1",
+  "status": "ready",
+  "ledger": "examples/readiness/active-stack-readiness.ledger.json",
+  "github_runs_report": "tmp/active-stack-github-runs-report.json",
+  "active_repositories": 1,
+  "ready_repositories": 1,
+  "blocked_repositories": 0,
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": true,
+  "repositories": [
+    {
+      "id": "ao-foundry",
+      "status": "ready",
+      "latest_ci_run_id": "28029016696",
+      "latest_ci_status": "completed/success",
+      "latest_ops_run_id": "28027968419",
+      "latest_ops_status": "completed/success"
+    }
+  ],
+  "release_handoff": [
+    {
+      "name": "signed-smoke-release-gate",
+      "status": "manual_required",
+      "required_before_promotion": true,
+      "classification": "promotion_manual_gate"
+    }
+  ],
+  "drift": [
+    {
+      "repository": "ao-foundry",
+      "workflow": "ci.yml",
+      "run_id": "28029016696",
+      "action": "ignored_current_refresh_loop"
+    }
+  ],
+  "manual_promotion_gates": ["signed-smoke-release-gate"],
+  "next_actions": [
+    "Run the signed-smoke release gate manually before promotion."
+  ]
+}
