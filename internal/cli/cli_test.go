@@ -672,6 +672,41 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 	}
 }
 
+func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/active-stack-readiness-loop.sh"))
+	if err != nil {
+		t.Fatalf("read active stack readiness loop script: %v", err)
+	}
+	readme, err := os.ReadFile(repoPath("README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	scriptText := string(script)
+	readmeText := string(readme)
+	for _, want := range []string{
+		"ao.foundry.active-stack-readiness-loop.v0.1",
+		"schema_version",
+		"registry validate",
+		"readiness snapshot",
+		"repo board",
+		"release candidate validate",
+		"loop preflight",
+		"first_failing_check",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("active stack readiness loop script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git push", "gh release", "gh repo edit", "gh pr merge"} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("active stack readiness loop script contains publishing command %q", forbidden)
+		}
+	}
+	if !strings.Contains(readmeText, "scripts/active-stack-readiness-loop.sh") {
+		t.Fatalf("README does not document active stack readiness loop")
+	}
+}
+
 func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 	schema, err := readArbitraryJSON("docs/contracts/foundry-active-stack-readiness-v0.1.schema.json")
 	if err != nil {

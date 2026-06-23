@@ -69,6 +69,7 @@ go run ./cmd/foundry release promotion validate --candidate examples/readiness/a
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
+scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 go run ./cmd/ao status
 go run ./cmd/ao run --out tmp/ao-pulse
 ```
@@ -95,6 +96,12 @@ is dirty or otherwise blocked so cleanup happens before new strategy work.
 Archived subscription-backed swarm, conductor, and deprecated operator/runtime
 repositories are intentionally excluded from the active registry.
 
+Use `scripts/active-stack-readiness-loop.sh` for the local active-stack gate. It
+runs registry validation, README readiness snapshot parity, repo board, release
+candidate validation, and loop preflight, then writes
+`ao.foundry.active-stack-readiness-loop.v0.1` JSON with `first_failing_check`
+and `next_actions`.
+
 ## Verified Active Stack Snapshot
 
 <!-- foundry:active-stack-readiness:start -->
@@ -102,20 +109,20 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json` |
-| AO Forge | Ready | license policy, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint |
-| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 26/26 gates, main CI run `28001691822` |
-| AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, main CI run `28001004295` |
-| AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run `28000068167` |
-| AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28006538855, PR #46 merged, main CI run `28006385705` |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, main CI run `28006997211` |
+| AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28011603944, PR #127 merged, main CI run `28011603731` |
+| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, PR #13 merged, main CI run `28012700399` |
+| AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, PR #191 merged, main CI run `28010971882` |
+| AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, active stack handoff readback gate, PR #62 merged, main CI run `28009244900` |
+| AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28006538855, branch protection verifier, PR #47 merged, main CI run `28012201163` |
 
 Release handoff gates:
 
 | Gate | Current status | Required before promotion | Evidence |
 | --- | --- | --- | --- |
 | foundry-release-candidate | Ready | Yes | `go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json` |
-| forge-release-candidate-handoff | Ready | Yes | `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`, ao-forge main CI run 28005757281, ao-forge Release Preview run 28005757247 |
-| covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28006385705, ao-covenant Release Readiness run 28006538855 |
+| forge-release-candidate-handoff | Ready | Yes | `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`, ao-forge main CI run 28011603731, ao-forge Release Preview run 28011603944 |
+| covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28012201163, ao-covenant Release Readiness run 28006538855 |
 | signed-smoke-release-gate | Manual Required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, release_safe=true |
 
 The machine-readable source for this snapshot is
