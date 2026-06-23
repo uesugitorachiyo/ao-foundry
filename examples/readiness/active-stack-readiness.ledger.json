@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28049572884",
-        "Production Readiness Ops run 28049664250",
-        "PR #36 merged",
+        "main CI run 28051909135",
+        "Production Readiness Ops run 28052003152",
+        "PR #37 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -81,14 +81,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28044688155"
+        "run_id": "28053626014"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28041937429",
-        "PR #194 merged"
+        "Production Readiness Ops run 28054451606",
+        "PR #195 merged"
       ]
     },
     {
