@@ -30,9 +30,9 @@
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
-        "main CI run 28045992781",
-        "Production Readiness Ops run 28041937507",
-        "PR #66 merged"
+        "main CI run 28050638200",
+        "Production Readiness Ops run 28051422824",
+        "PR #67 merged"
       ]
     },
     {
@@ -47,9 +47,9 @@
         "go run ./cmd/foundry contract fixtures validate",
         "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
         "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
-        "main CI run 28048717678",
-        "Production Readiness Ops run 28042567314",
-        "PR #35 merged"
+        "main CI run 28049572884",
+        "Production Readiness Ops run 28049664250",
+        "PR #36 merged"
       ]
     }
   ],
