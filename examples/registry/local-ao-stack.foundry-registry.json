@@ -68,7 +68,7 @@
         {
           "name": "command-surface",
           "status": "ready",
-          "source": "registered for read-only operator workflows"
+          "source": "read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant"
         }
       ]
     },

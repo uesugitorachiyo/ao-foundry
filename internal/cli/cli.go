@@ -3145,6 +3145,9 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 		}
 		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
 	default:
+		if repo.ID == "ao-command" {
+			return []string{"ao-command: keep as the read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant; do not route archived agy-swarms or ao-conductor scope through it"}
+		}
 		return []string{fmt.Sprintf("%s: keep supporting, but do not expand until the active spine is clean", repo.ID)}
 	}
 }

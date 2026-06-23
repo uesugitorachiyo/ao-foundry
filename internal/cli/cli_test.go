@@ -653,6 +653,7 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 		Name:          "Board Text Fixture",
 		Repos: []Repo{
 			boardFixtureRepo("ao-foundry", "AO Foundry", "operations-factory", clean),
+			boardFixtureRepo("ao-command", "AO Command", "operator-command", clean),
 			boardFixtureRepo("agy-swarms", "agy-swarms", "agent-orchestrator", clean),
 		},
 	}
@@ -663,7 +664,7 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"repo board: 2 repos status=ready", "ao-foundry", "active-spine", "agy-swarms", "candidate-demote", "archived for active AO spine work", "next_action="} {
+	for _, want := range []string{"repo board: 3 repos status=ready", "ao-foundry", "active-spine", "ao-command", "read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant", "agy-swarms", "candidate-demote", "archived for active AO spine work", "next_action="} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("board text missing %q: %s", want, out)
 		}

@@ -85,6 +85,9 @@ go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foun
 The board reports active-spine, supporting, candidate-demote, and
 blocked-hygiene entries. It exits non-zero when a registered sibling checkout is
 dirty or otherwise blocked so cleanup happens before new strategy work.
+`ao-command` is supporting because it is the active read-only operator/readback
+surface for AO Forge, AO2, ao2-control-plane, and AO Covenant; it is not a
+support path for archived agy-swarms or ao-conductor scope.
 
 ## Public Documents
 
