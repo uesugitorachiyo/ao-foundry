@@ -31,6 +31,9 @@ jobs:
           name: active-stack-github-runs-report
           path: tmp/active-stack-github-runs-report.json
           if-no-files-found: error
+      - name: Gate sibling ledger refresh drift
+        shell: bash
+        run: go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --fail-on-non-current-update
       - name: Enforce active-stack ledger evidence freshness
         shell: bash
         run: go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json

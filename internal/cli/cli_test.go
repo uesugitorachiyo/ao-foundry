@@ -1083,6 +1083,127 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
 	}
 }
 
+func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T) {
+	dir := t.TempDir()
+	ledgerPath := filepath.Join(dir, "active-stack-readiness.ledger.json")
+	readmePath := filepath.Join(dir, "README.md")
+	reportPath := filepath.Join(dir, "active-stack-github-runs-report.json")
+	copyFileForTest(t, repoPath("examples/readiness/active-stack-readiness.ledger.json"), ledgerPath)
+	copyFileForTest(t, repoPath("README.md"), readmePath)
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": false,
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-foundry",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999991",
+        "display_title": "Apply ledger refresh automation (#99)"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999992"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "ledger-refresh-proposal",
+		"--ledger", ledgerPath,
+		"--github-runs-report", reportPath,
+		"--readme", readmePath,
+		"--apply",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ledger_refresh_apply=ready") {
+		t.Fatalf("expected apply confirmation, got %q", stdout.String())
+	}
+	ledger, err := os.ReadFile(ledgerPath)
+	if err != nil {
+		t.Fatalf("read ledger: %v", err)
+	}
+	ledgerText := string(ledger)
+	for _, want := range []string{"main CI run 99999999991", "Production Readiness Ops run 99999999992", "PR #99 merged"} {
+		if !strings.Contains(ledgerText, want) {
+			t.Fatalf("applied ledger missing %q:\n%s", want, ledgerText)
+		}
+	}
+	if strings.Contains(ledgerText, `"run_id": "99999999991"`) {
+		t.Fatalf("apply must not add self-referential ao-foundry ci.run_id:\n%s", ledgerText)
+	}
+	readme, err := os.ReadFile(readmePath)
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	if !strings.Contains(string(readme), "main CI run 99999999991") || !strings.Contains(string(readme), "Production Readiness Ops run 99999999992") {
+		t.Fatalf("README snapshot was not regenerated:\n%s", string(readme))
+	}
+}
+
+func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
+	reportPath := filepath.Join(t.TempDir(), "active-stack-github-runs-report.json")
+	report := `{
+  "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
+  "status": "ready",
+  "branch": "main",
+  "current_repo": "ao-foundry",
+  "current_repo_skipped": false,
+  "generated_at": "2026-06-23T12:00:00Z",
+  "repositories": [
+    {
+      "repository": "uesugitorachiyo/ao-forge",
+      "latest_ci": {
+        "workflow": "ci.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "99999999993"
+      },
+      "latest_ops": {
+        "workflow": "production-readiness-ops.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": "28017685064"
+      }
+    }
+  ],
+  "next_actions": []
+}
+`
+	if err := os.WriteFile(reportPath, []byte(report), 0o644); err != nil {
+		t.Fatalf("write report: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"readiness", "ledger-refresh-proposal",
+		"--ledger", "examples/readiness/active-stack-readiness.ledger.json",
+		"--github-runs-report", reportPath,
+		"--fail-on-non-current-update",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for stale sibling proposal; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "ao-forge ci.yml has update row") {
+		t.Fatalf("expected non-current update failure, got %q", stderr.String())
+	}
+}
+
 func TestLoopPreflightPassesForExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"loop", "preflight", "--goal-run", goalFixture(), "--registry", registryFixture(), "--task", taskFixture()}, &stdout, &stderr)
@@ -1592,6 +1713,7 @@ func TestProductionReadinessOpsWorkflowRunsBranchProtectionVerifier(t *testing.T
 		"scripts/verify-branch-protection.sh",
 		"scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
 		"go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
+		"go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --fail-on-non-current-update",
 		"actions/upload-artifact",
 		"active-stack-github-runs-report",
 	} {
@@ -1686,6 +1808,8 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"covenant.policy-spine-result.v1",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json",
+		"--apply --readme README.md",
+		"--fail-on-non-current-update",
 		"go run ./cmd/foundry release candidate notes --ledger examples/readiness/active-spine-release-candidate.ledger.json",
 		"diff -u",
 		"workflow_dispatch signed_smoke=true",
@@ -3340,6 +3464,20 @@ func readmeBlock(t *testing.T, text, startMarker, endMarker string) string {
 		t.Fatalf("README marker order is invalid")
 	}
 	return text[start:end+len(endMarker)] + "\n"
+}
+
+func copyFileForTest(t *testing.T, from, to string) {
+	t.Helper()
+	data, err := os.ReadFile(from)
+	if err != nil {
+		t.Fatalf("read %s: %v", from, err)
+	}
+	if err := os.MkdirAll(filepath.Dir(to), 0o755); err != nil {
+		t.Fatalf("mkdir %s: %v", filepath.Dir(to), err)
+	}
+	if err := os.WriteFile(to, data, 0o644); err != nil {
+		t.Fatalf("write %s: %v", to, err)
+	}
 }
 
 func assertPulseFreshnessSummary(t *testing.T, event map[string]any, wantStatus, wantForgeLivePacket, wantControlPlaneReadback string) {
