@@ -277,6 +277,24 @@ type ReleaseCandidateGate struct {
 	Evidence                []string `json:"evidence"`
 }
 
+type ReleasePromotionLedger struct {
+	SchemaVersion            string                     `json:"schema_version"`
+	CandidateID              string                     `json:"candidate_id"`
+	Status                   string                     `json:"status"`
+	ReleaseSafe              bool                       `json:"release_safe"`
+	SignedSmokePulseID       string                     `json:"signed_smoke_pulse_id"`
+	SignedSmokeSummaryStatus string                     `json:"signed_smoke_summary_status"`
+	PulseStatus              string                     `json:"pulse_status"`
+	Evidence                 []ReleasePromotionEvidence `json:"evidence"`
+	NextActions              []string                   `json:"next_actions"`
+}
+
+type ReleasePromotionEvidence struct {
+	Name          string `json:"name"`
+	Status        string `json:"status"`
+	SchemaVersion string `json:"schema_version"`
+}
+
 type CompetitiveReadinessAudit struct {
 	SchemaVersion string                     `json:"schema_version"`
 	Status        string                     `json:"status"`
@@ -754,6 +772,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry release manifest --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release dry-run --out <manifest.json>")
 	fmt.Fprintln(w, "  foundry release candidate validate --ledger <path>")
+	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
 	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--signed-smoke-result <path>] --out <dir>")
@@ -1666,7 +1685,7 @@ func runDemo(args []string, stdout, stderr io.Writer) int {
 
 func runRelease(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "release: expected subcommand manifest, dry-run, candidate, or validate-manifest")
+		fmt.Fprintln(stderr, "release: expected subcommand manifest, dry-run, candidate, promotion, or validate-manifest")
 		return 2
 	}
 	switch args[0] {
@@ -1706,6 +1725,8 @@ func runRelease(args []string, stdout, stderr io.Writer) int {
 		return 0
 	case "candidate":
 		return runReleaseCandidate(args[1:], stdout, stderr)
+	case "promotion":
+		return runReleasePromotion(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "release: unknown subcommand %q\n", args[0])
 		return 2
@@ -1738,6 +1759,45 @@ func runReleaseCandidate(args []string, stdout, stderr io.Writer) int {
 		return 0
 	default:
 		fmt.Fprintf(stderr, "release candidate: unknown subcommand %q\n", args[0])
+		return 2
+	}
+}
+
+func runReleasePromotion(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "release promotion: expected subcommand validate")
+		return 2
+	}
+	switch args[0] {
+	case "validate":
+		fs := newFlagSet("release promotion validate", stderr)
+		candidatePath := fs.String("candidate", "", "release candidate ledger path")
+		summaryPath := fs.String("signed-smoke-summary", "", "signed-smoke summary path")
+		outPath := fs.String("out", "", "release promotion ledger output path")
+		if !parseFlags(fs, args[1:], stderr) {
+			return 2
+		}
+		if strings.TrimSpace(*outPath) == "" {
+			fmt.Fprintln(stderr, "release promotion: missing --out")
+			return 2
+		}
+		ledger, err := buildReleasePromotionLedger(*candidatePath, *summaryPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "release promotion: %v\n", err)
+			return 2
+		}
+		if err := writeJSONFile(*outPath, ledger); err != nil {
+			fmt.Fprintf(stderr, "release promotion: write ledger: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "release_promotion=%s\n", *outPath)
+		fmt.Fprintf(stdout, "candidate=%s\n", ledger.CandidateID)
+		fmt.Fprintf(stdout, "status=%s\n", ledger.Status)
+		fmt.Fprintf(stdout, "release_safe=%t\n", ledger.ReleaseSafe)
+		fmt.Fprintf(stdout, "signed_smoke=%s\n", ledger.SignedSmokePulseID)
+		return 0
+	default:
+		fmt.Fprintf(stderr, "release promotion: unknown subcommand %q\n", args[0])
 		return 2
 	}
 }
@@ -2284,6 +2344,93 @@ func releaseCandidateGateByName(ledger ReleaseCandidateLedger, name string) (Rel
 		}
 	}
 	return ReleaseCandidateGate{}, false
+}
+
+func buildReleasePromotionLedger(candidatePath, summaryPath string) (ReleasePromotionLedger, error) {
+	candidate, err := loadReleaseCandidateLedger(candidatePath)
+	if err != nil {
+		return ReleasePromotionLedger{}, err
+	}
+	summary, err := loadSignedSmokeSummary(summaryPath)
+	if err != nil {
+		return ReleasePromotionLedger{}, err
+	}
+	evidence := make([]ReleasePromotionEvidence, 0, len(summary.Evidence))
+	for _, item := range summary.Evidence {
+		evidence = append(evidence, ReleasePromotionEvidence{
+			Name:          item.Name,
+			Status:        item.Status,
+			SchemaVersion: item.SchemaVersion,
+		})
+	}
+	return ReleasePromotionLedger{
+		SchemaVersion:            "ao.foundry.release-promotion.v0.1",
+		CandidateID:              candidate.CandidateID,
+		Status:                   "ready",
+		ReleaseSafe:              true,
+		SignedSmokePulseID:       summary.PulseID,
+		SignedSmokeSummaryStatus: summary.Status,
+		PulseStatus:              summary.PulseStatus,
+		Evidence:                 evidence,
+		NextActions: []string{
+			"Attach release-promotion ledger to release notes",
+			"Promote only the bound active-spine candidate",
+		},
+	}, nil
+}
+
+func loadSignedSmokeSummary(path string) (SignedSmokeSummary, error) {
+	var summary SignedSmokeSummary
+	if strings.TrimSpace(path) == "" {
+		return summary, errors.New("missing --signed-smoke-summary")
+	}
+	if err := readJSONFile(path, &summary); err != nil {
+		return summary, err
+	}
+	return summary, validateSignedSmokeSummary(summary)
+}
+
+func validateSignedSmokeSummary(summary SignedSmokeSummary) error {
+	if summary.SchemaVersion != "ao.foundry.signed-smoke-summary.v0.1" {
+		return errors.New("invalid signed-smoke summary schema_version")
+	}
+	if strings.TrimSpace(summary.PulseID) == "" {
+		return errors.New("signed-smoke summary requires pulse_id")
+	}
+	if summary.Status != "ready" {
+		return errors.New("signed-smoke summary status must be ready")
+	}
+	if summary.PulseStatus != "ready" {
+		return errors.New("signed-smoke summary pulse_status must be ready")
+	}
+	if !summary.ReleaseSafe {
+		return errors.New("signed-smoke summary must be release_safe")
+	}
+	requiredEvidence := map[string]string{
+		"forge_live_attempt":     "passed",
+		"control_plane_readback": "ready",
+		"signed_smoke_ingest":    "ready",
+	}
+	seenEvidence := map[string]bool{}
+	for _, evidence := range summary.Evidence {
+		wantStatus, required := requiredEvidence[evidence.Name]
+		if !required {
+			continue
+		}
+		if evidence.Status != wantStatus {
+			return fmt.Errorf("signed-smoke summary evidence %q status = %q, want %q", evidence.Name, evidence.Status, wantStatus)
+		}
+		if strings.TrimSpace(evidence.SchemaVersion) == "" || evidence.SchemaVersion == "missing" {
+			return fmt.Errorf("signed-smoke summary evidence %q requires schema_version", evidence.Name)
+		}
+		seenEvidence[evidence.Name] = true
+	}
+	for name := range requiredEvidence {
+		if !seenEvidence[name] {
+			return fmt.Errorf("signed-smoke summary missing evidence %q", name)
+		}
+	}
+	return nil
 }
 
 func loadEvalScorecard(path string) (EvalScorecard, error) {
@@ -5162,6 +5309,7 @@ func publicSchemaNames() []string {
 		"foundry-registry-v0.1",
 		"foundry-release-candidate-v0.1",
 		"foundry-release-manifest-v0.1",
+		"foundry-release-promotion-v0.1",
 		"foundry-repo-health-v0.1",
 		"foundry-run-v0.1",
 		"foundry-signed-smoke-ingest-v0.1",

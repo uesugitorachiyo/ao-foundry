@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-release-promotion-v0.1.schema.json",
+  "title": "AO Foundry Release Promotion v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "status",
+    "release_safe",
+    "signed_smoke_pulse_id",
+    "signed_smoke_summary_status",
+    "pulse_status",
+    "evidence",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.release-promotion.v0.1" },
+    "candidate_id": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "release_safe": { "const": true },
+    "signed_smoke_pulse_id": { "type": "string", "minLength": 1 },
+    "signed_smoke_summary_status": { "type": "string", "enum": ["ready", "blocked"] },
+    "pulse_status": { "type": "string", "enum": ["ready", "blocked"] },
+    "evidence": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "schema_version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

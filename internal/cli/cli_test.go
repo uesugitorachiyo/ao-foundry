@@ -2199,6 +2199,63 @@ func TestReleaseCandidateLedgerValidatesActiveSpine(t *testing.T) {
 	}
 }
 
+func TestReleasePromotionLedgerRequiresSignedSmokeSummary(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "release-promotion.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "promotion", "validate",
+		"--candidate", "examples/readiness/active-spine-release-candidate.ledger.json",
+		"--signed-smoke-summary", "examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	for _, want := range []string{
+		"release_promotion=" + outPath,
+		"candidate=active-spine-2026-06-23",
+		"status=ready",
+		"release_safe=true",
+		"signed_smoke=pulse-signed-smoke",
+	} {
+		if !strings.Contains(stdout.String(), want) {
+			t.Fatalf("expected stdout to contain %q, got %q", want, stdout.String())
+		}
+	}
+
+	schema, err := readArbitraryJSON(repoPath("docs/contracts/foundry-release-promotion-v0.1.schema.json"))
+	if err != nil {
+		t.Fatalf("read schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("schema root is not object")
+	}
+	ledger, err := readArbitraryJSON(outPath)
+	if err != nil {
+		t.Fatalf("read promotion ledger: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, ledger, "$"); err != nil {
+		t.Fatalf("release promotion ledger should satisfy schema: %v", err)
+	}
+	ledgerObject, ok := ledger.(map[string]any)
+	if !ok {
+		t.Fatalf("ledger root is not object")
+	}
+	if ledgerObject["release_safe"] != true || ledgerObject["status"] != "ready" {
+		t.Fatalf("promotion ledger should be release-safe and ready: %#v", ledgerObject)
+	}
+	if ledgerObject["candidate_id"] != "active-spine-2026-06-23" || ledgerObject["signed_smoke_pulse_id"] != "pulse-signed-smoke" {
+		t.Fatalf("promotion ledger did not bind candidate and signed-smoke summary: %#v", ledgerObject)
+	}
+	renderedLedger := fmt.Sprintf("%v", ledgerObject)
+	for _, excluded := range []string{"ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(renderedLedger, excluded) {
+			t.Fatalf("release promotion ledger should exclude out-of-scope repo %s", excluded)
+		}
+	}
+}
+
 func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 	outDir := t.TempDir()
 	var stdout, stderr bytes.Buffer

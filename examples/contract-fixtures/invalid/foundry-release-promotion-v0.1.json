@@ -1,0 +1,29 @@
+{
+  "schema_version": "ao.foundry.release-promotion.v0.1",
+  "candidate_id": "active-spine-2026-06-23",
+  "status": "unsupported",
+  "release_safe": false,
+  "signed_smoke_pulse_id": "pulse-signed-smoke",
+  "signed_smoke_summary_status": "ready",
+  "pulse_status": "ready",
+  "evidence": [
+    {
+      "name": "forge_live_attempt",
+      "status": "passed",
+      "schema_version": "ao.foundry.forge-live-attempt.v0.1"
+    },
+    {
+      "name": "control_plane_readback",
+      "status": "ready",
+      "schema_version": "ao.foundry.control-plane-readback.v0.1"
+    },
+    {
+      "name": "signed_smoke_ingest",
+      "status": "ready",
+      "schema_version": "ao.foundry.signed-smoke-ingest.v0.1"
+    }
+  ],
+  "next_actions": [
+    "Attach release-promotion ledger to release notes"
+  ]
+}

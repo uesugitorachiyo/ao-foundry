@@ -33,6 +33,16 @@ The resulting pulse evidence must show:
 Evidence older than 24h is stale for release promotion. Rerun signed smoke when
 the Forge live packet or control-plane readback receipt is older than 24h.
 
+Validate the promotion handoff with the active-spine candidate ledger and the
+public-safe signed-smoke summary:
+
+```sh
+go run ./cmd/foundry release promotion validate \
+  --candidate examples/readiness/active-spine-release-candidate.ledger.json \
+  --signed-smoke-summary <signed-smoke-summary.json> \
+  --out tmp/release-promotion.json
+```
+
 ## Retention
 
 Keep runtime scratch under `tmp/` and local live evidence under
