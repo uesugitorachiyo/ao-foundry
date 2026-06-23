@@ -2161,8 +2161,18 @@ func TestCIWorkflowHasManualSignedSmoke(t *testing.T) {
 		"signed_smoke:",
 		"if: ${{ github.event_name == 'workflow_dispatch' && inputs.signed_smoke == 'true' }}",
 		"AO2_CP_API_TOKEN: ${{ secrets.AO2_CP_API_TOKEN }}",
+		"Prepare sibling AO workspace",
+		"git clone --depth 1 https://github.com/uesugitorachiyo/ao-forge.git ../ao-forge",
+		"git clone --depth 1 https://github.com/uesugitorachiyo/ao-covenant.git ../ao-covenant",
+		"git clone --depth 1 https://github.com/uesugitorachiyo/ao2-control-plane.git ../ao2-control-plane",
+		"cargo build -p ao2-cp-server",
 		"go run ./cmd/foundry pulse signed-smoke-script --out tmp/signed-smoke.sh",
 		"bash tmp/signed-smoke.sh",
+		"Upload signed-smoke release evidence",
+		"actions/upload-artifact@v4",
+		"signed-smoke-release-evidence",
+		"tmp/pulse-live/signed-smoke-summary.json",
+		"tmp/release-promotion.live.json",
 	} {
 		if !strings.Contains(workflow, want) {
 			t.Fatalf("CI workflow missing manual signed-smoke detail %q", want)

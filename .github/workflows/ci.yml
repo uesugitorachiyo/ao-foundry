@@ -94,7 +94,21 @@ jobs:
         with:
           go-version-file: go.mod
           cache: false
-      - name: Verify prepared sibling AO workspace
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Prepare sibling AO workspace
+        shell: bash
+        run: |
+          if [ ! -d ../ao-forge ]; then
+            git clone --depth 1 https://github.com/uesugitorachiyo/ao-forge.git ../ao-forge
+          fi
+          if [ ! -d ../ao-covenant ]; then
+            git clone --depth 1 https://github.com/uesugitorachiyo/ao-covenant.git ../ao-covenant
+          fi
+          if [ ! -d ../ao2-control-plane ]; then
+            git clone --depth 1 https://github.com/uesugitorachiyo/ao2-control-plane.git ../ao2-control-plane
+          fi
+          (cd ../ao2-control-plane && cargo build -p ao2-cp-server)
+      - name: Verify signed-smoke workspace
         shell: bash
         run: |
           test -d ../ao-forge
@@ -106,3 +120,16 @@ jobs:
       - name: Run signed smoke
         shell: bash
         run: bash tmp/signed-smoke.sh
+      - name: Scan signed-smoke release evidence
+        shell: bash
+        run: |
+          pattern="ghp""_|github""_pat_|BEGIN ""RSA|BEGIN ""OPENSSH|AO2_CP_API_TOKEN|local-signed-smoke-token|api""_key|access""_token"
+          ! rg -n "$pattern" tmp/pulse-live/signed-smoke-summary.json tmp/release-promotion.live.json
+      - name: Upload signed-smoke release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-smoke-release-evidence
+          path: |
+            tmp/pulse-live/signed-smoke-summary.json
+            tmp/release-promotion.live.json
+          retention-days: 7
