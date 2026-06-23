@@ -70,6 +70,7 @@ go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-producti
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
+scripts/verify-branch-protection.sh
 go run ./cmd/ao status
 go run ./cmd/ao run --out tmp/ao-pulse
 ```
@@ -109,7 +110,7 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/verify-branch-protection.sh |
 | AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28011603944, PR #127 merged, main CI run `28011603731` |
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, PR #13 merged, main CI run `28012700399` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, PR #191 merged, main CI run `28010971882` |
@@ -139,6 +140,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [AO Foundry v0.1 Design](docs/design/AO-FOUNDRY-V0.1.md)
 - [One-Shot Factory Run](docs/operations/ONE-SHOT-FACTORY-RUN.md)
 - [AO2 Pulse Event Loop](docs/operations/AO2-PULSE-EVENT-LOOP.md)
+- [Branch protection](docs/operations/BRANCH-PROTECTION.md)
 - [Signed-smoke release gate](docs/operations/SIGNED-SMOKE-RELEASE-GATE.md)
 - [Production Readiness SDD](docs/sdd/AO-FOUNDRY-PRODUCTION-READINESS-SDD.md)
 - [Pulse Golden Loop SDD](docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md)

@@ -707,6 +707,49 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 	}
 }
 
+func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/verify-branch-protection.sh"))
+	if err != nil {
+		t.Fatalf("read branch protection verifier: %v", err)
+	}
+	doc, err := os.ReadFile(repoPath("docs/operations/BRANCH-PROTECTION.md"))
+	if err != nil {
+		t.Fatalf("read branch protection docs: %v", err)
+	}
+	readme, err := os.ReadFile(repoPath("README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	scriptText := string(script)
+	docText := string(doc)
+	readmeText := string(readme)
+	for _, want := range []string{
+		"gh api",
+		"branches/$BRANCH/protection",
+		"test (ubuntu-latest)",
+		"test (macos-latest)",
+		"test (windows-latest)",
+		"enforce_admins",
+		"required_linear_history",
+		"branch_protection=passed",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("branch protection verifier missing %q", want)
+		}
+		if !strings.Contains(docText, want) && strings.HasPrefix(want, "test ") {
+			t.Fatalf("branch protection docs missing required check %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git push", "gh pr merge", "-X PUT", "-X PATCH", "gh repo edit"} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("branch protection verifier contains mutating command %q", forbidden)
+		}
+	}
+	if !strings.Contains(readmeText, "scripts/verify-branch-protection.sh") {
+		t.Fatalf("README does not document branch protection verifier")
+	}
+}
+
 func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 	schema, err := readArbitraryJSON("docs/contracts/foundry-active-stack-readiness-v0.1.schema.json")
 	if err != nil {
