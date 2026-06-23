@@ -13,7 +13,7 @@ Pulse status: ready
 | --- | --- | --- | --- |
 | AO2 | execution-engine | ready | `npm run release:readiness:static`, `npm run verify`, main CI run 28044688155, Production Readiness Ops run 28041937429, PR #194 merged |
 | AO2 Control Plane | evidence-observer | ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run 28045992781, Production Readiness Ops run 28041937507, PR #66 merged |
-| AO Foundry | operations-factory | ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry contract fixtures validate`, `go run ./cmd/foundry release dry-run --out tmp/release-manifest.json`, `go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json`, main CI run 28042487444, Production Readiness Ops run 28042567314, PR #32 merged |
+| AO Foundry | operations-factory | ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry contract fixtures validate`, `go run ./cmd/foundry release dry-run --out tmp/release-manifest.json`, `go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json`, main CI run 28047564484, Production Readiness Ops run 28042567314, PR #34 merged |
 
 ## Gates
 
