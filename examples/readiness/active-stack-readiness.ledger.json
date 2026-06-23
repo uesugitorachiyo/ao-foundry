@@ -50,7 +50,7 @@
         "go build",
         "production-readiness schemas",
         "actionlint",
-        "Release Preview run 28039509806",
+        "Release Preview run 28040935458",
         "Production Readiness Ops run 28042017044",
         "PR #133 merged"
       ]
@@ -155,7 +155,7 @@
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
           "ao-forge main CI run 28040935640",
-          "ao-forge Release Preview run 28039509806",
+          "ao-forge Release Preview run 28040935458",
           "ao-forge Production Readiness Ops run 28042017044"
         ]
       },
