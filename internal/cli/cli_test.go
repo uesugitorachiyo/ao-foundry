@@ -2226,7 +2226,7 @@ func TestCIWorkflowHasManualSignedSmoke(t *testing.T) {
 		"go run ./cmd/foundry pulse signed-smoke-script --out tmp/signed-smoke.sh",
 		"bash tmp/signed-smoke.sh",
 		"Upload signed-smoke release evidence",
-		"actions/upload-artifact@v4",
+		"actions/upload-artifact@v7.0.1",
 		"signed-smoke-release-evidence",
 		"test -x ../ao2/target/debug/ao2",
 		"tmp/pulse-live/signed-smoke-summary.json",
@@ -2245,6 +2245,31 @@ func TestCIWorkflowHasManualSignedSmoke(t *testing.T) {
 	}
 	if !strings.Contains(workflow[signedSmokeStart:], "go-version: \"1.26\"") {
 		t.Fatalf("CI workflow signed-smoke job should use Go 1.26 for sibling AO tools")
+	}
+}
+
+func TestWorkflowsUseCurrentUploadArtifactAction(t *testing.T) {
+	for _, path := range []string{
+		".github/workflows/ci.yml",
+		".github/workflows/production-readiness-ops.yml",
+	} {
+		data, err := os.ReadFile(repoPath(path))
+		if err != nil {
+			t.Fatalf("read workflow %s: %v", path, err)
+		}
+		workflow := string(data)
+		if !strings.Contains(workflow, "actions/upload-artifact@v7.0.1") {
+			t.Fatalf("workflow %s does not use current upload-artifact action", path)
+		}
+		for _, stale := range []string{
+			"actions/upload-artifact@v4",
+			"actions/upload-artifact@v5",
+			"actions/upload-artifact@v6",
+		} {
+			if strings.Contains(workflow, stale) {
+				t.Fatalf("workflow %s contains stale artifact action %q", path, stale)
+			}
+		}
 	}
 }
 
