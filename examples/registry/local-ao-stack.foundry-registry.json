@@ -76,22 +76,22 @@
       "id": "ao-operator",
       "name": "AO Operator",
       "role": "operator-command",
-      "delegates_to": "ao-foundry",
+      "delegates_to": "ao2",
       "workspace": "../ao-operator",
       "branches": ["main"],
       "evidence_sources": [
         {
-          "kind": "operator-plans",
-          "location": "docs/plans",
+          "kind": "archive-status",
+          "location": "../ao-operator/docs/archive-handoff.md",
           "owner": "ao-operator"
         }
       ],
-      "allowed_automation": ["read-status", "summarize"],
+      "allowed_automation": ["archive-read"],
       "readiness_signals": [
         {
-          "name": "operator-supporting-surface",
+          "name": "archive-handoff",
           "status": "ready",
-          "source": "supporting product surface; do not expand until active spine is clean"
+          "source": "deprecated and replaced by ao2 plus ao2-control-plane; keep as reference-only"
         }
       ]
     },

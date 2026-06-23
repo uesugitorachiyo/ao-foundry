@@ -3094,9 +3094,9 @@ func repoBoardTier(repo Repo) string {
 	switch repo.ID {
 	case "ao2", "ao-forge", "ao-covenant", "ao2-control-plane", "codex-cron", "ao-foundry":
 		return "active-spine"
-	case "ao-command", "ao-operator", "ao-runtime", "ao-control-plane", "financial-services-profile", "secure-agent-profile":
+	case "ao-command", "financial-services-profile", "secure-agent-profile":
 		return "supporting"
-	case "ao-conductor", "agy-swarms", "ai-teams", "ao-covenant-stub-20260617", "memory-ext":
+	case "ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "ai-teams", "ao-covenant-stub-20260617", "memory-ext":
 		return "candidate-demote"
 	default:
 		switch repo.Role {
@@ -3133,6 +3133,15 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 		}
 		if repo.ID == "ao-conductor" {
 			return []string{"ao-conductor: archived for active AO spine work; use docs/archive-handoff.md as reference and route new orchestration through AO Forge and AO2"}
+		}
+		if repo.ID == "ao-operator" {
+			return []string{"ao-operator: deprecated for active AO work; use docs/archive-handoff.md as reference and route execution/control-plane work to ao2 and ao2-control-plane"}
+		}
+		if repo.ID == "ao-runtime" {
+			return []string{"ao-runtime: deprecated with ao-operator; route execution work to ao2"}
+		}
+		if repo.ID == "ao-control-plane" {
+			return []string{"ao-control-plane: deprecated with ao-operator; route typed state and evidence work to ao2-control-plane"}
 		}
 		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
 	default:
