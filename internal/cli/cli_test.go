@@ -707,6 +707,45 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 	}
 }
 
+func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/active-stack-github-runs-report.sh"))
+	if err != nil {
+		t.Fatalf("read active stack GitHub runs report script: %v", err)
+	}
+	readme, err := os.ReadFile(repoPath("README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	scriptText := string(script)
+	readmeText := string(readme)
+	for _, want := range []string{
+		"ao.foundry.active-stack-github-runs-report.v0.1",
+		"ci.yml",
+		"production-readiness-ops.yml",
+		"gh run list",
+		"uesugitorachiyo/ao-foundry",
+		"uesugitorachiyo/ao-forge",
+		"uesugitorachiyo/ao-command",
+		"uesugitorachiyo/ao2",
+		"uesugitorachiyo/ao2-control-plane",
+		"uesugitorachiyo/ao-covenant",
+		"latest_ci",
+		"latest_ops",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("active stack GitHub runs report script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"gh pr merge", "gh workflow run", "git push", "gh release", "ao-operator", "ao-runtime", "ao-control-plane", "ao-conductor", "agy-swarms", "codex-cron"} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("active stack GitHub runs report script contains forbidden scope or mutation %q", forbidden)
+		}
+	}
+	if !strings.Contains(readmeText, "scripts/active-stack-github-runs-report.sh") {
+		t.Fatalf("README does not document active stack GitHub runs report")
+	}
+}
+
 func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/verify-branch-protection.sh"))
 	if err != nil {
