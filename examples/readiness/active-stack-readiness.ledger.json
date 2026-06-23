@@ -36,7 +36,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28040935640"
+        "run_id": "28060735171"
       },
       "verification_evidence": [
         "license policy",
@@ -47,9 +47,9 @@
         "go build",
         "production-readiness schemas",
         "actionlint",
-        "Release Preview run 28056174867",
-        "Production Readiness Ops run 28056174653",
-        "PR #133 merged"
+        "Release Preview run 28060735115",
+        "Production Readiness Ops run 28060835289",
+        "PR #134 merged"
       ]
     },
     {
@@ -118,15 +118,15 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28048024016"
+        "run_id": "28061483204"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
-        "Release Readiness run 28055013267",
+        "Release Readiness run 28061623129",
         "branch protection verifier",
-        "Production Readiness Ops run 28055014809",
-        "PR #51 merged"
+        "Production Readiness Ops run 28061624617",
+        "PR #52 merged"
       ]
     }
   ],
@@ -151,9 +151,9 @@
         "required_before_promotion": true,
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
-          "ao-forge main CI run 28040935640",
-          "ao-forge Release Preview run 28056174867",
-          "ao-forge Production Readiness Ops run 28056174653"
+          "ao-forge main CI run 28060735171",
+          "ao-forge Release Preview run 28060735115",
+          "ao-forge Production Readiness Ops run 28060835289"
         ]
       },
       {
@@ -163,9 +163,9 @@
         "evidence": [
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
-          "ao-covenant main CI run 28048024016",
-          "ao-covenant Release Readiness run 28055013267",
-          "ao-covenant Production Readiness Ops run 28055014809"
+          "ao-covenant main CI run 28061483204",
+          "ao-covenant Release Readiness run 28061623129",
+          "ao-covenant Production Readiness Ops run 28061624617"
         ]
       },
       {

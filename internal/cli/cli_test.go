@@ -1002,8 +1002,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28056174653",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28056174653"
+        "run_id": "28060835289",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28060835289"
       }
     }
   ],
@@ -1061,13 +1061,13 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28040935640"
+        "run_id": "28060735171"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28056174653"
+        "run_id": "28060835289"
       }
     }
   ],
@@ -1100,7 +1100,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
 		"Generated from: " + reportPath,
 		"| ao-foundry | ci.yml | 99999999991 | ignored_current_self_evidence |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_self_evidence |",
-		"| ao-forge | ci.yml | 28040935640 | already_recorded |",
+		"| ao-forge | ci.yml | 28060735171 | already_recorded |",
 		"Update examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
 	} {
@@ -1228,13 +1228,13 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28040935640"
+        "run_id": "28060735171"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28056174653"
+        "run_id": "28060835289"
       }
     }
   ],
@@ -1263,7 +1263,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
 	for _, want := range []string{
 		"| ao-foundry | ci.yml | 99999999991 | ignored_current_refresh_loop |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_refresh_loop |",
-		"| ao-forge | ci.yml | 28040935640 | already_recorded |",
+		"| ao-forge | ci.yml | 28060735171 | already_recorded |",
 	} {
 		if !strings.Contains(proposal, want) {
 			t.Fatalf("proposal missing %q:\n%s", want, proposal)
@@ -1296,7 +1296,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28056174653"
+        "run_id": "28060835289"
       }
     }
   ],
@@ -1353,13 +1353,13 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28040935640"
+        "run_id": "28060735171"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28056174653"
+        "run_id": "28060835289"
       }
     }
   ],
@@ -4002,19 +4002,19 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	t.Helper()
 	ciRuns := map[string]string{
 		"ao-foundry":        "99999999991",
-		"ao-forge":          "28040935640",
+		"ao-forge":          "28060735171",
 		"ao-command":        "28049179216",
 		"ao2":               "28053626014",
 		"ao2-control-plane": "28050638200",
-		"ao-covenant":       "28048024016",
+		"ao-covenant":       "28061483204",
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
-		"ao-forge":          "28056174653",
+		"ao-forge":          "28060835289",
 		"ao-command":        "28049279592",
 		"ao2":               "28054451606",
 		"ao2-control-plane": "28051422824",
-		"ao-covenant":       "28055014809",
+		"ao-covenant":       "28061624617",
 	}
 	for repo, runID := range ciOverrides {
 		ciRuns[repo] = runID
