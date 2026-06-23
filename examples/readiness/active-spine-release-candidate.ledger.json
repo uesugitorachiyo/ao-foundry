@@ -11,9 +11,9 @@
       "evidence": [
         "npm run release:readiness:static",
         "npm run verify",
-        "main CI run 28044688155",
-        "Production Readiness Ops run 28041937429",
-        "PR #194 merged"
+        "main CI run 28053626014",
+        "Production Readiness Ops run 28054451606",
+        "PR #195 merged"
       ]
     },
     {
@@ -47,9 +47,9 @@
         "go run ./cmd/foundry contract fixtures validate",
         "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
         "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
-        "main CI run 28049572884",
-        "Production Readiness Ops run 28049664250",
-        "PR #36 merged"
+        "main CI run 28051909135",
+        "Production Readiness Ops run 28052003152",
+        "PR #37 merged"
       ]
     }
   ],
