@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28037484365",
-        "Production Readiness Ops run 28037557468",
-        "PR #28 merged",
+        "main CI run 28042487444",
+        "Production Readiness Ops run 28042567314",
+        "PR #32 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -81,14 +81,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28040918370"
+        "run_id": "28044688155"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
         "Production Readiness Ops run 28041937429",
-        "PR #193 merged"
+        "PR #194 merged"
       ]
     },
     {
@@ -98,7 +98,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28040905721"
+        "run_id": "28045992781"
       },
       "verification_evidence": [
         "license policy",
@@ -111,7 +111,7 @@
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
         "Production Readiness Ops run 28041937507",
-        "PR #65 merged"
+        "PR #66 merged"
       ]
     },
     {
