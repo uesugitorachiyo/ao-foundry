@@ -1403,6 +1403,31 @@ func TestCIWorkflowRunsPulseSmoke(t *testing.T) {
 	}
 }
 
+func TestProductionReadinessOpsWorkflowRunsBranchProtectionVerifier(t *testing.T) {
+	data, err := os.ReadFile(repoPath(".github/workflows/production-readiness-ops.yml"))
+	if err != nil {
+		t.Fatalf("read production readiness ops workflow: %v", err)
+	}
+	workflow := string(data)
+	for _, want := range []string{
+		"name: production-readiness-ops",
+		"workflow_dispatch:",
+		"schedule:",
+		"cron:",
+		"GH_TOKEN: ${{ github.token }}",
+		"scripts/verify-branch-protection.sh",
+	} {
+		if !strings.Contains(workflow, want) {
+			t.Fatalf("production readiness ops workflow missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"gh pr merge", "git push", "-X PUT", "-X PATCH", "gh repo edit"} {
+		if strings.Contains(workflow, forbidden) {
+			t.Fatalf("production readiness ops workflow contains mutating command %q", forbidden)
+		}
+	}
+}
+
 func TestCleanCloneSmokeRunsContractFixtureValidation(t *testing.T) {
 	data, err := os.ReadFile(repoPath("docs/operations/CLEAN-CLONE-SMOKE.md"))
 	if err != nil {
