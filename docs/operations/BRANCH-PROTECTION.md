@@ -4,8 +4,11 @@ AO Foundry `main` is protected in GitHub and should require the current CI
 matrix before merge:
 
 - `test (ubuntu-latest)`
-- `test (macos-latest)`
+- `test (macos-26)`
 - `test (windows-latest)`
+
+The macOS runner is pinned to an explicit image label so GitHub's moving
+`macos-latest` alias cannot silently change the required status context.
 
 The branch protection policy also keeps strict status checks enabled, enforces
 the rule for administrators, requires linear history, disables force pushes, and
