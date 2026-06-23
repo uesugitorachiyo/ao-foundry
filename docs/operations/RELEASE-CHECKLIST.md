@@ -34,7 +34,8 @@
 17. Before promotion, run the signed-smoke workflow with
     `workflow_dispatch signed_smoke=true`, require `release_safe=true`, and
     download the `signed-smoke-release-evidence` artifact for the public-safe
-    summary and release-promotion JSON.
+    summary and release-promotion JSON. Retain the reviewed public-safe copy
+    under `docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate`.
 18. Confirm no release step requires credentials, remote services, sibling
    repositories, tags, pushes, uploads, or publishing.
 

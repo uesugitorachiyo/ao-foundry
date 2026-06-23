@@ -1979,6 +1979,7 @@ func TestCIWorkflowRunsPulseSmoke(t *testing.T) {
 	}
 	workflow := string(data)
 	for _, want := range []string{
+		"jq empty docs/contracts/*.json examples/**/*.json docs/evidence/pulse/**/*.json",
 		"go run ./cmd/foundry contract fixtures validate",
 		"go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json",
 		"go test ./internal/cli -run 'TestPulseRunBlocksStaleForgeLivePacket|TestPulseRunBlocksStaleControlPlaneReadback|TestPulseRunBlocksControlPlaneReadbackDigestMismatch' -v",
@@ -2117,6 +2118,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"diff -u",
 		"workflow_dispatch signed_smoke=true",
 		"release_safe=true",
+		"docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate",
 	} {
 		if !strings.Contains(checklist, want) {
 			t.Fatalf("release checklist missing active-stack handoff item %q", want)
@@ -2148,6 +2150,57 @@ func TestFreshSignedSmokeRunSummaryIsPublicSafe(t *testing.T) {
 	for _, unsafe := range []string{"/" + "Users/", "ghp" + "_", "github" + "_pat_", "api" + "_key", "access" + "_token", strings.Repeat("x", 32)} {
 		if strings.Contains(summary, unsafe) {
 			t.Fatalf("fresh signed-smoke summary contains unsafe content %q", unsafe)
+		}
+	}
+}
+
+func TestDurableSignedSmokeReleaseEvidenceIsPublicSafe(t *testing.T) {
+	dir := repoPath("docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate")
+	readme, err := os.ReadFile(filepath.Join(dir, "README.md"))
+	if err != nil {
+		t.Fatalf("read durable signed-smoke evidence README: %v", err)
+	}
+	readmeText := string(readme)
+	for _, want := range []string{
+		"run_id=28058644296",
+		"head_sha=908d19080ebb3eef58eaedfff4ef617675210246",
+		"signed_smoke_job_id=83067226516",
+		"artifact=signed-smoke-release-evidence",
+		"pulse_id=pulse-bf475cb4e3a8",
+		"release_safe=true",
+	} {
+		if !strings.Contains(readmeText, want) {
+			t.Fatalf("durable signed-smoke evidence README missing %q", want)
+		}
+	}
+	summary := readObjectFixture(t, filepath.Join(dir, "signed-smoke-summary.json"))
+	if summary["schema_version"] != "ao.foundry.signed-smoke-summary.v0.1" ||
+		summary["status"] != "ready" ||
+		summary["pulse_id"] != "pulse-bf475cb4e3a8" ||
+		summary["release_safe"] != true {
+		t.Fatalf("unexpected durable signed-smoke summary: %#v", summary)
+	}
+	promotion := readObjectFixture(t, filepath.Join(dir, "release-promotion.live.json"))
+	if promotion["schema_version"] != "ao.foundry.release-promotion.v0.1" ||
+		promotion["status"] != "ready" ||
+		promotion["release_safe"] != true ||
+		promotion["signed_smoke_pulse_id"] != "pulse-bf475cb4e3a8" {
+		t.Fatalf("unexpected durable release promotion evidence: %#v", promotion)
+	}
+	for _, path := range []string{
+		filepath.Join(dir, "README.md"),
+		filepath.Join(dir, "signed-smoke-summary.json"),
+		filepath.Join(dir, "release-promotion.live.json"),
+	} {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read durable signed-smoke evidence %s: %v", path, err)
+		}
+		text := string(data)
+		for _, unsafe := range []string{"/" + "Users/", "ghp" + "_", "github" + "_pat_", "AO2_CP_API_TOKEN", "local-signed-smoke-token", "api" + "_key", "access" + "_token", "BEGIN " + "RSA", "BEGIN " + "OPENSSH"} {
+			if strings.Contains(text, unsafe) {
+				t.Fatalf("durable signed-smoke evidence %s contains unsafe content %q", path, unsafe)
+			}
 		}
 	}
 }
@@ -3857,6 +3910,19 @@ func readPulseArtifactJSON(t *testing.T, artifact map[string]any) map[string]any
 		t.Fatalf("artifact is not JSON: %v", err)
 	}
 	return decoded
+}
+
+func readObjectFixture(t *testing.T, path string) map[string]any {
+	t.Helper()
+	value, err := readArbitraryJSON(path)
+	if err != nil {
+		t.Fatalf("read JSON object %s: %v", path, err)
+	}
+	object, ok := value.(map[string]any)
+	if !ok {
+		t.Fatalf("JSON fixture %s is not an object: %#v", path, value)
+	}
+	return object
 }
 
 func readmeBlock(t *testing.T, text, startMarker, endMarker string) string {

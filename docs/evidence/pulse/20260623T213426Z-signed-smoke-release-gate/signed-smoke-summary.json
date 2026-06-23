@@ -1,0 +1,25 @@
+{
+  "schema_version": "ao.foundry.signed-smoke-summary.v0.1",
+  "status": "ready",
+  "pulse_id": "pulse-bf475cb4e3a8",
+  "pulse_status": "ready",
+  "release_safe": true,
+  "evidence": [
+    {
+      "name": "forge_live_attempt",
+      "status": "passed",
+      "schema_version": "ao.foundry.forge-live-attempt.v0.1"
+    },
+    {
+      "name": "control_plane_readback",
+      "status": "ready",
+      "schema_version": "ao.foundry.control-plane-readback.v0.1"
+    },
+    {
+      "name": "signed_smoke_ingest",
+      "status": "ready",
+      "schema_version": "ao.foundry.signed-smoke-ingest.v0.1"
+    }
+  ],
+  "explanation": "Public-safe signed-smoke summary omits source paths, digests, tokens, server logs, and runtime scratch details."
+}
