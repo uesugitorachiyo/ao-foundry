@@ -3135,7 +3135,7 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 			return []string{"ao-conductor: archived for active AO spine work; use docs/archive-handoff.md as reference and route new orchestration through AO Forge and AO2"}
 		}
 		if repo.ID == "ao-operator" {
-			return []string{"ao-operator: deprecated for active AO work; use docs/archive-handoff.md as reference and route execution/control-plane work to ao2 and ao2-control-plane"}
+			return []string{"ao-operator: deprecated for active AO work; use Foundry deprecation record as reference and route execution/control-plane work to ao2 and ao2-control-plane"}
 		}
 		if repo.ID == "ao-runtime" {
 			return []string{"ao-runtime: deprecated with ao-operator; route execution work to ao2"}

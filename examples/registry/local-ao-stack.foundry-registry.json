@@ -82,8 +82,8 @@
       "evidence_sources": [
         {
           "kind": "archive-status",
-          "location": "../ao-operator/docs/archive-handoff.md",
-          "owner": "ao-operator"
+          "location": "docs/operations/AO-OPERATOR-DEPRECATION.md",
+          "owner": "ao-foundry"
         }
       ],
       "allowed_automation": ["archive-read"],
@@ -91,7 +91,7 @@
         {
           "name": "archive-handoff",
           "status": "ready",
-          "source": "deprecated and replaced by ao2 plus ao2-control-plane; keep as reference-only"
+          "source": "deprecated by Foundry portfolio decision and replaced by ao2 plus ao2-control-plane; keep as reference-only"
         }
       ]
     },
