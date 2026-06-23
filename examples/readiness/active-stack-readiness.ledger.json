@@ -26,9 +26,9 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28036181033",
-        "Production Readiness Ops run 28036271967",
-        "PR #27 merged",
+        "main CI run 28037484365",
+        "Production Readiness Ops run 28037557468",
+        "PR #28 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -62,7 +62,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28018015778"
+        "run_id": "28038021084"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
@@ -70,8 +70,8 @@
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
-        "Production Readiness Ops run 28029275150",
-        "PR #14 merged"
+        "Production Readiness Ops run 28038107702",
+        "PR #15 merged"
       ]
     },
     {
