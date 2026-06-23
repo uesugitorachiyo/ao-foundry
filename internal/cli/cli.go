@@ -791,6 +791,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry readiness audit --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry readiness snapshot --ledger <path> [--out <markdown>]")
 	fmt.Fprintln(w, "  foundry readiness evidence-check --ledger <path> --github-runs-report <path> [--check-current-repo]")
+	fmt.Fprintln(w, "  foundry readiness ledger-refresh-proposal --ledger <path> --github-runs-report <path> --out <markdown>")
 	fmt.Fprintln(w, "  foundry goal validate --goal-run <path>")
 	fmt.Fprintln(w, "  foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]")
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
@@ -986,7 +987,7 @@ func runNext(args []string, stdout, stderr io.Writer) int {
 
 func runReadiness(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "readiness: expected subcommand audit, snapshot, or evidence-check")
+		fmt.Fprintln(stderr, "readiness: expected subcommand audit, snapshot, evidence-check, or ledger-refresh-proposal")
 		return 2
 	}
 	switch args[0] {
@@ -996,6 +997,8 @@ func runReadiness(args []string, stdout, stderr io.Writer) int {
 		return runReadinessSnapshot(args[1:], stdout, stderr)
 	case "evidence-check":
 		return runReadinessEvidenceCheck(args[1:], stdout, stderr)
+	case "ledger-refresh-proposal":
+		return runReadinessLedgerRefreshProposal(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "readiness: unknown subcommand %q\n", args[0])
 		return 2
@@ -1090,6 +1093,37 @@ func runReadinessEvidenceCheck(args []string, stdout, stderr io.Writer) int {
 	if result.SkippedCurrentRepo {
 		fmt.Fprintf(stdout, "current_repo_skipped=%s\n", *currentRepo)
 	}
+	return 0
+}
+
+func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("readiness ledger-refresh-proposal", stderr)
+	ledgerPath := fs.String("ledger", "", "active stack readiness ledger path")
+	reportPath := fs.String("github-runs-report", "", "active stack GitHub runs report path")
+	outPath := fs.String("out", "", "ledger refresh proposal markdown output path")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "readiness ledger-refresh-proposal: missing --out")
+		return 2
+	}
+	ledger, err := loadActiveStackReadinessLedger(*ledgerPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: %v\n", err)
+		return 2
+	}
+	report, err := loadActiveStackGithubRunsReport(*reportPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: %v\n", err)
+		return 2
+	}
+	proposal := renderActiveStackLedgerRefreshProposal(*ledgerPath, *reportPath, ledger, report)
+	if err := writeTextFile(*outPath, proposal); err != nil {
+		fmt.Fprintf(stderr, "readiness ledger-refresh-proposal: write proposal: %v\n", err)
+		return 2
+	}
+	fmt.Fprintf(stdout, "ledger_refresh_proposal=%s\n", *outPath)
 	return 0
 }
 
@@ -2534,6 +2568,49 @@ func githubRepositoryID(repository string) string {
 		return ""
 	}
 	return strings.TrimSpace(parts[len(parts)-1])
+}
+
+func renderActiveStackLedgerRefreshProposal(ledgerPath, reportPath string, ledger ActiveStackReadinessLedger, report ActiveStackGithubRunsReport) string {
+	var b strings.Builder
+	ledgerRepos := map[string]ActiveStackReadinessRepository{}
+	for _, repo := range ledger.Repositories {
+		ledgerRepos[repo.ID] = repo
+	}
+	fmt.Fprintln(&b, "# Active Stack Ledger Refresh Proposal")
+	fmt.Fprintln(&b)
+	fmt.Fprintf(&b, "Generated from: %s\n\n", reportPath)
+	fmt.Fprintf(&b, "Ledger target: %s\n\n", ledgerPath)
+	fmt.Fprintln(&b, "| Repository | Workflow | Latest run | Action |")
+	fmt.Fprintln(&b, "| --- | --- | --- | --- |")
+	for _, repoReport := range report.Repositories {
+		repoID := githubRepositoryID(repoReport.Repository)
+		ledgerRepo, ok := ledgerRepos[repoID]
+		if !ok {
+			fmt.Fprintf(&b, "| %s | ci.yml | %s | missing_repository |\n", repoID, strings.TrimSpace(repoReport.LatestCI.RunID))
+			fmt.Fprintf(&b, "| %s | production-readiness-ops.yml | %s | missing_repository |\n", repoID, strings.TrimSpace(repoReport.LatestOps.RunID))
+			continue
+		}
+		writeLedgerRefreshProposalRow(&b, ledgerRepo, "ci.yml", repoReport.LatestCI)
+		writeLedgerRefreshProposalRow(&b, ledgerRepo, "production-readiness-ops.yml", repoReport.LatestOps)
+	}
+	fmt.Fprintln(&b)
+	fmt.Fprintln(&b, "## Apply")
+	fmt.Fprintln(&b)
+	fmt.Fprintf(&b, "1. Update %s with any `update` rows.\n", ledgerPath)
+	fmt.Fprintf(&b, "2. Regenerate README snapshot with `go run ./cmd/foundry readiness snapshot --ledger %s`.\n", ledgerPath)
+	fmt.Fprintf(&b, "3. Run `go run ./cmd/foundry readiness evidence-check --ledger %s --github-runs-report %s`.\n", ledgerPath, reportPath)
+	return b.String()
+}
+
+func writeLedgerRefreshProposalRow(b *strings.Builder, repo ActiveStackReadinessRepository, workflow string, run ActiveStackGithubRun) {
+	runID := strings.TrimSpace(run.RunID)
+	action := "already_recorded"
+	if run.Status != "completed" || run.Conclusion != "success" {
+		action = "blocked"
+	} else if runID == "" || !activeStackRepoEvidenceContainsRun(repo, runID) {
+		action = "update"
+	}
+	fmt.Fprintf(b, "| %s | %s | %s | %s |\n", repo.ID, workflow, runID, action)
 }
 
 func validateReleaseCandidateLedger(ledger ReleaseCandidateLedger) error {
