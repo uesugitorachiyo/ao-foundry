@@ -732,6 +732,8 @@ func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testin
 		"latest_ci",
 		"latest_ops",
 		"readiness evidence-check",
+		"CURRENT_REPO",
+		"current_repo_skipped",
 	} {
 		if !strings.Contains(scriptText, want) {
 			t.Fatalf("active stack GitHub runs report script missing %q", want)

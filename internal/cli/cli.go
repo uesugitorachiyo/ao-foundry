@@ -619,12 +619,14 @@ type ReadinessCI struct {
 }
 
 type ActiveStackGithubRunsReport struct {
-	SchemaVersion string                            `json:"schema_version"`
-	Status        string                            `json:"status"`
-	Branch        string                            `json:"branch"`
-	GeneratedAt   string                            `json:"generated_at"`
-	Repositories  []ActiveStackGithubRunsRepository `json:"repositories"`
-	NextActions   []string                          `json:"next_actions"`
+	SchemaVersion      string                            `json:"schema_version"`
+	Status             string                            `json:"status"`
+	Branch             string                            `json:"branch"`
+	CurrentRepo        string                            `json:"current_repo,omitempty"`
+	CurrentRepoSkipped bool                              `json:"current_repo_skipped,omitempty"`
+	GeneratedAt        string                            `json:"generated_at"`
+	Repositories       []ActiveStackGithubRunsRepository `json:"repositories"`
+	NextActions        []string                          `json:"next_actions"`
 }
 
 type ActiveStackGithubRunsRepository struct {

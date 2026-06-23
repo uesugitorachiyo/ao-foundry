@@ -6,16 +6,23 @@ OUT="tmp/active-stack-github-runs-report.json"
 BRANCH="main"
 LEDGER=""
 ENFORCE_LEDGER=false
+CURRENT_REPO="ao-foundry"
 
 usage() {
   cat <<'EOF'
-usage: scripts/active-stack-github-runs-report.sh [--branch <branch>] [--out <path>] [--ledger <path>] [--enforce-ledger]
+usage: scripts/active-stack-github-runs-report.sh [--branch <branch>] [--out <path>] [--ledger <path>] [--enforce-ledger] [--current-repo <repo-id>]
 
 Writes a read-only active-stack GitHub Actions evidence report with the latest
 ci.yml and production-readiness-ops.yml run for each active repository.
 
 When --enforce-ledger is set, also runs:
   go run ./cmd/foundry readiness evidence-check --ledger <path> --github-runs-report <out>
+
+The current repository is self-referential in ops because its latest
+production-readiness-ops.yml run may be the workflow currently collecting this
+report. CURRENT_REPO defaults to ao-foundry and is not allowed to block report
+status while its own run is in progress; readiness evidence-check still skips
+that repo by default and enforces sibling evidence.
 EOF
 }
 
@@ -36,6 +43,10 @@ while [[ $# -gt 0 ]]; do
     --enforce-ledger)
       ENFORCE_LEDGER=true
       shift
+      ;;
+    --current-repo)
+      CURRENT_REPO="${2:?missing --current-repo value}"
+      shift 2
       ;;
     -h|--help)
       usage
@@ -99,7 +110,7 @@ for repo in "${REPOS[@]}"; do
 done
 
 mkdir -p "$(dirname "$OUT_PATH")"
-python3 - "$MANIFEST" "$OUT_PATH" "$BRANCH" <<'PY'
+python3 - "$MANIFEST" "$OUT_PATH" "$BRANCH" "$CURRENT_REPO" <<'PY'
 import datetime
 import json
 import pathlib
@@ -108,10 +119,12 @@ import sys
 manifest_path = pathlib.Path(sys.argv[1])
 out_path = pathlib.Path(sys.argv[2])
 branch = sys.argv[3]
+current_repo = sys.argv[4]
 
 repos = {}
 status = "ready"
 next_actions = []
+current_repo_skipped = False
 
 for line in manifest_path.read_text().splitlines():
     if not line.strip():
@@ -119,6 +132,7 @@ for line in manifest_path.read_text().splitlines():
     repo, kind, workflow, path = line.split("\t", 3)
     runs = json.loads(pathlib.Path(path).read_text())
     entry = repos.setdefault(repo, {"repository": repo})
+    repo_id = repo.rsplit("/", 1)[-1]
     if not runs:
         run = {
             "workflow": workflow,
@@ -141,6 +155,9 @@ for line in manifest_path.read_text().splitlines():
         }
     entry[kind] = run
     if run["status"] != "completed" or run["conclusion"] != "success":
+        if repo_id == current_repo:
+            current_repo_skipped = True
+            continue
         status = "blocked"
         next_actions.append(f"{repo}: {kind} is {run['status']}/{run['conclusion']}")
 
@@ -157,6 +174,8 @@ payload = {
     "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
     "status": status,
     "branch": branch,
+    "current_repo": current_repo,
+    "current_repo_skipped": current_repo_skipped,
     "generated_at": datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     "repositories": [repos[repo] for repo in ordered_repos],
     "next_actions": next_actions or ["Refresh the readiness ledger with the latest successful ci.yml and production-readiness-ops.yml run IDs."],
@@ -164,6 +183,8 @@ payload = {
 out_path.write_text(json.dumps(payload, indent=2) + "\n")
 print(f"active_stack_github_runs_report={out_path}")
 print(f"status={status}")
+if current_repo_skipped:
+    print(f"current_repo_skipped={current_repo}")
 
 if status != "ready":
     sys.exit(1)
