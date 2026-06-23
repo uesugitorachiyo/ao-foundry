@@ -107,7 +107,16 @@ Last local sweep: 2026-06-23.
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 26/26 gates, main CI run `28001691822` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, main CI run `28001004295` |
 | AO2 Control Plane | Ready | license policy, `cargo fmt --all --check`, Python guard tests, `cargo test --workspace`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo deny check bans licenses sources`, `cargo audit --deny warnings`, `cargo build --release -p ao2-cp-server`, main CI run `28000068167` |
-| AO Covenant | Ready | AO2-stack policy docs, trust-boundary docs, PR #45 merged, main CI run `28002711646` |
+| AO Covenant | Ready | `covenant policy spine --json`, covenant.policy-spine-result.v1, Release Readiness run 28006538855, PR #46 merged, main CI run `28006385705` |
+
+Release handoff gates:
+
+| Gate | Current status | Required before promotion | Evidence |
+| --- | --- | --- | --- |
+| foundry-release-candidate | Ready | Yes | `go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json`, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json` |
+| forge-release-candidate-handoff | Ready | Yes | `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`, ao-forge main CI run 28005757281, ao-forge Release Preview run 28005757247 |
+| covenant-policy-spine | Ready | Yes | `covenant policy spine --json`, covenant.policy-spine-result.v1, ao-covenant main CI run 28006385705, ao-covenant Release Readiness run 28006538855 |
+| signed-smoke-release-gate | Manual Required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, release_safe=true |
 
 The machine-readable source for this snapshot is
 [`examples/readiness/active-stack-readiness.ledger.json`](examples/readiness/active-stack-readiness.ledger.json).

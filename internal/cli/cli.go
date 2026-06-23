@@ -586,7 +586,20 @@ type ActiveStackReadinessLedger struct {
 	LastSweepDate         string                           `json:"last_sweep_date"`
 	Status                string                           `json:"status"`
 	Repositories          []ActiveStackReadinessRepository `json:"repositories"`
+	ReleaseHandoff        ReleaseHandoff                   `json:"release_handoff"`
 	NextActions           []string                         `json:"next_actions"`
+}
+
+type ReleaseHandoff struct {
+	Status string               `json:"status"`
+	Gates  []ReleaseHandoffGate `json:"gates"`
+}
+
+type ReleaseHandoffGate struct {
+	Name                    string   `json:"name"`
+	Status                  string   `json:"status"`
+	RequiredBeforePromotion bool     `json:"required_before_promotion"`
+	Evidence                []string `json:"evidence"`
 }
 
 type ActiveStackReadinessRepository struct {
@@ -2243,6 +2256,9 @@ func loadActiveStackReadinessLedger(path string) (ActiveStackReadinessLedger, er
 	if len(ledger.Repositories) == 0 {
 		return ledger, errors.New("active stack readiness ledger requires repositories")
 	}
+	if ledger.ReleaseHandoff.Status == "" || len(ledger.ReleaseHandoff.Gates) == 0 {
+		return ledger, errors.New("active stack readiness ledger requires release_handoff gates")
+	}
 	return ledger, nil
 }
 
@@ -3107,6 +3123,15 @@ func renderActiveStackReadinessSnapshot(ledgerPath string, ledger ActiveStackRea
 	for _, repo := range ledger.Repositories {
 		fmt.Fprintf(&b, "| %s | %s | %s |\n", escapeMarkdownCell(repo.Name), titleStatus(repo.Status), escapeMarkdownCell(formatReadinessEvidence(repo)))
 	}
+	if len(ledger.ReleaseHandoff.Gates) > 0 {
+		b.WriteString("\n")
+		b.WriteString("Release handoff gates:\n\n")
+		b.WriteString("| Gate | Current status | Required before promotion | Evidence |\n")
+		b.WriteString("| --- | --- | --- | --- |\n")
+		for _, gate := range ledger.ReleaseHandoff.Gates {
+			fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", escapeMarkdownCell(gate.Name), titleStatus(gate.Status), boolStatus(gate.RequiredBeforePromotion), escapeMarkdownCell(formatEvidenceItems(gate.Evidence)))
+		}
+	}
 	b.WriteString("\n")
 	b.WriteString("The machine-readable source for this snapshot is\n")
 	fmt.Fprintf(&b, "[`%s`](%s).\n", ledgerPath, ledgerPath)
@@ -3127,13 +3152,32 @@ func formatReadinessEvidence(repo ActiveStackReadinessRepository) string {
 	return strings.Join(evidence, ", ")
 }
 
+func formatEvidenceItems(items []string) string {
+	evidence := make([]string, 0, len(items))
+	for _, item := range items {
+		evidence = append(evidence, formatEvidenceItem(item))
+	}
+	return strings.Join(evidence, ", ")
+}
+
+func boolStatus(value bool) string {
+	if value {
+		return "Yes"
+	}
+	return "No"
+}
+
 func formatEvidenceItem(item string) string {
 	switch {
 	case strings.HasPrefix(item, "go "),
 		strings.HasPrefix(item, "npm "),
 		strings.HasPrefix(item, "cargo "),
 		strings.HasPrefix(item, "python "),
-		strings.HasPrefix(item, "python3 "):
+		strings.HasPrefix(item, "python3 "),
+		strings.HasPrefix(item, "forge "),
+		strings.HasPrefix(item, "covenant "),
+		strings.HasPrefix(item, "docs/"),
+		strings.HasPrefix(item, "examples/"):
 		return "`" + item + "`"
 	default:
 		return item
@@ -3144,7 +3188,12 @@ func titleStatus(status string) string {
 	if status == "" {
 		return ""
 	}
-	return strings.ToUpper(status[:1]) + status[1:]
+	status = strings.ReplaceAll(status, "_", " ")
+	words := strings.Fields(status)
+	for i, word := range words {
+		words[i] = strings.ToUpper(word[:1]) + word[1:]
+	}
+	return strings.Join(words, " ")
 }
 
 func escapeMarkdownCell(value string) string {

@@ -18,5 +18,35 @@
       "verification_evidence": ["go test ./..."]
     }
   ],
+  "release_handoff": {
+    "status": "ready",
+    "gates": [
+      {
+        "name": "foundry-release-candidate",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json"
+        ]
+      },
+      {
+        "name": "forge-release-candidate-handoff",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json"
+        ]
+      },
+      {
+        "name": "covenant-policy-spine",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "covenant policy spine --json",
+          "covenant.policy-spine-result.v1"
+        ]
+      }
+    ]
+  },
   "next_actions": ["Keep ledger aligned with the active registry"]
 }
