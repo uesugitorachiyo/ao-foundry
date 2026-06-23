@@ -978,8 +978,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039628475",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28039628475"
+        "run_id": "28042017044",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28042017044"
       }
     }
   ],
@@ -1037,13 +1037,13 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039509787"
+        "run_id": "28040935640"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039628475"
+        "run_id": "28042017044"
       }
     }
   ],
@@ -1076,7 +1076,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
 		"Generated from: " + reportPath,
 		"| ao-foundry | ci.yml | 99999999991 | update |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | update |",
-		"| ao-forge | ci.yml | 28039509787 | already_recorded |",
+		"| ao-forge | ci.yml | 28040935640 | already_recorded |",
 		"Update examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
 	} {
@@ -1202,13 +1202,13 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039509787"
+        "run_id": "28040935640"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039628475"
+        "run_id": "28042017044"
       }
     }
   ],
@@ -1237,7 +1237,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
 	for _, want := range []string{
 		"| ao-foundry | ci.yml | 99999999991 | ignored_current_refresh_loop |",
 		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_refresh_loop |",
-		"| ao-forge | ci.yml | 28039509787 | already_recorded |",
+		"| ao-forge | ci.yml | 28040935640 | already_recorded |",
 	} {
 		if !strings.Contains(proposal, want) {
 			t.Fatalf("proposal missing %q:\n%s", want, proposal)
@@ -1270,7 +1270,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039628475"
+        "run_id": "28042017044"
       }
     }
   ],
@@ -1327,13 +1327,13 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "ci.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039509787"
+        "run_id": "28040935640"
       },
       "latest_ops": {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28039628475"
+        "run_id": "28042017044"
       }
     }
   ],
@@ -3086,7 +3086,7 @@ func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read candidate: %v", err)
 	}
-	stale := strings.ReplaceAll(string(data), "main CI run 28034439773", "main CI run 28016224096")
+	stale := strings.ReplaceAll(string(data), "main CI run 28040905721", "main CI run 28016224096")
 	if err := os.WriteFile(candidatePath, []byte(stale), 0o644); err != nil {
 		t.Fatalf("write stale candidate: %v", err)
 	}
@@ -3100,7 +3100,7 @@ func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
 		t.Fatalf("Run returned 0, want failure; stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
 	for _, want := range []string{
-		"release candidate active-stack parity: ao2-control-plane missing active-stack evidence \"main CI run 28034439773\"",
+		"release candidate active-stack parity: ao2-control-plane missing active-stack evidence \"main CI run 28040905721\"",
 		"release candidate active-stack parity: ao2-control-plane has stale evidence \"main CI run 28016224096\"",
 	} {
 		if !strings.Contains(stderr.String(), want) {
@@ -3828,19 +3828,19 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	t.Helper()
 	ciRuns := map[string]string{
 		"ao-foundry":        "99999999991",
-		"ao-forge":          "28039509787",
-		"ao-command":        "28038021084",
-		"ao2":               "28019192996",
-		"ao2-control-plane": "28034439773",
-		"ao-covenant":       "28020877698",
+		"ao-forge":          "28040935640",
+		"ao-command":        "28040883265",
+		"ao2":               "28040918370",
+		"ao2-control-plane": "28040905721",
+		"ao-covenant":       "28040949588",
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
-		"ao-forge":          "28039628475",
-		"ao-command":        "28038107702",
-		"ao2":               "28029871033",
-		"ao2-control-plane": "28035142216",
-		"ao-covenant":       "28032771767",
+		"ao-forge":          "28042017044",
+		"ao-command":        "28041937460",
+		"ao2":               "28041937429",
+		"ao2-control-plane": "28041937507",
+		"ao-covenant":       "28042017949",
 	}
 	for repo, runID := range ciOverrides {
 		ciRuns[repo] = runID

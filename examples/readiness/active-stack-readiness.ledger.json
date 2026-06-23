@@ -39,7 +39,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28039509787"
+        "run_id": "28040935640"
       },
       "verification_evidence": [
         "license policy",
@@ -51,8 +51,8 @@
         "production-readiness schemas",
         "actionlint",
         "Release Preview run 28039509806",
-        "Production Readiness Ops run 28039628475",
-        "PR #132 merged"
+        "Production Readiness Ops run 28042017044",
+        "PR #133 merged"
       ]
     },
     {
@@ -62,7 +62,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28038021084"
+        "run_id": "28040883265"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
@@ -70,8 +70,8 @@
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
-        "Production Readiness Ops run 28038107702",
-        "PR #15 merged"
+        "Production Readiness Ops run 28041937460",
+        "PR #16 merged"
       ]
     },
     {
@@ -81,14 +81,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28019192996"
+        "run_id": "28040918370"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28029871033",
-        "PR #192 merged"
+        "Production Readiness Ops run 28041937429",
+        "PR #193 merged"
       ]
     },
     {
@@ -98,7 +98,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28034439773"
+        "run_id": "28040905721"
       },
       "verification_evidence": [
         "license policy",
@@ -110,8 +110,8 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 28035142216",
-        "PR #64 merged"
+        "Production Readiness Ops run 28041937507",
+        "PR #65 merged"
       ]
     },
     {
@@ -121,15 +121,15 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28020877698"
+        "run_id": "28040949588"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
         "Release Readiness run 28032666961",
         "branch protection verifier",
-        "Production Readiness Ops run 28032771767",
-        "PR #49 merged"
+        "Production Readiness Ops run 28042017949",
+        "PR #50 merged"
       ]
     }
   ],
@@ -154,9 +154,9 @@
         "required_before_promotion": true,
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
-          "ao-forge main CI run 28039509787",
+          "ao-forge main CI run 28040935640",
           "ao-forge Release Preview run 28039509806",
-          "ao-forge Production Readiness Ops run 28039628475"
+          "ao-forge Production Readiness Ops run 28042017044"
         ]
       },
       {
@@ -166,9 +166,9 @@
         "evidence": [
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
-          "ao-covenant main CI run 28020877698",
+          "ao-covenant main CI run 28040949588",
           "ao-covenant Release Readiness run 28032666961",
-          "ao-covenant Production Readiness Ops run 28032771767"
+          "ao-covenant Production Readiness Ops run 28042017949"
         ]
       },
       {

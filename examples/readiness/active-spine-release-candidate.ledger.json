@@ -11,9 +11,9 @@
       "evidence": [
         "npm run release:readiness:static",
         "npm run verify",
-        "main CI run 28019192996",
-        "Production Readiness Ops run 28029871033",
-        "PR #192 merged"
+        "main CI run 28040918370",
+        "Production Readiness Ops run 28041937429",
+        "PR #193 merged"
       ]
     },
     {
@@ -30,9 +30,9 @@
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
-        "main CI run 28034439773",
-        "Production Readiness Ops run 28035142216",
-        "PR #64 merged"
+        "main CI run 28040905721",
+        "Production Readiness Ops run 28041937507",
+        "PR #65 merged"
       ]
     },
     {
