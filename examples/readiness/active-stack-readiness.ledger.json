@@ -194,6 +194,7 @@
     "Active-stack GitHub run evidence freshness enforced in production-readiness ops",
     "Active-stack ledger refresh proposal generated from GitHub runs report",
     "Active-stack GitHub runs report uploaded from production-readiness ops",
+    "Current-repo readiness evidence refresh loops ignored by ledger refresh proposal",
     "Run active-stack readiness loop before each release-readiness sweep",
     "Run active-stack GitHub runs report after each merged release-readiness PR",
     "Run signed-smoke workflow before release promotion"

@@ -125,7 +125,10 @@ report as the `active-stack-github-runs-report` artifact. Use
 `--apply --readme README.md` to apply report run IDs to the ledger and regenerate
 the README snapshot. Ops also runs `--fail-on-non-current-update` so sibling
 repository evidence drift blocks the workflow while current-repo self refreshes
-remain actionable.
+remain actionable. If the only pending updates are Foundry's own CI and ops
+runs from a readiness-evidence refresh PR, the proposal marks them
+`ignored_current_refresh_loop` so the automation does not keep opening
+ledger-only refresh PRs for its own bookkeeping.
 
 ## Verified Active Stack Snapshot
 
