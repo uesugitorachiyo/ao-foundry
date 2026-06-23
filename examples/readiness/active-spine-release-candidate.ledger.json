@@ -11,7 +11,9 @@
       "evidence": [
         "npm run release:readiness:static",
         "npm run verify",
-        "main CI run 28001004295"
+        "main CI run 28019192996",
+        "Production Readiness Ops run 28019892957",
+        "PR #192 merged"
       ]
     },
     {
@@ -28,7 +30,9 @@
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
-        "main CI run 28000068167"
+        "main CI run 28016224096",
+        "Production Readiness Ops run 28016250935",
+        "PR #63 merged"
       ]
     },
     {
@@ -42,7 +46,10 @@
         "go build ./cmd/foundry ./cmd/ao",
         "go run ./cmd/foundry contract fixtures validate",
         "go run ./cmd/foundry release dry-run --out tmp/release-manifest.json",
-        "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json"
+        "go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
+        "main CI run 28021453116",
+        "Production Readiness Ops run 28021576778",
+        "PR #7 merged"
       ]
     }
   ],
@@ -55,7 +62,9 @@
         "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md",
         "workflow_dispatch signed_smoke=true",
         "freshness_summary.status=ready",
-        "release_safe=true"
+        "signed_smoke_summary=ready",
+        "release_safe=true",
+        "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json"
       ]
     },
     {
@@ -77,7 +86,7 @@
     }
   ],
   "next_actions": [
-    "Run signed-smoke workflow before release promotion",
+    "Run signed-smoke workflow before each release promotion",
     "Attach release-candidate ledger to release notes"
   ]
 }

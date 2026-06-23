@@ -21,8 +21,13 @@
         "go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json",
         "go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json",
         "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json",
+        "scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
-        ".github/workflows/production-readiness-ops.yml"
+        ".github/workflows/production-readiness-ops.yml",
+        "main CI run 28021453116",
+        "Production Readiness Ops run 28021576778",
+        "PR #7 merged",
+        "signed-smoke release promotion release_safe=true"
       ]
     },
     {
@@ -32,7 +37,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28011603731"
+        "run_id": "28017583706"
       },
       "verification_evidence": [
         "license policy",
@@ -44,7 +49,8 @@
         "production-readiness schemas",
         "actionlint",
         "Release Preview run 28011603944",
-        "PR #127 merged"
+        "Production Readiness Ops run 28017685064",
+        "PR #129 merged"
       ]
     },
     {
@@ -54,7 +60,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28012700399"
+        "run_id": "28018015778"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
@@ -62,7 +68,8 @@
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
-        "PR #13 merged"
+        "Production Readiness Ops run 28018093029",
+        "PR #14 merged"
       ]
     },
     {
@@ -72,13 +79,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28010971882"
+        "run_id": "28019192996"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "PR #191 merged"
+        "Production Readiness Ops run 28019892957",
+        "PR #192 merged"
       ]
     },
     {
@@ -88,7 +96,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28009244900"
+        "run_id": "28016224096"
       },
       "verification_evidence": [
         "license policy",
@@ -100,7 +108,8 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "PR #62 merged"
+        "Production Readiness Ops run 28016250935",
+        "PR #63 merged"
       ]
     },
     {
@@ -110,14 +119,15 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28012201163"
+        "run_id": "28020877698"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
         "Release Readiness run 28006538855",
         "branch protection verifier",
-        "PR #47 merged"
+        "Production Readiness Ops run 28020887257",
+        "PR #49 merged"
       ]
     }
   ],
@@ -130,7 +140,8 @@
         "required_before_promotion": true,
         "evidence": [
           "go run ./cmd/foundry release candidate validate --ledger examples/readiness/active-spine-release-candidate.ledger.json",
-          "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json"
+          "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --out tmp/release-promotion.fixture.json",
+          "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json"
         ]
       },
       {
@@ -139,8 +150,9 @@
         "required_before_promotion": true,
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
-          "ao-forge main CI run 28011603731",
-          "ao-forge Release Preview run 28011603944"
+          "ao-forge main CI run 28017583706",
+          "ao-forge Release Preview run 28011603944",
+          "ao-forge Production Readiness Ops run 28017685064"
         ]
       },
       {
@@ -150,8 +162,9 @@
         "evidence": [
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
-          "ao-covenant main CI run 28012201163",
-          "ao-covenant Release Readiness run 28006538855"
+          "ao-covenant main CI run 28020877698",
+          "ao-covenant Release Readiness run 28006538855",
+          "ao-covenant Production Readiness Ops run 28020887257"
         ]
       },
       {
@@ -161,7 +174,10 @@
         "evidence": [
           "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md",
           "workflow_dispatch signed_smoke=true",
-          "release_safe=true"
+          "freshness_summary.status=ready",
+          "signed_smoke_summary=ready",
+          "release_safe=true",
+          "tmp/release-promotion.live.json"
         ]
       }
     ]
@@ -172,6 +188,7 @@
     "Signed-smoke release gate policy documented",
     "Active-spine release-candidate ledger validated in CI",
     "Run active-stack readiness loop before each release-readiness sweep",
+    "Run active-stack GitHub runs report after each merged release-readiness PR",
     "Run signed-smoke workflow before release promotion"
   ]
 }
