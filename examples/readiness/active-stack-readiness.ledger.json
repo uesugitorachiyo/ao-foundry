@@ -11,8 +11,7 @@
       "role": "operations-factory",
       "status": "ready",
       "ci": {
-        "status": "success",
-        "run_id": "28006997211"
+        "status": "success"
       },
       "verification_evidence": [
         "go test ./...",

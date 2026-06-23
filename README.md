@@ -109,7 +109,7 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, main CI run `28006997211` |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json |
 | AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28011603944, PR #127 merged, main CI run `28011603731` |
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, PR #13 merged, main CI run `28012700399` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, PR #191 merged, main CI run `28010971882` |
