@@ -1173,6 +1173,7 @@ func runReadinessLedgerRefreshProposal(args []string, stdout, stderr io.Writer) 
 	}
 	rows := activeStackLedgerRefreshRows(ledger, report)
 	rows = suppressCurrentRepoRefreshLoopRows(rows, *currentRepo)
+	rows = suppressCurrentRepoMutableEvidenceRows(rows, *currentRepo)
 	if *failOnNonCurrentUpdate {
 		if problems := nonCurrentUpdateProblems(rows, *currentRepo); len(problems) > 0 {
 			for _, problem := range problems {
@@ -2807,6 +2808,17 @@ func suppressCurrentRepoRefreshLoopRows(rows []ActiveStackLedgerRefreshRow, curr
 	return filtered
 }
 
+func suppressCurrentRepoMutableEvidenceRows(rows []ActiveStackLedgerRefreshRow, currentRepo string) []ActiveStackLedgerRefreshRow {
+	filtered := make([]ActiveStackLedgerRefreshRow, len(rows))
+	copy(filtered, rows)
+	for i := range filtered {
+		if filtered[i].Repository == currentRepo && filtered[i].Action == "update" {
+			filtered[i].Action = "ignored_current_self_evidence"
+		}
+	}
+	return filtered
+}
+
 func suppressCurrentRepoSelfWindowRows(rows []ActiveStackLedgerRefreshRow, currentRepo string, currentRepoSkipped bool) []ActiveStackLedgerRefreshRow {
 	if !currentRepoSkipped {
 		return rows
@@ -2912,6 +2924,7 @@ func buildActiveStackProductionReadinessRollup(ledgerPath, reportPath, currentRe
 		addProblem(problem)
 	}
 	rows := suppressCurrentRepoRefreshLoopRows(activeStackLedgerRefreshRows(ledger, report), currentRepo)
+	rows = suppressCurrentRepoMutableEvidenceRows(rows, currentRepo)
 	rows = suppressCurrentRepoSelfWindowRows(rows, currentRepo, report.CurrentRepoSkipped)
 	for _, problem := range nonCurrentUpdateProblems(rows, currentRepo) {
 		addProblem(problem)
@@ -2957,7 +2970,7 @@ func buildActiveStackProductionReadinessRollup(ledgerPath, reportPath, currentRe
 		rollup.NextActions = append(rollup.NextActions, rollup.Problems...)
 	} else {
 		rollup.NextActions = []string{
-			"Keep active-stack readiness evidence current after each readiness PR merge.",
+			"Keep sibling active-stack readiness evidence current after readiness PR merges.",
 			"Run the signed-smoke release gate manually before promotion.",
 		}
 	}
@@ -3267,12 +3280,22 @@ func checkReleaseCandidateActiveStackParity(candidate ReleaseCandidateLedger, re
 		}
 		reposChecked++
 		required := releaseCandidateRequiredActiveStackEvidence(readinessRepo)
+		requiredKinds := map[string]bool{}
 		for _, requiredEvidence := range required {
+			if kind := releaseCandidateEvidenceKind(requiredEvidence); kind != "" {
+				requiredKinds[kind] = true
+			}
 			if !releaseCandidateEvidenceContains(candidateRepo.Evidence, requiredEvidence) {
 				issues = append(issues, fmt.Sprintf("%s missing active-stack evidence %q", candidateRepo.ID, requiredEvidence))
 			}
 			for _, staleEvidence := range releaseCandidateStaleEvidenceFor(candidateRepo.Evidence, requiredEvidence) {
 				issues = append(issues, fmt.Sprintf("%s has stale evidence %q", candidateRepo.ID, staleEvidence))
+			}
+		}
+		for _, evidence := range candidateRepo.Evidence {
+			kind := releaseCandidateEvidenceKind(evidence)
+			if kind != "" && !requiredKinds[kind] {
+				issues = append(issues, fmt.Sprintf("%s has unrequired evidence %q", candidateRepo.ID, evidence))
 			}
 		}
 	}

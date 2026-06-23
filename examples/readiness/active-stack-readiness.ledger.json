@@ -26,9 +26,6 @@
         "go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json",
         "scripts/verify-branch-protection.sh",
         ".github/workflows/production-readiness-ops.yml",
-        "main CI run 28055871214",
-        "Production Readiness Ops run 28055936515",
-        "PR #40 merged",
         "signed-smoke release promotion release_safe=true"
       ]
     },
@@ -197,7 +194,7 @@
     "Active-stack GitHub runs report uploaded from production-readiness ops",
     "Current-repo readiness evidence refresh loops ignored by ledger refresh proposal",
     "Run active-stack readiness loop before each release-readiness sweep",
-    "Run active-stack GitHub runs report after each merged release-readiness PR",
+    "Run active-stack GitHub runs report after sibling release-readiness PR merges",
     "Run signed-smoke workflow before release promotion"
   ]
 }

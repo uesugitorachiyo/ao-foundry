@@ -854,6 +854,12 @@ func TestActiveStackReadinessLedgerMatchesRegistry(t *testing.T) {
 			if _, hasRunID := ci["run_id"]; hasRunID {
 				t.Fatalf("ao-foundry ledger entry must not self-reference a mutable main CI run: %#v", ci)
 			}
+			evidence := fmt.Sprintf("%v", repo["verification_evidence"])
+			for _, forbidden := range []string{"main CI run ", "Production Readiness Ops run ", "PR #"} {
+				if strings.Contains(evidence, forbidden) {
+					t.Fatalf("ao-foundry ledger entry must not self-reference mutable evidence %q: %#v", forbidden, repo["verification_evidence"])
+				}
+			}
 		}
 		delete(active, id)
 	}
@@ -1074,8 +1080,8 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
 	for _, want := range []string{
 		"# Active Stack Ledger Refresh Proposal",
 		"Generated from: " + reportPath,
-		"| ao-foundry | ci.yml | 99999999991 | update |",
-		"| ao-foundry | production-readiness-ops.yml | 99999999992 | update |",
+		"| ao-foundry | ci.yml | 99999999991 | ignored_current_self_evidence |",
+		"| ao-foundry | production-readiness-ops.yml | 99999999992 | ignored_current_self_evidence |",
 		"| ao-forge | ci.yml | 28040935640 | already_recorded |",
 		"Update examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
@@ -1143,9 +1149,9 @@ func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T)
 		t.Fatalf("read ledger: %v", err)
 	}
 	ledgerText := string(ledger)
-	for _, want := range []string{"main CI run 99999999991", "Production Readiness Ops run 99999999992", "PR #99 merged"} {
-		if !strings.Contains(ledgerText, want) {
-			t.Fatalf("applied ledger missing %q:\n%s", want, ledgerText)
+	for _, forbidden := range []string{"main CI run 99999999991", "Production Readiness Ops run 99999999992", "PR #99 merged"} {
+		if strings.Contains(ledgerText, forbidden) {
+			t.Fatalf("apply must not add current-repo mutable evidence %q:\n%s", forbidden, ledgerText)
 		}
 	}
 	if strings.Contains(ledgerText, `"run_id": "99999999991"`) {
@@ -1155,8 +1161,10 @@ func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T)
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
-	if !strings.Contains(string(readme), "main CI run 99999999991") || !strings.Contains(string(readme), "Production Readiness Ops run 99999999992") {
-		t.Fatalf("README snapshot was not regenerated:\n%s", string(readme))
+	for _, forbidden := range []string{"main CI run 99999999991", "Production Readiness Ops run 99999999992", "PR #99 merged"} {
+		if strings.Contains(string(readme), forbidden) {
+			t.Fatalf("README snapshot must not include current-repo mutable evidence %q:\n%s", forbidden, string(readme))
+		}
 	}
 }
 
@@ -3106,6 +3114,38 @@ func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
 		if !strings.Contains(stderr.String(), want) {
 			t.Fatalf("expected stderr to contain %q, got %q", want, stderr.String())
 		}
+	}
+}
+
+func TestReleaseCandidateActiveStackParityBlocksUnrequiredMutableEvidence(t *testing.T) {
+	tmp := t.TempDir()
+	candidatePath := filepath.Join(tmp, "candidate.json")
+	data, err := os.ReadFile(repoPath("examples/readiness/active-spine-release-candidate.ledger.json"))
+	if err != nil {
+		t.Fatalf("read candidate: %v", err)
+	}
+	mutated := strings.Replace(
+		string(data),
+		`"go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json"`,
+		`"go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json",
+        "main CI run 99999999991"`,
+		1,
+	)
+	if err := os.WriteFile(candidatePath, []byte(mutated), 0o644); err != nil {
+		t.Fatalf("write mutated candidate: %v", err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"release", "candidate", "active-stack-parity",
+		"--ledger", candidatePath,
+		"--readiness-ledger", "examples/readiness/active-stack-readiness.ledger.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned 0, want failure; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	want := `release candidate active-stack parity: ao-foundry has unrequired evidence "main CI run 99999999991"`
+	if !strings.Contains(stderr.String(), want) {
+		t.Fatalf("expected stderr to contain %q, got %q", want, stderr.String())
 	}
 }
 

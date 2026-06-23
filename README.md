@@ -123,24 +123,25 @@ candidate validation, and loop preflight, then writes
 `ao.foundry.active-stack-readiness-loop.v0.1` JSON with `first_failing_check`
 and `next_actions`.
 
-Use `scripts/active-stack-github-runs-report.sh` after each readiness PR merge to
-collect the latest successful `ci.yml` and `production-readiness-ops.yml` run IDs
-for the six active repositories. The script is read-only, uses `gh run list`,
-and writes `ao.foundry.active-stack-github-runs-report.v0.1` JSON for ledger
-refreshes. Add `--ledger examples/readiness/active-stack-readiness.ledger.json
+Use `scripts/active-stack-github-runs-report.sh` after sibling readiness PR
+merges to collect the latest successful `ci.yml` and
+`production-readiness-ops.yml` run IDs for the six active repositories. The
+script is read-only, uses `gh run list`, and writes
+`ao.foundry.active-stack-github-runs-report.v0.1` JSON for ledger refreshes.
+Add `--ledger examples/readiness/active-stack-readiness.ledger.json
 --enforce-ledger` to fail when sibling repository run evidence is newer than the
 ledger records; Foundry's own latest run is skipped by default to avoid a
 self-referential main-branch gate. Use `foundry readiness ledger-refresh-proposal`
-against the report to generate a markdown patch plan for ledger and README
-snapshot refreshes. The production-readiness ops workflow uploads the latest
-report as the `active-stack-github-runs-report` artifact. Use
-`--apply --readme README.md` to apply report run IDs to the ledger and regenerate
-the README snapshot. Ops also runs `--fail-on-non-current-update` so sibling
-repository evidence drift blocks the workflow while current-repo self refreshes
-remain actionable. If the only pending updates are Foundry's own CI and ops
-runs from a readiness-evidence refresh PR, the proposal marks them
-`ignored_current_refresh_loop` so the automation does not keep opening
-ledger-only refresh PRs for its own bookkeeping.
+against the report to generate a markdown patch plan for sibling ledger and
+README snapshot refreshes. The production-readiness ops workflow uploads the
+latest report as the `active-stack-github-runs-report` artifact. Use
+`--apply --readme README.md` to apply sibling report run IDs to the ledger and
+regenerate the README snapshot. Ops also runs `--fail-on-non-current-update` so
+sibling repository evidence drift blocks the workflow while current-repo mutable
+self evidence is ignored. Current-repo rows are marked
+`ignored_current_self_evidence`, or `ignored_current_refresh_loop` for historical
+readiness-evidence refresh PRs, so automation does not keep opening ledger-only
+refresh PRs for its own bookkeeping.
 
 Use `foundry readiness rollup` after the GitHub runs report exists to produce
 the final `ao.foundry.active-stack-production-readiness-rollup.v0.1` JSON and
@@ -157,7 +158,7 @@ Last local sweep: 2026-06-23.
 
 | Repository | Current status | Verification evidence |
 | --- | --- | --- |
-| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, main CI run 28055871214, Production Readiness Ops run 28055936515, PR #40 merged, signed-smoke release promotion release_safe=true |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, `go build ./cmd/foundry ./cmd/ao`, `go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json`, `go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json`, `go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json`, scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json, scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json, `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json`, `go run ./cmd/foundry readiness evidence-check --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json`, scripts/verify-branch-protection.sh, .github/workflows/production-readiness-ops.yml, signed-smoke release promotion release_safe=true |
 | AO Forge | Ready | license policy, license policy required in branch protection, GoalRun fixtures, `go test ./...`, `go vet ./...`, `go build`, production-readiness schemas, actionlint, Release Preview run 28056174867, Production Readiness Ops run 28056174653, PR #133 merged, main CI run `28040935640` |
 | AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness 100, 30/30 gates, license policy required in branch protection, Production Readiness Ops run 28049279592, PR #17 merged, main CI run `28049179216` |
 | AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, native AO2 runtime evidence tests, Production Readiness Ops run 28054451606, PR #195 merged, main CI run `28053626014` |
