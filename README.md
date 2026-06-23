@@ -89,6 +89,22 @@ is dirty or otherwise blocked so cleanup happens before new strategy work.
 Archived subscription-backed swarm, conductor, and deprecated operator/runtime
 repositories are intentionally excluded from the active registry.
 
+## Verified Active Stack Snapshot
+
+Last local sweep: 2026-06-23.
+
+| Repository | Current status | Verification evidence |
+| --- | --- | --- |
+| AO Foundry | Ready | `go test ./...`, `go vet ./...`, CLI build, registry/task validation, repo board |
+| AO Forge | Ready | License policy, GoalRun fixtures, Go tests/vet/build, production-readiness schemas, actionlint |
+| AO Command | Ready | AO2-first boundary audit, release dry-run chain, production readiness `100`, `26/26` gates |
+| AO2 | Ready | `npm run release:readiness:static`, `npm run verify`, main CI run `28001004295` |
+| ao2-control-plane | Ready | License policy, fmt, Python guard tests, Cargo tests/clippy/deny/audit, release build, main CI run `28000068167` |
+| AO Covenant | Ready | AO2-stack policy and trust-boundary docs merged through PR #45 |
+
+No active readiness path depends on `ao-operator`, `ao-runtime`,
+`ao-control-plane`, `ao-conductor`, `agy-swarms`, or `codex-cron`.
+
 ## Public Documents
 
 - [AO Foundry v0.1 Design](docs/design/AO-FOUNDRY-V0.1.md)
