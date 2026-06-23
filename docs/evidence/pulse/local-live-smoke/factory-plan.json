@@ -1,6 +1,6 @@
 {
   "schema_version": "ao.forge.factory-plan.v0.1",
-  "plan_id": "forge-plan-fc142fc6833e",
+  "plan_id": "forge-plan-a4b30137e1ad",
   "objective": {
     "text": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
     "workspace": "../ao-foundry",
@@ -23,7 +23,7 @@
       "workcell_id": "foundry-ao-foundry-bootstrap-execute",
       "kind": "execute",
       "workspace": "../ao-foundry",
-      "executor": "agy-swarms",
+      "executor": "ao2",
       "max_repairs": 1,
       "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
       "status": "planned",
