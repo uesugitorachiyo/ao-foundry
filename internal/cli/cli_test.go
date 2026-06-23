@@ -86,7 +86,7 @@ func TestStatusSummarizesRegistry(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"AO Foundry", "9 repos", "ao-foundry", "ready: 9"} {
+	for _, want := range []string{"AO Foundry", "6 repos", "ao-foundry", "ready: 6"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("status output missing %q: %s", want, out)
 		}
@@ -500,8 +500,8 @@ func TestRepoHealthJSONReportsLocalOnlyHealth(t *testing.T) {
 		t.Fatalf("unexpected health identity: %#v", health)
 	}
 	repos := health["repos"].([]any)
-	if len(repos) != 9 {
-		t.Fatalf("expected 9 repo health entries, got %d", len(repos))
+	if len(repos) != 6 {
+		t.Fatalf("expected 6 repo health entries, got %d", len(repos))
 	}
 }
 
@@ -654,7 +654,7 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 		Repos: []Repo{
 			boardFixtureRepo("ao-foundry", "AO Foundry", "operations-factory", clean),
 			boardFixtureRepo("ao-command", "AO Command", "operator-command", clean),
-			boardFixtureRepo("agy-swarms", "agy-swarms", "agent-orchestrator", clean),
+			boardFixtureRepo("ao2-control-plane", "AO2 Control Plane", "evidence-observer", clean),
 		},
 	}
 	registryPath := writeRegistryFixture(t, registry)
@@ -664,7 +664,7 @@ func TestRepoBoardTextReportsNextActions(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"repo board: 3 repos status=ready", "ao-foundry", "active-spine", "ao-command", "read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant", "agy-swarms", "candidate-demote", "archived for active AO spine work", "next_action="} {
+	for _, want := range []string{"repo board: 3 repos status=ready", "ao-foundry", "active-spine", "ao-command", "read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant", "do not route archived or subscription-backed scope through it", "ao2-control-plane", "active-spine", "next_action="} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("board text missing %q: %s", want, out)
 		}

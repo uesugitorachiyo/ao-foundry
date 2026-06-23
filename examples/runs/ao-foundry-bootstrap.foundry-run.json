@@ -7,7 +7,7 @@
   "delegated_to": "ao-forge",
   "forge_packet": {
     "path": "examples/packets/ao-foundry-bootstrap.factory-packet.json",
-    "sha256": "d860e30e61f0daeafab5af6406fe282d29b7a17988faa8e7d39156b1be7bd763",
+    "sha256": "4c4e341a7757d4f8931cf4149851d11f533099b2992b2db3cac4b9dc40ab1f76",
     "status": "passed"
   },
   "evidence": [

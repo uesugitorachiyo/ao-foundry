@@ -96,29 +96,6 @@
       ]
     },
     {
-      "id": "codex-cron",
-      "name": "codex-cron",
-      "role": "operations-factory",
-      "delegates_to": "ao-foundry",
-      "workspace": "../codex-cron",
-      "branches": ["main"],
-      "evidence_sources": [
-        {
-          "kind": "scheduler-status",
-          "location": "codex-cron doctor",
-          "owner": "codex-cron"
-        }
-      ],
-      "allowed_automation": ["read-schedule", "tick-local"],
-      "readiness_signals": [
-        {
-          "name": "durable-scheduler",
-          "status": "ready",
-          "source": "active spine scheduler for overnight Foundry loops"
-        }
-      ]
-    },
-    {
       "id": "ao2-control-plane",
       "name": "AO2 Control Plane",
       "role": "evidence-observer",
@@ -161,52 +138,6 @@
           "name": "covenant-binary",
           "status": "ready",
           "source": "local build for Forge gate"
-        }
-      ]
-    },
-    {
-      "id": "agy-swarms",
-      "name": "agy-swarms",
-      "role": "agent-orchestrator",
-      "delegates_to": "ao-forge",
-      "workspace": "../agy-swarms",
-      "branches": ["main"],
-      "evidence_sources": [
-        {
-          "kind": "archive-status",
-          "location": "../agy-swarms/docs/archive-handoff.md",
-          "owner": "agy-swarms"
-        }
-      ],
-      "allowed_automation": ["archive-read"],
-      "readiness_signals": [
-        {
-          "name": "archive-handoff",
-          "status": "ready",
-          "source": "archive handoff captured; keep as reference-only and out of active AO spine work"
-        }
-      ]
-    },
-    {
-      "id": "ao-conductor",
-      "name": "AO Conductor",
-      "role": "workflow-conductor",
-      "delegates_to": "ao-forge",
-      "workspace": "../ao-conductor",
-      "branches": ["main"],
-      "evidence_sources": [
-        {
-          "kind": "archive-status",
-          "location": "../ao-conductor/docs/archive-handoff.md",
-          "owner": "ao-conductor"
-        }
-      ],
-      "allowed_automation": ["archive-read"],
-      "readiness_signals": [
-        {
-          "name": "archive-handoff",
-          "status": "ready",
-          "source": "archive handoff captured; keep as reference-only and out of active AO spine work"
         }
       ]
     }

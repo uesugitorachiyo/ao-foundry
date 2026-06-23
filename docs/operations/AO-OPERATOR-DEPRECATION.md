@@ -13,6 +13,10 @@ The replacement path is:
 Foundry no longer tracks `ao-operator` in the active local stack registry.
 Foundry must not register `ao-operator`, `ao-runtime`, or `ao-control-plane` as
 active or supporting stack repos.
+The active sibling registry is limited to `ao-forge`, `ao2`,
+`ao2-control-plane`, `ao-covenant`, and `ao-command`; archived conductor,
+subscription-backed swarm, and scheduler/tooling repos are not active AO product
+scope.
 
 New work should route to `ao2` or `ao2-control-plane`. Do not add product,
 marketing, adapter, runtime, or control-plane scope to the deprecated repos.

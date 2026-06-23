@@ -82,12 +82,12 @@ read-only repo board to classify the portfolio and surface hygiene blockers:
 go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json
 ```
 
-The board reports active-spine, supporting, candidate-demote, and
-blocked-hygiene entries. It exits non-zero when a registered sibling checkout is
-dirty or otherwise blocked so cleanup happens before new strategy work.
-`ao-command` is supporting because it is the active read-only operator/readback
-surface for AO Forge, AO2, ao2-control-plane, and AO Covenant; it is not a
-support path for archived agy-swarms or ao-conductor scope.
+The active sibling portfolio is AO Forge, AO2, ao2-control-plane, AO Covenant,
+and AO Command. The board reports active-spine, supporting, and blocked-hygiene
+entries for that live set. It exits non-zero when a registered sibling checkout
+is dirty or otherwise blocked so cleanup happens before new strategy work.
+Archived subscription-backed swarm, conductor, and deprecated operator/runtime
+repositories are intentionally excluded from the active registry.
 
 ## Public Documents
 

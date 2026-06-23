@@ -24,7 +24,7 @@
       "workcell_id": "foundry-ao-foundry-bootstrap-execute",
       "kind": "execute",
       "workspace": "../ao-foundry",
-      "executor": "agy-swarms",
+      "executor": "ao2",
       "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
       "max_repairs": 1,
       "status": "passed",

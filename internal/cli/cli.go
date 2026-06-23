@@ -2632,7 +2632,7 @@ func buildForgeBrief(registry Registry, task Task) (ForgeBrief, error) {
 				WorkcellID: "foundry-" + task.TaskID + "-execute",
 				Kind:       "execute",
 				Workspace:  target.Workspace,
-				Executor:   "agy-swarms",
+				Executor:   "ao2",
 				Task:       task.Objective,
 				MaxRepairs: 1,
 				DependsOn:  []string{},
@@ -3146,7 +3146,7 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
 	default:
 		if repo.ID == "ao-command" {
-			return []string{"ao-command: keep as the read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant; do not route archived agy-swarms or ao-conductor scope through it"}
+			return []string{"ao-command: keep as the read-only operator/readback surface for ao-forge, ao2, ao2-control-plane, and ao-covenant; do not route archived or subscription-backed scope through it"}
 		}
 		return []string{fmt.Sprintf("%s: keep supporting, but do not expand until the active spine is clean", repo.ID)}
 	}
@@ -4885,7 +4885,7 @@ func checkNoPublicSiblingDependency(name string) CompetitiveAuditCheck {
 	if err != nil {
 		return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: "missing release checklist"}
 	}
-	for _, marker := range []string{"../ao-forge", "../ao2", "../ao-covenant", "../agy-swarms"} {
+	for _, marker := range []string{"../ao-forge", "../ao2", "../ao2-control-plane", "../ao-covenant", "../ao-command"} {
 		if strings.Contains(string(data), marker) {
 			return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: "release checklist depends on sibling repo " + marker}
 		}
