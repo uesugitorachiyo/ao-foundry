@@ -219,17 +219,17 @@
       "branches": ["main"],
       "evidence_sources": [
         {
-          "kind": "workflow-state",
-          "location": "registered-workflow-surface",
+          "kind": "archive-status",
+          "location": "../ao-conductor/docs/archive-handoff.md",
           "owner": "ao-conductor"
         }
       ],
-      "allowed_automation": ["read-workflow", "summarize-next-step"],
+      "allowed_automation": ["archive-read"],
       "readiness_signals": [
         {
-          "name": "conductor-registration",
+          "name": "archive-handoff",
           "status": "ready",
-          "source": "registered in Foundry local stack"
+          "source": "archive handoff captured; keep as reference-only and out of active AO spine work"
         }
       ]
     }

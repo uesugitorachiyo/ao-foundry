@@ -3131,6 +3131,9 @@ func repoBoardNextActions(repo Repo, tier string) []string {
 		if repo.ID == "agy-swarms" {
 			return []string{"agy-swarms: archived for active AO spine work; use docs/archive-handoff.md as reference and do not add new product scope"}
 		}
+		if repo.ID == "ao-conductor" {
+			return []string{"ao-conductor: archived for active AO spine work; use docs/archive-handoff.md as reference and route new orchestration through AO Forge and AO2"}
+		}
 		return []string{fmt.Sprintf("%s: freeze, archive, or extract unique ideas before further AO spine work", repo.ID)}
 	default:
 		return []string{fmt.Sprintf("%s: keep supporting, but do not expand until the active spine is clean", repo.ID)}
