@@ -5,9 +5,9 @@ Manual release gate.
 Signed smoke is a manual release gate. It is not required for pull_request or push CI.
 It needs sibling repository checkouts, an AO2 control-plane binary, and an
 operator-provided `AO2_CP_API_TOKEN`. The GitHub workflow installs Go 1.26 for
-the active-stack sibling tools, self-prepares those sibling checkouts, and
-builds `ao2-cp-server` on the selected runner when they are not already
-present.
+the active-stack sibling tools, self-prepares those sibling checkouts, builds
+the `ao2` executor from `../ao2`, and builds `ao2-cp-server` on the selected
+runner when they are not already present.
 
 Signed smoke is required before release promotion. A release candidate can pass
 normal CI without signed smoke, but it must not be called release-safe until a
@@ -21,7 +21,8 @@ Before release promotion, run the `signed-smoke` workflow with:
 - `workflow_dispatch`
 - `signed_smoke=true`
 - a hosted or prepared runner with Go 1.26; the workflow clones `../ao-forge`,
-  `../ao-covenant`, and `../ao2-control-plane`, then builds
+  `../ao-covenant`, `../ao2`, and `../ao2-control-plane`, then builds
+  `../ao2/target/debug/ao2` and
   `../ao2-control-plane/target/debug/ao2-cp-server` when needed
 - `AO2_CP_API_TOKEN` configured as a GitHub Actions secret or local operator
   environment variable
