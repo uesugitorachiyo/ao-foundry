@@ -831,7 +831,7 @@ func runNext(args []string, stdout, stderr io.Writer) int {
 			return 2
 		}
 		if *approvalPath != "" {
-			brief.ExpectedEvidence = append(brief.ExpectedEvidence, "approval decision: "+*approvalPath)
+			brief.ExpectedEvidence = append(brief.ExpectedEvidence, "approval decision: "+portableEvidencePath(*approvalPath))
 		}
 		if err := writeJSONFile(*outPath, brief); err != nil {
 			traceProblem = err.Error()
@@ -1234,7 +1234,7 @@ func runLoopNext(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	if *approvalPath != "" {
-		brief.ExpectedEvidence = append(brief.ExpectedEvidence, "approval decision: "+*approvalPath)
+		brief.ExpectedEvidence = append(brief.ExpectedEvidence, "approval decision: "+portableEvidencePath(*approvalPath))
 	}
 	if err := writeJSONFile(*outPath, brief); err != nil {
 		traceProblem = err.Error()
@@ -4162,6 +4162,10 @@ func publicResultPath(path string) string {
 	if filepath.IsAbs(path) {
 		return filepath.Base(path)
 	}
+	return filepath.ToSlash(filepath.Clean(path))
+}
+
+func portableEvidencePath(path string) string {
 	return filepath.ToSlash(filepath.Clean(path))
 }
 

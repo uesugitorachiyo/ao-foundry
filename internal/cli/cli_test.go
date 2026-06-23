@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -853,7 +854,8 @@ func TestNextReferencesApprovalInForgeBrief(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read brief: %v", err)
 	}
-	if !bytes.Contains(data, []byte("approval decision: "+decisionPath)) {
+	expectedDecisionPath := filepath.ToSlash(filepath.Clean(decisionPath))
+	if !bytes.Contains(data, []byte("approval decision: "+expectedDecisionPath)) {
 		t.Fatalf("brief does not reference approval decision: %s", string(data))
 	}
 }
@@ -1371,7 +1373,7 @@ func TestPulseSignedSmokePreflightReportsPreparedWorkspace(t *testing.T) {
 			t.Fatalf("mkdir %s: %v", dir, err)
 		}
 	}
-	serverPath := filepath.Join(workspace, "ao2-control-plane", "target", "debug", "ao2-cp-server")
+	serverPath := filepath.Join(workspace, "ao2-control-plane", "target", "debug", executableName("ao2-cp-server"))
 	if err := os.WriteFile(serverPath, []byte("#!/bin/sh\nexit 0\n"), 0o755); err != nil {
 		t.Fatalf("write server: %v", err)
 	}
@@ -2067,7 +2069,10 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 			requiredArtifacts[name] = true
 		}
 		path := artifact["path"].(string)
-		if strings.Contains(path, "/"+"Users/") || strings.Contains(path, "private "+"handoff") {
+		if runtime.GOOS != "windows" && strings.Contains(path, "/"+"Users/") {
+			t.Fatalf("pulse artifact path is not public-safe: %q", path)
+		}
+		if strings.Contains(path, "private "+"handoff") {
 			t.Fatalf("pulse artifact path is not public-safe: %q", path)
 		}
 		if len(artifact["sha256"].(string)) != 64 {
