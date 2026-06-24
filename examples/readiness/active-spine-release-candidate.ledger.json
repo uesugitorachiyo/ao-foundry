@@ -12,7 +12,7 @@
         "npm run release:readiness:static",
         "npm run verify",
         "main CI run 28070860510",
-        "Production Readiness Ops run 28071356637",
+        "Production Readiness Ops run 28098905314",
         "PR #197 merged"
       ]
     },
@@ -31,7 +31,7 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "main CI run 28068689048",
-        "Production Readiness Ops run 28068696486",
+        "Production Readiness Ops run 28098560438",
         "PR #69 merged"
       ]
     },
