@@ -95,7 +95,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28063002384"
+        "run_id": "28068689048"
       },
       "verification_evidence": [
         "license policy",
@@ -107,8 +107,8 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 28063009187",
-        "PR #68 merged"
+        "Production Readiness Ops run 28068696486",
+        "PR #69 merged"
       ]
     },
     {
