@@ -58,7 +58,7 @@ Successful output ends with:
 pulse_event=<out>/pulse-event.json
 status=ready
 score=100/100
-next_action=continue with governed AO Forge live execution when an executor is available
+next_action=stop autonomous readiness loop; live execution requires operator intent
 ```
 
 ## Pulse Event Contract

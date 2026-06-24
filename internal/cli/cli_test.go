@@ -694,6 +694,8 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 		"release handoff",
 		"loop preflight",
 		"first_failing_check",
+		"blocking_next_actions",
+		"maintenance_suggestions",
 	} {
 		if !strings.Contains(scriptText, want) {
 			t.Fatalf("active stack readiness loop script missing %q", want)
@@ -2776,7 +2778,7 @@ func TestPulseDerivesAO2LoopDecisionFromReadyPulse(t *testing.T) {
 		Status:        "ready",
 		Score:         100,
 		MaxScore:      100,
-		NextAction:    "Continue with governed AO Forge live execution.",
+		NextAction:    "Stop autonomous readiness loop; live execution requires operator intent.",
 	}
 	mustWriteJSONForTest(t, pulsePath, pulse)
 
@@ -2785,7 +2787,7 @@ func TestPulseDerivesAO2LoopDecisionFromReadyPulse(t *testing.T) {
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
 	}
-	if !strings.Contains(stdout.String(), "next_task_id=continue-with-governed-ao-forge-live-execution") {
+	if !strings.Contains(stdout.String(), "next_task_id=readiness-exit-gate-satisfied") {
 		t.Fatalf("expected derived task id in stdout, got %q", stdout.String())
 	}
 	var decision AO2LoopDecision
@@ -2798,7 +2800,7 @@ func TestPulseDerivesAO2LoopDecisionFromReadyPulse(t *testing.T) {
 	}
 	if decision.SchemaVersion != "ao2.pulse-event-loop-decision.v1" ||
 		decision.EventLoop.Action != "stop" ||
-		decision.EventLoop.NextTaskID != "continue-with-governed-ao-forge-live-execution" {
+		decision.EventLoop.NextTaskID != "readiness-exit-gate-satisfied" {
 		t.Fatalf("unexpected derived decision: %#v", decision)
 	}
 }
@@ -3401,6 +3403,9 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 	}
 	if event["score"] != float64(100) || event["max_score"] != float64(100) {
 		t.Fatalf("expected 100/100 pulse score, got %#v", event)
+	}
+	if event["next_action"] != "stop autonomous readiness loop; live execution requires operator intent" {
+		t.Fatalf("expected stop-oriented next_action, got %#v", event["next_action"])
 	}
 	assertPulseFreshnessSummary(t, event, "ready", "not_provided", "not_provided")
 	artifacts, ok := event["artifacts"].([]any)

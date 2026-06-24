@@ -54,5 +54,5 @@
     "control_plane_readback": "ready",
     "explanation": "operator-provided AO Forge live packet and control-plane readback are fresh"
   },
-  "next_action": "continue with governed AO Forge live execution when an executor is available"
+  "next_action": "stop autonomous readiness loop; live execution requires operator intent"
 }

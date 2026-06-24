@@ -5098,7 +5098,7 @@ func buildPulseBundle(registryPath, taskPath, goalPath, packetPath, scorecardPat
 
 	event.Status = "ready"
 	event.Score = event.MaxScore
-	event.NextAction = "continue with governed AO Forge live execution when an executor is available"
+	event.NextAction = "stop autonomous readiness loop; live execution requires operator intent"
 	return event, nil
 }
 
@@ -5844,11 +5844,17 @@ func deriveNextTaskID(event PulseEvent, audit *CompetitiveReadinessAudit) string
 				}
 			}
 		}
+		if strings.TrimSpace(audit.Status) != "ready" || audit.Score < audit.MaxScore {
+			return "resolve-competitive-readiness"
+		}
+	}
+	if event.Score >= event.MaxScore {
+		return "readiness-exit-gate-satisfied"
 	}
 	if id := slugTaskID(event.NextAction); id != "" {
 		return id
 	}
-	return "continue-foundry-pulse-loop"
+	return "resolve-pulse-readiness-gap"
 }
 
 func slugTaskID(input string) string {

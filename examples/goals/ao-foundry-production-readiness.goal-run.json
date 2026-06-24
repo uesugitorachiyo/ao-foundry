@@ -9,15 +9,15 @@
   ],
   "allowed_scope": ["../ao-foundry"],
   "stop_conditions": [
-    "production readiness is below 100",
+    "production readiness is 100/100 with passing tests, clean public-safety scan, and no blocking next actions",
     "evidence digest verification fails",
     "a requested action would mutate sibling repositories"
   ],
   "current_phase": "verification",
-  "next_task": "Add guarded Foundry GoalRun update audits after readiness is verified.",
-  "continuation_prompt": "Run foundry goal readiness, inspect blockers, and implement the next SDD slice without replacing AO Forge.",
+  "next_task": "Stop autonomous production-readiness advancement and wait for explicit operator-directed release or live-execution work.",
+  "continuation_prompt": "Run foundry goal readiness and competitive readiness first. If both are ready with no blocking next actions, emit stop and do not invent another implementation slice; otherwise implement only the highest-value blocking production-readiness SDD slice without replacing AO Forge.",
   "loop_owner": "ao-foundry",
-  "next_action_guard": "Only delegate implementation through AO Forge after goal readiness reaches 100.",
+  "next_action_guard": "Stop when goal readiness reaches 100 with no blocking next actions. Only delegate implementation through AO Forge when readiness is below 100 or blocking evidence exists.",
   "last_iteration": {
     "evidence": [
       {

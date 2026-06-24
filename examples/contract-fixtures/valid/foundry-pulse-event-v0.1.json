@@ -30,5 +30,5 @@
     "control_plane_readback": "not_provided",
     "explanation": "no operator-provided production freshness evidence was bundled; local public pulse remains runnable without live credentials"
   },
-  "next_action": "continue with governed AO Forge live execution when an executor is available"
+  "next_action": "stop autonomous readiness loop; live execution requires operator intent"
 }

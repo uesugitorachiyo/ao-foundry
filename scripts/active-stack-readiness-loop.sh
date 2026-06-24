@@ -180,11 +180,12 @@ out_path = pathlib.Path(sys.argv[2])
 status = sys.argv[3]
 first_failing_check = sys.argv[4] or None
 checks = [json.loads(line) for line in checks_path.read_text().splitlines() if line.strip()]
-next_actions = []
+blocking_next_actions = []
+maintenance_suggestions = []
 if first_failing_check:
-    next_actions.append(f"Fix first failing check: {first_failing_check}")
+    blocking_next_actions.append(f"Fix first failing check: {first_failing_check}")
 else:
-    next_actions.extend([
+    maintenance_suggestions.extend([
         "Keep the active stack registry limited to ao-foundry, ao-forge, ao-command, ao2, ao2-control-plane, and ao-covenant.",
         "Refresh the readiness ledger after each merged release-readiness PR.",
     ])
@@ -193,7 +194,9 @@ payload = {
     "status": status,
     "first_failing_check": first_failing_check,
     "checks": checks,
-    "next_actions": next_actions,
+    "next_actions": blocking_next_actions,
+    "blocking_next_actions": blocking_next_actions,
+    "maintenance_suggestions": maintenance_suggestions,
 }
 out_path.write_text(json.dumps(payload, indent=2) + "\n")
 PY
