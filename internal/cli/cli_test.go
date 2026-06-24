@@ -4010,7 +4010,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 		"ao-command":        "28049179216",
 		"ao2":               "28064655500",
 		"ao2-control-plane": "28063002384",
-		"ao-covenant":       "28061483204",
+		"ao-covenant":       "28067515041",
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
@@ -4018,7 +4018,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 		"ao-command":        "28049279592",
 		"ao2":               "28065310069",
 		"ao2-control-plane": "28063009187",
-		"ao-covenant":       "28061624617",
+		"ao-covenant":       "28067529489",
 	}
 	for repo, runID := range ciOverrides {
 		ciRuns[repo] = runID
