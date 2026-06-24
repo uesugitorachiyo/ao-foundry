@@ -4,13 +4,13 @@ Public-safe retained evidence for the hosted signed-smoke release gate.
 
 ## Provenance
 
-- checked_at=2026-06-23T21:37:22Z
-- run_id=28058644296
-- run_url=https://github.com/uesugitorachiyo/ao-foundry/actions/runs/28058644296
-- head_sha=908d19080ebb3eef58eaedfff4ef617675210246
+- checked_at=2026-06-24T00:08:13Z
+- run_id=28065612579
+- run_url=https://github.com/uesugitorachiyo/ao-foundry/actions/runs/28065612579
+- head_sha=f03e80c269b94f8d7e34baf50021928ad2bad098
 - workflow=ci
 - event=workflow_dispatch
-- signed_smoke_job_id=83067226516
+- signed_smoke_job_id=83089128722
 - artifact=signed-smoke-release-evidence
 
 ## Result

@@ -2180,9 +2180,9 @@ func TestDurableSignedSmokeReleaseEvidenceIsPublicSafe(t *testing.T) {
 	}
 	readmeText := string(readme)
 	for _, want := range []string{
-		"run_id=28058644296",
-		"head_sha=908d19080ebb3eef58eaedfff4ef617675210246",
-		"signed_smoke_job_id=83067226516",
+		"run_id=28065612579",
+		"head_sha=f03e80c269b94f8d7e34baf50021928ad2bad098",
+		"signed_smoke_job_id=83089128722",
 		"artifact=signed-smoke-release-evidence",
 		"pulse_id=pulse-bf475cb4e3a8",
 		"release_safe=true",
