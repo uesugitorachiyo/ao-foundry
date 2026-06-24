@@ -118,15 +118,15 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28061483204"
+        "run_id": "28067515041"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
-        "Release Readiness run 28061623129",
+        "Release Readiness run 28067529569",
         "branch protection verifier",
-        "Production Readiness Ops run 28061624617",
-        "PR #52 merged"
+        "Production Readiness Ops run 28067529489",
+        "PR #53 merged"
       ]
     }
   ],
@@ -163,9 +163,9 @@
         "evidence": [
           "covenant policy spine --json",
           "covenant.policy-spine-result.v1",
-          "ao-covenant main CI run 28061483204",
-          "ao-covenant Release Readiness run 28061623129",
-          "ao-covenant Production Readiness Ops run 28061624617"
+          "ao-covenant main CI run 28067515041",
+          "ao-covenant Release Readiness run 28067529569",
+          "ao-covenant Production Readiness Ops run 28067529489"
         ]
       },
       {
