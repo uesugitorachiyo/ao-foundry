@@ -36,7 +36,10 @@
     download the `signed-smoke-release-evidence` artifact for the public-safe
     summary and release-promotion JSON. Retain the reviewed public-safe copy
     under `docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate`.
-18. Confirm no release step requires credentials, remote services, sibling
+18. Run the final release handoff against the retained public-safe signed-smoke
+    summary:
+    `go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json --promotion-out tmp/release-promotion.final.json --notes-out docs/operations/ACTIVE-SPINE-2026-06-23-RELEASE-CANDIDATE.md --manifest-out tmp/release-manifest.final.json`.
+19. Confirm no release step requires credentials, remote services, sibling
    repositories, tags, pushes, uploads, or publishing.
 
 This checklist prepares a release candidate only. It does not publish artifacts.
