@@ -36,7 +36,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28060735171"
+        "run_id": "28066645277"
       },
       "verification_evidence": [
         "license policy",
@@ -47,9 +47,9 @@
         "go build",
         "production-readiness schemas",
         "actionlint",
-        "Release Preview run 28060735115",
-        "Production Readiness Ops run 28060835289",
-        "PR #134 merged"
+        "Release Preview run 28066645263",
+        "Production Readiness Ops run 28066734238",
+        "PR #135 merged"
       ]
     },
     {
@@ -151,9 +151,9 @@
         "required_before_promotion": true,
         "evidence": [
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
-          "ao-forge main CI run 28060735171",
-          "ao-forge Release Preview run 28060735115",
-          "ao-forge Production Readiness Ops run 28060835289"
+          "ao-forge main CI run 28066645277",
+          "ao-forge Release Preview run 28066645263",
+          "ao-forge Production Readiness Ops run 28066734238"
         ]
       },
       {
