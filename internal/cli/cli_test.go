@@ -3215,7 +3215,7 @@ func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read candidate: %v", err)
 	}
-	stale := strings.ReplaceAll(string(data), "main CI run 28050638200", "main CI run 28016224096")
+	stale := strings.ReplaceAll(string(data), "main CI run 28063002384", "main CI run 28016224096")
 	if err := os.WriteFile(candidatePath, []byte(stale), 0o644); err != nil {
 		t.Fatalf("write stale candidate: %v", err)
 	}
@@ -3229,7 +3229,7 @@ func TestReleaseCandidateActiveStackParityBlocksStaleEvidence(t *testing.T) {
 		t.Fatalf("Run returned 0, want failure; stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
 	for _, want := range []string{
-		"release candidate active-stack parity: ao2-control-plane missing active-stack evidence \"main CI run 28050638200\"",
+		"release candidate active-stack parity: ao2-control-plane missing active-stack evidence \"main CI run 28063002384\"",
 		"release candidate active-stack parity: ao2-control-plane has stale evidence \"main CI run 28016224096\"",
 	} {
 		if !strings.Contains(stderr.String(), want) {
@@ -4004,16 +4004,16 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 		"ao-foundry":        "99999999991",
 		"ao-forge":          "28060735171",
 		"ao-command":        "28049179216",
-		"ao2":               "28053626014",
-		"ao2-control-plane": "28050638200",
+		"ao2":               "28064655500",
+		"ao2-control-plane": "28063002384",
 		"ao-covenant":       "28061483204",
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
 		"ao-forge":          "28060835289",
 		"ao-command":        "28049279592",
-		"ao2":               "28054451606",
-		"ao2-control-plane": "28051422824",
+		"ao2":               "28065310069",
+		"ao2-control-plane": "28063009187",
 		"ao-covenant":       "28061624617",
 	}
 	for repo, runID := range ciOverrides {
