@@ -3,6 +3,6 @@
   "event_loop": {
     "action": "pause",
     "reason": "Invalid fixture uses an unsupported AO2 loop action.",
-    "next_task_id": "continue-foundry-pulse-loop"
+    "next_task_id": "resolve-pulse-readiness-gap"
   }
 }
