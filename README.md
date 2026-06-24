@@ -121,7 +121,14 @@ Use `scripts/active-stack-readiness-loop.sh` for the local active-stack gate. It
 runs registry validation, README readiness snapshot parity, repo board, release
 candidate validation, and loop preflight, then writes
 `ao.foundry.active-stack-readiness-loop.v0.1` JSON with `first_failing_check`
-and `next_actions`.
+plus separate `blocking_next_actions` and `maintenance_suggestions`.
+
+The readiness exit gate is stop-oriented. When goal readiness and competitive
+readiness are 100/100 and the active-stack loop passes with no
+`blocking_next_actions`, autonomous readiness work stops; live execution,
+release promotion, signed-smoke dispatch, or new implementation work requires
+explicit operator intent. See
+[`docs/operations/READINESS-EXIT-GATE.md`](docs/operations/READINESS-EXIT-GATE.md).
 
 Use `scripts/active-stack-github-runs-report.sh` after sibling readiness PR
 merges to collect the latest successful `ci.yml` and
