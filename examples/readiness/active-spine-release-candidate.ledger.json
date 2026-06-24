@@ -11,9 +11,9 @@
       "evidence": [
         "npm run release:readiness:static",
         "npm run verify",
-        "main CI run 28064655500",
-        "Production Readiness Ops run 28065310069",
-        "PR #196 merged"
+        "main CI run 28070860510",
+        "Production Readiness Ops run 28071356637",
+        "PR #197 merged"
       ]
     },
     {

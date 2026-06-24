@@ -78,14 +78,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28064655500"
+        "run_id": "28070860510"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28065310069",
-        "PR #196 merged"
+        "Production Readiness Ops run 28071356637",
+        "PR #197 merged"
       ]
     },
     {
