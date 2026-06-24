@@ -48,7 +48,7 @@
         "production-readiness schemas",
         "actionlint",
         "Release Preview run 28066645263",
-        "Production Readiness Ops run 28066734238",
+        "Production Readiness Ops run 28098513733",
         "PR #135 merged"
       ]
     },
@@ -67,7 +67,7 @@
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
-        "Production Readiness Ops run 28049279592",
+        "Production Readiness Ops run 28098685023",
         "PR #17 merged"
       ]
     },
@@ -84,7 +84,7 @@
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 28071356637",
+        "Production Readiness Ops run 28098905314",
         "PR #197 merged"
       ]
     },
@@ -107,7 +107,7 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 28068696486",
+        "Production Readiness Ops run 28098560438",
         "PR #69 merged"
       ]
     },
@@ -125,7 +125,7 @@
         "covenant.policy-spine-result.v1",
         "Release Readiness run 28067529569",
         "branch protection verifier",
-        "Production Readiness Ops run 28067529489",
+        "Production Readiness Ops run 28098729037",
         "PR #53 merged"
       ]
     }
@@ -153,7 +153,7 @@
           "forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json",
           "ao-forge main CI run 28066645277",
           "ao-forge Release Preview run 28066645263",
-          "ao-forge Production Readiness Ops run 28066734238"
+          "ao-forge Production Readiness Ops run 28098513733"
         ]
       },
       {
@@ -165,7 +165,7 @@
           "covenant.policy-spine-result.v1",
           "ao-covenant main CI run 28067515041",
           "ao-covenant Release Readiness run 28067529569",
-          "ao-covenant Production Readiness Ops run 28067529489"
+          "ao-covenant Production Readiness Ops run 28098729037"
         ]
       },
       {

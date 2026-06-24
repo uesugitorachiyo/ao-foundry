@@ -1004,8 +1004,8 @@ func TestReadinessEvidenceCheckRejectsStaleSiblingRunEvidence(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28066734238",
-        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28066734238"
+        "run_id": "28098513733",
+        "url": "https://github.com/uesugitorachiyo/ao-forge/actions/runs/28098513733"
       }
     }
   ],
@@ -1069,7 +1069,7 @@ func TestReadinessLedgerRefreshProposalRendersRunUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28066734238"
+        "run_id": "28098513733"
       }
     }
   ],
@@ -1236,7 +1236,7 @@ func testReadinessLedgerRefreshProposalIgnoresCurrentRepoEvidenceRefreshLoop(t *
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28066734238"
+        "run_id": "28098513733"
       }
     }
   ],
@@ -1298,7 +1298,7 @@ func TestReadinessLedgerRefreshProposalFailsOnNonCurrentUpdates(t *testing.T) {
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28066734238"
+        "run_id": "28098513733"
       }
     }
   ],
@@ -1361,7 +1361,7 @@ func TestReadinessLedgerRefreshProposalAllowsCurrentRepoSelfWindow(t *testing.T)
         "workflow": "production-readiness-ops.yml",
         "status": "completed",
         "conclusion": "success",
-        "run_id": "28066734238"
+        "run_id": "28098513733"
       }
     }
   ],
@@ -3625,7 +3625,20 @@ func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 }
 
 func TestPulseRunRecordsProvidedForgeLivePacket(t *testing.T) {
-	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir(), "--forge-live-packet", filepath.Join("..", "..", "examples", "packets", "ao-foundry-bootstrap.factory-packet.json")})
+	packetPath := filepath.Join(t.TempDir(), "factory-packet.json")
+	packetData, err := os.ReadFile(repoPath("examples/packets/ao-foundry-bootstrap.factory-packet.json"))
+	if err != nil {
+		t.Fatalf("read packet fixture: %v", err)
+	}
+	if err := os.WriteFile(packetPath, packetData, 0o644); err != nil {
+		t.Fatalf("write packet: %v", err)
+	}
+	fresh := time.Now()
+	if err := os.Chtimes(packetPath, fresh, fresh); err != nil {
+		t.Fatalf("make packet fresh: %v", err)
+	}
+
+	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir(), "--forge-live-packet", packetPath})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")
 	if artifact["status"] != "passed" {
 		t.Fatalf("expected passed forge live attempt, got %#v", artifact)
@@ -4019,11 +4032,11 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	}
 	opsRuns := map[string]string{
 		"ao-foundry":        "28027968419",
-		"ao-forge":          "28066734238",
-		"ao-command":        "28049279592",
-		"ao2":               "28071356637",
-		"ao2-control-plane": "28068696486",
-		"ao-covenant":       "28067529489",
+		"ao-forge":          "28098513733",
+		"ao-command":        "28098685023",
+		"ao2":               "28098905314",
+		"ao2-control-plane": "28098560438",
+		"ao-covenant":       "28098729037",
 	}
 	for repo, runID := range ciOverrides {
 		ciRuns[repo] = runID
