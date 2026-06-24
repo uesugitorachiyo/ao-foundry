@@ -2137,6 +2137,10 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"workflow_dispatch signed_smoke=true",
 		"release_safe=true",
 		"docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate",
+		"--signed-smoke-summary docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json",
+		"--promotion-out tmp/release-promotion.final.json",
+		"--notes-out docs/operations/ACTIVE-SPINE-2026-06-23-RELEASE-CANDIDATE.md",
+		"--manifest-out tmp/release-manifest.final.json",
 	} {
 		if !strings.Contains(checklist, want) {
 			t.Fatalf("release checklist missing active-stack handoff item %q", want)

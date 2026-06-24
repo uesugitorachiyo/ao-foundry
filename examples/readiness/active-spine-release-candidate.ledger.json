@@ -61,7 +61,7 @@
         "freshness_summary.status=ready",
         "signed_smoke_summary=ready",
         "release_safe=true",
-        "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json"
+        "go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json --out tmp/release-promotion.final.json"
       ]
     },
     {
