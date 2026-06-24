@@ -30,9 +30,9 @@
         "cargo deny check bans licenses sources",
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
-        "main CI run 28063002384",
-        "Production Readiness Ops run 28063009187",
-        "PR #68 merged"
+        "main CI run 28068689048",
+        "Production Readiness Ops run 28068696486",
+        "PR #69 merged"
       ]
     },
     {
