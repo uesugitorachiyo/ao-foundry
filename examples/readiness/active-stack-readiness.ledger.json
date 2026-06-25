@@ -59,16 +59,19 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "28049179216"
+        "run_id": "28148110317"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
         "release dry-run chain",
+        "ao-command rsi health --arena-gate ../ao-arena/tmp/arena-promotion-gate.json --crucible-gate ../ao-crucible/tmp/crucible-hardening-gate.json --sentinel-verdict ../ao-sentinel/tmp/sentinel-verdict.json --promoter-gate ../ao-promoter/tmp/promotion-gate.json --json",
+        "rsi_mode=governed_fixture_local",
+        "mutates_repositories=false",
         "production readiness 100",
         "30/30 gates",
         "license policy required in branch protection",
         "Production Readiness Ops run 28098685023",
-        "PR #17 merged"
+        "PR #18 merged"
       ]
     },
     {
@@ -166,6 +169,19 @@
           "ao-covenant main CI run 28067515041",
           "ao-covenant Release Readiness run 28067529569",
           "ao-covenant Production Readiness Ops run 28098729037"
+        ]
+      },
+      {
+        "name": "ao-command-rsi-health",
+        "status": "ready",
+        "required_before_promotion": true,
+        "evidence": [
+          "ao-command rsi health --arena-gate ../ao-arena/tmp/arena-promotion-gate.json --crucible-gate ../ao-crucible/tmp/crucible-hardening-gate.json --sentinel-verdict ../ao-sentinel/tmp/sentinel-verdict.json --promoter-gate ../ao-promoter/tmp/promotion-gate.json --json",
+          "rsi_mode=governed_fixture_local",
+          "rsi_capability=demonstrated_local_fixture_loop",
+          "mutates_repositories=false",
+          "ao-command main CI run 28148110317",
+          "ao-command PR #18 merged"
         ]
       },
       {
