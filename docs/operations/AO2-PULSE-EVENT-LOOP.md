@@ -18,6 +18,7 @@ load registry and task
 -> retain the Forge packet and policy gate summary
 -> record Forge packet in a Foundry run record
 -> score the run with local evals
+-> derive RSI candidate, improvement gate, and next improvement task evidence
 -> inspect a local trace
 -> write a pulse-event summary
 ```
@@ -34,9 +35,10 @@ go run ./cmd/ao run --out tmp/ao-pulse
 
 The command writes `tmp/pulse/pulse-event.json` plus the generated readiness,
 GoalRun, Forge brief, Forge packet, policy gate, live Forge attempt,
-control-plane readback, run, eval, trace, demo, release dry-run, and competitive
-audit artifacts. The loop exits non-zero and still writes a blocked event when a
-readiness gate fails. The command also prints an operator status line such as
+control-plane readback, run, eval, RSI candidate, RSI improvement gate, RSI next
+improvement task, trace, demo, release dry-run, and competitive audit artifacts.
+The loop exits non-zero and still writes a blocked event when a readiness gate
+fails. The command also prints an operator status line such as
 `freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
 The same values are recorded in `pulse-event.json` under `freshness_summary`.
 

@@ -236,6 +236,23 @@ type RSICandidateEvalResult struct {
 	SHA256        string `json:"sha256"`
 }
 
+type RSINextImprovementTask struct {
+	SchemaVersion              string   `json:"schema_version"`
+	Status                     string   `json:"status"`
+	GeneratedBy                string   `json:"generated_by"`
+	GoalID                     string   `json:"goal_id"`
+	RecommendedTaskID          string   `json:"recommended_task_id"`
+	RecommendedAction          string   `json:"recommended_action"`
+	ImprovementRationale       string   `json:"improvement_rationale"`
+	CandidateEvidencePath      string   `json:"candidate_evidence_path"`
+	GateEvidencePath           string   `json:"gate_evidence_path"`
+	RequiredImprovementPercent float64  `json:"required_improvement_percent"`
+	ActualImprovementPercent   float64  `json:"actual_improvement_percent"`
+	AutonomousClaim            string   `json:"autonomous_claim"`
+	MutatesRepositories        bool     `json:"mutates_repositories"`
+	NextActions                []string `json:"next_actions"`
+}
+
 type TraceSpan struct {
 	SchemaVersion string            `json:"schema_version"`
 	TraceID       string            `json:"trace_id"`
@@ -5233,6 +5250,19 @@ func buildPulseBundle(registryPath, taskPath, goalPath, packetPath, scorecardPat
 	}
 	pass("rsi_improvement_gate", "RSI improvement gate meets threshold")
 
+	rsiNextTask, err := buildRSINextImprovementTask(goal, rsiCandidatePath, rsiGatePath, rsiCandidate, rsiGate)
+	if err != nil {
+		return fail("rsi_next_improvement_task", err)
+	}
+	rsiNextTaskPath := filepath.Join(outDir, "rsi-next-improvement-task.json")
+	if err := writeJSONFile(rsiNextTaskPath, rsiNextTask); err != nil {
+		return fail("rsi_next_improvement_task", err)
+	}
+	if err := event.addArtifact("rsi_next_improvement_task", rsiNextTaskPath, rsiNextTask.SchemaVersion, rsiNextTask.Status); err != nil {
+		return fail("rsi_next_improvement_task_artifact", err)
+	}
+	pass("rsi_next_improvement_task", "RSI next improvement task was derived from candidate and gate evidence")
+
 	demoStatus, err := buildDemoStatus(registryPath, taskPath, runPath)
 	if err != nil {
 		return fail("demo_status", err)
@@ -5342,6 +5372,47 @@ func rsiCandidateEvalResult(path string, result EvalResult, hash string) RSICand
 		MaxScore:      result.MaxScore,
 		SHA256:        hash,
 	}
+}
+
+func buildRSINextImprovementTask(goal GoalRun, candidatePath, gatePath string, candidate RSICandidate, gate RSIImprovementGate) (RSINextImprovementTask, error) {
+	if strings.TrimSpace(goal.GoalID) == "" || strings.TrimSpace(goal.NextTask) == "" {
+		return RSINextImprovementTask{}, errors.New("goal_id and next_task are required")
+	}
+	if strings.TrimSpace(candidatePath) == "" || strings.TrimSpace(gatePath) == "" {
+		return RSINextImprovementTask{}, errors.New("candidate and gate evidence paths are required")
+	}
+	if candidate.SchemaVersion != "ao.foundry.rsi-candidate.v0.1" || candidate.Status != "ready" {
+		return RSINextImprovementTask{}, errors.New("RSI candidate must be ready")
+	}
+	if gate.SchemaVersion != "ao.foundry.rsi-improvement-gate.v0.1" || gate.Status != "passed" {
+		return RSINextImprovementTask{}, errors.New("RSI improvement gate must be passed")
+	}
+	if candidate.MutatesRepositories || gate.MutatesRepositories {
+		return RSINextImprovementTask{}, errors.New("RSI next task cannot be derived from mutating evidence")
+	}
+	if gate.RequiredImprovementPercent <= 0 || gate.ActualImprovementPercent < gate.RequiredImprovementPercent {
+		return RSINextImprovementTask{}, errors.New("RSI improvement gate does not meet the required improvement")
+	}
+	recommendedTaskID := "rsi-next-" + shortSHA256(strings.Join([]string{goal.GoalID, goal.NextTask, candidatePath, gatePath}, ":"))
+	return RSINextImprovementTask{
+		SchemaVersion:              "ao.foundry.rsi-next-improvement-task.v0.1",
+		Status:                     "ready",
+		GeneratedBy:                "foundry pulse run",
+		GoalID:                     goal.GoalID,
+		RecommendedTaskID:          recommendedTaskID,
+		RecommendedAction:          goal.NextTask,
+		ImprovementRationale:       "The local pulse produced an RSI candidate and a passing improvement gate, so the next bounded task can be retained as governed evidence before delegation.",
+		CandidateEvidencePath:      filepath.ToSlash(candidatePath),
+		GateEvidencePath:           filepath.ToSlash(gatePath),
+		RequiredImprovementPercent: gate.RequiredImprovementPercent,
+		ActualImprovementPercent:   gate.ActualImprovementPercent,
+		AutonomousClaim:            "derived_local_next_improvement",
+		MutatesRepositories:        false,
+		NextActions: []string{
+			"retain rsi_next_improvement_task with RSI candidate and gate evidence",
+			"delegate any repository-changing implementation through governed AO Forge execution",
+		},
+	}, nil
 }
 
 func newPulseFreshnessSummary() PulseFreshnessSummary {
@@ -6699,6 +6770,7 @@ func publicSchemaNames() []string {
 		"foundry-repo-health-v0.1",
 		"foundry-rsi-candidate-v0.1",
 		"foundry-rsi-improvement-gate-v0.1",
+		"foundry-rsi-next-improvement-task-v0.1",
 		"foundry-run-v0.1",
 		"foundry-signed-smoke-ingest-v0.1",
 		"foundry-signed-smoke-preflight-v0.1",

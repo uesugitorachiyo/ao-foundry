@@ -99,10 +99,10 @@ go run ./cmd/ao run --out tmp/ao-pulse
 
 The pulse command writes a local evidence bundle with readiness, GoalRun,
 Forge-brief, Forge-packet, policy-gate, optional live Forge attempt,
-control-plane readback, run, eval, RSI candidate, RSI improvement gate, trace,
-demo, release dry-run, competitive audit, and a final `pulse-event.json`
-summary. It is a scheduler and evidence loop only; live implementation remains
-delegated to AO Forge.
+control-plane readback, run, eval, RSI candidate, RSI improvement gate, RSI
+next improvement task, trace, demo, release dry-run, competitive audit, and a
+final `pulse-event.json` summary. It is a scheduler and evidence loop only; live
+implementation remains delegated to AO Forge.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
@@ -110,7 +110,10 @@ gate then compares the baseline eval result to that generated candidate eval
 result and requires a measurable improvement, such as 5 percentage points. It
 writes `ao.foundry.rsi-improvement-gate.v0.1` evidence with source hashes,
 `autonomous_claim=measured_local_improvement`, and
-`mutates_repositories=false`; it blocks when the threshold is not met.
+`mutates_repositories=false`; it blocks when the threshold is not met. When the
+gate passes, the loop writes `ao.foundry.rsi-next-improvement-task.v0.1`
+evidence that binds the candidate and gate artifact paths to the current GoalRun
+next task without mutating repositories.
 
 ## Portfolio Board
 
@@ -222,6 +225,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Release promotion schema](docs/contracts/foundry-release-promotion-v0.1.schema.json)
 - [RSI candidate schema](docs/contracts/foundry-rsi-candidate-v0.1.schema.json)
 - [RSI improvement gate schema](docs/contracts/foundry-rsi-improvement-gate-v0.1.schema.json)
+- [RSI next improvement task schema](docs/contracts/foundry-rsi-next-improvement-task-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)
 - [Goal readiness audit schema](docs/contracts/foundry-goal-readiness-audit-v0.1.schema.json)
 - [Pulse event schema](docs/contracts/foundry-pulse-event-v0.1.schema.json)

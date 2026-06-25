@@ -1,0 +1,18 @@
+{
+  "schema_version": "ao.foundry.rsi-next-improvement-task.v0.1",
+  "status": "ready",
+  "generated_by": "foundry pulse run",
+  "goal_id": "ao-foundry-production-readiness",
+  "recommended_task_id": "rsi-next-invalid",
+  "recommended_action": "mutate the repository directly from the pulse loop",
+  "improvement_rationale": "Invalid fixture: next improvement task evidence must remain non-mutating.",
+  "candidate_evidence_path": "tmp/pulse/rsi-candidate.json",
+  "gate_evidence_path": "tmp/pulse/rsi-improvement-gate.json",
+  "required_improvement_percent": 5,
+  "actual_improvement_percent": 10,
+  "autonomous_claim": "derived_local_next_improvement",
+  "mutates_repositories": true,
+  "next_actions": [
+    "mutate repository"
+  ]
+}
