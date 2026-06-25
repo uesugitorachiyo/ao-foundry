@@ -1,0 +1,18 @@
+{
+  "schema_version": "ao.foundry.rsi-next-improvement-task.v0.1",
+  "status": "ready",
+  "generated_by": "foundry pulse run",
+  "goal_id": "ao-foundry-production-readiness",
+  "recommended_task_id": "rsi-next-example",
+  "recommended_action": "retain the next bounded RSI improvement task as governed evidence",
+  "improvement_rationale": "The local pulse produced an RSI candidate and a passing improvement gate, so the next bounded task can be retained as governed evidence before delegation.",
+  "candidate_evidence_path": "tmp/pulse/rsi-candidate.json",
+  "gate_evidence_path": "tmp/pulse/rsi-improvement-gate.json",
+  "required_improvement_percent": 5,
+  "actual_improvement_percent": 10,
+  "autonomous_claim": "derived_local_next_improvement",
+  "mutates_repositories": false,
+  "next_actions": [
+    "retain rsi_next_improvement_task with RSI candidate and gate evidence"
+  ]
+}

@@ -3494,6 +3494,7 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 		"rsi_candidate":               false,
 		"eval_result":                 false,
 		"rsi_improvement_gate":        false,
+		"rsi_next_improvement_task":   false,
 		"demo_status":                 false,
 		"release_manifest":            false,
 		"competitive_readiness_audit": false,
@@ -3567,13 +3568,50 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 				t.Fatalf("RSI gate is not bound to generated eval result: %+v", gate.Evidence)
 			}
 		}
+		if name == "rsi_next_improvement_task" {
+			var nextTask struct {
+				SchemaVersion              string   `json:"schema_version"`
+				Status                     string   `json:"status"`
+				GeneratedBy                string   `json:"generated_by"`
+				GoalID                     string   `json:"goal_id"`
+				RecommendedTaskID          string   `json:"recommended_task_id"`
+				RecommendedAction          string   `json:"recommended_action"`
+				CandidateEvidencePath      string   `json:"candidate_evidence_path"`
+				GateEvidencePath           string   `json:"gate_evidence_path"`
+				RequiredImprovementPercent float64  `json:"required_improvement_percent"`
+				ActualImprovementPercent   float64  `json:"actual_improvement_percent"`
+				MutatesRepositories        bool     `json:"mutates_repositories"`
+				NextActions                []string `json:"next_actions"`
+			}
+			data, err := os.ReadFile(filepath.FromSlash(path))
+			if err != nil {
+				t.Fatalf("read RSI next improvement task: %v", err)
+			}
+			if err := json.Unmarshal(data, &nextTask); err != nil {
+				t.Fatalf("RSI next improvement task is not JSON: %v", err)
+			}
+			if nextTask.SchemaVersion != "ao.foundry.rsi-next-improvement-task.v0.1" ||
+				nextTask.Status != "ready" ||
+				nextTask.GeneratedBy != "foundry pulse run" ||
+				nextTask.GoalID == "" ||
+				nextTask.RecommendedTaskID == "" ||
+				nextTask.RecommendedAction == "" ||
+				nextTask.CandidateEvidencePath != artifactPathsByName["rsi_candidate"] ||
+				nextTask.GateEvidencePath != artifactPathsByName["rsi_improvement_gate"] ||
+				nextTask.RequiredImprovementPercent != 5 ||
+				nextTask.ActualImprovementPercent < 5 ||
+				nextTask.MutatesRepositories ||
+				len(nextTask.NextActions) == 0 {
+				t.Fatalf("unexpected RSI next improvement task: %+v", nextTask)
+			}
+		}
 	}
 	for name, found := range requiredArtifacts {
 		if !found {
 			t.Fatalf("pulse event missing artifact %q: %#v", name, artifacts)
 		}
 	}
-	if artifactPathsByName["rsi_candidate"] == "" || artifactPathsByName["eval_result"] == "" || artifactPathsByName["rsi_improvement_gate"] == "" {
+	if artifactPathsByName["rsi_candidate"] == "" || artifactPathsByName["eval_result"] == "" || artifactPathsByName["rsi_improvement_gate"] == "" || artifactPathsByName["rsi_next_improvement_task"] == "" {
 		t.Fatalf("pulse event missing RSI artifact chain: %#v", artifactPathsByName)
 	}
 }

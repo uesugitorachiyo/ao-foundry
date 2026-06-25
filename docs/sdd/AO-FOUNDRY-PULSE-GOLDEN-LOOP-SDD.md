@@ -27,6 +27,8 @@ Foundry contracts and fixtures to produce:
   eval result,
 - RSI improvement gate comparing the baseline eval to the generated candidate
   eval result,
+- RSI next improvement task derived from the candidate and passing improvement
+  gate,
 - trace spans and trace inspection summary,
 - demo status,
 - release dry-run manifest,
@@ -84,9 +86,11 @@ The summary document uses `ao.foundry.pulse-event.v0.1` and includes:
 
 `status=ready` requires every generated artifact check to pass, the RSI
 candidate evidence to be written before the RSI improvement gate, the RSI
-improvement gate to pass the configured threshold, and the competitive audit to
-score 100/100. Any failed step must stop the loop, preserve artifacts already
-written, write a failed pulse event when possible, and exit non-zero.
+improvement gate to pass the configured threshold, the RSI next improvement task
+to bind the candidate and gate artifact paths without repository mutation, and
+the competitive audit to score 100/100. Any failed step must stop the loop,
+preserve artifacts already written, write a failed pulse event when possible,
+and exit non-zero.
 
 ## Drift Controls
 
