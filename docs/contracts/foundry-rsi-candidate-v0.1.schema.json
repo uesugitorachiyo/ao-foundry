@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-rsi-candidate-v0.1.schema.json",
+  "title": "AO Foundry RSI Candidate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "generated_by",
+    "improvement_hypothesis",
+    "baseline_eval_result",
+    "candidate_eval_result",
+    "mutates_repositories",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.rsi-candidate.v0.1" },
+    "status": { "type": "string", "enum": ["ready", "blocked"] },
+    "generated_by": { "type": "string", "enum": ["foundry pulse run"] },
+    "improvement_hypothesis": { "type": "string", "minLength": 1 },
+    "baseline_eval_result": { "$ref": "#/$defs/eval_result_ref" },
+    "candidate_eval_result": { "$ref": "#/$defs/eval_result_ref" },
+    "mutates_repositories": { "const": false },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "eval_result_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schema_version", "status", "score", "max_score", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "const": "ao.foundry.eval-result.v0.1" },
+        "status": { "type": "string", "enum": ["ready"] },
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

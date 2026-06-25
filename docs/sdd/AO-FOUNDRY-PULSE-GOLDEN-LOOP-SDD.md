@@ -23,6 +23,8 @@ Foundry contracts and fixtures to produce:
 - policy gate summary,
 - Foundry run record from an existing Forge packet,
 - eval result,
+- RSI candidate evidence binding the baseline eval to the generated candidate
+  eval result,
 - RSI improvement gate comparing the baseline eval to the generated candidate
   eval result,
 - trace spans and trace inspection summary,
@@ -81,6 +83,7 @@ The summary document uses `ao.foundry.pulse-event.v0.1` and includes:
 - `next_action`.
 
 `status=ready` requires every generated artifact check to pass, the RSI
+candidate evidence to be written before the RSI improvement gate, the RSI
 improvement gate to pass the configured threshold, and the competitive audit to
 score 100/100. Any failed step must stop the loop, preserve artifacts already
 written, write a failed pulse event when possible, and exit non-zero.
