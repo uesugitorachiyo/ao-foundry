@@ -1761,6 +1761,70 @@ func TestEvalRunFailsBelowThreshold(t *testing.T) {
 	}
 }
 
+func TestRSIImprovementGatePassesFivePercentImprovement(t *testing.T) {
+	dir := t.TempDir()
+	baseline := writeEvalResultFixture(t, dir, "baseline.eval-result.json", 90, 100, "ready")
+	candidate := writeEvalResultFixture(t, dir, "candidate.eval-result.json", 96, 100, "ready")
+	outPath := filepath.Join(dir, "rsi-improvement-gate.json")
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"rsi", "improvement-gate", "--baseline", baseline, "--candidate", candidate, "--min-improvement", "5", "--out", outPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "rsi improvement: passed delta=6.00 required=5.00") {
+		t.Fatalf("unexpected stdout: %s", stdout.String())
+	}
+
+	var gate RSIImprovementGate
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read gate: %v", err)
+	}
+	if err := json.Unmarshal(data, &gate); err != nil {
+		t.Fatalf("gate is not JSON: %v", err)
+	}
+	if gate.SchemaVersion != "ao.foundry.rsi-improvement-gate.v0.1" ||
+		gate.Status != "passed" ||
+		gate.RequiredImprovementPercent != 5 ||
+		gate.ActualImprovementPercent != 6 ||
+		gate.AutonomousClaim != "measured_local_improvement" ||
+		gate.MutatesRepositories {
+		t.Fatalf("unexpected gate: %+v", gate)
+	}
+	if len(gate.Evidence) != 2 || gate.Evidence[0].SHA256 == "" || gate.Evidence[1].SHA256 == "" {
+		t.Fatalf("gate missing evidence hashes: %+v", gate.Evidence)
+	}
+}
+
+func TestRSIImprovementGateBlocksBelowFivePercentImprovement(t *testing.T) {
+	dir := t.TempDir()
+	baseline := writeEvalResultFixture(t, dir, "baseline.eval-result.json", 90, 100, "ready")
+	candidate := writeEvalResultFixture(t, dir, "candidate.eval-result.json", 94, 100, "ready")
+	outPath := filepath.Join(dir, "rsi-improvement-gate.json")
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"rsi", "improvement-gate", "--baseline", baseline, "--candidate", candidate, "--min-improvement", "5", "--out", outPath}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("Run returned %d, want 1; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "improvement below required threshold") {
+		t.Fatalf("expected threshold blocker, got %q", stderr.String())
+	}
+
+	var gate RSIImprovementGate
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read gate: %v", err)
+	}
+	if err := json.Unmarshal(data, &gate); err != nil {
+		t.Fatalf("gate is not JSON: %v", err)
+	}
+	if gate.Status != "blocked" || gate.ActualImprovementPercent != 4 || len(gate.NextActions) == 0 {
+		t.Fatalf("unexpected blocked gate: %+v", gate)
+	}
+}
+
 func TestReadinessTraceInspectSummarizesTerminalSpan(t *testing.T) {
 	tracePath := filepath.Join(t.TempDir(), "readiness.trace.jsonl")
 	var stdout, stderr bytes.Buffer
@@ -4284,6 +4348,24 @@ func mustWriteJSONForTest(t *testing.T, path string, value any) {
 	if err := os.WriteFile(path, append(data, '\n'), 0o644); err != nil {
 		t.Fatalf("write JSON: %v", err)
 	}
+}
+
+func writeEvalResultFixture(t *testing.T, dir, name string, score, maxScore int, status string) string {
+	t.Helper()
+	path := filepath.Join(dir, name)
+	result := EvalResult{
+		SchemaVersion: "ao.foundry.eval-result.v0.1",
+		ScorecardID:   "rsi-self-improvement",
+		RunID:         strings.TrimSuffix(name, ".eval-result.json"),
+		Status:        status,
+		Score:         score,
+		MaxScore:      maxScore,
+		Threshold:     score,
+		Dimensions:    []EvalDimension{},
+		NextActions:   []string{},
+	}
+	mustWriteJSONForTest(t, path, result)
+	return path
 }
 
 func stringSliceContains(values []string, want string) bool {

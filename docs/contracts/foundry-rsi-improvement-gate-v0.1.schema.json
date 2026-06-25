@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-rsi-improvement-gate-v0.1.schema.json",
+  "title": "AO Foundry RSI Improvement Gate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "baseline_score_percent",
+    "candidate_score_percent",
+    "required_improvement_percent",
+    "actual_improvement_percent",
+    "autonomous_claim",
+    "mutates_repositories",
+    "evidence",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.rsi-improvement-gate.v0.1" },
+    "status": { "type": "string", "enum": ["passed", "blocked"] },
+    "baseline_score_percent": { "type": "number", "minimum": 0 },
+    "candidate_score_percent": { "type": "number", "minimum": 0 },
+    "required_improvement_percent": { "type": "number", "minimum": 0 },
+    "actual_improvement_percent": { "type": "number" },
+    "autonomous_claim": {
+      "type": "string",
+      "enum": ["measured_local_improvement"]
+    },
+    "mutates_repositories": { "type": "boolean" },
+    "evidence": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "path", "schema_version", "status", "score", "max_score", "sha256"],
+      "properties": {
+        "label": { "type": "string", "enum": ["baseline", "candidate"] },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}
