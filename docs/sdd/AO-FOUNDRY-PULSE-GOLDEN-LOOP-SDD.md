@@ -23,6 +23,8 @@ Foundry contracts and fixtures to produce:
 - policy gate summary,
 - Foundry run record from an existing Forge packet,
 - eval result,
+- RSI improvement gate comparing the baseline eval to the generated candidate
+  eval result,
 - trace spans and trace inspection summary,
 - demo status,
 - release dry-run manifest,
@@ -49,6 +51,8 @@ foundry pulse run \
   --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json \
   --packet examples/packets/ao-foundry-bootstrap.factory-packet.json \
   --scorecard examples/evals/bootstrap.scorecard.json \
+  --rsi-baseline examples/evals/rsi-baseline.eval-result.json \
+  --rsi-min-improvement 5 \
   --out tmp/pulse
 ```
 
@@ -76,9 +80,10 @@ The summary document uses `ao.foundry.pulse-event.v0.1` and includes:
 - `checks`,
 - `next_action`.
 
-`status=ready` requires every generated artifact check to pass and the competitive
-audit to score 100/100. Any failed step must stop the loop, preserve artifacts
-already written, write a failed pulse event when possible, and exit non-zero.
+`status=ready` requires every generated artifact check to pass, the RSI
+improvement gate to pass the configured threshold, and the competitive audit to
+score 100/100. Any failed step must stop the loop, preserve artifacts already
+written, write a failed pulse event when possible, and exit non-zero.
 
 ## Drift Controls
 
@@ -94,8 +99,9 @@ Required verification:
 
 ```sh
 go test ./...
-go run ./cmd/foundry pulse run --out tmp/pulse
+go run ./cmd/foundry pulse run --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
 go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
+go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate tmp/pulse/eval-result.json --min-improvement 5 --out tmp/pulse/rsi-improvement-gate.json
 go run ./cmd/foundry competitive audit --out tmp/competitive-readiness-audit.json
 run the repository public-safety scan over README.md, docs, examples, internal, and cmd
 ```

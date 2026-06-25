@@ -3492,6 +3492,7 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 		"control_plane_readback":      false,
 		"foundry_run":                 false,
 		"eval_result":                 false,
+		"rsi_improvement_gate":        false,
 		"demo_status":                 false,
 		"release_manifest":            false,
 		"competitive_readiness_audit": false,
@@ -3519,6 +3520,23 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 				t.Fatalf("read artifact %s: %v", name, err)
 			} else if !json.Valid(data) {
 				t.Fatalf("artifact %s is not valid JSON: %s", name, string(data))
+			}
+		}
+		if name == "rsi_improvement_gate" {
+			var gate RSIImprovementGate
+			data, err := os.ReadFile(filepath.FromSlash(path))
+			if err != nil {
+				t.Fatalf("read RSI improvement gate: %v", err)
+			}
+			if err := json.Unmarshal(data, &gate); err != nil {
+				t.Fatalf("RSI improvement gate is not JSON: %v", err)
+			}
+			if gate.Status != "passed" ||
+				gate.RequiredImprovementPercent != 5 ||
+				gate.ActualImprovementPercent < 5 ||
+				gate.AutonomousClaim != "measured_local_improvement" ||
+				gate.MutatesRepositories {
+				t.Fatalf("unexpected RSI improvement gate: %+v", gate)
 			}
 		}
 	}

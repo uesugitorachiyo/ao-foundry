@@ -44,7 +44,7 @@ This first slice provides:
   - `foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>`
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
-  - `foundry pulse run --out <dir>`
+  - `foundry pulse run --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -85,7 +85,7 @@ go run ./cmd/foundry release promotion validate --candidate examples/readiness/a
 go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
-go run ./cmd/foundry pulse run --out tmp/pulse
+go run ./cmd/foundry pulse run --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
 go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
@@ -99,9 +99,10 @@ go run ./cmd/ao run --out tmp/ao-pulse
 
 The pulse command writes a local evidence bundle with readiness, GoalRun,
 Forge-brief, Forge-packet, policy-gate, optional live Forge attempt,
-control-plane readback, run, eval, trace, demo, release dry-run, competitive
-audit, and a final `pulse-event.json` summary. It is a scheduler and evidence
-loop only; live implementation remains delegated to AO Forge.
+control-plane readback, run, eval, RSI improvement gate, trace, demo, release
+dry-run, competitive audit, and a final `pulse-event.json` summary. It is a
+scheduler and evidence loop only; live implementation remains delegated to AO
+Forge.
 
 The RSI improvement gate compares a baseline eval result to a candidate eval
 result and requires a measurable improvement, such as 5 percentage points. It
