@@ -3491,6 +3491,7 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 		"forge_live_attempt":          false,
 		"control_plane_readback":      false,
 		"foundry_run":                 false,
+		"rsi_candidate":               false,
 		"eval_result":                 false,
 		"rsi_improvement_gate":        false,
 		"demo_status":                 false,
@@ -3499,9 +3500,11 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 		"pulse_trace":                 false,
 		"trace_inspect":               false,
 	}
+	artifactPathsByName := map[string]string{}
 	for _, raw := range artifacts {
 		artifact := raw.(map[string]any)
 		name := artifact["name"].(string)
+		artifactPathsByName[name] = artifact["path"].(string)
 		if _, ok := requiredArtifacts[name]; ok {
 			requiredArtifacts[name] = true
 		}
@@ -3522,6 +3525,26 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 				t.Fatalf("artifact %s is not valid JSON: %s", name, string(data))
 			}
 		}
+		if name == "rsi_candidate" {
+			var candidate RSICandidate
+			data, err := os.ReadFile(filepath.FromSlash(path))
+			if err != nil {
+				t.Fatalf("read RSI candidate: %v", err)
+			}
+			if err := json.Unmarshal(data, &candidate); err != nil {
+				t.Fatalf("RSI candidate is not JSON: %v", err)
+			}
+			if candidate.SchemaVersion != "ao.foundry.rsi-candidate.v0.1" ||
+				candidate.Status != "ready" ||
+				candidate.GeneratedBy != "foundry pulse run" ||
+				candidate.MutatesRepositories ||
+				candidate.CandidateEvalResult.Path != filepath.ToSlash(filepath.Join(outDir, "eval-result.json")) ||
+				candidate.BaselineEvalResult.Path == "" ||
+				candidate.CandidateEvalResult.SHA256 == "" ||
+				len(candidate.ImprovementHypothesis) == 0 {
+				t.Fatalf("unexpected RSI candidate: %+v", candidate)
+			}
+		}
 		if name == "rsi_improvement_gate" {
 			var gate RSIImprovementGate
 			data, err := os.ReadFile(filepath.FromSlash(path))
@@ -3538,12 +3561,20 @@ func TestPulseRunWritesGoldenLoopBundle(t *testing.T) {
 				gate.MutatesRepositories {
 				t.Fatalf("unexpected RSI improvement gate: %+v", gate)
 			}
+			if len(gate.Evidence) != 2 ||
+				gate.Evidence[1].Label != "candidate" ||
+				gate.Evidence[1].Path != filepath.ToSlash(filepath.Join(outDir, "eval-result.json")) {
+				t.Fatalf("RSI gate is not bound to generated eval result: %+v", gate.Evidence)
+			}
 		}
 	}
 	for name, found := range requiredArtifacts {
 		if !found {
 			t.Fatalf("pulse event missing artifact %q: %#v", name, artifacts)
 		}
+	}
+	if artifactPathsByName["rsi_candidate"] == "" || artifactPathsByName["eval_result"] == "" || artifactPathsByName["rsi_improvement_gate"] == "" {
+		t.Fatalf("pulse event missing RSI artifact chain: %#v", artifactPathsByName)
 	}
 }
 
