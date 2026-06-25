@@ -925,6 +925,11 @@ func TestActiveStackReadinessLedgerIncludesReleaseHandoffChain(t *testing.T) {
 			"covenant policy spine --json",
 			"covenant.policy-spine-result.v1",
 		},
+		"ao-command-rsi-health": {
+			"ao-command rsi health",
+			"rsi_mode=governed_fixture_local",
+			"mutates_repositories=false",
+		},
 	}
 	seen := map[string]bool{}
 	for _, rawGate := range gates {
@@ -976,6 +981,7 @@ func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
 		"foundry-release-candidate",
 		"forge-release-candidate-handoff",
 		"covenant-policy-spine",
+		"ao-command-rsi-health",
 	} {
 		if !strings.Contains(stdout.String(), required) {
 			t.Fatalf("snapshot missing release handoff detail %q:\n%s", required, stdout.String())
@@ -4025,7 +4031,7 @@ func writeActiveStackGithubRunsReportForTest(t *testing.T, path string, ciOverri
 	ciRuns := map[string]string{
 		"ao-foundry":        "99999999991",
 		"ao-forge":          "28066645277",
-		"ao-command":        "28049179216",
+		"ao-command":        "28148110317",
 		"ao2":               "28070860510",
 		"ao2-control-plane": "28068689048",
 		"ao-covenant":       "28067515041",
