@@ -890,7 +890,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
-	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--signed-smoke-result <path>] --out <dir>")
+	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -2541,11 +2541,13 @@ func runPulseRun(args []string, stdout, stderr io.Writer) int {
 	controlPlaneReceiptPath := fs.String("control-plane-receipt", "", "control-plane readback receipt path")
 	signedSmokeResultPath := fs.String("signed-smoke-result", "", "signed smoke result path")
 	scorecardPath := fs.String("scorecard", "examples/evals/bootstrap.scorecard.json", "eval scorecard path")
+	rsiBaselinePath := fs.String("rsi-baseline", "examples/evals/rsi-baseline.eval-result.json", "RSI baseline eval result path")
+	rsiMinImprovement := fs.Float64("rsi-min-improvement", 5, "minimum RSI improvement percentage points")
 	outDir := fs.String("out", "tmp/pulse", "pulse bundle output directory")
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
-	event, err := buildPulseBundle(*registryPath, *taskPath, *goalPath, *packetPath, *scorecardPath, *outDir, *forgeLivePacketPath, *controlPlaneReceiptPath, *signedSmokeResultPath)
+	event, err := buildPulseBundle(*registryPath, *taskPath, *goalPath, *packetPath, *scorecardPath, *rsiBaselinePath, *rsiMinImprovement, *outDir, *forgeLivePacketPath, *controlPlaneReceiptPath, *signedSmokeResultPath)
 	eventPath := filepath.Join(*outDir, "pulse-event.json")
 	if writeErr := writeJSONFile(eventPath, event); writeErr != nil {
 		fmt.Fprintf(stderr, "pulse: write event: %v\n", writeErr)
@@ -4974,10 +4976,10 @@ func buildDemoStatus(registryPath, taskPath, runPath string) (DemoStatus, error)
 	}, nil
 }
 
-func buildPulseBundle(registryPath, taskPath, goalPath, packetPath, scorecardPath, outDir, forgeLivePacketPath, controlPlaneReceiptPath, signedSmokeResultPath string) (PulseEvent, error) {
+func buildPulseBundle(registryPath, taskPath, goalPath, packetPath, scorecardPath, rsiBaselinePath string, rsiMinImprovement float64, outDir, forgeLivePacketPath, controlPlaneReceiptPath, signedSmokeResultPath string) (PulseEvent, error) {
 	event := PulseEvent{
 		SchemaVersion: pulseEventSchema,
-		PulseID:       "pulse-" + shortSHA256(strings.Join([]string{registryPath, taskPath, goalPath, packetPath, scorecardPath}, ":")),
+		PulseID:       "pulse-" + shortSHA256(strings.Join([]string{registryPath, taskPath, goalPath, packetPath, scorecardPath, rsiBaselinePath, fmt.Sprintf("%.2f", rsiMinImprovement)}, ":")),
 		Status:        "blocked",
 		MaxScore:      100,
 		Artifacts:     []PulseArtifact{},
@@ -5181,6 +5183,22 @@ func buildPulseBundle(registryPath, taskPath, goalPath, packetPath, scorecardPat
 		return fail("eval_threshold", fmt.Errorf("eval score is %d below threshold %d", evalResult.Score, evalResult.Threshold))
 	}
 	pass("eval_threshold", "eval score meets threshold")
+
+	rsiGate, err := buildRSIImprovementGate(rsiBaselinePath, evalPath, rsiMinImprovement)
+	if err != nil {
+		return fail("rsi_improvement_gate", err)
+	}
+	rsiGatePath := filepath.Join(outDir, "rsi-improvement-gate.json")
+	if err := writeJSONFile(rsiGatePath, rsiGate); err != nil {
+		return fail("rsi_improvement_gate", err)
+	}
+	if err := event.addArtifact("rsi_improvement_gate", rsiGatePath, rsiGate.SchemaVersion, rsiGate.Status); err != nil {
+		return fail("rsi_improvement_gate_artifact", err)
+	}
+	if rsiGate.Status != "passed" {
+		return fail("rsi_improvement_gate", fmt.Errorf("RSI improvement %.2f is below required %.2f", rsiGate.ActualImprovementPercent, rsiGate.RequiredImprovementPercent))
+	}
+	pass("rsi_improvement_gate", "RSI improvement gate meets threshold")
 
 	demoStatus, err := buildDemoStatus(registryPath, taskPath, runPath)
 	if err != nil {
