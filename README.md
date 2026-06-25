@@ -45,6 +45,7 @@ This first slice provides:
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run --out <dir>`
+  - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
 
@@ -85,6 +86,7 @@ go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse
+go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
 go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-ledger-refresh-proposal.md
@@ -100,6 +102,12 @@ Forge-brief, Forge-packet, policy-gate, optional live Forge attempt,
 control-plane readback, run, eval, trace, demo, release dry-run, competitive
 audit, and a final `pulse-event.json` summary. It is a scheduler and evidence
 loop only; live implementation remains delegated to AO Forge.
+
+The RSI improvement gate compares a baseline eval result to a candidate eval
+result and requires a measurable improvement, such as 5 percentage points. It
+writes `ao.foundry.rsi-improvement-gate.v0.1` evidence with source hashes,
+`autonomous_claim=measured_local_improvement`, and
+`mutates_repositories=false`; it blocks when the threshold is not met.
 
 ## Portfolio Board
 
@@ -209,6 +217,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Active stack production readiness rollup schema](docs/contracts/foundry-active-stack-production-readiness-rollup-v0.1.schema.json)
 - [Release candidate schema](docs/contracts/foundry-release-candidate-v0.1.schema.json)
 - [Release promotion schema](docs/contracts/foundry-release-promotion-v0.1.schema.json)
+- [RSI improvement gate schema](docs/contracts/foundry-rsi-improvement-gate-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)
 - [Goal readiness audit schema](docs/contracts/foundry-goal-readiness-audit-v0.1.schema.json)
 - [Pulse event schema](docs/contracts/foundry-pulse-event-v0.1.schema.json)

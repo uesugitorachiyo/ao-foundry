@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -190,6 +191,29 @@ type EvalResult struct {
 	Threshold     int             `json:"threshold"`
 	Dimensions    []EvalDimension `json:"dimensions"`
 	NextActions   []string        `json:"next_actions"`
+}
+
+type RSIImprovementGate struct {
+	SchemaVersion              string                `json:"schema_version"`
+	Status                     string                `json:"status"`
+	BaselineScorePercent       float64               `json:"baseline_score_percent"`
+	CandidateScorePercent      float64               `json:"candidate_score_percent"`
+	RequiredImprovementPercent float64               `json:"required_improvement_percent"`
+	ActualImprovementPercent   float64               `json:"actual_improvement_percent"`
+	AutonomousClaim            string                `json:"autonomous_claim"`
+	MutatesRepositories        bool                  `json:"mutates_repositories"`
+	Evidence                   []RSIImprovementProof `json:"evidence"`
+	NextActions                []string              `json:"next_actions"`
+}
+
+type RSIImprovementProof struct {
+	Label         string `json:"label"`
+	Path          string `json:"path"`
+	SchemaVersion string `json:"schema_version"`
+	Status        string `json:"status"`
+	Score         int    `json:"score"`
+	MaxScore      int    `json:"max_score"`
+	SHA256        string `json:"sha256"`
 }
 
 type TraceSpan struct {
@@ -794,6 +818,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		return runApproval(args[1:], stdout, stderr)
 	case "eval":
 		return runEval(args[1:], stdout, stderr)
+	case "rsi":
+		return runRSI(args[1:], stdout, stderr)
 	case "trace":
 		return runTrace(args[1:], stdout, stderr)
 	case "import":
@@ -848,6 +874,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry approval request --task <path> --out <approval-request.json>")
 	fmt.Fprintln(w, "  foundry approval validate --decision <approval-decision.json> --task <path>")
 	fmt.Fprintln(w, "  foundry eval run --run <foundry-run.json> --scorecard <scorecard.json> --out <eval-result.json>")
+	fmt.Fprintln(w, "  foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>")
 	fmt.Fprintln(w, "  foundry trace inspect --trace <path> [--json]")
 	fmt.Fprintln(w, "  foundry import ao2-sdd --plan <ao2.sdd-plan.json> --out <foundry-task.json>")
 	fmt.Fprintln(w, "  foundry export forge-brief --task <foundry-task.json> --registry <path> --out <forge-brief.json>")
@@ -1732,6 +1759,38 @@ func runEval(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	traceStatus = "passed"
+	return 0
+}
+
+func runRSI(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 || args[0] != "improvement-gate" {
+		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate")
+		return 2
+	}
+	fs := newFlagSet("rsi improvement-gate", stderr)
+	baselinePath := fs.String("baseline", "", "baseline eval result path")
+	candidatePath := fs.String("candidate", "", "candidate eval result path")
+	minImprovement := fs.Float64("min-improvement", 5, "minimum improvement percentage points")
+	outPath := fs.String("out", "", "RSI improvement gate output path")
+	if !parseFlags(fs, args[1:], stderr) {
+		return 2
+	}
+	gate, err := buildRSIImprovementGate(*baselinePath, *candidatePath, *minImprovement)
+	if err != nil {
+		fmt.Fprintf(stderr, "rsi improvement-gate: %v\n", err)
+		return 2
+	}
+	if *outPath != "" {
+		if err := writeJSONFile(*outPath, gate); err != nil {
+			fmt.Fprintf(stderr, "rsi improvement-gate: write gate: %v\n", err)
+			return 2
+		}
+	}
+	fmt.Fprintf(stdout, "rsi improvement: %s delta=%.2f required=%.2f\n", gate.Status, gate.ActualImprovementPercent, gate.RequiredImprovementPercent)
+	if gate.Status != "passed" {
+		fmt.Fprintln(stderr, "rsi improvement-gate: improvement below required threshold")
+		return 1
+	}
 	return 0
 }
 
@@ -4731,6 +4790,95 @@ func buildEvalResult(runPath, scorecardPath string) (EvalResult, error) {
 	return result, nil
 }
 
+func buildRSIImprovementGate(baselinePath, candidatePath string, requiredImprovement float64) (RSIImprovementGate, error) {
+	if baselinePath == "" || candidatePath == "" {
+		return RSIImprovementGate{}, errors.New("baseline and candidate are required")
+	}
+	if requiredImprovement <= 0 {
+		return RSIImprovementGate{}, errors.New("min-improvement must be greater than zero")
+	}
+	baseline, err := loadEvalResultForImprovement("baseline", baselinePath)
+	if err != nil {
+		return RSIImprovementGate{}, err
+	}
+	candidate, err := loadEvalResultForImprovement("candidate", candidatePath)
+	if err != nil {
+		return RSIImprovementGate{}, err
+	}
+	baselinePercent := scorePercent(baseline)
+	candidatePercent := scorePercent(candidate)
+	actualImprovement := roundPercent(candidatePercent - baselinePercent)
+	status := "passed"
+	nextActions := []string{}
+	if actualImprovement < requiredImprovement {
+		status = "blocked"
+		nextActions = append(nextActions, "produce a candidate eval result that improves by at least the required percentage points")
+	}
+	baselineHash, err := fileSHA256(baselinePath)
+	if err != nil {
+		return RSIImprovementGate{}, fmt.Errorf("hash baseline evidence: %w", err)
+	}
+	candidateHash, err := fileSHA256(candidatePath)
+	if err != nil {
+		return RSIImprovementGate{}, fmt.Errorf("hash candidate evidence: %w", err)
+	}
+	return RSIImprovementGate{
+		SchemaVersion:              "ao.foundry.rsi-improvement-gate.v0.1",
+		Status:                     status,
+		BaselineScorePercent:       baselinePercent,
+		CandidateScorePercent:      candidatePercent,
+		RequiredImprovementPercent: requiredImprovement,
+		ActualImprovementPercent:   actualImprovement,
+		AutonomousClaim:            "measured_local_improvement",
+		MutatesRepositories:        false,
+		Evidence: []RSIImprovementProof{
+			rsiImprovementProof("baseline", baselinePath, baseline, baselineHash),
+			rsiImprovementProof("candidate", candidatePath, candidate, candidateHash),
+		},
+		NextActions: nextActions,
+	}, nil
+}
+
+func loadEvalResultForImprovement(label, path string) (EvalResult, error) {
+	var result EvalResult
+	if err := readJSONFile(path, &result); err != nil {
+		return EvalResult{}, fmt.Errorf("read %s eval result: %w", label, err)
+	}
+	if result.SchemaVersion != "ao.foundry.eval-result.v0.1" {
+		return EvalResult{}, fmt.Errorf("%s eval result schema_version must be ao.foundry.eval-result.v0.1", label)
+	}
+	if result.Status != "ready" {
+		return EvalResult{}, fmt.Errorf("%s eval result status must be ready", label)
+	}
+	if result.MaxScore <= 0 {
+		return EvalResult{}, fmt.Errorf("%s eval result max_score must be greater than zero", label)
+	}
+	if result.Score < 0 || result.Score > result.MaxScore {
+		return EvalResult{}, fmt.Errorf("%s eval result score must be between 0 and max_score", label)
+	}
+	return result, nil
+}
+
+func scorePercent(result EvalResult) float64 {
+	return roundPercent(float64(result.Score) / float64(result.MaxScore) * 100)
+}
+
+func roundPercent(value float64) float64 {
+	return math.Round(value*100) / 100
+}
+
+func rsiImprovementProof(label, path string, result EvalResult, hash string) RSIImprovementProof {
+	return RSIImprovementProof{
+		Label:         label,
+		Path:          path,
+		SchemaVersion: result.SchemaVersion,
+		Status:        result.Status,
+		Score:         result.Score,
+		MaxScore:      result.MaxScore,
+		SHA256:        hash,
+	}
+}
+
 func importAO2SDDPlan(planPath string) (Task, error) {
 	var plan AO2SDDPlan
 	if planPath == "" {
@@ -6455,6 +6603,7 @@ func publicSchemaNames() []string {
 		"foundry-release-manifest-v0.1",
 		"foundry-release-promotion-v0.1",
 		"foundry-repo-health-v0.1",
+		"foundry-rsi-improvement-gate-v0.1",
 		"foundry-run-v0.1",
 		"foundry-signed-smoke-ingest-v0.1",
 		"foundry-signed-smoke-preflight-v0.1",
