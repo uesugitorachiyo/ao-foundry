@@ -42,6 +42,12 @@ fails. The command also prints an operator status line such as
 `freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
 The same values are recorded in `pulse-event.json` under `freshness_summary`.
 
+The RSI sequence is a read-only evidence loop. AO Foundry produces the
+candidate, improvement gate, and next-task artifacts that support the
+`bounded_governed_rsi` claim, then AO Command RSI health and AO Covenant retain
+the public claim boundary. `full_autonomous_self_mutating_rsi` remains denied
+until the stack has mutation authority, rollback, and live self-change evidence.
+
 Derive the next AO2 loop decision from the pulse output:
 
 ```sh

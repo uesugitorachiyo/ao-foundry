@@ -115,6 +115,14 @@ gate passes, the loop writes `ao.foundry.rsi-next-improvement-task.v0.1`
 evidence that binds the candidate and gate artifact paths to the current GoalRun
 next task without mutating repositories.
 
+This is bounded governed RSI evidence only. AO Foundry proves a local candidate
+improved by the configured threshold, such as 5 percentage points, and preserves
+`mutates_repositories=false`. Downstream AO Command RSI health may report
+`claim_level=bounded_governed_rsi decision=allowed` for that read-only evidence
+chain, while `claim_level=full_autonomous_self_mutating_rsi decision=denied`
+remains the correct boundary until mutation authority, rollback, live
+self-change evidence, and AO Covenant approval exist.
+
 ## Portfolio Board
 
 When the sibling AO repositories are checked out next to AO Foundry, use the

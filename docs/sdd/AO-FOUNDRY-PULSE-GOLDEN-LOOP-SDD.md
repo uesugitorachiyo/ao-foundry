@@ -38,6 +38,13 @@ Foundry contracts and fixtures to produce:
 The command is deterministic except for trace timestamps. It is public-safe,
 local-only, and clean-clone safe.
 
+The RSI portion is a bounded governed evidence loop. It can support a
+`bounded_governed_rsi` claim when the pulse candidate, improvement gate, and
+next-task evidence pass a configured threshold such as 5 percentage points
+without repository mutation. This is not a claim of full autonomous self-mutating RSI. A `full_autonomous_self_mutating_rsi` claim remains denied
+until mutation authority, rollback, and live self-change evidence exist and AO
+Covenant allows that claim boundary.
+
 ## Non-Goals
 
 - No live provider execution.
