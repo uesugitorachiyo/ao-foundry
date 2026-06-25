@@ -2412,6 +2412,57 @@ func TestPulseEventLoopDocsReferenceSignedSmokeFreshnessFixture(t *testing.T) {
 	}
 }
 
+func TestPulseDocsDeclareRSIClaimBoundary(t *testing.T) {
+	checks := []struct {
+		name string
+		path string
+		want []string
+	}{
+		{
+			name: "README",
+			path: "README.md",
+			want: []string{
+				"claim_level=bounded_governed_rsi decision=allowed",
+				"claim_level=full_autonomous_self_mutating_rsi decision=denied",
+				"5 percentage points",
+				"mutates_repositories=false",
+			},
+		},
+		{
+			name: "pulse SDD",
+			path: "docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md",
+			want: []string{
+				"bounded_governed_rsi",
+				"full_autonomous_self_mutating_rsi",
+				"not a claim of full autonomous self-mutating RSI",
+				"mutation authority, rollback, and live self-change evidence",
+			},
+		},
+		{
+			name: "AO2 pulse event loop docs",
+			path: "docs/operations/AO2-PULSE-EVENT-LOOP.md",
+			want: []string{
+				"bounded_governed_rsi",
+				"full_autonomous_self_mutating_rsi",
+				"read-only evidence loop",
+				"AO Command RSI health",
+			},
+		},
+	}
+	for _, check := range checks {
+		data, err := os.ReadFile(repoPath(check.path))
+		if err != nil {
+			t.Fatalf("read %s: %v", check.path, err)
+		}
+		doc := string(data)
+		for _, want := range check.want {
+			if !strings.Contains(doc, want) {
+				t.Fatalf("%s missing RSI claim-boundary detail %q", check.name, want)
+			}
+		}
+	}
+}
+
 func TestPulseWritesSignedSmokeScript(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "signed-pulse-smoke.sh")
 	var stdout, stderr bytes.Buffer
