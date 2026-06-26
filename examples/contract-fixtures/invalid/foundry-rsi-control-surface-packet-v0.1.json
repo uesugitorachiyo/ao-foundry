@@ -1,0 +1,89 @@
+{
+  "schema_version": "ao.foundry.rsi-control-surface-packet.v0.1",
+  "status": "ready",
+  "generated_by": "foundry portfolio readback",
+  "goal_id": "bounded-governed-rsi-control-surface-readback",
+  "loop_goal": "bounded_governed_rsi_control_surface_readback",
+  "chain": [
+    "ao-blueprint",
+    "ao-foundry",
+    "ao-forge",
+    "ao-covenant",
+    "ao2",
+    "ao2-control-plane"
+  ],
+  "claim_boundaries": {
+    "bounded_governed_rsi": {
+      "decision": "allowed",
+      "status": "supported",
+      "reason": "bounded governed RSI evidence exists"
+    },
+    "full_autonomous_self_mutating_rsi": {
+      "decision": "allowed",
+      "status": "boundary_enforced",
+      "publish_authority": false,
+      "reason": "invalid fixture must not allow full autonomous RSI"
+    },
+    "improvement_score": {
+      "interpretation": "evidence_coverage_not_publication_authority",
+      "target_exceeded": true
+    }
+  },
+  "evidence_links": [
+    {
+      "label": "blueprint_build_authorization",
+      "repo": "ao-blueprint",
+      "path": "../ao-blueprint/examples/blueprints/valid/bounded-governed-rsi-control-surface-readback/build-authorization.json",
+      "schema_version": "ao.blueprint.build-authorization.v0.1",
+      "status": "ready",
+      "sha256": "5dd0d6576377ed500cfbd32a76efe0a159c9ff426cf810659d8b43e31a0f66a1",
+      "role": "authorization"
+    },
+    {
+      "label": "forge_retained_chain_binding_readback",
+      "repo": "ao-forge",
+      "path": "../ao-forge/docs/evidence/goals/ao2-weekend-hardening/20260619T180000Z-verification/ao-stack-rsi-chain-binding-readback-retention-proof.json",
+      "schema_version": "ao.forge.goal-run-retained-evidence.v0.1",
+      "status": "retained",
+      "sha256": "a39a334b375b8ccd96a1173c24588854fcde9e7a9a5f48ab01668670e46527b2",
+      "role": "retained_proof"
+    },
+    {
+      "label": "ao2_improvement_evidence_gate",
+      "repo": "ao2",
+      "path": "../ao2/target/rsi-improvement-evidence-gate/latest/summary.json",
+      "schema_version": "ao2.rsi-improvement-evidence-gate.v1",
+      "status": "passed",
+      "sha256": "ba7a755f1b5fbfaf22d4d5bef6a6a3751ca2c3448bf4e4503bee774ccb643d7c",
+      "role": "execution_evidence"
+    },
+    {
+      "label": "ao2_improvement_trend",
+      "repo": "ao2",
+      "path": "../ao2/target/rsi-improvement-trend/latest/summary.json",
+      "schema_version": "ao2.rsi-improvement-trend.v1",
+      "status": "passed",
+      "sha256": "aec2c426a02b508508ffa099411e93f6dde9d7c0a76a7a81d875a3092b0ca29d",
+      "role": "execution_evidence"
+    },
+    {
+      "label": "control_plane_control_surface_readback",
+      "repo": "ao2-control-plane",
+      "path": "../ao2-control-plane/target/ao-stack-rsi-chain-binding-readback/producers/control-surface-readback.json",
+      "schema_version": "ao2.cp-ao2-rsi-control-surface-readback.v1",
+      "status": "passed",
+      "sha256": "114c23ea1b77e7183fd9076e396ddf4a41344cbb262fb17a5e01717e175b10f8",
+      "role": "observer_readback"
+    }
+  ],
+  "trust_boundary": {
+    "foundry_mutates_repositories": false,
+    "foundry_approves_claims": false,
+    "control_plane_observer_only": true,
+    "provider_credentials_allowed": false,
+    "publishes_full_autonomous_rsi_claim": false
+  },
+  "next_actions": [
+    "invalid fixture"
+  ]
+}

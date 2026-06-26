@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-rsi-control-surface-packet-v0.1.schema.json",
+  "title": "AO Foundry RSI Control Surface Packet v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "generated_by",
+    "goal_id",
+    "loop_goal",
+    "chain",
+    "claim_boundaries",
+    "evidence_links",
+    "trust_boundary",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.rsi-control-surface-packet.v0.1" },
+    "status": { "type": "string", "enum": ["ready"] },
+    "generated_by": { "type": "string", "enum": ["foundry portfolio readback"] },
+    "goal_id": { "type": "string", "minLength": 1 },
+    "loop_goal": { "const": "bounded_governed_rsi_control_surface_readback" },
+    "chain": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "ao-blueprint",
+          "ao-foundry",
+          "ao-forge",
+          "ao-covenant",
+          "ao2",
+          "ao2-control-plane"
+        ]
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bounded_governed_rsi",
+        "full_autonomous_self_mutating_rsi",
+        "improvement_score"
+      ],
+      "properties": {
+        "bounded_governed_rsi": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decision", "status", "reason"],
+          "properties": {
+            "decision": { "const": "allowed" },
+            "status": { "const": "supported" },
+            "reason": { "type": "string", "minLength": 1 }
+          }
+        },
+        "full_autonomous_self_mutating_rsi": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decision", "status", "publish_authority", "reason"],
+          "properties": {
+            "decision": { "const": "denied" },
+            "status": { "const": "boundary_enforced" },
+            "publish_authority": { "const": false },
+            "reason": { "type": "string", "minLength": 1 }
+          }
+        },
+        "improvement_score": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["interpretation", "target_exceeded"],
+          "properties": {
+            "interpretation": { "const": "evidence_coverage_not_publication_authority" },
+            "target_exceeded": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "evidence_links": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "$ref": "#/$defs/evidence_link" }
+    },
+    "trust_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "foundry_mutates_repositories",
+        "foundry_approves_claims",
+        "control_plane_observer_only",
+        "provider_credentials_allowed",
+        "publishes_full_autonomous_rsi_claim"
+      ],
+      "properties": {
+        "foundry_mutates_repositories": { "const": false },
+        "foundry_approves_claims": { "const": false },
+        "control_plane_observer_only": { "const": true },
+        "provider_credentials_allowed": { "const": false },
+        "publishes_full_autonomous_rsi_claim": { "const": false }
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "evidence_link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "repo",
+        "path",
+        "schema_version",
+        "status",
+        "sha256",
+        "role"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": [
+            "blueprint_build_authorization",
+            "forge_retained_chain_binding_readback",
+            "ao2_improvement_evidence_gate",
+            "ao2_improvement_trend",
+            "control_plane_control_surface_readback"
+          ]
+        },
+        "repo": {
+          "type": "string",
+          "enum": [
+            "ao-blueprint",
+            "ao-forge",
+            "ao2",
+            "ao2-control-plane"
+          ]
+        },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "authorization",
+            "retained_proof",
+            "execution_evidence",
+            "observer_readback"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -6769,6 +6769,7 @@ func publicSchemaNames() []string {
 		"foundry-release-promotion-v0.1",
 		"foundry-repo-health-v0.1",
 		"foundry-rsi-candidate-v0.1",
+		"foundry-rsi-control-surface-packet-v0.1",
 		"foundry-rsi-improvement-gate-v0.1",
 		"foundry-rsi-next-improvement-task-v0.1",
 		"foundry-run-v0.1",
