@@ -115,6 +115,14 @@ gate passes, the loop writes `ao.foundry.rsi-next-improvement-task.v0.1`
 evidence that binds the candidate and gate artifact paths to the current GoalRun
 next task without mutating repositories.
 
+Foundry can also retain an `ao.foundry.rsi-control-surface-packet.v0.1`
+portfolio readback packet that links Blueprint build authorization, Forge
+retained GoalRun evidence, AO2 RSI evidence, and control-plane observer
+readback. The packet preserves the same boundary as the pulse loop:
+`bounded_governed_rsi` may be supported by evidence, while
+`full_autonomous_self_mutating_rsi` remains denied and cannot be published by
+Foundry.
+
 This is bounded governed RSI evidence only. AO Foundry proves a local candidate
 improved by the configured threshold, such as 5 percentage points, and preserves
 `mutates_repositories=false`. Downstream AO Command RSI health may report
@@ -232,6 +240,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Release candidate schema](docs/contracts/foundry-release-candidate-v0.1.schema.json)
 - [Release promotion schema](docs/contracts/foundry-release-promotion-v0.1.schema.json)
 - [RSI candidate schema](docs/contracts/foundry-rsi-candidate-v0.1.schema.json)
+- [RSI control-surface packet schema](docs/contracts/foundry-rsi-control-surface-packet-v0.1.schema.json)
 - [RSI improvement gate schema](docs/contracts/foundry-rsi-improvement-gate-v0.1.schema.json)
 - [RSI next improvement task schema](docs/contracts/foundry-rsi-next-improvement-task-v0.1.schema.json)
 - [GoalRun schema](docs/contracts/foundry-goal-run-v0.1.schema.json)
