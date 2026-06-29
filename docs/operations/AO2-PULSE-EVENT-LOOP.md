@@ -91,6 +91,8 @@ To rehearse a larger refactor as bounded Atlas factory tasks, run:
 ```sh
 scripts/complex-refactor-workgraph-rehearsal.sh \
   --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+scripts/overnight-rehearsal-runner.sh \
+  --out docs/evidence/pulse/overnight-rehearsal-runner-local
 ```
 
 The rehearsal validates `examples/complex-refactor-workgraph/workgraph.json`,
@@ -99,6 +101,11 @@ proof. Its summary reports total, ready, blocked, completed, and failed task
 counts, blocked-node repair-plan output, needs-context repack output, AO
 Command read-only status output, the next recommended factory task, and why the
 loop may start the next ready task while blocked tasks remain denied.
+
+The overnight rehearsal runner wraps the complex-refactor rehearsal and emits
+`ao.foundry.overnight-rehearsal-runner.v0.1`. It is dry-run only: it validates
+the start gate, lifecycle state, Atlas import/readback, repair/repack artifacts,
+and AO Command status before reporting `allowed_next_action`.
 
 The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only

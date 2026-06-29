@@ -973,6 +973,36 @@ func TestComplexRefactorRehearsalScriptIncludesRepairRepackAndCommandReadback(t 
 	}
 }
 
+func TestOvernightRehearsalRunnerScriptIsDryRunAndValidatesControlChain(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/overnight-rehearsal-runner.sh"))
+	if err != nil {
+		t.Fatalf("read overnight rehearsal runner script: %v", err)
+	}
+	scriptText := string(script)
+	for _, want := range []string{
+		"ao.foundry.overnight-rehearsal-runner.v0.1",
+		"complex-refactor-workgraph-rehearsal.sh",
+		"pulse_gate_status",
+		"lifecycle_status",
+		"atlas_import_status",
+		"repair_plan_status",
+		"context_repack_status",
+		"command_status",
+		"mutates_repositories:false",
+		"executes_work:false",
+		"schedules_work:false",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("overnight rehearsal runner script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"gh pr merge", "git push", "gh release", "provider", "upload-artifact"} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("overnight rehearsal runner script contains forbidden live action %q", forbidden)
+		}
+	}
+}
+
 func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/active-stack-github-runs-report.sh"))
 	if err != nil {
