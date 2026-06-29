@@ -281,6 +281,16 @@ verifies the target docs file is removed again. It never applies patches to the
 live repository and keeps `live_mutation_allowed=false` and
 `mutates_repositories=false`.
 
+`scripts/approved-live-docs-dry-run-chain.sh` links the first approved
+docs-only path end to end as
+`ao.foundry.approved-live-docs-dry-run-chain.v0.1`: approval request, Covenant
+approval ticket, Foundry approval gate, Forge execution guard, AO2 docs-only
+patch packet, worktree preparation, rollback execution rehearsal, Sentinel
+verdict, Promoter boundary, and AO Command readback. This is still dry-run
+evidence only. A ready result means the chain is prepared for the next live docs
+PR rehearsal gate; it does not create a branch, open a PR, mutate repositories,
+call providers, publish, upload, release, or claim broad autonomous mutation.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval

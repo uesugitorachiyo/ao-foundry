@@ -5251,6 +5251,101 @@ func TestLiveDocsRollbackExecutionRehearsalContractFixtureValidates(t *testing.T
 	}
 }
 
+func TestApprovedLiveDocsDryRunChainScript(t *testing.T) {
+	script := repoPath("scripts/approved-live-docs-dry-run-chain.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read approved live docs dry-run chain script: %v", err)
+	}
+	scriptText := string(scriptData)
+	for _, want := range []string{
+		"ao.foundry.approved-live-docs-dry-run-chain.v0.1",
+		"live-docs-approval-gate.sh",
+		"live-docs-worktree-prepare.sh",
+		"live-docs-rollback-execution-rehearsal.sh",
+		"ao.forge.live-docs-execution-guard.v0.1",
+		"ao2.docs-only-patch-packet.v1",
+		"ao.sentinel.live-docs-mutation-hold.v0.1",
+		"ao.promoter.live-docs-mutation-boundary.v0.1",
+		"ao.command.live-docs-mutation-status.v0.1",
+		"safe_to_execute:false",
+		"fully_unsupervised_complex_mutation_claimed:false",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("approved live docs dry-run chain script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr merge", "git " + "push", "gh " + "release", "npm publish", "twine upload", "docker push", "kubectl apply", "terraform apply", "curl "} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("approved live docs dry-run chain script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	outDir := filepath.ToSlash(filepath.Join("target", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	cmd := exec.Command("bash", script, "--out", outDir)
+	cmd.Dir = repoPath(".")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("approved live docs dry-run chain failed: %v\n%s", err, string(out))
+	}
+	summary := readObjectFixture(t, filepath.Join(outDir, "summary.json"))
+	if summary["status"] != "ready" || summary["first_live_class"] != "docs_only" {
+		t.Fatalf("unexpected approved live docs chain identity: %#v", summary)
+	}
+	assessment := summary["readiness_assessment"].(map[string]any)
+	if assessment["approved_docs_only_dry_run_chain"] != "ready" ||
+		assessment["safe_to_request"] != true ||
+		assessment["safe_to_execute"] != false ||
+		assessment["requires_live_docs_pr_rehearsal_gate"] != true ||
+		assessment["live_mutation_performed"] != false ||
+		assessment["fully_unsupervised_complex_mutation_claimed"] != false {
+		t.Fatalf("unexpected approved live docs readiness assessment: %#v", assessment)
+	}
+	boundaries := summary["authority_boundaries"].(map[string]any)
+	if boundaries["live_mutation_allowed"] != false ||
+		boundaries["mutates_repositories"] != false ||
+		boundaries["creates_branch"] != false ||
+		boundaries["creates_worktree"] != false ||
+		boundaries["executes_work"] != false ||
+		boundaries["approves_work"] != false {
+		t.Fatalf("chain must remain dry-run and non-mutating: %#v", boundaries)
+	}
+	artifacts := summary["source_artifacts"].([]any)
+	if len(artifacts) != 10 {
+		t.Fatalf("expected ten approved live docs source artifacts, got %#v", artifacts)
+	}
+}
+
+func TestApprovedLiveDocsDryRunChainContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-approved-live-docs-dry-run-chain-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read approved live docs dry-run chain schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("approved live docs dry-run chain schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-approved-live-docs-dry-run-chain-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid approved live docs dry-run chain fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid approved live docs dry-run chain fixture failed schema: %v", err)
+	}
+	assessment := validFixture.(map[string]any)["readiness_assessment"].(map[string]any)
+	if assessment["safe_to_execute"] != false || assessment["fully_unsupervised_complex_mutation_claimed"] != false {
+		t.Fatalf("valid approved live docs chain must stay dry-run: %#v", assessment)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-approved-live-docs-dry-run-chain-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid approved live docs dry-run chain fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid approved live docs dry-run chain fixture unexpectedly passed schema")
+	}
+}
+
 func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthority(t *testing.T) {
 	script := repoPath("scripts/live-mutation-rollback-rehearsal.sh")
 	scriptData, err := os.ReadFile(script)

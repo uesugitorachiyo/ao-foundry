@@ -1,0 +1,123 @@
+{
+  "schema_version": "ao.foundry.approved-live-docs-dry-run-chain.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_dry_run",
+  "first_live_class": "docs_only",
+  "objective": "Prove the approved docs-only dry-run chain before any first live docs-only PR rehearsal gate.",
+  "chain": [
+    "request",
+    "approval ticket",
+    "Foundry approval gate",
+    "Forge guard",
+    "AO2 docs-only patch packet",
+    "worktree preparation",
+    "rollback execution rehearsal",
+    "Sentinel verdict",
+    "Promoter boundary",
+    "AO Command readback"
+  ],
+  "source_artifacts": [
+    {
+      "name": "approval_request",
+      "path": "examples/approved-live-docs-dry-run-chain/approval-request.json",
+      "schema_version": "ao.foundry.live-mutation-approval-request.v0.1",
+      "status": "pending_operator_approval",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "approval_ticket",
+      "path": "examples/approved-live-docs-dry-run-chain/approval-ticket.json",
+      "schema_version": "covenant.live-docs-approval-ticket.v1",
+      "status": "approved",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "name": "foundry_approval_gate",
+      "path": "examples/approved-live-docs-dry-run-chain/foundry-approval-gate.json",
+      "schema_version": "ao.foundry.live-docs-approval-gate.v0.1",
+      "status": "ready",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "name": "forge_execution_guard",
+      "path": "examples/approved-live-docs-dry-run-chain/forge-execution-guard.json",
+      "schema_version": "ao.forge.live-docs-execution-guard.v0.1",
+      "status": "ready",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "name": "ao2_docs_only_patch_packet",
+      "path": "examples/approved-live-docs-dry-run-chain/ao2-docs-only-patch-packet.json",
+      "schema_version": "ao2.docs-only-patch-packet.v1",
+      "status": "ready",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    {
+      "name": "worktree_prepare",
+      "path": "examples/approved-live-docs-dry-run-chain/worktree-prepare.json",
+      "schema_version": "ao.foundry.live-docs-worktree-prepare.v0.1",
+      "status": "ready",
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "name": "rollback_execution_rehearsal",
+      "path": "examples/approved-live-docs-dry-run-chain/rollback-execution-rehearsal.json",
+      "schema_version": "ao.foundry.live-docs-rollback-execution-rehearsal.v0.1",
+      "status": "ready",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "name": "sentinel_verdict",
+      "path": "examples/approved-live-docs-dry-run-chain/sentinel-verdict.json",
+      "schema_version": "ao.sentinel.live-docs-mutation-hold.v0.1",
+      "status": "clear",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "name": "promoter_boundary",
+      "path": "examples/approved-live-docs-dry-run-chain/promoter-boundary.json",
+      "schema_version": "ao.promoter.live-docs-mutation-boundary.v0.1",
+      "status": "passed",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "name": "command_readback",
+      "path": "examples/approved-live-docs-dry-run-chain/command-readback.json",
+      "schema_version": "ao.command.live-docs-mutation-status.v0.1",
+      "status": "ready",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "Use the next live docs PR rehearsal gate before creating any real branch or PR.",
+    "Do not treat this dry-run chain as broad live mutation authority."
+  ],
+  "readiness_assessment": {
+    "approved_docs_only_dry_run_chain": "ready",
+    "first_live_class": "docs_only",
+    "approval_ticket_present": true,
+    "approval_scope_exact": true,
+    "safe_to_request": true,
+    "safe_to_execute": false,
+    "requires_live_docs_pr_rehearsal_gate": true,
+    "exact_next_step": "run_live_docs_pr_rehearsal_gate",
+    "live_mutation_performed": false,
+    "fully_unsupervised_complex_mutation_claimed": false
+  },
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "creates_branch": false,
+    "creates_worktree": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false,
+    "broad_live_mutation_allowed": false,
+    "fully_unsupervised_complex_mutation_claimed": false
+  }
+}
