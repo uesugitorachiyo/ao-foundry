@@ -47,6 +47,50 @@ func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
 			t.Fatalf("status output missing %q: %s", want, out)
 		}
 	}
+
+	registry, err := loadRegistry(atlasRegistryFixture())
+	if err != nil {
+		t.Fatal(err)
+	}
+	var hasImportSource bool
+	for _, repo := range registry.Repos {
+		if repo.ID != "ao-atlas" {
+			continue
+		}
+		for _, source := range repo.EvidenceSources {
+			if source.Kind == "atlas-foundry-import" && source.Location == "examples/valid/foundry-import.json" {
+				hasImportSource = true
+			}
+		}
+	}
+	if !hasImportSource {
+		t.Fatal("atlas demo registry must identify the Atlas foundry-import packet as Foundry's first consumer artifact")
+	}
+}
+
+func TestAtlasImportValidateAcceptsFixtureOnlyPacket(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"atlas", "import", "validate", "--import", atlasImportFixture()}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	out := stdout.String()
+	for _, want := range []string{"atlas import valid", "tasks=1", "schedules_work=false", "executes_work=false", "approves_work=false"} {
+		if !strings.Contains(out, want) {
+			t.Fatalf("atlas import output missing %q: %s", want, out)
+		}
+	}
+}
+
+func TestAtlasImportValidateRejectsExecutionAuthority(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"atlas", "import", "validate", "--import", filepath.Join("testdata", "atlas-foundry-import-executes-work.json")}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for executable Atlas import; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "executes_work must be false") {
+		t.Fatalf("expected execution authority rejection, got %q", stderr.String())
+	}
 }
 
 func TestRegistryValidateRejectsMalformedFixture(t *testing.T) {
@@ -4363,6 +4407,10 @@ func registryFixture() string {
 
 func atlasRegistryFixture() string {
 	return filepath.Join("..", "..", "examples", "registry", "atlas-demo.foundry-registry.json")
+}
+
+func atlasImportFixture() string {
+	return filepath.Join("..", "..", "examples", "atlas", "foundry-import.json")
 }
 
 func taskFixture() string {

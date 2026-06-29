@@ -75,6 +75,7 @@ This public export is intentionally local-first:
 go test ./...
 go run ./cmd/foundry status --registry examples/registry/local-ao-stack.foundry-registry.json
 go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json
+go run ./cmd/foundry atlas import validate --import examples/atlas/foundry-import.json
 go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry next --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json
@@ -152,6 +153,16 @@ runs registry validation, README readiness snapshot parity, repo board, release
 candidate validation, and loop preflight, then writes
 `ao.foundry.active-stack-readiness-loop.v0.1` JSON with `first_failing_check`
 plus separate `blocking_next_actions` and `maintenance_suggestions`.
+
+AO Atlas integration is fixture-only. Foundry’s first Atlas consumer artifact is
+`ao.atlas.foundry-import.v0.1`, validated with:
+
+```sh
+go run ./cmd/foundry atlas import validate --import examples/atlas/foundry-import.json
+```
+
+The validator confirms the packet is readback material only: no scheduling,
+execution, approval, release mutation, provider calls, or sibling repo mutation.
 
 The readiness exit gate is stop-oriented. When goal readiness and competitive
 readiness are 100/100 and the active-stack loop passes with no

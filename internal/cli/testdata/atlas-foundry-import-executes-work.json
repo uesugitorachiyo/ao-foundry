@@ -1,0 +1,49 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "atlas-readiness-workgraph-foundry-import",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "tasks": [
+    {
+      "node_id": "readiness-ready",
+      "task_id": "atlas-readiness-task",
+      "path": "tasks/atlas-readiness-task.json",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "atlas-readiness-task",
+        "objective": "Verify AO Atlas stack instance readiness fixtures and command outputs.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/atlas-readiness",
+        "acceptance_criteria": [
+          "production readiness reports score=100/100"
+        ],
+        "non_goals": [
+          "do not execute AO2",
+          "do not publish releases"
+        ],
+        "write_scope": [
+          "factory/atlas-readiness"
+        ],
+        "verification_commands": [
+          "scripts/production-readiness.sh"
+        ],
+        "required_evidence": [
+          "target/production-readiness/summary.json"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credentials",
+          "no private paths"
+        ],
+        "dependency_refs": [
+          "contracts-ready"
+        ]
+      },
+      "task_digest": "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": true,
+  "approves_work": false
+}
