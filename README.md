@@ -291,6 +291,15 @@ evidence only. A ready result means the chain is prepared for the next live docs
 PR rehearsal gate; it does not create a branch, open a PR, mutate repositories,
 call providers, publish, upload, release, or claim broad autonomous mutation.
 
+`scripts/live-docs-pr-rehearsal-gate.sh` is the final decision gate before a
+first real docs-only branch/PR rehearsal may start. Without an explicit
+approval artifact it emits `safe_to_execute=false` and
+`exact_next_step=request_operator_approval`. With an approved, unconsumed
+Covenant ticket whose digest matches the approved dry-run chain, it can emit
+`safe_to_execute=true` for the first docs-only PR rehearsal decision only. The
+gate itself still does not create branches, create worktrees, open PRs, merge,
+mutate repositories, call providers, publish, upload, tag, or release.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval

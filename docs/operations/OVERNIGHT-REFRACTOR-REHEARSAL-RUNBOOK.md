@@ -192,3 +192,27 @@ Sentinel verdict, Promoter boundary, and AO Command readback. A ready result
 means the next step is the live docs PR rehearsal gate. It still keeps
 `safe_to_execute=false`, `mutates_repositories=false`, and
 `fully_unsupervised_complex_mutation_claimed=false`.
+
+Run the final PR rehearsal gate with no approval artifact to confirm it fails
+closed:
+
+```sh
+scripts/live-docs-pr-rehearsal-gate.sh \
+  --chain target/approved-live-docs-dry-run-chain/summary.json \
+  --out target/live-docs-pr-rehearsal-gate-blocked.json
+```
+
+That blocked result should report `exact_next_step=request_operator_approval`.
+Only when an explicit approved Covenant ticket is present and digest-bound to
+the approved dry-run chain may the decision gate be evaluated as ready:
+
+```sh
+scripts/live-docs-pr-rehearsal-gate.sh \
+  --chain target/approved-live-docs-dry-run-chain/summary.json \
+  --approval-artifact examples/live-docs-approval/ticket-approved.json \
+  --out target/live-docs-pr-rehearsal-gate-ready.json
+```
+
+The ready result is permission for the first docs-only PR rehearsal decision
+only. The gate does not create a worktree, create a branch, open or merge a PR,
+mutate repositories, call providers, publish, upload, tag, or release.
