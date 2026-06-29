@@ -217,6 +217,23 @@ The ready result is permission for the first docs-only PR rehearsal decision
 only. The gate does not create a worktree, create a branch, open or merge a PR,
 mutate repositories, call providers, publish, upload, tag, or release.
 
+Before treating that ready decision as executable, confirm the approval artifact
+is exact-scope and current:
+
+- target repository and branch prefix match the request;
+- allowed files are docs-only and forbidden paths are unchanged;
+- maximum changed-file count matches the request;
+- Covenant ticket is approved, unexpired, unconsumed, and digest-bound to the
+  approved dry-run chain;
+- rollback plan and kill switch references are present;
+- Sentinel and Promoter evidence are passing for the same docs-only class;
+- AO Command readback remains `operator_mode=read_only` and
+  `mutates_repositories=false`.
+
+If any item is missing or mismatched, stop and request a new exact operator
+approval. Do not convert a docs-only rehearsal decision into broad live mutation
+authority.
+
 Summarize the chain and PR rehearsal gate for operator closure:
 
 ```sh

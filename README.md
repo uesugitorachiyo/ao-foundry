@@ -310,6 +310,15 @@ chain and final PR rehearsal gate as
 that the first docs-only PR rehearsal decision is ready; it does not perform
 the live branch/PR rehearsal.
 
+The approval artifact is not blanket consent. It must name the exact repo,
+branch prefix, docs-only path allowlist, forbidden paths, maximum changed files,
+rollback plan, kill switch, and unconsumed Covenant ticket digest for the first
+docs-only class. Even when the rollup reports `safe_to_execute=true`, Foundry is
+only saying the first docs-only PR rehearsal may be started by explicit operator
+instruction under those gates. It is not permission for broad live mutation,
+provider calls, releases, tags, uploads, direct-main changes, or fully
+unsupervised complex repository mutation.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval
