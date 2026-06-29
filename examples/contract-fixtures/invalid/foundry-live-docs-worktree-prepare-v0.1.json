@@ -1,0 +1,73 @@
+{
+  "schema_version": "ao.foundry.live-docs-worktree-prepare.v0.1",
+  "status": "ready",
+  "can_start_docs_only_pr_rehearsal": false,
+  "allowed_next_action": "start_first_docs_only_live_pr_rehearsal",
+  "first_failing_check": "",
+  "candidate_id": "invalid-live-docs-worktree",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "worktree": {
+    "path": ".foundry-local/worktrees/ao-foundry-live-docs-rehearsal",
+    "branch": "codex/live-docs-first-rehearsal",
+    "base_branch": "main",
+    "clean": true,
+    "reused": false,
+    "active_elsewhere": false,
+    "has_untracked_changes": false,
+    "remote_branch_exists": false
+  },
+  "change_plan": {
+    "changed_files": [
+      "docs/operations/FIRST-LIVE-DOCS-REHEARSAL.md"
+    ],
+    "docs_only_path_allowlist": [
+      "docs/operations/"
+    ],
+    "forbidden_paths": [
+      "scripts/"
+    ],
+    "max_changed_files": 1
+  },
+  "source_hashes": [
+    {
+      "name": "worktree_candidate",
+      "path": "examples/live-docs-worktree-prepare/ready.candidate.json",
+      "schema_version": "ao.foundry.live-docs-worktree-preparation-candidate.v0.1",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "approval_gate",
+      "path": "examples/contract-fixtures/valid/foundry-live-docs-approval-gate-v0.1.json",
+      "schema_version": "ao.foundry.live-docs-approval-gate.v0.1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "checks": [
+    {
+      "name": "authority_boundaries",
+      "status": "passed",
+      "summary": "invalid fixture falsely marks rehearsal start as blocked while status is ready"
+    }
+  ],
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "Invalid fixture must fail schema validation."
+  ],
+  "authority_boundaries": {
+    "validation_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "creates_worktree": false,
+    "creates_branch": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

@@ -131,3 +131,32 @@ It does not mean the mutation is safe to execute; the rollup keeps
 `safe_to_execute=false` until a later explicit approval path exists.
 Do not commit generated target output unless a separate PR explicitly adds a
 public-safe fixture.
+
+## First Docs-Only Approval And Worktree Preparation
+
+After an operator approval request and exact Covenant ticket exist, evaluate the
+approval gate:
+
+```sh
+scripts/live-docs-approval-gate.sh \
+  --request examples/live-docs-approval/request.json \
+  --ticket examples/live-docs-approval/ticket-approved.json \
+  --out target/live-docs/approval-gate.json
+```
+
+Then validate the isolated docs-only branch/worktree preparation candidate:
+
+```sh
+scripts/live-docs-worktree-prepare.sh \
+  --candidate examples/live-docs-worktree-prepare/ready.candidate.json \
+  --approval-gate target/live-docs/approval-gate.json \
+  --out target/live-docs/worktree-prepare.json
+```
+
+The preparation gate emits
+`ao.foundry.live-docs-worktree-prepare.v0.1`. A ready result proves only that a
+tiny docs-only PR rehearsal candidate is bounded to a fresh ignored worktree, a
+`codex/live-docs-*` branch from synced `main`, a clean non-reused worktree, an
+armed kill switch, and docs-only changed files. It does not create that
+worktree or branch, and it does not mutate repositories, execute work, approve
+work, call providers, publish, upload, tag, or release.
