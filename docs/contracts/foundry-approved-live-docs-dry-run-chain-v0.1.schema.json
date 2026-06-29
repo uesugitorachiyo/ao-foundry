@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-approved-live-docs-dry-run-chain-v0.1.schema.json",
+  "title": "AO Foundry Approved Live Docs Dry Run Chain v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "mode",
+    "first_live_class",
+    "objective",
+    "chain",
+    "source_artifacts",
+    "first_failing_check",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "readiness_assessment",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.approved-live-docs-dry-run-chain.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "mode": { "const": "fixture_only_dry_run" },
+    "first_live_class": { "const": "docs_only" },
+    "objective": { "type": "string", "minLength": 1 },
+    "chain": {
+      "type": "array",
+      "minItems": 10,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "source_artifacts": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "schema_version", "status", "sha256"],
+        "properties": {
+          "name": {
+            "enum": [
+              "approval_request",
+              "approval_ticket",
+              "foundry_approval_gate",
+              "forge_execution_guard",
+              "ao2_docs_only_patch_packet",
+              "worktree_prepare",
+              "rollback_execution_rehearsal",
+              "sentinel_verdict",
+              "promoter_boundary",
+              "command_readback"
+            ]
+          },
+          "path": { "type": "string", "pattern": "^(examples|target|docs)/[A-Za-z0-9._/-]+\\.json$" },
+          "schema_version": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["pending_operator_approval", "ready", "approved", "clear", "passed", "blocked", "failed", "hold"] },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "first_failing_check": { "type": "string" },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "readiness_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approved_docs_only_dry_run_chain",
+        "first_live_class",
+        "approval_ticket_present",
+        "approval_scope_exact",
+        "safe_to_request",
+        "safe_to_execute",
+        "requires_live_docs_pr_rehearsal_gate",
+        "exact_next_step",
+        "live_mutation_performed",
+        "fully_unsupervised_complex_mutation_claimed"
+      ],
+      "properties": {
+        "approved_docs_only_dry_run_chain": { "enum": ["ready", "blocked"] },
+        "first_live_class": { "const": "docs_only" },
+        "approval_ticket_present": { "type": "boolean" },
+        "approval_scope_exact": { "type": "boolean" },
+        "safe_to_request": { "type": "boolean" },
+        "safe_to_execute": { "const": false },
+        "requires_live_docs_pr_rehearsal_gate": { "const": true },
+        "exact_next_step": { "type": "string", "minLength": 1 },
+        "live_mutation_performed": { "const": false },
+        "fully_unsupervised_complex_mutation_claimed": { "const": false }
+      }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dry_run_only",
+        "live_mutation_allowed",
+        "mutates_repositories",
+        "creates_branch",
+        "creates_worktree",
+        "schedules_work",
+        "executes_work",
+        "approves_work",
+        "provider_calls_allowed",
+        "release_or_publish_allowed",
+        "broad_live_mutation_allowed",
+        "fully_unsupervised_complex_mutation_claimed"
+      ],
+      "properties": {
+        "dry_run_only": { "const": true },
+        "live_mutation_allowed": { "const": false },
+        "mutates_repositories": { "const": false },
+        "creates_branch": { "const": false },
+        "creates_worktree": { "const": false },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "provider_calls_allowed": { "const": false },
+        "release_or_publish_allowed": { "const": false },
+        "broad_live_mutation_allowed": { "const": false },
+        "fully_unsupervised_complex_mutation_claimed": { "const": false }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "ready" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "first_failing_check": { "const": "" },
+          "blocking_next_actions": { "maxItems": 0 },
+          "readiness_assessment": {
+            "properties": {
+              "approved_docs_only_dry_run_chain": { "const": "ready" },
+              "approval_ticket_present": { "const": true },
+              "approval_scope_exact": { "const": true },
+              "safe_to_request": { "const": true },
+              "exact_next_step": { "const": "run_live_docs_pr_rehearsal_gate" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "blocked" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "first_failing_check": { "minLength": 1 },
+          "blocking_next_actions": { "minItems": 1 },
+          "readiness_assessment": {
+            "properties": {
+              "approved_docs_only_dry_run_chain": { "const": "blocked" },
+              "exact_next_step": { "const": "repair_approved_live_docs_dry_run_chain" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -176,3 +176,19 @@ temporary Git workspace, applies the proposed docs patch, applies the rollback
 patch, verifies the target docs file is gone, then removes the fixture
 workspace. It does not patch the live repository, create a branch, push, merge,
 approve, publish, release, upload, or call providers.
+
+Finally, link the approved docs-only evidence path without starting a live
+branch or PR:
+
+```sh
+scripts/approved-live-docs-dry-run-chain.sh \
+  --out target/approved-live-docs-dry-run-chain
+```
+
+The chain emits `ao.foundry.approved-live-docs-dry-run-chain.v0.1` and binds the
+approval request, Covenant approval ticket, Foundry approval gate, Forge guard,
+AO2 docs-only patch packet, worktree preparation, rollback execution rehearsal,
+Sentinel verdict, Promoter boundary, and AO Command readback. A ready result
+means the next step is the live docs PR rehearsal gate. It still keeps
+`safe_to_execute=false`, `mutates_repositories=false`, and
+`fully_unsupervised_complex_mutation_claimed=false`.

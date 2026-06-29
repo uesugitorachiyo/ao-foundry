@@ -1,0 +1,51 @@
+{
+  "schema_version": "ao.foundry.approved-live-docs-dry-run-chain.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_dry_run",
+  "first_live_class": "docs_only",
+  "objective": "Invalid fixture attempts to turn dry-run approval evidence into live mutation authority.",
+  "chain": [
+    "request",
+    "approval ticket",
+    "Foundry approval gate",
+    "Forge guard",
+    "AO2 docs-only patch packet",
+    "worktree preparation",
+    "rollback execution rehearsal",
+    "Sentinel verdict",
+    "Promoter boundary",
+    "AO Command readback"
+  ],
+  "source_artifacts": [],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "invalid"
+  ],
+  "readiness_assessment": {
+    "approved_docs_only_dry_run_chain": "ready",
+    "first_live_class": "docs_only",
+    "approval_ticket_present": true,
+    "approval_scope_exact": true,
+    "safe_to_request": true,
+    "safe_to_execute": true,
+    "requires_live_docs_pr_rehearsal_gate": true,
+    "exact_next_step": "run_live_docs_pr_rehearsal_gate",
+    "live_mutation_performed": true,
+    "fully_unsupervised_complex_mutation_claimed": true
+  },
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": true,
+    "mutates_repositories": false,
+    "creates_branch": false,
+    "creates_worktree": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false,
+    "broad_live_mutation_allowed": false,
+    "fully_unsupervised_complex_mutation_claimed": false
+  }
+}
