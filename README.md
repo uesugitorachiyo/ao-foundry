@@ -58,6 +58,7 @@ This first slice provides:
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
   - `scripts/overnight-rehearsal-runner.sh --out <public-safe-relative-dir>`
+  - `scripts/atlas-stress-readiness.sh --out <public-safe-relative-dir>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -109,6 +110,7 @@ go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline
 scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
 scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
 scripts/overnight-rehearsal-runner.sh --out docs/evidence/pulse/overnight-rehearsal-runner-local
+scripts/atlas-stress-readiness.sh --out docs/evidence/pulse/atlas-stress-readiness-local
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
 go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-ledger-refresh-proposal.md
@@ -175,6 +177,12 @@ overnight control-chain check. It validates Pulse gate/lifecycle state, Atlas
 import/readback, repair/repack artifacts, and AO Command readback, then emits
 `ao.foundry.overnight-rehearsal-runner.v0.1` without scheduling or executing
 work.
+
+`scripts/atlas-stress-readiness.sh` consumes AO Atlas's large workgraph stress
+fixture from Foundry. It validates the stress workgraph, generates Atlas
+Foundry-import material, validates that import through Foundry, and emits
+`ao.foundry.atlas-stress-readiness.v0.1` with ready, blocked, completed, and
+imported task counts.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

@@ -1003,6 +1003,30 @@ func TestOvernightRehearsalRunnerScriptIsDryRunAndValidatesControlChain(t *testi
 	}
 }
 
+func TestAtlasStressReadinessScriptConsumesLargeWorkgraph(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/atlas-stress-readiness.sh"))
+	if err != nil {
+		t.Fatalf("read Atlas stress readiness script: %v", err)
+	}
+	scriptText := string(script)
+	for _, want := range []string{
+		"ao.foundry.atlas-stress-readiness.v0.1",
+		"workgraph-large-stress.json",
+		"foundry import",
+		"foundry atlas import validate",
+		"ready_tasks",
+		"blocked_tasks",
+		"imported_tasks",
+		"schedules_work:false",
+		"executes_work:false",
+		"approves_work:false",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("Atlas stress readiness script missing %q", want)
+		}
+	}
+}
+
 func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/active-stack-github-runs-report.sh"))
 	if err != nil {
