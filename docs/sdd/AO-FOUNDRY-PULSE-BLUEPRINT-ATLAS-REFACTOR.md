@@ -134,6 +134,23 @@ Add a local state contract that records current branch, PR number, check status,
 merge status, cleanup status, and the next allowed transition. It must reject
 starting another slice while a branch, PR, or check is active.
 
+The executable slice is:
+
+```sh
+go run ./cmd/foundry pulse lifecycle inspect \
+  --state examples/pulse-lifecycle/ready-to-start-next-slice.json \
+  --json
+```
+
+It emits `ao.foundry.pulse-pr-lifecycle.v0.1`. The gate allows
+`start_next_slice` only when the target repo is clean on synced `main`, no
+current PR/check is active or failing, merged branch cleanup is complete, and
+there is no blocker reason. Open PRs, pending checks, failed checks, branch
+cleanup gaps, unsynced main, dirty worktrees, and multiple active `codex/*`
+branches fail closed. This command inspects local fixture/state only; it does
+not create branches, push, merge, delete branches, schedule work, execute work,
+approve work, publish, call providers, or mutate sibling repositories.
+
 ### Slice D: Atlas Workgraph Scheduler Input
 
 Teach Foundry to read Atlas ready nodes as scheduler input while preserving

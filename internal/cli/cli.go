@@ -19,23 +19,24 @@ import (
 )
 
 const (
-	registrySchema      = "ao.foundry.registry.v0.1"
-	taskSchema          = "ao.foundry.task.v0.1"
-	readinessSchema     = "ao.foundry.production-readiness-audit.v0.1"
-	goalRunSchema       = "ao.foundry.goal-run.v0.1"
-	goalReadinessSchema = "ao.foundry.goal-readiness-audit.v0.1"
-	runSchema           = "ao.foundry.run.v0.1"
-	repoHealthSchema    = "ao.foundry.repo-health.v0.1"
-	repoBoardSchema     = "ao.foundry.repo-board.v0.1"
-	loopLeaseSchema     = "ao.foundry.loop-lease.v0.1"
-	forgePacketSchema   = "ao.forge.factory-packet.v0.1"
-	pulseEventSchema    = "ao.foundry.pulse-event.v0.1"
-	atlasImportSchema   = "ao.atlas.foundry-import.v0.1"
-	atlasTaskSchema     = "ao.atlas.factory-task.v0.1"
-	atlasRunLinkSchema  = "ao.atlas.run-link.v0.1"
-	atlasReadbackSchema = "ao.foundry.atlas-readback.v0.1"
-	atlasStatusSchema   = "ao.foundry.atlas-status.v0.1"
-	pulseIntakeSchema   = "ao.foundry.pulse-intake-preflight.v0.1"
+	registrySchema       = "ao.foundry.registry.v0.1"
+	taskSchema           = "ao.foundry.task.v0.1"
+	readinessSchema      = "ao.foundry.production-readiness-audit.v0.1"
+	goalRunSchema        = "ao.foundry.goal-run.v0.1"
+	goalReadinessSchema  = "ao.foundry.goal-readiness-audit.v0.1"
+	runSchema            = "ao.foundry.run.v0.1"
+	repoHealthSchema     = "ao.foundry.repo-health.v0.1"
+	repoBoardSchema      = "ao.foundry.repo-board.v0.1"
+	loopLeaseSchema      = "ao.foundry.loop-lease.v0.1"
+	forgePacketSchema    = "ao.forge.factory-packet.v0.1"
+	pulseEventSchema     = "ao.foundry.pulse-event.v0.1"
+	atlasImportSchema    = "ao.atlas.foundry-import.v0.1"
+	atlasTaskSchema      = "ao.atlas.factory-task.v0.1"
+	atlasRunLinkSchema   = "ao.atlas.run-link.v0.1"
+	atlasReadbackSchema  = "ao.foundry.atlas-readback.v0.1"
+	atlasStatusSchema    = "ao.foundry.atlas-status.v0.1"
+	pulseIntakeSchema    = "ao.foundry.pulse-intake-preflight.v0.1"
+	pulseLifecycleSchema = "ao.foundry.pulse-pr-lifecycle.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -622,6 +623,21 @@ type PulseIntakeSource struct {
 	SHA256        string `json:"sha256"`
 }
 
+type PulsePRLifecycle struct {
+	SchemaVersion     string `json:"schema_version"`
+	CurrentSlice      string `json:"current_slice"`
+	TargetRepo        string `json:"target_repo"`
+	Branch            string `json:"branch"`
+	PRNumber          int    `json:"pr_number"`
+	PRURL             string `json:"pr_url"`
+	PRState           string `json:"pr_state"`
+	CheckState        string `json:"check_state"`
+	MergeState        string `json:"merge_state"`
+	CleanupState      string `json:"cleanup_state"`
+	AllowedNextAction string `json:"allowed_next_action"`
+	BlockerReason     string `json:"blocker_reason"`
+}
+
 type ContractFixtureValidationResult struct {
 	ValidFixtures   int
 	InvalidFixtures int
@@ -1045,6 +1061,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
 	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
 	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
+	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -2603,6 +2620,8 @@ func runPulse(args []string, stdout, stderr io.Writer) int {
 		return runPulseRun(args[1:], stdout, stderr)
 	case "intake-preflight":
 		return runPulseIntakePreflight(args[1:], stdout, stderr)
+	case "lifecycle":
+		return runPulseLifecycle(args[1:], stdout, stderr)
 	case "signed-smoke-script":
 		return runPulseSignedSmokeScript(args[1:], stdout, stderr)
 	case "signed-smoke-preflight":
@@ -2891,6 +2910,146 @@ func validatePublicSafeJSONStrings(value any) error {
 		}
 	}
 	return nil
+}
+
+func runPulseLifecycle(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 || args[0] != "inspect" {
+		fmt.Fprintln(stderr, "pulse lifecycle: expected subcommand inspect")
+		return 2
+	}
+	return runPulseLifecycleInspect(args[1:], stdout, stderr)
+}
+
+func runPulseLifecycleInspect(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("pulse lifecycle inspect", stderr)
+	statePath := fs.String("state", "", "Pulse PR lifecycle state path")
+	jsonOut := fs.Bool("json", false, "emit JSON lifecycle state")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	var state PulsePRLifecycle
+	if strings.TrimSpace(*statePath) == "" {
+		fmt.Fprintln(stderr, "pulse lifecycle: missing --state")
+		return 2
+	}
+	if err := validateEvidencePath(*statePath); err != nil {
+		fmt.Fprintf(stderr, "pulse lifecycle: unsafe state path: %v\n", err)
+		return 2
+	}
+	if err := readJSONFile(*statePath, &state); err != nil {
+		fmt.Fprintf(stderr, "pulse lifecycle: read state: %v\n", err)
+		return 2
+	}
+	if err := validatePulsePRLifecycle(state); err != nil {
+		if *jsonOut {
+			_ = writeJSON(stdout, state)
+		} else {
+			fmt.Fprintf(stdout, "pulse_pr_lifecycle=blocked\n")
+			fmt.Fprintf(stdout, "allowed_next_action=%s\n", state.AllowedNextAction)
+		}
+		fmt.Fprintf(stderr, "pulse lifecycle: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, state); err != nil {
+			fmt.Fprintf(stderr, "pulse lifecycle: marshal state: %v\n", err)
+			return 2
+		}
+		return 0
+	}
+	fmt.Fprintln(stdout, "pulse_pr_lifecycle=ready")
+	fmt.Fprintf(stdout, "allowed_next_action=%s\n", state.AllowedNextAction)
+	return 0
+}
+
+func validatePulsePRLifecycle(state PulsePRLifecycle) error {
+	if state.SchemaVersion != pulseLifecycleSchema {
+		return fmt.Errorf("schema_version must be %s", pulseLifecycleSchema)
+	}
+	if strings.TrimSpace(state.CurrentSlice) == "" || strings.TrimSpace(state.TargetRepo) == "" || strings.TrimSpace(state.Branch) == "" {
+		return errors.New("current_slice, target_repo, and branch are required")
+	}
+	if err := validateAtlasPublicString(state.CurrentSlice); err != nil {
+		return fmt.Errorf("current_slice: %w", err)
+	}
+	if err := validateAtlasPublicString(state.TargetRepo); err != nil {
+		return fmt.Errorf("target_repo: %w", err)
+	}
+	if err := validateAtlasPublicString(state.Branch); err != nil {
+		return fmt.Errorf("branch: %w", err)
+	}
+	switch state.PRState {
+	case "none", "open", "merged", "closed":
+	default:
+		return fmt.Errorf("invalid pr_state %q", state.PRState)
+	}
+	switch state.CheckState {
+	case "none", "pending", "passing", "failing":
+	default:
+		return fmt.Errorf("invalid check_state %q", state.CheckState)
+	}
+	switch state.MergeState {
+	case "not_started", "unmerged", "merged":
+	default:
+		return fmt.Errorf("invalid merge_state %q", state.MergeState)
+	}
+	switch state.CleanupState {
+	case "clean", "local_branch_exists", "remote_branch_exists", "dirty_worktree", "main_not_synced", "multiple_active_branches":
+	default:
+		return fmt.Errorf("invalid cleanup_state %q", state.CleanupState)
+	}
+	switch state.AllowedNextAction {
+	case "start_next_slice", "wait_for_checks", "fix_failed_checks", "cleanup_branch", "sync_main", "stop_blocked":
+	default:
+		return fmt.Errorf("invalid allowed_next_action %q", state.AllowedNextAction)
+	}
+	if state.PRURL != "" && errContainsUnsafeLifecycleURL(state.PRURL) {
+		return fmt.Errorf("unsafe pr_url %q", state.PRURL)
+	}
+	if state.CheckState == "pending" {
+		return errors.New("current slice PR checks are pending")
+	}
+	if state.CheckState == "failing" {
+		return errors.New("current slice PR checks are failing")
+	}
+	if state.PRState == "merged" && state.CleanupState != "clean" {
+		return errors.New("merged PR cleanup is incomplete")
+	}
+	switch state.CleanupState {
+	case "main_not_synced":
+		return errors.New("pulse lifecycle main is not synced with origin/main")
+	case "dirty_worktree":
+		return errors.New("pulse lifecycle dirty worktree blocks starting a new slice")
+	case "multiple_active_branches":
+		return errors.New("pulse lifecycle has multiple active codex branches")
+	case "local_branch_exists", "remote_branch_exists":
+		return errors.New("merged PR cleanup is incomplete")
+	}
+	if state.Branch != "main" && (state.PRState == "open" || state.MergeState != "merged") {
+		return errors.New("current branch is not main and has an open or unmerged PR")
+	}
+	if state.AllowedNextAction != "start_next_slice" {
+		if strings.TrimSpace(state.BlockerReason) == "" {
+			return errors.New("blocked lifecycle state requires blocker_reason")
+		}
+		return errors.New(state.BlockerReason)
+	}
+	if state.Branch != "main" || state.PRState != "none" || state.CleanupState != "clean" {
+		return errors.New("start_next_slice requires clean synced main with no active PR")
+	}
+	if strings.TrimSpace(state.BlockerReason) != "" {
+		return errors.New("ready lifecycle state must not include blocker_reason")
+	}
+	return nil
+}
+
+func errContainsUnsafeLifecycleURL(value string) bool {
+	lower := strings.ToLower(strings.ReplaceAll(value, "\\", "/"))
+	return strings.Contains(lower, "/"+"users/") ||
+		strings.Contains(lower, "/"+"home/") ||
+		strings.Contains(lower, "/"+"tmp/") ||
+		strings.Contains(lower, "api"+"_key") ||
+		strings.Contains(lower, "access"+"_"+"to"+"ken")
 }
 
 func runPulseSignedSmokeScript(args []string, stdout, stderr io.Writer) int {
@@ -7525,6 +7684,7 @@ func publicSchemaNames() []string {
 		"foundry-loop-lease-v0.1",
 		"foundry-production-readiness-audit-v0.1",
 		"foundry-pulse-intake-preflight-v0.1",
+		"foundry-pulse-pr-lifecycle-v0.1",
 		"foundry-pulse-event-v0.1",
 		"foundry-registry-v0.1",
 		"foundry-release-candidate-v0.1",

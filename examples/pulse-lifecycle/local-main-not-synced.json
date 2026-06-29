@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+  "current_slice": "pulse-intake-blueprint-atlas-preflight",
+  "target_repo": "ao-foundry",
+  "branch": "main",
+  "pr_number": 0,
+  "pr_url": "",
+  "pr_state": "none",
+  "check_state": "none",
+  "merge_state": "merged",
+  "cleanup_state": "main_not_synced",
+  "allowed_next_action": "sync_main",
+  "blocker_reason": "Sync local main to origin/main before starting another slice."
+}

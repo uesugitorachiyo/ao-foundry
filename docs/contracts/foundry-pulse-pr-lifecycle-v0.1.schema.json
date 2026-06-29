@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-pulse-pr-lifecycle-v0.1.schema.json",
+  "title": "AO Foundry Pulse PR Lifecycle v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "current_slice",
+    "target_repo",
+    "branch",
+    "pr_number",
+    "pr_url",
+    "pr_state",
+    "check_state",
+    "merge_state",
+    "cleanup_state",
+    "allowed_next_action",
+    "blocker_reason"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.pulse-pr-lifecycle.v0.1" },
+    "current_slice": { "type": "string", "minLength": 1 },
+    "target_repo": { "type": "string", "minLength": 1 },
+    "branch": { "type": "string", "minLength": 1 },
+    "pr_number": { "type": "integer" },
+    "pr_url": { "type": "string" },
+    "pr_state": { "enum": ["none", "open", "merged", "closed"] },
+    "check_state": { "enum": ["none", "pending", "passing", "failing"] },
+    "merge_state": { "enum": ["not_started", "unmerged", "merged"] },
+    "cleanup_state": { "enum": ["clean", "local_branch_exists", "remote_branch_exists", "dirty_worktree", "main_not_synced", "multiple_active_branches"] },
+    "allowed_next_action": { "enum": ["start_next_slice", "wait_for_checks", "fix_failed_checks", "cleanup_branch", "sync_main", "stop_blocked"] },
+    "blocker_reason": { "type": "string" }
+  }
+}

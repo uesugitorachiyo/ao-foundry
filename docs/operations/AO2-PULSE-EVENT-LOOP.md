@@ -40,6 +40,9 @@ go run ./cmd/foundry pulse intake-preflight \
   --atlas-import examples/atlas/foundry-import.json \
   --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json \
   --out tmp/pulse-intake-preflight.json
+go run ./cmd/foundry pulse lifecycle inspect \
+  --state examples/pulse-lifecycle/ready-to-start-next-slice.json \
+  --json
 go run ./cmd/foundry pulse run --out tmp/pulse
 go run ./cmd/foundry pulse freshness --pulse tmp/pulse/pulse-event.json
 go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
@@ -62,6 +65,13 @@ when Blueprint authorization is ready and required Atlas import/status readback
 artifacts preserve `schedules_work=false`, `executes_work=false`, and
 `approves_work=false`. A Blueprint clarification request returns a blocked
 preflight instead of pretending work is ready.
+
+The lifecycle inspect command reads
+`ao.foundry.pulse-pr-lifecycle.v0.1` and reports whether Pulse may start another
+slice. It fails closed when the current slice has an open PR, pending or failed
+checks, incomplete merged-branch cleanup, unsynced main, dirty worktree state,
+or multiple active `codex/*` branches. It is a local inspection gate only; it
+does not branch, push, merge, delete branches, schedule work, or execute work.
 
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the
@@ -189,7 +199,7 @@ before scoring the readback as ready.
 ## Next Loop Hardening
 
 The next production-readiness slice should make pulse intake Blueprint/Atlas
-aware before adding broader live execution behavior. The loop should refuse
-direct provider execution, preserve blocked events, keep delegated
-implementation inside AO Forge, and allow only one active branch/PR/check cycle
-at a time.
+aware and enforce the one-slice PR lifecycle before adding broader live
+execution behavior. The loop should refuse direct provider execution, preserve
+blocked events, keep delegated implementation inside AO Forge, and allow only
+one active branch/PR/check cycle at a time.
