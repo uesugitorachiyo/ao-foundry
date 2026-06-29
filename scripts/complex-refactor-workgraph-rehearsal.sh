@@ -78,8 +78,11 @@ INTAKE="examples/complex-refactor-workgraph/intake.json"
 STACK_INSTANCE="examples/complex-refactor-workgraph/stack-instance.json"
 FOUNDRY_IMPORT="examples/complex-refactor-workgraph/foundry-import.json"
 RUN_LINK="examples/complex-refactor-workgraph/run-link.pulse-runner-split.completed.json"
+BLOCKED_RUN_LINK="examples/complex-refactor-workgraph/run-link.command-readback.blocked.json"
+NEEDS_CONTEXT_RUN_LINK="examples/complex-refactor-workgraph/run-link.command-readback.needs-context.json"
 CONTEXT_DIR="examples/complex-refactor-workgraph/context-packs"
 FOUNDRY_FROM_ATLAS="../ao-foundry"
+FOUNDRY_FROM_COMMAND="../ao-foundry"
 
 mkdir -p "$OUT"
 
@@ -113,7 +116,7 @@ require_status() {
   fi
 }
 
-jq empty "$WORKGRAPH" "$INTAKE" "$STACK_INSTANCE" "$FOUNDRY_IMPORT" "$RUN_LINK" "$CONTEXT_DIR"/*.json
+jq empty "$WORKGRAPH" "$INTAKE" "$STACK_INSTANCE" "$FOUNDRY_IMPORT" "$RUN_LINK" "$BLOCKED_RUN_LINK" "$NEEDS_CONTEXT_RUN_LINK" "$CONTEXT_DIR"/*.json
 
 atlas_run workgraph validate --workgraph "$FOUNDRY_FROM_ATLAS/$WORKGRAPH" > "$OUT/atlas-workgraph-validate.txt"
 atlas_run workgraph next --workgraph "$FOUNDRY_FROM_ATLAS/$WORKGRAPH" --json > "$OUT/atlas-next-ready.json"
@@ -129,6 +132,20 @@ atlas_run mission status \
   --run-link "$FOUNDRY_FROM_ATLAS/$RUN_LINK" \
   --json > "$OUT/atlas-mission-status.json"
 
+atlas_run workgraph repair-plan \
+  --workgraph "$FOUNDRY_FROM_ATLAS/$WORKGRAPH" \
+  --run-link "$FOUNDRY_FROM_ATLAS/$BLOCKED_RUN_LINK" \
+  --out "$FOUNDRY_FROM_ATLAS/$OUT/atlas-repair-plan.json" > "$OUT/atlas-repair-plan.stdout"
+
+jq '.nodes[] | select(.id == "command-readback-followup").factory_task' "$WORKGRAPH" > "$OUT/command-readback-task.json"
+atlas_run context-pack repack \
+  --task "$FOUNDRY_FROM_ATLAS/$OUT/command-readback-task.json" \
+  --run-link "$FOUNDRY_FROM_ATLAS/$NEEDS_CONTEXT_RUN_LINK" \
+  --source-ref "$CONTEXT_DIR/command-readback.context-pack.json" \
+  --source-digest "sha256:$(sha256_file "$CONTEXT_DIR/command-readback.context-pack.json")" \
+  --budget 4096 \
+  --out "$FOUNDRY_FROM_ATLAS/$OUT/atlas-context-repack.json" > "$OUT/atlas-context-repack.stdout"
+
 go run ./cmd/foundry atlas import validate --import "$FOUNDRY_IMPORT" > "$OUT/foundry-import-validate.txt"
 go run ./cmd/foundry atlas readback \
   --import "$FOUNDRY_IMPORT" \
@@ -141,6 +158,7 @@ scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
 
 require_status "$OUT/foundry-atlas-readback.json" "ready"
 require_status "$OUT/pulse-gate/summary.json" "ready"
+require_status "$OUT/atlas-repair-plan.json" "repair_required"
 
 TOTAL_TASKS="$(jq '.nodes | length' "$WORKGRAPH")"
 READY_TASKS="$(jq '[.nodes[] | select(.status == "ready")] | length' "$WORKGRAPH")"
@@ -152,6 +170,8 @@ NEXT_NODE_ID="$(jq -r '.id' "$OUT/atlas-next-ready.json")"
 NEXT_FACTORY_REPO="$(jq -r '.factory_task.target_factory_repo' "$OUT/atlas-next-ready.json")"
 READY_GATE_ACTION="$(jq -r '.ready_path.allowed_next_action' "$OUT/pulse-gate/summary.json")"
 BLOCKED_GATE_ACTION="$(jq -r '.blocked_blueprint_path.allowed_next_action' "$OUT/pulse-gate/summary.json")"
+REPAIR_TASK_ID="$(jq -r '.repair_tasks[0].id' "$OUT/atlas-repair-plan.json")"
+REPACK_REASON="$(jq -r '.missing_context_reason' "$OUT/atlas-context-repack.json")"
 
 if [[ "$READY_TASKS" -gt 0 && "$READY_GATE_ACTION" == "start_next_slice" ]]; then
   LOOP_MAY_START_NEXT_READY_TASK=true
@@ -176,7 +196,13 @@ jq -n \
   --arg workgraph_sha "$(sha256_file "$WORKGRAPH")" \
   --arg import_sha "$(sha256_file "$FOUNDRY_IMPORT")" \
   --arg run_link_sha "$(sha256_file "$RUN_LINK")" \
+  --arg blocked_run_link_sha "$(sha256_file "$BLOCKED_RUN_LINK")" \
+  --arg needs_context_run_link_sha "$(sha256_file "$NEEDS_CONTEXT_RUN_LINK")" \
+  --arg repair_plan_sha "$(sha256_file "$OUT/atlas-repair-plan.json")" \
+  --arg context_repack_sha "$(sha256_file "$OUT/atlas-context-repack.json")" \
   --arg pulse_summary_sha "$(sha256_file "$OUT/pulse-gate/summary.json")" \
+  --arg repair_task_id "$REPAIR_TASK_ID" \
+  --arg repack_reason "$REPACK_REASON" \
   '{
     schema_version:$schema_version,
     status:$status,
@@ -206,21 +232,48 @@ jq -n \
       blocked_blueprint_action:$blocked_gate_action,
       why:"A dependency-ready factory task exists and the ready Pulse gate allows start_next_slice; blocked tasks remain blocked until upstream run-link evidence is completed."
     },
+    repair_plan:{
+      status:"repair_required",
+      path:"'$OUT'/atlas-repair-plan.json",
+      repair_task_id:$repair_task_id,
+      schedules_work:false,
+      executes_work:false,
+      approves_work:false
+    },
+    context_repack:{
+      status:"ready",
+      path:"'$OUT'/atlas-context-repack.json",
+      missing_context_reason:$repack_reason,
+      schedules_work:false,
+      executes_work:false,
+      approves_work:false
+    },
     source_digests:[
       {name:"workgraph",path:"'$WORKGRAPH'",sha256:$workgraph_sha},
       {name:"foundry_import",path:"'$FOUNDRY_IMPORT'",sha256:$import_sha},
       {name:"run_link",path:"'$RUN_LINK'",sha256:$run_link_sha},
+      {name:"blocked_run_link",path:"'$BLOCKED_RUN_LINK'",sha256:$blocked_run_link_sha},
+      {name:"needs_context_run_link",path:"'$NEEDS_CONTEXT_RUN_LINK'",sha256:$needs_context_run_link_sha},
+      {name:"repair_plan",path:"'$OUT'/atlas-repair-plan.json",sha256:$repair_plan_sha},
+      {name:"context_repack",path:"'$OUT'/atlas-context-repack.json",sha256:$context_repack_sha},
       {name:"pulse_gate_summary",path:"'$OUT'/pulse-gate/summary.json",sha256:$pulse_summary_sha}
     ],
     artifacts:{
       atlas_next_ready:"'$OUT'/atlas-next-ready.json",
       atlas_mission_status:"'$OUT'/atlas-mission-status.json",
+      repair_plan:"'$OUT'/atlas-repair-plan.json",
+      context_repack:"'$OUT'/atlas-context-repack.json",
       foundry_atlas_readback:"'$OUT'/foundry-atlas-readback.json",
-      pulse_gate_summary:"'$OUT'/pulse-gate/summary.json"
+      pulse_gate_summary:"'$OUT'/pulse-gate/summary.json",
+      command_readback:"'$OUT'/ao-command-complex-refactor-status.json"
     }
   }' > "$OUT/summary.json"
 
-jq empty "$OUT/atlas-next-ready.json" "$OUT/atlas-mission-status.json" "$OUT/foundry-atlas-readback.json" "$OUT/pulse-gate/summary.json" "$OUT/summary.json"
+(cd "$AO_COMMAND_ROOT" && go run ./cmd/ao-command complex-refactor status \
+  --summary "$FOUNDRY_FROM_COMMAND/$OUT/summary.json" \
+  --json > "$FOUNDRY_FROM_COMMAND/$OUT/ao-command-complex-refactor-status.json")
+
+jq empty "$OUT/atlas-next-ready.json" "$OUT/atlas-mission-status.json" "$OUT/atlas-repair-plan.json" "$OUT/atlas-context-repack.json" "$OUT/foundry-atlas-readback.json" "$OUT/pulse-gate/summary.json" "$OUT/summary.json" "$OUT/ao-command-complex-refactor-status.json"
 
 echo "complex_refactor_workgraph_rehearsal=$OUT/summary.json"
 echo "status=ready"
@@ -230,4 +283,7 @@ echo "blocked_tasks=$BLOCKED_TASKS"
 echo "completed_tasks=$COMPLETED_TASKS"
 echo "failed_tasks=$FAILED_TASKS"
 echo "next_recommended_factory_task=$NEXT_TASK_ID"
+echo "repair_task=$REPAIR_TASK_ID"
+echo "context_repack_reason=$REPACK_REASON"
+echo "command_readback=$OUT/ao-command-complex-refactor-status.json"
 echo "loop_may_start_next_ready_task=$LOOP_MAY_START_NEXT_READY_TASK"

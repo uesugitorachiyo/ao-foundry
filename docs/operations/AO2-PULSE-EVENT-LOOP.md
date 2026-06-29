@@ -96,8 +96,9 @@ scripts/complex-refactor-workgraph-rehearsal.sh \
 The rehearsal validates `examples/complex-refactor-workgraph/workgraph.json`,
 its context packs, the Foundry import/readback fixture, and the Pulse gate e2e
 proof. Its summary reports total, ready, blocked, completed, and failed task
-counts, the next recommended factory task, and why the loop may start the next
-ready task while blocked tasks remain denied.
+counts, blocked-node repair-plan output, needs-context repack output, AO
+Command read-only status output, the next recommended factory task, and why the
+loop may start the next ready task while blocked tasks remain denied.
 
 The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
