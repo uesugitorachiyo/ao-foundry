@@ -1,0 +1,23 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "stitch-integration-context",
+  "task_id": "complex-refactor-stitch-integration-task",
+  "budget_bytes": 3072,
+  "source_refs": [
+    {
+      "ref": "examples/complex-refactor-workgraph/workgraph.json",
+      "digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "summaries": [
+    "The stitch task integrates completed refactor slices and validates the whole control chain."
+  ],
+  "assumptions": [
+    "All upstream task run-links are completed before stitch work becomes ready."
+  ],
+  "exclusions": [
+    "No direct main bypass.",
+    "No release or publish side effects."
+  ],
+  "missing_context_protocol": "Remain blocked until every upstream task has completed run-link evidence."
+}

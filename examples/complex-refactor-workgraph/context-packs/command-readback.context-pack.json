@@ -1,0 +1,22 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "command-readback-context",
+  "task_id": "complex-refactor-command-readback-task",
+  "budget_bytes": 3072,
+  "source_refs": [
+    {
+      "ref": "README.md",
+      "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "summaries": [
+    "AO Command must remain read-only and explain Pulse gate state without starting loops."
+  ],
+  "assumptions": [
+    "Runner and Atlas import slices complete before readback follow-up work begins."
+  ],
+  "exclusions": [
+    "No repository mutation from AO Command."
+  ],
+  "missing_context_protocol": "Block and request readback-specific context rather than guessing."
+}

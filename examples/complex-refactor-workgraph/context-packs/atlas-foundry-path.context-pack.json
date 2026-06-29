@@ -1,0 +1,29 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "atlas-foundry-path-context",
+  "task_id": "complex-refactor-atlas-foundry-path-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "examples/blueprint-atlas-pulse-e2e/fixture-manifest.json",
+      "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "ref": "examples/atlas/foundry-import.json",
+      "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "summaries": [
+    "Atlas import/readback artifacts must remain fixture-only and authority-neutral.",
+    "Foundry consumes Atlas import material but does not execute it directly."
+  ],
+  "assumptions": [
+    "Atlas remains the workgraph/context-pack compiler.",
+    "Foundry remains the scheduler and gate owner."
+  ],
+  "exclusions": [
+    "No sibling repo mutation.",
+    "No copied AO stack folder."
+  ],
+  "missing_context_protocol": "Ask Atlas to repack bounded context when source refs are insufficient."
+}

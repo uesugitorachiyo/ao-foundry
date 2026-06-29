@@ -1,0 +1,28 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "pulse-runner-split-context",
+  "task_id": "complex-refactor-pulse-runner-split-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "internal/cli/cli.go",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "ref": "docs/sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "summaries": [
+    "Pulse runner start-gate enforcement and bundle generation are separable concerns.",
+    "The refactor target is typed/module boundary cleanup, not authority expansion."
+  ],
+  "assumptions": [
+    "Existing Pulse gate behavior remains green before module extraction."
+  ],
+  "exclusions": [
+    "No provider calls.",
+    "No live PR merge automation in the rehearsal."
+  ],
+  "missing_context_protocol": "Emit a blocked Atlas run-link with needs_context instead of proceeding."
+}

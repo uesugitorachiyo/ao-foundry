@@ -206,6 +206,22 @@ AO Command `pulse status` readback. The ready path produces a ready runner
 decision and pulse event. The blocked Blueprint path produces blocked preflight,
 start-gate, runner-decision, and Command readback evidence, but no pulse event.
 
+### Slice L: Complex Refactor Workgraph Rehearsal
+
+Add a realistic fixture-only oversized-task rehearsal:
+
+```sh
+scripts/complex-refactor-workgraph-rehearsal.sh \
+  --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+```
+
+The rehearsal uses `examples/complex-refactor-workgraph/` to model a complex AO
+stack refactor as Atlas factory tasks with completed, ready, blocked, and stitch
+nodes. It validates Atlas workgraph/context-pack/mission status, Foundry
+import/readback, Pulse start-gate evidence, and AO Command readback. The summary
+identifies the next ready factory task and explains that blocked tasks must wait
+for completed run-link evidence.
+
 ### Slice D: Atlas Workgraph Scheduler Input
 
 Teach Foundry to read Atlas ready nodes as scheduler input while preserving

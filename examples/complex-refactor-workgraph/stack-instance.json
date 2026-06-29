@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "ao-stack-shared-toolchain",
+  "state_root": ".atlas-local/state",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "mission": ".atlas-local/state/ao-stack-shared-toolchain/mission",
+    "workgraph": ".atlas-local/state/ao-stack-shared-toolchain/workgraph",
+    "context": ".atlas-local/state/ao-stack-shared-toolchain/context",
+    "evidence": ".atlas-local/state/ao-stack-shared-toolchain/evidence",
+    "worktree": ".atlas-local/state/ao-stack-shared-toolchain/worktree"
+  }
+}
