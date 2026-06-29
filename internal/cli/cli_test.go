@@ -940,6 +940,15 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 			t.Fatalf("active stack readiness loop script contains publishing command %q", forbidden)
 		}
 	}
+	if strings.Contains(scriptText, "--out tmp/governed-live-mutation-dry-run-chain") ||
+		strings.Contains(scriptText, "--chain tmp/governed-live-mutation-dry-run-chain/summary.json") {
+		t.Fatalf("active stack readiness loop should use per-run governed live-mutation evidence paths")
+	}
+	if strings.Contains(scriptText, `RUN_TMP_REL="tmp/`) ||
+		!strings.Contains(scriptText, `EXCLUDED_DIR="excluded"`) ||
+		!strings.Contains(scriptText, `RUN_TMP_REL="$EXCLUDED_DIR/active-stack-readiness-loop-`) {
+		t.Fatalf("active stack readiness loop should keep internal scratch out of repo-root tmp")
+	}
 	if !strings.Contains(readmeText, "scripts/active-stack-readiness-loop.sh") {
 		t.Fatalf("README does not document active stack readiness loop")
 	}
