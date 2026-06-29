@@ -3421,10 +3421,13 @@ func TestReleaseDryRunExcludesRuntimeScratchAndEvidence(t *testing.T) {
 		"docs/contracts/foundry-signed-smoke-ingest-v0.1.schema.json",
 		"docs/contracts/foundry-signed-smoke-summary-v0.1.schema.json",
 		"docs/contracts/foundry-pulse-intake-preflight-v0.1.schema.json",
+		"docs/contracts/foundry-pulse-pr-lifecycle-v0.1.schema.json",
 		"examples/contract-fixtures/valid/foundry-ao2-loop-decision-v0.1.json",
 		"examples/contract-fixtures/invalid/foundry-ao2-loop-decision-v0.1.json",
 		"examples/contract-fixtures/valid/foundry-pulse-intake-preflight-v0.1.json",
 		"examples/contract-fixtures/invalid/foundry-pulse-intake-preflight-v0.1.json",
+		"examples/contract-fixtures/valid/foundry-pulse-pr-lifecycle-v0.1.json",
+		"examples/contract-fixtures/invalid/foundry-pulse-pr-lifecycle-v0.1.json",
 		"examples/contract-fixtures/valid/foundry-signed-smoke-ingest-v0.1.json",
 		"examples/contract-fixtures/invalid/foundry-signed-smoke-ingest-v0.1.json",
 		"examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json",
@@ -4160,6 +4163,109 @@ func TestPulseIntakePreflightContractFixtureValidates(t *testing.T) {
 	}
 	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
 		t.Fatalf("invalid pulse intake preflight fixture unexpectedly passed schema")
+	}
+}
+
+func TestPulseLifecycleInspectAllowsReadyState(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "lifecycle", "inspect",
+		"--state", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	var result map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &result); err != nil {
+		t.Fatalf("lifecycle JSON output invalid: %v\n%s", err, stdout.String())
+	}
+	if result["allowed_next_action"] != "start_next_slice" || result["blocker_reason"] != "" {
+		t.Fatalf("unexpected ready lifecycle result: %#v", result)
+	}
+}
+
+func TestPulseLifecycleInspectBlocksOpenPRPendingChecks(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "lifecycle", "inspect",
+		"--state", "examples/pulse-lifecycle/open-pr-pending-checks.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for pending PR checks; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "current slice PR checks are pending") {
+		t.Fatalf("expected pending check blocker, got %q", stderr.String())
+	}
+}
+
+func TestPulseLifecycleInspectBlocksFailedChecks(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "lifecycle", "inspect",
+		"--state", "examples/pulse-lifecycle/checks-failed.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for failed PR checks; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "current slice PR checks are failing") {
+		t.Fatalf("expected failed check blocker, got %q", stderr.String())
+	}
+}
+
+func TestPulseLifecycleInspectBlocksCleanupIncomplete(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "lifecycle", "inspect",
+		"--state", "examples/pulse-lifecycle/merged-cleanup-incomplete.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for incomplete cleanup; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "merged PR cleanup is incomplete") {
+		t.Fatalf("expected cleanup blocker, got %q", stderr.String())
+	}
+}
+
+func TestPulseLifecycleInspectBlocksUnsyncedMainAndDirtyWorktree(t *testing.T) {
+	for _, fixture := range []string{
+		"examples/pulse-lifecycle/local-main-not-synced.json",
+		"examples/pulse-lifecycle/dirty-worktree-blocked.json",
+		"examples/pulse-lifecycle/multiple-active-branches.json",
+	} {
+		var stdout, stderr bytes.Buffer
+		code := Run([]string{"pulse", "lifecycle", "inspect", "--state", fixture}, &stdout, &stderr)
+		if code == 0 {
+			t.Fatalf("Run returned success for blocked lifecycle fixture %s; stdout=%s stderr=%s", fixture, stdout.String(), stderr.String())
+		}
+		if !strings.Contains(stderr.String(), "pulse lifecycle") {
+			t.Fatalf("expected lifecycle blocker for %s, got %q", fixture, stderr.String())
+		}
+	}
+}
+
+func TestPulseLifecycleContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-pulse-pr-lifecycle-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read pulse lifecycle schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("pulse lifecycle schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-pulse-pr-lifecycle-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid pulse lifecycle fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid pulse lifecycle fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-pulse-pr-lifecycle-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid pulse lifecycle fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid pulse lifecycle fixture unexpectedly passed schema")
 	}
 }
 

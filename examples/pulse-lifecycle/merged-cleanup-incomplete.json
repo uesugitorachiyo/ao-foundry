@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+  "current_slice": "pulse-intake-blueprint-atlas-preflight",
+  "target_repo": "ao-foundry",
+  "branch": "main",
+  "pr_number": 74,
+  "pr_url": "https://github.com/uesugitorachiyo/ao-foundry/pull/74",
+  "pr_state": "merged",
+  "check_state": "passing",
+  "merge_state": "merged",
+  "cleanup_state": "remote_branch_exists",
+  "allowed_next_action": "cleanup_branch",
+  "blocker_reason": "Delete the merged remote branch before starting another slice."
+}

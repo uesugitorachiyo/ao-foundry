@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+  "current_slice": "pulse-one-slice-pr-lifecycle",
+  "target_repo": "ao-foundry",
+  "branch": "codex/pulse-one-slice-pr-lifecycle",
+  "pr_number": 75,
+  "pr_url": "https://github.com/uesugitorachiyo/ao-foundry/pull/75",
+  "pr_state": "open",
+  "check_state": "pending",
+  "merge_state": "unmerged",
+  "cleanup_state": "clean",
+  "allowed_next_action": "wait_for_checks",
+  "blocker_reason": "Wait for current slice PR checks before starting another slice."
+}
