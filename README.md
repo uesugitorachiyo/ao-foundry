@@ -184,7 +184,8 @@ a fresh timestamped output directory and emits
 `ao.foundry.overnight-rehearsal-artifact.v0.1`. The artifact links the runner
 summary, complex-refactor summary, and AO Command readback with SHA-256 digests
 so operators can preserve the exact rehearsal evidence without treating it as
-live mutation authority.
+live mutation authority. The stable operator sequence is documented in
+`docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md`.
 
 `scripts/atlas-stress-readiness.sh` consumes AO Atlas's large workgraph stress
 fixture from Foundry. It validates the stress workgraph, generates Atlas

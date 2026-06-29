@@ -1032,6 +1032,28 @@ func TestFreshOvernightRehearsalArtifactScriptPreservesCommandReadback(t *testin
 	}
 }
 
+func TestOvernightRehearsalRunbookDocumentsDryRunOperatorSequence(t *testing.T) {
+	runbook, err := os.ReadFile(repoPath("docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md"))
+	if err != nil {
+		t.Fatalf("read overnight rehearsal runbook: %v", err)
+	}
+	text := string(runbook)
+	for _, want := range []string{
+		"scripts/fresh-overnight-rehearsal-artifact.sh",
+		"scripts/overnight-rehearsal-runner.sh",
+		"scripts/complex-refactor-workgraph-rehearsal.sh",
+		"ao-command complex-refactor status",
+		"ao.foundry.overnight-rehearsal-artifact.v0.1",
+		"operator_mode=read_only",
+		"mutates_repositories=false",
+		"does not schedule, execute, approve, publish, upload, call providers, or mutate repositories",
+	} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("overnight rehearsal runbook missing %q", want)
+		}
+	}
+}
+
 func TestAtlasStressReadinessScriptConsumesLargeWorkgraph(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/atlas-stress-readiness.sh"))
 	if err != nil {
