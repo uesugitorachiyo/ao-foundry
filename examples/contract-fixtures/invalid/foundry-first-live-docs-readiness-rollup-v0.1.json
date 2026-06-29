@@ -1,0 +1,46 @@
+{
+  "schema_version": "ao.foundry.first-live-docs-readiness-rollup.v0.1",
+  "status": "ready",
+  "first_live_class": "docs_only",
+  "approved_scope": "docs_only",
+  "safe_to_request": true,
+  "safe_to_execute": true,
+  "explicit_operator_approval_required": false,
+  "exact_next_step": "start_first_docs_only_live_pr_rehearsal",
+  "first_failing_check": "",
+  "evidence": {
+    "approved_live_docs_dry_run_chain": {
+      "path": "examples/first-live-docs-readiness/approved-live-docs-dry-run-chain.json",
+      "schema_version": "ao.foundry.approved-live-docs-dry-run-chain.v0.1",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "status": "ready"
+    },
+    "live_docs_pr_rehearsal_gate": {
+      "path": "examples/first-live-docs-readiness/live-docs-pr-rehearsal-gate.json",
+      "schema_version": "ao.foundry.live-docs-pr-rehearsal-gate.v0.1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "status": "ready"
+    },
+    "source_artifacts": []
+  },
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "invalid"
+  ],
+  "authority_boundaries": {
+    "emits_rollup_only": true,
+    "live_mutation_performed": true,
+    "mutates_repositories": false,
+    "creates_branch": false,
+    "creates_worktree": false,
+    "opens_pr": false,
+    "merges_pr": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false,
+    "broad_live_mutation_allowed": false,
+    "fully_unsupervised_complex_mutation_claimed": false
+  }
+}

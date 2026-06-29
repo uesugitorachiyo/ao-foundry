@@ -216,3 +216,18 @@ scripts/live-docs-pr-rehearsal-gate.sh \
 The ready result is permission for the first docs-only PR rehearsal decision
 only. The gate does not create a worktree, create a branch, open or merge a PR,
 mutate repositories, call providers, publish, upload, tag, or release.
+
+Summarize the chain and PR rehearsal gate for operator closure:
+
+```sh
+scripts/first-live-docs-readiness-rollup.sh \
+  --chain target/approved-live-docs-dry-run-chain/summary.json \
+  --pr-gate target/live-docs-pr-rehearsal-gate-ready.json \
+  --out target/first-live-docs-readiness-rollup.json
+```
+
+The rollup emits `ao.foundry.first-live-docs-readiness-rollup.v0.1`. It reports
+`first_live_class=docs_only`, `approved_scope=docs_only`, `safe_to_request`,
+`safe_to_execute`, and `exact_next_step`. It is still a rollup only: it does not
+create a branch, create a worktree, open or merge a PR, mutate repositories,
+call providers, publish, upload, tag, or release.

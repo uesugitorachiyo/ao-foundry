@@ -5459,6 +5459,119 @@ func TestLiveDocsPRRehearsalGateContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestFirstLiveDocsReadinessRollupScript(t *testing.T) {
+	chainScript := repoPath("scripts/approved-live-docs-dry-run-chain.sh")
+	gateScript := repoPath("scripts/live-docs-pr-rehearsal-gate.sh")
+	rollupScript := repoPath("scripts/first-live-docs-readiness-rollup.sh")
+	rollupData, err := os.ReadFile(rollupScript)
+	if err != nil {
+		t.Fatalf("read first live docs readiness rollup script: %v", err)
+	}
+	rollupText := string(rollupData)
+	for _, want := range []string{
+		"ao.foundry.first-live-docs-readiness-rollup.v0.1",
+		"safe_to_request",
+		"safe_to_execute",
+		"approved_scope",
+		"docs_only",
+		"fully_unsupervised_complex_mutation_claimed:false",
+		"mutates_repositories:false",
+	} {
+		if !strings.Contains(rollupText, want) {
+			t.Fatalf("first live docs readiness rollup script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr create", "gh pr merge", "git " + "push", "gh " + "release", "npm publish", "curl "} {
+		if strings.Contains(rollupText, forbidden) {
+			t.Fatalf("first live docs readiness rollup script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	outDir := filepath.ToSlash(filepath.Join("target", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	chainDir := outDir + "/chain"
+	blockedGate := outDir + "/blocked-gate.json"
+	readyGate := outDir + "/ready-gate.json"
+	blockedRollup := outDir + "/blocked-rollup.json"
+	readyRollup := outDir + "/ready-rollup.json"
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainCmd := exec.Command("bash", chainScript, "--out", chainDir)
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("approved live docs chain failed: %v\n%s", err, string(out))
+	}
+	blockedGateCmd := exec.Command("bash", gateScript, "--chain", chainDir+"/summary.json", "--out", blockedGate)
+	blockedGateCmd.Dir = repoPath(".")
+	if out, err := blockedGateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("blocked PR gate failed: %v\n%s", err, string(out))
+	}
+	readyGateCmd := exec.Command("bash", gateScript, "--chain", chainDir+"/summary.json", "--approval-artifact", "examples/live-docs-approval/ticket-approved.json", "--out", readyGate)
+	readyGateCmd.Dir = repoPath(".")
+	if out, err := readyGateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("ready PR gate failed: %v\n%s", err, string(out))
+	}
+
+	runRollup := func(path string, gate string) map[string]any {
+		t.Helper()
+		cmd := exec.Command("bash", rollupScript, "--chain", chainDir+"/summary.json", "--pr-gate", gate, "--out", path)
+		cmd.Dir = repoPath(".")
+		if out, err := cmd.CombinedOutput(); err != nil {
+			t.Fatalf("first live docs readiness rollup failed: %v\n%s", err, string(out))
+		}
+		return readObjectFixture(t, path)
+	}
+	blocked := runRollup(blockedRollup, blockedGate)
+	if blocked["status"] != "blocked" ||
+		blocked["safe_to_request"] != true ||
+		blocked["safe_to_execute"] != false ||
+		blocked["exact_next_step"] != "request_operator_approval" {
+		t.Fatalf("unexpected blocked first live docs rollup: %#v", blocked)
+	}
+	ready := runRollup(readyRollup, readyGate)
+	if ready["status"] != "ready" ||
+		ready["safe_to_request"] != true ||
+		ready["safe_to_execute"] != true ||
+		ready["approved_scope"] != "docs_only" ||
+		ready["exact_next_step"] != "start_first_docs_only_live_pr_rehearsal" {
+		t.Fatalf("unexpected ready first live docs rollup: %#v", ready)
+	}
+	boundaries := ready["authority_boundaries"].(map[string]any)
+	if boundaries["live_mutation_performed"] != false ||
+		boundaries["mutates_repositories"] != false ||
+		boundaries["creates_branch"] != false ||
+		boundaries["opens_pr"] != false ||
+		boundaries["fully_unsupervised_complex_mutation_claimed"] != false {
+		t.Fatalf("rollup must stay non-mutating and scoped: %#v", boundaries)
+	}
+}
+
+func TestFirstLiveDocsReadinessRollupContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-first-live-docs-readiness-rollup-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read first live docs readiness rollup schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("first live docs readiness rollup schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-first-live-docs-readiness-rollup-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid first live docs readiness rollup fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid first live docs readiness rollup fixture failed schema: %v", err)
+	}
+	if validFixture.(map[string]any)["safe_to_execute"] != true {
+		t.Fatalf("valid first live docs rollup should be ready for only the docs-only PR rehearsal decision")
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-first-live-docs-readiness-rollup-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid first live docs readiness rollup fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid first live docs readiness rollup fixture unexpectedly passed schema")
+	}
+}
+
 func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthority(t *testing.T) {
 	script := repoPath("scripts/live-mutation-rollback-rehearsal.sh")
 	scriptData, err := os.ReadFile(script)

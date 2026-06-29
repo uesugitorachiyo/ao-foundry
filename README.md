@@ -300,6 +300,16 @@ Covenant ticket whose digest matches the approved dry-run chain, it can emit
 gate itself still does not create branches, create worktrees, open PRs, merge,
 mutate repositories, call providers, publish, upload, tag, or release.
 
+`scripts/first-live-docs-readiness-rollup.sh` summarizes the approved docs-only
+chain and final PR rehearsal gate as
+`ao.foundry.first-live-docs-readiness-rollup.v0.1`. It reports
+`first_live_class=docs_only`, `approved_scope=docs_only`, `safe_to_request`,
+`safe_to_execute`, and `exact_next_step` while preserving
+`mutates_repositories=false`, `opens_pr=false`, and
+`fully_unsupervised_complex_mutation_claimed=false`. A ready rollup means only
+that the first docs-only PR rehearsal decision is ready; it does not perform
+the live branch/PR rehearsal.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval
