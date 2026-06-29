@@ -4872,6 +4872,65 @@ func TestLiveDocsApprovalRequestContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveDocsApprovalGateScript(t *testing.T) {
+	script := repoPath("scripts/live-docs-approval-gate.sh")
+	outDir := t.TempDir()
+	readyOut := filepath.Join(outDir, "ready.json")
+	readyCmd := exec.Command("bash", script,
+		"--request", repoPath("examples/live-docs-approval/request.json"),
+		"--ticket", repoPath("examples/live-docs-approval/ticket-approved.json"),
+		"--out", readyOut,
+	)
+	readyCmd.Dir = repoPath(".")
+	if out, err := readyCmd.CombinedOutput(); err != nil {
+		t.Fatalf("approval gate ready failed: %v\n%s", err, string(out))
+	}
+	ready := readObjectFixture(t, readyOut)
+	if ready["status"] != "ready" || ready["safe_to_execute"] != true || ready["approval_state"] != "approved" {
+		t.Fatalf("unexpected ready approval gate: %#v", ready)
+	}
+
+	blockedOut := filepath.Join(outDir, "blocked.json")
+	blockedCmd := exec.Command("bash", script,
+		"--request", repoPath("examples/live-docs-approval/request.json"),
+		"--ticket", repoPath("examples/live-docs-approval/ticket-pending.json"),
+		"--out", blockedOut,
+	)
+	blockedCmd.Dir = repoPath(".")
+	if out, err := blockedCmd.CombinedOutput(); err != nil {
+		t.Fatalf("approval gate blocked should write blocked result, got error: %v\n%s", err, string(out))
+	}
+	blocked := readObjectFixture(t, blockedOut)
+	if blocked["status"] != "blocked" || blocked["safe_to_execute"] != false || blocked["first_failing_check"] != "approval_state" {
+		t.Fatalf("unexpected blocked approval gate: %#v", blocked)
+	}
+}
+
+func TestLiveDocsApprovalGateContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-docs-approval-gate-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live docs approval gate schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live docs approval gate schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-docs-approval-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live docs approval gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live docs approval gate fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-docs-approval-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live docs approval gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live docs approval gate fixture unexpectedly passed schema")
+	}
+}
+
 func TestWorktreeIsolationProofScriptBlocksDirtyAndReusedCandidates(t *testing.T) {
 	script := repoPath("scripts/live-mutation-worktree-isolation-proof.sh")
 	scriptData, err := os.ReadFile(script)

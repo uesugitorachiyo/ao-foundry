@@ -1,0 +1,32 @@
+{
+  "schema_version": "ao.foundry.live-docs-approval-gate.v0.1",
+  "status": "ready",
+  "safe_to_request": true,
+  "safe_to_execute": true,
+  "approval_state": "approved",
+  "request_id": "first-live-docs-only-approval-request",
+  "ticket_id": "live-docs-approval-ticket",
+  "first_failing_check": "",
+  "allowed_next_action": "start_first_docs_only_live_pr_rehearsal",
+  "source_hashes": [
+    {
+      "name": "approval_request",
+      "path": "examples/live-docs-approval/request.json",
+      "schema_version": "ao.foundry.live-mutation-approval-request.v0.1",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "approval_ticket",
+      "path": "examples/live-docs-approval/ticket-approved.json",
+      "schema_version": "covenant.live-docs-approval-ticket.v1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "authority_boundaries": {
+    "mutates_repositories": false,
+    "approves_work": false,
+    "executes_work": false,
+    "calls_providers": false,
+    "release_or_publish_allowed": false
+  }
+}

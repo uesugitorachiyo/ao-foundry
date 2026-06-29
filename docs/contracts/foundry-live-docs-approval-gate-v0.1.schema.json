@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-live-docs-approval-gate-v0.1.schema.json",
+  "title": "AO Foundry Live Docs Approval Gate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "safe_to_request",
+    "safe_to_execute",
+    "approval_state",
+    "request_id",
+    "ticket_id",
+    "first_failing_check",
+    "allowed_next_action",
+    "source_hashes",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.live-docs-approval-gate.v0.1" },
+    "status": { "enum": ["ready", "blocked", "failed"] },
+    "safe_to_request": { "const": true },
+    "safe_to_execute": { "type": "boolean" },
+    "approval_state": { "enum": ["approved", "pending", "denied", ""] },
+    "request_id": { "type": "string", "minLength": 1 },
+    "ticket_id": { "type": "string", "minLength": 1 },
+    "first_failing_check": { "type": "string" },
+    "allowed_next_action": { "type": "string", "minLength": 1 },
+    "source_hashes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "schema_version", "sha256"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "path": {
+            "type": "string",
+            "pattern": "^(docs|examples|scripts|target|tmp)/[A-Za-z0-9._/-]+$"
+          },
+          "schema_version": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mutates_repositories",
+        "approves_work",
+        "executes_work",
+        "calls_providers",
+        "release_or_publish_allowed"
+      ],
+      "properties": {
+        "mutates_repositories": { "const": false },
+        "approves_work": { "const": false },
+        "executes_work": { "const": false },
+        "calls_providers": { "const": false },
+        "release_or_publish_allowed": { "const": false }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "ready" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "safe_to_execute": { "const": true },
+          "approval_state": { "const": "approved" },
+          "first_failing_check": { "const": "" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "enum": ["blocked", "failed"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "safe_to_execute": { "const": false },
+          "first_failing_check": { "minLength": 1 }
+        }
+      }
+    }
+  ]
+}
