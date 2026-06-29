@@ -4833,6 +4833,45 @@ func TestLiveMutationRequestContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveDocsApprovalRequestContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-mutation-approval-request-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live docs approval request schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live docs approval request schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-mutation-approval-request-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live docs approval request fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live docs approval request fixture failed schema: %v", err)
+	}
+	request := validFixture.(map[string]any)
+	if request["status"] != "pending_operator_approval" || request["first_live_class"] != "docs_only" {
+		t.Fatalf("unexpected live docs approval request identity: %#v", request)
+	}
+	if request["safe_to_request"] != true || request["safe_to_execute"] != false {
+		t.Fatalf("approval request must be requestable but not executable: %#v", request)
+	}
+	boundaries := request["authority_boundaries"].(map[string]any)
+	if boundaries["mutates_repositories"] != false ||
+		boundaries["provider_calls_allowed"] != false ||
+		boundaries["release_or_publish_allowed"] != false ||
+		boundaries["fully_unsupervised_complex_mutation_claimed"] != false {
+		t.Fatalf("approval request must preserve non-execution boundaries: %#v", boundaries)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-mutation-approval-request-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live docs approval request fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live docs approval request fixture unexpectedly passed schema")
+	}
+}
+
 func TestWorktreeIsolationProofScriptBlocksDirtyAndReusedCandidates(t *testing.T) {
 	script := repoPath("scripts/live-mutation-worktree-isolation-proof.sh")
 	scriptData, err := os.ReadFile(script)
