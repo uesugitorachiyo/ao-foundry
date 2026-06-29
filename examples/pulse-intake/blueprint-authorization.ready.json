@@ -1,0 +1,20 @@
+{
+  "schema_version": "ao.blueprint.build-authorization.v0.1",
+  "authorization_id": "blueprint-auth-pulse-intake-ready",
+  "status": "ready",
+  "target": "ao-foundry-pulse-intake-preflight",
+  "build_ready": true,
+  "requires_atlas": true,
+  "objective": "Run a fixture-local Pulse intake preflight over Blueprint and Atlas evidence.",
+  "authorized_scope": [
+    "validate Blueprint build authorization",
+    "validate Atlas handoff and readback evidence",
+    "emit preflight result"
+  ],
+  "non_goals": [
+    "do not schedule work",
+    "do not execute AO2",
+    "do not approve policy",
+    "do not publish releases"
+  ]
+}

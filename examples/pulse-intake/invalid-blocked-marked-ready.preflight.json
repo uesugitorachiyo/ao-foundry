@@ -1,0 +1,17 @@
+{
+  "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+  "status": "ready",
+  "blueprint_status": "blocked",
+  "atlas_status": "not_required",
+  "first_failing_check": "",
+  "checks": [
+    {
+      "name": "blueprint_build_authorization",
+      "status": "pass",
+      "reason": "This fixture is invalid because blocked Blueprint evidence must not be marked ready."
+    }
+  ],
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [],
+  "source_artifacts": []
+}

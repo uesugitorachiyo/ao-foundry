@@ -35,6 +35,7 @@ const (
 	atlasRunLinkSchema  = "ao.atlas.run-link.v0.1"
 	atlasReadbackSchema = "ao.foundry.atlas-readback.v0.1"
 	atlasStatusSchema   = "ao.foundry.atlas-status.v0.1"
+	pulseIntakeSchema   = "ao.foundry.pulse-intake-preflight.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -595,6 +596,32 @@ type AO2LoopDecisionBody struct {
 	Freshness  PulseFreshnessSummary `json:"freshness"`
 }
 
+type PulseIntakePreflight struct {
+	SchemaVersion          string              `json:"schema_version"`
+	Status                 string              `json:"status"`
+	BlueprintStatus        string              `json:"blueprint_status"`
+	AtlasStatus            string              `json:"atlas_status"`
+	FirstFailingCheck      string              `json:"first_failing_check"`
+	Checks                 []PulseIntakeCheck  `json:"checks"`
+	BlockingNextActions    []string            `json:"blocking_next_actions"`
+	MaintenanceSuggestions []string            `json:"maintenance_suggestions"`
+	SourceArtifacts        []PulseIntakeSource `json:"source_artifacts"`
+}
+
+type PulseIntakeCheck struct {
+	Name   string `json:"name"`
+	Status string `json:"status"`
+	Reason string `json:"reason"`
+}
+
+type PulseIntakeSource struct {
+	Name          string `json:"name"`
+	Path          string `json:"path"`
+	SchemaVersion string `json:"schema_version"`
+	Status        string `json:"status"`
+	SHA256        string `json:"sha256"`
+}
+
 type ContractFixtureValidationResult struct {
 	ValidFixtures   int
 	InvalidFixtures int
@@ -1017,6 +1044,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
 	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
+	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -2573,6 +2601,8 @@ func runPulse(args []string, stdout, stderr io.Writer) int {
 	switch args[0] {
 	case "run":
 		return runPulseRun(args[1:], stdout, stderr)
+	case "intake-preflight":
+		return runPulseIntakePreflight(args[1:], stdout, stderr)
 	case "signed-smoke-script":
 		return runPulseSignedSmokeScript(args[1:], stdout, stderr)
 	case "signed-smoke-preflight":
@@ -2593,6 +2623,274 @@ func runPulse(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "pulse: unknown subcommand %q\n", args[0])
 		return 2
 	}
+}
+
+func runPulseIntakePreflight(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("pulse intake-preflight", stderr)
+	blueprintAuthorizationPath := fs.String("blueprint-authorization", "", "Blueprint build authorization artifact")
+	blueprintRequestPath := fs.String("blueprint-request", "", "Blueprint blocked clarification request artifact")
+	atlasImportPath := fs.String("atlas-import", "", "Atlas foundry-import artifact")
+	atlasStatusPath := fs.String("atlas-status", "", "Foundry Atlas status/readback artifact")
+	requiresAtlas := fs.Bool("requires-atlas", false, "require Atlas handoff/readback evidence")
+	outPath := fs.String("out", "", "preflight result output path")
+	jsonOut := fs.Bool("json", false, "emit JSON result to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	result, err := buildPulseIntakePreflight(*blueprintAuthorizationPath, *blueprintRequestPath, *atlasImportPath, *atlasStatusPath, *requiresAtlas)
+	if strings.TrimSpace(*outPath) != "" {
+		for _, inputPath := range []string{*blueprintAuthorizationPath, *blueprintRequestPath, *atlasImportPath, *atlasStatusPath} {
+			if sameCleanPath(*outPath, inputPath) {
+				fmt.Fprintln(stderr, "pulse intake-preflight: --out must not overwrite input artifacts")
+				return 2
+			}
+		}
+		if writeErr := writeJSONFile(*outPath, result); writeErr != nil {
+			fmt.Fprintf(stderr, "pulse intake-preflight: write result: %v\n", writeErr)
+			return 2
+		}
+	}
+	if *jsonOut {
+		if writeErr := writeJSON(stdout, result); writeErr != nil {
+			fmt.Fprintf(stderr, "pulse intake-preflight: marshal result: %v\n", writeErr)
+			return 2
+		}
+	} else {
+		fmt.Fprintf(stdout, "pulse_intake_preflight=%s\n", result.Status)
+		fmt.Fprintf(stdout, "blueprint_status=%s\n", result.BlueprintStatus)
+		fmt.Fprintf(stdout, "atlas_status=%s\n", result.AtlasStatus)
+		if strings.TrimSpace(*outPath) != "" {
+			fmt.Fprintf(stdout, "preflight_result=%s\n", *outPath)
+		}
+	}
+	if err != nil {
+		fmt.Fprintf(stderr, "pulse intake-preflight: %v\n", err)
+		return 1
+	}
+	if result.Status != "ready" {
+		return 1
+	}
+	return 0
+}
+
+func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath, atlasImportPath, atlasStatusPath string, requiresAtlas bool) (PulseIntakePreflight, error) {
+	result := PulseIntakePreflight{
+		SchemaVersion:          pulseIntakeSchema,
+		Status:                 "ready",
+		BlueprintStatus:        "missing",
+		AtlasStatus:            "not_required",
+		Checks:                 []PulseIntakeCheck{},
+		BlockingNextActions:    []string{},
+		MaintenanceSuggestions: []string{"keep pulse intake preflight fixture/local; do not schedule, execute, approve, upload, or mutate sibling repositories"},
+		SourceArtifacts:        []PulseIntakeSource{},
+	}
+	if strings.TrimSpace(blueprintAuthorizationPath) != "" && strings.TrimSpace(blueprintRequestPath) != "" {
+		return failPulseIntake(result, "blueprint_build_authorization", "failed", "provide either Blueprint authorization or Blueprint request, not both", "Use exactly one Blueprint intake artifact.")
+	}
+	switch {
+	case strings.TrimSpace(blueprintAuthorizationPath) != "":
+		source, status, err := loadPulseIntakeSource("blueprint_authorization", blueprintAuthorizationPath, "ao.blueprint.build-authorization.v0.1")
+		if err != nil {
+			return failPulseIntake(result, "blueprint_build_authorization", "failed", err.Error(), "Regenerate the Blueprint build authorization artifact.")
+		}
+		result.SourceArtifacts = append(result.SourceArtifacts, source)
+		result.BlueprintStatus = status
+		if status != "ready" {
+			return failPulseIntake(result, "blueprint_build_authorization", "failed", "Blueprint authorization is blocked; Pulse must not proceed as ready", "Return to AO Blueprint for requirements clarification.")
+		}
+		result.Checks = append(result.Checks, PulseIntakeCheck{Name: "blueprint_build_authorization", Status: "pass", Reason: "Blueprint build authorization is ready."})
+	case strings.TrimSpace(blueprintRequestPath) != "":
+		source, status, err := loadPulseIntakeSource("blueprint_request", blueprintRequestPath, "ao.blueprint.request.v0.1")
+		if err != nil {
+			return failPulseIntake(result, "blueprint_build_authorization", "failed", err.Error(), "Regenerate the Blueprint clarification request.")
+		}
+		result.SourceArtifacts = append(result.SourceArtifacts, source)
+		result.BlueprintStatus = "blocked"
+		if status != "blocked" && status != "needs_clarification" {
+			return failPulseIntake(result, "blueprint_build_authorization", "failed", "Blueprint request must be blocked or needs_clarification", "Regenerate the Blueprint request with a blocked clarification status.")
+		}
+		return failPulseIntake(result, "blueprint_build_authorization", "blocked", "Blueprint request exists; work is not build-ready.", "Answer the Blueprint clarification request before scheduling implementation.")
+	default:
+		return failPulseIntake(result, "blueprint_build_authorization", "failed", "Blueprint authorization is required for build-ready Pulse intake", "Run AO Blueprint and provide a ready build authorization or blocked clarification request.")
+	}
+
+	if requiresAtlas {
+		result.AtlasStatus = "missing"
+		if strings.TrimSpace(atlasImportPath) == "" || strings.TrimSpace(atlasStatusPath) == "" {
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", "Atlas handoff/readback is required for oversized Pulse intake", "Provide Atlas foundry-import and Foundry Atlas status/readback artifacts.")
+		}
+		importArtifact, err := loadAtlasFoundryImport(atlasImportPath)
+		if err != nil {
+			if isAtlasAuthorityError(err) {
+				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas artifact claims forbidden authority", "Regenerate Atlas artifacts with schedules_work=false, executes_work=false, and approves_work=false.")
+			}
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Regenerate the Atlas Foundry handoff/import artifact.")
+		}
+		importSource, err := pulseIntakeSourceFromFile("atlas_import", atlasImportPath, importArtifact.ContractVersion, importArtifact.Status)
+		if err != nil {
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Use a public-safe Atlas import path.")
+		}
+		result.SourceArtifacts = append(result.SourceArtifacts, importSource)
+
+		var atlasStatus AtlasStatus
+		if err := readJSONFile(atlasStatusPath, &atlasStatus); err != nil {
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", fmt.Sprintf("read Atlas status: %v", err), "Regenerate the Foundry Atlas status/readback artifact.")
+		}
+		if err := validatePulseAtlasStatus(atlasStatus, importArtifact); err != nil {
+			if isAtlasAuthorityError(err) {
+				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas artifact claims forbidden authority", "Regenerate Atlas status with schedules_work=false, executes_work=false, and approves_work=false.")
+			}
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Regenerate the Foundry Atlas status/readback artifact.")
+		}
+		statusSource, err := pulseIntakeSourceFromFile("atlas_status", atlasStatusPath, atlasStatus.SchemaVersion, atlasStatus.Status)
+		if err != nil {
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Use a public-safe Atlas status path.")
+		}
+		result.SourceArtifacts = append(result.SourceArtifacts, statusSource)
+		result.AtlasStatus = "ready"
+		result.Checks = append(result.Checks,
+			PulseIntakeCheck{Name: "atlas_handoff_readback", Status: "pass", Reason: "Atlas handoff/import and Foundry status readback are ready."},
+			PulseIntakeCheck{Name: "atlas_authority_boundary", Status: "pass", Reason: "Atlas artifacts preserve compile-only authority."},
+		)
+	} else {
+		result.Checks = append(result.Checks, PulseIntakeCheck{Name: "atlas_handoff_readback", Status: "pass", Reason: "Atlas handoff/readback is not required for this bounded intake."})
+	}
+	return result, nil
+}
+
+func loadPulseIntakeSource(name, path, expectedSchema string) (PulseIntakeSource, string, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulseIntakeSource{}, "", fmt.Errorf("unsafe source artifact path: %w", err)
+	}
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return PulseIntakeSource{}, "", err
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return PulseIntakeSource{}, "", errors.New("source artifact must be a JSON object")
+	}
+	if err := validatePublicSafeJSONStrings(object); err != nil {
+		return PulseIntakeSource{}, "", err
+	}
+	schemaVersion, _ := object["schema_version"].(string)
+	if schemaVersion == "" {
+		schemaVersion, _ = object["contract_version"].(string)
+	}
+	if schemaVersion != expectedSchema {
+		return PulseIntakeSource{}, "", fmt.Errorf("unexpected source artifact schema %q", schemaVersion)
+	}
+	status, _ := object["status"].(string)
+	if strings.TrimSpace(status) == "" {
+		return PulseIntakeSource{}, "", errors.New("source artifact status is required")
+	}
+	source, err := pulseIntakeSourceFromFile(name, path, schemaVersion, status)
+	if err != nil {
+		return PulseIntakeSource{}, "", err
+	}
+	return source, status, nil
+}
+
+func pulseIntakeSourceFromFile(name, path, schemaVersion, status string) (PulseIntakeSource, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulseIntakeSource{}, fmt.Errorf("unsafe source artifact path: %w", err)
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return PulseIntakeSource{}, err
+	}
+	return PulseIntakeSource{
+		Name:          name,
+		Path:          filepath.ToSlash(filepath.Clean(path)),
+		SchemaVersion: schemaVersion,
+		Status:        status,
+		SHA256:        sum,
+	}, nil
+}
+
+func validatePulseAtlasStatus(status AtlasStatus, artifact AtlasFoundryImport) error {
+	if status.SchemaVersion != atlasStatusSchema {
+		return fmt.Errorf("Atlas status schema_version must be %s", atlasStatusSchema)
+	}
+	if status.Status != "ready" || status.ReadbackStatus != "ready" {
+		return errors.New("Atlas status and readback_status must be ready")
+	}
+	if status.ImportID != artifact.ID || status.WorkgraphID != artifact.WorkgraphID || status.TargetInstance != artifact.TargetInstance {
+		return errors.New("Atlas status must match Atlas import identity")
+	}
+	if status.SchedulesWork {
+		return errors.New("schedules_work must be false")
+	}
+	if status.ExecutesWork {
+		return errors.New("executes_work must be false")
+	}
+	if status.ApprovesWork {
+		return errors.New("approves_work must be false")
+	}
+	for label, path := range status.Evidence {
+		if strings.TrimSpace(label) == "" {
+			return errors.New("Atlas status evidence labels must not be empty")
+		}
+		if err := validateEvidencePath(path); err != nil {
+			return fmt.Errorf("Atlas status evidence %s: %w", label, err)
+		}
+	}
+	return validatePublicSafeJSONStrings(status)
+}
+
+func failPulseIntake(result PulseIntakePreflight, checkName, status, reason, nextAction string) (PulseIntakePreflight, error) {
+	result.Status = status
+	if status == "blocked" {
+		result.BlueprintStatus = "blocked"
+	} else if result.BlueprintStatus == "" || result.BlueprintStatus == "missing" {
+		result.BlueprintStatus = "missing"
+	}
+	result.FirstFailingCheck = checkName
+	result.Checks = append(result.Checks, PulseIntakeCheck{Name: checkName, Status: "fail", Reason: reason})
+	result.BlockingNextActions = append(result.BlockingNextActions, nextAction)
+	return result, errors.New(reason)
+}
+
+func isAtlasAuthorityError(err error) bool {
+	message := err.Error()
+	return strings.Contains(message, "schedules_work") || strings.Contains(message, "executes_work") || strings.Contains(message, "approves_work")
+}
+
+func validatePublicSafeJSONStrings(value any) error {
+	switch typed := value.(type) {
+	case map[string]any:
+		for _, nested := range typed {
+			if err := validatePublicSafeJSONStrings(nested); err != nil {
+				return err
+			}
+		}
+	case []any:
+		for _, nested := range typed {
+			if err := validatePublicSafeJSONStrings(nested); err != nil {
+				return err
+			}
+		}
+	case string:
+		lower := strings.ToLower(strings.ReplaceAll(typed, "\\", "/"))
+		for _, marker := range []string{
+			"/" + "users/",
+			"/" + "home/",
+			"/" + "tmp/",
+			"/" + "var/folders/",
+			"downloads/",
+			"file://",
+			"api" + "_key",
+			"access" + "_token",
+			"authorization: bearer",
+			"begin " + "rsa",
+			"begin " + "openssh",
+		} {
+			if strings.Contains(lower, marker) {
+				return fmt.Errorf("unsafe public artifact value %q", typed)
+			}
+		}
+	}
+	return nil
 }
 
 func runPulseSignedSmokeScript(args []string, stdout, stderr io.Writer) int {
@@ -7226,6 +7524,7 @@ func publicSchemaNames() []string {
 		"foundry-loop-event-log-v0.1",
 		"foundry-loop-lease-v0.1",
 		"foundry-production-readiness-audit-v0.1",
+		"foundry-pulse-intake-preflight-v0.1",
 		"foundry-pulse-event-v0.1",
 		"foundry-registry-v0.1",
 		"foundry-release-candidate-v0.1",

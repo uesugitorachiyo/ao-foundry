@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+  "status": "approved",
+  "blueprint_status": "ready",
+  "atlas_status": "ready",
+  "first_failing_check": "",
+  "checks": [],
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [],
+  "source_artifacts": []
+}
