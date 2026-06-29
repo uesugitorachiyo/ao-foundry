@@ -248,3 +248,17 @@ The rollup emits `ao.foundry.first-live-docs-readiness-rollup.v0.1`. It reports
 `safe_to_execute`, and `exact_next_step`. It is still a rollup only: it does not
 create a branch, create a worktree, open or merge a PR, mutate repositories,
 call providers, publish, upload, tag, or release.
+
+## First Live Docs-Only PR Rehearsal
+
+When the final PR rehearsal gate reports
+`exact_next_step=start_first_docs_only_live_pr_rehearsal`, the only permitted
+live action is one docs-only branch and PR within the approved scope. The branch
+must use the `codex/live-docs-` prefix, change only this runbook, preserve the
+maximum changed-file count of one, and pass the same verification and rollback
+evidence checks before merge.
+
+This rehearsal proves that the governed path can move from dry-run evidence to
+one tightly scoped documentation PR. It is not approval for code changes,
+release changes, provider calls, direct-main changes, broad repository mutation,
+or fully unsupervised complex mutation.
