@@ -160,6 +160,13 @@ run_check "atlas_readback_consumer" \
     --import examples/atlas/foundry-import.json \
     --run-link examples/atlas/run-link.completed.json \
     --out "$TMPDIR/atlas-readback.json"
+run_check "atlas_status_surface" \
+  "Atlas operator status summarizes registry, import, and readback without authority expansion" \
+  go run ./cmd/foundry atlas status \
+    --registry examples/registry/atlas-demo.foundry-registry.json \
+    --import examples/atlas/foundry-import.json \
+    --run-link examples/atlas/run-link.completed.json \
+    --out "$TMPDIR/atlas-status.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

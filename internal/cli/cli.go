@@ -34,6 +34,7 @@ const (
 	atlasTaskSchema     = "ao.atlas.factory-task.v0.1"
 	atlasRunLinkSchema  = "ao.atlas.run-link.v0.1"
 	atlasReadbackSchema = "ao.foundry.atlas-readback.v0.1"
+	atlasStatusSchema   = "ao.foundry.atlas-status.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -154,6 +155,25 @@ type AtlasReadback struct {
 	SchedulesWork  bool              `json:"schedules_work"`
 	ExecutesWork   bool              `json:"executes_work"`
 	ApprovesWork   bool              `json:"approves_work"`
+	NextActions    []string          `json:"next_actions"`
+}
+
+type AtlasStatus struct {
+	SchemaVersion  string            `json:"schema_version"`
+	Status         string            `json:"status"`
+	Mode           string            `json:"mode"`
+	RegistryID     string            `json:"registry_id"`
+	ImportID       string            `json:"import_id"`
+	WorkgraphID    string            `json:"workgraph_id"`
+	TargetInstance string            `json:"target_instance"`
+	ReadbackStatus string            `json:"readback_status"`
+	TaskID         string            `json:"task_id"`
+	TaskDigest     string            `json:"task_digest"`
+	RunLinkDigest  string            `json:"run_link_digest"`
+	SchedulesWork  bool              `json:"schedules_work"`
+	ExecutesWork   bool              `json:"executes_work"`
+	ApprovesWork   bool              `json:"approves_work"`
+	Evidence       map[string]string `json:"evidence"`
 	NextActions    []string          `json:"next_actions"`
 }
 
@@ -970,6 +990,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry run inspect --run <path> [--json]")
 	fmt.Fprintln(w, "  foundry atlas import validate --import <atlas-foundry-import.json>")
 	fmt.Fprintln(w, "  foundry atlas readback --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-readback.json>]")
+	fmt.Fprintln(w, "  foundry atlas status --registry <registry.json> --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-status.json>] [--json]")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
 	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
@@ -1552,7 +1573,7 @@ func runRunInspect(args []string, stdout, stderr io.Writer) int {
 
 func runAtlas(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "atlas: expected subcommand import validate or readback")
+		fmt.Fprintln(stderr, "atlas: expected subcommand import validate, readback, or status")
 		return 2
 	}
 	if len(args) >= 2 && args[0] == "import" && args[1] == "validate" {
@@ -1561,7 +1582,10 @@ func runAtlas(args []string, stdout, stderr io.Writer) int {
 	if args[0] == "readback" {
 		return runAtlasReadback(args[1:], stdout, stderr)
 	}
-	fmt.Fprintln(stderr, "atlas: expected subcommand import validate or readback")
+	if args[0] == "status" {
+		return runAtlasStatus(args[1:], stdout, stderr)
+	}
+	fmt.Fprintln(stderr, "atlas: expected subcommand import validate, readback, or status")
 	return 2
 }
 
@@ -1620,6 +1644,54 @@ func runAtlasReadback(args []string, stdout, stderr io.Writer) int {
 	fmt.Fprintf(stdout, "atlas_readback=%s\n", *outPath)
 	fmt.Fprintf(stdout, "status=%s\n", report.Status)
 	fmt.Fprintf(stdout, "mode=%s\n", report.Mode)
+	fmt.Fprintf(stdout, "task_id=%s\n", report.TaskID)
+	fmt.Fprintf(stdout, "schedules_work=%t\n", report.SchedulesWork)
+	fmt.Fprintf(stdout, "executes_work=%t\n", report.ExecutesWork)
+	fmt.Fprintf(stdout, "approves_work=%t\n", report.ApprovesWork)
+	return 0
+}
+
+func runAtlasStatus(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("atlas status", stderr)
+	registryPath := fs.String("registry", "", "Foundry registry path")
+	importPath := fs.String("import", "", "Atlas foundry-import packet path")
+	runLinkPath := fs.String("run-link", "", "Atlas run-link path")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "emit JSON status report")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	report, err := buildAtlasStatus(*registryPath, *importPath, *runLinkPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "atlas status: %v\n", err)
+		return 2
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		for _, inputPath := range []string{*registryPath, *importPath, *runLinkPath} {
+			if sameCleanPath(*outPath, inputPath) {
+				fmt.Fprintln(stderr, "atlas status: --out must not overwrite input artifacts")
+				return 2
+			}
+		}
+		if err := writeJSONFile(*outPath, report); err != nil {
+			fmt.Fprintf(stderr, "atlas status: write report: %v\n", err)
+			return 2
+		}
+		fmt.Fprintf(stdout, "atlas_status=%s\n", *outPath)
+		return 0
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, report); err != nil {
+			fmt.Fprintf(stderr, "atlas status: marshal report: %v\n", err)
+			return 2
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "atlas status: %s\n", report.Status)
+	fmt.Fprintf(stdout, "mode=%s\n", report.Mode)
+	fmt.Fprintf(stdout, "registry=%s\n", report.RegistryID)
+	fmt.Fprintf(stdout, "import=%s\n", report.ImportID)
+	fmt.Fprintf(stdout, "readback=%s\n", atlasReadbackSchema)
 	fmt.Fprintf(stdout, "task_id=%s\n", report.TaskID)
 	fmt.Fprintf(stdout, "schedules_work=%t\n", report.SchedulesWork)
 	fmt.Fprintf(stdout, "executes_work=%t\n", report.ExecutesWork)
@@ -4742,6 +4814,35 @@ func buildAtlasReadback(importPath, runLinkPath string) (AtlasReadback, error) {
 	}, nil
 }
 
+func buildAtlasStatus(registryPath, importPath, runLinkPath string) (AtlasStatus, error) {
+	registry, err := loadRegistry(registryPath)
+	if err != nil {
+		return AtlasStatus{}, err
+	}
+	readback, err := buildAtlasReadback(importPath, runLinkPath)
+	if err != nil {
+		return AtlasStatus{}, err
+	}
+	return AtlasStatus{
+		SchemaVersion:  atlasStatusSchema,
+		Status:         "ready",
+		Mode:           "fixture_only_readback",
+		RegistryID:     registry.FoundryID,
+		ImportID:       readback.AtlasImportID,
+		WorkgraphID:    readback.WorkgraphID,
+		TargetInstance: readback.TargetInstance,
+		ReadbackStatus: readback.Status,
+		TaskID:         readback.TaskID,
+		TaskDigest:     readback.TaskDigest,
+		RunLinkDigest:  readback.RunLinkDigest,
+		SchedulesWork:  false,
+		ExecutesWork:   false,
+		ApprovesWork:   false,
+		Evidence:       readback.Evidence,
+		NextActions:    []string{"keep Atlas status as observer-only readback"},
+	}, nil
+}
+
 func validateAtlasPublicString(value string) error {
 	normalized := strings.ReplaceAll(value, "\\", "/")
 	lower := strings.ToLower(normalized)
@@ -7111,6 +7212,7 @@ func publicSchemaNames() []string {
 		"foundry-active-stack-production-readiness-rollup-v0.1",
 		"foundry-active-stack-readiness-v0.1",
 		"foundry-atlas-readback-v0.1",
+		"foundry-atlas-status-v0.1",
 		"foundry-approval-decision-v0.1",
 		"foundry-approval-request-v0.1",
 		"foundry-capability-matrix-v0.1",

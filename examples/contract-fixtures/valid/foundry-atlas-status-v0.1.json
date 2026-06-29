@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.atlas-status.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_readback",
+  "registry_id": "atlas-demo-stack",
+  "import_id": "atlas-readiness-workgraph-foundry-import",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "target_instance": "demo-stack",
+  "readback_status": "ready",
+  "task_id": "atlas-readiness-task",
+  "task_digest": "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99",
+  "run_link_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "evidence": {
+    "foundry": "evidence/foundry/atlas-readiness.json"
+  },
+  "next_actions": [
+    "keep Atlas status as observer-only readback"
+  ]
+}
