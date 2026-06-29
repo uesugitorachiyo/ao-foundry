@@ -51,7 +51,7 @@ This first slice provides:
   - `foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>`
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
-  - `foundry pulse run --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
+  - `foundry pulse run [--start-gate <pulse-overnight-start-gate.json>] --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
   - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
@@ -98,7 +98,7 @@ go run ./cmd/foundry release promotion validate --candidate examples/readiness/a
 go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json --promotion-out tmp/release-promotion.handoff.json --notes-out tmp/release-candidate.handoff.md --manifest-out tmp/release-manifest.handoff.json
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
-go run ./cmd/foundry pulse run --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
+go run ./cmd/foundry pulse run --start-gate examples/pulse-overnight-start-gate/ready.json --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
 go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry pulse lifecycle inspect --state examples/pulse-lifecycle/ready-to-start-next-slice.json --json
 go run ./cmd/foundry pulse overnight-start-gate --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json --out tmp/pulse-overnight-start-gate.json
@@ -113,11 +113,16 @@ go run ./cmd/ao status
 go run ./cmd/ao run --out tmp/ao-pulse
 ```
 
-The pulse command writes a local evidence bundle with readiness, GoalRun,
-Forge-brief, Forge-packet, policy-gate, optional live Forge attempt,
-control-plane readback, run, eval, RSI candidate, RSI improvement gate, RSI
-next improvement task, trace, demo, release dry-run, competitive audit, and a
-final `pulse-event.json` summary. It is a scheduler and evidence loop only; live
+The pulse command first enforces a Pulse overnight start gate and writes
+`pulse-runner-start-decision.json`. Only a ready gate with digest-bound
+Blueprint/Atlas/preflight/lifecycle evidence may continue to bundle generation.
+Blocked or failed gates stop before implementation evidence is produced.
+
+When the gate is ready, the command writes a local evidence bundle with
+readiness, GoalRun, Forge-brief, Forge-packet, policy-gate, optional live Forge
+attempt, control-plane readback, run, eval, RSI candidate, RSI improvement gate,
+RSI next improvement task, trace, demo, release dry-run, competitive audit, and
+a final `pulse-event.json` summary. It is a scheduler and evidence loop only; live
 implementation remains delegated to AO Forge.
 
 `foundry pulse intake-preflight` is the Blueprint/Atlas-aware intake gate before

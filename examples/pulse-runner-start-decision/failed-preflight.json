@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+  "status": "failed",
+  "start_gate_path": "examples/pulse-overnight-start-gate/failed-preflight.json",
+  "allowed_next_action": "stop_blocked",
+  "first_failing_check": "intake_preflight",
+  "blocking_next_actions": [
+    "Fix the Pulse intake preflight failure before starting the loop."
+  ],
+  "source_digests": [
+    {
+      "name": "pulse_overnight_start_gate",
+      "path": "examples/pulse-overnight-start-gate/failed-preflight.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "sha256": "a93716d26c1b35a0a95060e4f07963002b990edbe9446a2d62c1ecd05feca145"
+    },
+    {
+      "name": "intake_preflight",
+      "path": "examples/pulse-overnight-start-gate/failed.intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "2d0ee325b5cf4010886590f935f2fb6ac561ef946d722122baa735b835974258"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}

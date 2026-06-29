@@ -1,0 +1,16 @@
+{
+  "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+  "status": "started",
+  "start_gate_path": "examples/pulse-overnight-start-gate/ready.json",
+  "allowed_next_action": "start_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "source_digests": [
+    {
+      "name": "pulse_overnight_start_gate",
+      "path": "examples/pulse-overnight-start-gate/ready.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "sha256": "821d980b34f965ed7e47454c07e6289915a8cae72bbfbc1e3720e6bcc2c996a2"
+    }
+  ]
+}

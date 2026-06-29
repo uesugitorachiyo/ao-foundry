@@ -38,6 +38,7 @@ const (
 	pulseIntakeSchema    = "ao.foundry.pulse-intake-preflight.v0.1"
 	pulseLifecycleSchema = "ao.foundry.pulse-pr-lifecycle.v0.1"
 	pulseStartGateSchema = "ao.foundry.pulse-overnight-start-gate.v0.1"
+	pulseRunnerSchema    = "ao.foundry.pulse-runner-start-decision.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -663,6 +664,16 @@ type PulseStartGateSource struct {
 	SHA256        string `json:"sha256"`
 }
 
+type PulseRunnerStartDecision struct {
+	SchemaVersion       string                 `json:"schema_version"`
+	Status              string                 `json:"status"`
+	StartGatePath       string                 `json:"start_gate_path"`
+	AllowedNextAction   string                 `json:"allowed_next_action"`
+	FirstFailingCheck   string                 `json:"first_failing_check"`
+	BlockingNextActions []string               `json:"blocking_next_actions"`
+	SourceDigests       []PulseStartGateSource `json:"source_digests"`
+}
+
 type ContractFixtureValidationResult struct {
 	ValidFixtures   int
 	InvalidFixtures int
@@ -1084,7 +1095,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry release promotion validate --candidate <path> --signed-smoke-summary <path> --out <path>")
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
-	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
+	fmt.Fprintln(w, "  foundry pulse run [--start-gate <path>] [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
 	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
 	fmt.Fprintln(w, "  foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]")
@@ -3285,6 +3296,74 @@ func failPulseStartGate(result PulseOvernightStartGate, checkName, status, reaso
 	return result, errors.New(reason)
 }
 
+func buildPulseRunnerStartDecision(startGatePath string) (PulseRunnerStartDecision, error) {
+	decision := PulseRunnerStartDecision{
+		SchemaVersion:       pulseRunnerSchema,
+		Status:              "failed",
+		StartGatePath:       filepath.ToSlash(filepath.Clean(startGatePath)),
+		AllowedNextAction:   "stop_blocked",
+		FirstFailingCheck:   "pulse_overnight_start_gate",
+		BlockingNextActions: []string{"Provide a ready Pulse overnight start gate before running the event loop."},
+		SourceDigests:       []PulseStartGateSource{},
+	}
+	if strings.TrimSpace(startGatePath) == "" {
+		return decision, errors.New("Pulse runner start gate is required")
+	}
+	if err := validateEvidencePath(startGatePath); err != nil {
+		return decision, fmt.Errorf("unsafe Pulse runner start gate path: %w", err)
+	}
+	var startGate PulseOvernightStartGate
+	if err := readJSONFile(startGatePath, &startGate); err != nil {
+		return decision, fmt.Errorf("read Pulse runner start gate: %w", err)
+	}
+	if startGate.SchemaVersion != pulseStartGateSchema {
+		return decision, fmt.Errorf("Pulse runner start gate schema_version must be %s", pulseStartGateSchema)
+	}
+	if err := validatePublicSafeJSONStrings(startGate); err != nil {
+		return decision, err
+	}
+	source, err := pulseStartGateSourceFromFile("pulse_overnight_start_gate", startGatePath, startGate.SchemaVersion)
+	if err != nil {
+		return decision, err
+	}
+	decision.SourceDigests = append(decision.SourceDigests, source)
+	if len(startGate.SourceHashes) == 0 {
+		return decision, errors.New("Pulse runner start gate lacks digest-bound source hashes")
+	}
+	for _, sourceHash := range startGate.SourceHashes {
+		if strings.TrimSpace(sourceHash.Name) == "" || strings.TrimSpace(sourceHash.Path) == "" || strings.TrimSpace(sourceHash.SchemaVersion) == "" {
+			return decision, errors.New("Pulse runner start gate source hashes require name, path, and schema_version")
+		}
+		if !isHexSHA256(sourceHash.SHA256) {
+			return decision, fmt.Errorf("Pulse runner start gate source %s has missing or invalid sha256 digest", sourceHash.Name)
+		}
+		if err := validateEvidencePath(sourceHash.Path); err != nil {
+			return decision, fmt.Errorf("Pulse runner start gate source %s has unsafe path: %w", sourceHash.Name, err)
+		}
+		decision.SourceDigests = append(decision.SourceDigests, sourceHash)
+	}
+	decision.Status = startGate.Status
+	decision.AllowedNextAction = startGate.AllowedNextAction
+	decision.FirstFailingCheck = startGate.FirstFailingCheck
+	decision.BlockingNextActions = append([]string{}, startGate.BlockingNextActions...)
+	if decision.Status != "ready" {
+		if decision.FirstFailingCheck == "" {
+			decision.FirstFailingCheck = "pulse_overnight_start_gate"
+		}
+		if len(decision.BlockingNextActions) == 0 {
+			decision.BlockingNextActions = append(decision.BlockingNextActions, "Regenerate the Pulse overnight start gate with ready status before running the event loop.")
+		}
+		return decision, fmt.Errorf("Pulse runner start gate is %s", decision.Status)
+	}
+	if decision.AllowedNextAction != "start_next_slice" {
+		decision.Status = "blocked"
+		decision.FirstFailingCheck = "pulse_overnight_start_gate"
+		decision.BlockingNextActions = append(decision.BlockingNextActions, "Pulse runner start gate must allow start_next_slice.")
+		return decision, errors.New("Pulse runner start gate does not allow start_next_slice")
+	}
+	return decision, nil
+}
+
 func runPulseSignedSmokeScript(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("pulse signed-smoke-script", stderr)
 	outPath := fs.String("out", "", "signed control-plane smoke shell script output path")
@@ -3484,12 +3563,25 @@ func runPulseRun(args []string, stdout, stderr io.Writer) int {
 	forgeLivePacketPath := fs.String("forge-live-packet", "", "AO Forge live packet path")
 	controlPlaneReceiptPath := fs.String("control-plane-receipt", "", "control-plane readback receipt path")
 	signedSmokeResultPath := fs.String("signed-smoke-result", "", "signed smoke result path")
+	startGatePath := fs.String("start-gate", "examples/pulse-overnight-start-gate/ready.json", "Pulse overnight start gate result path")
 	scorecardPath := fs.String("scorecard", "examples/evals/bootstrap.scorecard.json", "eval scorecard path")
 	rsiBaselinePath := fs.String("rsi-baseline", "examples/evals/rsi-baseline.eval-result.json", "RSI baseline eval result path")
 	rsiMinImprovement := fs.Float64("rsi-min-improvement", 5, "minimum RSI improvement percentage points")
 	outDir := fs.String("out", "tmp/pulse", "pulse bundle output directory")
 	if !parseFlags(fs, args, stderr) {
 		return 2
+	}
+	decision, decisionErr := buildPulseRunnerStartDecision(*startGatePath)
+	decisionPath := filepath.Join(*outDir, "pulse-runner-start-decision.json")
+	if writeErr := writeJSONFile(decisionPath, decision); writeErr != nil {
+		fmt.Fprintf(stderr, "pulse: write runner start decision: %v\n", writeErr)
+		return 2
+	}
+	fmt.Fprintf(stdout, "pulse_runner_start_decision=%s\n", decisionPath)
+	fmt.Fprintf(stdout, "runner_start_status=%s\n", decision.Status)
+	if decisionErr != nil {
+		fmt.Fprintf(stderr, "pulse: %v\n", decisionErr)
+		return 1
 	}
 	event, err := buildPulseBundle(*registryPath, *taskPath, *goalPath, *packetPath, *scorecardPath, *rsiBaselinePath, *rsiMinImprovement, *outDir, *forgeLivePacketPath, *controlPlaneReceiptPath, *signedSmokeResultPath)
 	eventPath := filepath.Join(*outDir, "pulse-event.json")
@@ -7936,6 +8028,7 @@ func publicSchemaNames() []string {
 		"foundry-pulse-intake-preflight-v0.1",
 		"foundry-pulse-overnight-start-gate-v0.1",
 		"foundry-pulse-pr-lifecycle-v0.1",
+		"foundry-pulse-runner-start-decision-v0.1",
 		"foundry-pulse-event-v0.1",
 		"foundry-registry-v0.1",
 		"foundry-release-candidate-v0.1",

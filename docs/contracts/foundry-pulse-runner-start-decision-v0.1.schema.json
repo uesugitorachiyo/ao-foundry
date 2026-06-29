@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-pulse-runner-start-decision-v0.1.schema.json",
+  "title": "AO Foundry Pulse Runner Start Decision v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "start_gate_path",
+    "allowed_next_action",
+    "first_failing_check",
+    "blocking_next_actions",
+    "source_digests"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.pulse-runner-start-decision.v0.1" },
+    "status": { "enum": ["ready", "blocked", "failed"] },
+    "start_gate_path": { "type": "string", "minLength": 1 },
+    "allowed_next_action": {
+      "enum": ["start_next_slice", "request_blueprint_clarification", "stop_blocked"]
+    },
+    "first_failing_check": { "type": "string" },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_digests": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/source_digest" }
+    }
+  },
+  "$defs": {
+    "source_digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "schema_version", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        }
+      }
+    }
+  }
+}
