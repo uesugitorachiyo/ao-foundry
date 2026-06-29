@@ -25,6 +25,30 @@ func TestRegistryValidateAcceptsExample(t *testing.T) {
 	}
 }
 
+func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"registry", "validate", "--registry", atlasRegistryFixture()}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "registry valid") {
+		t.Fatalf("expected validation output, got %q", stdout.String())
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"status", "--registry", atlasRegistryFixture()}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("status returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	out := stdout.String()
+	for _, want := range []string{"atlas-demo-stack", "2 repos", "ao-atlas", "ready: 2"} {
+		if !strings.Contains(out, want) {
+			t.Fatalf("status output missing %q: %s", want, out)
+		}
+	}
+}
+
 func TestRegistryValidateRejectsMalformedFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", filepath.Join("testdata", "invalid-registry.json")}, &stdout, &stderr)
@@ -4335,6 +4359,10 @@ func assertPulseFreshnessSummary(t *testing.T, event map[string]any, wantStatus,
 
 func registryFixture() string {
 	return filepath.Join("..", "..", "examples", "registry", "local-ao-stack.foundry-registry.json")
+}
+
+func atlasRegistryFixture() string {
+	return filepath.Join("..", "..", "examples", "registry", "atlas-demo.foundry-registry.json")
 }
 
 func taskFixture() string {

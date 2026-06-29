@@ -1,0 +1,53 @@
+{
+  "schema_version": "ao.foundry.registry.v0.1",
+  "foundry_id": "atlas-demo-stack",
+  "name": "AO Atlas Demo Stack",
+  "repos": [
+    {
+      "id": "ao-atlas",
+      "name": "AO Atlas",
+      "role": "operations-factory",
+      "delegates_to": "ao-foundry",
+      "workspace": "../ao-atlas",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "atlas-foundry-handoff",
+          "location": "examples/valid/workgraph.json",
+          "owner": "ao-atlas"
+        }
+      ],
+      "allowed_automation": ["compile-workgraph", "emit-foundry-handoff", "readback-link"],
+      "readiness_signals": [
+        {
+          "name": "atlas-production-readiness",
+          "status": "ready",
+          "source": "scripts/production-readiness.sh reports score=100/100"
+        }
+      ]
+    },
+    {
+      "id": "ao-foundry",
+      "name": "AO Foundry",
+      "role": "operations-factory",
+      "delegates_to": "ao-forge",
+      "workspace": "../ao-foundry",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "foundry-registry-consumer",
+          "location": "examples/registry/atlas-demo.foundry-registry.json",
+          "owner": "ao-foundry"
+        }
+      ],
+      "allowed_automation": ["registry-validate", "status-readback"],
+      "readiness_signals": [
+        {
+          "name": "atlas-registry-consumer",
+          "status": "ready",
+          "source": "go test ./internal/cli -run TestRegistryValidateAcceptsAtlasDemoFixture"
+        }
+      ]
+    }
+  ]
+}
