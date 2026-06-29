@@ -4595,6 +4595,23 @@ func TestPulseRunRequiresReadyStartGateBeforeBundle(t *testing.T) {
 	}
 }
 
+func TestCIWorkflowRunsPulseStartGateRegression(t *testing.T) {
+	workflow, err := os.ReadFile(repoPath(".github/workflows/ci.yml"))
+	if err != nil {
+		t.Fatalf("read CI workflow: %v", err)
+	}
+	text := string(workflow)
+	for _, want := range []string{
+		"Pulse start gate regression",
+		"TestPulseRunRequiresReadyStartGateBeforeBundle",
+		"TestPulseRunAcceptsReadyStartGateAndWritesDecision",
+	} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("CI workflow missing %q", want)
+		}
+	}
+}
+
 func TestPulseRunAcceptsReadyStartGateAndWritesDecision(t *testing.T) {
 	outDir := t.TempDir()
 	event := runPulseForEvent(t, []string{
