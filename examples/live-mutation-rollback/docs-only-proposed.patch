@@ -1,0 +1,5 @@
+diff --git a/docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md b/docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md
+--- a/docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md
++++ b/docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md
+@@
++Rollback rehearsal marker for dry-run docs-only live mutation.

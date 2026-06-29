@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.live-mutation-rollback-candidate.v0.1",
+  "candidate_id": "docs-only-unsafe-authority",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "proposed_patch_path": "examples/live-mutation-rollback/docs-only-proposed.patch",
+  "rollback_patch_path": "examples/live-mutation-rollback/docs-only-rollback.patch",
+  "rollback_plan": {
+    "strategy": "reverse_patch_then_quarantine",
+    "quarantine_path": ".foundry-local/quarantine/docs-only-live-mutation-rehearsal",
+    "kill_switch_state": "armed",
+    "verification_commands": [
+      "go test ./... -count=1"
+    ]
+  },
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": true,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

@@ -8024,6 +8024,7 @@ func publicSchemaNames() []string {
 		"foundry-goal-run-v0.1",
 		"foundry-loop-event-log-v0.1",
 		"foundry-loop-lease-v0.1",
+		"foundry-live-mutation-rollback-rehearsal-v0.1",
 		"foundry-production-readiness-audit-v0.1",
 		"foundry-pulse-intake-preflight-v0.1",
 		"foundry-pulse-overnight-start-gate-v0.1",

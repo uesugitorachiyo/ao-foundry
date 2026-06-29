@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-live-mutation-rollback-rehearsal-v0.1.schema.json",
+  "title": "AO Foundry Live Mutation Rollback Rehearsal v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "mode",
+    "candidate_path",
+    "candidate_sha256",
+    "target_repo",
+    "change_class",
+    "rollback_plan",
+    "patch_artifacts",
+    "checks",
+    "first_failing_check",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.live-mutation-rollback-rehearsal.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "mode": { "const": "dry_run_only" },
+    "candidate_path": {
+      "type": "string",
+      "pattern": "^(examples|target|tmp)/[A-Za-z0-9._/-]+$"
+    },
+    "candidate_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "target_repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "remote", "target_branch"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "remote": { "type": "string", "pattern": "^uesugitorachiyo/[a-z0-9][a-z0-9_-]*$" },
+        "target_branch": { "const": "main" }
+      }
+    },
+    "change_class": { "enum": ["docs_only", "fixture_only", "test_only"] },
+    "rollback_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "quarantine_path",
+        "kill_switch_state",
+        "verification_commands"
+      ],
+      "properties": {
+        "strategy": { "enum": ["reverse_patch_then_quarantine", "restore_from_clean_base_then_quarantine"] },
+        "quarantine_path": {
+          "type": "string",
+          "pattern": "^\\.foundry-local/quarantine/[A-Za-z0-9._/-]+$"
+        },
+        "kill_switch_state": { "const": "armed" },
+        "verification_commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "patch_artifacts": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "sha256"],
+        "properties": {
+          "name": { "enum": ["proposed_patch", "rollback_patch"] },
+          "path": {
+            "type": "string",
+            "pattern": "^examples/live-mutation-rollback/[A-Za-z0-9._/-]+\\.patch$"
+          },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "summary"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["passed", "blocked"] },
+          "summary": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "first_failing_check": { "type": "string" },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dry_run_only",
+        "live_mutation_allowed",
+        "mutates_repositories",
+        "schedules_work",
+        "executes_work",
+        "approves_work",
+        "provider_calls_allowed",
+        "release_or_publish_allowed"
+      ],
+      "properties": {
+        "dry_run_only": { "const": true },
+        "live_mutation_allowed": { "const": false },
+        "mutates_repositories": { "const": false },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "provider_calls_allowed": { "const": false },
+        "release_or_publish_allowed": { "const": false }
+      }
+    }
+  }
+}
