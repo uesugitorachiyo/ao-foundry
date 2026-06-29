@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "atlas-readiness-task",
+  "status": "blocked",
+  "evidence": {
+    "foundry": "evidence/foundry/atlas-readiness-blocked.json"
+  },
+  "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}

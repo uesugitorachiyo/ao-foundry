@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "atlas-missing-task",
+  "status": "completed",
+  "evidence": {
+    "foundry": "evidence/foundry/atlas-missing-task.json"
+  },
+  "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+}
