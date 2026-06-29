@@ -52,6 +52,7 @@ This first slice provides:
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
+  - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -96,6 +97,7 @@ go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
+go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
@@ -113,6 +115,14 @@ control-plane readback, run, eval, RSI candidate, RSI improvement gate, RSI
 next improvement task, trace, demo, release dry-run, competitive audit, and a
 final `pulse-event.json` summary. It is a scheduler and evidence loop only; live
 implementation remains delegated to AO Forge.
+
+`foundry pulse intake-preflight` is the Blueprint/Atlas-aware intake gate before
+future automated scheduling. It emits
+`ao.foundry.pulse-intake-preflight.v0.1`, fails closed when Blueprint
+authorization is missing or blocked, and requires Atlas handoff/readback for
+oversized work. The command is fixture/local only: it does not schedule,
+execute, approve, upload, publish, call providers, or mutate sibling
+repositories.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

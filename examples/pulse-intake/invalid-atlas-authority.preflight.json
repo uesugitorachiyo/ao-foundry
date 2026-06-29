@@ -1,0 +1,19 @@
+{
+  "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+  "status": "failed",
+  "blueprint_status": "ready",
+  "atlas_status": "failed",
+  "first_failing_check": "atlas_authority_boundary",
+  "checks": [
+    {
+      "name": "atlas_authority_boundary",
+      "status": "fail",
+      "reason": "Atlas artifact claims forbidden authority."
+    }
+  ],
+  "blocking_next_actions": [
+    "Regenerate Atlas artifacts with schedules_work=false, executes_work=false, and approves_work=false."
+  ],
+  "maintenance_suggestions": [],
+  "source_artifacts": []
+}

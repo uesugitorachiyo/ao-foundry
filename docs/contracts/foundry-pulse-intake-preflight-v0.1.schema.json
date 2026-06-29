@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-pulse-intake-preflight-v0.1.schema.json",
+  "title": "AO Foundry Pulse Intake Preflight v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "blueprint_status",
+    "atlas_status",
+    "first_failing_check",
+    "checks",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "source_artifacts"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.pulse-intake-preflight.v0.1" },
+    "status": { "enum": ["ready", "blocked", "failed"] },
+    "blueprint_status": { "enum": ["ready", "blocked", "missing", "failed"] },
+    "atlas_status": { "enum": ["ready", "blocked", "missing", "failed", "not_required"] },
+    "first_failing_check": { "type": "string" },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source_artifact" }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "reason"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["pass", "fail", "blocked"] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "source_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "schema_version", "status", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "minLength": 64, "maxLength": 64 }
+      }
+    }
+  }
+}

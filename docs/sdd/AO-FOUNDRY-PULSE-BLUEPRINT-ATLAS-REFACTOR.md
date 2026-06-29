@@ -110,6 +110,24 @@ stop conditions, and non-goals. This document is that first slice.
 Add a Foundry pulse preflight that accepts Blueprint authorization and Atlas
 handoff/readback inputs, then fails closed when missing or blocked.
 
+The executable slice is:
+
+```sh
+go run ./cmd/foundry pulse intake-preflight \
+  --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
+  --requires-atlas \
+  --atlas-import examples/atlas/foundry-import.json \
+  --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json \
+  --out tmp/pulse-intake-preflight.json
+```
+
+It emits `ao.foundry.pulse-intake-preflight.v0.1`. A blocked Blueprint request
+is a valid blocked intake result, not a ready scheduling signal. Missing
+Blueprint authorization, blocked authorization treated as ready, missing Atlas
+handoff/readback, Atlas authority claims, and unsafe source artifact paths fail
+closed. This preflight does not schedule, execute, approve, upload, publish,
+call providers, or mutate sibling repositories.
+
 ### Slice C: One-Slice PR Lifecycle State
 
 Add a local state contract that records current branch, PR number, check status,

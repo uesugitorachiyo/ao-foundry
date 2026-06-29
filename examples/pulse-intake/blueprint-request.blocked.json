@@ -1,0 +1,13 @@
+{
+  "schema_version": "ao.blueprint.request.v0.1",
+  "request_id": "blueprint-request-pulse-intake-blocked",
+  "status": "blocked",
+  "target": "ao-foundry-pulse-intake-preflight",
+  "reason": "The operator objective is not specified enough to build.",
+  "missing_requirements": [
+    "acceptance criteria",
+    "write scope",
+    "verification commands"
+  ],
+  "next_action": "Return to AO Blueprint before scheduling implementation."
+}

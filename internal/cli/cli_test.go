@@ -3420,8 +3420,11 @@ func TestReleaseDryRunExcludesRuntimeScratchAndEvidence(t *testing.T) {
 		"docs/contracts/foundry-signed-smoke-result-v0.1.schema.json",
 		"docs/contracts/foundry-signed-smoke-ingest-v0.1.schema.json",
 		"docs/contracts/foundry-signed-smoke-summary-v0.1.schema.json",
+		"docs/contracts/foundry-pulse-intake-preflight-v0.1.schema.json",
 		"examples/contract-fixtures/valid/foundry-ao2-loop-decision-v0.1.json",
 		"examples/contract-fixtures/invalid/foundry-ao2-loop-decision-v0.1.json",
+		"examples/contract-fixtures/valid/foundry-pulse-intake-preflight-v0.1.json",
+		"examples/contract-fixtures/invalid/foundry-pulse-intake-preflight-v0.1.json",
 		"examples/contract-fixtures/valid/foundry-signed-smoke-ingest-v0.1.json",
 		"examples/contract-fixtures/invalid/foundry-signed-smoke-ingest-v0.1.json",
 		"examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json",
@@ -4022,6 +4025,141 @@ func TestStaleControlPlaneDerivedDecisionCIFixtureValidates(t *testing.T) {
 	freshness := eventLoop["freshness"].(map[string]any)
 	if freshness["status"] != "blocked" || freshness["forge_live_packet"] != "ready" || freshness["control_plane_readback"] != "stale" {
 		t.Fatalf("fixture should model stale control-plane readback freshness: %#v", freshness)
+	}
+}
+
+func TestPulseIntakePreflightReadyRequiresBlueprintAndAtlasEvidence(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-import", "examples/atlas/foundry-import.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--requires-atlas",
+		"--out", outPath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["schema_version"] != "ao.foundry.pulse-intake-preflight.v0.1" ||
+		result["status"] != "ready" ||
+		result["blueprint_status"] != "ready" ||
+		result["atlas_status"] != "ready" ||
+		result["first_failing_check"] != "" {
+		t.Fatalf("unexpected ready preflight result: %#v", result)
+	}
+	if !strings.Contains(stdout.String(), `"status": "ready"`) {
+		t.Fatalf("expected JSON stdout for ready preflight, got %s", stdout.String())
+	}
+}
+
+func TestPulseIntakePreflightBlocksForBlueprintClarification(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-request", "examples/pulse-intake/blueprint-request.blocked.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("Run returned %d, want blocked exit 1; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "blocked" || result["blueprint_status"] != "blocked" {
+		t.Fatalf("unexpected blocked preflight result: %#v", result)
+	}
+	if result["first_failing_check"] != "blueprint_build_authorization" {
+		t.Fatalf("blocked preflight should identify Blueprint authorization check, got %#v", result)
+	}
+}
+
+func TestPulseIntakePreflightFailsClosedForMissingBlueprintAuthorization(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--atlas-import", "examples/atlas/foundry-import.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--requires-atlas",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for missing Blueprint authorization; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "Blueprint authorization is required") {
+		t.Fatalf("expected missing Blueprint error, got %q", stderr.String())
+	}
+}
+
+func TestPulseIntakePreflightFailsClosedForBlockedBlueprintMarkedReady(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.blocked.json",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for blocked Blueprint authorization; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "Blueprint authorization is blocked") {
+		t.Fatalf("expected blocked Blueprint authorization error, got %q", stderr.String())
+	}
+}
+
+func TestPulseIntakePreflightFailsClosedForMissingAtlasEvidence(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--requires-atlas",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for missing Atlas evidence; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "Atlas handoff/readback is required") {
+		t.Fatalf("expected missing Atlas error, got %q", stderr.String())
+	}
+}
+
+func TestPulseIntakePreflightFailsClosedForAtlasAuthorityClaim(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-import", "internal/cli/testdata/atlas-foundry-import-executes-work.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--requires-atlas",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for Atlas authority claim; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "Atlas artifact claims forbidden authority") {
+		t.Fatalf("expected Atlas authority error, got %q", stderr.String())
+	}
+}
+
+func TestPulseIntakePreflightContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-pulse-intake-preflight-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read pulse intake preflight schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("pulse intake preflight schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-pulse-intake-preflight-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid pulse intake preflight fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid pulse intake preflight fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-pulse-intake-preflight-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid pulse intake preflight fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid pulse intake preflight fixture unexpectedly passed schema")
 	}
 }
 

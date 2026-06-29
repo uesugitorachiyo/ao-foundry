@@ -34,6 +34,12 @@ load registry and task
 Run the local clean-clone-safe pulse:
 
 ```sh
+go run ./cmd/foundry pulse intake-preflight \
+  --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
+  --requires-atlas \
+  --atlas-import examples/atlas/foundry-import.json \
+  --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json \
+  --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry pulse run --out tmp/pulse
 go run ./cmd/foundry pulse freshness --pulse tmp/pulse/pulse-event.json
 go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
@@ -49,6 +55,13 @@ The loop exits non-zero and still writes a blocked event when a readiness gate
 fails. The command also prints an operator status line such as
 `freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
 The same values are recorded in `pulse-event.json` under `freshness_summary`.
+
+The intake preflight writes `tmp/pulse-intake-preflight.json` with
+`schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
+when Blueprint authorization is ready and required Atlas import/status readback
+artifacts preserve `schedules_work=false`, `executes_work=false`, and
+`approves_work=false`. A Blueprint clarification request returns a blocked
+preflight instead of pretending work is ready.
 
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the

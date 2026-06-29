@@ -1,0 +1,19 @@
+{
+  "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+  "status": "failed",
+  "blueprint_status": "ready",
+  "atlas_status": "missing",
+  "first_failing_check": "atlas_handoff_readback",
+  "checks": [
+    {
+      "name": "atlas_handoff_readback",
+      "status": "fail",
+      "reason": "Atlas handoff/readback is required for oversized Pulse intake."
+    }
+  ],
+  "blocking_next_actions": [
+    "Provide Atlas foundry-import and Foundry Atlas status/readback artifacts."
+  ],
+  "maintenance_suggestions": [],
+  "source_artifacts": []
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "ao.blueprint.build-authorization.v0.1",
+  "authorization_id": "blueprint-auth-pulse-intake-blocked",
+  "status": "blocked",
+  "target": "ao-foundry-pulse-intake-preflight",
+  "build_ready": false,
+  "requires_atlas": false,
+  "reason": "Blueprint readiness is blocked, so Pulse must not treat this as ready."
+}

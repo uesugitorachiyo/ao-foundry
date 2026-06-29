@@ -1,0 +1,51 @@
+{
+  "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+  "status": "ready",
+  "blueprint_status": "ready",
+  "atlas_status": "ready",
+  "first_failing_check": "",
+  "checks": [
+    {
+      "name": "blueprint_build_authorization",
+      "status": "pass",
+      "reason": "Blueprint build authorization is ready."
+    },
+    {
+      "name": "atlas_handoff_readback",
+      "status": "pass",
+      "reason": "Atlas handoff/import and Foundry status readback are ready."
+    },
+    {
+      "name": "atlas_authority_boundary",
+      "status": "pass",
+      "reason": "Atlas artifacts preserve compile-only authority."
+    }
+  ],
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "keep pulse intake preflight fixture/local; do not schedule, execute, approve, upload, or mutate sibling repositories"
+  ],
+  "source_artifacts": [
+    {
+      "name": "blueprint_authorization",
+      "path": "examples/pulse-intake/blueprint-authorization.ready.json",
+      "schema_version": "ao.blueprint.build-authorization.v0.1",
+      "status": "ready",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "atlas_import",
+      "path": "examples/atlas/foundry-import.json",
+      "schema_version": "ao.atlas.foundry-import.v0.1",
+      "status": "ready_for_foundry_fixture_import",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "name": "atlas_status",
+      "path": "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+      "schema_version": "ao.foundry.atlas-status.v0.1",
+      "status": "ready",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ]
+}
