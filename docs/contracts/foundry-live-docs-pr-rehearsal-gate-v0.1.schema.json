@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-live-docs-pr-rehearsal-gate-v0.1.schema.json",
+  "title": "AO Foundry Live Docs PR Rehearsal Gate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "first_live_class",
+    "safe_to_request",
+    "safe_to_execute",
+    "exact_next_step",
+    "allowed_next_action",
+    "first_failing_check",
+    "checks",
+    "source_hashes",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.live-docs-pr-rehearsal-gate.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "first_live_class": { "const": "docs_only" },
+    "safe_to_request": { "const": true },
+    "safe_to_execute": { "type": "boolean" },
+    "exact_next_step": { "type": "string", "minLength": 1 },
+    "allowed_next_action": { "type": "string", "minLength": 1 },
+    "first_failing_check": { "type": "string" },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "summary"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["passed", "blocked"] },
+          "summary": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "source_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "schema_version", "sha256"],
+        "properties": {
+          "name": { "enum": ["approved_live_docs_dry_run_chain", "approval_artifact"] },
+          "path": { "type": "string", "pattern": "^(examples|target|docs)/[A-Za-z0-9._/-]+\\.json$" },
+          "schema_version": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["approved", "pending", "denied", ""] },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "emits_decision_only",
+        "first_live_class",
+        "broad_live_mutation_allowed",
+        "fully_unsupervised_complex_mutation_claimed",
+        "mutates_repositories",
+        "creates_branch",
+        "creates_worktree",
+        "opens_pr",
+        "merges_pr",
+        "schedules_work",
+        "executes_work",
+        "approves_work",
+        "provider_calls_allowed",
+        "release_or_publish_allowed"
+      ],
+      "properties": {
+        "emits_decision_only": { "const": true },
+        "first_live_class": { "const": "docs_only" },
+        "broad_live_mutation_allowed": { "const": false },
+        "fully_unsupervised_complex_mutation_claimed": { "const": false },
+        "mutates_repositories": { "const": false },
+        "creates_branch": { "const": false },
+        "creates_worktree": { "const": false },
+        "opens_pr": { "const": false },
+        "merges_pr": { "const": false },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "provider_calls_allowed": { "const": false },
+        "release_or_publish_allowed": { "const": false }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "ready" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "safe_to_execute": { "const": true },
+          "exact_next_step": { "const": "start_first_docs_only_live_pr_rehearsal" },
+          "allowed_next_action": { "const": "start_first_docs_only_live_pr_rehearsal" },
+          "first_failing_check": { "const": "" },
+          "blocking_next_actions": { "maxItems": 0 },
+          "source_hashes": { "minItems": 2 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "blocked" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "safe_to_execute": { "const": false },
+          "first_failing_check": { "minLength": 1 },
+          "blocking_next_actions": { "minItems": 1 }
+        }
+      }
+    }
+  ]
+}

@@ -8025,6 +8025,7 @@ func publicSchemaNames() []string {
 		"foundry-goal-run-v0.1",
 		"foundry-governed-live-mutation-dry-run-chain-v0.1",
 		"foundry-live-docs-approval-gate-v0.1",
+		"foundry-live-docs-pr-rehearsal-gate-v0.1",
 		"foundry-live-docs-rollback-execution-rehearsal-v0.1",
 		"foundry-live-docs-worktree-prepare-v0.1",
 		"foundry-live-mutation-approval-request-v0.1",

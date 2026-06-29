@@ -5346,6 +5346,119 @@ func TestApprovedLiveDocsDryRunChainContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveDocsPRRehearsalGateScriptRequiresExplicitApprovalArtifact(t *testing.T) {
+	chainScript := repoPath("scripts/approved-live-docs-dry-run-chain.sh")
+	gateScript := repoPath("scripts/live-docs-pr-rehearsal-gate.sh")
+	gateData, err := os.ReadFile(gateScript)
+	if err != nil {
+		t.Fatalf("read live docs PR rehearsal gate script: %v", err)
+	}
+	gateText := string(gateData)
+	for _, want := range []string{
+		"ao.foundry.live-docs-pr-rehearsal-gate.v0.1",
+		"approval_artifact",
+		"approval_digest_binding",
+		"request_operator_approval",
+		"start_first_docs_only_live_pr_rehearsal",
+		"mutates_repositories:false",
+		"creates_branch:false",
+		"opens_pr:false",
+		"fully_unsupervised_complex_mutation_claimed:false",
+	} {
+		if !strings.Contains(gateText, want) {
+			t.Fatalf("live docs PR rehearsal gate script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr create", "gh pr merge", "git " + "push", "gh " + "release", "npm publish", "curl "} {
+		if strings.Contains(gateText, forbidden) {
+			t.Fatalf("live docs PR rehearsal gate script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	outDir := filepath.ToSlash(filepath.Join("target", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	chainDir := outDir + "/chain"
+	chainSummary := chainDir + "/summary.json"
+	blockedPath := outDir + "/blocked-gate.json"
+	readyPath := outDir + "/ready-gate.json"
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainCmd := exec.Command("bash", chainScript, "--out", chainDir)
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("approved live docs chain failed: %v\n%s", err, string(out))
+	}
+
+	blockedCmd := exec.Command("bash", gateScript,
+		"--chain", chainSummary,
+		"--out", blockedPath,
+		"--json",
+	)
+	blockedCmd.Dir = repoPath(".")
+	if out, err := blockedCmd.CombinedOutput(); err != nil {
+		t.Fatalf("blocked live docs PR rehearsal gate should emit blocked result: %v\n%s", err, string(out))
+	}
+	blocked := readObjectFixture(t, blockedPath)
+	if blocked["status"] != "blocked" ||
+		blocked["safe_to_execute"] != false ||
+		blocked["exact_next_step"] != "request_operator_approval" ||
+		blocked["first_failing_check"] != "approval_artifact" {
+		t.Fatalf("missing approval artifact should block execution: %#v", blocked)
+	}
+
+	readyCmd := exec.Command("bash", gateScript,
+		"--chain", chainSummary,
+		"--approval-artifact", "examples/live-docs-approval/ticket-approved.json",
+		"--out", readyPath,
+		"--json",
+	)
+	readyCmd.Dir = repoPath(".")
+	if out, err := readyCmd.CombinedOutput(); err != nil {
+		t.Fatalf("ready live docs PR rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	ready := readObjectFixture(t, readyPath)
+	if ready["status"] != "ready" ||
+		ready["safe_to_execute"] != true ||
+		ready["exact_next_step"] != "start_first_docs_only_live_pr_rehearsal" {
+		t.Fatalf("explicit approval artifact should allow docs-only PR rehearsal gate: %#v", ready)
+	}
+	boundaries := ready["authority_boundaries"].(map[string]any)
+	if boundaries["mutates_repositories"] != false ||
+		boundaries["creates_branch"] != false ||
+		boundaries["creates_worktree"] != false ||
+		boundaries["opens_pr"] != false ||
+		boundaries["executes_work"] != false ||
+		boundaries["approves_work"] != false {
+		t.Fatalf("PR rehearsal gate must only emit a decision: %#v", boundaries)
+	}
+}
+
+func TestLiveDocsPRRehearsalGateContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-docs-pr-rehearsal-gate-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live docs PR rehearsal gate schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live docs PR rehearsal gate schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-docs-pr-rehearsal-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live docs PR rehearsal gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live docs PR rehearsal gate fixture failed schema: %v", err)
+	}
+	if validFixture.(map[string]any)["safe_to_execute"] != true {
+		t.Fatalf("valid PR rehearsal gate fixture should allow only the first docs-only rehearsal decision")
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-docs-pr-rehearsal-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live docs PR rehearsal gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live docs PR rehearsal gate fixture unexpectedly passed schema")
+	}
+}
+
 func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthority(t *testing.T) {
 	script := repoPath("scripts/live-mutation-rollback-rehearsal.sh")
 	scriptData, err := os.ReadFile(script)
