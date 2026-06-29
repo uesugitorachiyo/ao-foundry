@@ -190,6 +190,22 @@ digest-bound source evidence. Blocked Blueprint clarification, failed preflight,
 stale lifecycle state, missing digests, stale hashes, dirty worktrees, or
 unsynced local main stop before implementation evidence is produced.
 
+### Slice K: Blueprint To Command Dry Run
+
+Add a fixture-only end-to-end script:
+
+```sh
+scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
+  --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
+```
+
+The script proves the intended control chain without live execution:
+Blueprint authorization/request -> Atlas import/readback -> Foundry intake
+preflight -> PR lifecycle -> overnight start gate -> runner start decision ->
+AO Command `pulse status` readback. The ready path produces a ready runner
+decision and pulse event. The blocked Blueprint path produces blocked preflight,
+start-gate, runner-decision, and Command readback evidence, but no pulse event.
+
 ### Slice D: Atlas Workgraph Scheduler Input
 
 Teach Foundry to read Atlas ready nodes as scheduler input while preserving

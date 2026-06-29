@@ -1,0 +1,27 @@
+{
+  "schema_version": "ao.foundry.blueprint-atlas-pulse-e2e-fixture-manifest.v0.1",
+  "description": "Public-safe fixture inputs for the Blueprint -> Atlas -> Foundry -> AO Command Pulse dry run.",
+  "mode": "fixture_only_dry_run",
+  "mutates_repositories": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "calls_providers": false,
+  "ready_path": {
+    "blueprint_authorization": "examples/pulse-intake/blueprint-authorization.ready.json",
+    "atlas_import": "examples/atlas/foundry-import.json",
+    "atlas_run_link": "examples/atlas/run-link.completed.json",
+    "pulse_lifecycle": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+    "expected_result": "runner may start"
+  },
+  "blocked_blueprint_path": {
+    "blueprint_request": "examples/pulse-intake/blueprint-request.blocked.json",
+    "pulse_lifecycle": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+    "expected_result": "runner must not start"
+  },
+  "readback": {
+    "ao_command_mode": "read_only",
+    "operator_mode": "read_only",
+    "mutates_repositories": false
+  }
+}
