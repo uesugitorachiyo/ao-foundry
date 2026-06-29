@@ -1,0 +1,60 @@
+{
+  "schema_version": "ao.foundry.live-docs-worktree-preparation-candidate.v0.1",
+  "candidate_id": "first-live-docs-dirty-worktree",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "worktree": {
+    "path": ".foundry-local/worktrees/ao-foundry-live-docs-rehearsal",
+    "branch": "codex/live-docs-first-rehearsal",
+    "base_branch": "main",
+    "clean": false,
+    "reused": false,
+    "active_elsewhere": false,
+    "has_untracked_changes": true,
+    "remote_branch_exists": false
+  },
+  "change_plan": {
+    "changed_files": [
+      "docs/operations/FIRST-LIVE-DOCS-REHEARSAL.md"
+    ],
+    "docs_only_path_allowlist": [
+      "docs/operations/"
+    ],
+    "forbidden_paths": [
+      ".github/",
+      "cmd/",
+      "internal/",
+      "scripts/",
+      "docs/contracts/",
+      "examples/",
+      "go.mod",
+      "go.sum",
+      "LICENSE",
+      "SECURITY.md",
+      "README.md"
+    ],
+    "max_changed_files": 1
+  },
+  "kill_switch_ref": {
+    "name": "operator_kill_switch",
+    "state": "armed",
+    "path": "target/live-docs/kill-switch.json",
+    "schema_version": "ao.foundry.operator-kill-switch.v0.1"
+  },
+  "authority_boundaries": {
+    "validation_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "creates_worktree": false,
+    "creates_branch": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

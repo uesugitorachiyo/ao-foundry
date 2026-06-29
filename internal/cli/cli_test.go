@@ -1025,7 +1025,7 @@ func TestFreshOvernightRehearsalArtifactScriptPreservesCommandReadback(t *testin
 			t.Fatalf("fresh overnight rehearsal artifact script missing %q", want)
 		}
 	}
-	for _, forbidden := range []string{"gh pr merge", "git push", "gh release", "OPENAI_API_KEY", "ANTHROPIC_API_KEY", "upload-artifact"} {
+	for _, forbidden := range []string{"gh pr merge", "git push", "gh release", "OPENAI" + "_API_KEY", "ANTHROPIC" + "_API_KEY", "upload-artifact"} {
 		if strings.Contains(scriptText, forbidden) {
 			t.Fatalf("fresh overnight rehearsal artifact script contains forbidden live action %q", forbidden)
 		}
@@ -5028,6 +5028,122 @@ func TestWorktreeIsolationProofContractFixtureValidates(t *testing.T) {
 	}
 	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
 		t.Fatalf("invalid worktree isolation proof fixture unexpectedly passed schema")
+	}
+}
+
+func TestLiveDocsWorktreePrepareScriptBlocksUnsafeCandidates(t *testing.T) {
+	script := repoPath("scripts/live-docs-worktree-prepare.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read live docs worktree prepare script: %v", err)
+	}
+	for _, want := range []string{
+		"ao.foundry.live-docs-worktree-prepare.v0.1",
+		"approval_gate",
+		"branch_isolation",
+		"clean_worktree",
+		"reuse_block",
+		"docs_only_path_plan",
+		"validation_only:true",
+	} {
+		if !strings.Contains(string(scriptData), want) {
+			t.Fatalf("live docs worktree prepare script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr merge", "gh release", "curl "} {
+		if strings.Contains(string(scriptData), forbidden) {
+			t.Fatalf("live docs worktree prepare script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	runPrepare := func(t *testing.T, candidate string, gate string, wantReady bool, wantFailingCheck string) map[string]any {
+		t.Helper()
+		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
+		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
+		cmd := exec.Command(
+			"bash",
+			script,
+			"--candidate", candidate,
+			"--approval-gate", gate,
+			"--out", outPath,
+			"--json",
+		)
+		cmd.Dir = repoPath(".")
+		out, err := cmd.CombinedOutput()
+		if wantReady && err != nil {
+			t.Fatalf("live docs worktree prepare failed: %v\n%s", err, string(out))
+		}
+		if !wantReady && err == nil {
+			t.Fatalf("live docs worktree prepare unexpectedly passed for %s:\n%s", candidate, string(out))
+		}
+		result := readObjectFixture(t, outPath)
+		if wantReady && result["status"] != "ready" {
+			t.Fatalf("expected ready prepare result, got %#v", result)
+		}
+		if !wantReady {
+			if result["status"] != "blocked" || result["first_failing_check"] != wantFailingCheck {
+				t.Fatalf("expected blocked prepare result at %s, got %#v", wantFailingCheck, result)
+			}
+		}
+		boundaries := result["authority_boundaries"].(map[string]any)
+		if boundaries["mutates_repositories"] != false ||
+			boundaries["creates_worktree"] != false ||
+			boundaries["creates_branch"] != false ||
+			boundaries["executes_work"] != false ||
+			boundaries["approves_work"] != false {
+			t.Fatalf("prepare gate must stay validation-only: %#v", boundaries)
+		}
+		return result
+	}
+
+	readyGate := "examples/contract-fixtures/valid/foundry-live-docs-approval-gate-v0.1.json"
+	blockedGate := "examples/contract-fixtures/invalid/foundry-live-docs-approval-gate-v0.1.json"
+
+	t.Run("ready", func(t *testing.T) {
+		result := runPrepare(t, "examples/live-docs-worktree-prepare/ready.candidate.json", readyGate, true, "")
+		if result["can_start_docs_only_pr_rehearsal"] != true {
+			t.Fatalf("ready result must allow docs-only PR rehearsal start: %#v", result)
+		}
+	})
+	t.Run("approval gate blocked", func(t *testing.T) {
+		runPrepare(t, "examples/live-docs-worktree-prepare/ready.candidate.json", blockedGate, false, "approval_gate")
+	})
+	t.Run("dirty", func(t *testing.T) {
+		runPrepare(t, "examples/live-docs-worktree-prepare/dirty-worktree.candidate.json", readyGate, false, "clean_worktree")
+	})
+	t.Run("reused", func(t *testing.T) {
+		runPrepare(t, "examples/live-docs-worktree-prepare/reused-branch.candidate.json", readyGate, false, "reuse_block")
+	})
+	t.Run("wrong branch", func(t *testing.T) {
+		runPrepare(t, "examples/live-docs-worktree-prepare/wrong-branch.candidate.json", readyGate, false, "branch_isolation")
+	})
+	t.Run("unsafe path", func(t *testing.T) {
+		runPrepare(t, "examples/live-docs-worktree-prepare/unsafe-path.candidate.json", readyGate, false, "docs_only_path_plan")
+	})
+}
+
+func TestLiveDocsWorktreePrepareContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-docs-worktree-prepare-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live docs worktree prepare schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live docs worktree prepare schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-docs-worktree-prepare-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live docs worktree prepare fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live docs worktree prepare fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-docs-worktree-prepare-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live docs worktree prepare fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live docs worktree prepare fixture unexpectedly passed schema")
 	}
 }
 

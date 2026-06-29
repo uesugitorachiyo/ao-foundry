@@ -64,6 +64,8 @@ This first slice provides:
   - `scripts/live-mutation-rollback-rehearsal.sh --candidate <candidate.json> --out <rehearsal.json>`
   - `scripts/governed-live-mutation-dry-run-chain.sh --out <public-safe-relative-dir>`
   - `scripts/live-mutation-readiness-rollup.sh --chain <summary.json> --out <rollup.json>`
+  - `scripts/live-docs-approval-gate.sh --request <request.json> --ticket <ticket.json> --out <gate.json>`
+  - `scripts/live-docs-worktree-prepare.sh --candidate <candidate.json> --approval-gate <gate.json> --out <prepare.json>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -258,6 +260,16 @@ Covenant approval ticket exactly matches the scope.
 has an approver identity, and exact-matches the request's repo, branch policy,
 docs allowlist, forbidden paths, and changed-file limit. It emits evidence only;
 it does not create a branch, mutate files, approve work, publish, upload, or call
+providers.
+
+`scripts/live-docs-worktree-prepare.sh` reads the ready approval gate and a
+public-safe preparation candidate, then emits
+`ao.foundry.live-docs-worktree-prepare.v0.1`. The gate is ready only when the
+candidate uses a fresh ignored `.foundry-local/worktrees/...` path, a
+`codex/live-docs-*` branch from `main`, a clean non-reused worktree, an armed
+kill switch, and a changed-file plan bounded to docs-only markdown paths. It is
+validation-only: it does not create a worktree, create a branch, mutate
+repositories, execute work, approve work, publish, upload, release, or call
 providers.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
