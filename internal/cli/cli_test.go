@@ -1032,6 +1032,68 @@ func TestFreshOvernightRehearsalArtifactScriptPreservesCommandReadback(t *testin
 	}
 }
 
+func TestGovernedLiveMutationDryRunChainScript(t *testing.T) {
+	script := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read governed live mutation chain script: %v", err)
+	}
+	scriptText := string(scriptData)
+	for _, want := range []string{
+		"ao.foundry.governed-live-mutation-dry-run-chain.v0.1",
+		"Blueprint/Atlas complex task",
+		"Covenant authority dry-run",
+		"Forge dry-run plan",
+		"AO2 dry-run packet",
+		"worktree isolation",
+		"rollback rehearsal",
+		"Sentinel hold verdict",
+		"Promoter activation boundary",
+		"AO Command readback",
+		"live_mutation_performed:false",
+		"ungated_live_mutation_claim:false",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("governed live mutation chain script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git apply", "git checkout", "git switch", "git worktree add", "gh pr merge", "git " + "push", "gh " + "release", "curl "} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("governed live mutation chain script contains forbidden live action %q", forbidden)
+		}
+	}
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	cmd := exec.Command("bash", script, "--out", outDir)
+	cmd.Dir = repoPath(".")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("governed live mutation chain failed: %v\n%s", err, string(out))
+	}
+	summary := readObjectFixture(t, filepath.Join(outDir, "summary.json"))
+	if summary["status"] != "ready" {
+		t.Fatalf("expected ready governed live mutation chain: %#v", summary)
+	}
+	assessment := summary["readiness_assessment"].(map[string]any)
+	if assessment["live_mutation_performed"] != false ||
+		assessment["ungated_live_mutation_claim"] != false ||
+		assessment["first_tiny_live_mutation_class_safe_to_request"] != true {
+		t.Fatalf("unexpected governed live mutation assessment: %#v", assessment)
+	}
+	boundaries := summary["authority_boundaries"].(map[string]any)
+	if boundaries["live_mutation_allowed"] != false ||
+		boundaries["mutates_repositories"] != false ||
+		boundaries["schedules_work"] != false ||
+		boundaries["executes_work"] != false ||
+		boundaries["approves_work"] != false {
+		t.Fatalf("chain must remain dry-run and non-mutating: %#v", boundaries)
+	}
+	artifacts := summary["source_artifacts"].([]any)
+	if len(artifacts) != 10 {
+		t.Fatalf("expected ten source artifacts, got %#v", artifacts)
+	}
+}
+
 func TestOvernightRehearsalRunbookDocumentsDryRunOperatorSequence(t *testing.T) {
 	runbook, err := os.ReadFile(repoPath("docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md"))
 	if err != nil {
@@ -4913,6 +4975,35 @@ func TestLiveMutationRollbackRehearsalContractFixtureValidates(t *testing.T) {
 	}
 	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
 		t.Fatalf("invalid rollback rehearsal fixture unexpectedly passed schema")
+	}
+}
+
+func TestGovernedLiveMutationDryRunChainContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-governed-live-mutation-dry-run-chain-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read governed live mutation chain schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("governed live mutation chain schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-governed-live-mutation-dry-run-chain-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid governed live mutation chain fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid governed live mutation chain fixture failed schema: %v", err)
+	}
+	assessment := validFixture.(map[string]any)["readiness_assessment"].(map[string]any)
+	if assessment["live_mutation_performed"] != false || assessment["ungated_live_mutation_claim"] != false {
+		t.Fatalf("valid governed chain must not claim live mutation: %#v", assessment)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-governed-live-mutation-dry-run-chain-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid governed live mutation chain fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid governed live mutation chain fixture unexpectedly passed schema")
 	}
 }
 

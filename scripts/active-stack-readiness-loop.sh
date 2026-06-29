@@ -184,6 +184,10 @@ run_check "live_mutation_rollback_rehearsal" \
   scripts/live-mutation-rollback-rehearsal.sh \
     --candidate examples/live-mutation-rollback/docs-only-rollback.candidate.json \
     --out "$TMPDIR/live-mutation-rollback-rehearsal.json"
+run_check "governed_live_mutation_dry_run_chain" \
+  "governed live-mutation readiness chain remains dry-run and evidence-bound" \
+  scripts/governed-live-mutation-dry-run-chain.sh \
+    --out tmp/governed-live-mutation-dry-run-chain
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"
