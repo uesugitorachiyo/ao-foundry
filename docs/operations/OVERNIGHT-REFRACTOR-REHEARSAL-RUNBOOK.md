@@ -93,5 +93,27 @@ Stop and do not start implementation when:
 
 For a reviewed dry run, preserve the generated
 `overnight-rehearsal-artifact.json` and the linked Command readback artifact.
+
+## Governed Live-Mutation Dry Run
+
+After the oversized refactor rehearsal is green, preserve the governed
+live-mutation readiness chain:
+
+```sh
+scripts/governed-live-mutation-dry-run-chain.sh \
+  --out target/governed-live-mutation-dry-run-chain
+```
+
+The script emits
+`ao.foundry.governed-live-mutation-dry-run-chain.v0.1` at
+`target/governed-live-mutation-dry-run-chain/summary.json`. It links
+Blueprint/Atlas complex-task evidence, Foundry start gate, Covenant authority
+dry-run, Forge dry-run plan, AO2 dry-run packet, worktree isolation, rollback
+rehearsal, Sentinel hold verdict, Promoter boundary, and AO Command readback.
+
+This artifact is still dry-run evidence. It can support a later operator
+request for the first tiny live-mutation class, but it does not mutate
+repositories, call providers, publish, release, or grant ungated live mutation
+authority.
 Do not commit generated target output unless a separate PR explicitly adds a
 public-safe fixture.

@@ -1,0 +1,112 @@
+{
+  "schema_version": "ao.foundry.governed-live-mutation-dry-run-chain.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_dry_run",
+  "objective": "Prove governed live-mutation readiness evidence without performing live mutation.",
+  "chain": [
+    "Blueprint/Atlas complex task",
+    "Foundry start gate",
+    "Covenant authority dry-run",
+    "Forge dry-run plan",
+    "AO2 dry-run packet",
+    "worktree isolation",
+    "rollback rehearsal",
+    "Sentinel hold verdict",
+    "Promoter activation boundary",
+    "AO Command readback"
+  ],
+  "source_artifacts": [
+    {
+      "name": "blueprint_atlas_complex_task",
+      "path": "examples/governed-live-mutation/blueprint-atlas-complex-task.json",
+      "schema_version": "ao.foundry.blueprint-atlas-complex-task.v0.1",
+      "status": "ready",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "foundry_start_gate",
+      "path": "examples/governed-live-mutation/foundry-start-gate.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "status": "ready",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "name": "covenant_authority",
+      "path": "examples/governed-live-mutation/covenant-authority.json",
+      "schema_version": "covenant.live-mutation-authority.v1",
+      "status": "approved",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "name": "forge_dry_run_plan",
+      "path": "examples/governed-live-mutation/forge-dry-run-plan.json",
+      "schema_version": "ao.forge.live-mutation-dry-run-plan.v0.1",
+      "status": "ready",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "name": "ao2_dry_run_packet",
+      "path": "examples/governed-live-mutation/ao2-dry-run-packet.json",
+      "schema_version": "ao2.live-mutation-dry-run-packet.v1",
+      "status": "ready",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    {
+      "name": "worktree_isolation",
+      "path": "examples/governed-live-mutation/worktree-isolation.json",
+      "schema_version": "ao.foundry.worktree-isolation-proof.v0.1",
+      "status": "ready",
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "name": "rollback_rehearsal",
+      "path": "examples/governed-live-mutation/rollback-rehearsal.json",
+      "schema_version": "ao.foundry.live-mutation-rollback-rehearsal.v0.1",
+      "status": "ready",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "name": "sentinel_hold",
+      "path": "examples/governed-live-mutation/sentinel-hold.json",
+      "schema_version": "ao.sentinel.live-mutation-hold.v0.1",
+      "status": "clear",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "name": "promoter_boundary",
+      "path": "examples/governed-live-mutation/promoter-boundary.json",
+      "schema_version": "ao.promoter.live-mutation-boundary.v0.1",
+      "status": "passed",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "name": "command_readback",
+      "path": "examples/governed-live-mutation/command-readback.json",
+      "schema_version": "ao.command.live-mutation-status.v0.1",
+      "status": "ready",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "Keep this chain dry-run until a separate operator request authorizes the first tiny live mutation class."
+  ],
+  "readiness_assessment": {
+    "oversized_task_management": "proven_by_fixture_chain",
+    "governed_live_mutation": "dry_run_ready_for_request",
+    "first_tiny_live_mutation_class_safe_to_request": true,
+    "live_mutation_performed": false,
+    "ungated_live_mutation_claim": false
+  },
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

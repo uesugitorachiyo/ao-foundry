@@ -62,6 +62,7 @@ This first slice provides:
   - `scripts/atlas-stress-readiness.sh --out <public-safe-relative-dir>`
   - `scripts/live-mutation-worktree-isolation-proof.sh --candidate <candidate.json> --out <proof.json>`
   - `scripts/live-mutation-rollback-rehearsal.sh --candidate <candidate.json> --out <rehearsal.json>`
+  - `scripts/governed-live-mutation-dry-run-chain.sh --out <public-safe-relative-dir>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -222,6 +223,16 @@ is armed, and verification commands stay local. Missing rollback material,
 unsafe paths, disabled kill switch state, or expanded authority block the
 rehearsal. The script does not apply either patch and does not grant live
 mutation authority.
+
+`scripts/governed-live-mutation-dry-run-chain.sh` combines the current
+fixture-only control chain into
+`ao.foundry.governed-live-mutation-dry-run-chain.v0.1`: Blueprint/Atlas complex
+task evidence, Foundry start gate, Covenant authority dry-run, Forge dry-run
+plan, AO2 dry-run packet, worktree isolation, rollback rehearsal, Sentinel hold
+verdict, Promoter boundary, and AO Command readback. A ready result means the
+first tiny live-mutation class is safe to request through a separate governed
+operator approval path. It does not perform live mutation and does not claim
+ungated authority.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
