@@ -1,0 +1,63 @@
+{
+  "schema_version": "ao.foundry.live-docs-rollback-execution-rehearsal.v0.1",
+  "status": "ready",
+  "mode": "fixture_workspace_only",
+  "rollback_verified": true,
+  "candidate_id": "first-live-docs-rollback-execution",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "target_file": "docs/operations/FIRST-LIVE-DOCS-REHEARSAL.md",
+  "source_hashes": [
+    {
+      "name": "candidate",
+      "path": "examples/live-docs-rollback-execution/docs-only.candidate.json",
+      "schema_version": "ao.foundry.live-docs-rollback-execution-candidate.v0.1",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "proposed_patch",
+      "path": "examples/live-docs-rollback-execution/docs-only-proposed.patch",
+      "schema_version": "patch",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "name": "rollback_patch",
+      "path": "examples/live-docs-rollback-execution/docs-only-rollback.patch",
+      "schema_version": "patch",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ],
+  "execution_summary": {
+    "proposed_patch_applied": true,
+    "rollback_patch_applied": true,
+    "target_after_apply_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "target_after_rollback_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "fixture_workspace_removed": true
+  },
+  "checks": [
+    {
+      "name": "rollback_patch_apply",
+      "status": "passed",
+      "summary": "rollback patch restores the fixture workspace by removing the proposed docs file"
+    }
+  ],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "This rehearsal executes patches only inside a temporary fixture workspace.",
+    "Do not treat this as permission to apply patches to the live repository."
+  ],
+  "authority_boundaries": {
+    "fixture_workspace_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

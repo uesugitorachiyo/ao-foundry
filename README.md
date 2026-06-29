@@ -272,6 +272,15 @@ validation-only: it does not create a worktree, create a branch, mutate
 repositories, execute work, approve work, publish, upload, release, or call
 providers.
 
+`scripts/live-docs-rollback-execution-rehearsal.sh` consumes a docs-only
+rollback execution candidate and emits
+`ao.foundry.live-docs-rollback-execution-rehearsal.v0.1`. Unlike the earlier
+metadata-only rollback proof, this rehearsal initializes a temporary fixture
+Git workspace, applies the proposed docs patch, applies the rollback patch, and
+verifies the target docs file is removed again. It never applies patches to the
+live repository and keeps `live_mutation_allowed=false` and
+`mutates_repositories=false`.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval

@@ -1,0 +1,24 @@
+{
+  "schema_version": "ao.foundry.live-docs-rollback-execution-candidate.v0.1",
+  "candidate_id": "first-live-docs-rollback-execution-missing-rollback",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "target_file": "docs/operations/FIRST-LIVE-DOCS-REHEARSAL.md",
+  "proposed_patch_path": "examples/live-docs-rollback-execution/docs-only-proposed.patch",
+  "rollback_patch_path": "",
+  "kill_switch_state": "armed",
+  "authority_boundaries": {
+    "fixture_workspace_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}
