@@ -47,19 +47,27 @@ go run ./cmd/foundry pulse overnight-start-gate \
   --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json \
   --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json \
   --out tmp/pulse-overnight-start-gate.json
-go run ./cmd/foundry pulse run --out tmp/pulse
+go run ./cmd/foundry pulse run \
+  --start-gate examples/pulse-overnight-start-gate/ready.json \
+  --out tmp/pulse
 go run ./cmd/foundry pulse freshness --pulse tmp/pulse/pulse-event.json
 go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
 go run ./cmd/ao status
 go run ./cmd/ao run --out tmp/ao-pulse
 ```
 
-The command writes `tmp/pulse/pulse-event.json` plus the generated readiness,
-GoalRun, Forge brief, Forge packet, policy gate, live Forge attempt,
-control-plane readback, run, eval, RSI candidate, RSI improvement gate, RSI next
-improvement task, trace, demo, release dry-run, and competitive audit artifacts.
-The loop exits non-zero and still writes a blocked event when a readiness gate
-fails. The command also prints an operator status line such as
+The command first writes `tmp/pulse/pulse-runner-start-decision.json` from the
+Pulse overnight start gate. A ready decision is required before the runner
+generates implementation evidence. Blocked or failed decisions exit non-zero and
+stop before `pulse-event.json` is produced.
+
+After a ready decision, the command writes `tmp/pulse/pulse-event.json` plus the
+generated readiness, GoalRun, Forge brief, Forge packet, policy gate, live Forge
+attempt, control-plane readback, run, eval, RSI candidate, RSI improvement gate,
+RSI next improvement task, trace, demo, release dry-run, and competitive audit
+artifacts. The loop exits non-zero and still writes a blocked event when a
+readiness gate fails after the start gate. The command also prints an operator
+status line such as
 `freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
 The same values are recorded in `pulse-event.json` under `freshness_summary`.
 
@@ -85,6 +93,11 @@ Blueprint/Atlas evidence, fails closed on failed preflight, stale digests,
 pending or failing checks, incomplete cleanup, unsynced main, and dirty
 worktrees, and cleanly blocks for Blueprint clarification when implementation
 is not being started. It does not start a loop or mutate repositories.
+
+`foundry pulse run` enforces that start gate through
+`--start-gate <pulse-overnight-start-gate.json>`. The default public fixture is
+ready for local smoke runs, but production overnight operation should pass the
+freshly generated gate result for the current intake and lifecycle state.
 
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the

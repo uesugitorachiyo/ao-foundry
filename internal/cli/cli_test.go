@@ -4457,6 +4457,80 @@ func TestPulseRunWritesFailedEventForBlockedReadiness(t *testing.T) {
 	}
 }
 
+func TestPulseRunRequiresReadyStartGateBeforeBundle(t *testing.T) {
+	outDir := t.TempDir()
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "run",
+		"--start-gate", "examples/pulse-overnight-start-gate/blocked-blueprint-clarification.json",
+		"--out", outDir,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for blocked start gate; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	decisionPath := filepath.Join(outDir, "pulse-runner-start-decision.json")
+	decision := readObjectFixture(t, decisionPath)
+	if decision["schema_version"] != "ao.foundry.pulse-runner-start-decision.v0.1" ||
+		decision["status"] != "blocked" ||
+		decision["allowed_next_action"] != "request_blueprint_clarification" ||
+		decision["first_failing_check"] != "intake_preflight" {
+		t.Fatalf("unexpected blocked runner decision: %#v", decision)
+	}
+	if _, err := os.Stat(filepath.Join(outDir, "pulse-event.json")); err == nil {
+		t.Fatalf("blocked start gate should refuse to build pulse-event.json")
+	}
+	if !strings.Contains(stderr.String(), "Pulse runner start gate is blocked") {
+		t.Fatalf("stderr missing blocked start gate reason: %s", stderr.String())
+	}
+}
+
+func TestPulseRunAcceptsReadyStartGateAndWritesDecision(t *testing.T) {
+	outDir := t.TempDir()
+	event := runPulseForEvent(t, []string{
+		"pulse", "run",
+		"--start-gate", "examples/pulse-overnight-start-gate/ready.json",
+		"--out", outDir,
+	})
+	if event["status"] != "ready" {
+		t.Fatalf("ready start gate should allow pulse bundle, got %#v", event)
+	}
+	decision := readObjectFixture(t, filepath.Join(outDir, "pulse-runner-start-decision.json"))
+	if decision["schema_version"] != "ao.foundry.pulse-runner-start-decision.v0.1" ||
+		decision["status"] != "ready" ||
+		decision["start_gate_path"] != "examples/pulse-overnight-start-gate/ready.json" {
+		t.Fatalf("unexpected ready runner decision: %#v", decision)
+	}
+	sourceDigests, ok := decision["source_digests"].([]any)
+	if !ok || len(sourceDigests) < 3 {
+		t.Fatalf("runner decision should include the start gate and source evidence digests: %#v", decision)
+	}
+}
+
+func TestPulseRunnerStartDecisionContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-pulse-runner-start-decision-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read pulse runner start decision schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("pulse runner start decision schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-pulse-runner-start-decision-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid pulse runner start decision fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid pulse runner start decision fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-pulse-runner-start-decision-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid pulse runner start decision fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid pulse runner start decision fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir()})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")

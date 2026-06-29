@@ -177,6 +177,19 @@ unsynced main, and stale evidence digests fail closed. This command writes gate
 evidence only; it does not start implementation, schedule work, execute work,
 approve work, publish, call providers, or mutate repositories.
 
+### Slice J: Runner Start-Gate Enforcement
+
+Wire the overnight start gate into the runner itself. `foundry pulse run`
+accepts `--start-gate <pulse-overnight-start-gate.json>` and writes
+`pulse-runner-start-decision.json` with
+`schema_version=ao.foundry.pulse-runner-start-decision.v0.1`.
+
+The runner may generate a pulse bundle only when the start gate status is
+`ready`, `allowed_next_action=start_next_slice`, and the gate carries
+digest-bound source evidence. Blocked Blueprint clarification, failed preflight,
+stale lifecycle state, missing digests, stale hashes, dirty worktrees, or
+unsynced local main stop before implementation evidence is produced.
+
 ### Slice D: Atlas Workgraph Scheduler Input
 
 Teach Foundry to read Atlas ready nodes as scheduler input while preserving
