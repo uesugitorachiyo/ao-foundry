@@ -154,6 +154,12 @@ run_check "release_handoff" \
     --promotion-out "$TMPDIR/release-promotion.fixture.json" \
     --notes-out "$TMPDIR/release-candidate.md" \
     --manifest-out "$TMPDIR/release-manifest.json"
+run_check "atlas_readback_consumer" \
+  "Atlas import and run-link readback remain fixture-only and observer-safe" \
+  go run ./cmd/foundry atlas readback \
+    --import examples/atlas/foundry-import.json \
+    --run-link examples/atlas/run-link.completed.json \
+    --out "$TMPDIR/atlas-readback.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

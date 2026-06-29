@@ -76,6 +76,7 @@ go test ./...
 go run ./cmd/foundry status --registry examples/registry/local-ao-stack.foundry-registry.json
 go run ./cmd/foundry registry validate --registry examples/registry/local-ao-stack.foundry-registry.json
 go run ./cmd/foundry atlas import validate --import examples/atlas/foundry-import.json
+go run ./cmd/foundry atlas readback --import examples/atlas/foundry-import.json --run-link examples/atlas/run-link.completed.json --out tmp/atlas-readback.json
 go run ./cmd/foundry task validate --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry next --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json
 go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json
@@ -159,10 +160,14 @@ AO Atlas integration is fixture-only. Foundry’s first Atlas consumer artifact 
 
 ```sh
 go run ./cmd/foundry atlas import validate --import examples/atlas/foundry-import.json
+go run ./cmd/foundry atlas readback --import examples/atlas/foundry-import.json --run-link examples/atlas/run-link.completed.json --out tmp/atlas-readback.json
 ```
 
 The validator confirms the packet is readback material only: no scheduling,
 execution, approval, release mutation, provider calls, or sibling repo mutation.
+The readback command links the Atlas import packet to a completed
+`ao.atlas.run-link.v0.1` and emits `ao.foundry.atlas-readback.v0.1` with the
+same observer-only authority boundary.
 
 The readiness exit gate is stop-oriented. When goal readiness and competitive
 readiness are 100/100 and the active-stack loop passes with no
@@ -248,6 +253,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Production readiness audit schema](docs/contracts/foundry-production-readiness-audit-v0.1.schema.json)
 - [Active stack readiness schema](docs/contracts/foundry-active-stack-readiness-v0.1.schema.json)
 - [Active stack production readiness rollup schema](docs/contracts/foundry-active-stack-production-readiness-rollup-v0.1.schema.json)
+- [Atlas readback schema](docs/contracts/foundry-atlas-readback-v0.1.schema.json)
 - [Release candidate schema](docs/contracts/foundry-release-candidate-v0.1.schema.json)
 - [Release promotion schema](docs/contracts/foundry-release-promotion-v0.1.schema.json)
 - [RSI candidate schema](docs/contracts/foundry-rsi-candidate-v0.1.schema.json)

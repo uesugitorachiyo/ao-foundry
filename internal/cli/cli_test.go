@@ -93,6 +93,85 @@ func TestAtlasImportValidateRejectsExecutionAuthority(t *testing.T) {
 	}
 }
 
+func TestAtlasReadbackWritesObserverReport(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "atlas-readback.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"atlas", "readback",
+		"--import", atlasImportFixture(),
+		"--run-link", atlasRunLinkFixture(),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "atlas_readback="+outPath) {
+		t.Fatalf("expected readback output path, got %q", stdout.String())
+	}
+	var report map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read report: %v", err)
+	}
+	if err := json.Unmarshal(data, &report); err != nil {
+		t.Fatalf("report is not JSON: %v", err)
+	}
+	for key, want := range map[string]any{
+		"schema_version":  "ao.foundry.atlas-readback.v0.1",
+		"status":          "ready",
+		"mode":            "fixture_only_readback",
+		"task_id":         "atlas-readiness-task",
+		"workgraph_id":    "atlas-readiness-workgraph",
+		"target_instance": "demo-stack",
+		"schedules_work":  false,
+		"executes_work":   false,
+		"approves_work":   false,
+	} {
+		if report[key] != want {
+			t.Fatalf("report[%s] = %#v, want %#v; report=%#v", key, report[key], want, report)
+		}
+	}
+	if report["task_digest"] != "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99" {
+		t.Fatalf("report must preserve Atlas task digest: %#v", report)
+	}
+	evidence, ok := report["evidence"].(map[string]any)
+	if !ok || evidence["foundry"] != "evidence/foundry/atlas-readiness.json" {
+		t.Fatalf("report must preserve public-safe run-link evidence: %#v", report["evidence"])
+	}
+}
+
+func TestAtlasReadbackRejectsIncompleteRunLink(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"atlas", "readback",
+		"--import", atlasImportFixture(),
+		"--run-link", filepath.Join("testdata", "atlas-run-link-blocked.json"),
+		"--out", filepath.Join(t.TempDir(), "atlas-readback.json"),
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for blocked Atlas run-link; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "run-link status must be completed") {
+		t.Fatalf("expected completed status rejection, got %q", stderr.String())
+	}
+}
+
+func TestAtlasReadbackRejectsMissingMatchingTask(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"atlas", "readback",
+		"--import", atlasImportFixture(),
+		"--run-link", filepath.Join("testdata", "atlas-run-link-missing-task.json"),
+		"--out", filepath.Join(t.TempDir(), "atlas-readback.json"),
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for missing Atlas task match; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "no matching Atlas import task") {
+		t.Fatalf("expected missing task rejection, got %q", stderr.String())
+	}
+}
+
 func TestRegistryValidateRejectsMalformedFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", filepath.Join("testdata", "invalid-registry.json")}, &stdout, &stderr)
@@ -760,6 +839,7 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 		"active-stack-production-readiness-rollup",
 		"repo board",
 		"release handoff",
+		"atlas_readback_consumer",
 		"loop preflight",
 		"first_failing_check",
 		"blocking_next_actions",
@@ -4411,6 +4491,10 @@ func atlasRegistryFixture() string {
 
 func atlasImportFixture() string {
 	return filepath.Join("..", "..", "examples", "atlas", "foundry-import.json")
+}
+
+func atlasRunLinkFixture() string {
+	return filepath.Join("..", "..", "examples", "atlas", "run-link.completed.json")
 }
 
 func taskFixture() string {

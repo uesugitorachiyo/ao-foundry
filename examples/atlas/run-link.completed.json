@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "atlas-readiness-task",
+  "status": "completed",
+  "evidence": {
+    "foundry": "evidence/foundry/atlas-readiness.json",
+    "forge": "evidence/forge/atlas-readiness.json",
+    "ao2": "evidence/ao2/atlas-readiness.json"
+  },
+  "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}
