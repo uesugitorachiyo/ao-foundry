@@ -1,0 +1,111 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "complex-refactor-workgraph-foundry-import",
+  "workgraph_id": "complex-refactor-workgraph",
+  "target_instance": "ao-stack-shared-toolchain",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "examples/complex-refactor-workgraph/workgraph.json",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "ref": "examples/complex-refactor-workgraph/stack-instance.json",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "pulse-runner-module-split",
+      "task_id": "complex-refactor-pulse-runner-split-task",
+      "path": "tasks/complex-refactor-pulse-runner-split-task.json",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-pulse-runner-split-task",
+        "objective": "Split Pulse runner start-decision and bundle-building code into clearer typed modules.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/pulse-runner-module-split",
+        "acceptance_criteria": [
+          "runner gate behavior stays fail-closed",
+          "existing Pulse tests and active-stack readiness stay green"
+        ],
+        "non_goals": [
+          "do not change Pulse authority",
+          "do not run live provider or release actions"
+        ],
+        "write_scope": [
+          "internal/cli",
+          "docs/sdd",
+          "docs/operations"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go run ./cmd/foundry contract fixtures validate"
+        ],
+        "required_evidence": [
+          "target/complex-refactor/pulse-runner-tests.json"
+        ],
+        "safety_limits": [
+          "no direct main bypass",
+          "one PR at a time",
+          "public-safe evidence only"
+        ],
+        "dependency_refs": [
+          "boundary-audit"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/pulse-runner-split.context-pack.json"
+        ]
+      },
+      "task_digest": "sha256:333de61e81a93a59d90828093cde40193ea0f35696b78def829ac5af9eeca051"
+    },
+    {
+      "node_id": "atlas-foundry-fixture-path",
+      "task_id": "complex-refactor-atlas-foundry-path-task",
+      "path": "tasks/complex-refactor-atlas-foundry-path-task.json",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-atlas-foundry-path-task",
+        "objective": "Harden the Atlas-to-Foundry fixture import/readback path for large refactor task packets.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/atlas-foundry-path",
+        "acceptance_criteria": [
+          "Atlas import remains schedules_work=false executes_work=false approves_work=false",
+          "Foundry readback links run-link evidence without executing work"
+        ],
+        "non_goals": [
+          "do not mutate AO Atlas",
+          "do not start Foundry scheduling"
+        ],
+        "write_scope": [
+          "examples",
+          "scripts",
+          "docs"
+        ],
+        "verification_commands": [
+          "go run ./cmd/foundry atlas import validate --import examples/complex-refactor-workgraph/foundry-import.json",
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+        ],
+        "required_evidence": [
+          "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+        ],
+        "safety_limits": [
+          "no copied stack folders",
+          "no sibling repo mutation",
+          "no provider calls"
+        ],
+        "dependency_refs": [
+          "boundary-audit"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/atlas-foundry-path.context-pack.json"
+        ]
+      },
+      "task_digest": "sha256:e583e400a0c82c3741ac00652b64ee2201299e39cec7ace7d4dde38c2e6370ca"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

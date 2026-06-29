@@ -86,6 +86,19 @@ that the blocked Blueprint path cannot produce `pulse-event.json`. It is
 fixture-only and does not schedule, execute, approve, publish, call providers,
 or mutate repositories.
 
+To rehearse a larger refactor as bounded Atlas factory tasks, run:
+
+```sh
+scripts/complex-refactor-workgraph-rehearsal.sh \
+  --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+```
+
+The rehearsal validates `examples/complex-refactor-workgraph/workgraph.json`,
+its context packs, the Foundry import/readback fixture, and the Pulse gate e2e
+proof. Its summary reports total, ready, blocked, completed, and failed task
+counts, the next recommended factory task, and why the loop may start the next
+ready task while blocked tasks remain denied.
+
 The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
 when Blueprint authorization is ready and required Atlas import/status readback

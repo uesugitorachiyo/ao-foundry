@@ -56,6 +56,7 @@ This first slice provides:
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
+  - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -105,6 +106,7 @@ go run ./cmd/foundry pulse lifecycle inspect --state examples/pulse-lifecycle/re
 go run ./cmd/foundry pulse overnight-start-gate --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json --out tmp/pulse-overnight-start-gate.json
 go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
+scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
 go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-ledger-refresh-proposal.md
@@ -158,6 +160,11 @@ Blueprint -> Atlas -> Foundry -> AO Command control path. The ready path starts
 the runner after digest-bound gates pass. The blocked Blueprint path writes a
 blocked runner decision and AO Command readback, but does not produce
 `pulse-event.json` or start implementation.
+
+`scripts/complex-refactor-workgraph-rehearsal.sh` is the reference oversized
+task demo. It validates an Atlas workgraph with completed, ready, blocked, and
+stitch nodes; validates Foundry import/readback; runs the Pulse gate e2e proof;
+and reports the next ready factory task without starting blocked work.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

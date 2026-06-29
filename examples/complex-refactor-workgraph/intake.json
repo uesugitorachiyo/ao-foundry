@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.intake.v0.1",
+  "id": "complex-refactor-intake",
+  "target_instance": "ao-stack-shared-toolchain",
+  "broad_prompt": "Rehearse a complex AO stack Rust/module refactor that is too large for one context window.",
+  "instruction_refs": [
+    "docs/sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md",
+    "docs/operations/AO2-PULSE-EVENT-LOOP.md"
+  ],
+  "folder_refs": [
+    "internal/cli",
+    "scripts",
+    "examples/complex-refactor-workgraph"
+  ],
+  "constraints": [
+    "public-safe",
+    "fixture-only",
+    "no provider calls",
+    "no live execution",
+    "no source repo duplication",
+    "Blueprint authorizes before build",
+    "Atlas compiles workgraphs and context packs",
+    "Foundry schedules only after Pulse gates"
+  ]
+}

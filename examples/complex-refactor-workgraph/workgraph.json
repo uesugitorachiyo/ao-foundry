@@ -1,0 +1,246 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "complex-refactor-workgraph",
+  "target_instance": "ao-stack-shared-toolchain",
+  "nodes": [
+    {
+      "id": "boundary-audit",
+      "status": "completed",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-boundary-audit-task",
+        "objective": "Audit the AO stack refactor boundaries before any module split.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/boundary-audit",
+        "acceptance_criteria": [
+          "Blueprint, Atlas, Foundry, Forge, AO2, Covenant, Command boundaries are listed",
+          "deprecated repos remain out of scope"
+        ],
+        "non_goals": [
+          "do not edit product code",
+          "do not schedule execution"
+        ],
+        "write_scope": [
+          "docs",
+          "examples/complex-refactor-workgraph"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json"
+        ],
+        "required_evidence": [
+          "docs/evidence/complex-refactor/boundary-audit.json"
+        ],
+        "safety_limits": [
+          "public-safe paths only",
+          "no provider calls",
+          "no sibling repo mutation"
+        ],
+        "dependency_refs": [],
+        "context_pack_refs": []
+      }
+    },
+    {
+      "id": "pulse-runner-module-split",
+      "status": "ready",
+      "dependencies": [
+        "boundary-audit"
+      ],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-pulse-runner-split-task",
+        "objective": "Split Pulse runner start-decision and bundle-building code into clearer typed modules.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/pulse-runner-module-split",
+        "acceptance_criteria": [
+          "runner gate behavior stays fail-closed",
+          "existing Pulse tests and active-stack readiness stay green"
+        ],
+        "non_goals": [
+          "do not change Pulse authority",
+          "do not run live provider or release actions"
+        ],
+        "write_scope": [
+          "internal/cli",
+          "docs/sdd",
+          "docs/operations"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go run ./cmd/foundry contract fixtures validate"
+        ],
+        "required_evidence": [
+          "target/complex-refactor/pulse-runner-tests.json"
+        ],
+        "safety_limits": [
+          "no direct main bypass",
+          "one PR at a time",
+          "public-safe evidence only"
+        ],
+        "dependency_refs": [
+          "boundary-audit"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/pulse-runner-split.context-pack.json"
+        ]
+      }
+    },
+    {
+      "id": "atlas-foundry-fixture-path",
+      "status": "ready",
+      "dependencies": [
+        "boundary-audit"
+      ],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-atlas-foundry-path-task",
+        "objective": "Harden the Atlas-to-Foundry fixture import/readback path for large refactor task packets.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/atlas-foundry-path",
+        "acceptance_criteria": [
+          "Atlas import remains schedules_work=false executes_work=false approves_work=false",
+          "Foundry readback links run-link evidence without executing work"
+        ],
+        "non_goals": [
+          "do not mutate AO Atlas",
+          "do not start Foundry scheduling"
+        ],
+        "write_scope": [
+          "examples",
+          "scripts",
+          "docs"
+        ],
+        "verification_commands": [
+          "go run ./cmd/foundry atlas import validate --import examples/complex-refactor-workgraph/foundry-import.json",
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+        ],
+        "required_evidence": [
+          "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+        ],
+        "safety_limits": [
+          "no copied stack folders",
+          "no sibling repo mutation",
+          "no provider calls"
+        ],
+        "dependency_refs": [
+          "boundary-audit"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/atlas-foundry-path.context-pack.json"
+        ]
+      }
+    },
+    {
+      "id": "command-readback-followup",
+      "status": "blocked",
+      "dependencies": [
+        "pulse-runner-module-split",
+        "atlas-foundry-fixture-path"
+      ],
+      "blockers": [
+        "waiting for Pulse runner and Atlas/Foundry fixture path slices to complete"
+      ],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-command-readback-task",
+        "objective": "Update AO Command readback after the upstream refactor slices complete.",
+        "target_factory_repo": "ao-command",
+        "factory_folder": "factory/complex-refactor/command-readback",
+        "acceptance_criteria": [
+          "AO Command explains ready, blocked, and failed Pulse decisions read-only"
+        ],
+        "non_goals": [
+          "do not start loops",
+          "do not mutate repositories"
+        ],
+        "write_scope": [
+          "cmd",
+          "internal",
+          "README.md"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/ao-command"
+        ],
+        "required_evidence": [
+          "target/complex-refactor/ao-command-readback.json"
+        ],
+        "safety_limits": [
+          "read-only operator mode",
+          "no provider calls"
+        ],
+        "dependency_refs": [
+          "pulse-runner-module-split",
+          "atlas-foundry-fixture-path"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/command-readback.context-pack.json"
+        ]
+      }
+    },
+    {
+      "id": "stitch-integration",
+      "status": "blocked",
+      "dependencies": [
+        "pulse-runner-module-split",
+        "atlas-foundry-fixture-path",
+        "command-readback-followup"
+      ],
+      "blockers": [
+        "upstream refactor slices need completed run-link evidence"
+      ],
+      "stitch_task": true,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-refactor-stitch-integration-task",
+        "objective": "Stitch completed refactor slices and run the full control-chain rehearsal.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-refactor/stitch-integration",
+        "acceptance_criteria": [
+          "all upstream run-links are completed",
+          "the e2e dry-run and workgraph rehearsal both pass",
+          "operator readback reports why the loop may start or block"
+        ],
+        "non_goals": [
+          "do not publish releases",
+          "do not bypass PR lifecycle gates"
+        ],
+        "write_scope": [
+          "docs",
+          "examples",
+          "scripts"
+        ],
+        "verification_commands": [
+          "scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local",
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+        ],
+        "required_evidence": [
+          "docs/evidence/complex-refactor/stitch-summary.json"
+        ],
+        "safety_limits": [
+          "no live execution",
+          "no provider calls",
+          "public-safe evidence only"
+        ],
+        "dependency_refs": [
+          "pulse-runner-module-split",
+          "atlas-foundry-fixture-path",
+          "command-readback-followup"
+        ],
+        "context_pack_refs": [
+          "examples/complex-refactor-workgraph/context-packs/stitch-integration.context-pack.json"
+        ]
+      }
+    }
+  ]
+}
