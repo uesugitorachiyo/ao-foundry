@@ -1,0 +1,49 @@
+{
+  "schema_version": "ao.foundry.live-mutation-request.v0.1",
+  "request_id": "docs-only-live-mutation-request",
+  "mode": "dry_run_only",
+  "status": "ready",
+  "requested_authority_schema": "covenant.live-mutation-authority.v1",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "objective": "Request Covenant dry-run authority for a future tiny docs-only mutation class.",
+  "allowed_path_class": {
+    "class": "docs",
+    "paths": [
+      "docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md"
+    ]
+  },
+  "branch_isolation": {
+    "required": true,
+    "branch_prefix": "codex/",
+    "clean_worktree_required": true,
+    "reuse_allowed": false
+  },
+  "rollback_required": true,
+  "pr_lifecycle_required": true,
+  "operator_kill_switch_required": true,
+  "source_evidence": [
+    {
+      "name": "fresh_overnight_rehearsal_artifact",
+      "path": "target/live-mutation-request/overnight-rehearsal-artifact.json",
+      "schema_version": "ao.foundry.overnight-rehearsal-artifact.v0.1",
+      "status": "ready",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false,
+    "sibling_repo_mutation_allowed": false
+  },
+  "next_actions": [
+    "Ask Covenant to validate the dry-run authority packet.",
+    "Do not apply live mutation from this request."
+  ]
+}

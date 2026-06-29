@@ -193,6 +193,14 @@ Foundry-import material, validates that import through Foundry, and emits
 `ao.foundry.atlas-stress-readiness.v0.1` with ready, blocked, completed, and
 imported task counts.
 
+Foundry's dry-run live-mutation request fixture lives at
+`examples/contract-fixtures/valid/foundry-live-mutation-request-v0.1.json`. It
+requests Covenant `covenant.live-mutation-authority.v1` evaluation for a tiny
+docs-only mutation class while preserving `mode=dry_run_only`,
+`live_mutation_allowed=false`, `provider_calls_allowed=false`, and
+`release_or_publish_allowed=false`. It is request material, not execution
+authority.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval

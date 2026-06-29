@@ -4681,6 +4681,39 @@ func TestPulseRunnerStartDecisionContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveMutationRequestContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-mutation-request-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live mutation request schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live mutation request schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-mutation-request-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live mutation request fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live mutation request fixture failed schema: %v", err)
+	}
+	request := validFixture.(map[string]any)
+	if request["mode"] != "dry_run_only" || request["requested_authority_schema"] != "covenant.live-mutation-authority.v1" {
+		t.Fatalf("unexpected live mutation request authority boundary: %#v", request)
+	}
+	boundaries := request["authority_boundaries"].(map[string]any)
+	if boundaries["live_mutation_allowed"] != false || boundaries["provider_calls_allowed"] != false {
+		t.Fatalf("live mutation request must not allow live mutation or providers: %#v", boundaries)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-mutation-request-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live mutation request fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live mutation request fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir()})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")
