@@ -1003,6 +1003,35 @@ func TestOvernightRehearsalRunnerScriptIsDryRunAndValidatesControlChain(t *testi
 	}
 }
 
+func TestFreshOvernightRehearsalArtifactScriptPreservesCommandReadback(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/fresh-overnight-rehearsal-artifact.sh"))
+	if err != nil {
+		t.Fatalf("read fresh overnight rehearsal artifact script: %v", err)
+	}
+	scriptText := string(script)
+	for _, want := range []string{
+		"ao.foundry.overnight-rehearsal-artifact.v0.1",
+		"overnight-rehearsal-runner.sh",
+		"fresh_output_root",
+		"runner_summary",
+		"command_readback",
+		"source_digests",
+		"mutates_repositories:false",
+		"executes_work:false",
+		"schedules_work:false",
+		"approves_work:false",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("fresh overnight rehearsal artifact script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"gh pr merge", "git push", "gh release", "OPENAI_API_KEY", "ANTHROPIC_API_KEY", "upload-artifact"} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("fresh overnight rehearsal artifact script contains forbidden live action %q", forbidden)
+		}
+	}
+}
+
 func TestAtlasStressReadinessScriptConsumesLargeWorkgraph(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/atlas-stress-readiness.sh"))
 	if err != nil {
