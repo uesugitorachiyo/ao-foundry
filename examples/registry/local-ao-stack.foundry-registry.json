@@ -27,6 +27,39 @@
       ]
     },
     {
+      "id": "ao-atlas",
+      "name": "AO Atlas",
+      "role": "operations-factory",
+      "delegates_to": "ao-foundry",
+      "workspace": "../ao-atlas",
+      "branches": ["main"],
+      "evidence_sources": [
+        {
+          "kind": "stack-instance-readiness",
+          "location": "../ao-atlas/docs/sdd/AO-ATLAS-STACK-INSTANCES.md",
+          "owner": "ao-atlas"
+        },
+        {
+          "kind": "foundry-readback",
+          "location": "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+          "owner": "ao-foundry"
+        }
+      ],
+      "allowed_automation": ["validate", "emit-foundry-fixtures", "readback"],
+      "readiness_signals": [
+        {
+          "name": "atlas-production-readiness",
+          "status": "ready",
+          "source": "scripts/production-readiness.sh"
+        },
+        {
+          "name": "atlas-foundry-roundtrip",
+          "status": "ready",
+          "source": "scripts/atlas-foundry-roundtrip-smoke.sh"
+        }
+      ]
+    },
+    {
       "id": "ao-forge",
       "name": "AO Forge",
       "role": "factory-brain",
