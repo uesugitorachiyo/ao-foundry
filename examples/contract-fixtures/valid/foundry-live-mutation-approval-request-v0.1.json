@@ -1,0 +1,97 @@
+{
+  "schema_version": "ao.foundry.live-mutation-approval-request.v0.1",
+  "request_id": "first-live-docs-only-approval-request",
+  "status": "pending_operator_approval",
+  "first_live_class": "docs_only",
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "branch_policy": {
+    "branch_prefix": "codex/live-docs-",
+    "requires_isolated_branch": true,
+    "requires_clean_worktree": true,
+    "requires_pr": true,
+    "allows_direct_main": false
+  },
+  "docs_only_path_allowlist": [
+    "docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md"
+  ],
+  "forbidden_paths": [
+    ".github/**",
+    "cmd/**",
+    "internal/**",
+    "scripts/**",
+    "docs/contracts/**",
+    "examples/contract-fixtures/**"
+  ],
+  "max_changed_files": 1,
+  "rollback_plan_ref": {
+    "name": "rollback_rehearsal",
+    "path": "target/live-mutation-readiness/rollback-rehearsal.json",
+    "schema_version": "ao.foundry.live-mutation-rollback-rehearsal.v0.1",
+    "status": "ready",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "kill_switch_ref": {
+    "name": "operator_kill_switch",
+    "path": "target/live-mutation-readiness/kill-switch.json",
+    "schema_version": "ao.foundry.operator-kill-switch.v0.1",
+    "status": "ready",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "covenant_authority_ref": {
+    "name": "covenant_authority_dry_run",
+    "path": "target/live-mutation-readiness/covenant-authority.json",
+    "schema_version": "covenant.live-mutation-authority.v1",
+    "status": "ready",
+    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "sentinel_hold_ref": {
+    "name": "sentinel_hold",
+    "path": "target/live-mutation-readiness/sentinel-hold.json",
+    "schema_version": "ao.sentinel.live-mutation-hold.v0.1",
+    "status": "ready",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "command_readback_ref": {
+    "name": "command_readback",
+    "path": "target/live-mutation-readiness/command-status.json",
+    "schema_version": "ao.command.live-mutation-status.v0.1",
+    "status": "ready",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "required_operator_approval": {
+    "ticket_schema": "ao.covenant.live-docs-approval-ticket.v0.1",
+    "must_exact_match_request": true,
+    "must_be_unexpired": true,
+    "must_be_unconsumed": true,
+    "approver_identity_required": true
+  },
+  "source_evidence": [
+    {
+      "name": "governed_live_mutation_dry_run_chain",
+      "path": "target/live-mutation-readiness/governed-chain-summary.json",
+      "schema_version": "ao.foundry.governed-live-mutation-dry-run-chain.v0.1",
+      "status": "ready",
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "name": "live_mutation_readiness_rollup",
+      "path": "target/live-mutation-readiness/rollup.json",
+      "schema_version": "ao.foundry.live-mutation-readiness-rollup.v0.1",
+      "status": "ready",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "authority_boundaries": {
+    "mutates_repositories": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false,
+    "fully_unsupervised_complex_mutation_claimed": false
+  },
+  "exact_next_step": "submit_to_covenant_for_exact_scope_approval_ticket"
+}

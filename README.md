@@ -242,6 +242,15 @@ requested when the chain is ready, but it is still not safe to execute until a
 separate operator approval request exists. It keeps `safe_to_execute=false`,
 `live_mutation_allowed=false`, and `mutates_repositories=false`.
 
+The first approval request contract is
+`ao.foundry.live-mutation-approval-request.v0.1`, with a public-safe example at
+`examples/contract-fixtures/valid/foundry-live-mutation-approval-request-v0.1.json`.
+It pins the target repo, `codex/live-docs-` branch prefix, docs-only allowlist,
+forbidden paths, maximum changed file count, rollback plan, kill-switch,
+Covenant authority, Sentinel hold, and AO Command readback references. This is
+only a request artifact: it keeps `safe_to_execute=false` until a future
+Covenant approval ticket exactly matches the scope.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval

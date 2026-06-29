@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-live-mutation-approval-request-v0.1.schema.json",
+  "title": "AO Foundry Live Mutation Approval Request v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "status",
+    "first_live_class",
+    "safe_to_request",
+    "safe_to_execute",
+    "repo",
+    "branch_policy",
+    "docs_only_path_allowlist",
+    "forbidden_paths",
+    "max_changed_files",
+    "rollback_plan_ref",
+    "kill_switch_ref",
+    "covenant_authority_ref",
+    "sentinel_hold_ref",
+    "command_readback_ref",
+    "required_operator_approval",
+    "source_evidence",
+    "authority_boundaries",
+    "exact_next_step"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.live-mutation-approval-request.v0.1" },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "status": { "const": "pending_operator_approval" },
+    "first_live_class": { "const": "docs_only" },
+    "safe_to_request": { "const": true },
+    "safe_to_execute": { "const": false },
+    "repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "remote", "target_branch"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "remote": { "type": "string", "pattern": "^uesugitorachiyo/[a-z0-9][a-z0-9_-]*$" },
+        "target_branch": { "const": "main" }
+      }
+    },
+    "branch_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "branch_prefix",
+        "requires_isolated_branch",
+        "requires_clean_worktree",
+        "requires_pr",
+        "allows_direct_main"
+      ],
+      "properties": {
+        "branch_prefix": { "const": "codex/live-docs-" },
+        "requires_isolated_branch": { "const": true },
+        "requires_clean_worktree": { "const": true },
+        "requires_pr": { "const": true },
+        "allows_direct_main": { "const": false }
+      }
+    },
+    "docs_only_path_allowlist": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^docs/[A-Za-z0-9._/-]+\\.md$"
+      }
+    },
+    "forbidden_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9._*{}!/-]+$"
+      }
+    },
+    "max_changed_files": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "rollback_plan_ref": { "$ref": "#/$defs/evidence_ref" },
+    "kill_switch_ref": { "$ref": "#/$defs/evidence_ref" },
+    "covenant_authority_ref": { "$ref": "#/$defs/evidence_ref" },
+    "sentinel_hold_ref": { "$ref": "#/$defs/evidence_ref" },
+    "command_readback_ref": { "$ref": "#/$defs/evidence_ref" },
+    "required_operator_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ticket_schema",
+        "must_exact_match_request",
+        "must_be_unexpired",
+        "must_be_unconsumed",
+        "approver_identity_required"
+      ],
+      "properties": {
+        "ticket_schema": { "const": "ao.covenant.live-docs-approval-ticket.v0.1" },
+        "must_exact_match_request": { "const": true },
+        "must_be_unexpired": { "const": true },
+        "must_be_unconsumed": { "const": true },
+        "approver_identity_required": { "const": true }
+      }
+    },
+    "source_evidence": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/evidence_ref" }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mutates_repositories",
+        "provider_calls_allowed",
+        "release_or_publish_allowed",
+        "fully_unsupervised_complex_mutation_claimed"
+      ],
+      "properties": {
+        "mutates_repositories": { "const": false },
+        "provider_calls_allowed": { "const": false },
+        "release_or_publish_allowed": { "const": false },
+        "fully_unsupervised_complex_mutation_claimed": { "const": false }
+      }
+    },
+    "exact_next_step": {
+      "const": "submit_to_covenant_for_exact_scope_approval_ticket"
+    }
+  },
+  "$defs": {
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "schema_version", "status", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": {
+          "type": "string",
+          "pattern": "^(docs|examples|scripts|target|tmp)/[A-Za-z0-9._/-]+$"
+        },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["ready", "passed", "pending_operator_approval"] },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    }
+  }
+}
