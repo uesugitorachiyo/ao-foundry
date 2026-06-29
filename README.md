@@ -388,6 +388,10 @@ go run ./cmd/foundry atlas status --registry examples/registry/atlas-demo.foundr
 
 The validator confirms the packet is readback material only: no scheduling,
 execution, approval, release mutation, provider calls, or sibling repo mutation.
+It also requires each imported task to carry Atlas authority metadata
+(`mutation_class`, `write_scope`, `rollback_scope`, `required_gates`,
+`required_evidence`, and `authority_boundary`) before Foundry will accept the
+packet.
 The readback command links the Atlas import packet to a completed
 `ao.atlas.run-link.v0.1` and emits `ao.foundry.atlas-readback.v0.1` with the
 same observer-only authority boundary. The status command combines registry,
