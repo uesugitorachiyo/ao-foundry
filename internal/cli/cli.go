@@ -39,6 +39,7 @@ const (
 	pulseLifecycleSchema = "ao.foundry.pulse-pr-lifecycle.v0.1"
 	pulseStartGateSchema = "ao.foundry.pulse-overnight-start-gate.v0.1"
 	pulseRunnerSchema    = "ao.foundry.pulse-runner-start-decision.v0.1"
+	classGateSchema      = "ao.foundry.mutation-class-gate.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -196,6 +197,32 @@ type AtlasStatus struct {
 	ApprovesWork   bool              `json:"approves_work"`
 	Evidence       map[string]string `json:"evidence"`
 	NextActions    []string          `json:"next_actions"`
+}
+
+type MutationClassGate struct {
+	SchemaVersion       string                      `json:"schema_version"`
+	Status              string                      `json:"status"`
+	MutationClass       string                      `json:"mutation_class"`
+	SafeToRequest       bool                        `json:"safe_to_request"`
+	SafeToExecute       bool                        `json:"safe_to_execute"`
+	FirstFailingCheck   string                      `json:"first_failing_check"`
+	RequiredEvidence    []string                    `json:"required_evidence"`
+	SourceEvidence      []MutationClassGateEvidence `json:"source_evidence"`
+	DeniedClasses       []string                    `json:"denied_classes"`
+	AuthorityBoundary   string                      `json:"authority_boundary"`
+	NextActions         []string                    `json:"next_actions"`
+	SchedulesWork       bool                        `json:"schedules_work"`
+	ExecutesWork        bool                        `json:"executes_work"`
+	ApprovesWork        bool                        `json:"approves_work"`
+	MutatesRepositories bool                        `json:"mutates_repositories"`
+}
+
+type MutationClassGateEvidence struct {
+	Name          string `json:"name"`
+	Path          string `json:"path"`
+	SchemaVersion string `json:"schema_version"`
+	Status        string `json:"status"`
+	SHA256        string `json:"sha256"`
 }
 
 type ReadinessAudit struct {
@@ -1022,6 +1049,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		return runRun(args[1:], stdout, stderr)
 	case "atlas":
 		return runAtlas(args[1:], stdout, stderr)
+	case "class-gate":
+		return runClassGate(args[1:], stdout, stderr)
 	case "repo":
 		return runRepo(args[1:], stdout, stderr)
 	case "loop":
@@ -1080,6 +1109,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry atlas import validate --import <atlas-foundry-import.json>")
 	fmt.Fprintln(w, "  foundry atlas readback --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-readback.json>]")
 	fmt.Fprintln(w, "  foundry atlas status --registry <registry.json> --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-status.json>] [--json]")
+	fmt.Fprintln(w, "  foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> --out <path>")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
 	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
@@ -1790,6 +1820,235 @@ func runAtlasStatus(args []string, stdout, stderr io.Writer) int {
 	fmt.Fprintf(stdout, "executes_work=%t\n", report.ExecutesWork)
 	fmt.Fprintf(stdout, "approves_work=%t\n", report.ApprovesWork)
 	return 0
+}
+
+func runClassGate(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "usage: foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> --out <path>")
+		return 2
+	}
+	switch args[0] {
+	case "evaluate":
+		return runClassGateEvaluate(args[1:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "foundry class-gate: unknown command %q\n", args[0])
+		return 2
+	}
+}
+
+func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("class-gate evaluate", stderr)
+	atlasPath := fs.String("atlas", "", "Atlas mutation-class classification evidence")
+	covenantPath := fs.String("covenant", "", "Covenant mutation-class authority ticket")
+	sentinelPath := fs.String("sentinel", "", "Sentinel mutation-class hold verdict")
+	promoterPath := fs.String("promoter", "", "Promoter mutation-class readiness evidence")
+	rollbackPath := fs.String("rollback", "", "rollback rehearsal evidence")
+	commandPath := fs.String("command", "", "AO Command authority-ladder readback")
+	ciPath := fs.String("ci", "", "CI status evidence")
+	outPath := fs.String("out", "", "class gate output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*atlasPath) == "" ||
+		strings.TrimSpace(*covenantPath) == "" ||
+		strings.TrimSpace(*sentinelPath) == "" ||
+		strings.TrimSpace(*promoterPath) == "" ||
+		strings.TrimSpace(*rollbackPath) == "" ||
+		strings.TrimSpace(*commandPath) == "" ||
+		strings.TrimSpace(*ciPath) == "" ||
+		strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "--atlas, --covenant, --sentinel, --promoter, --rollback, --command, --ci, and --out are required")
+		return 2
+	}
+	gate, err := evaluateMutationClassGate(classGateEvidencePaths{
+		Atlas:    *atlasPath,
+		Covenant: *covenantPath,
+		Sentinel: *sentinelPath,
+		Promoter: *promoterPath,
+		Rollback: *rollbackPath,
+		Command:  *commandPath,
+		CI:       *ciPath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "class gate: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, gate); err != nil {
+		fmt.Fprintf(stderr, "write class gate: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, gate); err != nil {
+			fmt.Fprintf(stderr, "write class gate json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "class_gate=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", gate.Status)
+	fmt.Fprintf(stdout, "mutation_class=%s\n", gate.MutationClass)
+	fmt.Fprintf(stdout, "safe_to_request=%t\n", gate.SafeToRequest)
+	fmt.Fprintf(stdout, "safe_to_execute=%t\n", gate.SafeToExecute)
+	return 0
+}
+
+type classGateEvidencePaths struct {
+	Atlas    string
+	Covenant string
+	Sentinel string
+	Promoter string
+	Rollback string
+	Command  string
+	CI       string
+}
+
+func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate, error) {
+	requiredEvidence := []string{"atlas_classification", "covenant_class_ticket", "sentinel_no_hold", "promoter_ready", "rollback_proof", "command_readback", "ci_passed"}
+	gate := MutationClassGate{
+		SchemaVersion:       classGateSchema,
+		Status:              "blocked",
+		RequiredEvidence:    requiredEvidence,
+		DeniedClasses:       deniedMutationClasses(""),
+		AuthorityBoundary:   "single_class_only",
+		NextActions:         []string{},
+		SchedulesWork:       false,
+		ExecutesWork:        false,
+		ApprovesWork:        false,
+		MutatesRepositories: false,
+	}
+	checks := []classGateCheck{
+		{Name: "atlas_classification", Path: paths.Atlas, SchemaVersion: "ao.atlas.mutation-classification.v0.1", StatusField: "status", ReadyStatuses: []string{"ready"}},
+		{Name: "covenant_class_ticket", Path: paths.Covenant, SchemaVersion: "covenant.mutation-class-authority-ticket.v1", StatusField: "approval_state", ReadyStatuses: []string{"approved"}},
+		{Name: "sentinel_no_hold", Path: paths.Sentinel, SchemaVersion: "ao.sentinel.mutation-class-hold.v0.1", StatusField: "status", ReadyStatuses: []string{"no_hold"}},
+		{Name: "promoter_ready", Path: paths.Promoter, SchemaVersion: "ao.promoter.mutation-class-promotion.v0.1", StatusField: "status", ReadyStatuses: []string{"ready"}},
+		{Name: "rollback_proof", Path: paths.Rollback, SchemaVersion: "ao.foundry.mutation-class-rollback.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
+		{Name: "command_readback", Path: paths.Command, SchemaVersion: "ao.command.atlas-authority-ladder.v0.1", StatusField: "readback_status", ReadyStatuses: []string{"ready"}},
+		{Name: "ci_passed", Path: paths.CI, SchemaVersion: "ao.foundry.ci-readiness.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
+	}
+	var className string
+	var blockers []string
+	for _, check := range checks {
+		evidence, document, blocker, err := evaluateClassGateCheck(check, className)
+		if err != nil {
+			return gate, err
+		}
+		gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+		documentClass := classGateString(document, "mutation_class")
+		if documentClass == "" && check.Name == "command_readback" {
+			documentClass = classGateString(document, "next_class")
+		}
+		if className == "" && documentClass != "" {
+			className = documentClass
+			gate.MutationClass = className
+			gate.DeniedClasses = deniedMutationClasses(className)
+		}
+		if blocker != "" {
+			blockers = append(blockers, blocker)
+		}
+	}
+	if className == "" {
+		blockers = append([]string{"atlas_classification missing mutation_class"}, blockers...)
+	}
+	if len(blockers) == 0 {
+		gate.Status = "ready"
+		gate.SafeToRequest = true
+		gate.SafeToExecute = true
+		gate.NextActions = []string{"Request exactly one docs_only_multi_file mutation through the next governed gate; do not broaden class scope."}
+		return gate, nil
+	}
+	gate.FirstFailingCheck = blockers[0]
+	gate.NextActions = blockers
+	return gate, nil
+}
+
+type classGateCheck struct {
+	Name          string
+	Path          string
+	SchemaVersion string
+	StatusField   string
+	ReadyStatuses []string
+}
+
+func evaluateClassGateCheck(check classGateCheck, expectedClass string) (MutationClassGateEvidence, map[string]any, string, error) {
+	document, err := readArbitraryJSON(check.Path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("read %s evidence: %w", check.Name, err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("%s evidence must be a JSON object", check.Name)
+	}
+	sum, err := fileSHA256(check.Path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("hash %s evidence: %w", check.Name, err)
+	}
+	status := classGateString(object, check.StatusField)
+	evidence := MutationClassGateEvidence{
+		Name:          check.Name,
+		Path:          check.Path,
+		SchemaVersion: classGateString(object, "schema_version"),
+		Status:        status,
+		SHA256:        sum,
+	}
+	if evidence.SchemaVersion != check.SchemaVersion {
+		return evidence, object, fmt.Sprintf("%s schema_version must be %s", check.Name, check.SchemaVersion), nil
+	}
+	if !classGateStringSliceContains(check.ReadyStatuses, status) {
+		return evidence, object, fmt.Sprintf("%s status is %s", check.Name, status), nil
+	}
+	className := classGateString(object, "mutation_class")
+	if className == "" && check.Name == "command_readback" {
+		className = classGateString(object, "next_class")
+	}
+	if className == "" {
+		return evidence, object, fmt.Sprintf("%s missing mutation_class", check.Name), nil
+	}
+	if expectedClass != "" && className != expectedClass {
+		return evidence, object, fmt.Sprintf("%s mutation_class %s does not match %s", check.Name, className, expectedClass), nil
+	}
+	if check.Name == "covenant_class_ticket" && classGateBool(object, "consumed") {
+		return evidence, object, "covenant_class_ticket is already consumed", nil
+	}
+	return evidence, object, "", nil
+}
+
+func classGateString(document map[string]any, key string) string {
+	value, _ := document[key].(string)
+	return value
+}
+
+func classGateBool(document map[string]any, key string) bool {
+	value, _ := document[key].(bool)
+	return value
+}
+
+func classGateStringSliceContains(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
+}
+
+func deniedMutationClasses(allowed string) []string {
+	classes := []string{
+		"docs_only_single_file",
+		"docs_only_multi_file",
+		"docs_config_only",
+		"test_only",
+		"low_risk_code",
+		"multi_repo_low_risk",
+		"complex_repo_mutation",
+	}
+	denied := []string{}
+	for _, className := range classes {
+		if className != allowed {
+			denied = append(denied, className)
+		}
+	}
+	return denied
 }
 
 func runRepo(args []string, stdout, stderr io.Writer) int {
@@ -8120,6 +8379,7 @@ func publicSchemaNames() []string {
 		"foundry-loop-event-log-v0.1",
 		"foundry-loop-lease-v0.1",
 		"foundry-live-mutation-rollback-rehearsal-v0.1",
+		"foundry-mutation-class-gate-v0.1",
 		"foundry-production-readiness-audit-v0.1",
 		"foundry-pulse-intake-preflight-v0.1",
 		"foundry-pulse-overnight-start-gate-v0.1",

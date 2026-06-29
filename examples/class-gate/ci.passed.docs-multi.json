@@ -1,0 +1,9 @@
+{
+  "schema_version": "ao.foundry.ci-readiness.v0.1",
+  "status": "passed",
+  "mutation_class": "docs_only_multi_file",
+  "required_checks": [
+    "go test ./...",
+    "production readiness"
+  ]
+}

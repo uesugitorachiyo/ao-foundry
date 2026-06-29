@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+  "status": "ready",
+  "mutation_class": "docs_only_multi_file",
+  "promotion_boundary": "docs_only_multi_file_only"
+}
