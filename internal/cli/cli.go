@@ -106,10 +106,16 @@ type AtlasFoundryImport struct {
 	WorkgraphID     string                   `json:"workgraph_id"`
 	TargetInstance  string                   `json:"target_instance"`
 	Status          string                   `json:"status"`
+	SourceArtifacts []AtlasSourceArtifact    `json:"source_artifacts"`
 	Tasks           []AtlasImportTaskFixture `json:"tasks"`
 	SchedulesWork   bool                     `json:"schedules_work"`
 	ExecutesWork    bool                     `json:"executes_work"`
 	ApprovesWork    bool                     `json:"approves_work"`
+}
+
+type AtlasSourceArtifact struct {
+	Ref    string `json:"ref"`
+	Digest string `json:"digest"`
 }
 
 type AtlasImportTaskFixture struct {
@@ -133,6 +139,7 @@ type AtlasFactoryTask struct {
 	RequiredEvidence  []string `json:"required_evidence"`
 	SafetyLimits      []string `json:"safety_limits"`
 	DependencyRefs    []string `json:"dependency_refs"`
+	ContextPackRefs   []string `json:"context_pack_refs"`
 }
 
 type AtlasRunLink struct {
@@ -1649,6 +1656,7 @@ func runAtlasImportValidate(args []string, stdout, stderr io.Writer) int {
 	fmt.Fprintf(stdout, "id=%s\n", artifact.ID)
 	fmt.Fprintf(stdout, "workgraph=%s\n", artifact.WorkgraphID)
 	fmt.Fprintf(stdout, "target_instance=%s\n", artifact.TargetInstance)
+	fmt.Fprintf(stdout, "source_artifacts=%d\n", len(artifact.SourceArtifacts))
 	fmt.Fprintf(stdout, "tasks=%d\n", len(artifact.Tasks))
 	fmt.Fprintf(stdout, "schedules_work=%t\n", artifact.SchedulesWork)
 	fmt.Fprintf(stdout, "executes_work=%t\n", artifact.ExecutesWork)
@@ -4617,6 +4625,23 @@ func validateAtlasFoundryImport(artifact AtlasFoundryImport) error {
 	if artifact.ApprovesWork {
 		return errors.New("approves_work must be false")
 	}
+	if len(artifact.SourceArtifacts) == 0 {
+		return errors.New("source_artifacts must not be empty")
+	}
+	for i, source := range artifact.SourceArtifacts {
+		if strings.TrimSpace(source.Ref) == "" {
+			return fmt.Errorf("source_artifacts[%d].ref must not be empty", i)
+		}
+		if err := validateEvidencePath(source.Ref); err != nil {
+			return fmt.Errorf("source_artifacts[%d].ref: %w", i, err)
+		}
+		if !strings.HasPrefix(source.Digest, "sha256:") {
+			return fmt.Errorf("source_artifacts[%d].digest must start with sha256:", i)
+		}
+		if err := validateSHA256(strings.TrimPrefix(source.Digest, "sha256:"), fmt.Sprintf("source_artifacts[%d].digest", i)); err != nil {
+			return err
+		}
+	}
 	if len(artifact.Tasks) == 0 {
 		return errors.New("tasks must not be empty")
 	}
@@ -4661,7 +4686,7 @@ func validateAtlasFactoryTask(task AtlasFactoryTask) error {
 	if err := validateEvidencePath(task.FactoryFolder); err != nil {
 		return fmt.Errorf("factory_folder: %w", err)
 	}
-	for _, values := range [][]string{task.Acceptance, task.NonGoals, task.WriteScope, task.Verification, task.RequiredEvidence, task.SafetyLimits, task.DependencyRefs} {
+	for _, values := range [][]string{task.Acceptance, task.NonGoals, task.WriteScope, task.Verification, task.RequiredEvidence, task.SafetyLimits, task.DependencyRefs, task.ContextPackRefs} {
 		for _, value := range values {
 			if strings.TrimSpace(value) == "" {
 				return errors.New("task lists must not contain empty values")

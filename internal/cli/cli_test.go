@@ -75,7 +75,7 @@ func TestAtlasImportValidateAcceptsFixtureOnlyPacket(t *testing.T) {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
 	out := stdout.String()
-	for _, want := range []string{"atlas import valid", "tasks=1", "schedules_work=false", "executes_work=false", "approves_work=false"} {
+	for _, want := range []string{"atlas import valid", "source_artifacts=2", "tasks=1", "schedules_work=false", "executes_work=false", "approves_work=false"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("atlas import output missing %q: %s", want, out)
 		}
@@ -131,7 +131,7 @@ func TestAtlasReadbackWritesObserverReport(t *testing.T) {
 			t.Fatalf("report[%s] = %#v, want %#v; report=%#v", key, report[key], want, report)
 		}
 	}
-	if report["task_digest"] != "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99" {
+	if report["task_digest"] != "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d" {
 		t.Fatalf("report must preserve Atlas task digest: %#v", report)
 	}
 	evidence, ok := report["evidence"].(map[string]any)
