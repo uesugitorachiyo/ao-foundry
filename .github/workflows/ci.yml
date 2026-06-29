@@ -76,6 +76,9 @@ jobs:
       - name: Stale control-plane decision fixture
         shell: bash
         run: go test ./internal/cli -run TestStaleControlPlaneDerivedDecisionCIFixtureValidates -v
+      - name: Pulse start gate regression
+        shell: bash
+        run: go test ./internal/cli -run 'TestPulseRunRequiresReadyStartGateBeforeBundle|TestPulseRunAcceptsReadyStartGateAndWritesDecision' -v
       - name: Pulse smoke
         shell: bash
         run: |
