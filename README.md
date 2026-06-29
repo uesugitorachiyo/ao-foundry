@@ -244,6 +244,14 @@ requested when the chain is ready, but it is still not safe to execute until a
 separate operator approval request exists. It keeps `safe_to_execute=false`,
 `live_mutation_allowed=false`, and `mutates_repositories=false`.
 
+Public readiness wording for this phase is intentionally narrow:
+
+- dry-run governed live mutation readiness is ready;
+- first docs-only live request readiness is ready;
+- execution readiness is conditional on explicit exact-scope approval and every
+  downstream gate passing;
+- fully unsupervised complex live repository mutation remains out of scope.
+
 The first approval request contract is
 `ao.foundry.live-mutation-approval-request.v0.1`, with a public-safe example at
 `examples/contract-fixtures/valid/foundry-live-mutation-approval-request-v0.1.json`.
