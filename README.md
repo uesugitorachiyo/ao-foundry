@@ -58,6 +58,7 @@ This first slice provides:
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
   - `scripts/overnight-rehearsal-runner.sh --out <public-safe-relative-dir>`
+  - `scripts/fresh-overnight-rehearsal-artifact.sh --out <public-safe-relative-dir>`
   - `scripts/atlas-stress-readiness.sh --out <public-safe-relative-dir>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
@@ -177,6 +178,13 @@ overnight control-chain check. It validates Pulse gate/lifecycle state, Atlas
 import/readback, repair/repack artifacts, and AO Command readback, then emits
 `ao.foundry.overnight-rehearsal-runner.v0.1` without scheduling or executing
 work.
+
+`scripts/fresh-overnight-rehearsal-artifact.sh` runs the same dry-run chain into
+a fresh timestamped output directory and emits
+`ao.foundry.overnight-rehearsal-artifact.v0.1`. The artifact links the runner
+summary, complex-refactor summary, and AO Command readback with SHA-256 digests
+so operators can preserve the exact rehearsal evidence without treating it as
+live mutation authority.
 
 `scripts/atlas-stress-readiness.sh` consumes AO Atlas's large workgraph stress
 fixture from Foundry. It validates the stress workgraph, generates Atlas
