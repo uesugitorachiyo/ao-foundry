@@ -115,5 +115,19 @@ This artifact is still dry-run evidence. It can support a later operator
 request for the first tiny live-mutation class, but it does not mutate
 repositories, call providers, publish, release, or grant ungated live mutation
 authority.
+
+Then emit the request-readiness rollup:
+
+```sh
+scripts/live-mutation-readiness-rollup.sh \
+  --chain target/governed-live-mutation-dry-run-chain/summary.json \
+  --out target/live-mutation-readiness-rollup.json
+```
+
+The rollup emits `ao.foundry.live-mutation-readiness-rollup.v0.1`. A ready
+rollup means the exact next step is
+`submit_operator_approval_request_for_first_tiny_docs_only_live_mutation_class`.
+It does not mean the mutation is safe to execute; the rollup keeps
+`safe_to_execute=false` until a later explicit approval path exists.
 Do not commit generated target output unless a separate PR explicitly adds a
 public-safe fixture.

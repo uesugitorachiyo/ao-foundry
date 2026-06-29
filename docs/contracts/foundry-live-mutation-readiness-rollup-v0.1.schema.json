@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-live-mutation-readiness-rollup-v0.1.schema.json",
+  "title": "AO Foundry Live Mutation Readiness Rollup v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "score",
+    "source_chain",
+    "dry_run_authority_path",
+    "first_failing_check",
+    "residual_blockers",
+    "exact_next_step",
+    "first_tiny_live_mutation_class",
+    "remaining_risks",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.live-mutation-readiness-rollup.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "source_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schema_version", "status", "readiness_assessment", "sha256", "source_artifact_count"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^(examples|target|tmp|docs)/[A-Za-z0-9._/-]+\\.json$" },
+        "schema_version": { "const": "ao.foundry.governed-live-mutation-dry-run-chain.v0.1" },
+        "status": { "enum": ["ready", "blocked"] },
+        "readiness_assessment": { "enum": ["dry_run_ready_for_request", "blocked"] },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "source_artifact_count": { "type": "number", "minimum": 10 }
+      }
+    },
+    "dry_run_authority_path": {
+      "type": "array",
+      "minItems": 10,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "first_failing_check": { "type": "string" },
+    "residual_blockers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "exact_next_step": { "enum": ["submit_operator_approval_request_for_first_tiny_docs_only_live_mutation_class", "repair_governed_live_mutation_dry_run_chain_before_request"] },
+    "first_tiny_live_mutation_class": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "safe_to_request",
+        "safe_to_execute",
+        "requires_operator_approval",
+        "requires_new_branch_pr_lifecycle",
+        "requires_kill_switch_armed"
+      ],
+      "properties": {
+        "class": { "enum": ["docs_only"] },
+        "safe_to_request": { "type": "boolean" },
+        "safe_to_execute": { "const": false },
+        "requires_operator_approval": { "const": true },
+        "requires_new_branch_pr_lifecycle": { "const": true },
+        "requires_kill_switch_armed": { "const": true }
+      }
+    },
+    "remaining_risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dry_run_only",
+        "live_mutation_allowed",
+        "mutates_repositories",
+        "schedules_work",
+        "executes_work",
+        "approves_work",
+        "provider_calls_allowed",
+        "release_or_publish_allowed"
+      ],
+      "properties": {
+        "dry_run_only": { "const": true },
+        "live_mutation_allowed": { "const": false },
+        "mutates_repositories": { "const": false },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "provider_calls_allowed": { "const": false },
+        "release_or_publish_allowed": { "const": false }
+      }
+    }
+  }
+}

@@ -1094,6 +1094,63 @@ func TestGovernedLiveMutationDryRunChainScript(t *testing.T) {
 	}
 }
 
+func TestLiveMutationReadinessRollupScript(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	rollupScript := repoPath("scripts/live-mutation-readiness-rollup.sh")
+	rollupScriptData, err := os.ReadFile(rollupScript)
+	if err != nil {
+		t.Fatalf("read live mutation readiness rollup script: %v", err)
+	}
+	rollupScriptText := string(rollupScriptData)
+	for _, want := range []string{
+		"ao.foundry.live-mutation-readiness-rollup.v0.1",
+		"safe_to_request",
+		"safe_to_execute:false",
+		"requires_operator_approval:true",
+		"live_mutation_allowed:false",
+		"mutates_repositories:false",
+		"submit_operator_approval_request_for_first_tiny_docs_only_live_mutation_class",
+	} {
+		if !strings.Contains(rollupScriptText, want) {
+			t.Fatalf("live mutation readiness rollup script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git apply", "git checkout", "git switch", "git worktree add", "gh pr merge", "git " + "push", "gh " + "release", "curl "} {
+		if strings.Contains(rollupScriptText, forbidden) {
+			t.Fatalf("live mutation readiness rollup script contains forbidden live action %q", forbidden)
+		}
+	}
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainCmd := exec.Command("bash", chainScript, "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("governed chain failed: %v\n%s", err, string(out))
+	}
+	rollupPath := filepath.Join(outDir, "rollup.json")
+	rollupCmd := exec.Command("bash", rollupScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", rollupPath)
+	rollupCmd.Dir = repoPath(".")
+	if out, err := rollupCmd.CombinedOutput(); err != nil {
+		t.Fatalf("readiness rollup failed: %v\n%s", err, string(out))
+	}
+	rollup := readObjectFixture(t, rollupPath)
+	if rollup["status"] != "ready" || fmt.Sprint(rollup["score"]) != "100" {
+		t.Fatalf("unexpected live mutation readiness rollup: %#v", rollup)
+	}
+	tinyClass := rollup["first_tiny_live_mutation_class"].(map[string]any)
+	if tinyClass["safe_to_request"] != true ||
+		tinyClass["safe_to_execute"] != false ||
+		tinyClass["requires_operator_approval"] != true {
+		t.Fatalf("unexpected tiny live mutation class assessment: %#v", tinyClass)
+	}
+	boundaries := rollup["authority_boundaries"].(map[string]any)
+	if boundaries["live_mutation_allowed"] != false ||
+		boundaries["mutates_repositories"] != false ||
+		boundaries["executes_work"] != false {
+		t.Fatalf("readiness rollup must remain non-mutating: %#v", boundaries)
+	}
+}
+
 func TestOvernightRehearsalRunbookDocumentsDryRunOperatorSequence(t *testing.T) {
 	runbook, err := os.ReadFile(repoPath("docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md"))
 	if err != nil {
@@ -5004,6 +5061,35 @@ func TestGovernedLiveMutationDryRunChainContractFixtureValidates(t *testing.T) {
 	}
 	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
 		t.Fatalf("invalid governed live mutation chain fixture unexpectedly passed schema")
+	}
+}
+
+func TestLiveMutationReadinessRollupContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-mutation-readiness-rollup-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live mutation readiness rollup schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live mutation readiness rollup schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-mutation-readiness-rollup-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live mutation readiness rollup fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live mutation readiness rollup fixture failed schema: %v", err)
+	}
+	tinyClass := validFixture.(map[string]any)["first_tiny_live_mutation_class"].(map[string]any)
+	if tinyClass["safe_to_request"] != true || tinyClass["safe_to_execute"] != false {
+		t.Fatalf("valid readiness rollup must allow request but not execution: %#v", tinyClass)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-mutation-readiness-rollup-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live mutation readiness rollup fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live mutation readiness rollup fixture unexpectedly passed schema")
 	}
 }
 

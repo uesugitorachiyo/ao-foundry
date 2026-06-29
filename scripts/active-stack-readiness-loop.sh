@@ -188,6 +188,11 @@ run_check "governed_live_mutation_dry_run_chain" \
   "governed live-mutation readiness chain remains dry-run and evidence-bound" \
   scripts/governed-live-mutation-dry-run-chain.sh \
     --out tmp/governed-live-mutation-dry-run-chain
+run_check "live_mutation_readiness_rollup" \
+  "live-mutation readiness rollup summarizes request readiness without execution authority" \
+  scripts/live-mutation-readiness-rollup.sh \
+    --chain tmp/governed-live-mutation-dry-run-chain/summary.json \
+    --out tmp/live-mutation-readiness-rollup.json
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

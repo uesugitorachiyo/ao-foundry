@@ -1,0 +1,49 @@
+{
+  "schema_version": "ao.foundry.live-mutation-readiness-rollup.v0.1",
+  "status": "ready",
+  "score": 100,
+  "source_chain": {
+    "path": "examples/contract-fixtures/valid/foundry-governed-live-mutation-dry-run-chain-v0.1.json",
+    "schema_version": "ao.foundry.governed-live-mutation-dry-run-chain.v0.1",
+    "status": "ready",
+    "readiness_assessment": "dry_run_ready_for_request",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_artifact_count": 10
+  },
+  "dry_run_authority_path": [
+    "Blueprint/Atlas complex task",
+    "Foundry start gate",
+    "Covenant authority dry-run",
+    "Forge dry-run plan",
+    "AO2 dry-run packet",
+    "worktree isolation",
+    "rollback rehearsal",
+    "Sentinel hold verdict",
+    "Promoter activation boundary",
+    "AO Command readback"
+  ],
+  "first_failing_check": "",
+  "residual_blockers": [],
+  "exact_next_step": "submit_operator_approval_request_for_first_tiny_docs_only_live_mutation_class",
+  "first_tiny_live_mutation_class": {
+    "class": "docs_only",
+    "safe_to_request": true,
+    "safe_to_execute": true,
+    "requires_operator_approval": true,
+    "requires_new_branch_pr_lifecycle": true,
+    "requires_kill_switch_armed": true
+  },
+  "remaining_risks": [
+    "invalid"
+  ],
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": true,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}
