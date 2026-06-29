@@ -1,0 +1,56 @@
+{
+  "schema_version": "ao.foundry.live-mutation-rollback-rehearsal.v0.1",
+  "status": "ready",
+  "mode": "dry_run_only",
+  "candidate_path": "examples/live-mutation-rollback/docs-only-rollback.candidate.json",
+  "candidate_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "rollback_plan": {
+    "strategy": "reverse_patch_then_quarantine",
+    "quarantine_path": ".foundry-local/quarantine/docs-only-live-mutation-rehearsal",
+    "kill_switch_state": "armed",
+    "verification_commands": [
+      "go test ./... -count=1",
+      "go vet ./..."
+    ]
+  },
+  "patch_artifacts": [
+    {
+      "name": "proposed_patch",
+      "path": "examples/live-mutation-rollback/docs-only-proposed.patch",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "rollback_patch",
+      "path": "examples/live-mutation-rollback/docs-only-rollback.patch",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "checks": [
+    {
+      "name": "rollback_patch_present",
+      "status": "passed",
+      "summary": "rollback patch is digest-bound"
+    }
+  ],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "Keep rollback rehearsal dry-run until Sentinel and Promoter evidence also pass."
+  ],
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

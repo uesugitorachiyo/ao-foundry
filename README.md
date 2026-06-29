@@ -61,6 +61,7 @@ This first slice provides:
   - `scripts/fresh-overnight-rehearsal-artifact.sh --out <public-safe-relative-dir>`
   - `scripts/atlas-stress-readiness.sh --out <public-safe-relative-dir>`
   - `scripts/live-mutation-worktree-isolation-proof.sh --candidate <candidate.json> --out <proof.json>`
+  - `scripts/live-mutation-rollback-rehearsal.sh --candidate <candidate.json> --out <rehearsal.json>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -211,6 +212,16 @@ untracked changes, reused branches/worktrees, unsafe paths, or expanded
 authority block the proof. The script is dry-run only: it does not create a
 worktree, switch branches, mutate repositories, schedule work, approve work,
 call providers, publish, or release.
+
+`scripts/live-mutation-rollback-rehearsal.sh` consumes a public-safe rollback
+candidate fixture and emits
+`ao.foundry.live-mutation-rollback-rehearsal.v0.1`. The rehearsal is ready only
+when the proposed patch and rollback patch are digest-bound, the rollback plan
+uses an ignored `.foundry-local/quarantine/...` path, the operator kill switch
+is armed, and verification commands stay local. Missing rollback material,
+unsafe paths, disabled kill switch state, or expanded authority block the
+rehearsal. The script does not apply either patch and does not grant live
+mutation authority.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

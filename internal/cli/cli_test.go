@@ -4814,6 +4814,108 @@ func TestWorktreeIsolationProofContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthority(t *testing.T) {
+	script := repoPath("scripts/live-mutation-rollback-rehearsal.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read rollback rehearsal script: %v", err)
+	}
+	for _, want := range []string{
+		"ao.foundry.live-mutation-rollback-rehearsal.v0.1",
+		"rollback_patch_present",
+		"quarantine_plan",
+		"kill_switch",
+		"dry_run_only",
+		"live_mutation_allowed:false",
+	} {
+		if !strings.Contains(string(scriptData), want) {
+			t.Fatalf("rollback rehearsal script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git apply", "git checkout", "git switch", "git worktree add", "gh pr merge", "gh release", "curl "} {
+		if strings.Contains(string(scriptData), forbidden) {
+			t.Fatalf("rollback rehearsal script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	runRehearsal := func(t *testing.T, candidate string, wantReady bool, wantFailingCheck string) map[string]any {
+		t.Helper()
+		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
+		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
+		cmd := exec.Command(
+			"bash",
+			script,
+			"--candidate", candidate,
+			"--out", outPath,
+			"--json",
+		)
+		cmd.Dir = repoPath(".")
+		out, err := cmd.CombinedOutput()
+		if wantReady && err != nil {
+			t.Fatalf("rollback rehearsal failed: %v\n%s", err, string(out))
+		}
+		if !wantReady && err == nil {
+			t.Fatalf("rollback rehearsal unexpectedly passed for %s:\n%s", candidate, string(out))
+		}
+		result := readObjectFixture(t, outPath)
+		if wantReady && result["status"] != "ready" {
+			t.Fatalf("expected ready rehearsal, got %#v", result)
+		}
+		if !wantReady {
+			if result["status"] != "blocked" || result["first_failing_check"] != wantFailingCheck {
+				t.Fatalf("expected blocked rehearsal at %s, got %#v", wantFailingCheck, result)
+			}
+		}
+		boundaries := result["authority_boundaries"].(map[string]any)
+		if boundaries["mutates_repositories"] != false ||
+			boundaries["schedules_work"] != false ||
+			boundaries["executes_work"] != false ||
+			boundaries["approves_work"] != false {
+			t.Fatalf("rehearsal must stay read-only/dry-run: %#v", boundaries)
+		}
+		return result
+	}
+
+	t.Run("ready", func(t *testing.T) {
+		result := runRehearsal(t, "examples/live-mutation-rollback/docs-only-rollback.candidate.json", true, "")
+		artifacts := result["patch_artifacts"].([]any)
+		if len(artifacts) != 2 {
+			t.Fatalf("ready rehearsal should bind proposed and rollback patch artifacts: %#v", result)
+		}
+	})
+	t.Run("missing_rollback", func(t *testing.T) {
+		runRehearsal(t, "examples/live-mutation-rollback/missing-rollback.candidate.json", false, "rollback_patch_present")
+	})
+	t.Run("unsafe_authority", func(t *testing.T) {
+		runRehearsal(t, "examples/live-mutation-rollback/unsafe-authority.candidate.json", false, "authority_boundaries")
+	})
+}
+
+func TestLiveMutationRollbackRehearsalContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-mutation-rollback-rehearsal-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read rollback rehearsal schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("rollback rehearsal schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-mutation-rollback-rehearsal-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid rollback rehearsal fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid rollback rehearsal fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-mutation-rollback-rehearsal-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid rollback rehearsal fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid rollback rehearsal fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir()})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")

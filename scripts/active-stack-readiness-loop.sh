@@ -179,6 +179,11 @@ run_check "worktree_isolation_proof" \
   scripts/live-mutation-worktree-isolation-proof.sh \
     --candidate examples/live-mutation-worktree-isolation/clean-isolated.candidate.json \
     --out "$TMPDIR/worktree-isolation-proof.json"
+run_check "live_mutation_rollback_rehearsal" \
+  "live-mutation candidates require digest-bound rollback and quarantine rehearsal before authority can advance" \
+  scripts/live-mutation-rollback-rehearsal.sh \
+    --candidate examples/live-mutation-rollback/docs-only-rollback.candidate.json \
+    --out "$TMPDIR/live-mutation-rollback-rehearsal.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"
