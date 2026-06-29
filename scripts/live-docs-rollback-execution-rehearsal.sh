@@ -74,6 +74,17 @@ sha256_file_or_empty() {
   fi
 }
 
+sha256_text() {
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 | awk '{print $1}'
+  elif command -v sha256sum >/dev/null 2>&1; then
+    sha256sum | awk '{print $1}'
+  else
+    echo "live-docs-rollback-execution-rehearsal: shasum or sha256sum is required" >&2
+    exit 2
+  fi
+}
+
 json_string() {
   jq -Rsa .
 }
@@ -170,8 +181,8 @@ if [[ -z "$first_failing_check" ]]; then
   workspace="$tmpdir/workspace"
   mkdir -p "$workspace"
   git -C "$workspace" init -q
-  if git -C "$workspace" apply --check "$repo_root/$proposed_patch_path" &&
-    git -C "$workspace" apply "$repo_root/$proposed_patch_path" &&
+  if git -C "$workspace" apply --whitespace=nowarn --check "$repo_root/$proposed_patch_path" &&
+    git -C "$workspace" apply --whitespace=nowarn "$repo_root/$proposed_patch_path" &&
     [[ -f "$workspace/$target_file" ]]; then
     apply_sha="$(sha256_file "$workspace/$target_file")"
     add_check "proposed_patch_apply" "passed" "proposed docs patch applies inside the fixture workspace"
@@ -180,10 +191,10 @@ if [[ -z "$first_failing_check" ]]; then
   fi
 fi
 if [[ -z "$first_failing_check" ]]; then
-  if git -C "$workspace" apply --check "$repo_root/$rollback_patch_path" &&
-    git -C "$workspace" apply "$repo_root/$rollback_patch_path" &&
+  if git -C "$workspace" apply --whitespace=nowarn --check "$repo_root/$rollback_patch_path" &&
+    git -C "$workspace" apply --whitespace=nowarn "$repo_root/$rollback_patch_path" &&
     [[ ! -e "$workspace/$target_file" ]]; then
-    rollback_sha="$(printf 'removed:%s' "$target_file" | shasum -a 256 | awk '{print $1}')"
+    rollback_sha="$(printf 'removed:%s' "$target_file" | sha256_text)"
     add_check "rollback_patch_apply" "passed" "rollback patch restores the fixture workspace by removing the proposed docs file"
   else
     add_check "rollback_patch_apply" "blocked" "rollback patch failed to restore the fixture workspace"
