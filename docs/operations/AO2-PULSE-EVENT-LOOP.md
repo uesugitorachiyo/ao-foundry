@@ -71,6 +71,21 @@ status line such as
 `freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided`.
 The same values are recorded in `pulse-event.json` under `freshness_summary`.
 
+To prove the full dry-run control path with AO Command readback, run:
+
+```sh
+scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
+  --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
+```
+
+The script consumes public fixtures for Blueprint ready authorization,
+Blueprint blocked clarification, Atlas import/run-link evidence, Foundry Pulse
+preflight/lifecycle/start-gate evidence, runner start decisions, and AO Command
+`pulse status` readback. It proves that the ready path may start the runner and
+that the blocked Blueprint path cannot produce `pulse-event.json`. It is
+fixture-only and does not schedule, execute, approve, publish, call providers,
+or mutate repositories.
+
 The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
 when Blueprint authorization is ready and required Atlas import/status readback
