@@ -199,7 +199,7 @@ if first_failing_check:
     blocking_next_actions.append(f"Fix first failing check: {first_failing_check}")
 else:
     maintenance_suggestions.extend([
-        "Keep the active stack registry limited to ao-foundry, ao-forge, ao-command, ao2, ao2-control-plane, and ao-covenant.",
+        "Keep the active stack registry limited to ao-foundry, ao-atlas, ao-forge, ao-command, ao2, ao2-control-plane, and ao-covenant.",
         "Refresh the readiness ledger after each merged release-readiness PR.",
     ])
 payload = {

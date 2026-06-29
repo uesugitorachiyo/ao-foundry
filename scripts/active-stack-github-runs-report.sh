@@ -82,6 +82,7 @@ MANIFEST="$TMPDIR/manifest.tsv"
 
 REPOS=(
   "uesugitorachiyo/ao-foundry"
+  "uesugitorachiyo/ao-atlas"
   "uesugitorachiyo/ao-forge"
   "uesugitorachiyo/ao-command"
   "uesugitorachiyo/ao2"
@@ -163,6 +164,7 @@ for line in manifest_path.read_text().splitlines():
 
 ordered_repos = [
     "uesugitorachiyo/ao-foundry",
+    "uesugitorachiyo/ao-atlas",
     "uesugitorachiyo/ao-forge",
     "uesugitorachiyo/ao-command",
     "uesugitorachiyo/ao2",
