@@ -63,6 +63,7 @@ This first slice provides:
   - `scripts/live-mutation-worktree-isolation-proof.sh --candidate <candidate.json> --out <proof.json>`
   - `scripts/live-mutation-rollback-rehearsal.sh --candidate <candidate.json> --out <rehearsal.json>`
   - `scripts/governed-live-mutation-dry-run-chain.sh --out <public-safe-relative-dir>`
+  - `scripts/live-mutation-readiness-rollup.sh --chain <summary.json> --out <rollup.json>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -233,6 +234,13 @@ verdict, Promoter boundary, and AO Command readback. A ready result means the
 first tiny live-mutation class is safe to request through a separate governed
 operator approval path. It does not perform live mutation and does not claim
 ungated authority.
+
+`scripts/live-mutation-readiness-rollup.sh` consumes that chain summary and
+emits `ao.foundry.live-mutation-readiness-rollup.v0.1`. The rollup answers the
+operator question precisely: the first tiny docs-only live-mutation class can be
+requested when the chain is ready, but it is still not safe to execute until a
+separate operator approval request exists. It keeps `safe_to_execute=false`,
+`live_mutation_allowed=false`, and `mutates_repositories=false`.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
