@@ -18,6 +18,13 @@ the higher-level operating view: what work is queued, which repository is ready,
 which evidence is waiting, which branch or release train is blocked, and what
 the next safe delegated factory action should be.
 
+Canonical upstream intake is AO Blueprint -> AO Atlas -> AO Foundry. Blueprint
+owns requirements interview and build authorization. Atlas compiles authorized
+oversized objectives into stack instances, workgraphs, context packs, Foundry
+handoff material, and run-link readback. Foundry validates those artifacts and
+decides whether a ready item should be delegated, but it does not treat raw
+operator ideas or underspecified Atlas material as implementation-ready work.
+
 ## v0.1 Scope
 
 This first slice provides:
@@ -143,10 +150,11 @@ read-only repo board to classify the portfolio and surface hygiene blockers:
 go run ./cmd/foundry repo board --registry examples/registry/local-ao-stack.foundry-registry.json
 ```
 
-The active sibling portfolio is AO Forge, AO2, ao2-control-plane, AO Covenant,
-and AO Command. The board reports active-spine, supporting, and blocked-hygiene
-entries for that live set. It exits non-zero when a registered sibling checkout
-is dirty or otherwise blocked so cleanup happens before new strategy work.
+The active sibling portfolio is AO Atlas, AO Forge, AO2, ao2-control-plane, AO
+Covenant, and AO Command, with AO Foundry as the local orchestration repo. The
+board reports active-spine, supporting, and blocked-hygiene entries for that
+live set. It exits non-zero when a registered sibling checkout is dirty or
+otherwise blocked so cleanup happens before new strategy work.
 Archived subscription-backed swarm, conductor, and deprecated operator/runtime
 repositories are intentionally excluded from the active registry.
 
@@ -183,7 +191,7 @@ explicit operator intent. See
 
 Use `scripts/active-stack-github-runs-report.sh` after sibling readiness PR
 merges to collect the latest successful `ci.yml` and
-`production-readiness-ops.yml` run IDs for the six active repositories. The
+`production-readiness-ops.yml` run IDs for the seven active repositories. The
 script is read-only, uses `gh run list`, and writes
 `ao.foundry.active-stack-github-runs-report.v0.1` JSON for ledger refreshes.
 Add `--ledger examples/readiness/active-stack-readiness.ledger.json
