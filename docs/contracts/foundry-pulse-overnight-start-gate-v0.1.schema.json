@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-pulse-overnight-start-gate-v0.1.schema.json",
+  "title": "AO Foundry Pulse Overnight Start Gate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "allowed_next_action",
+    "first_failing_check",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "source_hashes"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.pulse-overnight-start-gate.v0.1" },
+    "status": { "enum": ["ready", "blocked", "failed"] },
+    "allowed_next_action": {
+      "enum": ["start_next_slice", "request_blueprint_clarification", "stop_blocked"]
+    },
+    "first_failing_check": { "type": "string" },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/source_hash" }
+    }
+  },
+  "$defs": {
+    "source_hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "schema_version", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        }
+      }
+    }
+  }
+}

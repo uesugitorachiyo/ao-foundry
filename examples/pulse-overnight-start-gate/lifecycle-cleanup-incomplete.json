@@ -1,0 +1,27 @@
+{
+  "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+  "status": "failed",
+  "allowed_next_action": "stop_blocked",
+  "first_failing_check": "pulse_pr_lifecycle",
+  "blocking_next_actions": [
+    "Finish PR checks, merge, sync main, and clean branches before starting another slice."
+  ],
+  "maintenance_suggestions": [
+    "run this gate before autonomous overnight/event-loop advancement",
+    "the gate only decides readiness; it must not schedule, execute, approve, upload, publish, or mutate repositories"
+  ],
+  "source_hashes": [
+    {
+      "name": "intake_preflight",
+      "path": "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "d1b1b4e263af9924384cc272c62018437ce9aba6d0aec1fe3345f1470d6c2752"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/merged-cleanup-incomplete.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "72ef99284cf0c0f132c76bdc84d4eb01d87acbb8bd88473ba38f3646fcfb379f"
+    }
+  ]
+}

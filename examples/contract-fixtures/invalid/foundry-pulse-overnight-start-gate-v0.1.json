@@ -1,0 +1,18 @@
+{
+  "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+  "status": "started",
+  "allowed_next_action": "start_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "invalid fixture: unsupported status must be rejected"
+  ],
+  "source_hashes": [
+    {
+      "name": "intake_preflight",
+      "path": "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "d1b1b4e263af9924384cc272c62018437ce9aba6d0aec1fe3345f1470d6c2752"
+    }
+  ]
+}

@@ -22,6 +22,7 @@ Runs the local-only active stack readiness loop:
   production readiness rollup when a GitHub runs report exists
   repo board
   release handoff
+  pulse overnight start gate
   loop preflight
 EOF
 }
@@ -167,6 +168,12 @@ run_check "atlas_status_surface" \
     --import examples/atlas/foundry-import.json \
     --run-link examples/atlas/run-link.completed.json \
     --out "$TMPDIR/atlas-status.json"
+run_check "pulse_overnight_start_gate" \
+  "Pulse overnight/event-loop advancement is gated by Blueprint/Atlas preflight and one-slice lifecycle state" \
+  go run ./cmd/foundry pulse overnight-start-gate \
+    --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json \
+    --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json \
+    --out "$TMPDIR/pulse-overnight-start-gate.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

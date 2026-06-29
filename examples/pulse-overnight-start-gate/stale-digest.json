@@ -1,0 +1,27 @@
+{
+  "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+  "status": "failed",
+  "allowed_next_action": "stop_blocked",
+  "first_failing_check": "evidence_digest",
+  "blocking_next_actions": [
+    "Regenerate digest-bound Blueprint and Atlas evidence before starting the loop."
+  ],
+  "maintenance_suggestions": [
+    "run this gate before autonomous overnight/event-loop advancement",
+    "the gate only decides readiness; it must not schedule, execute, approve, upload, publish, or mutate repositories"
+  ],
+  "source_hashes": [
+    {
+      "name": "intake_preflight",
+      "path": "examples/pulse-overnight-start-gate/stale-digest.intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "cf3e09fa57f50378dcb5d8a132d2131f49ce89a071073b301abb108149b03fe9"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}
