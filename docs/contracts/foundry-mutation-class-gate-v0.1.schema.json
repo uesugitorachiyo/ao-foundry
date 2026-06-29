@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-mutation-class-gate-v0.1.schema.json",
+  "title": "AO Foundry Mutation Class Gate v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "mutation_class",
+    "safe_to_request",
+    "safe_to_execute",
+    "first_failing_check",
+    "required_evidence",
+    "source_evidence",
+    "denied_classes",
+    "authority_boundary",
+    "next_actions",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "mutates_repositories"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.mutation-class-gate.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "mutation_class": { "$ref": "#/$defs/mutation_class" },
+    "safe_to_request": { "type": "boolean" },
+    "safe_to_execute": { "type": "boolean" },
+    "first_failing_check": { "type": "string" },
+    "required_evidence": {
+      "type": "array",
+      "minItems": 7,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "source_evidence": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "schema_version", "status", "sha256"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "schema_version": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "denied_classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/mutation_class" }
+    },
+    "authority_boundary": { "const": "single_class_only" },
+    "next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false }
+  },
+  "$defs": {
+    "mutation_class": {
+      "enum": [
+        "docs_only_single_file",
+        "docs_only_multi_file",
+        "docs_config_only",
+        "test_only",
+        "low_risk_code",
+        "multi_repo_low_risk",
+        "complex_repo_mutation"
+      ]
+    }
+  }
+}

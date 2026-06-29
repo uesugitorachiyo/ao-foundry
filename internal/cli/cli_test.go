@@ -4967,6 +4967,86 @@ func TestLiveDocsApprovalGateContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestMutationClassGateEvaluateReady(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.docs-multi.json",
+		"--covenant", "examples/class-gate/covenant-ticket.docs-multi.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.docs-multi.json",
+		"--promoter", "examples/class-gate/promoter.ready.docs-multi.json",
+		"--rollback", "examples/class-gate/rollback.passed.docs-multi.json",
+		"--command", "examples/class-gate/command-readback.docs-multi.json",
+		"--ci", "examples/class-gate/ci.passed.docs-multi.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["schema_version"] != "ao.foundry.mutation-class-gate.v0.1" ||
+		gate["status"] != "ready" ||
+		gate["mutation_class"] != "docs_only_multi_file" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != true {
+		t.Fatalf("unexpected ready class gate: %#v", gate)
+	}
+	if gate["authority_boundary"] != "single_class_only" {
+		t.Fatalf("class gate must remain single-class: %#v", gate)
+	}
+	denied, ok := gate["denied_classes"].([]any)
+	if !ok || len(denied) == 0 {
+		t.Fatalf("class gate must deny other classes: %#v", gate)
+	}
+}
+
+func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.docs-multi.json",
+		"--covenant", "examples/class-gate/covenant-ticket.docs-multi.json",
+		"--promoter", "examples/class-gate/promoter.ready.docs-multi.json",
+		"--rollback", "examples/class-gate/rollback.passed.docs-multi.json",
+		"--command", "examples/class-gate/command-readback.docs-multi.json",
+		"--ci", "examples/class-gate/ci.passed.docs-multi.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 2 {
+		t.Fatalf("class gate missing sentinel returned %d, want 2; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "--sentinel") {
+		t.Fatalf("stderr missing sentinel requirement: %s", stderr.String())
+	}
+}
+
+func TestMutationClassGateContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-mutation-class-gate-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read mutation class gate schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("mutation class gate schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-mutation-class-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid mutation class gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid mutation class gate fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-mutation-class-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid mutation class gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid mutation class gate fixture unexpectedly passed schema")
+	}
+}
+
 func TestWorktreeIsolationProofScriptBlocksDirtyAndReusedCandidates(t *testing.T) {
 	script := repoPath("scripts/live-mutation-worktree-isolation-proof.sh")
 	scriptData, err := os.ReadFile(script)

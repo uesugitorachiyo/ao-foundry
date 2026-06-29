@@ -55,6 +55,7 @@ This first slice provides:
   - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
+  - `foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> --out <path>`
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
   - `scripts/overnight-rehearsal-runner.sh --out <public-safe-relative-dir>`
@@ -113,6 +114,7 @@ go run ./cmd/foundry pulse run --start-gate examples/pulse-overnight-start-gate/
 go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry pulse lifecycle inspect --state examples/pulse-lifecycle/ready-to-start-next-slice.json --json
 go run ./cmd/foundry pulse overnight-start-gate --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json --out tmp/pulse-overnight-start-gate.json
+go run ./cmd/foundry class-gate evaluate --atlas examples/class-gate/atlas-classification.docs-multi.json --covenant examples/class-gate/covenant-ticket.docs-multi.json --sentinel examples/class-gate/sentinel.no-hold.docs-multi.json --promoter examples/class-gate/promoter.ready.docs-multi.json --rollback examples/class-gate/rollback.passed.docs-multi.json --command examples/class-gate/command-readback.docs-multi.json --ci examples/class-gate/ci.passed.docs-multi.json --out tmp/class-gate.json
 go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
 scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
@@ -164,6 +166,15 @@ cleanup, unsynced main, dirty worktrees, and stale evidence digests, and returns
 a clean blocked result for Blueprint clarification when implementation is not
 being started. The gate is read-only decision evidence; it does not start the
 loop, schedule, execute, approve, publish, call providers, or mutate
+repositories.
+
+`foundry class-gate evaluate` composes one Atlas mutation-class classification,
+one Covenant class ticket, Sentinel no-hold evidence, Promoter readiness,
+rollback proof, AO Command readback, and CI evidence. It emits
+`ao.foundry.mutation-class-gate.v0.1` with `safe_to_request` and
+`safe_to_execute` for exactly one mutation class, while all other classes stay
+listed in `denied_classes`. Missing or mismatched evidence blocks the gate. The
+gate does not schedule, execute, approve, publish, call providers, or mutate
 repositories.
 
 `scripts/blueprint-atlas-pulse-e2e-dry-run.sh` proves the fixture-only
