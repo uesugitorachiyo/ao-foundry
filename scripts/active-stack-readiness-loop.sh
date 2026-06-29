@@ -58,7 +58,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 TMPDIR="$(mktemp -d)"
-trap 'rm -rf "$TMPDIR"' EXIT
+EXCLUDED_DIR="excluded"
+RUN_TMP_REL="$EXCLUDED_DIR/active-stack-readiness-loop-$$-$RANDOM"
+GOVERNED_CHAIN_DIR="$RUN_TMP_REL/governed-live-mutation-dry-run-chain"
+LIVE_MUTATION_ROLLUP_OUT="$RUN_TMP_REL/live-mutation-readiness-rollup.json"
+trap 'rm -rf "$TMPDIR" "$ROOT/$RUN_TMP_REL"' EXIT
 
 CHECKS_FILE="$TMPDIR/checks.jsonl"
 : > "$CHECKS_FILE"
@@ -187,12 +191,12 @@ run_check "live_mutation_rollback_rehearsal" \
 run_check "governed_live_mutation_dry_run_chain" \
   "governed live-mutation readiness chain remains dry-run and evidence-bound" \
   scripts/governed-live-mutation-dry-run-chain.sh \
-    --out tmp/governed-live-mutation-dry-run-chain
+    --out "$GOVERNED_CHAIN_DIR"
 run_check "live_mutation_readiness_rollup" \
   "live-mutation readiness rollup summarizes request readiness without execution authority" \
   scripts/live-mutation-readiness-rollup.sh \
-    --chain tmp/governed-live-mutation-dry-run-chain/summary.json \
-    --out tmp/live-mutation-readiness-rollup.json
+    --chain "$GOVERNED_CHAIN_DIR/summary.json" \
+    --out "$LIVE_MUTATION_ROLLUP_OUT"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"
