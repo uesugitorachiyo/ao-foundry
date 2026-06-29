@@ -218,9 +218,10 @@ scripts/complex-refactor-workgraph-rehearsal.sh \
 The rehearsal uses `examples/complex-refactor-workgraph/` to model a complex AO
 stack refactor as Atlas factory tasks with completed, ready, blocked, and stitch
 nodes. It validates Atlas workgraph/context-pack/mission status, Foundry
-import/readback, Pulse start-gate evidence, and AO Command readback. The summary
-identifies the next ready factory task and explains that blocked tasks must wait
-for completed run-link evidence.
+import/readback, Pulse start-gate evidence, blocked-node repair plans,
+needs-context context repacks, and AO Command readback. The summary identifies
+the next ready factory task and explains that blocked tasks must wait for
+completed run-link evidence.
 
 ### Slice D: Atlas Workgraph Scheduler Input
 

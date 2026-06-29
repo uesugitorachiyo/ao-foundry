@@ -945,6 +945,34 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 	}
 }
 
+func TestComplexRefactorRehearsalScriptIncludesRepairRepackAndCommandReadback(t *testing.T) {
+	script, err := os.ReadFile(repoPath("scripts/complex-refactor-workgraph-rehearsal.sh"))
+	if err != nil {
+		t.Fatalf("read complex refactor rehearsal script: %v", err)
+	}
+	scriptText := string(script)
+	for _, want := range []string{
+		"atlas-repair-plan.json",
+		"atlas-context-repack.json",
+		"ao-command-complex-refactor-status.json",
+		"repair_plan",
+		"context_repack",
+		"command_readback",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("complex refactor rehearsal script missing %q", want)
+		}
+	}
+	for _, path := range []string{
+		"examples/complex-refactor-workgraph/run-link.command-readback.blocked.json",
+		"examples/complex-refactor-workgraph/run-link.command-readback.needs-context.json",
+	} {
+		if _, err := os.Stat(repoPath(path)); err != nil {
+			t.Fatalf("missing complex refactor fixture %s: %v", path, err)
+		}
+	}
+}
+
 func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testing.T) {
 	script, err := os.ReadFile(repoPath("scripts/active-stack-github-runs-report.sh"))
 	if err != nil {

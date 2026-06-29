@@ -164,7 +164,9 @@ blocked runner decision and AO Command readback, but does not produce
 `scripts/complex-refactor-workgraph-rehearsal.sh` is the reference oversized
 task demo. It validates an Atlas workgraph with completed, ready, blocked, and
 stitch nodes; validates Foundry import/readback; runs the Pulse gate e2e proof;
-and reports the next ready factory task without starting blocked work.
+emits blocked-node repair and needs-context repack artifacts; writes AO Command
+complex-refactor status readback; and reports the next ready factory task
+without starting blocked work.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

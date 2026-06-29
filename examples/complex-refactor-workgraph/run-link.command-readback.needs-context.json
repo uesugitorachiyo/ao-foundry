@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "complex-refactor-command-readback-task",
+  "status": "blocked",
+  "evidence": {
+    "needs_context": "evidence/foundry/complex-refactor/command-readback-needs-context.json"
+  },
+  "digest": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+}
