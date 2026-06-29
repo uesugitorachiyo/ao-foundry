@@ -8,7 +8,7 @@
   "target_instance": "demo-stack",
   "readback_status": "ready",
   "task_id": "atlas-readiness-task",
-  "task_digest": "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99",
+  "task_digest": "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d",
   "run_link_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "schedules_work": false,
   "executes_work": true,

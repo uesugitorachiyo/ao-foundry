@@ -4,6 +4,16 @@
   "workgraph_id": "atlas-readiness-workgraph",
   "target_instance": "demo-stack",
   "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "examples/valid/workgraph.json",
+      "digest": "sha256:98c442b96878ed067bb4f4e718a9920befa288d940844c63f13575a8fdde8967"
+    },
+    {
+      "ref": "examples/valid/stack-instance.json",
+      "digest": "sha256:833ac56f56cfd8f058a786eb7ced74d9879e157db6510a28867c3e3c46ecf1b6"
+    }
+  ],
   "tasks": [
     {
       "node_id": "readiness-ready",
@@ -38,9 +48,12 @@
         ],
         "dependency_refs": [
           "contracts-ready"
+        ],
+        "context_pack_refs": [
+          "examples/valid/context-pack.json"
         ]
       },
-      "task_digest": "sha256:7a3df442c6a8268de6e7b963bb55759aa15039e724f3291b7bf902a37cd43d99"
+      "task_digest": "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d"
     }
   ],
   "schedules_work": false,
