@@ -30,6 +30,8 @@ const (
 	loopLeaseSchema     = "ao.foundry.loop-lease.v0.1"
 	forgePacketSchema   = "ao.forge.factory-packet.v0.1"
 	pulseEventSchema    = "ao.foundry.pulse-event.v0.1"
+	atlasImportSchema   = "ao.atlas.foundry-import.v0.1"
+	atlasTaskSchema     = "ao.atlas.factory-task.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -91,6 +93,41 @@ type TaskSafety struct {
 	ForbiddenActions     []string `json:"forbidden_actions"`
 	AllowNetwork         bool     `json:"allow_network,omitempty"`
 	AllowReleaseMutation bool     `json:"allow_release_mutation,omitempty"`
+}
+
+type AtlasFoundryImport struct {
+	ContractVersion string                   `json:"contract_version"`
+	ID              string                   `json:"id"`
+	WorkgraphID     string                   `json:"workgraph_id"`
+	TargetInstance  string                   `json:"target_instance"`
+	Status          string                   `json:"status"`
+	Tasks           []AtlasImportTaskFixture `json:"tasks"`
+	SchedulesWork   bool                     `json:"schedules_work"`
+	ExecutesWork    bool                     `json:"executes_work"`
+	ApprovesWork    bool                     `json:"approves_work"`
+}
+
+type AtlasImportTaskFixture struct {
+	NodeID     string           `json:"node_id"`
+	TaskID     string           `json:"task_id"`
+	Path       string           `json:"path"`
+	Task       AtlasFactoryTask `json:"task"`
+	TaskDigest string           `json:"task_digest"`
+}
+
+type AtlasFactoryTask struct {
+	ContractVersion   string   `json:"contract_version"`
+	ID                string   `json:"id"`
+	Objective         string   `json:"objective"`
+	TargetFactoryRepo string   `json:"target_factory_repo"`
+	FactoryFolder     string   `json:"factory_folder"`
+	Acceptance        []string `json:"acceptance_criteria"`
+	NonGoals          []string `json:"non_goals"`
+	WriteScope        []string `json:"write_scope"`
+	Verification      []string `json:"verification_commands"`
+	RequiredEvidence  []string `json:"required_evidence"`
+	SafetyLimits      []string `json:"safety_limits"`
+	DependencyRefs    []string `json:"dependency_refs"`
 }
 
 type ReadinessAudit struct {
@@ -847,6 +884,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		return runGoal(args[1:], stdout, stderr)
 	case "run":
 		return runRun(args[1:], stdout, stderr)
+	case "atlas":
+		return runAtlas(args[1:], stdout, stderr)
 	case "repo":
 		return runRepo(args[1:], stdout, stderr)
 	case "loop":
@@ -902,6 +941,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry run validate --run <path>")
 	fmt.Fprintln(w, "  foundry run ingest --registry <path> --task <path> --packet <forge-packet.json> --out <foundry-run.json>")
 	fmt.Fprintln(w, "  foundry run inspect --run <path> [--json]")
+	fmt.Fprintln(w, "  foundry atlas import validate --import <atlas-foundry-import.json>")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
 	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
@@ -1479,6 +1519,32 @@ func runRunInspect(args []string, stdout, stderr io.Writer) int {
 	fmt.Fprintf(stdout, "delegated_to=%s\n", run.DelegatedTo)
 	fmt.Fprintf(stdout, "packet_sha256=%s\n", run.ForgePacket.SHA256)
 	fmt.Fprintf(stdout, "evidence_count=%d\n", len(run.Evidence))
+	return 0
+}
+
+func runAtlas(args []string, stdout, stderr io.Writer) int {
+	if len(args) < 2 || args[0] != "import" || args[1] != "validate" {
+		fmt.Fprintln(stderr, "atlas: expected subcommand import validate")
+		return 2
+	}
+	fs := newFlagSet("atlas import validate", stderr)
+	importPath := fs.String("import", "", "Atlas foundry-import packet path")
+	if !parseFlags(fs, args[2:], stderr) {
+		return 2
+	}
+	artifact, err := loadAtlasFoundryImport(*importPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "atlas import validate: %v\n", err)
+		return 2
+	}
+	fmt.Fprintln(stdout, "atlas import valid")
+	fmt.Fprintf(stdout, "id=%s\n", artifact.ID)
+	fmt.Fprintf(stdout, "workgraph=%s\n", artifact.WorkgraphID)
+	fmt.Fprintf(stdout, "target_instance=%s\n", artifact.TargetInstance)
+	fmt.Fprintf(stdout, "tasks=%d\n", len(artifact.Tasks))
+	fmt.Fprintf(stdout, "schedules_work=%t\n", artifact.SchedulesWork)
+	fmt.Fprintf(stdout, "executes_work=%t\n", artifact.ExecutesWork)
+	fmt.Fprintf(stdout, "approves_work=%t\n", artifact.ApprovesWork)
 	return 0
 }
 
@@ -2700,6 +2766,17 @@ func loadFoundryRun(path string) (FoundryRun, error) {
 	return run, validateFoundryRun(run)
 }
 
+func loadAtlasFoundryImport(path string) (AtlasFoundryImport, error) {
+	var artifact AtlasFoundryImport
+	if path == "" {
+		return artifact, errors.New("missing --import")
+	}
+	if err := readJSONFile(path, &artifact); err != nil {
+		return artifact, err
+	}
+	return artifact, validateAtlasFoundryImport(artifact)
+}
+
 func loadActiveStackReadinessLedger(path string) (ActiveStackReadinessLedger, error) {
 	var ledger ActiveStackReadinessLedger
 	if strings.TrimSpace(path) == "" {
@@ -3902,6 +3979,82 @@ func validateTask(task Task) error {
 	return nil
 }
 
+func validateAtlasFoundryImport(artifact AtlasFoundryImport) error {
+	if artifact.ContractVersion != atlasImportSchema {
+		return fmt.Errorf("contract_version must be %s", atlasImportSchema)
+	}
+	if artifact.ID == "" || artifact.WorkgraphID == "" || artifact.TargetInstance == "" {
+		return errors.New("id, workgraph_id, and target_instance are required")
+	}
+	if artifact.Status != "ready_for_foundry_fixture_import" {
+		return errors.New("status must be ready_for_foundry_fixture_import")
+	}
+	if artifact.SchedulesWork {
+		return errors.New("schedules_work must be false")
+	}
+	if artifact.ExecutesWork {
+		return errors.New("executes_work must be false")
+	}
+	if artifact.ApprovesWork {
+		return errors.New("approves_work must be false")
+	}
+	if len(artifact.Tasks) == 0 {
+		return errors.New("tasks must not be empty")
+	}
+	seenPaths := map[string]bool{}
+	for i, fixture := range artifact.Tasks {
+		if fixture.NodeID == "" || fixture.TaskID == "" || fixture.Path == "" {
+			return fmt.Errorf("tasks[%d] requires node_id, task_id, and path", i)
+		}
+		if seenPaths[fixture.Path] {
+			return fmt.Errorf("tasks[%d].path must be unique", i)
+		}
+		seenPaths[fixture.Path] = true
+		if err := validateEvidencePath(fixture.Path); err != nil {
+			return fmt.Errorf("tasks[%d].path: %w", i, err)
+		}
+		if fixture.TaskID != fixture.Task.ID {
+			return fmt.Errorf("tasks[%d].task_id must match task.id", i)
+		}
+		if err := validateAtlasFactoryTask(fixture.Task); err != nil {
+			return fmt.Errorf("tasks[%d].task: %w", i, err)
+		}
+		if fixture.TaskDigest != digestAtlasFactoryTask(fixture.Task) {
+			return fmt.Errorf("tasks[%d].task_digest does not match embedded task", i)
+		}
+	}
+	return nil
+}
+
+func validateAtlasFactoryTask(task AtlasFactoryTask) error {
+	if task.ContractVersion != atlasTaskSchema {
+		return fmt.Errorf("contract_version must be %s", atlasTaskSchema)
+	}
+	if task.ID == "" || task.Objective == "" || task.TargetFactoryRepo == "" || task.FactoryFolder == "" {
+		return errors.New("id, objective, target_factory_repo, and factory_folder are required")
+	}
+	if len(task.Acceptance) == 0 || len(task.NonGoals) == 0 || len(task.WriteScope) == 0 || len(task.Verification) == 0 || len(task.RequiredEvidence) == 0 || len(task.SafetyLimits) == 0 {
+		return errors.New("acceptance, non_goals, write_scope, verification_commands, required_evidence, and safety_limits must not be empty")
+	}
+	if err := validateAtlasPublicString(task.TargetFactoryRepo); err != nil {
+		return fmt.Errorf("target_factory_repo: %w", err)
+	}
+	if err := validateEvidencePath(task.FactoryFolder); err != nil {
+		return fmt.Errorf("factory_folder: %w", err)
+	}
+	for _, values := range [][]string{task.Acceptance, task.NonGoals, task.WriteScope, task.Verification, task.RequiredEvidence, task.SafetyLimits, task.DependencyRefs} {
+		for _, value := range values {
+			if strings.TrimSpace(value) == "" {
+				return errors.New("task lists must not contain empty values")
+			}
+			if err := validateAtlasPublicString(value); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func validateGoalRun(goal GoalRun) error {
 	if goal.SchemaVersion != goalRunSchema {
 		return fmt.Errorf("schema_version must be %s", goalRunSchema)
@@ -4424,6 +4577,44 @@ func validateEvidencePath(path string) error {
 		return fmt.Errorf("unsafe evidence path %q", path)
 	}
 	return nil
+}
+
+func validateAtlasPublicString(value string) error {
+	normalized := strings.ReplaceAll(value, "\\", "/")
+	lower := strings.ToLower(normalized)
+	if normalized == "" ||
+		strings.HasPrefix(normalized, "/") ||
+		strings.HasPrefix(normalized, "~/") ||
+		strings.HasPrefix(normalized, "../") ||
+		strings.Contains(normalized, "/../") ||
+		isWindowsAbsolutePath(normalized) {
+		return fmt.Errorf("unsafe Atlas value %q", value)
+	}
+	for _, marker := range []string{
+		"/" + "users/",
+		"/" + "home/",
+		"/" + "tmp/",
+		"downloads" + "/",
+		"file:" + "//",
+		"api" + "_key",
+		"api" + "-key",
+		"access" + "_token",
+		"access" + "-token",
+	} {
+		if strings.Contains(lower, marker) {
+			return fmt.Errorf("unsafe Atlas value %q", value)
+		}
+	}
+	return nil
+}
+
+func digestAtlasFactoryTask(task AtlasFactoryTask) string {
+	data, err := json.Marshal(task)
+	if err != nil {
+		return ""
+	}
+	sum := sha256.Sum256(data)
+	return "sha256:" + fmt.Sprintf("%x", sum[:])
 }
 
 func isWindowsAbsolutePath(path string) bool {

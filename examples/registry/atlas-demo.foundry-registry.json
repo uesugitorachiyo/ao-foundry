@@ -15,14 +15,19 @@
           "kind": "atlas-foundry-handoff",
           "location": "examples/valid/workgraph.json",
           "owner": "ao-atlas"
+        },
+        {
+          "kind": "atlas-foundry-import",
+          "location": "examples/valid/foundry-import.json",
+          "owner": "ao-atlas"
         }
       ],
-      "allowed_automation": ["compile-workgraph", "emit-foundry-handoff", "readback-link"],
+      "allowed_automation": ["compile-workgraph", "emit-foundry-handoff", "validate-foundry-import", "readback-link"],
       "readiness_signals": [
         {
           "name": "atlas-production-readiness",
           "status": "ready",
-          "source": "scripts/production-readiness.sh reports score=100/100"
+          "source": "scripts/production-readiness.sh reports score=100/100 and foundry import validates"
         }
       ]
     },
@@ -45,7 +50,7 @@
         {
           "name": "atlas-registry-consumer",
           "status": "ready",
-          "source": "go test ./internal/cli -run TestRegistryValidateAcceptsAtlasDemoFixture"
+          "source": "go test ./internal/cli -run 'TestRegistryValidateAcceptsAtlasDemoFixture|TestAtlasImportValidate'"
         }
       ]
     }
