@@ -160,3 +160,19 @@ tiny docs-only PR rehearsal candidate is bounded to a fresh ignored worktree, a
 armed kill switch, and docs-only changed files. It does not create that
 worktree or branch, and it does not mutate repositories, execute work, approve
 work, call providers, publish, upload, tag, or release.
+
+Before any first live docs-only PR rehearsal gate can pass, prove rollback
+execution in a temporary fixture workspace:
+
+```sh
+scripts/live-docs-rollback-execution-rehearsal.sh \
+  --candidate examples/live-docs-rollback-execution/docs-only.candidate.json \
+  --out target/live-docs/rollback-execution-rehearsal.json
+```
+
+The rehearsal emits
+`ao.foundry.live-docs-rollback-execution-rehearsal.v0.1`. It initializes a
+temporary Git workspace, applies the proposed docs patch, applies the rollback
+patch, verifies the target docs file is gone, then removes the fixture
+workspace. It does not patch the live repository, create a branch, push, merge,
+approve, publish, release, upload, or call providers.

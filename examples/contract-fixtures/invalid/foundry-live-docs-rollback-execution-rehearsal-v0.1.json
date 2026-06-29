@@ -1,0 +1,45 @@
+{
+  "schema_version": "ao.foundry.live-docs-rollback-execution-rehearsal.v0.1",
+  "status": "ready",
+  "mode": "fixture_workspace_only",
+  "rollback_verified": false,
+  "candidate_id": "invalid-live-docs-rollback-execution",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "target_file": "internal/cli/live-docs-rehearsal.go",
+  "source_hashes": [],
+  "execution_summary": {
+    "proposed_patch_applied": false,
+    "rollback_patch_applied": false,
+    "target_after_apply_sha256": "",
+    "target_after_rollback_sha256": "",
+    "fixture_workspace_removed": true
+  },
+  "checks": [
+    {
+      "name": "rollback_patch_apply",
+      "status": "blocked",
+      "summary": "invalid fixture falsely claims ready while rollback did not verify"
+    }
+  ],
+  "first_failing_check": "rollback_patch_apply",
+  "blocking_next_actions": [
+    "Repair the rollback fixture."
+  ],
+  "maintenance_suggestions": [
+    "Invalid fixture must fail schema validation."
+  ],
+  "authority_boundaries": {
+    "fixture_workspace_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": false,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

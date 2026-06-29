@@ -5147,6 +5147,110 @@ func TestLiveDocsWorktreePrepareContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestLiveDocsRollbackExecutionRehearsalScriptExecutesAndRollsBackInFixtureWorkspace(t *testing.T) {
+	script := repoPath("scripts/live-docs-rollback-execution-rehearsal.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read live docs rollback execution rehearsal script: %v", err)
+	}
+	for _, want := range []string{
+		"ao.foundry.live-docs-rollback-execution-rehearsal.v0.1",
+		"fixture_workspace_only",
+		"git -C \"$workspace\" apply",
+		"proposed_patch_apply",
+		"rollback_patch_apply",
+		"mutates_repositories:false",
+	} {
+		if !strings.Contains(string(scriptData), want) {
+			t.Fatalf("live docs rollback execution script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr merge", "gh release", "curl "} {
+		if strings.Contains(string(scriptData), forbidden) {
+			t.Fatalf("live docs rollback execution script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	runRehearsal := func(t *testing.T, candidate string, wantReady bool, wantFailingCheck string) map[string]any {
+		t.Helper()
+		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
+		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
+		cmd := exec.Command(
+			"bash",
+			script,
+			"--candidate", candidate,
+			"--out", outPath,
+			"--json",
+		)
+		cmd.Dir = repoPath(".")
+		out, err := cmd.CombinedOutput()
+		if wantReady && err != nil {
+			t.Fatalf("live docs rollback execution failed: %v\n%s", err, string(out))
+		}
+		if !wantReady && err == nil {
+			t.Fatalf("live docs rollback execution unexpectedly passed for %s:\n%s", candidate, string(out))
+		}
+		result := readObjectFixture(t, outPath)
+		if wantReady && (result["status"] != "ready" || result["rollback_verified"] != true) {
+			t.Fatalf("expected ready verified rehearsal, got %#v", result)
+		}
+		if !wantReady {
+			if result["status"] != "blocked" || result["first_failing_check"] != wantFailingCheck {
+				t.Fatalf("expected blocked rehearsal at %s, got %#v", wantFailingCheck, result)
+			}
+		}
+		boundaries := result["authority_boundaries"].(map[string]any)
+		if boundaries["fixture_workspace_only"] != true ||
+			boundaries["live_mutation_allowed"] != false ||
+			boundaries["mutates_repositories"] != false ||
+			boundaries["schedules_work"] != false ||
+			boundaries["executes_work"] != false ||
+			boundaries["approves_work"] != false {
+			t.Fatalf("rehearsal must stay fixture-workspace-only: %#v", boundaries)
+		}
+		return result
+	}
+
+	t.Run("ready", func(t *testing.T) {
+		result := runRehearsal(t, "examples/live-docs-rollback-execution/docs-only.candidate.json", true, "")
+		summary := result["execution_summary"].(map[string]any)
+		if summary["proposed_patch_applied"] != true || summary["rollback_patch_applied"] != true {
+			t.Fatalf("ready rehearsal must apply and roll back inside fixture workspace: %#v", result)
+		}
+	})
+	t.Run("unsafe_path", func(t *testing.T) {
+		runRehearsal(t, "examples/live-docs-rollback-execution/unsafe-path.candidate.json", false, "docs_only_target")
+	})
+	t.Run("missing_rollback", func(t *testing.T) {
+		runRehearsal(t, "examples/live-docs-rollback-execution/missing-rollback.candidate.json", false, "rollback_patch_present")
+	})
+}
+
+func TestLiveDocsRollbackExecutionRehearsalContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-live-docs-rollback-execution-rehearsal-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read live docs rollback execution schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("live docs rollback execution schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid live docs rollback execution fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid live docs rollback execution fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid live docs rollback execution fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid live docs rollback execution fixture unexpectedly passed schema")
+	}
+}
+
 func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthority(t *testing.T) {
 	script := repoPath("scripts/live-mutation-rollback-rehearsal.sh")
 	scriptData, err := os.ReadFile(script)
