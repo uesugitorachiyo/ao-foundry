@@ -5,6 +5,14 @@ authority boundary. The scheduler may trigger a Foundry readiness audit and
 select the next queued task, but Foundry must still delegate governed execution
 to AO Forge.
 
+The next pulse refactor must follow the current stack intake order:
+AO Blueprint handles requirements sufficiency and build authorization, AO Atlas
+compiles oversized authorized objectives into workgraphs and bounded context
+packs, AO Foundry schedules the next safe ready item, AO Forge runs one
+governed factory job, AO Covenant gates side effects, AO2 executes, and
+readback surfaces observe. See
+[`../sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md`](../sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md).
+
 ## v0.1 Loop
 
 ```text
@@ -167,7 +175,8 @@ before scoring the readback as ready.
 
 ## Next Loop Hardening
 
-The next production-readiness slice should connect this local pulse bundle to a
-real AO Forge live execution packet when an executor is available. The same
-command should continue to refuse direct provider execution, preserve blocked
-events, and keep delegated implementation inside AO Forge.
+The next production-readiness slice should make pulse intake Blueprint/Atlas
+aware before adding broader live execution behavior. The loop should refuse
+direct provider execution, preserve blocked events, keep delegated
+implementation inside AO Forge, and allow only one active branch/PR/check cycle
+at a time.
