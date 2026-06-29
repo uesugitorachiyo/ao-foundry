@@ -1,0 +1,45 @@
+{
+  "schema_version": "ao.foundry.worktree-isolation-proof.v0.1",
+  "status": "ready",
+  "mode": "dry_run_only",
+  "candidate_path": "examples/live-mutation-worktree-isolation/reused-worktree.candidate.json",
+  "candidate_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "target_repo": {
+    "id": "ao-foundry",
+    "remote": "uesugitorachiyo/ao-foundry",
+    "target_branch": "main"
+  },
+  "change_class": "docs_only",
+  "worktree": {
+    "path": ".foundry-local/worktrees/ao-foundry-docs-only-live-mutation",
+    "branch": "codex/live-mutation-docs-only-rehearsal",
+    "base_branch": "main",
+    "clean": true,
+    "reused": true,
+    "active_elsewhere": true,
+    "has_untracked_changes": false,
+    "remote_branch_exists": false
+  },
+  "checks": [
+    {
+      "name": "clean_isolated_worktree",
+      "status": "passed",
+      "summary": "invalid fixture falsely claims readiness"
+    }
+  ],
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "This fixture must fail because it allows repository mutation."
+  ],
+  "authority_boundaries": {
+    "dry_run_only": true,
+    "live_mutation_allowed": false,
+    "mutates_repositories": true,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

@@ -174,6 +174,11 @@ run_check "pulse_overnight_start_gate" \
     --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json \
     --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json \
     --out "$TMPDIR/pulse-overnight-start-gate.json"
+run_check "worktree_isolation_proof" \
+  "live-mutation candidates require clean isolated non-reused worktrees before authority can advance" \
+  scripts/live-mutation-worktree-isolation-proof.sh \
+    --candidate examples/live-mutation-worktree-isolation/clean-isolated.candidate.json \
+    --out "$TMPDIR/worktree-isolation-proof.json"
 run_check "loop_preflight" \
   "goal, registry, task, and production readiness preflight passes" \
   go run ./cmd/foundry loop preflight --goal-run "$GOAL_RUN" --registry "$REGISTRY" --task "$TASK"

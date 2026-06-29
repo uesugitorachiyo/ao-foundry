@@ -4714,6 +4714,106 @@ func TestLiveMutationRequestContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestWorktreeIsolationProofScriptBlocksDirtyAndReusedCandidates(t *testing.T) {
+	script := repoPath("scripts/live-mutation-worktree-isolation-proof.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read worktree isolation proof script: %v", err)
+	}
+	for _, want := range []string{
+		"ao.foundry.worktree-isolation-proof.v0.1",
+		"clean_worktree",
+		"reuse_block",
+		"dry_run_only",
+		"live_mutation_allowed:false",
+	} {
+		if !strings.Contains(string(scriptData), want) {
+			t.Fatalf("worktree isolation proof script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git checkout", "git switch", "git worktree add", "gh pr merge", "gh release", "curl "} {
+		if strings.Contains(string(scriptData), forbidden) {
+			t.Fatalf("worktree isolation proof script contains forbidden live action %q", forbidden)
+		}
+	}
+
+	runProof := func(t *testing.T, candidate string, wantReady bool, wantFailingCheck string) map[string]any {
+		t.Helper()
+		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
+		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
+		cmd := exec.Command(
+			"bash",
+			script,
+			"--candidate", candidate,
+			"--out", outPath,
+			"--json",
+		)
+		cmd.Dir = repoPath(".")
+		out, err := cmd.CombinedOutput()
+		if wantReady && err != nil {
+			t.Fatalf("worktree isolation proof failed: %v\n%s", err, string(out))
+		}
+		if !wantReady && err == nil {
+			t.Fatalf("worktree isolation proof unexpectedly passed for %s:\n%s", candidate, string(out))
+		}
+		result := readObjectFixture(t, outPath)
+		if wantReady && result["status"] != "ready" {
+			t.Fatalf("expected ready proof, got %#v", result)
+		}
+		if !wantReady {
+			if result["status"] != "blocked" || result["first_failing_check"] != wantFailingCheck {
+				t.Fatalf("expected blocked proof at %s, got %#v", wantFailingCheck, result)
+			}
+		}
+		boundaries := result["authority_boundaries"].(map[string]any)
+		if boundaries["mutates_repositories"] != false ||
+			boundaries["schedules_work"] != false ||
+			boundaries["executes_work"] != false ||
+			boundaries["approves_work"] != false {
+			t.Fatalf("proof must stay read-only/dry-run: %#v", boundaries)
+		}
+		return result
+	}
+
+	t.Run("ready", func(t *testing.T) {
+		result := runProof(t, "examples/live-mutation-worktree-isolation/clean-isolated.candidate.json", true, "")
+		if result["candidate_sha256"] == "" {
+			t.Fatalf("ready proof missing candidate digest: %#v", result)
+		}
+	})
+	t.Run("dirty", func(t *testing.T) {
+		runProof(t, "examples/live-mutation-worktree-isolation/dirty-worktree.candidate.json", false, "clean_worktree")
+	})
+	t.Run("reused", func(t *testing.T) {
+		runProof(t, "examples/live-mutation-worktree-isolation/reused-worktree.candidate.json", false, "reuse_block")
+	})
+}
+
+func TestWorktreeIsolationProofContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-worktree-isolation-proof-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read worktree isolation proof schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("worktree isolation proof schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-worktree-isolation-proof-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid worktree isolation proof fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid worktree isolation proof fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-worktree-isolation-proof-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid worktree isolation proof fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid worktree isolation proof fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir()})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")
