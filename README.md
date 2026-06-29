@@ -251,6 +251,15 @@ Covenant authority, Sentinel hold, and AO Command readback references. This is
 only a request artifact: it keeps `safe_to_execute=false` until a future
 Covenant approval ticket exactly matches the scope.
 
+`scripts/live-docs-approval-gate.sh` reads that approval request and a Covenant
+`covenant.live-docs-approval-ticket.v1` ticket, then emits
+`ao.foundry.live-docs-approval-gate.v0.1`. The gate sets
+`safe_to_execute=true` only when the ticket is approved, unexpired, unconsumed,
+has an approver identity, and exact-matches the request's repo, branch policy,
+docs allowlist, forbidden paths, and changed-file limit. It emits evidence only;
+it does not create a branch, mutate files, approve work, publish, upload, or call
+providers.
+
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
 gate then compares the baseline eval result to that generated candidate eval
