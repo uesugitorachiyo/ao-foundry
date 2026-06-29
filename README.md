@@ -260,6 +260,7 @@ No active readiness path depends on `ao-operator`, `ao-runtime`,
 - [Signed-smoke release gate](docs/operations/SIGNED-SMOKE-RELEASE-GATE.md)
 - [Production Readiness SDD](docs/sdd/AO-FOUNDRY-PRODUCTION-READINESS-SDD.md)
 - [Pulse Golden Loop SDD](docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md)
+- [Pulse Blueprint/Atlas Refactor Design](docs/sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md)
 - [Pulse Production Adapters SDD](docs/sdd/AO-FOUNDRY-PULSE-PRODUCTION-ADAPTERS-SDD.md)
 - [Registry schema](docs/contracts/foundry-registry-v0.1.schema.json)
 - [Task schema](docs/contracts/foundry-task-v0.1.schema.json)
