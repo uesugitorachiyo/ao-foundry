@@ -7,7 +7,7 @@
   "source_artifacts": [
     {
       "ref": "examples/valid/workgraph.json",
-      "digest": "sha256:5c761cd7ef1ed5d648f7b2a4ee0988eef60fb097f73c343a70e0ea81999db4e5"
+      "digest": "sha256:98c442b96878ed067bb4f4e718a9920befa288d940844c63f13575a8fdde8967"
     },
     {
       "ref": "examples/valid/stack-instance.json",
@@ -19,28 +19,12 @@
       "node_id": "readiness-ready",
       "task_id": "atlas-readiness-task",
       "path": "tasks/atlas-readiness-task.json",
-      "mutation_class": "docs_only_single_file",
-      "write_scope": [
-        "factory/atlas-readiness"
-      ],
-      "rollback_scope": [
-        "factory/atlas-readiness"
-      ],
-      "required_gates": [
-        "atlas_classification",
-        "command_readback"
-      ],
-      "required_evidence": [
-        "target/production-readiness/summary.json"
-      ],
-      "authority_boundary": "atlas_classification_only",
       "task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "atlas-readiness-task",
         "objective": "Verify AO Atlas stack instance readiness fixtures and command outputs.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/atlas-readiness",
-        "mutation_class": "docs_only_single_file",
         "acceptance_criteria": [
           "production readiness reports score=100/100"
         ],
@@ -49,13 +33,6 @@
           "do not publish releases"
         ],
         "write_scope": [
-          "factory/atlas-readiness"
-        ],
-        "required_gates": [
-          "atlas_classification",
-          "command_readback"
-        ],
-        "rollback_scope": [
           "factory/atlas-readiness"
         ],
         "verification_commands": [
@@ -69,7 +46,6 @@
           "no credentials",
           "no private paths"
         ],
-        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [
           "contracts-ready"
         ],
@@ -77,7 +53,7 @@
           "examples/valid/context-pack.json"
         ]
       },
-      "task_digest": "sha256:1d49e1952c8db016899a8f3f054bff4ab92eca3b45c291b5f3498e734e857396"
+      "task_digest": "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d"
     }
   ],
   "schedules_work": false,

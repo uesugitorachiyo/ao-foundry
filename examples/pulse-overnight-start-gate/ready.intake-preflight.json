@@ -38,14 +38,14 @@
       "path": "examples/atlas/foundry-import.json",
       "schema_version": "ao.atlas.foundry-import.v0.1",
       "status": "ready_for_foundry_fixture_import",
-      "sha256": "4401ea5b02c61e3d07f6ae365dc5570b62fee808ec7371dd682cb264a902b370"
+      "sha256": "6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
     },
     {
       "name": "atlas_status",
       "path": "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
       "schema_version": "ao.foundry.atlas-status.v0.1",
       "status": "ready",
-      "sha256": "cb13a42134742902a506646b6988b45a3571170a0f8d073e0e6f8944f20d4730"
+      "sha256": "a075b7d86294733b65c4fc409f173f714e3a1d8a3b50da9ce9086e54c8571b08"
     }
   ]
 }

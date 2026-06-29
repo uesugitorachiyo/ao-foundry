@@ -82,6 +82,33 @@ func TestAtlasImportValidateAcceptsFixtureOnlyPacket(t *testing.T) {
 	}
 }
 
+func TestAtlasImportValidateAcceptsMutationAuthorityMetadata(t *testing.T) {
+	artifact, err := loadAtlasFoundryImport(filepath.Join("testdata", "atlas-foundry-import-mutation-metadata.json"))
+	if err != nil {
+		t.Fatalf("expected mutation metadata import to validate: %v", err)
+	}
+	if len(artifact.Tasks) != 1 {
+		t.Fatalf("expected one task, got %#v", artifact.Tasks)
+	}
+	task := artifact.Tasks[0]
+	if task.MutationClass != "docs_only_single_file" {
+		t.Fatalf("expected mutation class metadata, got %#v", task)
+	}
+	if !stringSliceContains(task.RequiredGates, "atlas_classification") {
+		t.Fatalf("expected required gate metadata, got %#v", task.RequiredGates)
+	}
+	if len(task.RollbackScope) == 0 || task.AuthorityBoundary == "" {
+		t.Fatalf("expected rollback scope and authority boundary, got %#v", task)
+	}
+}
+
+func TestAtlasImportValidateRejectsMissingMutationAuthorityMetadata(t *testing.T) {
+	_, err := loadAtlasFoundryImport(filepath.Join("testdata", "atlas-foundry-import-missing-metadata.json"))
+	if err == nil || !strings.Contains(err.Error(), "mutation_class") {
+		t.Fatalf("expected missing mutation metadata rejection, got %v", err)
+	}
+}
+
 func TestAtlasImportValidateRejectsExecutionAuthority(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"atlas", "import", "validate", "--import", filepath.Join("testdata", "atlas-foundry-import-executes-work.json")}, &stdout, &stderr)
@@ -131,7 +158,7 @@ func TestAtlasReadbackWritesObserverReport(t *testing.T) {
 			t.Fatalf("report[%s] = %#v, want %#v; report=%#v", key, report[key], want, report)
 		}
 	}
-	if report["task_digest"] != "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d" {
+	if report["task_digest"] != "sha256:1d49e1952c8db016899a8f3f054bff4ab92eca3b45c291b5f3498e734e857396" {
 		t.Fatalf("report must preserve Atlas task digest: %#v", report)
 	}
 	evidence, ok := report["evidence"].(map[string]any)

@@ -121,11 +121,17 @@ type AtlasSourceArtifact struct {
 }
 
 type AtlasImportTaskFixture struct {
-	NodeID     string           `json:"node_id"`
-	TaskID     string           `json:"task_id"`
-	Path       string           `json:"path"`
-	Task       AtlasFactoryTask `json:"task"`
-	TaskDigest string           `json:"task_digest"`
+	NodeID            string           `json:"node_id"`
+	TaskID            string           `json:"task_id"`
+	Path              string           `json:"path"`
+	MutationClass     string           `json:"mutation_class"`
+	WriteScope        []string         `json:"write_scope"`
+	RollbackScope     []string         `json:"rollback_scope"`
+	RequiredGates     []string         `json:"required_gates"`
+	RequiredEvidence  []string         `json:"required_evidence"`
+	AuthorityBoundary string           `json:"authority_boundary"`
+	Task              AtlasFactoryTask `json:"task"`
+	TaskDigest        string           `json:"task_digest"`
 }
 
 type AtlasFactoryTask struct {
@@ -134,12 +140,16 @@ type AtlasFactoryTask struct {
 	Objective         string   `json:"objective"`
 	TargetFactoryRepo string   `json:"target_factory_repo"`
 	FactoryFolder     string   `json:"factory_folder"`
+	MutationClass     string   `json:"mutation_class"`
 	Acceptance        []string `json:"acceptance_criteria"`
 	NonGoals          []string `json:"non_goals"`
 	WriteScope        []string `json:"write_scope"`
+	RequiredGates     []string `json:"required_gates"`
+	RollbackScope     []string `json:"rollback_scope"`
 	Verification      []string `json:"verification_commands"`
 	RequiredEvidence  []string `json:"required_evidence"`
 	SafetyLimits      []string `json:"safety_limits"`
+	AuthorityBoundary string   `json:"authority_boundary"`
 	DependencyRefs    []string `json:"dependency_refs"`
 	ContextPackRefs   []string `json:"context_pack_refs"`
 }
@@ -4967,6 +4977,15 @@ func validateAtlasFoundryImport(artifact AtlasFoundryImport) error {
 		if fixture.NodeID == "" || fixture.TaskID == "" || fixture.Path == "" {
 			return fmt.Errorf("tasks[%d] requires node_id, task_id, and path", i)
 		}
+		if fixture.MutationClass == "" {
+			return fmt.Errorf("tasks[%d].mutation_class must not be empty", i)
+		}
+		if len(fixture.WriteScope) == 0 || len(fixture.RollbackScope) == 0 || len(fixture.RequiredGates) == 0 || len(fixture.RequiredEvidence) == 0 || fixture.AuthorityBoundary == "" {
+			return fmt.Errorf("tasks[%d] requires write_scope, rollback_scope, required_gates, required_evidence, and authority_boundary", i)
+		}
+		if !validAtlasMutationClass(fixture.MutationClass) {
+			return fmt.Errorf("tasks[%d].mutation_class is not supported", i)
+		}
 		if seenPaths[fixture.Path] {
 			return fmt.Errorf("tasks[%d].path must be unique", i)
 		}
@@ -4974,11 +4993,42 @@ func validateAtlasFoundryImport(artifact AtlasFoundryImport) error {
 		if err := validateEvidencePath(fixture.Path); err != nil {
 			return fmt.Errorf("tasks[%d].path: %w", i, err)
 		}
+		for _, values := range [][]string{fixture.WriteScope, fixture.RollbackScope, fixture.RequiredGates, fixture.RequiredEvidence} {
+			for _, value := range values {
+				if strings.TrimSpace(value) == "" {
+					return fmt.Errorf("tasks[%d] authority metadata lists must not contain empty values", i)
+				}
+				if err := validateAtlasPublicString(value); err != nil {
+					return fmt.Errorf("tasks[%d] authority metadata: %w", i, err)
+				}
+			}
+		}
+		if err := validateAtlasPublicString(fixture.AuthorityBoundary); err != nil {
+			return fmt.Errorf("tasks[%d].authority_boundary: %w", i, err)
+		}
 		if fixture.TaskID != fixture.Task.ID {
 			return fmt.Errorf("tasks[%d].task_id must match task.id", i)
 		}
 		if err := validateAtlasFactoryTask(fixture.Task); err != nil {
 			return fmt.Errorf("tasks[%d].task: %w", i, err)
+		}
+		if fixture.MutationClass != fixture.Task.MutationClass {
+			return fmt.Errorf("tasks[%d].mutation_class must match task.mutation_class", i)
+		}
+		if !equalStringSlices(fixture.WriteScope, fixture.Task.WriteScope) {
+			return fmt.Errorf("tasks[%d].write_scope must match task.write_scope", i)
+		}
+		if !equalStringSlices(fixture.RollbackScope, fixture.Task.RollbackScope) {
+			return fmt.Errorf("tasks[%d].rollback_scope must match task.rollback_scope", i)
+		}
+		if !equalStringSlices(fixture.RequiredGates, fixture.Task.RequiredGates) {
+			return fmt.Errorf("tasks[%d].required_gates must match task.required_gates", i)
+		}
+		if !equalStringSlices(fixture.RequiredEvidence, fixture.Task.RequiredEvidence) {
+			return fmt.Errorf("tasks[%d].required_evidence must match task.required_evidence", i)
+		}
+		if fixture.AuthorityBoundary != fixture.Task.AuthorityBoundary {
+			return fmt.Errorf("tasks[%d].authority_boundary must match task.authority_boundary", i)
 		}
 		if fixture.TaskDigest != digestAtlasFactoryTask(fixture.Task) {
 			return fmt.Errorf("tasks[%d].task_digest does not match embedded task", i)
@@ -4994,8 +5044,14 @@ func validateAtlasFactoryTask(task AtlasFactoryTask) error {
 	if task.ID == "" || task.Objective == "" || task.TargetFactoryRepo == "" || task.FactoryFolder == "" {
 		return errors.New("id, objective, target_factory_repo, and factory_folder are required")
 	}
-	if len(task.Acceptance) == 0 || len(task.NonGoals) == 0 || len(task.WriteScope) == 0 || len(task.Verification) == 0 || len(task.RequiredEvidence) == 0 || len(task.SafetyLimits) == 0 {
-		return errors.New("acceptance, non_goals, write_scope, verification_commands, required_evidence, and safety_limits must not be empty")
+	if task.MutationClass == "" || task.AuthorityBoundary == "" {
+		return errors.New("mutation_class and authority_boundary must not be empty")
+	}
+	if !validAtlasMutationClass(task.MutationClass) {
+		return errors.New("mutation_class is not supported")
+	}
+	if len(task.Acceptance) == 0 || len(task.NonGoals) == 0 || len(task.WriteScope) == 0 || len(task.RequiredGates) == 0 || len(task.RollbackScope) == 0 || len(task.Verification) == 0 || len(task.RequiredEvidence) == 0 || len(task.SafetyLimits) == 0 {
+		return errors.New("acceptance, non_goals, write_scope, required_gates, rollback_scope, verification_commands, required_evidence, and safety_limits must not be empty")
 	}
 	if err := validateAtlasPublicString(task.TargetFactoryRepo); err != nil {
 		return fmt.Errorf("target_factory_repo: %w", err)
@@ -5003,7 +5059,10 @@ func validateAtlasFactoryTask(task AtlasFactoryTask) error {
 	if err := validateEvidencePath(task.FactoryFolder); err != nil {
 		return fmt.Errorf("factory_folder: %w", err)
 	}
-	for _, values := range [][]string{task.Acceptance, task.NonGoals, task.WriteScope, task.Verification, task.RequiredEvidence, task.SafetyLimits, task.DependencyRefs, task.ContextPackRefs} {
+	if err := validateAtlasPublicString(task.AuthorityBoundary); err != nil {
+		return fmt.Errorf("authority_boundary: %w", err)
+	}
+	for _, values := range [][]string{task.Acceptance, task.NonGoals, task.WriteScope, task.RequiredGates, task.RollbackScope, task.Verification, task.RequiredEvidence, task.SafetyLimits, task.DependencyRefs, task.ContextPackRefs} {
 		for _, value := range values {
 			if strings.TrimSpace(value) == "" {
 				return errors.New("task lists must not contain empty values")
@@ -5014,6 +5073,21 @@ func validateAtlasFactoryTask(task AtlasFactoryTask) error {
 		}
 	}
 	return nil
+}
+
+func validAtlasMutationClass(class string) bool {
+	switch class {
+	case "docs_only_single_file",
+		"docs_only_multi_file",
+		"docs_config_only",
+		"test_only",
+		"low_risk_code",
+		"multi_repo_low_risk",
+		"complex_repo_mutation":
+		return true
+	default:
+		return false
+	}
 }
 
 func validateGoalRun(goal GoalRun) error {
@@ -5678,6 +5752,18 @@ func digestAtlasFactoryTask(task AtlasFactoryTask) string {
 	}
 	sum := sha256.Sum256(data)
 	return "sha256:" + fmt.Sprintf("%x", sum[:])
+}
+
+func equalStringSlices(left, right []string) bool {
+	if len(left) != len(right) {
+		return false
+	}
+	for i := range left {
+		if left[i] != right[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func sameCleanPath(left, right string) bool {

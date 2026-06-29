@@ -6,7 +6,7 @@
   "workgraph_id": "atlas-readiness-workgraph",
   "target_instance": "demo-stack",
   "task_id": "atlas-readiness-task",
-  "task_digest": "sha256:5538bebff461bff94839123f3de3173de5b1f39bc37456684f66c63534dda11d",
+  "task_digest": "sha256:1d49e1952c8db016899a8f3f054bff4ab92eca3b45c291b5f3498e734e857396",
   "run_link_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "evidence": {
     "foundry": "evidence/foundry/atlas-readiness.json"
