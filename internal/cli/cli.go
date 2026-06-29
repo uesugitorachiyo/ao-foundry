@@ -8046,6 +8046,7 @@ func publicSchemaNames() []string {
 		"foundry-signed-smoke-summary-v0.1",
 		"foundry-task-v0.1",
 		"foundry-trace-v0.1",
+		"foundry-worktree-isolation-proof-v0.1",
 	}
 }
 

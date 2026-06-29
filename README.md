@@ -60,6 +60,7 @@ This first slice provides:
   - `scripts/overnight-rehearsal-runner.sh --out <public-safe-relative-dir>`
   - `scripts/fresh-overnight-rehearsal-artifact.sh --out <public-safe-relative-dir>`
   - `scripts/atlas-stress-readiness.sh --out <public-safe-relative-dir>`
+  - `scripts/live-mutation-worktree-isolation-proof.sh --candidate <candidate.json> --out <proof.json>`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -200,6 +201,16 @@ docs-only mutation class while preserving `mode=dry_run_only`,
 `live_mutation_allowed=false`, `provider_calls_allowed=false`, and
 `release_or_publish_allowed=false`. It is request material, not execution
 authority.
+
+`scripts/live-mutation-worktree-isolation-proof.sh` consumes a public-safe
+worktree candidate fixture and emits
+`ao.foundry.worktree-isolation-proof.v0.1`. The proof is ready only when the
+candidate uses a clean, isolated, non-reused `.foundry-local/worktrees/...`
+worktree on a fresh `codex/*` branch from synced `main`. Dirty worktrees,
+untracked changes, reused branches/worktrees, unsafe paths, or expanded
+authority block the proof. The script is dry-run only: it does not create a
+worktree, switch branches, mutate repositories, schedule work, approve work,
+call providers, publish, or release.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement
