@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-atlas-status-v0.1.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "mode",
+    "registry_id",
+    "import_id",
+    "workgraph_id",
+    "target_instance",
+    "readback_status",
+    "task_id",
+    "task_digest",
+    "run_link_digest",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "evidence",
+    "next_actions"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.atlas-status.v0.1" },
+    "status": { "const": "ready" },
+    "mode": { "const": "fixture_only_readback" },
+    "registry_id": { "type": "string", "minLength": 1 },
+    "import_id": { "type": "string", "minLength": 1 },
+    "workgraph_id": { "type": "string", "minLength": 1 },
+    "target_instance": { "type": "string", "minLength": 1 },
+    "readback_status": { "const": "ready" },
+    "task_id": { "type": "string", "minLength": 1 },
+    "task_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "run_link_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "evidence": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "additionalProperties": false
+}
