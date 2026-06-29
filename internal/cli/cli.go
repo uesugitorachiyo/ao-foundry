@@ -37,6 +37,7 @@ const (
 	atlasStatusSchema    = "ao.foundry.atlas-status.v0.1"
 	pulseIntakeSchema    = "ao.foundry.pulse-intake-preflight.v0.1"
 	pulseLifecycleSchema = "ao.foundry.pulse-pr-lifecycle.v0.1"
+	pulseStartGateSchema = "ao.foundry.pulse-overnight-start-gate.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -645,6 +646,23 @@ type PulsePRLifecycle struct {
 	BlockerReason     string `json:"blocker_reason"`
 }
 
+type PulseOvernightStartGate struct {
+	SchemaVersion          string                 `json:"schema_version"`
+	Status                 string                 `json:"status"`
+	AllowedNextAction      string                 `json:"allowed_next_action"`
+	FirstFailingCheck      string                 `json:"first_failing_check"`
+	BlockingNextActions    []string               `json:"blocking_next_actions"`
+	MaintenanceSuggestions []string               `json:"maintenance_suggestions"`
+	SourceHashes           []PulseStartGateSource `json:"source_hashes"`
+}
+
+type PulseStartGateSource struct {
+	Name          string `json:"name"`
+	Path          string `json:"path"`
+	SchemaVersion string `json:"schema_version"`
+	SHA256        string `json:"sha256"`
+}
+
 type ContractFixtureValidationResult struct {
 	ValidFixtures   int
 	InvalidFixtures int
@@ -1069,6 +1087,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse run [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
 	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
+	fmt.Fprintln(w, "  foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -2620,7 +2639,7 @@ func runCompetitive(args []string, stdout, stderr io.Writer) int {
 
 func runPulse(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "pulse: expected subcommand run or signed-smoke-script")
+		fmt.Fprintln(stderr, "pulse: expected subcommand run, intake-preflight, lifecycle, overnight-start-gate, or signed-smoke-script")
 		return 2
 	}
 	switch args[0] {
@@ -2630,6 +2649,8 @@ func runPulse(args []string, stdout, stderr io.Writer) int {
 		return runPulseIntakePreflight(args[1:], stdout, stderr)
 	case "lifecycle":
 		return runPulseLifecycle(args[1:], stdout, stderr)
+	case "overnight-start-gate":
+		return runPulseOvernightStartGate(args[1:], stdout, stderr)
 	case "signed-smoke-script":
 		return runPulseSignedSmokeScript(args[1:], stdout, stderr)
 	case "signed-smoke-preflight":
@@ -3058,6 +3079,210 @@ func errContainsUnsafeLifecycleURL(value string) bool {
 		strings.Contains(lower, "/"+"tmp/") ||
 		strings.Contains(lower, "api"+"_key") ||
 		strings.Contains(lower, "access"+"_"+"to"+"ken")
+}
+
+func runPulseOvernightStartGate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("pulse overnight-start-gate", stderr)
+	preflightPath := fs.String("intake-preflight", "", "Pulse intake preflight result")
+	lifecyclePath := fs.String("lifecycle", "", "Pulse PR lifecycle state")
+	outPath := fs.String("out", "", "overnight start gate result output path")
+	startImplementation := fs.Bool("start-implementation", false, "fail if a blocked preflight would be used to start implementation")
+	jsonOut := fs.Bool("json", false, "emit JSON result to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*preflightPath) == "" || strings.TrimSpace(*lifecyclePath) == "" || strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "pulse overnight-start-gate: --intake-preflight, --lifecycle, and --out are required")
+		return 2
+	}
+	if sameCleanPath(*outPath, *preflightPath) || sameCleanPath(*outPath, *lifecyclePath) {
+		fmt.Fprintln(stderr, "pulse overnight-start-gate: --out must not overwrite input artifacts")
+		return 2
+	}
+	result, err := buildPulseOvernightStartGate(*preflightPath, *lifecyclePath, *startImplementation)
+	if writeErr := writeJSONFile(*outPath, result); writeErr != nil {
+		fmt.Fprintf(stderr, "pulse overnight-start-gate: write result: %v\n", writeErr)
+		return 2
+	}
+	if *jsonOut {
+		if writeErr := writeJSON(stdout, result); writeErr != nil {
+			fmt.Fprintf(stderr, "pulse overnight-start-gate: marshal result: %v\n", writeErr)
+			return 2
+		}
+	} else {
+		fmt.Fprintf(stdout, "pulse_overnight_start_gate=%s\n", result.Status)
+		fmt.Fprintf(stdout, "allowed_next_action=%s\n", result.AllowedNextAction)
+		fmt.Fprintf(stdout, "start_gate_result=%s\n", *outPath)
+	}
+	if err != nil {
+		fmt.Fprintf(stderr, "pulse overnight-start-gate: %v\n", err)
+		return 1
+	}
+	if result.Status == "failed" {
+		return 1
+	}
+	return 0
+}
+
+func buildPulseOvernightStartGate(preflightPath, lifecyclePath string, startImplementation bool) (PulseOvernightStartGate, error) {
+	result := PulseOvernightStartGate{
+		SchemaVersion:       pulseStartGateSchema,
+		Status:              "ready",
+		AllowedNextAction:   "start_next_slice",
+		BlockingNextActions: []string{},
+		MaintenanceSuggestions: []string{
+			"run this gate before autonomous overnight/event-loop advancement",
+			"the gate only decides readiness; it must not schedule, execute, approve, upload, publish, or mutate repositories",
+		},
+		SourceHashes: []PulseStartGateSource{},
+	}
+	preflight, err := loadPulseStartGatePreflight(preflightPath)
+	if err != nil {
+		return failPulseStartGate(result, "intake_preflight", "failed", err.Error(), "Regenerate the Pulse intake preflight artifact.")
+	}
+	preflightSource, err := pulseStartGateSourceFromFile("intake_preflight", preflightPath, preflight.SchemaVersion)
+	if err != nil {
+		return failPulseStartGate(result, "intake_preflight", "failed", err.Error(), "Use a public-safe Pulse intake preflight path.")
+	}
+	result.SourceHashes = append(result.SourceHashes, preflightSource)
+
+	lifecycle, err := loadPulseStartGateLifecycle(lifecyclePath)
+	if err != nil {
+		return failPulseStartGate(result, "pulse_pr_lifecycle", "failed", err.Error(), "Regenerate the Pulse PR lifecycle state artifact.")
+	}
+	lifecycleSource, err := pulseStartGateSourceFromFile("pulse_pr_lifecycle", lifecyclePath, lifecycle.SchemaVersion)
+	if err != nil {
+		return failPulseStartGate(result, "pulse_pr_lifecycle", "failed", err.Error(), "Use a public-safe Pulse PR lifecycle path.")
+	}
+	result.SourceHashes = append(result.SourceHashes, lifecycleSource)
+
+	if err := validatePulsePRLifecycle(lifecycle); err != nil {
+		return failPulseStartGate(result, "pulse_pr_lifecycle", "failed", err.Error(), "Finish PR checks, merge, sync main, and clean branches before starting another slice.")
+	}
+	switch preflight.Status {
+	case "ready":
+		if err := validatePulseStartGateSourceArtifacts(preflight.SourceArtifacts); err != nil {
+			return failPulseStartGate(result, "evidence_digest", "failed", err.Error(), "Regenerate digest-bound Blueprint and Atlas evidence before starting the loop.")
+		}
+		if preflight.BlueprintStatus != "ready" {
+			return failPulseStartGate(result, "intake_preflight", "failed", "ready preflight requires blueprint_status=ready", "Regenerate the Pulse intake preflight artifact.")
+		}
+		return result, nil
+	case "blocked":
+		if err := validatePulseStartGateSourceArtifacts(preflight.SourceArtifacts); err != nil {
+			return failPulseStartGate(result, "evidence_digest", "failed", err.Error(), "Regenerate digest-bound Blueprint and Atlas evidence before starting the loop.")
+		}
+		if startImplementation {
+			return failPulseStartGate(result, "blueprint_blocked_start_attempt", "failed", "Blueprint clarification is blocked but caller attempted to start implementation", "Answer the Blueprint clarification request before starting implementation.")
+		}
+		result.Status = "blocked"
+		result.AllowedNextAction = "request_blueprint_clarification"
+		result.FirstFailingCheck = "intake_preflight"
+		result.BlockingNextActions = append(result.BlockingNextActions, preflight.BlockingNextActions...)
+		if len(result.BlockingNextActions) == 0 {
+			result.BlockingNextActions = append(result.BlockingNextActions, "Answer the Blueprint clarification request before starting implementation.")
+		}
+		return result, nil
+	case "failed":
+		return failPulseStartGate(result, "intake_preflight", "failed", "Pulse intake preflight failed", "Fix the Pulse intake preflight failure before starting the loop.")
+	default:
+		return failPulseStartGate(result, "intake_preflight", "failed", fmt.Sprintf("invalid preflight status %q", preflight.Status), "Regenerate the Pulse intake preflight artifact.")
+	}
+}
+
+func loadPulseStartGatePreflight(path string) (PulseIntakePreflight, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulseIntakePreflight{}, fmt.Errorf("unsafe intake preflight path: %w", err)
+	}
+	var preflight PulseIntakePreflight
+	if err := readJSONFile(path, &preflight); err != nil {
+		return PulseIntakePreflight{}, fmt.Errorf("read intake preflight: %w", err)
+	}
+	if preflight.SchemaVersion != pulseIntakeSchema {
+		return PulseIntakePreflight{}, fmt.Errorf("intake preflight schema_version must be %s", pulseIntakeSchema)
+	}
+	if err := validatePublicSafeJSONStrings(preflight); err != nil {
+		return PulseIntakePreflight{}, err
+	}
+	if strings.TrimSpace(preflight.Status) == "" {
+		return PulseIntakePreflight{}, errors.New("intake preflight status is required")
+	}
+	return preflight, nil
+}
+
+func loadPulseStartGateLifecycle(path string) (PulsePRLifecycle, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulsePRLifecycle{}, fmt.Errorf("unsafe lifecycle path: %w", err)
+	}
+	var lifecycle PulsePRLifecycle
+	if err := readJSONFile(path, &lifecycle); err != nil {
+		return PulsePRLifecycle{}, fmt.Errorf("read lifecycle: %w", err)
+	}
+	if err := validatePublicSafeJSONStrings(lifecycle); err != nil {
+		return PulsePRLifecycle{}, err
+	}
+	return lifecycle, nil
+}
+
+func pulseStartGateSourceFromFile(name, path, schemaVersion string) (PulseStartGateSource, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulseStartGateSource{}, fmt.Errorf("unsafe source path: %w", err)
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return PulseStartGateSource{}, err
+	}
+	return PulseStartGateSource{
+		Name:          name,
+		Path:          filepath.ToSlash(filepath.Clean(path)),
+		SchemaVersion: schemaVersion,
+		SHA256:        sum,
+	}, nil
+}
+
+func validatePulseStartGateSourceArtifacts(sources []PulseIntakeSource) error {
+	if len(sources) == 0 {
+		return errors.New("Pulse intake preflight must include digest-bound source_artifacts")
+	}
+	for _, source := range sources {
+		if strings.TrimSpace(source.Name) == "" || strings.TrimSpace(source.Path) == "" || strings.TrimSpace(source.SchemaVersion) == "" || strings.TrimSpace(source.Status) == "" {
+			return errors.New("Pulse intake source artifacts require name, path, schema_version, and status")
+		}
+		if err := validateEvidencePath(source.Path); err != nil {
+			return fmt.Errorf("source artifact %s has unsafe path: %w", source.Name, err)
+		}
+		if !isHexSHA256(source.SHA256) {
+			return fmt.Errorf("source artifact %s has missing or invalid sha256 digest", source.Name)
+		}
+		actual, err := fileSHA256(source.Path)
+		if err != nil {
+			return fmt.Errorf("source artifact %s cannot be hashed: %w", source.Name, err)
+		}
+		if actual != source.SHA256 {
+			return fmt.Errorf("source artifact %s digest is stale", source.Name)
+		}
+	}
+	return nil
+}
+
+func isHexSHA256(value string) bool {
+	if len(value) != 64 {
+		return false
+	}
+	for _, r := range value {
+		if (r < '0' || r > '9') && (r < 'a' || r > 'f') && (r < 'A' || r > 'F') {
+			return false
+		}
+	}
+	return true
+}
+
+func failPulseStartGate(result PulseOvernightStartGate, checkName, status, reason, nextAction string) (PulseOvernightStartGate, error) {
+	result.Status = status
+	result.AllowedNextAction = "stop_blocked"
+	result.FirstFailingCheck = checkName
+	result.BlockingNextActions = append(result.BlockingNextActions, nextAction)
+	return result, errors.New(reason)
 }
 
 func runPulseSignedSmokeScript(args []string, stdout, stderr io.Writer) int {
@@ -7709,6 +7934,7 @@ func publicSchemaNames() []string {
 		"foundry-loop-lease-v0.1",
 		"foundry-production-readiness-audit-v0.1",
 		"foundry-pulse-intake-preflight-v0.1",
+		"foundry-pulse-overnight-start-gate-v0.1",
 		"foundry-pulse-pr-lifecycle-v0.1",
 		"foundry-pulse-event-v0.1",
 		"foundry-registry-v0.1",

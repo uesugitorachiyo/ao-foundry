@@ -54,6 +54,7 @@ This first slice provides:
   - `foundry pulse run --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
   - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
+  - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
   - `foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>`
   - `foundry repo board --registry <path>`
   - `ao status`, `ao next`, `ao run`, `ao audit`, `ao demo` through `cmd/ao`
@@ -100,6 +101,7 @@ go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-product
 go run ./cmd/foundry pulse run --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
 go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry pulse lifecycle inspect --state examples/pulse-lifecycle/ready-to-start-next-slice.json --json
+go run ./cmd/foundry pulse overnight-start-gate --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json --out tmp/pulse-overnight-start-gate.json
 go run ./cmd/foundry rsi improvement-gate --baseline examples/evals/rsi-baseline.eval-result.json --candidate examples/evals/bootstrap.eval-result.json --min-improvement 5 --out tmp/rsi-improvement-gate.json
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 scripts/active-stack-github-runs-report.sh --out tmp/active-stack-github-runs-report.json
@@ -132,6 +134,17 @@ starting another automated slice. It reads
 check, merge cleanup, dirty worktree, or main-sync condition still blocks the
 next slice. It is inspection-only and does not create branches, push, merge, or
 delete anything.
+
+`foundry pulse overnight-start-gate` composes the Blueprint/Atlas intake
+preflight and one-slice PR lifecycle state into the required precondition before
+autonomous overnight/event-loop advancement. It emits
+`ao.foundry.pulse-overnight-start-gate.v0.1`, requires digest-bound source
+evidence, fails closed on failed preflight, pending/failing PRs, incomplete
+cleanup, unsynced main, dirty worktrees, and stale evidence digests, and returns
+a clean blocked result for Blueprint clarification when implementation is not
+being started. The gate is read-only decision evidence; it does not start the
+loop, schedule, execute, approve, publish, call providers, or mutate
+repositories.
 
 The pulse loop writes `ao.foundry.rsi-candidate.v0.1` evidence after generating
 the local candidate eval result and before running the gate. The RSI improvement

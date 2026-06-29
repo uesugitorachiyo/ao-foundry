@@ -151,6 +151,32 @@ branches fail closed. This command inspects local fixture/state only; it does
 not create branches, push, merge, delete branches, schedule work, execute work,
 approve work, publish, call providers, or mutate sibling repositories.
 
+### Slice G: Overnight Start Gate
+
+Compose the Blueprint/Atlas intake preflight with one-slice PR lifecycle state
+before any autonomous overnight/event-loop advancement begins.
+
+The executable slice is:
+
+```sh
+go run ./cmd/foundry pulse overnight-start-gate \
+  --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json \
+  --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json \
+  --out tmp/pulse-overnight-start-gate.json
+```
+
+It emits `ao.foundry.pulse-overnight-start-gate.v0.1`. The gate allows
+`start_next_slice` only when the intake preflight is ready, Blueprint/Atlas
+source evidence is digest-bound and current, lifecycle state allows starting,
+main is synced, the worktree is clean, no current-slice PR/check is active, and
+merged branch cleanup is complete. A Blueprint clarification preflight returns
+`status=blocked` and `allowed_next_action=request_blueprint_clarification`
+unless `--start-implementation` is supplied, in which case it fails closed.
+Failed preflight, pending/failing checks, incomplete cleanup, dirty worktrees,
+unsynced main, and stale evidence digests fail closed. This command writes gate
+evidence only; it does not start implementation, schedule work, execute work,
+approve work, publish, call providers, or mutate repositories.
+
 ### Slice D: Atlas Workgraph Scheduler Input
 
 Teach Foundry to read Atlas ready nodes as scheduler input while preserving

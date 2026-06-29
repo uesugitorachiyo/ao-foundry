@@ -43,6 +43,10 @@ go run ./cmd/foundry pulse intake-preflight \
 go run ./cmd/foundry pulse lifecycle inspect \
   --state examples/pulse-lifecycle/ready-to-start-next-slice.json \
   --json
+go run ./cmd/foundry pulse overnight-start-gate \
+  --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json \
+  --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json \
+  --out tmp/pulse-overnight-start-gate.json
 go run ./cmd/foundry pulse run --out tmp/pulse
 go run ./cmd/foundry pulse freshness --pulse tmp/pulse/pulse-event.json
 go run ./cmd/foundry trace inspect --trace tmp/pulse/pulse.trace.jsonl
@@ -72,6 +76,15 @@ slice. It fails closed when the current slice has an open PR, pending or failed
 checks, incomplete merged-branch cleanup, unsynced main, dirty worktree state,
 or multiple active `codex/*` branches. It is a local inspection gate only; it
 does not branch, push, merge, delete branches, schedule work, or execute work.
+
+The overnight start gate reads the preflight and lifecycle artifacts, writes
+`tmp/pulse-overnight-start-gate.json`, and is the required precondition before
+autonomous overnight advancement. It emits
+`ao.foundry.pulse-overnight-start-gate.v0.1`, requires digest-bound
+Blueprint/Atlas evidence, fails closed on failed preflight, stale digests,
+pending or failing checks, incomplete cleanup, unsynced main, and dirty
+worktrees, and cleanly blocks for Blueprint clarification when implementation
+is not being started. It does not start a loop or mutate repositories.
 
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the

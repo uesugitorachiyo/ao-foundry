@@ -4269,6 +4269,165 @@ func TestPulseLifecycleContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestPulseOvernightStartGateAllowsReadyState(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "overnight-start-gate",
+		"--intake-preflight", "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+		"--lifecycle", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--out", outPath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["schema_version"] != "ao.foundry.pulse-overnight-start-gate.v0.1" ||
+		result["status"] != "ready" ||
+		result["allowed_next_action"] != "start_next_slice" ||
+		result["first_failing_check"] != "" {
+		t.Fatalf("unexpected ready start gate result: %#v", result)
+	}
+	if !strings.Contains(stdout.String(), `"status": "ready"`) {
+		t.Fatalf("expected JSON stdout for ready gate, got %s", stdout.String())
+	}
+}
+
+func TestPulseOvernightStartGateBlocksForBlueprintClarification(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "overnight-start-gate",
+		"--intake-preflight", "examples/pulse-overnight-start-gate/blocked.intake-preflight.json",
+		"--lifecycle", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want clean blocked exit 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "blocked" || result["allowed_next_action"] != "request_blueprint_clarification" {
+		t.Fatalf("unexpected blocked start gate result: %#v", result)
+	}
+}
+
+func TestPulseOvernightStartGateFailsBlockedPreflightWhenStartingImplementation(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "overnight-start-gate",
+		"--intake-preflight", "examples/pulse-overnight-start-gate/blocked.intake-preflight.json",
+		"--lifecycle", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--out", outPath,
+		"--start-implementation",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for blocked start attempt; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["first_failing_check"] != "blueprint_blocked_start_attempt" {
+		t.Fatalf("expected blocked start attempt failure, got %#v", result)
+	}
+}
+
+func TestPulseOvernightStartGateFailsClosedForFailedPreflight(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "overnight-start-gate",
+		"--intake-preflight", "examples/pulse-overnight-start-gate/failed.intake-preflight.json",
+		"--lifecycle", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for failed preflight; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "failed" || result["first_failing_check"] != "intake_preflight" {
+		t.Fatalf("unexpected failed preflight gate result: %#v", result)
+	}
+}
+
+func TestPulseOvernightStartGateFailsClosedForLifecycleBlockers(t *testing.T) {
+	for _, tc := range []struct {
+		name    string
+		fixture string
+		want    string
+	}{
+		{name: "pending_pr", fixture: "examples/pulse-lifecycle/open-pr-pending-checks.json", want: "current slice PR checks are pending"},
+		{name: "cleanup_incomplete", fixture: "examples/pulse-lifecycle/merged-cleanup-incomplete.json", want: "merged PR cleanup is incomplete"},
+		{name: "dirty_worktree", fixture: "examples/pulse-lifecycle/dirty-worktree-blocked.json", want: "dirty worktree"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"pulse", "overnight-start-gate",
+				"--intake-preflight", "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+				"--lifecycle", tc.fixture,
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code == 0 {
+				t.Fatalf("Run returned success for lifecycle blocker %s; stdout=%s stderr=%s", tc.fixture, stdout.String(), stderr.String())
+			}
+			if !strings.Contains(stderr.String(), tc.want) {
+				t.Fatalf("expected lifecycle blocker %q, got %q", tc.want, stderr.String())
+			}
+			result := readObjectFixture(t, outPath)
+			if result["first_failing_check"] != "pulse_pr_lifecycle" {
+				t.Fatalf("expected lifecycle failure, got %#v", result)
+			}
+		})
+	}
+}
+
+func TestPulseOvernightStartGateFailsClosedForStaleDigest(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-overnight-start-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "overnight-start-gate",
+		"--intake-preflight", "examples/pulse-overnight-start-gate/stale-digest.intake-preflight.json",
+		"--lifecycle", "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for stale digest; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "digest is stale") {
+		t.Fatalf("expected stale digest failure, got %q", stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["first_failing_check"] != "evidence_digest" {
+		t.Fatalf("expected evidence digest failure, got %#v", result)
+	}
+}
+
+func TestPulseOvernightStartGateContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-pulse-overnight-start-gate-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read pulse overnight start gate schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("pulse overnight start gate schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-pulse-overnight-start-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid pulse overnight start gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid pulse overnight start gate fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-pulse-overnight-start-gate-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid pulse overnight start gate fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid pulse overnight start gate fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunWritesFailedEventForBlockedReadiness(t *testing.T) {
 	outDir := t.TempDir()
 	var stdout, stderr bytes.Buffer
