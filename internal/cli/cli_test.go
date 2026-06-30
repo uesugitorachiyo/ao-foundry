@@ -1251,6 +1251,173 @@ func TestLowRiskCodeLiveRehearsalGateBlocksWithoutPolicyEvidence(t *testing.T) {
 	}
 }
 
+func TestLowRiskCodeLiveRehearsalGateRejectsWeakPolicyEvidenceAfterAtlasImport(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	gateScript := repoPath("scripts/low-risk-code-live-rehearsal-gate.sh")
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainPath := filepath.Join(outDir, "chain", "summary.json")
+	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	policyPath := filepath.Join(outDir, "weak-policy.json")
+	writeWeakLowRiskLivePolicyFixture(t, repoPath(policyPath), fileSHA256HexForTest(t, repoPath(chainPath)))
+
+	gatePath := filepath.Join(outDir, "gate.json")
+	gateCmd := exec.Command("bash", gateScript,
+		"--chain", chainPath,
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--live-policy-evidence", policyPath,
+		"--out", gatePath,
+	)
+	gateCmd.Dir = repoPath(".")
+	if out, err := gateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	gate := readObjectFixture(t, gatePath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "live_policy_evidence" ||
+		gate["exact_next_step"] != "collect_low_risk_code_live_policy_evidence" {
+		t.Fatalf("weak policy evidence must fail after Atlas import/readback: %#v", gate)
+	}
+	if !gateCheckHasStatusForTest(t, gate, "atlas_blueprint_import", "passed") {
+		t.Fatalf("Atlas import/readback should pass before weak policy blocks: %#v", gate["checks"])
+	}
+}
+
+func TestLowRiskCodeLiveRehearsalGateRequiresDownstreamProofsAfterExpandedPolicy(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	gateScript := repoPath("scripts/low-risk-code-live-rehearsal-gate.sh")
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainPath := filepath.Join(outDir, "chain", "summary.json")
+	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	policyPath := filepath.Join(outDir, "policy.json")
+	writeExpandedLowRiskLivePolicyFixture(t, repoPath(policyPath), repoPath(chainPath))
+
+	gatePath := filepath.Join(outDir, "gate.json")
+	gateCmd := exec.Command("bash", gateScript,
+		"--chain", chainPath,
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--live-policy-evidence", policyPath,
+		"--out", gatePath,
+	)
+	gateCmd.Dir = repoPath(".")
+	if out, err := gateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	gate := readObjectFixture(t, gatePath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "bounded_packet_enforcement" ||
+		gate["exact_next_step"] != "collect_forge_ao2_bounded_packet_enforcement_proof" {
+		t.Fatalf("expanded policy must rewire to bounded-packet proof before execution: %#v", gate)
+	}
+	if !gateCheckHasStatusForTest(t, gate, "live_policy_evidence", "passed") {
+		t.Fatalf("expanded policy evidence should pass before bounded-packet proof blocks: %#v", gate["checks"])
+	}
+}
+
+func TestLowRiskCodeLiveRehearsalGateAcceptsExactAtlasFirstRewiredProofs(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	gateScript := repoPath("scripts/low-risk-code-live-rehearsal-gate.sh")
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainPath := filepath.Join(outDir, "chain", "summary.json")
+	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	chainSHA := fileSHA256HexForTest(t, repoPath(chainPath))
+	policyPath := filepath.Join(outDir, "policy.json")
+	boundedPath := filepath.Join(outDir, "bounded-packet-proof.json")
+	sentinelPath := filepath.Join(outDir, "sentinel-verdict.json")
+	promoterPath := filepath.Join(outDir, "promoter-verdict.json")
+	commandPath := filepath.Join(outDir, "command-readback.json")
+	writeExpandedLowRiskLivePolicyFixture(t, repoPath(policyPath), repoPath(chainPath))
+	writeLowRiskLiveDownstreamProofFixture(t, repoPath(boundedPath), "ao.forge_ao2.low-risk-code-bounded-packet-enforcement.v0.1", "ready", chainSHA, "codex/low-risk-code-rehearsal-one")
+	writeLowRiskLiveDownstreamProofFixture(t, repoPath(sentinelPath), "ao.sentinel.low-risk-code-live-hold-verdict.v0.1", "clear", chainSHA, "codex/low-risk-code-rehearsal-one")
+	writeLowRiskLiveDownstreamProofFixture(t, repoPath(promoterPath), "ao.promoter.low-risk-code-live-verdict.v0.1", "no_promotion_before_execution", chainSHA, "codex/low-risk-code-rehearsal-one")
+	writeLowRiskLiveDownstreamProofFixture(t, repoPath(commandPath), "ao.command.low-risk-code-live-readback.v0.1", "ready", chainSHA, "codex/low-risk-code-rehearsal-one")
+
+	gatePath := filepath.Join(outDir, "gate.json")
+	gateCmd := exec.Command("bash", gateScript,
+		"--chain", chainPath,
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--live-policy-evidence", policyPath,
+		"--bounded-packet-proof", boundedPath,
+		"--sentinel-verdict", sentinelPath,
+		"--promoter-verdict", promoterPath,
+		"--command-readback", commandPath,
+		"--out", gatePath,
+	)
+	gateCmd.Dir = repoPath(".")
+	if out, err := gateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	gate := readObjectFixture(t, gatePath)
+	if gate["status"] != "ready" ||
+		gate["safe_to_execute"] != true ||
+		gate["first_failing_check"] != "" ||
+		gate["exact_next_step"] != "request_low_risk_code_live_rehearsal" {
+		t.Fatalf("exact Atlas-first rewired proofs should make the gate decidable: %#v", gate)
+	}
+	for _, checkName := range []string{"atlas_blueprint_import", "live_policy_evidence", "bounded_packet_enforcement", "sentinel_low_risk_live_verdict", "promoter_low_risk_live_verdict", "command_live_readback"} {
+		if !gateCheckHasStatusForTest(t, gate, checkName, "passed") {
+			t.Fatalf("rewired check %s did not pass: %#v", checkName, gate["checks"])
+		}
+	}
+}
+
+func TestLowRiskCodeLiveRehearsalGateFailsClosedOnMismatchedRewiredProof(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	gateScript := repoPath("scripts/low-risk-code-live-rehearsal-gate.sh")
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainPath := filepath.Join(outDir, "chain", "summary.json")
+	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	chainSHA := fileSHA256HexForTest(t, repoPath(chainPath))
+	policyPath := filepath.Join(outDir, "policy.json")
+	boundedPath := filepath.Join(outDir, "bounded-packet-proof.json")
+	writeExpandedLowRiskLivePolicyFixture(t, repoPath(policyPath), repoPath(chainPath))
+	writeLowRiskLiveDownstreamProofFixture(t, repoPath(boundedPath), "ao.forge_ao2.low-risk-code-bounded-packet-enforcement.v0.1", "ready", chainSHA, "codex/other-branch")
+
+	gatePath := filepath.Join(outDir, "gate.json")
+	gateCmd := exec.Command("bash", gateScript,
+		"--chain", chainPath,
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--live-policy-evidence", policyPath,
+		"--bounded-packet-proof", boundedPath,
+		"--out", gatePath,
+	)
+	gateCmd.Dir = repoPath(".")
+	if out, err := gateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	gate := readObjectFixture(t, gatePath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "bounded_packet_enforcement" {
+		t.Fatalf("mismatched bounded proof must fail closed: %#v", gate)
+	}
+}
+
 func TestLiveMutationReadinessRollupScript(t *testing.T) {
 	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
 	rollupScript := repoPath("scripts/live-mutation-readiness-rollup.sh")
@@ -6956,6 +7123,112 @@ func readObjectFixture(t *testing.T, path string) map[string]any {
 		t.Fatalf("JSON fixture %s is not an object: %#v", path, value)
 	}
 	return object
+}
+
+func writeWeakLowRiskLivePolicyFixture(t *testing.T, path string, chainSHA string) {
+	t.Helper()
+	writeJSONFixtureForTest(t, path, map[string]any{
+		"schema_version":        "ao.foundry.low-risk-code-live-execution-policy.v0.1",
+		"status":                "approved",
+		"mutation_class":        "low_risk_code",
+		"dry_run_chain_sha256":  chainSHA,
+		"scope":                 "single_source_plus_test",
+		"expires_at_utc":        time.Now().UTC().Add(2 * time.Hour).Format(time.RFC3339),
+		"safe_to_execute":       false,
+		"live_execution_grants": false,
+	})
+}
+
+func writeExpandedLowRiskLivePolicyFixture(t *testing.T, path string, chainPath string) {
+	t.Helper()
+	atlasImport := readObjectFixture(t, "examples/atlas/blueprint-import.low-risk-code.json")
+	digests := atlasImport["digests"].(map[string]any)
+	writeJSONFixtureForTest(t, path, map[string]any{
+		"schema_version":                       "ao.foundry.low-risk-code-live-execution-policy.v0.1",
+		"status":                               "approved",
+		"mutation_class":                       "low_risk_code",
+		"dry_run_chain_sha256":                 fileSHA256HexForTest(t, chainPath),
+		"atlas_blueprint_import_sha256":        fileSHA256HexForTest(t, repoPath("examples/atlas/blueprint-import.low-risk-code.json")),
+		"blueprint_pack_digest":                digests["blueprint_pack"],
+		"blueprint_authorization_digest":       digests["build_authorization"],
+		"candidate_selection_digest":           digests["candidate_selection"],
+		"mutation_class_model_digest":          digests["mutation_class_model"],
+		"scope":                                "single_source_plus_test",
+		"expires_at_utc":                       time.Now().UTC().Add(2 * time.Hour).Format(time.RFC3339),
+		"safe_to_execute":                      false,
+		"live_execution_grants":                false,
+		"fully_unsupervised_complex_repo_live": false,
+		"candidate": map[string]any{
+			"repo":              "ao-atlas",
+			"base_branch":       "main",
+			"work_branch":       "codex/low-risk-code-rehearsal-one",
+			"file_allowlist":    []string{"internal/atlas/validate.go"},
+			"command_allowlist": []string{"git diff --check", "go test ./..."},
+			"rollback_plan": map[string]any{
+				"strategy": "git_restore_exact_file",
+				"files":    []string{"internal/atlas/validate.go"},
+			},
+		},
+	})
+}
+
+func writeLowRiskLiveDownstreamProofFixture(t *testing.T, path string, schemaVersion string, status string, chainSHA string, workBranch string) {
+	t.Helper()
+	writeJSONFixtureForTest(t, path, map[string]any{
+		"schema_version":        schemaVersion,
+		"status":                status,
+		"mutation_class":        "low_risk_code",
+		"dry_run_chain_sha256":  chainSHA,
+		"safe_to_execute":       true,
+		"live_execution_grants": false,
+		"candidate": map[string]any{
+			"repo":              "ao-atlas",
+			"base_branch":       "main",
+			"work_branch":       workBranch,
+			"file_allowlist":    []string{"internal/atlas/validate.go"},
+			"command_allowlist": []string{"git diff --check", "go test ./..."},
+			"rollback_plan": map[string]any{
+				"strategy": "git_restore_exact_file",
+				"files":    []string{"internal/atlas/validate.go"},
+			},
+		},
+	})
+}
+
+func writeJSONFixtureForTest(t *testing.T, path string, value any) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		t.Fatalf("create fixture directory: %v", err)
+	}
+	mustWriteJSONForTest(t, path, value)
+}
+
+func fileSHA256HexForTest(t *testing.T, path string) string {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read file for sha256 %s: %v", path, err)
+	}
+	sum := sha256.Sum256(data)
+	return fmt.Sprintf("%x", sum[:])
+}
+
+func gateCheckHasStatusForTest(t *testing.T, gate map[string]any, name string, status string) bool {
+	t.Helper()
+	checks, ok := gate["checks"].([]any)
+	if !ok {
+		t.Fatalf("gate checks missing or not array: %#v", gate["checks"])
+	}
+	for _, raw := range checks {
+		check, ok := raw.(map[string]any)
+		if !ok {
+			t.Fatalf("gate check is not object: %#v", raw)
+		}
+		if check["name"] == name {
+			return check["status"] == status
+		}
+	}
+	return false
 }
 
 func objectStringSliceContains(object map[string]any, key, want string) bool {
