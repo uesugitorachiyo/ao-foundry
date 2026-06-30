@@ -199,13 +199,19 @@ mutate repositories.
 For `multi_repo_low_risk`, Foundry also requires a serialized per-repo dry-run
 plan with ordered PR dependencies, fresh clean-main repo state, rollback ready
 for each repo, CI passing for each repo, an armed kill switch, and
-`max_active_repos=1`. It reports the repo plan for readback, keeps
-`safe_to_execute=false`, and fails closed on unsafe concurrent execution,
-missing per-repo rollback or CI, stale repo state, disarmed kill switch, or a
-dependency that does not point to an earlier repo in the serialized order. It
-also emits a `live_rehearsal_decision` denial readback showing that the first
-live multi-repo rehearsal remains blocked until `low_risk_code` live evidence,
-rollback, Sentinel, Promoter, Command, and clean-main CI evidence are complete.
+`max_active_repos=1`. It reports the repo plan for readback and fails closed on
+unsafe concurrent execution, missing per-repo rollback or CI, stale repo state,
+disarmed kill switch, or a dependency that does not point to an earlier repo in
+the serialized order. Before the first serialized live rehearsal completed, its
+`live_rehearsal_decision` readback kept live multi-repo execution blocked until
+`low_risk_code` live evidence, rollback, Sentinel, Promoter, Command, and
+clean-main CI evidence were complete. The 2026-06-30 Atlas-first rehearsal then
+completed repo one through AO Command PR #56 and repo two through AO Foundry PR
+#122, both with exact test-only scope, passing CI, branch cleanup, rollback
+readiness, Sentinel/Promoter/Command evidence, and public-safety review. That
+evidence makes `multi_repo_low_risk` the highest proven live class. The next
+denied class is `complex_repo_mutation`; complex mutation, fully unsupervised
+complex mutation, and RSI remain denied.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus
 promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
