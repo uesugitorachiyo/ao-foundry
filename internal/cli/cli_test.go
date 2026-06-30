@@ -1130,6 +1130,66 @@ func TestGovernedLiveMutationDryRunChainScript(t *testing.T) {
 	}
 }
 
+func TestGovernedLiveMutationDryRunChainScriptLowRiskCode(t *testing.T) {
+	script := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	scriptData, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatalf("read governed live mutation chain script: %v", err)
+	}
+	scriptText := string(scriptData)
+	for _, want := range []string{
+		"--mutation-class docs_only_multi_file|low_risk_code",
+		"Atlas classification",
+		"Foundry class gate",
+		"Covenant authority ticket",
+		"Forge dry-run plan",
+		"AO2 bounded patch packet",
+		"Sentinel hold verdict",
+		"AO Command readback",
+		"low_risk_code dry-run/readback is complete",
+		"safe_to_execute=$safe_to_execute",
+	} {
+		if !strings.Contains(scriptText, want) {
+			t.Fatalf("low-risk governed chain script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git apply", "git checkout", "git switch", "git worktree add", "gh pr merge", "git " + "push", "gh " + "release", "curl "} {
+		if strings.Contains(scriptText, forbidden) {
+			t.Fatalf("low-risk governed chain script contains forbidden live action %q", forbidden)
+		}
+	}
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	cmd := exec.Command("bash", script, "--mutation-class", "low_risk_code", "--out", outDir)
+	cmd.Dir = repoPath(".")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	summary := readObjectFixture(t, filepath.Join(outDir, "summary.json"))
+	if summary["status"] != "ready" ||
+		summary["mutation_class"] != "low_risk_code" ||
+		summary["current_proven_live_class"] != "test_only" ||
+		summary["safe_to_request"] != true ||
+		summary["safe_to_execute"] != false ||
+		summary["exact_next_action"] != "build_low_risk_code_live_execution_gate" {
+		t.Fatalf("unexpected low-risk governed chain summary: %#v", summary)
+	}
+	assessment := summary["readiness_assessment"].(map[string]any)
+	for _, field := range []string{"includes_atlas", "includes_covenant", "includes_forge", "includes_ao2", "includes_rollback", "includes_sentinel", "includes_promoter", "includes_command"} {
+		if assessment[field] != true {
+			t.Fatalf("low-risk chain assessment missing %s: %#v", field, assessment)
+		}
+	}
+	if assessment["live_mutation_performed"] != false || assessment["ungated_live_mutation_claim"] != false {
+		t.Fatalf("low-risk chain must remain dry-run: %#v", assessment)
+	}
+	artifacts := summary["source_artifacts"].([]any)
+	if len(artifacts) != 10 {
+		t.Fatalf("expected ten low-risk source artifacts, got %#v", artifacts)
+	}
+}
+
 func TestLiveMutationReadinessRollupScript(t *testing.T) {
 	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
 	rollupScript := repoPath("scripts/live-mutation-readiness-rollup.sh")
