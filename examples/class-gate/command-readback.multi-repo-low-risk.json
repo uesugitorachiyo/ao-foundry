@@ -1,0 +1,21 @@
+{
+  "schema_version": "ao.command.atlas-authority-ladder.v0.1",
+  "status": "blocked",
+  "readback_status": "ready",
+  "mutation_class": "multi_repo_low_risk",
+  "current_class": "low_risk_code",
+  "next_class": "multi_repo_low_risk",
+  "required_evidence": [
+    "low_risk_code_live_success",
+    "multi_repo_sequencing_plan",
+    "per_repo_rollback:ao-atlas",
+    "per_repo_rollback:ao-foundry",
+    "per_repo_rollback:ao-command",
+    "prevent_concurrent_unsafe_execution"
+  ],
+  "denied_higher_classes": {
+    "complex_repo_mutation": "denied until multi_repo_low_risk live rehearsal completes"
+  },
+  "operator_mode": "read_only",
+  "mutates_repositories": false
+}

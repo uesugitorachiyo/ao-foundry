@@ -1,0 +1,48 @@
+{
+  "schema_version": "ao.foundry.multi-repo-low-risk-plan.v0.1",
+  "status": "ready",
+  "mutation_class": "multi_repo_low_risk",
+  "current_mutation_class": "low_risk_code",
+  "next_mutation_class": "multi_repo_low_risk",
+  "concurrency_policy": {
+    "policy": "prevent_concurrent_unsafe_execution",
+    "max_active_repos": 1,
+    "concurrent_execution_allowed": false,
+    "required_serialized_dependency_order": true
+  },
+  "repo_states": [
+    {
+      "repo": "ao-atlas",
+      "status": "ready",
+      "execution_status": "sequenced_dry_run_only",
+      "write_scope": ["repo:ao-atlas:internal/**"],
+      "rollback_scope": ["repo:ao-atlas:internal/**"],
+      "rollback_required": true,
+      "rollback_status": "ready",
+      "depends_on": []
+    },
+    {
+      "repo": "ao-foundry",
+      "status": "ready",
+      "execution_status": "sequenced_dry_run_only",
+      "write_scope": ["repo:ao-foundry:internal/**"],
+      "rollback_scope": ["repo:ao-foundry:internal/**"],
+      "rollback_required": true,
+      "rollback_status": "ready",
+      "depends_on": ["ao-atlas"]
+    },
+    {
+      "repo": "ao-command",
+      "status": "ready",
+      "execution_status": "sequenced_dry_run_only",
+      "write_scope": ["repo:ao-command:internal/**"],
+      "rollback_scope": ["repo:ao-command:internal/**"],
+      "rollback_required": true,
+      "rollback_status": "ready",
+      "depends_on": ["ao-foundry"]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "mutates_repositories": false
+}

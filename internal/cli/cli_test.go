@@ -5118,6 +5118,71 @@ func TestMutationClassGateLowRiskCodeDryRunReadyWithTestOnlySuccess(t *testing.T
 	}
 }
 
+func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+		"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+		"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+		"--rollback", "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.safe.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "ready" ||
+		gate["mutation_class"] != "multi_repo_low_risk" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "" {
+		t.Fatalf("multi_repo_low_risk dry-run gate should be requestable but not executable: %#v", gate)
+	}
+	if !strings.Contains(fmt.Sprint(gate["required_evidence"]), "multi_repo_sequencing_plan") {
+		t.Fatalf("multi_repo_low_risk gate must require sequencing plan evidence: %#v", gate["required_evidence"])
+	}
+	if !strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-atlas") ||
+		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-foundry") ||
+		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-command") {
+		t.Fatalf("multi_repo_low_risk gate must retain repo execution plan: %#v", gate["repo_execution_plan"])
+	}
+	if !strings.Contains(fmt.Sprint(gate["repo_safety"]), "prevent_concurrent_unsafe_execution") {
+		t.Fatalf("multi_repo_low_risk gate must record unsafe concurrency prevention: %#v", gate["repo_safety"])
+	}
+
+	blockedOut := filepath.Join(t.TempDir(), "class-gate-blocked.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+		"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+		"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+		"--rollback", "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.unsafe-concurrent.json",
+		"--out", blockedOut,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked class gate should still emit a decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	blocked := readObjectFixture(t, blockedOut)
+	if blocked["status"] != "blocked" ||
+		blocked["safe_to_request"] != false ||
+		blocked["safe_to_execute"] != false ||
+		!strings.Contains(fmt.Sprint(blocked["first_failing_check"]), "unsafe concurrent") {
+		t.Fatalf("unsafe concurrent multi-repo plan must fail closed: %#v", blocked)
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer

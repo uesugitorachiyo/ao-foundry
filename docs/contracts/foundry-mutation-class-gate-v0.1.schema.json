@@ -60,6 +60,65 @@
       "minItems": 1,
       "items": { "type": "string", "minLength": 1 }
     },
+    "repo_execution_plan": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repo",
+          "status",
+          "execution_status",
+          "write_scope",
+          "rollback_scope",
+          "rollback_required",
+          "rollback_status",
+          "depends_on"
+        ],
+        "properties": {
+          "repo": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["ready"] },
+          "execution_status": { "enum": ["sequenced_dry_run_only", "ready_to_execute"] },
+          "write_scope": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "rollback_scope": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "rollback_required": { "const": true },
+          "rollback_status": { "enum": ["ready"] },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "repo_safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "max_active_repos",
+        "concurrent_execution_allowed",
+        "unsafe_concurrent_execution_prevented",
+        "required_serialized_dependency_order",
+        "live_multi_repo_execution_authority"
+      ],
+      "properties": {
+        "policy": { "const": "prevent_concurrent_unsafe_execution" },
+        "max_active_repos": { "const": 1 },
+        "concurrent_execution_allowed": { "const": false },
+        "unsafe_concurrent_execution_prevented": { "const": true },
+        "required_serialized_dependency_order": { "const": true },
+        "live_multi_repo_execution_authority": { "const": false }
+      }
+    },
     "schedules_work": { "const": false },
     "executes_work": { "const": false },
     "approves_work": { "const": false },

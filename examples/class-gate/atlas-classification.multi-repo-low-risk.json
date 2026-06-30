@@ -1,0 +1,25 @@
+{
+  "schema_version": "ao.atlas.mutation-classification.v0.1",
+  "status": "ready",
+  "mutation_class": "multi_repo_low_risk",
+  "write_scope": [
+    "repo:ao-atlas:internal/**",
+    "repo:ao-foundry:internal/**",
+    "repo:ao-command:internal/**"
+  ],
+  "required_gates": [
+    "atlas_classification",
+    "low_risk_code_live_evidence",
+    "covenant_class_ticket",
+    "foundry_class_gate",
+    "multi_repo_sequencing_plan",
+    "per_repo_rollback",
+    "sentinel_no_hold",
+    "promoter_ready",
+    "command_readback",
+    "ci_passed"
+  ],
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "authority_boundary": "atlas_classification_only"
+}

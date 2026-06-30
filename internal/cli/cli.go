@@ -211,6 +211,8 @@ type MutationClassGate struct {
 	DeniedClasses       []string                    `json:"denied_classes"`
 	AuthorityBoundary   string                      `json:"authority_boundary"`
 	NextActions         []string                    `json:"next_actions"`
+	RepoExecutionPlan   []MutationClassRepoState    `json:"repo_execution_plan,omitempty"`
+	RepoSafety          *MutationClassRepoSafety    `json:"repo_safety,omitempty"`
 	SchedulesWork       bool                        `json:"schedules_work"`
 	ExecutesWork        bool                        `json:"executes_work"`
 	ApprovesWork        bool                        `json:"approves_work"`
@@ -223,6 +225,26 @@ type MutationClassGateEvidence struct {
 	SchemaVersion string `json:"schema_version"`
 	Status        string `json:"status"`
 	SHA256        string `json:"sha256"`
+}
+
+type MutationClassRepoState struct {
+	Repo             string   `json:"repo"`
+	Status           string   `json:"status"`
+	ExecutionStatus  string   `json:"execution_status"`
+	WriteScope       []string `json:"write_scope"`
+	RollbackScope    []string `json:"rollback_scope"`
+	RollbackRequired bool     `json:"rollback_required"`
+	RollbackStatus   string   `json:"rollback_status"`
+	DependsOn        []string `json:"depends_on"`
+}
+
+type MutationClassRepoSafety struct {
+	Policy                             string `json:"policy"`
+	MaxActiveRepos                     int    `json:"max_active_repos"`
+	ConcurrentExecutionAllowed         bool   `json:"concurrent_execution_allowed"`
+	UnsafeConcurrentExecutionPrevented bool   `json:"unsafe_concurrent_execution_prevented"`
+	RequiredSerializedDependencyOrder  bool   `json:"required_serialized_dependency_order"`
+	LiveMultiRepoExecutionAuthority    bool   `json:"live_multi_repo_execution_authority"`
 }
 
 type ReadinessAudit struct {
@@ -1846,6 +1868,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	commandPath := fs.String("command", "", "AO Command authority-ladder readback")
 	ciPath := fs.String("ci", "", "CI status evidence")
 	testOnlySuccessPath := fs.String("test-only-success", "", "completed test_only live rehearsal evidence for low_risk_code dry-run readiness")
+	multiRepoPlanPath := fs.String("multi-repo-plan", "", "multi-repo low-risk sequencing and rollback plan evidence")
 	outPath := fs.String("out", "", "class gate output path")
 	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
 	if !parseFlags(fs, args, stderr) {
@@ -1871,6 +1894,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 		Command:         *commandPath,
 		CI:              *ciPath,
 		TestOnlySuccess: *testOnlySuccessPath,
+		MultiRepoPlan:   *multiRepoPlanPath,
 	})
 	if err != nil {
 		fmt.Fprintf(stderr, "class gate: %v\n", err)
@@ -1904,6 +1928,7 @@ type classGateEvidencePaths struct {
 	Command         string
 	CI              string
 	TestOnlySuccess string
+	MultiRepoPlan   string
 }
 
 func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate, error) {
@@ -1976,6 +2001,31 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 			return gate, nil
 		}
 	}
+	if className == "multi_repo_low_risk" {
+		requiredEvidence = append(requiredEvidence, "multi_repo_sequencing_plan")
+		gate.RequiredEvidence = requiredEvidence
+		if strings.TrimSpace(paths.MultiRepoPlan) == "" {
+			blockers = append(blockers, "multi_repo_sequencing_plan evidence is required for multi_repo_low_risk")
+		} else {
+			evidence, repoPlan, repoSafety, blocker, err := evaluateMultiRepoPlanEvidence(paths.MultiRepoPlan)
+			if err != nil {
+				return gate, err
+			}
+			gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+			gate.RepoExecutionPlan = repoPlan
+			gate.RepoSafety = repoSafety
+			if blocker != "" {
+				blockers = append(blockers, blocker)
+			}
+		}
+		if len(blockers) == 0 {
+			gate.Status = "ready"
+			gate.SafeToRequest = true
+			gate.SafeToExecute = false
+			gate.NextActions = []string{"Request multi_repo_low_risk dry-run sequencing only; live multi-repo execution remains denied until per-repo live evidence, rollback, CI, Sentinel, Promoter, and Command readback pass."}
+			return gate, nil
+		}
+	}
 	if len(blockers) == 0 {
 		gate.Status = "ready"
 		gate.SafeToRequest = true
@@ -2022,6 +2072,105 @@ func evaluateTestOnlySuccessEvidence(path string) (MutationClassGateEvidence, st
 	default:
 		return evidence, "", nil
 	}
+}
+
+func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []MutationClassRepoState, *MutationClassRepoSafety, string, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, nil, "", fmt.Errorf("read multi_repo_sequencing_plan evidence: %w", err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return MutationClassGateEvidence{}, nil, nil, "", errors.New("multi_repo_sequencing_plan evidence must be a JSON object")
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, nil, "", fmt.Errorf("hash multi_repo_sequencing_plan evidence: %w", err)
+	}
+	evidence := MutationClassGateEvidence{
+		Name:          "multi_repo_sequencing_plan",
+		Path:          path,
+		SchemaVersion: classGateString(object, "schema_version"),
+		Status:        classGateString(object, "status"),
+		SHA256:        sum,
+	}
+	switch {
+	case evidence.SchemaVersion != "ao.foundry.multi-repo-low-risk-plan.v0.1":
+		return evidence, nil, nil, "multi_repo_sequencing_plan schema_version is " + evidence.SchemaVersion, nil
+	case evidence.Status != "ready":
+		return evidence, nil, nil, "multi_repo_sequencing_plan status is " + evidence.Status, nil
+	case classGateString(object, "mutation_class") != "multi_repo_low_risk":
+		return evidence, nil, nil, "multi_repo_sequencing_plan mutation_class must be multi_repo_low_risk", nil
+	case classGateBool(object, "schedules_work") || classGateBool(object, "executes_work") || classGateBool(object, "mutates_repositories"):
+		return evidence, nil, nil, "multi_repo_sequencing_plan must not schedule, execute, or mutate repositories", nil
+	}
+	policyObject, _ := object["concurrency_policy"].(map[string]any)
+	maxActiveRepos := classGateInt(policyObject, "max_active_repos")
+	concurrentExecutionAllowed := classGateBool(policyObject, "concurrent_execution_allowed")
+	if concurrentExecutionAllowed || maxActiveRepos != 1 {
+		return evidence, nil, &MutationClassRepoSafety{
+			Policy:                             classGateString(policyObject, "policy"),
+			MaxActiveRepos:                     maxActiveRepos,
+			ConcurrentExecutionAllowed:         concurrentExecutionAllowed,
+			UnsafeConcurrentExecutionPrevented: false,
+			RequiredSerializedDependencyOrder:  classGateBool(policyObject, "required_serialized_dependency_order"),
+			LiveMultiRepoExecutionAuthority:    false,
+		}, "multi_repo_sequencing_plan has unsafe concurrent execution", nil
+	}
+	rawStates, _ := object["repo_states"].([]any)
+	if len(rawStates) < 2 {
+		return evidence, nil, nil, "multi_repo_sequencing_plan requires at least two repo states", nil
+	}
+	seenRepos := map[string]bool{}
+	readyToExecute := 0
+	states := []MutationClassRepoState{}
+	for _, rawState := range rawStates {
+		stateObject, ok := rawState.(map[string]any)
+		if !ok {
+			return evidence, states, nil, "multi_repo_sequencing_plan repo_states must be objects", nil
+		}
+		state := MutationClassRepoState{
+			Repo:             classGateString(stateObject, "repo"),
+			Status:           classGateString(stateObject, "status"),
+			ExecutionStatus:  classGateString(stateObject, "execution_status"),
+			WriteScope:       classGateStringSlice(stateObject, "write_scope"),
+			RollbackScope:    classGateStringSlice(stateObject, "rollback_scope"),
+			RollbackRequired: classGateBool(stateObject, "rollback_required"),
+			RollbackStatus:   classGateString(stateObject, "rollback_status"),
+			DependsOn:        classGateStringSlice(stateObject, "depends_on"),
+		}
+		switch {
+		case state.Repo == "":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo_state missing repo", nil
+		case seenRepos[state.Repo]:
+			return evidence, states, nil, "multi_repo_sequencing_plan duplicate repo " + state.Repo, nil
+		case state.Status != "ready":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " status is " + state.Status, nil
+		case state.ExecutionStatus == "executing" || state.ExecutionStatus == "active":
+			return evidence, states, nil, "multi_repo_sequencing_plan has unsafe concurrent execution", nil
+		case state.ExecutionStatus == "ready_to_execute":
+			readyToExecute++
+		case state.ExecutionStatus != "sequenced_dry_run_only":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " execution_status is " + state.ExecutionStatus, nil
+		case len(state.WriteScope) == 0 || len(state.RollbackScope) == 0:
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires write_scope and rollback_scope", nil
+		case !state.RollbackRequired || state.RollbackStatus != "ready":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires ready rollback", nil
+		}
+		seenRepos[state.Repo] = true
+		states = append(states, state)
+	}
+	if readyToExecute > 1 {
+		return evidence, states, nil, "multi_repo_sequencing_plan has unsafe concurrent execution", nil
+	}
+	return evidence, states, &MutationClassRepoSafety{
+		Policy:                             classGateString(policyObject, "policy"),
+		MaxActiveRepos:                     maxActiveRepos,
+		ConcurrentExecutionAllowed:         false,
+		UnsafeConcurrentExecutionPrevented: true,
+		RequiredSerializedDependencyOrder:  classGateBool(policyObject, "required_serialized_dependency_order"),
+		LiveMultiRepoExecutionAuthority:    false,
+	}, "", nil
 }
 
 type classGateCheck struct {
@@ -2085,9 +2234,38 @@ func classGateBool(document map[string]any, key string) bool {
 	return value
 }
 
+func classGateInt(document map[string]any, key string) int {
+	switch value := document[key].(type) {
+	case float64:
+		return int(value)
+	case int:
+		return value
+	case json.Number:
+		parsed, err := value.Int64()
+		if err != nil {
+			return 0
+		}
+		return int(parsed)
+	default:
+		return 0
+	}
+}
+
 func classGateNestedString(document map[string]any, outer, inner string) string {
 	nested, _ := document[outer].(map[string]any)
 	return classGateString(nested, inner)
+}
+
+func classGateStringSlice(document map[string]any, key string) []string {
+	rawValues, _ := document[key].([]any)
+	values := []string{}
+	for _, raw := range rawValues {
+		value, ok := raw.(string)
+		if ok {
+			values = append(values, value)
+		}
+	}
+	return values
 }
 
 func classGateStringSliceContains(values []string, want string) bool {
