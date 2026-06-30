@@ -5228,6 +5228,39 @@ func TestMutationClassGateLowRiskCodeDryRunReadyWithTestOnlySuccess(t *testing.T
 	if !strings.Contains(fmt.Sprint(gate["next_actions"]), "dry-run") {
 		t.Fatalf("low_risk_code next action must stay dry-run only: %#v", gate["next_actions"])
 	}
+	boundary, ok := gate["class_boundary_checks"].(map[string]any)
+	if !ok {
+		t.Fatalf("low_risk_code gate must include class boundary readback: %#v", gate)
+	}
+	for _, field := range []string{
+		"atlas_classification_only",
+		"atlas_required_gates_complete",
+		"covenant_exact_scope",
+		"covenant_class_bound",
+		"covenant_digest_bound",
+		"covenant_single_use",
+		"covenant_unconsumed",
+		"covenant_live_mutation_denied",
+		"sentinel_no_hold",
+		"rollback_patch_present",
+		"rollback_verification_commands_present",
+		"command_read_only",
+		"ci_passed",
+		"ci_required_checks_present",
+		"test_only_live_evidence",
+		"safe_to_request",
+	} {
+		if boundary[field] != true {
+			t.Fatalf("low_risk_code boundary %s must be true: %#v", field, boundary)
+		}
+	}
+	if boundary["safe_to_execute"] != false ||
+		boundary["promoter_boundary"] != "low_risk_code_only" ||
+		boundary["command_current_class"] != "test_only" ||
+		boundary["command_next_class"] != "low_risk_code" ||
+		boundary["command_mutates_repositories"] != false {
+		t.Fatalf("low_risk_code boundary readback drifted: %#v", boundary)
+	}
 	audit, ok := gate["denial_audit"].(map[string]any)
 	if !ok {
 		t.Fatalf("low_risk_code gate must include denial_audit readback: %#v", gate)
@@ -5260,6 +5293,94 @@ func TestMutationClassGateLowRiskCodeDryRunReadyWithTestOnlySuccess(t *testing.T
 	}
 	if _, ok := checked["denial_audit"].(map[string]any); !ok {
 		t.Fatalf("checked low_risk_code dry-run fixture must include denial audit: %#v", checked)
+	}
+	if _, ok := checked["class_boundary_checks"].(map[string]any); !ok {
+		t.Fatalf("checked low_risk_code dry-run fixture must include class boundary readback: %#v", checked)
+	}
+}
+
+func TestMutationClassGateLowRiskCodeFailsClosedOnBoundaryEvidence(t *testing.T) {
+	baseArgs := func(covenantPath, sentinelPath, commandPath, outPath string) []string {
+		return []string{
+			"class-gate", "evaluate",
+			"--atlas", "examples/class-gate/atlas-classification.low-risk-code.json",
+			"--covenant", covenantPath,
+			"--sentinel", sentinelPath,
+			"--promoter", "examples/class-gate/promoter.ready.low-risk-code.json",
+			"--rollback", "examples/class-gate/rollback.passed.low-risk-code.json",
+			"--command", commandPath,
+			"--ci", "examples/class-gate/ci.passed.low-risk-code.json",
+			"--test-only-success", "examples/class-gate/test-only-success.low-risk-code.json",
+			"--out", outPath,
+		}
+	}
+	cases := []struct {
+		name          string
+		covenantPath  string
+		sentinelPath  string
+		commandPath   string
+		mutate        func(t *testing.T) (covenantPath, sentinelPath, commandPath string)
+		wantFirstFail string
+	}{
+		{
+			name: "covenant_not_exact_scope",
+			mutate: func(t *testing.T) (string, string, string) {
+				t.Helper()
+				covenant := readObjectFixture(t, "examples/class-gate/covenant-ticket.low-risk-code.json")
+				boundaries, ok := covenant["authority_boundaries"].(map[string]any)
+				if !ok {
+					t.Fatalf("fixture missing authority_boundaries: %#v", covenant)
+				}
+				boundaries["exact_scope"] = false
+				path := filepath.Join(t.TempDir(), "covenant-ticket.json")
+				mustWriteJSONForTest(t, path, covenant)
+				return path, "examples/class-gate/sentinel.no-hold.low-risk-code.json", "examples/class-gate/command-readback.low-risk-code.json"
+			},
+			wantFirstFail: "covenant_class_ticket must remain exact-scope, class-bound, digest-bound, unconsumed, and single-use",
+		},
+		{
+			name: "sentinel_hold_flag",
+			mutate: func(t *testing.T) (string, string, string) {
+				t.Helper()
+				sentinel := readObjectFixture(t, "examples/class-gate/sentinel.no-hold.low-risk-code.json")
+				sentinel["hold"] = true
+				path := filepath.Join(t.TempDir(), "sentinel.json")
+				mustWriteJSONForTest(t, path, sentinel)
+				return "examples/class-gate/covenant-ticket.low-risk-code.json", path, "examples/class-gate/command-readback.low-risk-code.json"
+			},
+			wantFirstFail: "sentinel_no_hold must be an explicit no-hold verdict",
+		},
+		{
+			name: "command_not_read_only",
+			mutate: func(t *testing.T) (string, string, string) {
+				t.Helper()
+				command := readObjectFixture(t, "examples/class-gate/command-readback.low-risk-code.json")
+				command["operator_mode"] = "write_enabled"
+				path := filepath.Join(t.TempDir(), "command.json")
+				mustWriteJSONForTest(t, path, command)
+				return "examples/class-gate/covenant-ticket.low-risk-code.json", "examples/class-gate/sentinel.no-hold.low-risk-code.json", path
+			},
+			wantFirstFail: "command_readback must remain read-only from test_only to low_risk_code",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			covenantPath, sentinelPath, commandPath := tc.mutate(t)
+			outPath := filepath.Join(t.TempDir(), "class-gate.json")
+			var stdout, stderr bytes.Buffer
+			code := Run(baseArgs(covenantPath, sentinelPath, commandPath, outPath), &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			gate := readObjectFixture(t, outPath)
+			if gate["status"] != "blocked" ||
+				gate["mutation_class"] != "low_risk_code" ||
+				gate["safe_to_request"] != false ||
+				gate["safe_to_execute"] != false ||
+				gate["first_failing_check"] != tc.wantFirstFail {
+				t.Fatalf("low_risk_code boundary must fail closed on %s: %#v", tc.name, gate)
+			}
+		})
 	}
 }
 
