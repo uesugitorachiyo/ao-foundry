@@ -190,26 +190,72 @@
       ],
       "properties": {
         "schema_version": { "const": "ao.foundry.multi-repo-live-rehearsal-decision.v0.1" },
-        "status": { "const": "denied" },
+        "status": { "enum": ["denied", "accepted"] },
         "mutation_class": { "const": "multi_repo_low_risk" },
         "current_class": { "const": "low_risk_code" },
         "next_class": { "const": "multi_repo_low_risk" },
         "current_proven_live_class": { "$ref": "#/$defs/mutation_class" },
         "lower_class_live_evidence_status": { "type": "string", "minLength": 1 },
         "safe_to_request": { "type": "boolean" },
-        "safe_to_execute": { "const": false },
-        "live_execution_authority": { "const": false },
+        "safe_to_execute": { "type": "boolean" },
+        "live_execution_authority": { "type": "boolean" },
         "missing_evidence": {
           "type": "array",
-          "minItems": 1,
           "items": { "type": "string", "minLength": 1 }
         },
         "denial_reason": { "type": "string", "minLength": 1 },
-        "exact_next_action": { "const": "complete_low_risk_code_live_rehearsal_before_multi_repo_live" },
+        "exact_next_action": {
+          "enum": [
+            "complete_low_risk_code_live_rehearsal_before_multi_repo_live",
+            "request_repo_one_multi_repo_low_risk_live_rehearsal"
+          ]
+        },
         "repo_execution_policy": { "const": "sequenced_dry_run_only" },
         "schedules_work": { "const": false },
         "executes_work": { "const": false },
         "mutates_repositories": { "const": false }
+      }
+    },
+    "low_risk_code_live_success": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "mutation_class",
+        "proven_live_class",
+        "repo",
+        "pull_request",
+        "pull_request_number",
+        "base_branch",
+        "work_branch",
+        "merge_commit",
+        "merge_state",
+        "changed_files",
+        "file_allowlist"
+      ],
+      "properties": {
+        "schema_version": { "const": "ao.foundry.low-risk-code-live-success-readback.v0.1" },
+        "status": { "enum": ["accepted", "passed"] },
+        "mutation_class": { "const": "low_risk_code" },
+        "proven_live_class": { "const": "low_risk_code" },
+        "repo": { "const": "ao-atlas" },
+        "pull_request": { "type": "string", "minLength": 1 },
+        "pull_request_number": { "const": 37 },
+        "base_branch": { "const": "main" },
+        "work_branch": { "const": "codex/low-risk-code-rehearsal-one" },
+        "merge_commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "merge_state": { "const": "merged" },
+        "changed_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "file_allowlist": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
       }
     },
     "repo_execution_plan": {

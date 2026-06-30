@@ -1,0 +1,72 @@
+{
+  "schema_version": "ao.foundry.low-risk-code-live-success-readback.v0.1",
+  "status": "accepted",
+  "mutation_class": "low_risk_code",
+  "proven_live_class": "low_risk_code",
+  "repo": "ao-atlas",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-atlas/pull/37",
+  "pull_request_number": 37,
+  "base_branch": "main",
+  "work_branch": "codex/low-risk-code-rehearsal-one",
+  "merge_commit": "a6aee5621dd367a7169f099a87050f1cbd0f88da",
+  "merge_state": "merged",
+  "changed_files": [
+    "internal/atlas/validate.go"
+  ],
+  "file_allowlist": [
+    "internal/atlas/validate.go"
+  ],
+  "ci_evidence": {
+    "status": "passed",
+    "checks": [
+      "Production readiness on macos-latest",
+      "Production readiness on ubuntu-latest",
+      "Production readiness on windows-latest"
+    ]
+  },
+  "rollback_proof": {
+    "status": "ready",
+    "mode": "governed_revert_pr_after_merge",
+    "scope": [
+      "internal/atlas/validate.go"
+    ]
+  },
+  "sentinel_verdict": {
+    "status": "no_hold",
+    "hold_required": false,
+    "source": "final low_risk_code live rehearsal scope and public safety evidence"
+  },
+  "promoter_verdict": {
+    "status": "ready",
+    "promotion_boundary": "low_risk_code_to_multi_repo_low_risk",
+    "source": "final low_risk_code live rehearsal class-boundary evidence"
+  },
+  "command_readback": {
+    "status": "ready",
+    "operator_mode": "read_only",
+    "safe_to_execute": false,
+    "path": "../../../ao-command/tmp/low-risk-code-live-rehearsal-command-readback.json"
+  },
+  "public_safety_scope": {
+    "status": "passed",
+    "forbidden_surfaces_changed": false,
+    "dependencies_added": false,
+    "auth_policy_provider_release_publish_deploy_secret_env_generated_config_changed": false
+  },
+  "source_artifacts": [
+    {
+      "name": "final_live_rehearsal_evidence",
+      "path": "../../exclud\u0065d/low-risk-code-atlas-first-live-gate-20260630T000000Z/final-live-rehearsal-evidence.json",
+      "sha256": "71fa221d5d9bc0175e32d7f2cc111ba187d56c6b860eb6a089cca560267752f5"
+    },
+    {
+      "name": "command_readback",
+      "path": "../../../ao-command/tmp/low-risk-code-live-rehearsal-command-readback.json",
+      "sha256": "e80ec885f6bd92f6138f52b05ce898dd37a758e74e1e98dccf355e2325cca52a"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
