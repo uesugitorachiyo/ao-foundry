@@ -93,9 +93,9 @@ fi
 
 sha256_file() {
   if command -v shasum >/dev/null 2>&1; then
-    shasum -a 256 "$1" | awk '{print $1}'
+    shasum -a 256 "$1" | awk '{print $1}' | sed 's/^\\//'
   elif command -v sha256sum >/dev/null 2>&1; then
-    sha256sum "$1" | awk '{print $1}'
+    sha256sum "$1" | awk '{print $1}' | sed 's/^\\//'
   else
     echo "low-risk-code-live-rehearsal-gate: shasum or sha256sum is required" >&2
     exit 2
