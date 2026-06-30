@@ -5067,6 +5067,57 @@ func TestMutationClassGateBlocksLowRiskCodeWithoutTestOnlySuccess(t *testing.T) 
 	}
 }
 
+func TestMutationClassGateLowRiskCodeDryRunReadyWithTestOnlySuccess(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.low-risk-code.json",
+		"--covenant", "examples/class-gate/covenant-ticket.low-risk-code.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.low-risk-code.json",
+		"--promoter", "examples/class-gate/promoter.ready.low-risk-code.json",
+		"--rollback", "examples/class-gate/rollback.passed.low-risk-code.json",
+		"--command", "examples/class-gate/command-readback.low-risk-code.json",
+		"--ci", "examples/class-gate/ci.passed.low-risk-code.json",
+		"--test-only-success", "examples/class-gate/test-only-success.low-risk-code.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "ready" ||
+		gate["mutation_class"] != "low_risk_code" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "" {
+		t.Fatalf("low_risk_code dry-run gate should be requestable but not executable: %#v", gate)
+	}
+	required, ok := gate["required_evidence"].([]any)
+	if !ok {
+		t.Fatalf("low_risk_code gate must retain test_only_success evidence: %#v", gate["required_evidence"])
+	}
+	hasTestOnlySuccess := false
+	for _, item := range required {
+		if item == "test_only_success" {
+			hasTestOnlySuccess = true
+		}
+	}
+	if !hasTestOnlySuccess {
+		t.Fatalf("low_risk_code gate must retain test_only_success evidence: %#v", gate["required_evidence"])
+	}
+	if !strings.Contains(fmt.Sprint(gate["next_actions"]), "dry-run") {
+		t.Fatalf("low_risk_code next action must stay dry-run only: %#v", gate["next_actions"])
+	}
+	checked := readObjectFixture(t, "examples/class-gate/gate.dry-run.low-risk-code.json")
+	if checked["status"] != "ready" ||
+		checked["mutation_class"] != "low_risk_code" ||
+		checked["safe_to_request"] != true ||
+		checked["safe_to_execute"] != false {
+		t.Fatalf("checked low_risk_code dry-run fixture drifted: %#v", checked)
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
