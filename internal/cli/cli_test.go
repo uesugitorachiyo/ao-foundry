@@ -1190,6 +1190,62 @@ func TestGovernedLiveMutationDryRunChainScriptLowRiskCode(t *testing.T) {
 	}
 }
 
+func TestLowRiskCodeLiveRehearsalGateBlocksWithoutPolicyEvidence(t *testing.T) {
+	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
+	gateScript := repoPath("scripts/low-risk-code-live-rehearsal-gate.sh")
+	gateScriptData, err := os.ReadFile(gateScript)
+	if err != nil {
+		t.Fatalf("read low-risk live rehearsal gate script: %v", err)
+	}
+	gateScriptText := string(gateScriptData)
+	for _, want := range []string{
+		"ao.foundry.low-risk-code-live-rehearsal-gate.v0.1",
+		"collect_low_risk_code_live_policy_evidence",
+		"live policy evidence is required",
+		"safe_to_execute=$safe_to_execute",
+		"max_source_files:1",
+		"max_test_files:1",
+	} {
+		if !strings.Contains(gateScriptText, want) {
+			t.Fatalf("low-risk live rehearsal gate script missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"git apply", "git checkout", "git switch", "git worktree add", "gh pr merge", "git " + "push", "gh " + "release", "curl "} {
+		if strings.Contains(gateScriptText, forbidden) {
+			t.Fatalf("low-risk live rehearsal gate contains forbidden live action %q", forbidden)
+		}
+	}
+
+	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
+	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
+	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd.Dir = repoPath(".")
+	if out, err := chainCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
+	}
+	gatePath := filepath.Join(outDir, "gate.json")
+	gateCmd := exec.Command("bash", gateScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", gatePath)
+	gateCmd.Dir = repoPath(".")
+	if out, err := gateCmd.CombinedOutput(); err != nil {
+		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
+	}
+	gate := readObjectFixture(t, gatePath)
+	if gate["status"] != "blocked" ||
+		gate["mutation_class"] != "low_risk_code" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "live_policy_evidence" ||
+		gate["exact_next_step"] != "collect_low_risk_code_live_policy_evidence" {
+		t.Fatalf("unexpected low-risk live rehearsal gate: %#v", gate)
+	}
+	boundaries := gate["authority_boundaries"].(map[string]any)
+	for _, field := range []string{"mutates_repositories", "creates_branch", "creates_worktree", "opens_pr", "merges_pr", "schedules_work", "executes_work", "approves_work", "provider_calls_allowed", "release_or_publish_allowed", "multi_repo_mutation_allowed", "complex_repo_mutation_allowed", "fully_unsupervised_complex_mutation_claimed"} {
+		if boundaries[field] != false {
+			t.Fatalf("low-risk live rehearsal gate boundary %s must be false: %#v", field, boundaries)
+		}
+	}
+}
+
 func TestLiveMutationReadinessRollupScript(t *testing.T) {
 	chainScript := repoPath("scripts/governed-live-mutation-dry-run-chain.sh")
 	rollupScript := repoPath("scripts/live-mutation-readiness-rollup.sh")
