@@ -258,6 +258,108 @@
         }
       }
     },
+    "complex_node_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "mutation_class",
+        "highest_proven_live_class",
+        "next_denied_class",
+        "workgraph_id",
+        "node_id",
+        "task_id",
+        "safe_to_request",
+        "safe_to_execute",
+        "live_execution_authority",
+        "first_failing_check",
+        "blockers",
+        "exact_next_action",
+        "foundry_import_id",
+        "foundry_import_status",
+        "foundry_import_task_count",
+        "foundry_import_schedules_work",
+        "foundry_import_executes_work",
+        "foundry_import_approves_work",
+        "candidate_status",
+        "candidate_executable_ready",
+        "candidate_safe_to_execute",
+        "rollback_status",
+        "rollback_safe_to_execute",
+        "authority_boundary",
+        "required_gates",
+        "source_evidence",
+        "schedules_work",
+        "executes_work",
+        "approves_work",
+        "mutates_repositories",
+        "fully_unsupervised_complex_mutation",
+        "rsi"
+      ],
+      "properties": {
+        "schema_version": { "const": "ao.foundry.complex-repo-mutation-node-gate.v0.1" },
+        "status": { "enum": ["ready", "blocked"] },
+        "mutation_class": { "const": "complex_repo_mutation" },
+        "highest_proven_live_class": { "const": "multi_repo_low_risk" },
+        "next_denied_class": { "const": "complex_repo_mutation" },
+        "workgraph_id": { "type": "string", "minLength": 1 },
+        "node_id": { "type": "string", "minLength": 1 },
+        "task_id": { "type": "string", "minLength": 1 },
+        "safe_to_request": { "type": "boolean" },
+        "safe_to_execute": { "type": "boolean" },
+        "live_execution_authority": { "type": "boolean" },
+        "first_failing_check": { "type": "string" },
+        "blockers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "exact_next_action": {
+          "enum": [
+            "complete_complex_node_gate_prerequisites_before_execution",
+            "execute_exact_complex_node_candidate"
+          ]
+        },
+        "foundry_import_id": { "type": "string", "minLength": 1 },
+        "foundry_import_status": { "type": "string", "minLength": 1 },
+        "foundry_import_task_count": { "type": "integer", "minimum": 0 },
+        "foundry_import_schedules_work": { "type": "boolean" },
+        "foundry_import_executes_work": { "type": "boolean" },
+        "foundry_import_approves_work": { "type": "boolean" },
+        "candidate_status": { "type": "string", "minLength": 1 },
+        "candidate_executable_ready": { "type": "boolean" },
+        "candidate_safe_to_execute": { "type": "boolean" },
+        "rollback_status": { "type": "string", "minLength": 1 },
+        "rollback_safe_to_execute": { "type": "boolean" },
+        "authority_boundary": { "const": "complex_node_exact_scope_only" },
+        "required_gates": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "source_evidence": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "path", "schema_version", "status", "sha256"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "path": { "type": "string", "minLength": 1 },
+              "schema_version": { "type": "string", "minLength": 1 },
+              "status": { "type": "string", "minLength": 1 },
+              "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+            }
+          }
+        },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "mutates_repositories": { "const": false },
+        "fully_unsupervised_complex_mutation": { "const": "denied" },
+        "rsi": { "const": "denied" }
+      }
+    },
     "repo_execution_plan": {
       "type": "array",
       "minItems": 2,
