@@ -1,0 +1,11 @@
+{
+  "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+  "status": "passed",
+  "mutation_class": "test_only",
+  "rollback_verified": true,
+  "rollback_failure": false,
+  "rollback_patch": "examples/class-gate/rollback.test-only.patch",
+  "verification_commands": [
+    "git apply --reverse --check examples/class-gate/rollback.test-only.patch"
+  ]
+}

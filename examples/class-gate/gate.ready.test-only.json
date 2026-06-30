@@ -1,0 +1,84 @@
+{
+  "schema_version": "ao.foundry.mutation-class-gate.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "safe_to_request": true,
+  "safe_to_execute": true,
+  "first_failing_check": "",
+  "required_evidence": [
+    "atlas_classification",
+    "covenant_class_ticket",
+    "sentinel_no_hold",
+    "promoter_ready",
+    "rollback_proof",
+    "command_readback",
+    "ci_passed"
+  ],
+  "source_evidence": [
+    {
+      "name": "atlas_classification",
+      "path": "examples/class-gate/atlas-classification.test-only.json",
+      "schema_version": "ao.atlas.mutation-classification.v0.1",
+      "status": "ready",
+      "sha256": "698f9a18191190ae7e64f8c2051fa72cd6c8e0c450f0bf91afa98c154ca41c81"
+    },
+    {
+      "name": "covenant_class_ticket",
+      "path": "examples/class-gate/covenant-ticket.test-only.json",
+      "schema_version": "covenant.mutation-class-authority-ticket.v1",
+      "status": "approved",
+      "sha256": "e4e69a1305c2b4f921bf196db9e7d2f223fa45441a503494bfb333eae85aed77"
+    },
+    {
+      "name": "sentinel_no_hold",
+      "path": "examples/class-gate/sentinel.no-hold.test-only.json",
+      "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+      "status": "no_hold",
+      "sha256": "caecbab4b733b69e724d13038296ba6391044ca6199318d496ca70e134984c74"
+    },
+    {
+      "name": "promoter_ready",
+      "path": "examples/class-gate/promoter.ready.test-only.json",
+      "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+      "status": "ready",
+      "sha256": "f2caf1dcb9bf999d6a297d9b5b533c09cd0a94a5aa09aa29b8e2ecd01a3a2a02"
+    },
+    {
+      "name": "rollback_proof",
+      "path": "examples/class-gate/rollback.passed.test-only.json",
+      "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+      "status": "passed",
+      "sha256": "aa0266fecd4346478a769940018028fdd57f4c64099905a958d0b346056f9128"
+    },
+    {
+      "name": "command_readback",
+      "path": "examples/class-gate/command-readback.test-only.json",
+      "schema_version": "ao.command.atlas-authority-ladder.v0.1",
+      "status": "ready",
+      "sha256": "261a0396e6fe8cc0c01fcb5ba792f7d1b957de1f8320909143556b3157fedb2c"
+    },
+    {
+      "name": "ci_passed",
+      "path": "examples/class-gate/ci.passed.test-only.json",
+      "schema_version": "ao.foundry.ci-readiness.v0.1",
+      "status": "passed",
+      "sha256": "4d648ab77ddbff03e7ba63790f3358ef2e620bbe4a35c4fe0b266a9aef7abaf0"
+    }
+  ],
+  "denied_classes": [
+    "docs_only_single_file",
+    "docs_only_multi_file",
+    "docs_config_only",
+    "low_risk_code",
+    "multi_repo_low_risk",
+    "complex_repo_mutation"
+  ],
+  "authority_boundary": "single_class_only",
+  "next_actions": [
+    "Request exactly one test_only mutation through the next governed gate; do not broaden class scope."
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

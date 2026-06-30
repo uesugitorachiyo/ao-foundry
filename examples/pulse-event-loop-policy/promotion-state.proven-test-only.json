@@ -1,0 +1,16 @@
+{
+  "schema_version": "ao.foundry.mutation-class-promotion-state.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "proven_live_class": "test_only",
+  "approved_mutation_class": "test_only",
+  "live_evidence_merged": true,
+  "promotion_evidence_present": true,
+  "class_jump_requested": false,
+  "operator_prompt_required": false,
+  "denied_next_classes": {
+    "low_risk_code": "denied until low_risk_code promotion evidence grants exact safe_to_execute authority",
+    "multi_repo_low_risk": "denied until low_risk_code live evidence is proven",
+    "complex_repo_mutation": "denied until lower classes are live-proven"
+  }
+}

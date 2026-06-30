@@ -1,7 +1,7 @@
 {
   "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
   "status": "hold",
-  "mutation_class": "low_risk_code",
+  "mutation_class": "test_only",
   "hold_reasons": [
     "CI status is insufficient"
   ]

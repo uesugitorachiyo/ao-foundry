@@ -55,7 +55,7 @@ This first slice provides:
   - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
-  - `foundry pulse event-loop-policy --class-gate <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --branch-cleanup <path> --scope <path> --out <path> [--json]`
+  - `foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]`
   - `foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> [--test-only-success <path>] [--multi-repo-plan <path>] --out <path>`
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
@@ -206,15 +206,16 @@ also emits a `live_rehearsal_decision` denial readback showing that the first
 live multi-repo rehearsal remains blocked until `low_risk_code` live evidence,
 rollback, Sentinel, Promoter, Command, and clean-main CI evidence are complete.
 
-`foundry pulse event-loop-policy` consumes the class-gate result plus CI,
-repo-cleanliness, evidence-freshness, Sentinel, Promoter, branch-cleanup, and
-scope-boundary evidence. It emits
+`foundry pulse event-loop-policy` consumes the class-gate result plus
+promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
+rollback, branch-cleanup, and scope-boundary evidence. It emits
 `ao.foundry.pulse-event-loop-policy.v0.1` with `safe_to_continue=true` only
-when every gate is ready for the current class. The policy stops on failing CI,
-dirty or unsynced repos, stale evidence, Sentinel holds, Promoter denial,
-branch cleanup failure, or broadened scope. It preserves the class gate's
-`safe_to_execute` value and does not schedule, execute, approve, open PRs,
-merge PRs, call providers, or mutate repositories.
+when every gate is ready for the current proven class and the class gate has
+`safe_to_execute=true`. The policy stops on failing CI, dirty or unsynced
+repos, stale evidence, Sentinel holds, Promoter denial, rollback failure,
+branch cleanup failure, broadened scope, or any attempted jump to a class that
+is not proven by promotion evidence. It does not schedule, execute, approve,
+open PRs, merge PRs, call providers, or mutate repositories.
 
 `scripts/blueprint-atlas-pulse-e2e-dry-run.sh` proves the fixture-only
 Blueprint -> Atlas -> Foundry -> AO Command control path. The ready path starts

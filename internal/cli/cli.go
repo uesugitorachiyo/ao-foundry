@@ -794,6 +794,8 @@ type PulseEventLoopPolicy struct {
 	SchemaVersion          string                       `json:"schema_version"`
 	Status                 string                       `json:"status"`
 	MutationClass          string                       `json:"mutation_class"`
+	ProvenLiveClass        string                       `json:"proven_live_class"`
+	ApprovedMutationClass  string                       `json:"approved_mutation_class"`
 	AllowedNextAction      string                       `json:"allowed_next_action"`
 	SafeToContinue         bool                         `json:"safe_to_continue"`
 	SafeToRequest          bool                         `json:"safe_to_request"`
@@ -1266,7 +1268,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
 	fmt.Fprintln(w, "  foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]")
-	fmt.Fprintln(w, "  foundry pulse event-loop-policy --class-gate <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --branch-cleanup <path> --scope <path> --out <path> [--json]")
+	fmt.Fprintln(w, "  foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -4159,11 +4161,13 @@ func failPulseStartGate(result PulseOvernightStartGate, checkName, status, reaso
 func runPulseEventLoopPolicy(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("pulse event-loop-policy", stderr)
 	classGatePath := fs.String("class-gate", "", "Foundry mutation class gate output")
+	promotionStatePath := fs.String("promotion-state", "", "proven mutation-class promotion state evidence")
 	ciPath := fs.String("ci", "", "CI readiness evidence")
 	repoStatePath := fs.String("repo-state", "", "repo cleanliness evidence")
 	evidenceFreshnessPath := fs.String("evidence-freshness", "", "evidence freshness evidence")
 	sentinelPath := fs.String("sentinel", "", "Sentinel mutation-class hold verdict")
 	promoterPath := fs.String("promoter", "", "Promoter mutation-class readiness evidence")
+	rollbackPath := fs.String("rollback", "", "rollback integrity evidence")
 	branchCleanupPath := fs.String("branch-cleanup", "", "branch cleanup evidence")
 	scopePath := fs.String("scope", "", "scope boundary evidence")
 	outPath := fs.String("out", "", "event-loop policy output path")
@@ -4171,15 +4175,15 @@ func runPulseEventLoopPolicy(args []string, stdout, stderr io.Writer) int {
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
-	inputs := []string{*classGatePath, *ciPath, *repoStatePath, *evidenceFreshnessPath, *sentinelPath, *promoterPath, *branchCleanupPath, *scopePath}
+	inputs := []string{*classGatePath, *promotionStatePath, *ciPath, *repoStatePath, *evidenceFreshnessPath, *sentinelPath, *promoterPath, *rollbackPath, *branchCleanupPath, *scopePath}
 	for _, input := range inputs {
 		if strings.TrimSpace(input) == "" {
-			fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --branch-cleanup, --scope, and --out are required")
+			fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --promotion-state, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --rollback, --branch-cleanup, --scope, and --out are required")
 			return 2
 		}
 	}
 	if strings.TrimSpace(*outPath) == "" {
-		fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --branch-cleanup, --scope, and --out are required")
+		fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --promotion-state, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --rollback, --branch-cleanup, --scope, and --out are required")
 		return 2
 	}
 	for _, input := range inputs {
@@ -4190,11 +4194,13 @@ func runPulseEventLoopPolicy(args []string, stdout, stderr io.Writer) int {
 	}
 	result, err := buildPulseEventLoopPolicy(pulseEventLoopPolicyPaths{
 		ClassGate:         *classGatePath,
+		PromotionState:    *promotionStatePath,
 		CI:                *ciPath,
 		RepoState:         *repoStatePath,
 		EvidenceFreshness: *evidenceFreshnessPath,
 		Sentinel:          *sentinelPath,
 		Promoter:          *promoterPath,
+		Rollback:          *rollbackPath,
 		BranchCleanup:     *branchCleanupPath,
 		Scope:             *scopePath,
 	})
@@ -4225,11 +4231,13 @@ func runPulseEventLoopPolicy(args []string, stdout, stderr io.Writer) int {
 
 type pulseEventLoopPolicyPaths struct {
 	ClassGate         string
+	PromotionState    string
 	CI                string
 	RepoState         string
 	EvidenceFreshness string
 	Sentinel          string
 	Promoter          string
+	Rollback          string
 	BranchCleanup     string
 	Scope             string
 }
@@ -4245,11 +4253,13 @@ type pulseEventLoopPolicyCheck struct {
 func buildPulseEventLoopPolicy(paths pulseEventLoopPolicyPaths) (PulseEventLoopPolicy, error) {
 	requiredChecks := []string{
 		"class_gate",
+		"promotion_state",
 		"ci_status",
 		"repo_cleanliness",
 		"evidence_freshness",
 		"sentinel_hold",
 		"promoter_readiness",
+		"rollback_integrity",
 		"branch_cleanup",
 		"scope_boundary",
 	}
@@ -4283,6 +4293,20 @@ func buildPulseEventLoopPolicy(paths pulseEventLoopPolicyPaths) (PulseEventLoopP
 	if blocker != "" {
 		return failPulseEventLoopPolicy(result, "class_gate", blocker, "Stop the event loop and rerun the Foundry mutation class gate.")
 	}
+	if !classGate.SafeToExecute {
+		return failPulseEventLoopPolicy(result, "class_gate", "class_gate safe_to_execute is false", "Stop the event loop until the current class has exact safe_to_execute evidence.")
+	}
+
+	promotionStateSource, provenLiveClass, approvedMutationClass, blocker, err := evaluatePulseEventLoopPromotionState(paths.PromotionState, result.MutationClass)
+	if err != nil {
+		return failPulseEventLoopPolicy(result, "promotion_state", err.Error(), "Regenerate the promotion_state evidence.")
+	}
+	result.SourceEvidence = append(result.SourceEvidence, promotionStateSource)
+	result.ProvenLiveClass = provenLiveClass
+	result.ApprovedMutationClass = approvedMutationClass
+	if blocker != "" {
+		return failPulseEventLoopPolicy(result, "promotion_state", blocker, "Stop the event loop until promotion evidence approves exactly the current proven class.")
+	}
 
 	checks := []pulseEventLoopPolicyCheck{
 		{Name: "ci_status", Path: paths.CI, SchemaVersion: "ao.foundry.ci-readiness.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
@@ -4290,6 +4314,7 @@ func buildPulseEventLoopPolicy(paths pulseEventLoopPolicyPaths) (PulseEventLoopP
 		{Name: "evidence_freshness", Path: paths.EvidenceFreshness, SchemaVersion: "ao.foundry.evidence-freshness.v0.1", StatusField: "status", ReadyStatuses: []string{"fresh"}},
 		{Name: "sentinel_hold", Path: paths.Sentinel, SchemaVersion: "ao.sentinel.mutation-class-hold.v0.1", StatusField: "status", ReadyStatuses: []string{"no_hold"}},
 		{Name: "promoter_readiness", Path: paths.Promoter, SchemaVersion: "ao.promoter.mutation-class-promotion.v0.1", StatusField: "status", ReadyStatuses: []string{"ready"}},
+		{Name: "rollback_integrity", Path: paths.Rollback, SchemaVersion: "ao.foundry.mutation-class-rollback.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
 		{Name: "branch_cleanup", Path: paths.BranchCleanup, SchemaVersion: "ao.foundry.branch-cleanup.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
 		{Name: "scope_boundary", Path: paths.Scope, SchemaVersion: "ao.foundry.scope-boundary.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
 	}
@@ -4334,6 +4359,56 @@ func evaluatePulseEventLoopClassGate(path string) (MutationClassGate, PulseEvent
 		return gate, source, "class_gate must not schedule, execute, approve, or mutate repositories", nil
 	default:
 		return gate, source, "", nil
+	}
+}
+
+func evaluatePulseEventLoopPromotionState(path, mutationClass string) (PulseEventLoopPolicySource, string, string, string, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return PulseEventLoopPolicySource{}, "", "", "", fmt.Errorf("unsafe promotion_state path: %w", err)
+	}
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return PulseEventLoopPolicySource{}, "", "", "", fmt.Errorf("read promotion_state evidence: %w", err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return PulseEventLoopPolicySource{}, "", "", "", fmt.Errorf("promotion_state evidence must be a JSON object")
+	}
+	if err := validatePublicSafeJSONStrings(object); err != nil {
+		return PulseEventLoopPolicySource{}, "", "", "", err
+	}
+	status := classGateString(object, "status")
+	source, err := pulseEventLoopPolicySourceFromFile("promotion_state", path, classGateString(object, "schema_version"), status)
+	if err != nil {
+		return source, "", "", "", err
+	}
+	provenLiveClass := classGateString(object, "proven_live_class")
+	approvedMutationClass := classGateString(object, "approved_mutation_class")
+	switch {
+	case source.SchemaVersion != "ao.foundry.mutation-class-promotion-state.v0.1":
+		return source, provenLiveClass, approvedMutationClass, "promotion_state schema_version must be ao.foundry.mutation-class-promotion-state.v0.1", nil
+	case status != "ready":
+		return source, provenLiveClass, approvedMutationClass, "promotion_state status is " + status, nil
+	case classGateString(object, "mutation_class") != mutationClass:
+		return source, provenLiveClass, approvedMutationClass, fmt.Sprintf("promotion_state mutation_class %s does not match %s", classGateString(object, "mutation_class"), mutationClass), nil
+	case provenLiveClass == "":
+		return source, provenLiveClass, approvedMutationClass, "promotion_state missing proven_live_class", nil
+	case approvedMutationClass == "":
+		return source, provenLiveClass, approvedMutationClass, "promotion_state missing approved_mutation_class", nil
+	case provenLiveClass != mutationClass:
+		return source, provenLiveClass, approvedMutationClass, fmt.Sprintf("promotion_state proven_live_class %s does not match %s", provenLiveClass, mutationClass), nil
+	case approvedMutationClass != mutationClass:
+		return source, provenLiveClass, approvedMutationClass, fmt.Sprintf("promotion_state approved_mutation_class %s does not match %s", approvedMutationClass, mutationClass), nil
+	case classGateBool(object, "class_jump_requested"):
+		return source, provenLiveClass, approvedMutationClass, "promotion_state class_jump_requested is true", nil
+	case !classGateBool(object, "live_evidence_merged"):
+		return source, provenLiveClass, approvedMutationClass, "promotion_state live_evidence_merged is false", nil
+	case !classGateBool(object, "promotion_evidence_present"):
+		return source, provenLiveClass, approvedMutationClass, "promotion_state promotion_evidence_present is false", nil
+	case classGateBool(object, "operator_prompt_required"):
+		return source, provenLiveClass, approvedMutationClass, "promotion_state operator_prompt_required is true", nil
+	default:
+		return source, provenLiveClass, approvedMutationClass, "", nil
 	}
 }
 
@@ -4383,6 +4458,13 @@ func evaluatePulseEventLoopCheck(check pulseEventLoopPolicyCheck, mutationClass 
 	case "evidence_freshness":
 		if classGateBool(object, "stale_evidence") {
 			return source, "evidence_freshness stale_evidence is true", nil
+		}
+	case "rollback_integrity":
+		switch {
+		case classGateBool(object, "rollback_failure"):
+			return source, "rollback_integrity rollback_failure is true", nil
+		case !classGateBool(object, "rollback_verified"):
+			return source, "rollback_integrity rollback_verified is false", nil
 		}
 	case "branch_cleanup":
 		switch {
@@ -4438,6 +4520,8 @@ func pulseEventLoopBlockerAction(checkName string) string {
 		return "Stop the event loop until Sentinel reports no active hold."
 	case "promoter_readiness":
 		return "Stop the event loop until Promoter reports class promotion readiness."
+	case "rollback_integrity":
+		return "Stop the event loop until rollback evidence passes."
 	case "branch_cleanup":
 		return "Stop the event loop until local and remote codex branches are cleaned up."
 	case "scope_boundary":
