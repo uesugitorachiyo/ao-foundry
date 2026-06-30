@@ -5001,6 +5001,32 @@ func TestMutationClassGateEvaluateReady(t *testing.T) {
 	}
 }
 
+func TestMutationClassGateEvaluateTestOnlyReady(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.test-only.json",
+		"--covenant", "examples/class-gate/covenant-ticket.test-only.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.test-only.json",
+		"--promoter", "examples/class-gate/promoter.ready.test-only.json",
+		"--rollback", "examples/class-gate/rollback.passed.test-only.json",
+		"--command", "examples/class-gate/command-readback.test-only.json",
+		"--ci", "examples/class-gate/ci.passed.test-only.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("test_only class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "ready" ||
+		gate["mutation_class"] != "test_only" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != true {
+		t.Fatalf("unexpected test_only class gate: %#v", gate)
+	}
+}
+
 func TestMutationClassGateBlocksLowRiskCodeWithoutTestOnlySuccess(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
