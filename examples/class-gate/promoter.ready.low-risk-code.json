@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+  "status": "ready",
+  "mutation_class": "low_risk_code",
+  "promotion_boundary": "low_risk_code_only"
+}

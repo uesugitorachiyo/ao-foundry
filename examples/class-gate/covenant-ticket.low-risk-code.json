@@ -1,0 +1,19 @@
+{
+  "schema_version": "covenant.mutation-class-authority-ticket.v1",
+  "ticket_id": "mutation-class-low-risk-code-ticket",
+  "request_id": "low-risk-code-authority-request",
+  "approval_state": "approved",
+  "approver_identity": "ao-operator",
+  "expires_at": "2099-01-01T00:00:00Z",
+  "consumed": false,
+  "mutation_class": "low_risk_code",
+  "authority_boundaries": {
+    "exact_scope": true,
+    "class_bound": true,
+    "digest_bound": true,
+    "single_use": true,
+    "live_mutation_grant": false,
+    "provider_calls_allowed": false,
+    "release_or_publish_allowed": false
+  }
+}

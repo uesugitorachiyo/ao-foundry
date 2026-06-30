@@ -5001,6 +5001,46 @@ func TestMutationClassGateEvaluateReady(t *testing.T) {
 	}
 }
 
+func TestMutationClassGateBlocksLowRiskCodeWithoutTestOnlySuccess(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.low-risk-code.json",
+		"--covenant", "examples/class-gate/covenant-ticket.low-risk-code.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.low-risk-code.json",
+		"--promoter", "examples/class-gate/promoter.ready.low-risk-code.json",
+		"--rollback", "examples/class-gate/rollback.passed.low-risk-code.json",
+		"--command", "examples/class-gate/command-readback.low-risk-code.json",
+		"--ci", "examples/class-gate/ci.passed.low-risk-code.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "blocked" ||
+		gate["mutation_class"] != "low_risk_code" ||
+		gate["safe_to_request"] != false ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "test_only_success evidence is required for low_risk_code" {
+		t.Fatalf("low_risk_code must remain blocked without test_only_success: %#v", gate)
+	}
+	required, ok := gate["required_evidence"].([]any)
+	if !ok {
+		t.Fatalf("low_risk_code gate missing required evidence list: %#v", gate["required_evidence"])
+	}
+	hasTestOnlySuccess := false
+	for _, item := range required {
+		if item == "test_only_success" {
+			hasTestOnlySuccess = true
+		}
+	}
+	if !hasTestOnlySuccess {
+		t.Fatalf("low_risk_code gate must require test_only_success: %#v", gate["required_evidence"])
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer

@@ -1950,11 +1950,16 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	if className == "" {
 		blockers = append([]string{"atlas_classification missing mutation_class"}, blockers...)
 	}
+	if className == "low_risk_code" {
+		requiredEvidence = append(requiredEvidence, "test_only_success")
+		gate.RequiredEvidence = requiredEvidence
+		blockers = append(blockers, "test_only_success evidence is required for low_risk_code")
+	}
 	if len(blockers) == 0 {
 		gate.Status = "ready"
 		gate.SafeToRequest = true
 		gate.SafeToExecute = true
-		gate.NextActions = []string{"Request exactly one docs_only_multi_file mutation through the next governed gate; do not broaden class scope."}
+		gate.NextActions = []string{"Request exactly one " + className + " mutation through the next governed gate; do not broaden class scope."}
 		return gate, nil
 	}
 	gate.FirstFailingCheck = blockers[0]

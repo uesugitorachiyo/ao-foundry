@@ -1,0 +1,7 @@
+diff --git a/internal/example.go b/internal/example.go
+deleted file mode 100644
+index 1111111..0000000
+--- a/internal/example.go
++++ /dev/null
+@@ -1 +0,0 @@
+-package internal
