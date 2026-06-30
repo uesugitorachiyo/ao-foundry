@@ -1,0 +1,9 @@
+{
+  "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+  "status": "passed",
+  "mutation_class": "low_risk_code",
+  "rollback_patch": "examples/class-gate/rollback.low-risk-code.patch",
+  "verification_commands": [
+    "git apply --reverse --check"
+  ]
+}
