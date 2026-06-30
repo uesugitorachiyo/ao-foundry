@@ -73,6 +73,30 @@
       "sha256": "178d83a4f29ba94e27fe33e4e3fd0edb4a2c333c61dd73a52b77625e6c2b1641"
     }
   ],
+  "class_boundary_checks": {
+    "mutation_class": "low_risk_code",
+    "atlas_classification_only": true,
+    "atlas_required_gates_complete": true,
+    "covenant_exact_scope": true,
+    "covenant_class_bound": true,
+    "covenant_digest_bound": true,
+    "covenant_single_use": true,
+    "covenant_unconsumed": true,
+    "covenant_live_mutation_denied": true,
+    "sentinel_no_hold": true,
+    "promoter_boundary": "low_risk_code_only",
+    "rollback_patch_present": true,
+    "rollback_verification_commands_present": true,
+    "command_read_only": true,
+    "command_current_class": "test_only",
+    "command_next_class": "low_risk_code",
+    "command_mutates_repositories": false,
+    "ci_passed": true,
+    "ci_required_checks_present": true,
+    "test_only_live_evidence": true,
+    "safe_to_request": true,
+    "safe_to_execute": false
+  },
   "denied_classes": [
     "docs_only_single_file",
     "docs_only_multi_file",

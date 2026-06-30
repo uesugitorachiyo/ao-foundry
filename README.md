@@ -181,7 +181,13 @@ evidence. Without that evidence Foundry keeps `safe_to_request=false` and
 `safe_to_execute=false` even if the generic class evidence is otherwise ready.
 With checked test-only live rehearsal evidence, Foundry may report
 `safe_to_request=true` for a low-risk-code dry-run design while still keeping
-`safe_to_execute=false`. The low-risk-code gate also emits a
+`safe_to_execute=false`. The low-risk-code gate also emits
+`class_boundary_checks` readback for the Atlas classification-only boundary,
+exact-scope Covenant ticket flags, Sentinel no-hold verdict, Promoter class
+boundary, rollback proof, read-only Command state, CI readiness, and
+test-only live evidence. If any of those consumed artifacts broadens scope,
+loses class binding, claims mutation authority, omits rollback/CI evidence, or
+stops being read-only, Foundry fails closed. The low-risk-code gate also emits a
 `denial_audit` readback listing the missing live policy promotion, rollback
 proof, Sentinel clear verdict, Promoter promotion, Command readback, and PR CI
 evidence, with `exact_next_action=build_low_risk_code_promotion_prerequisites`.

@@ -201,24 +201,25 @@ type AtlasStatus struct {
 }
 
 type MutationClassGate struct {
-	SchemaVersion       string                      `json:"schema_version"`
-	Status              string                      `json:"status"`
-	MutationClass       string                      `json:"mutation_class"`
-	SafeToRequest       bool                        `json:"safe_to_request"`
-	SafeToExecute       bool                        `json:"safe_to_execute"`
-	FirstFailingCheck   string                      `json:"first_failing_check"`
-	RequiredEvidence    []string                    `json:"required_evidence"`
-	SourceEvidence      []MutationClassGateEvidence `json:"source_evidence"`
-	DeniedClasses       []string                    `json:"denied_classes"`
-	AuthorityBoundary   string                      `json:"authority_boundary"`
-	NextActions         []string                    `json:"next_actions"`
-	DenialAudit         *LowRiskCodeDenialAudit     `json:"denial_audit,omitempty"`
-	RepoExecutionPlan   []MutationClassRepoState    `json:"repo_execution_plan,omitempty"`
-	RepoSafety          *MutationClassRepoSafety    `json:"repo_safety,omitempty"`
-	SchedulesWork       bool                        `json:"schedules_work"`
-	ExecutesWork        bool                        `json:"executes_work"`
-	ApprovesWork        bool                        `json:"approves_work"`
-	MutatesRepositories bool                        `json:"mutates_repositories"`
+	SchemaVersion       string                       `json:"schema_version"`
+	Status              string                       `json:"status"`
+	MutationClass       string                       `json:"mutation_class"`
+	SafeToRequest       bool                         `json:"safe_to_request"`
+	SafeToExecute       bool                         `json:"safe_to_execute"`
+	FirstFailingCheck   string                       `json:"first_failing_check"`
+	RequiredEvidence    []string                     `json:"required_evidence"`
+	SourceEvidence      []MutationClassGateEvidence  `json:"source_evidence"`
+	ClassBoundaryChecks *MutationClassBoundaryChecks `json:"class_boundary_checks,omitempty"`
+	DeniedClasses       []string                     `json:"denied_classes"`
+	AuthorityBoundary   string                       `json:"authority_boundary"`
+	NextActions         []string                     `json:"next_actions"`
+	DenialAudit         *LowRiskCodeDenialAudit      `json:"denial_audit,omitempty"`
+	RepoExecutionPlan   []MutationClassRepoState     `json:"repo_execution_plan,omitempty"`
+	RepoSafety          *MutationClassRepoSafety     `json:"repo_safety,omitempty"`
+	SchedulesWork       bool                         `json:"schedules_work"`
+	ExecutesWork        bool                         `json:"executes_work"`
+	ApprovesWork        bool                         `json:"approves_work"`
+	MutatesRepositories bool                         `json:"mutates_repositories"`
 }
 
 type LowRiskCodeDenialAudit struct {
@@ -245,6 +246,31 @@ type MutationClassGateEvidence struct {
 	SchemaVersion string `json:"schema_version"`
 	Status        string `json:"status"`
 	SHA256        string `json:"sha256"`
+}
+
+type MutationClassBoundaryChecks struct {
+	MutationClass                       string `json:"mutation_class"`
+	AtlasClassificationOnly             bool   `json:"atlas_classification_only"`
+	AtlasRequiredGatesComplete          bool   `json:"atlas_required_gates_complete"`
+	CovenantExactScope                  bool   `json:"covenant_exact_scope"`
+	CovenantClassBound                  bool   `json:"covenant_class_bound"`
+	CovenantDigestBound                 bool   `json:"covenant_digest_bound"`
+	CovenantSingleUse                   bool   `json:"covenant_single_use"`
+	CovenantUnconsumed                  bool   `json:"covenant_unconsumed"`
+	CovenantLiveMutationDenied          bool   `json:"covenant_live_mutation_denied"`
+	SentinelNoHold                      bool   `json:"sentinel_no_hold"`
+	PromoterBoundary                    string `json:"promoter_boundary"`
+	RollbackPatchPresent                bool   `json:"rollback_patch_present"`
+	RollbackVerificationCommandsPresent bool   `json:"rollback_verification_commands_present"`
+	CommandReadOnly                     bool   `json:"command_read_only"`
+	CommandCurrentClass                 string `json:"command_current_class"`
+	CommandNextClass                    string `json:"command_next_class"`
+	CommandMutatesRepositories          bool   `json:"command_mutates_repositories"`
+	CIPassed                            bool   `json:"ci_passed"`
+	CIRequiredChecksPresent             bool   `json:"ci_required_checks_present"`
+	TestOnlyLiveEvidence                bool   `json:"test_only_live_evidence"`
+	SafeToRequest                       bool   `json:"safe_to_request"`
+	SafeToExecute                       bool   `json:"safe_to_execute"`
 }
 
 type MutationClassRepoState struct {
@@ -2008,12 +2034,14 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	}
 	var className string
 	var blockers []string
+	documents := map[string]map[string]any{}
 	for _, check := range checks {
 		evidence, document, blocker, err := evaluateClassGateCheck(check, className)
 		if err != nil {
 			return gate, err
 		}
 		gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+		documents[check.Name] = document
 		documentClass := classGateString(document, "mutation_class")
 		if documentClass == "" && check.Name == "command_readback" {
 			documentClass = classGateString(document, "next_class")
@@ -2033,6 +2061,7 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	if className == "low_risk_code" {
 		requiredEvidence = append(requiredEvidence, "test_only_success")
 		gate.RequiredEvidence = requiredEvidence
+		testOnlySuccessReady := false
 		if strings.TrimSpace(paths.TestOnlySuccess) == "" {
 			blockers = append(blockers, "test_only_success evidence is required for low_risk_code")
 		} else {
@@ -2043,13 +2072,19 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 			gate.SourceEvidence = append(gate.SourceEvidence, evidence)
 			if blocker != "" {
 				blockers = append(blockers, blocker)
+			} else {
+				testOnlySuccessReady = true
 			}
 		}
+		boundaryChecks, boundaryBlockers := evaluateLowRiskCodeBoundaryChecks(documents, testOnlySuccessReady)
+		gate.ClassBoundaryChecks = boundaryChecks
+		blockers = append(blockers, boundaryBlockers...)
 		gate.DenialAudit = lowRiskCodeDenialAudit(len(blockers) == 0)
 		if len(blockers) == 0 {
 			gate.Status = "ready"
 			gate.SafeToRequest = true
 			gate.SafeToExecute = false
+			gate.ClassBoundaryChecks.SafeToRequest = true
 			gate.NextActions = []string{"Request a low_risk_code dry-run design only; live code execution remains denied until a later promotion slice."}
 			return gate, nil
 		}
@@ -2089,6 +2124,69 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	gate.FirstFailingCheck = blockers[0]
 	gate.NextActions = blockers
 	return gate, nil
+}
+
+func evaluateLowRiskCodeBoundaryChecks(documents map[string]map[string]any, testOnlySuccessReady bool) (*MutationClassBoundaryChecks, []string) {
+	atlas := documents["atlas_classification"]
+	covenant := documents["covenant_class_ticket"]
+	sentinel := documents["sentinel_no_hold"]
+	promoter := documents["promoter_ready"]
+	rollback := documents["rollback_proof"]
+	command := documents["command_readback"]
+	ci := documents["ci_passed"]
+	checks := &MutationClassBoundaryChecks{
+		MutationClass:                       "low_risk_code",
+		AtlasClassificationOnly:             classGateString(atlas, "authority_boundary") == "atlas_classification_only" && !classGateBool(atlas, "safe_to_execute"),
+		AtlasRequiredGatesComplete:          classGateContainsAll(atlas, "required_gates", []string{"atlas_classification", "test_only_success", "covenant_class_ticket", "sentinel_no_hold", "promoter_ready", "rollback_proof", "command_readback", "ci_passed"}),
+		CovenantExactScope:                  classGateNestedBool(covenant, "authority_boundaries", "exact_scope"),
+		CovenantClassBound:                  classGateNestedBool(covenant, "authority_boundaries", "class_bound"),
+		CovenantDigestBound:                 classGateNestedBool(covenant, "authority_boundaries", "digest_bound"),
+		CovenantSingleUse:                   classGateNestedBool(covenant, "authority_boundaries", "single_use"),
+		CovenantUnconsumed:                  !classGateBool(covenant, "consumed"),
+		CovenantLiveMutationDenied:          !classGateNestedBool(covenant, "authority_boundaries", "live_mutation_grant"),
+		SentinelNoHold:                      classGateString(sentinel, "status") == "no_hold" && !classGateBool(sentinel, "hold"),
+		PromoterBoundary:                    classGateString(promoter, "promotion_boundary"),
+		RollbackPatchPresent:                classGateString(rollback, "rollback_patch") != "",
+		RollbackVerificationCommandsPresent: len(classGateStringSlice(rollback, "verification_commands")) > 0,
+		CommandReadOnly:                     classGateString(command, "operator_mode") == "read_only",
+		CommandCurrentClass:                 classGateString(command, "current_class"),
+		CommandNextClass:                    classGateString(command, "next_class"),
+		CommandMutatesRepositories:          classGateBool(command, "mutates_repositories"),
+		CIPassed:                            classGateString(ci, "status") == "passed",
+		CIRequiredChecksPresent:             len(classGateStringSlice(ci, "required_checks")) > 0,
+		TestOnlyLiveEvidence:                testOnlySuccessReady,
+		SafeToRequest:                       false,
+		SafeToExecute:                       false,
+	}
+	blockers := []string{}
+	if !checks.AtlasClassificationOnly {
+		blockers = append(blockers, "atlas_classification must be classification-only for low_risk_code")
+	}
+	if !checks.AtlasRequiredGatesComplete {
+		blockers = append(blockers, "atlas_classification missing required low_risk_code gates")
+	}
+	if !checks.CovenantExactScope || !checks.CovenantClassBound || !checks.CovenantDigestBound || !checks.CovenantSingleUse || !checks.CovenantUnconsumed {
+		blockers = append(blockers, "covenant_class_ticket must remain exact-scope, class-bound, digest-bound, unconsumed, and single-use")
+	}
+	if !checks.CovenantLiveMutationDenied {
+		blockers = append(blockers, "covenant_class_ticket must not grant live mutation execution")
+	}
+	if !checks.SentinelNoHold {
+		blockers = append(blockers, "sentinel_no_hold must be an explicit no-hold verdict")
+	}
+	if checks.PromoterBoundary != "low_risk_code_only" {
+		blockers = append(blockers, "promoter_ready must be bounded to low_risk_code_only")
+	}
+	if !checks.RollbackPatchPresent || !checks.RollbackVerificationCommandsPresent {
+		blockers = append(blockers, "rollback_proof requires rollback_patch and verification_commands")
+	}
+	if !checks.CommandReadOnly || checks.CommandCurrentClass != "test_only" || checks.CommandNextClass != "low_risk_code" || checks.CommandMutatesRepositories {
+		blockers = append(blockers, "command_readback must remain read-only from test_only to low_risk_code")
+	}
+	if !checks.CIPassed || !checks.CIRequiredChecksPresent {
+		blockers = append(blockers, "ci_passed must pass and list required checks")
+	}
+	return checks, blockers
 }
 
 func lowRiskCodeDenialAudit(safeToRequest bool) *LowRiskCodeDenialAudit {
@@ -2337,6 +2435,11 @@ func classGateNestedString(document map[string]any, outer, inner string) string 
 	return classGateString(nested, inner)
 }
 
+func classGateNestedBool(document map[string]any, outer, inner string) bool {
+	nested, _ := document[outer].(map[string]any)
+	return classGateBool(nested, inner)
+}
+
 func classGateStringSlice(document map[string]any, key string) []string {
 	rawValues, _ := document[key].([]any)
 	values := []string{}
@@ -2347,6 +2450,16 @@ func classGateStringSlice(document map[string]any, key string) []string {
 		}
 	}
 	return values
+}
+
+func classGateContainsAll(document map[string]any, key string, wants []string) bool {
+	values := classGateStringSlice(document, key)
+	for _, want := range wants {
+		if !classGateStringSliceContains(values, want) {
+			return false
+		}
+	}
+	return true
 }
 
 func classGateStringSliceContains(values []string, want string) bool {
