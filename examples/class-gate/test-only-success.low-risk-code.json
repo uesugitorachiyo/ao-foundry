@@ -1,0 +1,24 @@
+{
+  "schema_version": "ao.foundry.mutation-class-live-success.v0.1",
+  "status": "passed",
+  "mutation_class": "test_only",
+  "proven_live_class": "test_only",
+  "source_repo": "ao-atlas",
+  "merged_pr": {
+    "number": 28,
+    "merge_commit": "ec1c327d951dd3b125a71328457ed8701c1ab722",
+    "changed_files": [
+      "internal/atlas/atlas_test.go"
+    ],
+    "max_changed_files": 1,
+    "mutation_class": "test_only"
+  },
+  "rollback_proof": {
+    "status": "passed",
+    "sha256": "a6050d81251a536a85117198f7580ac9a529866d84f11f8d312e3a17c61a0711"
+  },
+  "ci_status": {
+    "status": "passed",
+    "required": true
+  }
+}

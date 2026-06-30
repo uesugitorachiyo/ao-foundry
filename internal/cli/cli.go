@@ -1845,6 +1845,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	rollbackPath := fs.String("rollback", "", "rollback rehearsal evidence")
 	commandPath := fs.String("command", "", "AO Command authority-ladder readback")
 	ciPath := fs.String("ci", "", "CI status evidence")
+	testOnlySuccessPath := fs.String("test-only-success", "", "completed test_only live rehearsal evidence for low_risk_code dry-run readiness")
 	outPath := fs.String("out", "", "class gate output path")
 	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
 	if !parseFlags(fs, args, stderr) {
@@ -1862,13 +1863,14 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	gate, err := evaluateMutationClassGate(classGateEvidencePaths{
-		Atlas:    *atlasPath,
-		Covenant: *covenantPath,
-		Sentinel: *sentinelPath,
-		Promoter: *promoterPath,
-		Rollback: *rollbackPath,
-		Command:  *commandPath,
-		CI:       *ciPath,
+		Atlas:           *atlasPath,
+		Covenant:        *covenantPath,
+		Sentinel:        *sentinelPath,
+		Promoter:        *promoterPath,
+		Rollback:        *rollbackPath,
+		Command:         *commandPath,
+		CI:              *ciPath,
+		TestOnlySuccess: *testOnlySuccessPath,
 	})
 	if err != nil {
 		fmt.Fprintf(stderr, "class gate: %v\n", err)
@@ -1894,13 +1896,14 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 }
 
 type classGateEvidencePaths struct {
-	Atlas    string
-	Covenant string
-	Sentinel string
-	Promoter string
-	Rollback string
-	Command  string
-	CI       string
+	Atlas           string
+	Covenant        string
+	Sentinel        string
+	Promoter        string
+	Rollback        string
+	Command         string
+	CI              string
+	TestOnlySuccess string
 }
 
 func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate, error) {
@@ -1953,7 +1956,25 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	if className == "low_risk_code" {
 		requiredEvidence = append(requiredEvidence, "test_only_success")
 		gate.RequiredEvidence = requiredEvidence
-		blockers = append(blockers, "test_only_success evidence is required for low_risk_code")
+		if strings.TrimSpace(paths.TestOnlySuccess) == "" {
+			blockers = append(blockers, "test_only_success evidence is required for low_risk_code")
+		} else {
+			evidence, blocker, err := evaluateTestOnlySuccessEvidence(paths.TestOnlySuccess)
+			if err != nil {
+				return gate, err
+			}
+			gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+			if blocker != "" {
+				blockers = append(blockers, blocker)
+			}
+		}
+		if len(blockers) == 0 {
+			gate.Status = "ready"
+			gate.SafeToRequest = true
+			gate.SafeToExecute = false
+			gate.NextActions = []string{"Request a low_risk_code dry-run design only; live code execution remains denied until a later promotion slice."}
+			return gate, nil
+		}
 	}
 	if len(blockers) == 0 {
 		gate.Status = "ready"
@@ -1965,6 +1986,42 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	gate.FirstFailingCheck = blockers[0]
 	gate.NextActions = blockers
 	return gate, nil
+}
+
+func evaluateTestOnlySuccessEvidence(path string) (MutationClassGateEvidence, string, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, "", fmt.Errorf("read test_only_success evidence: %w", err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return MutationClassGateEvidence{}, "", fmt.Errorf("test_only_success evidence must be a JSON object")
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, "", fmt.Errorf("hash test_only_success evidence: %w", err)
+	}
+	evidence := MutationClassGateEvidence{
+		Name:          "test_only_success",
+		Path:          path,
+		SchemaVersion: classGateString(object, "schema_version"),
+		Status:        classGateString(object, "status"),
+		SHA256:        sum,
+	}
+	switch {
+	case evidence.SchemaVersion != "ao.foundry.mutation-class-live-success.v0.1":
+		return evidence, "test_only_success schema_version must be ao.foundry.mutation-class-live-success.v0.1", nil
+	case evidence.Status != "passed":
+		return evidence, fmt.Sprintf("test_only_success status is %s", evidence.Status), nil
+	case classGateString(object, "proven_live_class") != "test_only" && classGateString(object, "mutation_class") != "test_only":
+		return evidence, "test_only_success must prove the test_only live class", nil
+	case classGateNestedString(object, "rollback_proof", "status") != "passed":
+		return evidence, "test_only_success rollback_proof must pass", nil
+	case classGateNestedString(object, "ci_status", "status") != "passed":
+		return evidence, "test_only_success ci_status must pass", nil
+	default:
+		return evidence, "", nil
+	}
 }
 
 type classGateCheck struct {
@@ -2026,6 +2083,11 @@ func classGateString(document map[string]any, key string) string {
 func classGateBool(document map[string]any, key string) bool {
 	value, _ := document[key].(bool)
 	return value
+}
+
+func classGateNestedString(document map[string]any, outer, inner string) string {
+	nested, _ := document[outer].(map[string]any)
+	return classGateString(nested, inner)
 }
 
 func classGateStringSliceContains(values []string, want string) bool {

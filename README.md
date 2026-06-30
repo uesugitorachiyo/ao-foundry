@@ -175,10 +175,13 @@ rollback proof, AO Command readback, and CI evidence. It emits
 `safe_to_execute` for exactly one mutation class, while all other classes stay
 listed in `denied_classes`. Missing or mismatched evidence blocks the gate. The
 checked-in fixtures cover `docs_only_multi_file` and `test_only` readiness.
-The low-risk-code dry-run path also requires explicit `test_only_success` evidence;
-without it Foundry keeps `safe_to_request=false` and `safe_to_execute=false`
-even if the generic class evidence is otherwise ready. The gate does not
-schedule, execute, approve, publish, call providers, or mutate repositories.
+The low-risk-code dry-run path also requires explicit `test_only_success`
+evidence. Without that evidence Foundry keeps `safe_to_request=false` and
+`safe_to_execute=false` even if the generic class evidence is otherwise ready.
+With checked test-only live rehearsal evidence, Foundry may report
+`safe_to_request=true` for a low-risk-code dry-run design while still keeping
+`safe_to_execute=false`. The gate does not schedule, execute, approve, publish,
+call providers, or mutate repositories.
 
 `scripts/blueprint-atlas-pulse-e2e-dry-run.sh` proves the fixture-only
 Blueprint -> Atlas -> Foundry -> AO Command control path. The ready path starts

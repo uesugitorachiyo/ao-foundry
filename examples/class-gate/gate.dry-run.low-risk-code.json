@@ -1,0 +1,92 @@
+{
+  "schema_version": "ao.foundry.mutation-class-gate.v0.1",
+  "status": "ready",
+  "mutation_class": "low_risk_code",
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "first_failing_check": "",
+  "required_evidence": [
+    "atlas_classification",
+    "covenant_class_ticket",
+    "sentinel_no_hold",
+    "promoter_ready",
+    "rollback_proof",
+    "command_readback",
+    "ci_passed",
+    "test_only_success"
+  ],
+  "source_evidence": [
+    {
+      "name": "atlas_classification",
+      "path": "examples/class-gate/atlas-classification.low-risk-code.json",
+      "schema_version": "ao.atlas.mutation-classification.v0.1",
+      "status": "ready",
+      "sha256": "4101f9545384e2dec4004d8b106d4528fd52b723ab46de927ea89bff3e111ab0"
+    },
+    {
+      "name": "covenant_class_ticket",
+      "path": "examples/class-gate/covenant-ticket.low-risk-code.json",
+      "schema_version": "covenant.mutation-class-authority-ticket.v1",
+      "status": "approved",
+      "sha256": "f70c0783ceeb4a91b1f82aa5374a5ecc9c8c7756a8c6fd3ef7afa6a532c51afb"
+    },
+    {
+      "name": "sentinel_no_hold",
+      "path": "examples/class-gate/sentinel.no-hold.low-risk-code.json",
+      "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+      "status": "no_hold",
+      "sha256": "a849b9c86ea9476a5cd9a98a60bc4b055263d8367480253e321aa2ea4e3d5ff3"
+    },
+    {
+      "name": "promoter_ready",
+      "path": "examples/class-gate/promoter.ready.low-risk-code.json",
+      "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+      "status": "ready",
+      "sha256": "00abc89f70bc266c0be64261bc10d668c731db11ee6502f51ead445d678751b0"
+    },
+    {
+      "name": "rollback_proof",
+      "path": "examples/class-gate/rollback.passed.low-risk-code.json",
+      "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+      "status": "passed",
+      "sha256": "21ba0a25b27ab5d5e3b6554f56124c0aad2c8d5ca844f1d388b0fbcd38732011"
+    },
+    {
+      "name": "command_readback",
+      "path": "examples/class-gate/command-readback.low-risk-code.json",
+      "schema_version": "ao.command.atlas-authority-ladder.v0.1",
+      "status": "ready",
+      "sha256": "4af44aaad94c081cd294cbbe95591b7cf65758837041ab1320072fef019caef8"
+    },
+    {
+      "name": "ci_passed",
+      "path": "examples/class-gate/ci.passed.low-risk-code.json",
+      "schema_version": "ao.foundry.ci-readiness.v0.1",
+      "status": "passed",
+      "sha256": "2a9f3d05b84a728bc4ab6c04c6af1fab14f2c223042d2b483780d3171e2c39d8"
+    },
+    {
+      "name": "test_only_success",
+      "path": "examples/class-gate/test-only-success.low-risk-code.json",
+      "schema_version": "ao.foundry.mutation-class-live-success.v0.1",
+      "status": "passed",
+      "sha256": "178d83a4f29ba94e27fe33e4e3fd0edb4a2c333c61dd73a52b77625e6c2b1641"
+    }
+  ],
+  "denied_classes": [
+    "docs_only_single_file",
+    "docs_only_multi_file",
+    "docs_config_only",
+    "test_only",
+    "multi_repo_low_risk",
+    "complex_repo_mutation"
+  ],
+  "authority_boundary": "single_class_only",
+  "next_actions": [
+    "Request a low_risk_code dry-run design only; live code execution remains denied until a later promotion slice."
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
