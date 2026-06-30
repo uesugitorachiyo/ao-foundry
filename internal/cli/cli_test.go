@@ -6735,6 +6735,147 @@ func TestFullyUnsupervisedReadinessEvaluateBlocksMissingNodeArtifact(t *testing.
 	}
 }
 
+func TestFullyUnsupervisedAuthorityGatesEvaluateConsumesAllNodesAndDeniesLiveAuthority(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedAuthorityGateArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "authority-gates-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "authority-gates", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("authority gates evaluate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["schema_version"] != "ao.foundry.fully-unsupervised-complex-authority-gates-rollup.v0.1" ||
+		rollup["status"] != "denied" ||
+		rollup["target_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["highest_proven_live_class"] != "complex_repo_mutation" ||
+		rollup["next_denied_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["safe_to_execute"] != false ||
+		rollup["safe_to_promote"] != false ||
+		rollup["fully_unsupervised_complex_mutation"] != "denied" ||
+		rollup["rsi"] != "denied" {
+		t.Fatalf("authority gates rollup must deny live authority: %#v", rollup)
+	}
+	if fmt.Sprint(rollup["nodes_consumed"]) != "3" ||
+		fmt.Sprint(rollup["ready_nodes"]) != "1" ||
+		fmt.Sprint(rollup["blocked_nodes"]) != "2" {
+		t.Fatalf("authority gates rollup must consume all fixture nodes: %#v", rollup)
+	}
+	readback, ok := rollup["command_readback"].(map[string]any)
+	if !ok ||
+		readback["schema_version"] != "ao.command.fully-unsupervised-complex-authority-gates-readback.v0.1" ||
+		readback["status"] != "ready" ||
+		readback["safe_to_execute"] != false ||
+		readback["fully_unsupervised_complex_mutation"] != "denied" ||
+		readback["rsi"] != "denied" {
+		t.Fatalf("rollup must include Command authority-gates denial readback: %#v", rollup["command_readback"])
+	}
+	checks, ok := rollup["checks"].(map[string]any)
+	if !ok ||
+		checks["continuation_handoff_ready"] != true ||
+		checks["all_node_artifacts_present"] != true ||
+		checks["all_nodes_non_executable"] != true ||
+		checks["non_abandonment_evidence"] != true {
+		t.Fatalf("authority-gates checks should pass while keeping class denied: %#v", checks)
+	}
+}
+
+func TestFullyUnsupervisedAuthorityGatesEvaluateBlocksUnsafeCandidate(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedAuthorityGateArtifacts(t, dir, func(paths map[string]string) {
+		candidatePath := filepath.Join(paths["candidate_root"], "foundry-autonomous-runner-candidate.json")
+		candidate := readObjectFixture(t, candidatePath)
+		candidate["fully_unsupervised_complex_mutation_live_proven"] = true
+		writeJSONFixtureForTest(t, candidatePath, candidate)
+	})
+	outPath := filepath.Join(dir, "authority-gates-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "authority-gates", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked authority gates evaluate should still emit rollup, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		rollup["safe_to_execute"] != false ||
+		!objectStringSliceContains(rollup, "blockers", "candidate foundry-autonomous-runner must not claim fully_unsupervised_complex_mutation live-proven") {
+		t.Fatalf("unsafe candidate must block authority-gates rollup: %#v", rollup)
+	}
+}
+
+func TestFullyUnsupervisedAuthorityGatesEvaluateBlocksMissingNodeEvidence(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedAuthorityGateArtifacts(t, dir, func(paths map[string]string) {
+		if err := os.Remove(filepath.Join(paths["node_evidence_root"], "bounded-rehearsal-definition-evidence-requirements.json")); err != nil {
+			t.Fatalf("remove node evidence fixture: %v", err)
+		}
+	})
+	outPath := filepath.Join(dir, "authority-gates-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "authority-gates", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked authority gates evaluate should still emit rollup, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		!objectStringSliceContains(rollup, "blockers", "node_evidence bounded-rehearsal-definition is missing or invalid") {
+		t.Fatalf("missing node evidence must block authority-gates rollup: %#v", rollup)
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
@@ -8460,6 +8601,296 @@ func writeFullyUnsupervisedReadinessArtifacts(t *testing.T, dir string, mutate f
 		"status":                    "atlas_first_readiness_phase_complete",
 		"ready_nodes":               1,
 		"blocked_nodes":             1,
+		"highest_proven_live_class": "complex_repo_mutation",
+		"next_denied_class":         "fully_unsupervised_complex_mutation",
+		"rsi":                       "denied",
+	})
+	writeJSONFixtureForTest(t, paths["first_node_gate"], map[string]any{
+		"schema_version":                      "ao.foundry.complex-repo-mutation-node-gate.v0.1",
+		"status":                              "blocked",
+		"mutation_class":                      "complex_repo_mutation",
+		"node_id":                             nodes[0].ID,
+		"task_id":                             nodes[0].TaskID,
+		"safe_to_request":                     true,
+		"safe_to_execute":                     false,
+		"live_execution_authority":            false,
+		"fully_unsupervised_complex_mutation": "denied",
+		"rsi":                                 "denied",
+	})
+	if mutate != nil {
+		mutate(paths)
+	}
+	return paths
+}
+
+func writeFullyUnsupervisedAuthorityGateArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	paths := map[string]string{
+		"blueprint_import":     filepath.Join(dir, "blueprint-import.json"),
+		"workgraph":            filepath.Join(dir, "workgraph.json"),
+		"foundry_import":       filepath.Join(dir, "foundry-import.json"),
+		"continuation_handoff": filepath.Join(dir, "foundry-continuation-handoff.json"),
+		"atlas_summary":        filepath.Join(dir, "atlas-first-summary.json"),
+		"slice_manifest":       filepath.Join(dir, "sdd-slice-completion-manifest.json"),
+		"final_synthesis":      filepath.Join(dir, "final-evidence-synthesis.json"),
+		"first_node_gate":      filepath.Join(dir, "first-node-gate.json"),
+		"task_root":            filepath.Join(dir, "tasks"),
+		"context_root":         filepath.Join(dir, "context-packs"),
+		"candidate_root":       filepath.Join(dir, "candidate-records"),
+		"rollback_root":        filepath.Join(dir, "rollback-records"),
+		"node_evidence_root":   filepath.Join(dir, "node-evidence"),
+		"repair_root":          filepath.Join(dir, "repair-plans"),
+		"repack_root":          filepath.Join(dir, "context-repack-plans"),
+	}
+	nodes := []struct {
+		ID        string
+		TaskID    string
+		Status    string
+		NodeClass string
+		Folder    string
+	}{
+		{"authority-gate-support-readback", "authority-gate-support-readback-task", "ready", "support/readback authority-gate node", "00-authority-gate-support-readback"},
+		{"bounded-rehearsal-definition", "bounded-rehearsal-definition-task", "blocked", "bounded rehearsal definition", "01-bounded-rehearsal-definition"},
+		{"foundry-autonomous-runner", "foundry-autonomous-runner-task", "blocked", "Foundry autonomous runner", "02-foundry-autonomous-runner"},
+	}
+	workgraphNodes := []any{}
+	requiredGates := []any{
+		"atlas_blueprint_import",
+		"non_planning_authority_gate",
+		"covenant_unsupervised_authority_ticket",
+		"forge_ao2_bounded_packet",
+		"per_node_authority_envelope",
+		"foundry_continuation_handoff",
+		"sentinel_kill_switch",
+		"promoter_no_promotion",
+		"command_readback",
+		"rollback_escalation",
+		"evidence_freshness",
+		"public_claim_guard",
+		"rsi_denial_boundary",
+	}
+	requiredEvidence := []any{
+		"highest_proven_live_class:complex_repo_mutation",
+		"next_denied_class:fully_unsupervised_complex_mutation",
+		"rsi:denied",
+		"foundry_pr_131_readiness_only_denial:bound",
+		"no_return_early_manifest:required",
+		"safe_to_execute:false",
+	}
+	for i, node := range nodes {
+		dependencies := []any{}
+		blockers := []any{}
+		if i > 0 {
+			dependencies = append(dependencies, nodes[i-1].ID)
+			blockers = append(blockers, "waits for predecessor terminal authority-gate evidence")
+		}
+		nodeRequiredEvidence := append([]any{}, requiredEvidence...)
+		nodeRequiredEvidence = append(nodeRequiredEvidence, "node_id:"+node.ID, "node_class:"+node.NodeClass)
+		task := map[string]any{
+			"contract_version":    "ao.atlas.factory-task.v0.1",
+			"id":                  node.TaskID,
+			"objective":           "Authority gate evidence for " + node.NodeClass,
+			"target_factory_repo": "ao-foundry",
+			"factory_folder":      "factory/fully-unsupervised-authority-gates/" + node.Folder,
+			"mutation_class":      "complex_repo_mutation",
+			"acceptance_criteria": []any{
+				node.NodeClass + " authority-gate evidence is complete",
+				"fully_unsupervised_complex_mutation remains denied",
+				"RSI remains denied",
+			},
+			"non_goals": []any{
+				"do not execute ungated mutation",
+				"do not claim fully_unsupervised_complex_mutation proven",
+				"do not claim RSI proven",
+			},
+			"write_scope":       []any{"factory/fully-unsupervised-authority-gates/" + node.Folder},
+			"required_gates":    requiredGates,
+			"rollback_scope":    []any{"factory/fully-unsupervised-authority-gates/" + node.Folder},
+			"required_evidence": nodeRequiredEvidence,
+			"safety_limits": []any{
+				"no ungated mutation",
+				"no RSI",
+				"no release deploy publish upload tag",
+				"no provider calls",
+				"no credential use",
+				"no dependency updates",
+				"no auth policy config widening",
+				"no secret or env exposure",
+				"no direct main mutation",
+				"no concurrent mutation",
+				"no public claim broadening",
+			},
+			"authority_boundary": "bounded_authority_gate_support_readback_only",
+		}
+		writeJSONFixtureForTest(t, filepath.Join(paths["task_root"], node.ID+"-task.json"), task)
+		writeJSONFixtureForTest(t, filepath.Join(paths["context_root"], node.ID+"-context.json"), map[string]any{
+			"contract_version": "ao.atlas.context-pack.v0.1",
+			"node_id":          node.ID,
+			"task_id":          node.TaskID,
+			"status":           "ready",
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["candidate_root"], node.ID+"-candidate.json"), map[string]any{
+			"schema":                   "ao.atlas.private-authority-gate-candidate.v0.1",
+			"node_id":                  node.ID,
+			"task_id":                  node.TaskID,
+			"status":                   node.Status,
+			"candidate_class":          node.NodeClass,
+			"selected_first_safe_node": i == 0,
+			"safe_first_node_reason":   "support/readback authority-gate work only",
+			"allowed_surfaces":         []any{"factory/fully-unsupervised-authority-gates/" + node.Folder},
+			"denied_surfaces":          task["safety_limits"],
+			"required_evidence":        nodeRequiredEvidence,
+			"fully_unsupervised_complex_mutation_live_proven": false,
+			"rsi": "denied",
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["rollback_root"], node.ID+"-rollback.json"), map[string]any{
+			"schema":             "ao.atlas.private-authority-gate-rollback.v0.1",
+			"node_id":            node.ID,
+			"task_id":            node.TaskID,
+			"rollback_scope":     []any{"factory/fully-unsupervised-authority-gates/" + node.Folder},
+			"rollback_plan":      []any{"remove generated authority-gate artifacts for this node", "restore prior denial readback"},
+			"auto_stop_triggers": []any{"CI failure", "Sentinel hold", "public claim broadening", "forbidden surface expansion", "RSI boundary crossing"},
+			"fully_unsupervised_complex_mutation_live_proven": false,
+			"rsi": "denied",
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["node_evidence_root"], node.ID+"-evidence-requirements.json"), map[string]any{
+			"schema":                     "ao.atlas.private-authority-gate-node-evidence-requirements.v0.1",
+			"node_id":                    node.ID,
+			"task_id":                    node.TaskID,
+			"terminal_evidence_required": true,
+			"accepted_terminal_states":   []any{"completed", "blocked", "repaired", "repacked", "rolled_back", "denied"},
+			"required_evidence":          nodeRequiredEvidence,
+			"non_abandonment_rule":       "node cannot disappear from mission manifest without terminal evidence",
+			"fully_unsupervised_complex_mutation_live_proven": false,
+			"rsi": "denied",
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["repair_root"], node.ID+"-repair-plan.json"), map[string]any{
+			"schema":          "ao.atlas.private-authority-gate-repair-plan.v0.1",
+			"node_id":         node.ID,
+			"task_id":         node.TaskID,
+			"status":          "repair_planned",
+			"safe_to_execute": false,
+			"fully_unsupervised_complex_mutation_live_proven": false,
+			"rsi": "denied",
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["repack_root"], node.ID+"-context-repack-plan.json"), map[string]any{
+			"schema":          "ao.atlas.private-authority-gate-context-repack-plan.v0.1",
+			"node_id":         node.ID,
+			"task_id":         node.TaskID,
+			"status":          "context_repack_planned",
+			"safe_to_execute": false,
+			"fully_unsupervised_complex_mutation_live_proven": false,
+			"rsi": "denied",
+		})
+		workgraphNodes = append(workgraphNodes, map[string]any{
+			"id":           node.ID,
+			"status":       node.Status,
+			"factory_task": task,
+			"dependencies": dependencies,
+			"blockers":     blockers,
+		})
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "fully-unsupervised-complex-authority-gates-workgraph-test",
+		"nodes":            workgraphNodes,
+	})
+	writeJSONFixtureForTest(t, paths["blueprint_import"], map[string]any{
+		"contract_version":           "ao.atlas.blueprint-import.v0.1",
+		"id":                         "fully-unsupervised-complex-authority-gates-blueprint-import-test",
+		"project_id":                 "fully_unsupervised_complex_mutation-authority-gates-blueprint",
+		"status":                     "ready",
+		"workgraph_id":               "fully-unsupervised-complex-authority-gates-workgraph-test",
+		"mutation_class":             "complex_repo_mutation",
+		"ready_for_foundry":          true,
+		"safe_to_execute":            false,
+		"live_execution_proven":      false,
+		"schedules_work":             false,
+		"executes_work":              false,
+		"approves_work":              false,
+		"mutates_repositories":       false,
+		"calls_providers":            false,
+		"release_or_publish_allowed": false,
+		"candidate_selection": map[string]any{
+			"status":                "ready",
+			"mutation_class":        "complex_repo_mutation",
+			"safe_to_execute":       false,
+			"live_execution_proven": false,
+			"schedules_work":        false,
+			"executes_work":         false,
+			"approves_work":         false,
+			"mutates_repositories":  false,
+			"required_evidence":     append(append([]any{}, requiredEvidence...), "non_planning_authority_gates_requested:true"),
+		},
+	})
+	writeJSONFixtureForTest(t, paths["foundry_import"], map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "fully-unsupervised-complex-authority-gates-foundry-import-test",
+		"workgraph_id":     "fully-unsupervised-complex-authority-gates-workgraph-test",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":            nodes[0].ID,
+				"task_id":            nodes[0].TaskID,
+				"mutation_class":     "complex_repo_mutation",
+				"write_scope":        []any{"factory/fully-unsupervised-authority-gates/00-authority-gate-support-readback"},
+				"rollback_scope":     []any{"factory/fully-unsupervised-authority-gates/00-authority-gate-support-readback"},
+				"required_gates":     requiredGates,
+				"required_evidence":  append(append([]any{}, requiredEvidence...), "node_id:"+nodes[0].ID),
+				"authority_boundary": "bounded_authority_gate_support_readback_only",
+			},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["continuation_handoff"], map[string]any{
+		"contract_version":     "ao.atlas.foundry-continuation-handoff.v0.1",
+		"id":                   "fully-unsupervised-complex-authority-gates-continuation-handoff-test",
+		"target_folder":        "/" + "Users/torachiyouesugi/Documents/public/ao-foundry",
+		"command":              "codex --yolo",
+		"first_safe_node":      nodes[0].ID,
+		"total_node_count":     len(nodes),
+		"completed_node_count": 0,
+		"ready_node_count":     1,
+		"blocked_node_count":   2,
+		"class_boundary":       "complex_repo_mutation is live-proven; this handoff only requests bounded authority gates for fully_unsupervised_complex_mutation and preserves the Atlas no-execution boundary",
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+	})
+	writeJSONFixtureForTest(t, paths["atlas_summary"], map[string]any{
+		"schema":                    "ao.atlas.private-authority-gate-summary.v0.1",
+		"first_safe_node":           nodes[0].ID,
+		"planned_node_count":        len(nodes),
+		"ready_node_count":          1,
+		"blocked_node_count":        2,
+		"context_pack_count":        len(nodes),
+		"candidate_record_count":    len(nodes),
+		"rollback_record_count":     len(nodes),
+		"repair_plan_count":         len(nodes),
+		"context_repack_plan_count": len(nodes),
+		"sdd_slice_count":           30,
+		"completed_sdd_slice_count": 30,
+		"safe_to_execute":           false,
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                           "denied",
+		"highest_proven_live_class":     "complex_repo_mutation",
+		"next_denied_class":             "fully_unsupervised_complex_mutation",
+		"foundry_import_task_count":     1,
+		"foundry_import_selected_node":  nodes[0].ID,
+		"foundry_import_schedules_work": false,
+		"foundry_import_executes_work":  false,
+		"foundry_import_approves_work":  false,
+	})
+	writeJSONFixtureForTest(t, paths["slice_manifest"], map[string]any{
+		"schema":           "ao.atlas.private-authority-gate-slice-manifest.v0.1",
+		"total_slices":     30,
+		"completed_slices": 30,
+		"rsi":              "denied",
+	})
+	writeJSONFixtureForTest(t, paths["final_synthesis"], map[string]any{
+		"schema":                    "ao.atlas.private-authority-gate-final-evidence-synthesis.v0.1",
 		"highest_proven_live_class": "complex_repo_mutation",
 		"next_denied_class":         "fully_unsupervised_complex_mutation",
 		"rsi":                       "denied",
