@@ -1207,6 +1207,7 @@ func TestLowRiskCodeLiveRehearsalGateBlocksWithoutPolicyEvidence(t *testing.T) {
 		"collect_low_risk_code_live_policy_evidence",
 		"live policy evidence is required",
 		"safe_to_execute=$safe_to_execute",
+		"atlas_blueprint_import",
 		"max_source_files:1",
 		"max_test_files:1",
 	} {
@@ -1238,8 +1239,8 @@ func TestLowRiskCodeLiveRehearsalGateBlocksWithoutPolicyEvidence(t *testing.T) {
 		gate["mutation_class"] != "low_risk_code" ||
 		gate["safe_to_request"] != true ||
 		gate["safe_to_execute"] != false ||
-		gate["first_failing_check"] != "live_policy_evidence" ||
-		gate["exact_next_step"] != "collect_low_risk_code_live_policy_evidence" {
+		gate["first_failing_check"] != "atlas_blueprint_import" ||
+		gate["exact_next_step"] != "collect_atlas_blueprint_import_readback" {
 		t.Fatalf("unexpected low-risk live rehearsal gate: %#v", gate)
 	}
 	boundaries := gate["authority_boundaries"].(map[string]any)
@@ -4445,6 +4446,7 @@ func TestPulseIntakePreflightReadyRequiresBlueprintAndAtlasEvidence(t *testing.T
 	code := Run([]string{
 		"pulse", "intake-preflight",
 		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-import", "examples/atlas/foundry-import.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
 		"--requires-atlas",
@@ -4458,12 +4460,33 @@ func TestPulseIntakePreflightReadyRequiresBlueprintAndAtlasEvidence(t *testing.T
 	if result["schema_version"] != "ao.foundry.pulse-intake-preflight.v0.1" ||
 		result["status"] != "ready" ||
 		result["blueprint_status"] != "ready" ||
+		result["atlas_blueprint_status"] != "ready" ||
 		result["atlas_status"] != "ready" ||
 		result["first_failing_check"] != "" {
 		t.Fatalf("unexpected ready preflight result: %#v", result)
 	}
 	if !strings.Contains(stdout.String(), `"status": "ready"`) {
 		t.Fatalf("expected JSON stdout for ready preflight, got %s", stdout.String())
+	}
+}
+
+func TestPulseIntakePreflightRequiresAtlasBlueprintImportWhenAtlasRequired(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-import", "examples/atlas/foundry-import.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--requires-atlas",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("expected missing Atlas Blueprint import to block, stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["first_failing_check"] != "atlas_blueprint_import" {
+		t.Fatalf("expected atlas_blueprint_import blocker, got %#v", result)
 	}
 }
 
@@ -4522,6 +4545,7 @@ func TestPulseIntakePreflightFailsClosedForMissingAtlasEvidence(t *testing.T) {
 	code := Run([]string{
 		"pulse", "intake-preflight",
 		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--requires-atlas",
 	}, &stdout, &stderr)
 	if code == 0 {
@@ -4537,6 +4561,7 @@ func TestPulseIntakePreflightFailsClosedForAtlasAuthorityClaim(t *testing.T) {
 	code := Run([]string{
 		"pulse", "intake-preflight",
 		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-import", "internal/cli/testdata/atlas-foundry-import-executes-work.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
 		"--requires-atlas",

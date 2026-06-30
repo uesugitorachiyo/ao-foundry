@@ -8,6 +8,7 @@
     "schema_version",
     "status",
     "blueprint_status",
+    "atlas_blueprint_status",
     "atlas_status",
     "first_failing_check",
     "checks",
@@ -19,6 +20,7 @@
     "schema_version": { "const": "ao.foundry.pulse-intake-preflight.v0.1" },
     "status": { "enum": ["ready", "blocked", "failed"] },
     "blueprint_status": { "enum": ["ready", "blocked", "missing", "failed"] },
+    "atlas_blueprint_status": { "enum": ["ready", "blocked", "missing", "failed", "not_required"] },
     "atlas_status": { "enum": ["ready", "blocked", "missing", "failed", "not_required"] },
     "first_failing_check": { "type": "string" },
     "checks": {

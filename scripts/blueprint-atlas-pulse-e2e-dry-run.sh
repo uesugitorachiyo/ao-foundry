@@ -103,6 +103,7 @@ write_source_digest() {
 
 READY_ATLAS_READBACK="$OUT/ready/atlas-readback.json"
 READY_ATLAS_STATUS="$OUT/ready/atlas-status.json"
+READY_ATLAS_BLUEPRINT_IMPORT="examples/atlas/blueprint-import.low-risk-code.json"
 READY_PREFLIGHT="$OUT/ready/pulse-intake-preflight.json"
 READY_START_GATE="$OUT/ready/pulse-overnight-start-gate.json"
 READY_PULSE_DIR="$OUT/ready/pulse-run"
@@ -122,6 +123,7 @@ go run ./cmd/foundry atlas status \
 go run ./cmd/foundry pulse intake-preflight \
   --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
   --requires-atlas \
+  --atlas-blueprint-import "$READY_ATLAS_BLUEPRINT_IMPORT" \
   --atlas-import examples/atlas/foundry-import.json \
   --atlas-status "$READY_ATLAS_STATUS" \
   --out "$READY_PREFLIGHT" >/dev/null
@@ -206,6 +208,7 @@ jq -n \
   --argjson source_digests "[
     $(write_source_digest blueprint_ready examples/pulse-intake/blueprint-authorization.ready.json),
     $(write_source_digest blueprint_blocked examples/pulse-intake/blueprint-request.blocked.json),
+    $(write_source_digest atlas_blueprint_import "$READY_ATLAS_BLUEPRINT_IMPORT"),
     $(write_source_digest atlas_import examples/atlas/foundry-import.json),
     $(write_source_digest atlas_run_link examples/atlas/run-link.completed.json),
     $(write_source_digest ready_start_gate "$READY_START_GATE"),

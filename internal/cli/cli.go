@@ -19,28 +19,29 @@ import (
 )
 
 const (
-	registrySchema        = "ao.foundry.registry.v0.1"
-	taskSchema            = "ao.foundry.task.v0.1"
-	readinessSchema       = "ao.foundry.production-readiness-audit.v0.1"
-	goalRunSchema         = "ao.foundry.goal-run.v0.1"
-	goalReadinessSchema   = "ao.foundry.goal-readiness-audit.v0.1"
-	runSchema             = "ao.foundry.run.v0.1"
-	repoHealthSchema      = "ao.foundry.repo-health.v0.1"
-	repoBoardSchema       = "ao.foundry.repo-board.v0.1"
-	loopLeaseSchema       = "ao.foundry.loop-lease.v0.1"
-	forgePacketSchema     = "ao.forge.factory-packet.v0.1"
-	pulseEventSchema      = "ao.foundry.pulse-event.v0.1"
-	atlasImportSchema     = "ao.atlas.foundry-import.v0.1"
-	atlasTaskSchema       = "ao.atlas.factory-task.v0.1"
-	atlasRunLinkSchema    = "ao.atlas.run-link.v0.1"
-	atlasReadbackSchema   = "ao.foundry.atlas-readback.v0.1"
-	atlasStatusSchema     = "ao.foundry.atlas-status.v0.1"
-	pulseIntakeSchema     = "ao.foundry.pulse-intake-preflight.v0.1"
-	pulseLifecycleSchema  = "ao.foundry.pulse-pr-lifecycle.v0.1"
-	pulseStartGateSchema  = "ao.foundry.pulse-overnight-start-gate.v0.1"
-	pulseLoopPolicySchema = "ao.foundry.pulse-event-loop-policy.v0.1"
-	pulseRunnerSchema     = "ao.foundry.pulse-runner-start-decision.v0.1"
-	classGateSchema       = "ao.foundry.mutation-class-gate.v0.1"
+	registrySchema             = "ao.foundry.registry.v0.1"
+	taskSchema                 = "ao.foundry.task.v0.1"
+	readinessSchema            = "ao.foundry.production-readiness-audit.v0.1"
+	goalRunSchema              = "ao.foundry.goal-run.v0.1"
+	goalReadinessSchema        = "ao.foundry.goal-readiness-audit.v0.1"
+	runSchema                  = "ao.foundry.run.v0.1"
+	repoHealthSchema           = "ao.foundry.repo-health.v0.1"
+	repoBoardSchema            = "ao.foundry.repo-board.v0.1"
+	loopLeaseSchema            = "ao.foundry.loop-lease.v0.1"
+	forgePacketSchema          = "ao.forge.factory-packet.v0.1"
+	pulseEventSchema           = "ao.foundry.pulse-event.v0.1"
+	atlasImportSchema          = "ao.atlas.foundry-import.v0.1"
+	atlasBlueprintImportSchema = "ao.atlas.blueprint-import.v0.1"
+	atlasTaskSchema            = "ao.atlas.factory-task.v0.1"
+	atlasRunLinkSchema         = "ao.atlas.run-link.v0.1"
+	atlasReadbackSchema        = "ao.foundry.atlas-readback.v0.1"
+	atlasStatusSchema          = "ao.foundry.atlas-status.v0.1"
+	pulseIntakeSchema          = "ao.foundry.pulse-intake-preflight.v0.1"
+	pulseLifecycleSchema       = "ao.foundry.pulse-pr-lifecycle.v0.1"
+	pulseStartGateSchema       = "ao.foundry.pulse-overnight-start-gate.v0.1"
+	pulseLoopPolicySchema      = "ao.foundry.pulse-event-loop-policy.v0.1"
+	pulseRunnerSchema          = "ao.foundry.pulse-runner-start-decision.v0.1"
+	classGateSchema            = "ao.foundry.mutation-class-gate.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -115,6 +116,31 @@ type AtlasFoundryImport struct {
 	SchedulesWork   bool                     `json:"schedules_work"`
 	ExecutesWork    bool                     `json:"executes_work"`
 	ApprovesWork    bool                     `json:"approves_work"`
+}
+
+type AtlasBlueprintImport struct {
+	ContractVersion         string              `json:"contract_version"`
+	ID                      string              `json:"id"`
+	ProjectID               string              `json:"project_id"`
+	Status                  string              `json:"status"`
+	Reason                  string              `json:"reason"`
+	BlueprintPack           AtlasSourceArtifact `json:"blueprint_pack"`
+	BuildAuthorization      AtlasSourceArtifact `json:"build_authorization"`
+	TargetInstance          string              `json:"target_instance"`
+	WorkgraphID             string              `json:"workgraph_id"`
+	MutationClass           string              `json:"mutation_class"`
+	DownstreamFoundryImport AtlasSourceArtifact `json:"downstream_foundry_import"`
+	Digests                 map[string]string   `json:"digests"`
+	SafetyLimits            []string            `json:"safety_limits"`
+	ReadyForFoundry         bool                `json:"ready_for_foundry"`
+	SafeToExecute           bool                `json:"safe_to_execute"`
+	LiveExecutionProven     bool                `json:"live_execution_proven"`
+	SchedulesWork           bool                `json:"schedules_work"`
+	ExecutesWork            bool                `json:"executes_work"`
+	ApprovesWork            bool                `json:"approves_work"`
+	MutatesRepositories     bool                `json:"mutates_repositories"`
+	CallsProviders          bool                `json:"calls_providers"`
+	ReleaseOrPublishAllowed bool                `json:"release_or_publish_allowed"`
 }
 
 type AtlasSourceArtifact struct {
@@ -744,6 +770,7 @@ type PulseIntakePreflight struct {
 	Status                 string              `json:"status"`
 	BlueprintStatus        string              `json:"blueprint_status"`
 	AtlasStatus            string              `json:"atlas_status"`
+	AtlasBlueprintStatus   string              `json:"atlas_blueprint_status,omitempty"`
 	FirstFailingCheck      string              `json:"first_failing_check"`
 	Checks                 []PulseIntakeCheck  `json:"checks"`
 	BlockingNextActions    []string            `json:"blocking_next_actions"`
@@ -1265,7 +1292,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry competitive audit --out <audit.json> [--json]")
 	fmt.Fprintln(w, "  foundry contract fixtures validate")
 	fmt.Fprintln(w, "  foundry pulse run [--start-gate <path>] [--registry <path>] [--task <path>] [--goal-run <path>] [--packet <path>] [--scorecard <path>] [--rsi-baseline <path>] [--rsi-min-improvement <percent>] [--signed-smoke-result <path>] --out <dir>")
-	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
+	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-blueprint-import <path> --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
 	fmt.Fprintln(w, "  foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]")
 	fmt.Fprintln(w, "  foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]")
@@ -3550,6 +3577,7 @@ func runPulseIntakePreflight(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("pulse intake-preflight", stderr)
 	blueprintAuthorizationPath := fs.String("blueprint-authorization", "", "Blueprint build authorization artifact")
 	blueprintRequestPath := fs.String("blueprint-request", "", "Blueprint blocked clarification request artifact")
+	atlasBlueprintImportPath := fs.String("atlas-blueprint-import", "", "Atlas Blueprint import artifact")
 	atlasImportPath := fs.String("atlas-import", "", "Atlas foundry-import artifact")
 	atlasStatusPath := fs.String("atlas-status", "", "Foundry Atlas status/readback artifact")
 	requiresAtlas := fs.Bool("requires-atlas", false, "require Atlas handoff/readback evidence")
@@ -3558,9 +3586,9 @@ func runPulseIntakePreflight(args []string, stdout, stderr io.Writer) int {
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
-	result, err := buildPulseIntakePreflight(*blueprintAuthorizationPath, *blueprintRequestPath, *atlasImportPath, *atlasStatusPath, *requiresAtlas)
+	result, err := buildPulseIntakePreflight(*blueprintAuthorizationPath, *blueprintRequestPath, *atlasBlueprintImportPath, *atlasImportPath, *atlasStatusPath, *requiresAtlas)
 	if strings.TrimSpace(*outPath) != "" {
-		for _, inputPath := range []string{*blueprintAuthorizationPath, *blueprintRequestPath, *atlasImportPath, *atlasStatusPath} {
+		for _, inputPath := range []string{*blueprintAuthorizationPath, *blueprintRequestPath, *atlasBlueprintImportPath, *atlasImportPath, *atlasStatusPath} {
 			if sameCleanPath(*outPath, inputPath) {
 				fmt.Fprintln(stderr, "pulse intake-preflight: --out must not overwrite input artifacts")
 				return 2
@@ -3579,6 +3607,7 @@ func runPulseIntakePreflight(args []string, stdout, stderr io.Writer) int {
 	} else {
 		fmt.Fprintf(stdout, "pulse_intake_preflight=%s\n", result.Status)
 		fmt.Fprintf(stdout, "blueprint_status=%s\n", result.BlueprintStatus)
+		fmt.Fprintf(stdout, "atlas_blueprint_status=%s\n", result.AtlasBlueprintStatus)
 		fmt.Fprintf(stdout, "atlas_status=%s\n", result.AtlasStatus)
 		if strings.TrimSpace(*outPath) != "" {
 			fmt.Fprintf(stdout, "preflight_result=%s\n", *outPath)
@@ -3594,17 +3623,19 @@ func runPulseIntakePreflight(args []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
-func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath, atlasImportPath, atlasStatusPath string, requiresAtlas bool) (PulseIntakePreflight, error) {
+func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath, atlasBlueprintImportPath, atlasImportPath, atlasStatusPath string, requiresAtlas bool) (PulseIntakePreflight, error) {
 	result := PulseIntakePreflight{
 		SchemaVersion:          pulseIntakeSchema,
 		Status:                 "ready",
 		BlueprintStatus:        "missing",
 		AtlasStatus:            "not_required",
+		AtlasBlueprintStatus:   "not_required",
 		Checks:                 []PulseIntakeCheck{},
 		BlockingNextActions:    []string{},
 		MaintenanceSuggestions: []string{"keep pulse intake preflight fixture/local; do not schedule, execute, approve, upload, or mutate sibling repositories"},
 		SourceArtifacts:        []PulseIntakeSource{},
 	}
+	var blueprintSource PulseIntakeSource
 	if strings.TrimSpace(blueprintAuthorizationPath) != "" && strings.TrimSpace(blueprintRequestPath) != "" {
 		return failPulseIntake(result, "blueprint_build_authorization", "failed", "provide either Blueprint authorization or Blueprint request, not both", "Use exactly one Blueprint intake artifact.")
 	}
@@ -3615,6 +3646,7 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 			return failPulseIntake(result, "blueprint_build_authorization", "failed", err.Error(), "Regenerate the Blueprint build authorization artifact.")
 		}
 		result.SourceArtifacts = append(result.SourceArtifacts, source)
+		blueprintSource = source
 		result.BlueprintStatus = status
 		if status != "ready" {
 			return failPulseIntake(result, "blueprint_build_authorization", "failed", "Blueprint authorization is blocked; Pulse must not proceed as ready", "Return to AO Blueprint for requirements clarification.")
@@ -3637,8 +3669,12 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 
 	if requiresAtlas {
 		result.AtlasStatus = "missing"
+		result.AtlasBlueprintStatus = "missing"
+		if strings.TrimSpace(atlasBlueprintImportPath) == "" {
+			return failPulseIntake(result, "atlas_blueprint_import", "failed", "Atlas Blueprint import is required before Foundry gates for oversized or live-mutation work", "Run AO Atlas blueprint import and provide the ready import record.")
+		}
 		if strings.TrimSpace(atlasImportPath) == "" || strings.TrimSpace(atlasStatusPath) == "" {
-			return failPulseIntake(result, "atlas_handoff_readback", "failed", "Atlas handoff/readback is required for oversized Pulse intake", "Provide Atlas foundry-import and Foundry Atlas status/readback artifacts.")
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", "Atlas handoff/readback is required for oversized Pulse intake", "Provide Atlas Blueprint import, Foundry import, and Foundry Atlas status/readback artifacts.")
 		}
 		importArtifact, err := loadAtlasFoundryImport(atlasImportPath)
 		if err != nil {
@@ -3652,6 +3688,25 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Use a public-safe Atlas import path.")
 		}
 		result.SourceArtifacts = append(result.SourceArtifacts, importSource)
+
+		blueprintImport, err := loadAtlasBlueprintImport(atlasBlueprintImportPath)
+		if err != nil {
+			if isAtlasAuthorityError(err) {
+				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas Blueprint import claims forbidden authority", "Regenerate Atlas Blueprint import with schedules_work=false, executes_work=false, and approves_work=false.")
+			}
+			return failPulseIntake(result, "atlas_blueprint_import", "failed", err.Error(), "Regenerate the Atlas Blueprint import artifact.")
+		}
+		if err := validateAtlasBlueprintImportForFoundry(blueprintImport, importArtifact, blueprintSource, importSource); err != nil {
+			if isAtlasAuthorityError(err) {
+				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas Blueprint import claims forbidden authority", "Regenerate Atlas Blueprint import with schedules_work=false, executes_work=false, and approves_work=false.")
+			}
+			return failPulseIntake(result, "atlas_blueprint_import", "failed", err.Error(), "Regenerate the Atlas Blueprint import artifact.")
+		}
+		blueprintImportSource, err := pulseIntakeSourceFromFile("atlas_blueprint_import", atlasBlueprintImportPath, blueprintImport.ContractVersion, blueprintImport.Status)
+		if err != nil {
+			return failPulseIntake(result, "atlas_blueprint_import", "failed", err.Error(), "Use a public-safe Atlas Blueprint import path.")
+		}
+		result.SourceArtifacts = append(result.SourceArtifacts, blueprintImportSource)
 
 		var atlasStatus AtlasStatus
 		if err := readJSONFile(atlasStatusPath, &atlasStatus); err != nil {
@@ -3668,8 +3723,10 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Use a public-safe Atlas status path.")
 		}
 		result.SourceArtifacts = append(result.SourceArtifacts, statusSource)
+		result.AtlasBlueprintStatus = "ready"
 		result.AtlasStatus = "ready"
 		result.Checks = append(result.Checks,
+			PulseIntakeCheck{Name: "atlas_blueprint_import", Status: "pass", Reason: "Atlas Blueprint import is ready and digest-bound."},
 			PulseIntakeCheck{Name: "atlas_handoff_readback", Status: "pass", Reason: "Atlas handoff/import and Foundry status readback are ready."},
 			PulseIntakeCheck{Name: "atlas_authority_boundary", Status: "pass", Reason: "Atlas artifacts preserve compile-only authority."},
 		)
@@ -3774,7 +3831,13 @@ func failPulseIntake(result PulseIntakePreflight, checkName, status, reason, nex
 
 func isAtlasAuthorityError(err error) bool {
 	message := err.Error()
-	return strings.Contains(message, "schedules_work") || strings.Contains(message, "executes_work") || strings.Contains(message, "approves_work")
+	return strings.Contains(message, "schedules_work") ||
+		strings.Contains(message, "executes_work") ||
+		strings.Contains(message, "approves_work") ||
+		strings.Contains(message, "mutates_repositories") ||
+		strings.Contains(message, "calls_providers") ||
+		strings.Contains(message, "release_or_publish_allowed") ||
+		strings.Contains(message, "live execution safe or proven")
 }
 
 func validatePublicSafeJSONStrings(value any) error {
@@ -4955,6 +5018,17 @@ func loadAtlasFoundryImport(path string) (AtlasFoundryImport, error) {
 		return artifact, err
 	}
 	return artifact, validateAtlasFoundryImport(artifact)
+}
+
+func loadAtlasBlueprintImport(path string) (AtlasBlueprintImport, error) {
+	var artifact AtlasBlueprintImport
+	if path == "" {
+		return artifact, errors.New("missing --atlas-blueprint-import")
+	}
+	if err := readJSONFile(path, &artifact); err != nil {
+		return artifact, err
+	}
+	return artifact, validateAtlasBlueprintImport(artifact)
 }
 
 func loadAtlasRunLink(path string) (AtlasRunLink, error) {
@@ -6270,6 +6344,114 @@ func validateAtlasFoundryImport(artifact AtlasFoundryImport) error {
 		if fixture.TaskDigest != digestAtlasFactoryTask(fixture.Task) {
 			return fmt.Errorf("tasks[%d].task_digest does not match embedded task", i)
 		}
+	}
+	return nil
+}
+
+func validateAtlasBlueprintImport(artifact AtlasBlueprintImport) error {
+	if artifact.ContractVersion != atlasBlueprintImportSchema {
+		return fmt.Errorf("contract_version must be %s", atlasBlueprintImportSchema)
+	}
+	if artifact.ID == "" || artifact.ProjectID == "" || artifact.Status == "" {
+		return errors.New("id, project_id, and status are required")
+	}
+	if artifact.Status != "ready" {
+		return errors.New("Atlas Blueprint import status must be ready")
+	}
+	if !artifact.ReadyForFoundry {
+		return errors.New("Atlas Blueprint import ready_for_foundry must be true")
+	}
+	if artifact.SafeToExecute || artifact.LiveExecutionProven {
+		return errors.New("Atlas Blueprint import must not mark live execution safe or proven")
+	}
+	if artifact.SchedulesWork {
+		return errors.New("schedules_work must be false")
+	}
+	if artifact.ExecutesWork {
+		return errors.New("executes_work must be false")
+	}
+	if artifact.ApprovesWork {
+		return errors.New("approves_work must be false")
+	}
+	if artifact.MutatesRepositories {
+		return errors.New("mutates_repositories must be false")
+	}
+	if artifact.CallsProviders {
+		return errors.New("calls_providers must be false")
+	}
+	if artifact.ReleaseOrPublishAllowed {
+		return errors.New("release_or_publish_allowed must be false")
+	}
+	for name, source := range map[string]AtlasSourceArtifact{
+		"blueprint_pack":            artifact.BlueprintPack,
+		"build_authorization":       artifact.BuildAuthorization,
+		"downstream_foundry_import": artifact.DownstreamFoundryImport,
+	} {
+		if strings.TrimSpace(source.Ref) == "" {
+			return fmt.Errorf("%s.ref must not be empty", name)
+		}
+		if err := validateEvidencePath(source.Ref); err != nil {
+			return fmt.Errorf("%s.ref: %w", name, err)
+		}
+		if !strings.HasPrefix(source.Digest, "sha256:") {
+			return fmt.Errorf("%s.digest must start with sha256:", name)
+		}
+		if err := validateSHA256(strings.TrimPrefix(source.Digest, "sha256:"), name+".digest"); err != nil {
+			return err
+		}
+	}
+	requiredDigests := []string{
+		"blueprint_pack",
+		"build_authorization",
+		"implementation_spec",
+		"quality_profile",
+		"candidate_rules",
+		"mutation_class_model",
+		"candidate_selection",
+		"workgraph",
+		"downstream_foundry_import",
+	}
+	for _, key := range requiredDigests {
+		digest := artifact.Digests[key]
+		if strings.TrimSpace(digest) == "" {
+			return fmt.Errorf("digests.%s must not be empty", key)
+		}
+		if !strings.HasPrefix(digest, "sha256:") {
+			return fmt.Errorf("digests.%s must start with sha256:", key)
+		}
+		if err := validateSHA256(strings.TrimPrefix(digest, "sha256:"), "digests."+key); err != nil {
+			return err
+		}
+	}
+	if artifact.Digests["downstream_foundry_import"] != artifact.DownstreamFoundryImport.Digest {
+		return errors.New("Atlas Blueprint import downstream Foundry import digest must match digests.downstream_foundry_import")
+	}
+	if artifact.MutationClass == "" || !validAtlasMutationClass(artifact.MutationClass) {
+		return errors.New("Atlas Blueprint import mutation_class must be supported")
+	}
+	if len(artifact.SafetyLimits) == 0 {
+		return errors.New("Atlas Blueprint import safety_limits must not be empty")
+	}
+	for _, value := range artifact.SafetyLimits {
+		if err := validateAtlasPublicString(value); err != nil {
+			return fmt.Errorf("safety_limits: %w", err)
+		}
+	}
+	return validatePublicSafeJSONStrings(artifact)
+}
+
+func validateAtlasBlueprintImportForFoundry(blueprintImport AtlasBlueprintImport, foundryImport AtlasFoundryImport, blueprintSource, importSource PulseIntakeSource) error {
+	if blueprintImport.WorkgraphID != foundryImport.WorkgraphID || blueprintImport.TargetInstance != foundryImport.TargetInstance {
+		return errors.New("Atlas Blueprint import must match downstream Foundry import identity")
+	}
+	if blueprintImport.BuildAuthorization.Digest != "sha256:"+blueprintSource.SHA256 {
+		return errors.New("Atlas Blueprint import build authorization digest must match provided Blueprint authorization")
+	}
+	if blueprintImport.DownstreamFoundryImport.Digest != blueprintImport.Digests["downstream_foundry_import"] {
+		return errors.New("Atlas Blueprint import downstream digest binding is inconsistent")
+	}
+	if blueprintImport.DownstreamFoundryImport.Digest != "sha256:"+importSource.SHA256 {
+		return errors.New("Atlas Blueprint import downstream digest must match provided Foundry import")
 	}
 	return nil
 }

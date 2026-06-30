@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   cat <<'USAGE'
-usage: scripts/low-risk-code-live-rehearsal-gate.sh --chain <summary.json> --out <gate.json> [--live-policy-evidence <policy.json>] [--json]
+usage: scripts/low-risk-code-live-rehearsal-gate.sh --chain <summary.json> --out <gate.json> [--atlas-blueprint-import <blueprint-import.json>] [--atlas-status <atlas-status.json>] [--live-policy-evidence <policy.json>] [--json]
 
 Decides whether a first low_risk_code live rehearsal may start. This gate emits
 evidence only. It never creates branches, creates worktrees, mutates
@@ -13,6 +13,8 @@ USAGE
 }
 
 chain=""
+atlas_blueprint_import=""
+atlas_status=""
 live_policy_evidence=""
 out=""
 json=0
@@ -20,6 +22,8 @@ json=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --chain) chain="${2:-}"; shift 2 ;;
+    --atlas-blueprint-import) atlas_blueprint_import="${2:-}"; shift 2 ;;
+    --atlas-status) atlas_status="${2:-}"; shift 2 ;;
     --live-policy-evidence) live_policy_evidence="${2:-}"; shift 2 ;;
     --out) out="${2:-}"; shift 2 ;;
     --json) json=1; shift ;;
@@ -32,11 +36,11 @@ if [[ -z "$chain" || -z "$out" ]]; then
   usage >&2
   exit 2
 fi
-if [[ "$out" == "$chain" || "$out" == "$live_policy_evidence" ]]; then
+if [[ "$out" == "$chain" || "$out" == "$atlas_blueprint_import" || "$out" == "$atlas_status" || "$out" == "$live_policy_evidence" ]]; then
   echo "low-risk-code-live-rehearsal-gate: --out must not overwrite input artifacts" >&2
   exit 2
 fi
-path_bundle="$chain:$live_policy_evidence:$out"
+path_bundle="$chain:$atlas_blueprint_import:$atlas_status:$live_policy_evidence:$out"
 private_mac_root="/""Users/"
 private_linux_root="/""home/"
 private_tmp_root="/""tmp/"
@@ -48,6 +52,14 @@ for unsafe_marker in "/.." "../" "~" "$private_mac_root" "$private_linux_root" "
 done
 if [[ ! -f "$chain" ]]; then
   echo "low-risk-code-live-rehearsal-gate: chain not found: $chain" >&2
+  exit 2
+fi
+if [[ -n "$atlas_blueprint_import" && ! -f "$atlas_blueprint_import" ]]; then
+  echo "low-risk-code-live-rehearsal-gate: Atlas Blueprint import not found: $atlas_blueprint_import" >&2
+  exit 2
+fi
+if [[ -n "$atlas_status" && ! -f "$atlas_status" ]]; then
+  echo "low-risk-code-live-rehearsal-gate: Atlas status not found: $atlas_status" >&2
   exit 2
 fi
 if [[ -n "$live_policy_evidence" && ! -f "$live_policy_evidence" ]]; then
@@ -104,6 +116,67 @@ if [[ "$chain_schema" == "ao.foundry.governed-live-mutation-dry-run-chain.v0.1" 
   add_check "low_risk_code_dry_run_chain" "passed" "low_risk_code dry-run chain is ready and requestable"
 else
   add_check "low_risk_code_dry_run_chain" "blocked" "low_risk_code dry-run chain must be ready before live rehearsal can be considered"
+fi
+
+atlas_blueprint_schema=""
+atlas_blueprint_status=""
+atlas_blueprint_class=""
+atlas_blueprint_workgraph=""
+atlas_blueprint_ready_for_foundry=""
+atlas_blueprint_safe_to_execute=""
+atlas_blueprint_live_proven=""
+atlas_blueprint_downstream_digest=""
+atlas_blueprint_sha=""
+atlas_status_schema=""
+atlas_status_status=""
+atlas_status_readback=""
+atlas_status_workgraph=""
+atlas_status_sha=""
+if [[ -z "$atlas_blueprint_import" || -z "$atlas_status" ]]; then
+  add_check "atlas_blueprint_import" "blocked" "Atlas Blueprint import and Foundry Atlas status readback are required before low_risk_code live gates can run"
+else
+  atlas_blueprint_schema="$(jq -r '.contract_version // ""' "$atlas_blueprint_import")"
+  atlas_blueprint_status="$(jq -r '.status // ""' "$atlas_blueprint_import")"
+  atlas_blueprint_class="$(jq -r '.mutation_class // ""' "$atlas_blueprint_import")"
+  atlas_blueprint_workgraph="$(jq -r '.workgraph_id // ""' "$atlas_blueprint_import")"
+  atlas_blueprint_ready_for_foundry="$(jq -r 'if .ready_for_foundry == true then "true" else "false" end' "$atlas_blueprint_import")"
+  atlas_blueprint_safe_to_execute="$(jq -r 'if .safe_to_execute == true then "true" else "false" end' "$atlas_blueprint_import")"
+  atlas_blueprint_live_proven="$(jq -r 'if .live_execution_proven == true then "true" else "false" end' "$atlas_blueprint_import")"
+  atlas_blueprint_downstream_digest="$(jq -r '.digests.downstream_foundry_import // ""' "$atlas_blueprint_import")"
+  atlas_blueprint_sha="$(sha256_file "$atlas_blueprint_import")"
+  atlas_status_schema="$(jq -r '.schema_version // ""' "$atlas_status")"
+  atlas_status_status="$(jq -r '.status // ""' "$atlas_status")"
+  atlas_status_readback="$(jq -r '.readback_status // ""' "$atlas_status")"
+  atlas_status_workgraph="$(jq -r '.workgraph_id // ""' "$atlas_status")"
+  atlas_status_sha="$(sha256_file "$atlas_status")"
+  if jq -e '
+    .contract_version == "ao.atlas.blueprint-import.v0.1" and
+    .status == "ready" and
+    .mutation_class == "low_risk_code" and
+    .ready_for_foundry == true and
+    .safe_to_execute == false and
+    .live_execution_proven == false and
+    .schedules_work == false and
+    .executes_work == false and
+    .approves_work == false and
+    .mutates_repositories == false and
+    .calls_providers == false and
+    .release_or_publish_allowed == false and
+    (.digests.downstream_foundry_import // "") != ""
+  ' "$atlas_blueprint_import" >/dev/null &&
+    jq -e --arg workgraph "$atlas_blueprint_workgraph" '
+      .schema_version == "ao.foundry.atlas-status.v0.1" and
+      .status == "ready" and
+      .readback_status == "ready" and
+      .workgraph_id == $workgraph and
+      .schedules_work == false and
+      .executes_work == false and
+      .approves_work == false
+    ' "$atlas_status" >/dev/null; then
+    add_check "atlas_blueprint_import" "passed" "Atlas Blueprint import and Foundry Atlas readback are ready for the exact low_risk_code candidate"
+  else
+    add_check "atlas_blueprint_import" "blocked" "Atlas Blueprint import must be ready, low_risk_code scoped, Foundry-readback bound, and non-authoritative"
+  fi
 fi
 
 for evidence_name in atlas_classification foundry_class_gate covenant_class_ticket forge_dry_run_plan ao2_dry_run_packet rollback_proof sentinel_hold promoter_ready command_readback test_only_success; do
@@ -176,13 +249,20 @@ allowed_next_action="request_low_risk_code_live_rehearsal"
 if [[ -n "$first_failing_check" ]]; then
   status="blocked"
   safe_to_execute="false"
-  if [[ "$first_failing_check" == "live_policy_evidence" ]]; then
-    exact_next_step="collect_low_risk_code_live_policy_evidence"
-    allowed_next_action="collect_low_risk_code_live_policy_evidence"
-  else
-    exact_next_step="repair_low_risk_code_live_rehearsal_gate"
-    allowed_next_action="repair_low_risk_code_live_rehearsal_gate"
-  fi
+  case "$first_failing_check" in
+    atlas_blueprint_import)
+      exact_next_step="collect_atlas_blueprint_import_readback"
+      allowed_next_action="collect_atlas_blueprint_import_readback"
+      ;;
+    live_policy_evidence)
+      exact_next_step="collect_low_risk_code_live_policy_evidence"
+      allowed_next_action="collect_low_risk_code_live_policy_evidence"
+      ;;
+    *)
+      exact_next_step="repair_low_risk_code_live_rehearsal_gate"
+      allowed_next_action="repair_low_risk_code_live_rehearsal_gate"
+      ;;
+  esac
 fi
 
 mkdir -p "$(dirname "$out")"
@@ -199,6 +279,17 @@ jq -n \
   --arg first_failing_check "$first_failing_check" \
   --arg chain_path "$chain" \
   --arg chain_sha256 "$chain_sha" \
+  --arg atlas_blueprint_path "$atlas_blueprint_import" \
+  --arg atlas_blueprint_schema "$atlas_blueprint_schema" \
+  --arg atlas_blueprint_status "$atlas_blueprint_status" \
+  --arg atlas_blueprint_sha256 "$atlas_blueprint_sha" \
+  --arg atlas_blueprint_workgraph "$atlas_blueprint_workgraph" \
+  --arg atlas_status_path "$atlas_status" \
+  --arg atlas_status_schema "$atlas_status_schema" \
+  --arg atlas_status_status "$atlas_status_status" \
+  --arg atlas_status_readback "$atlas_status_readback" \
+  --arg atlas_status_workgraph "$atlas_status_workgraph" \
+  --arg atlas_status_sha256 "$atlas_status_sha" \
   --arg policy_path "$live_policy_evidence" \
   --arg policy_schema "$policy_schema" \
   --arg policy_status "$policy_status" \
@@ -216,7 +307,11 @@ jq -n \
     checks:$checks[0],
     source_hashes:([
       {name:"low_risk_code_dry_run_chain", path:$chain_path, schema_version:"ao.foundry.governed-live-mutation-dry-run-chain.v0.1", sha256:$chain_sha256}
-    ] + (if $policy_path == "" then [] else [
+    ] + (if $atlas_blueprint_path == "" then [] else [
+      {name:"atlas_blueprint_import", path:$atlas_blueprint_path, schema_version:$atlas_blueprint_schema, status:$atlas_blueprint_status, workgraph_id:$atlas_blueprint_workgraph, sha256:$atlas_blueprint_sha256}
+    ] end) + (if $atlas_status_path == "" then [] else [
+      {name:"atlas_status", path:$atlas_status_path, schema_version:$atlas_status_schema, status:$atlas_status_status, readback_status:$atlas_status_readback, workgraph_id:$atlas_status_workgraph, sha256:$atlas_status_sha256}
+    ] end) + (if $policy_path == "" then [] else [
       {name:"live_policy_evidence", path:$policy_path, schema_version:$policy_schema, status:$policy_status, sha256:$policy_sha256}
     ] end)),
     blocking_next_actions:(if $status == "ready" then [] else [$exact_next_step] end),
