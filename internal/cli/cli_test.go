@@ -5934,6 +5934,10 @@ func TestMutationClassGateMultiRepoLowRiskAcceptsLowRiskLivePrerequisite(t *test
 	if !objectStringSliceContains(gate, "required_evidence", "low_risk_code_live_success") {
 		t.Fatalf("multi_repo_low_risk gate must record low_risk_code_live_success requirement: %#v", gate["required_evidence"])
 	}
+	liveSuccessReadback := gate["low_risk_code_live_success"].(map[string]any)
+	if fmt.Sprint(liveSuccessReadback["pull_request_number"]) != "37" || liveSuccessReadback["repo"] != "ao-atlas" {
+		t.Fatalf("multi_repo_low_risk gate must retain the exact low_risk_code live success readback: %#v", liveSuccessReadback)
+	}
 	decision := gate["live_rehearsal_decision"].(map[string]any)
 	if decision["status"] != "accepted" ||
 		decision["current_proven_live_class"] != "low_risk_code" ||
