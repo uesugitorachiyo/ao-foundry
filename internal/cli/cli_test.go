@@ -6229,6 +6229,190 @@ func TestComplexRepoPromotionRollupAcceptsCompletedMission(t *testing.T) {
 	}
 }
 
+func TestComplexRepoClosureBackfillGeneratesDigestBoundEvidenceAndRollupPromotes(t *testing.T) {
+	dir := t.TempDir()
+	nodeIDs := make([]string, 0, 12)
+	for i := 0; i < 12; i++ {
+		nodeIDs = append(nodeIDs, fmt.Sprintf("node-%02d", i))
+	}
+	artifacts := writeComplexPromotionRollupArtifactsForNodes(t, dir, nodeIDs, func(objects map[string]any) {
+		runLinks := objects["run_links"].(map[string]map[string]any)
+		for _, runLink := range runLinks {
+			evidence := runLink["evidence"].(map[string]any)
+			delete(evidence, "rollback")
+			delete(evidence, "sentinel")
+			delete(evidence, "promoter")
+			delete(evidence, "command_readback")
+		}
+	})
+	closureRoot := filepath.Join(dir, "closure")
+	var stdout, stderr bytes.Buffer
+	backfillArgs := []string{
+		"complex-repo", "closure", "backfill",
+		"--mission", artifacts["mission"],
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--closure-root", closureRoot,
+	}
+	for _, nodeID := range nodeIDs[:len(nodeIDs)-1] {
+		backfillArgs = append(backfillArgs, "--node-gate", artifacts[strings.ReplaceAll(nodeID, "-", "_")+"_gate"])
+	}
+	backfillArgs = append(backfillArgs, "--final-node-gate", artifacts[strings.ReplaceAll(nodeIDs[len(nodeIDs)-1], "-", "_")+"_gate"])
+	code := Run(backfillArgs, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("closure backfill returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+
+	for _, nodeID := range nodeIDs {
+		for _, name := range []string{"rollback.json", "sentinel.json", "promoter.json", "command-readback.json"} {
+			if _, err := os.Stat(filepath.Join(closureRoot, nodeID, name)); err != nil {
+				t.Fatalf("closure evidence %s/%s was not generated: %v", nodeID, name, err)
+			}
+		}
+	}
+	manifest := readObjectFixture(t, filepath.Join(closureRoot, "closure-manifest.json"))
+	if classGateNumber(manifest, "node_count") != 12 || classGateNumber(manifest, "evidence_item_count") != 48 {
+		t.Fatalf("manifest must count 12 nodes and 48 evidence items: %#v", manifest)
+	}
+
+	outPath := filepath.Join(dir, "rollup.json")
+	stdout.Reset()
+	stderr.Reset()
+	args := []string{
+		"complex-repo", "promotion-rollup", "evaluate",
+		"--mission", artifacts["mission"],
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--closure-root", closureRoot,
+		"--out", outPath,
+	}
+	for _, nodeID := range nodeIDs[:len(nodeIDs)-1] {
+		args = append(args, "--node-gate", artifacts[strings.ReplaceAll(nodeID, "-", "_")+"_gate"])
+	}
+	args = append(args, "--final-node-gate", artifacts[strings.ReplaceAll(nodeIDs[len(nodeIDs)-1], "-", "_")+"_gate"])
+	code = Run(args, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("promotion rollup returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "ready" ||
+		rollup["safe_to_promote"] != true ||
+		rollup["complex_repo_mutation_live_proven"] != true ||
+		rollup["highest_proven_live_class"] != "complex_repo_mutation" ||
+		rollup["next_denied_class"] != "fully_unsupervised_complex_mutation" {
+		t.Fatalf("digest-bound closure evidence should promote complex_repo_mutation: %#v", rollup)
+	}
+	checks := rollup["checks"].(map[string]any)
+	for _, key := range []string{"rollback_evidence", "sentinel_evidence", "promoter_evidence", "command_readback"} {
+		if checks[key] != true {
+			t.Fatalf("closure check %s must pass: %#v", key, checks)
+		}
+	}
+}
+
+func TestComplexRepoPromotionRollupFailsClosedOnInvalidClosureEvidence(t *testing.T) {
+	for _, tc := range []struct {
+		name          string
+		mutateClosure func(t *testing.T, closureRoot string, nodeIDs []string)
+		want          string
+	}{
+		{
+			name: "missing_rollback",
+			mutateClosure: func(t *testing.T, closureRoot string, nodeIDs []string) {
+				t.Helper()
+				if err := os.Remove(filepath.Join(closureRoot, nodeIDs[0], "rollback.json")); err != nil {
+					t.Fatal(err)
+				}
+			},
+			want: "closure evidence node-a/rollback.json is missing",
+		},
+		{
+			name: "stale_digest",
+			mutateClosure: func(t *testing.T, closureRoot string, nodeIDs []string) {
+				t.Helper()
+				path := filepath.Join(closureRoot, nodeIDs[0], "sentinel.json")
+				doc := readObjectFixture(t, path)
+				doc["run_link_sha256"] = strings.Repeat("0", 64)
+				writeJSONFixtureForTest(t, path, doc)
+			},
+			want: "closure evidence node-a/sentinel.json run-link digest mismatch",
+		},
+		{
+			name: "wrong_node_id",
+			mutateClosure: func(t *testing.T, closureRoot string, nodeIDs []string) {
+				t.Helper()
+				path := filepath.Join(closureRoot, nodeIDs[0], "promoter.json")
+				doc := readObjectFixture(t, path)
+				doc["node_id"] = "wrong-node"
+				writeJSONFixtureForTest(t, path, doc)
+			},
+			want: "closure evidence node-a/promoter.json node_id mismatch",
+		},
+		{
+			name: "incomplete_node_set",
+			mutateClosure: func(t *testing.T, closureRoot string, nodeIDs []string) {
+				t.Helper()
+				if err := os.RemoveAll(filepath.Join(closureRoot, nodeIDs[1])); err != nil {
+					t.Fatal(err)
+				}
+			},
+			want: "closure evidence node-b/rollback.json is missing",
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			dir := t.TempDir()
+			artifacts := writeComplexPromotionRollupArtifactsForNodes(t, dir, []string{"node-a", "node-b"}, func(objects map[string]any) {
+				runLinks := objects["run_links"].(map[string]map[string]any)
+				for _, runLink := range runLinks {
+					evidence := runLink["evidence"].(map[string]any)
+					delete(evidence, "rollback")
+					delete(evidence, "sentinel")
+					delete(evidence, "promoter")
+					delete(evidence, "command_readback")
+				}
+			})
+			closureRoot := filepath.Join(dir, "closure")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"complex-repo", "closure", "backfill",
+				"--mission", artifacts["mission"],
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--closure-root", closureRoot,
+				"--node-gate", artifacts["node_a_gate"],
+				"--final-node-gate", artifacts["node_b_gate"],
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("closure backfill returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			tc.mutateClosure(t, closureRoot, []string{"node-a", "node-b"})
+			outPath := filepath.Join(dir, "rollup.json")
+			stdout.Reset()
+			stderr.Reset()
+			code = Run([]string{
+				"complex-repo", "promotion-rollup", "evaluate",
+				"--mission", artifacts["mission"],
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--closure-root", closureRoot,
+				"--node-gate", artifacts["node_a_gate"],
+				"--final-node-gate", artifacts["node_b_gate"],
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked promotion rollup should still emit decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			rollup := readObjectFixture(t, outPath)
+			if rollup["status"] != "blocked" ||
+				rollup["safe_to_promote"] != false ||
+				rollup["complex_repo_mutation_live_proven"] != false ||
+				rollup["first_failing_check"] != tc.want {
+				t.Fatalf("%s must fail closed with %q: %#v", tc.name, tc.want, rollup)
+			}
+		})
+	}
+}
+
 func TestComplexRepoPromotionRollupFailsClosed(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
@@ -7923,22 +8107,28 @@ func writeComplexRepoNodeGateArtifacts(t *testing.T, dir string, candidateSafe b
 
 func writeComplexPromotionRollupArtifacts(t *testing.T, dir string, mutate func(map[string]any)) map[string]string {
 	t.Helper()
-	nodeIDs := []string{"node-a", "node-b"}
+	return writeComplexPromotionRollupArtifactsForNodes(t, dir, []string{"node-a", "node-b"}, mutate)
+}
+
+func writeComplexPromotionRollupArtifactsForNodes(t *testing.T, dir string, nodeIDs []string, mutate func(map[string]any)) map[string]string {
+	t.Helper()
 	workgraph := map[string]any{
 		"id":     "complex-rollup-workgraph",
 		"status": "completed",
-		"nodes": []any{
-			map[string]any{"id": "node-a", "status": "completed"},
-			map[string]any{"id": "node-b", "status": "completed"},
-		},
+		"nodes":  []any{},
+	}
+	completedNodeIDs := []any{}
+	for _, nodeID := range nodeIDs {
+		workgraph["nodes"] = append(workgraph["nodes"].([]any), map[string]any{"id": nodeID, "status": "completed"})
+		completedNodeIDs = append(completedNodeIDs, nodeID)
 	}
 	mission := map[string]any{
 		"schema":                              "ao.atlas.private-mission-continuation-evidence.v0.1",
 		"mission":                             "complex-rollup-test",
 		"status":                              "all_nodes_completed_with_foundry_evidence",
-		"completed_nodes":                     2,
-		"total_atlas_nodes":                   2,
-		"completed_node_ids":                  []any{"node-a", "node-b"},
+		"completed_nodes":                     len(nodeIDs),
+		"total_atlas_nodes":                   len(nodeIDs),
+		"completed_node_ids":                  completedNodeIDs,
 		"blocked_nodes":                       []any{},
 		"active_node":                         "",
 		"active_executable_node":              nil,
