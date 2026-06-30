@@ -66,6 +66,7 @@ This first slice provides:
   - `scripts/live-mutation-rollback-rehearsal.sh --candidate <candidate.json> --out <rehearsal.json>`
   - `scripts/governed-live-mutation-dry-run-chain.sh --out <public-safe-relative-dir>`
   - `scripts/governed-live-mutation-dry-run-chain.sh --mutation-class low_risk_code --out <public-safe-relative-dir>`
+  - `scripts/low-risk-code-live-rehearsal-gate.sh --chain <summary.json> --out <gate.json>`
   - `scripts/live-mutation-readiness-rollup.sh --chain <summary.json> --out <rollup.json>`
   - `scripts/live-docs-approval-gate.sh --request <request.json> --ticket <ticket.json> --out <gate.json>`
   - `scripts/live-docs-worktree-prepare.sh --candidate <candidate.json> --approval-gate <gate.json> --out <prepare.json>`
@@ -287,6 +288,14 @@ bounded patch packet, rollback proof, Sentinel hold verdict, Promoter boundary,
 and AO Command readback. It reports `safe_to_request=true` when those dry-run
 inputs are present, but keeps `safe_to_execute=false` until later live
 promotion evidence exists.
+
+`scripts/low-risk-code-live-rehearsal-gate.sh` consumes that low-risk dry-run
+chain and decides whether the first bounded low-risk code live rehearsal may
+start. Without explicit live policy evidence bound to the dry-run chain digest,
+it emits `safe_to_request=true`, `safe_to_execute=false`, and
+`exact_next_step=collect_low_risk_code_live_policy_evidence`. The gate itself
+does not create branches, open PRs, mutate repositories, schedule work, approve
+work, call providers, publish, or release.
 
 `scripts/live-mutation-readiness-rollup.sh` consumes that chain summary and
 emits `ao.foundry.live-mutation-readiness-rollup.v0.1`. The rollup answers the
