@@ -6188,6 +6188,107 @@ func TestComplexRepoNodeExecuteBlocksUnsafeNodeGate(t *testing.T) {
 	}
 }
 
+func TestComplexRepoPromotionRollupAcceptsCompletedMission(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeComplexPromotionRollupArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "promotion-rollup", "evaluate",
+		"--mission", artifacts["mission"],
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--node-gate", artifacts["node_a_gate"],
+		"--final-node-gate", artifacts["node_b_gate"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("promotion rollup returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["schema_version"] != "ao.foundry.complex-repo-mutation-promotion-rollup.v0.1" ||
+		rollup["status"] != "ready" ||
+		rollup["mutation_class"] != "complex_repo_mutation" ||
+		rollup["safe_to_promote"] != true ||
+		rollup["complex_repo_mutation_live_proven"] != true ||
+		rollup["highest_proven_live_class"] != "complex_repo_mutation" ||
+		rollup["next_denied_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["fully_unsupervised_complex_mutation"] != "denied" ||
+		rollup["rsi"] != "denied" {
+		t.Fatalf("unexpected promotion rollup: %#v", rollup)
+	}
+	checks := rollup["checks"].(map[string]any)
+	for _, key := range []string{"all_nodes_completed", "run_links_complete", "node_gates_safe", "pr_ci_merge_evidence", "rollback_evidence", "sentinel_evidence", "promoter_evidence", "command_readback", "atlas_final_workgraph_complete", "bounded_authority", "forbidden_surfaces_clear"} {
+		if checks[key] != true {
+			t.Fatalf("rollup check %s must pass: %#v", key, checks)
+		}
+	}
+	nodes := rollup["nodes"].([]any)
+	if len(nodes) != 2 {
+		t.Fatalf("rollup should include node summaries: %#v", rollup["nodes"])
+	}
+}
+
+func TestComplexRepoPromotionRollupFailsClosed(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		mutate func(map[string]any)
+		want   string
+	}{
+		{
+			name: "missing_ci",
+			mutate: func(objects map[string]any) {
+				runLinks := objects["run_links"].(map[string]map[string]any)
+				runLinks["node-b"]["evidence"].(map[string]any)["ci"] = "pending"
+			},
+			want: "run-link node-b requires passed CI evidence",
+		},
+		{
+			name: "unsafe_node_gate",
+			mutate: func(objects map[string]any) {
+				gates := objects["node_gates"].(map[string]map[string]any)
+				gates["node-a"]["safe_to_execute"] = false
+			},
+			want: "node gate node-a must be ready and safe_to_execute=true",
+		},
+		{
+			name: "wrong_workgraph_status",
+			mutate: func(objects map[string]any) {
+				workgraph := objects["workgraph"].(map[string]any)
+				nodes := workgraph["nodes"].([]any)
+				nodes[1].(map[string]any)["status"] = "blocked"
+			},
+			want: "workgraph node node-b must be completed",
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			dir := t.TempDir()
+			artifacts := writeComplexPromotionRollupArtifacts(t, dir, tc.mutate)
+			outPath := filepath.Join(dir, "rollup.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"complex-repo", "promotion-rollup", "evaluate",
+				"--mission", artifacts["mission"],
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--node-gate", artifacts["node_a_gate"],
+				"--final-node-gate", artifacts["node_b_gate"],
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked promotion rollup should still emit decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			rollup := readObjectFixture(t, outPath)
+			if rollup["status"] != "blocked" ||
+				rollup["safe_to_promote"] != false ||
+				rollup["complex_repo_mutation_live_proven"] != false ||
+				rollup["first_failing_check"] != tc.want {
+				t.Fatalf("%s must fail closed with %q: %#v", tc.name, tc.want, rollup)
+			}
+		})
+	}
+}
+
 func TestMutationClassGateBlocksComplexRepoMutationWithoutNodeGate(t *testing.T) {
 	dir := t.TempDir()
 	common := writeComplexRepoClassGateCommonEvidence(t, dir)
@@ -7816,6 +7917,108 @@ func writeComplexRepoNodeGateArtifacts(t *testing.T, dir string, candidateSafe b
 		path := filepath.Join(dir, name+".json")
 		mustWriteJSONForTest(t, path, value)
 		paths[name] = path
+	}
+	return paths
+}
+
+func writeComplexPromotionRollupArtifacts(t *testing.T, dir string, mutate func(map[string]any)) map[string]string {
+	t.Helper()
+	nodeIDs := []string{"node-a", "node-b"}
+	workgraph := map[string]any{
+		"id":     "complex-rollup-workgraph",
+		"status": "completed",
+		"nodes": []any{
+			map[string]any{"id": "node-a", "status": "completed"},
+			map[string]any{"id": "node-b", "status": "completed"},
+		},
+	}
+	mission := map[string]any{
+		"schema":                              "ao.atlas.private-mission-continuation-evidence.v0.1",
+		"mission":                             "complex-rollup-test",
+		"status":                              "all_nodes_completed_with_foundry_evidence",
+		"completed_nodes":                     2,
+		"total_atlas_nodes":                   2,
+		"completed_node_ids":                  []any{"node-a", "node-b"},
+		"blocked_nodes":                       []any{},
+		"active_node":                         "",
+		"active_executable_node":              nil,
+		"executable_node_count":               0,
+		"highest_proven_live_class":           "multi_repo_low_risk",
+		"next_denied_class":                   "complex_repo_mutation",
+		"complex_repo_mutation_live_proven":   false,
+		"fully_unsupervised_complex_mutation": "denied",
+		"rsi":                                 "denied",
+	}
+	gates := map[string]map[string]any{}
+	runLinks := map[string]map[string]any{}
+	runLinksRoot := filepath.Join(dir, "run-links")
+	for i, nodeID := range nodeIDs {
+		gatePath := filepath.Join(dir, nodeID+"-gate.json")
+		gates[nodeID] = map[string]any{
+			"schema_version":                      "ao.foundry.complex-repo-mutation-node-gate.v0.1",
+			"status":                              "ready",
+			"mutation_class":                      "complex_repo_mutation",
+			"highest_proven_live_class":           "multi_repo_low_risk",
+			"next_denied_class":                   "complex_repo_mutation",
+			"workgraph_id":                        "complex-rollup-workgraph",
+			"node_id":                             nodeID,
+			"task_id":                             nodeID + "-task",
+			"safe_to_request":                     true,
+			"safe_to_execute":                     true,
+			"live_execution_authority":            true,
+			"blockers":                            []any{},
+			"required_gates":                      []any{"rollback_record_complete", "sentinel_hold_default", "promoter_no_promotion", "command_readback_required", "forge_ao2_packet_required"},
+			"schedules_work":                      false,
+			"executes_work":                       false,
+			"approves_work":                       false,
+			"mutates_repositories":                false,
+			"fully_unsupervised_complex_mutation": "denied",
+			"rsi":                                 "denied",
+		}
+		evidence := map[string]any{
+			"changed_file":     fmt.Sprintf("factory/complex-repo-mutation-rehearsal/%02d-%s/node-record.json", i, nodeID),
+			"ci":               "passed",
+			"merge_commit":     strings.Repeat(fmt.Sprint(i+1), 40),
+			"pr":               fmt.Sprintf("https://github.com/uesugitorachiyo/ao-test/pull/%d", i+1),
+			"rollback":         "ready",
+			"sentinel":         "clear",
+			"promoter":         "ready",
+			"command_readback": "ready",
+		}
+		if nodeID == "node-b" {
+			evidence["node_gate"] = gatePath
+		}
+		runLinks[nodeID] = map[string]any{
+			"contract_version": "ao.atlas.run-link.v0.1",
+			"task_id":          nodeID + "-task",
+			"status":           "completed",
+			"evidence":         evidence,
+			"digest":           "sha256:" + strings.Repeat(fmt.Sprint(i+2), 64),
+		}
+	}
+	objects := map[string]any{
+		"mission":    mission,
+		"workgraph":  workgraph,
+		"node_gates": gates,
+		"run_links":  runLinks,
+	}
+	if mutate != nil {
+		mutate(objects)
+	}
+	missionPath := filepath.Join(dir, "mission.json")
+	workgraphPath := filepath.Join(dir, "workgraph.json")
+	writeJSONFixtureForTest(t, missionPath, mission)
+	writeJSONFixtureForTest(t, workgraphPath, workgraph)
+	paths := map[string]string{
+		"mission":        missionPath,
+		"workgraph":      workgraphPath,
+		"run_links_root": runLinksRoot,
+	}
+	for _, nodeID := range nodeIDs {
+		gatePath := filepath.Join(dir, nodeID+"-gate.json")
+		writeJSONFixtureForTest(t, gatePath, gates[nodeID])
+		paths[strings.ReplaceAll(nodeID, "-", "_")+"_gate"] = gatePath
+		writeJSONFixtureForTest(t, filepath.Join(runLinksRoot, nodeID, "run-link.json"), runLinks[nodeID])
 	}
 	return paths
 }

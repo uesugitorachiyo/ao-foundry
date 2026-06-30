@@ -19,30 +19,31 @@ import (
 )
 
 const (
-	registrySchema             = "ao.foundry.registry.v0.1"
-	taskSchema                 = "ao.foundry.task.v0.1"
-	readinessSchema            = "ao.foundry.production-readiness-audit.v0.1"
-	goalRunSchema              = "ao.foundry.goal-run.v0.1"
-	goalReadinessSchema        = "ao.foundry.goal-readiness-audit.v0.1"
-	runSchema                  = "ao.foundry.run.v0.1"
-	repoHealthSchema           = "ao.foundry.repo-health.v0.1"
-	repoBoardSchema            = "ao.foundry.repo-board.v0.1"
-	loopLeaseSchema            = "ao.foundry.loop-lease.v0.1"
-	forgePacketSchema          = "ao.forge.factory-packet.v0.1"
-	pulseEventSchema           = "ao.foundry.pulse-event.v0.1"
-	atlasImportSchema          = "ao.atlas.foundry-import.v0.1"
-	atlasBlueprintImportSchema = "ao.atlas.blueprint-import.v0.1"
-	atlasTaskSchema            = "ao.atlas.factory-task.v0.1"
-	atlasRunLinkSchema         = "ao.atlas.run-link.v0.1"
-	atlasReadbackSchema        = "ao.foundry.atlas-readback.v0.1"
-	atlasStatusSchema          = "ao.foundry.atlas-status.v0.1"
-	pulseIntakeSchema          = "ao.foundry.pulse-intake-preflight.v0.1"
-	pulseLifecycleSchema       = "ao.foundry.pulse-pr-lifecycle.v0.1"
-	pulseStartGateSchema       = "ao.foundry.pulse-overnight-start-gate.v0.1"
-	pulseLoopPolicySchema      = "ao.foundry.pulse-event-loop-policy.v0.1"
-	pulseRunnerSchema          = "ao.foundry.pulse-runner-start-decision.v0.1"
-	classGateSchema            = "ao.foundry.mutation-class-gate.v0.1"
-	complexNodeGateSchema      = "ao.foundry.complex-repo-mutation-node-gate.v0.1"
+	registrySchema               = "ao.foundry.registry.v0.1"
+	taskSchema                   = "ao.foundry.task.v0.1"
+	readinessSchema              = "ao.foundry.production-readiness-audit.v0.1"
+	goalRunSchema                = "ao.foundry.goal-run.v0.1"
+	goalReadinessSchema          = "ao.foundry.goal-readiness-audit.v0.1"
+	runSchema                    = "ao.foundry.run.v0.1"
+	repoHealthSchema             = "ao.foundry.repo-health.v0.1"
+	repoBoardSchema              = "ao.foundry.repo-board.v0.1"
+	loopLeaseSchema              = "ao.foundry.loop-lease.v0.1"
+	forgePacketSchema            = "ao.forge.factory-packet.v0.1"
+	pulseEventSchema             = "ao.foundry.pulse-event.v0.1"
+	atlasImportSchema            = "ao.atlas.foundry-import.v0.1"
+	atlasBlueprintImportSchema   = "ao.atlas.blueprint-import.v0.1"
+	atlasTaskSchema              = "ao.atlas.factory-task.v0.1"
+	atlasRunLinkSchema           = "ao.atlas.run-link.v0.1"
+	atlasReadbackSchema          = "ao.foundry.atlas-readback.v0.1"
+	atlasStatusSchema            = "ao.foundry.atlas-status.v0.1"
+	pulseIntakeSchema            = "ao.foundry.pulse-intake-preflight.v0.1"
+	pulseLifecycleSchema         = "ao.foundry.pulse-pr-lifecycle.v0.1"
+	pulseStartGateSchema         = "ao.foundry.pulse-overnight-start-gate.v0.1"
+	pulseLoopPolicySchema        = "ao.foundry.pulse-event-loop-policy.v0.1"
+	pulseRunnerSchema            = "ao.foundry.pulse-runner-start-decision.v0.1"
+	classGateSchema              = "ao.foundry.mutation-class-gate.v0.1"
+	complexNodeGateSchema        = "ao.foundry.complex-repo-mutation-node-gate.v0.1"
+	complexPromotionRollupSchema = "ao.foundry.complex-repo-mutation-promotion-rollup.v0.1"
 )
 
 var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -351,6 +352,50 @@ type ComplexRepoMutationNodeGate struct {
 	MutatesRepositories              bool                        `json:"mutates_repositories"`
 	FullyUnsupervisedComplexMutation string                      `json:"fully_unsupervised_complex_mutation"`
 	RSI                              string                      `json:"rsi"`
+}
+
+type ComplexRepoMutationPromotionRollup struct {
+	SchemaVersion                    string                          `json:"schema_version"`
+	Status                           string                          `json:"status"`
+	MutationClass                    string                          `json:"mutation_class"`
+	SafeToPromote                    bool                            `json:"safe_to_promote"`
+	ComplexRepoMutationLiveProven    bool                            `json:"complex_repo_mutation_live_proven"`
+	HighestProvenLiveClass           string                          `json:"highest_proven_live_class"`
+	NextDeniedClass                  string                          `json:"next_denied_class"`
+	FullyUnsupervisedComplexMutation string                          `json:"fully_unsupervised_complex_mutation"`
+	RSI                              string                          `json:"rsi"`
+	Mission                          string                          `json:"mission"`
+	CompletedNodes                   int                             `json:"completed_nodes"`
+	TotalNodes                       int                             `json:"total_nodes"`
+	FirstFailingCheck                string                          `json:"first_failing_check"`
+	Blockers                         []string                        `json:"blockers"`
+	Checks                           map[string]bool                 `json:"checks"`
+	Nodes                            []ComplexRepoMutationRollupNode `json:"nodes"`
+	SourceEvidence                   []MutationClassGateEvidence     `json:"source_evidence"`
+	AuthorityBoundaries              map[string]bool                 `json:"authority_boundaries"`
+	PromoterVerdictReady             bool                            `json:"promoter_verdict_ready"`
+	CommandReadbackReady             bool                            `json:"command_readback_ready"`
+	PublicWordingReview              string                          `json:"public_wording_review"`
+	EvaluatedAtUTC                   string                          `json:"evaluated_at_utc"`
+}
+
+type ComplexRepoMutationRollupNode struct {
+	NodeID                 string `json:"node_id"`
+	TaskID                 string `json:"task_id"`
+	Status                 string `json:"status"`
+	ChangedFile            string `json:"changed_file"`
+	PullRequest            string `json:"pull_request"`
+	MergeCommit            string `json:"merge_commit"`
+	CI                     string `json:"ci"`
+	NodeGatePath           string `json:"node_gate_path"`
+	NodeGateSHA256         string `json:"node_gate_sha256"`
+	RunLinkPath            string `json:"run_link_path"`
+	RunLinkSHA256          string `json:"run_link_sha256"`
+	SafeToExecuteBeforeRun bool   `json:"safe_to_execute_before_run"`
+	RollbackEvidence       string `json:"rollback_evidence"`
+	SentinelEvidence       string `json:"sentinel_evidence"`
+	PromoterEvidence       string `json:"promoter_evidence"`
+	CommandReadback        string `json:"command_readback"`
 }
 
 type MutationClassBoundaryChecks struct {
@@ -2056,7 +2101,7 @@ func runClassGate(args []string, stdout, stderr io.Writer) int {
 
 func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 	if len(args) < 2 {
-		fmt.Fprintln(stderr, "usage: foundry complex-repo node-gate evaluate --workgraph <path> --foundry-import <path> --candidate <path> --rollback <path> --out <path>")
+		fmt.Fprintln(stderr, "usage: foundry complex-repo <node-gate evaluate|node execute|promotion-rollup evaluate> ...")
 		return 2
 	}
 	switch {
@@ -2064,10 +2109,335 @@ func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 		return runComplexRepoNodeGateEvaluate(args[2:], stdout, stderr)
 	case args[0] == "node" && args[1] == "execute":
 		return runComplexRepoNodeExecute(args[2:], stdout, stderr)
+	case args[0] == "promotion-rollup" && args[1] == "evaluate":
+		return runComplexRepoPromotionRollupEvaluate(args[2:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "foundry complex-repo: unknown command %q\n", strings.Join(args, " "))
 		return 2
 	}
+}
+
+type repeatedStringFlag []string
+
+func (f *repeatedStringFlag) String() string {
+	return strings.Join(*f, ",")
+}
+
+func (f *repeatedStringFlag) Set(value string) error {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return errors.New("empty value")
+	}
+	*f = append(*f, value)
+	return nil
+}
+
+func runComplexRepoPromotionRollupEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("complex-repo promotion-rollup evaluate", stderr)
+	missionPath := fs.String("mission", "", "Atlas mission continuation evidence")
+	workgraphPath := fs.String("workgraph", "", "Atlas final complex_repo_mutation workgraph")
+	runLinksRoot := fs.String("run-links-root", "", "root containing per-node run-link.json evidence")
+	finalNodeGatePath := fs.String("final-node-gate", "", "final synthesis node gate evidence")
+	outPath := fs.String("out", "", "promotion rollup output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	var nodeGatePaths repeatedStringFlag
+	fs.Var(&nodeGatePaths, "node-gate", "additional per-node gate evidence; may be repeated")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*missionPath) == "" ||
+		strings.TrimSpace(*workgraphPath) == "" ||
+		strings.TrimSpace(*runLinksRoot) == "" ||
+		strings.TrimSpace(*finalNodeGatePath) == "" ||
+		strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "--mission, --workgraph, --run-links-root, --final-node-gate, and --out are required")
+		return 2
+	}
+	rollup, err := buildComplexRepoMutationPromotionRollup(complexPromotionRollupPaths{
+		Mission:       *missionPath,
+		Workgraph:     *workgraphPath,
+		RunLinksRoot:  *runLinksRoot,
+		NodeGates:     nodeGatePaths,
+		FinalNodeGate: *finalNodeGatePath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "complex promotion rollup: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, rollup); err != nil {
+		fmt.Fprintf(stderr, "write complex promotion rollup: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, rollup); err != nil {
+			fmt.Fprintf(stderr, "write complex promotion rollup json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "complex_promotion_rollup=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", rollup.Status)
+	fmt.Fprintf(stdout, "safe_to_promote=%t\n", rollup.SafeToPromote)
+	if rollup.FirstFailingCheck != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", rollup.FirstFailingCheck)
+	}
+	return 0
+}
+
+type complexPromotionRollupPaths struct {
+	Mission       string
+	Workgraph     string
+	RunLinksRoot  string
+	NodeGates     []string
+	FinalNodeGate string
+}
+
+func buildComplexRepoMutationPromotionRollup(paths complexPromotionRollupPaths) (ComplexRepoMutationPromotionRollup, error) {
+	rollup := ComplexRepoMutationPromotionRollup{
+		SchemaVersion:                    complexPromotionRollupSchema,
+		Status:                           "blocked",
+		MutationClass:                    "complex_repo_mutation",
+		HighestProvenLiveClass:           "multi_repo_low_risk",
+		NextDeniedClass:                  "complex_repo_mutation",
+		FullyUnsupervisedComplexMutation: "denied",
+		RSI:                              "denied",
+		Blockers:                         []string{},
+		Checks: map[string]bool{
+			"all_nodes_completed":            false,
+			"run_links_complete":             false,
+			"node_gates_safe":                false,
+			"no_concurrent_mutation":         false,
+			"pr_ci_merge_evidence":           false,
+			"rollback_evidence":              false,
+			"sentinel_evidence":              false,
+			"promoter_evidence":              false,
+			"command_readback":               false,
+			"atlas_final_workgraph_complete": false,
+			"bounded_authority":              false,
+			"forbidden_surfaces_clear":       false,
+		},
+		AuthorityBoundaries: map[string]bool{
+			"schedules_work":                      false,
+			"executes_work":                       false,
+			"approves_work":                       false,
+			"mutates_repositories":                false,
+			"release_or_publish_allowed":          false,
+			"provider_calls_allowed":              false,
+			"credential_or_secret_access_allowed": false,
+			"fully_unsupervised_claimed":          false,
+			"rsi_claimed":                         false,
+		},
+		PublicWordingReview: "complex_repo_mutation may be marked live-proven only for this governed 12-node rehearsal; fully unsupervised complex mutation and RSI remain denied.",
+		EvaluatedAtUTC:      nowUTC(),
+	}
+	missionSource, mission, err := readComplexNodeGateObject("mission_continuation_evidence", paths.Mission)
+	if err != nil {
+		return rollup, err
+	}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_final_workgraph", paths.Workgraph)
+	if err != nil {
+		return rollup, err
+	}
+	rollup.SourceEvidence = append(rollup.SourceEvidence, missionSource, workgraphSource)
+	rollup.Mission = classGateString(mission, "mission")
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	rollup.TotalNodes = len(nodes)
+	rollup.CompletedNodes = int(classGateNumber(mission, "completed_nodes"))
+	blockers := []string{}
+	if classGateString(mission, "schema") != "ao.atlas.private-mission-continuation-evidence.v0.1" {
+		blockers = append(blockers, "mission continuation evidence schema mismatch")
+	}
+	if classGateString(mission, "status") != "all_nodes_completed_with_foundry_evidence" {
+		blockers = append(blockers, "mission continuation evidence must report all nodes completed")
+	}
+	if rollup.CompletedNodes != rollup.TotalNodes || int(classGateNumber(mission, "total_atlas_nodes")) != rollup.TotalNodes {
+		blockers = append(blockers, "mission completed node count must match final workgraph")
+	}
+	completedIDs := stringSet(classGateStringSlice(mission, "completed_node_ids"))
+	workgraphComplete := len(nodes) > 0
+	nodeIDs := []string{}
+	for _, node := range nodes {
+		nodeID := classGateString(node, "id")
+		nodeIDs = append(nodeIDs, nodeID)
+		if nodeID == "" {
+			workgraphComplete = false
+			blockers = append(blockers, "workgraph node missing id")
+			continue
+		}
+		if classGateString(node, "status") != "completed" {
+			workgraphComplete = false
+			blockers = append(blockers, "workgraph node "+nodeID+" must be completed")
+		}
+		if !completedIDs[nodeID] {
+			workgraphComplete = false
+			blockers = append(blockers, "mission completed_node_ids missing "+nodeID)
+		}
+	}
+	rollup.Checks["all_nodes_completed"] = rollup.CompletedNodes == rollup.TotalNodes && rollup.TotalNodes > 0 && workgraphComplete
+	rollup.Checks["atlas_final_workgraph_complete"] = workgraphComplete
+	if len(classGateObjectSlice(mission["blocked_nodes"])) == 0 &&
+		classGateString(mission, "active_node") == "" &&
+		int(classGateNumber(mission, "executable_node_count")) == 0 {
+		rollup.Checks["no_concurrent_mutation"] = true
+	}
+	gateOverrides, overrideEvidence, err := loadComplexPromotionNodeGateOverrides(paths.NodeGates, paths.FinalNodeGate)
+	if err != nil {
+		return rollup, err
+	}
+	rollup.SourceEvidence = append(rollup.SourceEvidence, overrideEvidence...)
+	runLinksOK := true
+	nodeGatesOK := true
+	prCIOK := true
+	rollbackOK := true
+	sentinelOK := true
+	promoterOK := true
+	commandOK := true
+	boundedOK := true
+	for _, nodeID := range nodeIDs {
+		runLinkPath := filepath.Join(paths.RunLinksRoot, nodeID, "run-link.json")
+		runLinkSource, runLink, err := readComplexNodeGateObject("run_link:"+nodeID, runLinkPath)
+		if err != nil {
+			runLinksOK = false
+			blockers = append(blockers, "run-link "+nodeID+" is missing")
+			continue
+		}
+		rollup.SourceEvidence = append(rollup.SourceEvidence, runLinkSource)
+		evidence, _ := runLink["evidence"].(map[string]any)
+		nodeSummary := ComplexRepoMutationRollupNode{
+			NodeID:           nodeID,
+			TaskID:           classGateString(runLink, "task_id"),
+			Status:           classGateString(runLink, "status"),
+			ChangedFile:      classGateString(evidence, "changed_file"),
+			PullRequest:      classGateString(evidence, "pr"),
+			MergeCommit:      classGateString(evidence, "merge_commit"),
+			CI:               classGateString(evidence, "ci"),
+			NodeGatePath:     classGateString(evidence, "node_gate"),
+			RunLinkPath:      runLinkPath,
+			RunLinkSHA256:    runLinkSource.SHA256,
+			RollbackEvidence: classGateString(evidence, "rollback"),
+			SentinelEvidence: classGateString(evidence, "sentinel"),
+			PromoterEvidence: classGateString(evidence, "promoter"),
+			CommandReadback:  classGateString(evidence, "command_readback"),
+		}
+		if nodeSummary.Status != "completed" {
+			runLinksOK = false
+			blockers = append(blockers, "run-link "+nodeID+" must be completed")
+		}
+		if nodeSummary.ChangedFile == "" {
+			runLinksOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires changed_file evidence")
+		}
+		if nodeSummary.PullRequest == "" || nodeSummary.MergeCommit == "" || !statusPassed(nodeSummary.CI) {
+			prCIOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires passed CI evidence")
+		}
+		if nodeSummary.NodeGatePath == "" {
+			if override, ok := gateOverrides[nodeID]; ok {
+				nodeSummary.NodeGatePath = override
+			}
+		}
+		gate, gateSource, err := loadComplexPromotionNodeGate(nodeSummary.NodeGatePath)
+		if err != nil {
+			nodeGatesOK = false
+			blockers = append(blockers, "node gate "+nodeID+" is missing")
+		} else {
+			rollup.SourceEvidence = append(rollup.SourceEvidence, gateSource)
+			nodeSummary.NodeGateSHA256 = gateSource.SHA256
+			nodeSummary.SafeToExecuteBeforeRun = gate.Status == "ready" && gate.NodeID == nodeID && gate.SafeToRequest && gate.SafeToExecute && gate.LiveExecutionAuthority && len(gate.Blockers) == 0
+			if !nodeSummary.SafeToExecuteBeforeRun {
+				nodeGatesOK = false
+				blockers = append(blockers, "node gate "+nodeID+" must be ready and safe_to_execute=true")
+			}
+			if gate.SchedulesWork || gate.ExecutesWork || gate.ApprovesWork || gate.MutatesRepositories {
+				boundedOK = false
+				blockers = append(blockers, "node gate "+nodeID+" expands forbidden authority")
+			}
+			required := stringSet(gate.RequiredGates)
+			for _, want := range []string{"rollback_record_complete", "sentinel_hold_default", "promoter_no_promotion", "command_readback_required", "forge_ao2_packet_required"} {
+				if !required[want] {
+					boundedOK = false
+					blockers = append(blockers, "node gate "+nodeID+" missing required gate "+want)
+				}
+			}
+		}
+		if nodeSummary.RollbackEvidence == "" {
+			rollbackOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires rollback evidence")
+		}
+		if nodeSummary.SentinelEvidence == "" {
+			sentinelOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires Sentinel evidence")
+		}
+		if nodeSummary.PromoterEvidence == "" {
+			promoterOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires Promoter evidence")
+		}
+		if nodeSummary.CommandReadback == "" {
+			commandOK = false
+			blockers = append(blockers, "run-link "+nodeID+" requires Command readback")
+		}
+		rollup.Nodes = append(rollup.Nodes, nodeSummary)
+	}
+	rollup.Checks["run_links_complete"] = runLinksOK && len(rollup.Nodes) == rollup.TotalNodes
+	rollup.Checks["node_gates_safe"] = nodeGatesOK
+	rollup.Checks["pr_ci_merge_evidence"] = prCIOK
+	rollup.Checks["rollback_evidence"] = rollbackOK
+	rollup.Checks["sentinel_evidence"] = sentinelOK
+	rollup.Checks["promoter_evidence"] = promoterOK
+	rollup.Checks["command_readback"] = commandOK
+	rollup.Checks["bounded_authority"] = boundedOK
+	rollup.Checks["forbidden_surfaces_clear"] = boundedOK
+	rollup.PromoterVerdictReady = promoterOK
+	rollup.CommandReadbackReady = commandOK
+	rollup.Blockers = uniqueStrings(blockers)
+	if len(rollup.Blockers) > 0 {
+		rollup.FirstFailingCheck = rollup.Blockers[0]
+		return rollup, nil
+	}
+	rollup.Status = "ready"
+	rollup.SafeToPromote = true
+	rollup.ComplexRepoMutationLiveProven = true
+	rollup.HighestProvenLiveClass = "complex_repo_mutation"
+	rollup.NextDeniedClass = "fully_unsupervised_complex_mutation"
+	return rollup, nil
+}
+
+func loadComplexPromotionNodeGateOverrides(nodeGatePaths []string, finalNodeGatePath string) (map[string]string, []MutationClassGateEvidence, error) {
+	overrides := map[string]string{}
+	evidence := []MutationClassGateEvidence{}
+	allPaths := append([]string{}, nodeGatePaths...)
+	allPaths = append(allPaths, finalNodeGatePath)
+	for _, path := range uniqueStrings(allPaths) {
+		gate, source, err := loadComplexPromotionNodeGate(path)
+		if err != nil {
+			return nil, nil, err
+		}
+		overrides[gate.NodeID] = path
+		evidence = append(evidence, source)
+	}
+	return overrides, evidence, nil
+}
+
+func loadComplexPromotionNodeGate(path string) (ComplexRepoMutationNodeGate, MutationClassGateEvidence, error) {
+	if strings.TrimSpace(path) == "" {
+		return ComplexRepoMutationNodeGate{}, MutationClassGateEvidence{}, errors.New("empty node gate path")
+	}
+	source, object, err := readComplexNodeGateObject("complex_node_gate", path)
+	if err != nil {
+		return ComplexRepoMutationNodeGate{}, MutationClassGateEvidence{}, err
+	}
+	data, err := json.Marshal(object)
+	if err != nil {
+		return ComplexRepoMutationNodeGate{}, MutationClassGateEvidence{}, err
+	}
+	var gate ComplexRepoMutationNodeGate
+	if err := json.Unmarshal(data, &gate); err != nil {
+		return ComplexRepoMutationNodeGate{}, MutationClassGateEvidence{}, err
+	}
+	if gate.SchemaVersion != complexNodeGateSchema {
+		return ComplexRepoMutationNodeGate{}, MutationClassGateEvidence{}, fmt.Errorf("node gate schema_version must be %s", complexNodeGateSchema)
+	}
+	return gate, source, nil
 }
 
 func runComplexRepoNodeGateEvaluate(args []string, stdout, stderr io.Writer) int {
@@ -3285,6 +3655,59 @@ func classGateInt(document map[string]any, key string) int {
 	default:
 		return 0
 	}
+}
+
+func classGateNumber(document map[string]any, key string) float64 {
+	switch value := document[key].(type) {
+	case float64:
+		return value
+	case int:
+		return float64(value)
+	case json.Number:
+		parsed, err := value.Float64()
+		if err != nil {
+			return 0
+		}
+		return parsed
+	default:
+		return 0
+	}
+}
+
+func stringSet(values []string) map[string]bool {
+	set := map[string]bool{}
+	for _, value := range values {
+		if strings.TrimSpace(value) != "" {
+			set[value] = true
+		}
+	}
+	return set
+}
+
+func statusPassed(status string) bool {
+	switch strings.ToLower(strings.TrimSpace(status)) {
+	case "passed", "pass", "success", "successful", "ready", "clear":
+		return true
+	default:
+		return false
+	}
+}
+
+func uniqueStrings(values []string) []string {
+	seen := map[string]bool{}
+	unique := []string{}
+	for _, value := range values {
+		if strings.TrimSpace(value) == "" || seen[value] {
+			continue
+		}
+		seen[value] = true
+		unique = append(unique, value)
+	}
+	return unique
+}
+
+func nowUTC() string {
+	return time.Now().UTC().Format(time.RFC3339)
 }
 
 func classGateNestedString(document map[string]any, outer, inner string) string {
