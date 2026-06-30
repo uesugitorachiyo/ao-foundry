@@ -5531,7 +5531,9 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 	}
 	if !strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-atlas") ||
 		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-foundry") ||
-		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-command") {
+		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "ao-command") ||
+		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "dry-run-pr:ao-atlas") ||
+		!strings.Contains(fmt.Sprint(gate["repo_execution_plan"]), "merge_after") {
 		t.Fatalf("multi_repo_low_risk gate must retain repo execution plan: %#v", gate["repo_execution_plan"])
 	}
 	if !strings.Contains(fmt.Sprint(gate["repo_safety"]), "prevent_concurrent_unsafe_execution") {
@@ -5562,6 +5564,32 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		blocked["safe_to_execute"] != false ||
 		!strings.Contains(fmt.Sprint(blocked["first_failing_check"]), "unsafe concurrent") {
 		t.Fatalf("unsafe concurrent multi-repo plan must fail closed: %#v", blocked)
+	}
+
+	unorderedOut := filepath.Join(t.TempDir(), "class-gate-unordered.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+		"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+		"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+		"--rollback", "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.unordered-dependency.json",
+		"--out", unorderedOut,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("unordered class gate should still emit a decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	unordered := readObjectFixture(t, unorderedOut)
+	if unordered["status"] != "blocked" ||
+		unordered["safe_to_request"] != false ||
+		unordered["safe_to_execute"] != false ||
+		!strings.Contains(fmt.Sprint(unordered["first_failing_check"]), "must appear earlier in dependency order") {
+		t.Fatalf("unordered multi-repo plan must fail closed: %#v", unordered)
 	}
 }
 

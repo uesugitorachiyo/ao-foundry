@@ -196,9 +196,11 @@ evidence, with `exact_next_action=build_low_risk_code_promotion_prerequisites`.
 The gate does not schedule, execute, approve, publish, call providers, or
 mutate repositories.
 For `multi_repo_low_risk`, Foundry also requires a serialized per-repo dry-run
-plan with rollback ready for each repo and `max_active_repos=1`. It reports the
-repo plan for readback, keeps `safe_to_execute=false`, and fails closed on
-unsafe concurrent execution.
+plan with ordered PR dependencies, rollback ready for each repo, and
+`max_active_repos=1`. It reports the repo plan for readback, keeps
+`safe_to_execute=false`, and fails closed on unsafe concurrent execution,
+missing per-repo rollback, or a dependency that does not point to an earlier
+repo in the serialized order.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus CI,
 repo-cleanliness, evidence-freshness, Sentinel, Promoter, branch-cleanup, and

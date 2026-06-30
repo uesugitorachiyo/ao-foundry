@@ -275,6 +275,8 @@ type MutationClassBoundaryChecks struct {
 
 type MutationClassRepoState struct {
 	Repo             string   `json:"repo"`
+	Order            int      `json:"order"`
+	PlannedPR        string   `json:"planned_pr"`
 	Status           string   `json:"status"`
 	ExecutionStatus  string   `json:"execution_status"`
 	WriteScope       []string `json:"write_scope"`
@@ -282,6 +284,7 @@ type MutationClassRepoState struct {
 	RollbackRequired bool     `json:"rollback_required"`
 	RollbackStatus   string   `json:"rollback_status"`
 	DependsOn        []string `json:"depends_on"`
+	MergeAfter       []string `json:"merge_after"`
 }
 
 type MutationClassRepoSafety struct {
@@ -2286,13 +2289,14 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 	policyObject, _ := object["concurrency_policy"].(map[string]any)
 	maxActiveRepos := classGateInt(policyObject, "max_active_repos")
 	concurrentExecutionAllowed := classGateBool(policyObject, "concurrent_execution_allowed")
-	if concurrentExecutionAllowed || maxActiveRepos != 1 {
+	requiredSerializedDependencyOrder := classGateBool(policyObject, "required_serialized_dependency_order")
+	if concurrentExecutionAllowed || maxActiveRepos != 1 || !requiredSerializedDependencyOrder {
 		return evidence, nil, &MutationClassRepoSafety{
 			Policy:                             classGateString(policyObject, "policy"),
 			MaxActiveRepos:                     maxActiveRepos,
 			ConcurrentExecutionAllowed:         concurrentExecutionAllowed,
 			UnsafeConcurrentExecutionPrevented: false,
-			RequiredSerializedDependencyOrder:  classGateBool(policyObject, "required_serialized_dependency_order"),
+			RequiredSerializedDependencyOrder:  requiredSerializedDependencyOrder,
 			LiveMultiRepoExecutionAuthority:    false,
 		}, "multi_repo_sequencing_plan has unsafe concurrent execution", nil
 	}
@@ -2310,6 +2314,8 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 		}
 		state := MutationClassRepoState{
 			Repo:             classGateString(stateObject, "repo"),
+			Order:            classGateInt(stateObject, "order"),
+			PlannedPR:        classGateString(stateObject, "planned_pr"),
 			Status:           classGateString(stateObject, "status"),
 			ExecutionStatus:  classGateString(stateObject, "execution_status"),
 			WriteScope:       classGateStringSlice(stateObject, "write_scope"),
@@ -2317,12 +2323,18 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 			RollbackRequired: classGateBool(stateObject, "rollback_required"),
 			RollbackStatus:   classGateString(stateObject, "rollback_status"),
 			DependsOn:        classGateStringSlice(stateObject, "depends_on"),
+			MergeAfter:       classGateStringSlice(stateObject, "merge_after"),
 		}
+		expectedOrder := len(states) + 1
 		switch {
 		case state.Repo == "":
 			return evidence, states, nil, "multi_repo_sequencing_plan repo_state missing repo", nil
 		case seenRepos[state.Repo]:
 			return evidence, states, nil, "multi_repo_sequencing_plan duplicate repo " + state.Repo, nil
+		case state.Order != expectedOrder:
+			return evidence, states, nil, fmt.Sprintf("multi_repo_sequencing_plan repo %s order must be %d", state.Repo, expectedOrder), nil
+		case state.PlannedPR == "":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires planned_pr", nil
 		case state.Status != "ready":
 			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " status is " + state.Status, nil
 		case state.ExecutionStatus == "executing" || state.ExecutionStatus == "active":
@@ -2336,6 +2348,14 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 		case !state.RollbackRequired || state.RollbackStatus != "ready":
 			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires ready rollback", nil
 		}
+		if !equalStringSlices(state.DependsOn, state.MergeAfter) {
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " merge_after must match depends_on", nil
+		}
+		for _, dependency := range state.DependsOn {
+			if !seenRepos[dependency] {
+				return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " dependency " + dependency + " must appear earlier in dependency order", nil
+			}
+		}
 		seenRepos[state.Repo] = true
 		states = append(states, state)
 	}
@@ -2347,7 +2367,7 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 		MaxActiveRepos:                     maxActiveRepos,
 		ConcurrentExecutionAllowed:         false,
 		UnsafeConcurrentExecutionPrevented: true,
-		RequiredSerializedDependencyOrder:  classGateBool(policyObject, "required_serialized_dependency_order"),
+		RequiredSerializedDependencyOrder:  requiredSerializedDependencyOrder,
 		LiveMultiRepoExecutionAuthority:    false,
 	}, "", nil
 }
