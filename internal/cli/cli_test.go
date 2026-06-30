@@ -6597,6 +6597,144 @@ func TestMutationClassGateComplexRepoMutationUsesNodeGate(t *testing.T) {
 	}
 }
 
+func TestFullyUnsupervisedReadinessEvaluateConsumesAllNodesAndDeniesLiveAuthority(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedReadinessArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "readiness", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("readiness evaluate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["schema_version"] != "ao.foundry.fully-unsupervised-complex-readiness-rollup.v0.1" ||
+		rollup["status"] != "denied" ||
+		rollup["mutation_class"] != "complex_repo_mutation" ||
+		rollup["target_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["highest_proven_live_class"] != "complex_repo_mutation" ||
+		rollup["next_denied_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["safe_to_request"] != true ||
+		rollup["safe_to_execute"] != false ||
+		rollup["live_execution_authority"] != false ||
+		rollup["safe_to_promote"] != false ||
+		rollup["fully_unsupervised_complex_mutation"] != "denied" ||
+		rollup["rsi"] != "denied" {
+		t.Fatalf("readiness rollup must deny live authority: %#v", rollup)
+	}
+	if fmt.Sprint(rollup["nodes_consumed"]) != "2" ||
+		fmt.Sprint(rollup["ready_nodes"]) != "1" ||
+		fmt.Sprint(rollup["blocked_nodes"]) != "1" {
+		t.Fatalf("readiness rollup must consume all fixture nodes: %#v", rollup)
+	}
+	readback, ok := rollup["command_readback"].(map[string]any)
+	if !ok ||
+		readback["schema_version"] != "ao.command.fully-unsupervised-complex-readiness-readback.v0.1" ||
+		readback["status"] != "ready" ||
+		readback["safe_to_execute"] != false ||
+		readback["fully_unsupervised_complex_mutation"] != "denied" ||
+		readback["rsi"] != "denied" {
+		t.Fatalf("rollup must include Command denial readback: %#v", rollup["command_readback"])
+	}
+	checks, ok := rollup["checks"].(map[string]any)
+	if !ok || checks["all_node_artifacts_present"] != true || checks["first_node_gate_blocks_live"] != true || checks["all_nodes_non_executable"] != true {
+		t.Fatalf("readiness checks should pass while keeping class denied: %#v", checks)
+	}
+}
+
+func TestFullyUnsupervisedReadinessEvaluateBlocksUnsafeFirstNodeGate(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedReadinessArtifacts(t, dir, func(paths map[string]string) {
+		gate := readObjectFixture(t, paths["first_node_gate"])
+		gate["status"] = "ready"
+		gate["safe_to_execute"] = true
+		gate["live_execution_authority"] = true
+		writeJSONFixtureForTest(t, paths["first_node_gate"], gate)
+	})
+	outPath := filepath.Join(dir, "rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "readiness", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked readiness evaluate should still emit rollup, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		rollup["safe_to_execute"] != false ||
+		rollup["first_failing_check"] != "first node gate must block live execution while allowing request readback" {
+		t.Fatalf("unsafe first gate must block readiness rollup: %#v", rollup)
+	}
+}
+
+func TestFullyUnsupervisedReadinessEvaluateBlocksMissingNodeArtifact(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedReadinessArtifacts(t, dir, func(paths map[string]string) {
+		if err := os.Remove(filepath.Join(paths["candidate_root"], "autonomous-continuation-policy-candidate.json")); err != nil {
+			t.Fatalf("remove candidate fixture: %v", err)
+		}
+	})
+	outPath := filepath.Join(dir, "rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "readiness", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--first-node-gate", artifacts["first_node_gate"],
+		"--task-root", artifacts["task_root"],
+		"--context-root", artifacts["context_root"],
+		"--candidate-root", artifacts["candidate_root"],
+		"--rollback-root", artifacts["rollback_root"],
+		"--node-evidence-root", artifacts["node_evidence_root"],
+		"--repair-root", artifacts["repair_root"],
+		"--context-repack-root", artifacts["repack_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked readiness evaluate should still emit rollup, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		!objectStringSliceContains(rollup, "blockers", "candidate autonomous-continuation-policy is missing or invalid") {
+		t.Fatalf("missing node artifact must block readiness rollup: %#v", rollup)
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
@@ -8101,6 +8239,245 @@ func writeComplexRepoNodeGateArtifacts(t *testing.T, dir string, candidateSafe b
 		path := filepath.Join(dir, name+".json")
 		mustWriteJSONForTest(t, path, value)
 		paths[name] = path
+	}
+	return paths
+}
+
+func writeFullyUnsupervisedReadinessArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	paths := map[string]string{
+		"blueprint_import":   filepath.Join(dir, "blueprint-import.json"),
+		"workgraph":          filepath.Join(dir, "workgraph.json"),
+		"foundry_import":     filepath.Join(dir, "foundry-import.json"),
+		"atlas_summary":      filepath.Join(dir, "atlas-first-summary.json"),
+		"slice_manifest":     filepath.Join(dir, "sdd-slice-completion-manifest.json"),
+		"final_synthesis":    filepath.Join(dir, "final-evidence-synthesis.json"),
+		"first_node_gate":    filepath.Join(dir, "first-node-gate.json"),
+		"task_root":          filepath.Join(dir, "tasks"),
+		"context_root":       filepath.Join(dir, "context-packs"),
+		"candidate_root":     filepath.Join(dir, "candidate-records"),
+		"rollback_root":      filepath.Join(dir, "rollback-records"),
+		"node_evidence_root": filepath.Join(dir, "node-evidence"),
+		"repair_root":        filepath.Join(dir, "repair-plans"),
+		"repack_root":        filepath.Join(dir, "context-repack-plans"),
+	}
+	nodes := []struct {
+		ID        string
+		TaskID    string
+		Status    string
+		NodeClass string
+		Folder    string
+	}{
+		{"unsupervised-mission-authorization", "unsupervised-mission-authorization-task", "ready", "autonomous mission authorization", "00-mission-authorization"},
+		{"autonomous-continuation-policy", "autonomous-continuation-policy-task", "blocked", "continuation policy", "01-continuation-policy"},
+	}
+	workgraphNodes := []any{}
+	for i, node := range nodes {
+		dependencies := []any{}
+		blockers := []any{}
+		if i > 0 {
+			dependencies = append(dependencies, nodes[i-1].ID)
+			blockers = append(blockers, "waits for predecessor completion and policy evidence")
+		}
+		task := map[string]any{
+			"contract_version":    "ao.atlas.factory-task.v0.1",
+			"id":                  node.TaskID,
+			"objective":           "Readiness evidence for " + node.NodeClass,
+			"target_factory_repo": "ao-atlas",
+			"factory_folder":      "factory/fully-unsupervised-readiness/" + node.Folder,
+			"mutation_class":      "complex_repo_mutation",
+			"acceptance_criteria": []any{
+				node.NodeClass + " readiness record is complete",
+				"safe_to_execute remains false",
+				"RSI remains denied",
+			},
+			"non_goals": []any{
+				"do not execute live mutation",
+				"do not claim fully_unsupervised_complex_mutation proven",
+				"do not claim RSI proven",
+			},
+			"write_scope": []any{"factory/fully-unsupervised-readiness/" + node.Folder},
+			"required_gates": []any{
+				"atlas_blueprint_import",
+				"mission_authorization_contract",
+				"autonomous_continuation_policy",
+				"kill_switch_contract",
+				"rollback_escalation_contract",
+				"evidence_freshness_contract",
+				"self_change_boundary",
+				"operator_review_bypass_prohibition",
+				"public_claim_policy",
+				"sentinel_monitoring_required",
+				"promoter_no_promotion",
+				"command_readback_required",
+			},
+			"rollback_scope": []any{"factory/fully-unsupervised-readiness/" + node.Folder},
+			"required_evidence": []any{
+				"live_rehearsal:complex_repo_mutation",
+				"next_denied_class:fully_unsupervised_complex_mutation",
+				"rsi:denied",
+				"safe_to_execute:false",
+				"fully_unsupervised_complex_mutation_live_proven:false",
+				"node_id:" + node.ID,
+			},
+			"safety_limits": []any{
+				"no release deploy provider secret auth policy config expansion",
+				"no credential use",
+				"no public claim broadening",
+			},
+			"authority_boundary": "atlas_readiness_planning_only",
+		}
+		writeJSONFixtureForTest(t, filepath.Join(paths["task_root"], node.ID+"-task.json"), task)
+		writeJSONFixtureForTest(t, filepath.Join(paths["context_root"], node.ID+"-context.json"), map[string]any{
+			"schema":          "ao.atlas.private-context-pack.v0.1",
+			"node_id":         node.ID,
+			"task_id":         node.TaskID,
+			"status":          "ready",
+			"safe_to_execute": false,
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["candidate_root"], node.ID+"-candidate.json"), map[string]any{
+			"schema":            "ao.atlas.private-candidate-record.v0.1",
+			"node_id":           node.ID,
+			"task_id":           node.TaskID,
+			"node_class":        node.NodeClass,
+			"status":            node.Status,
+			"executable_ready":  node.Status == "ready",
+			"safe_to_execute":   false,
+			"candidate_summary": "Readiness evidence for " + node.NodeClass,
+			"required_gates":    task["required_gates"],
+			"context_pack":      ".atlas-local/fully-unsupervised-complex-readiness/atlas-first-phase/context-packs/" + node.ID + "-context.json",
+			"task":              ".atlas-local/fully-unsupervised-complex-readiness/atlas-first-phase/tasks/" + node.ID + "-task.json",
+			"denied_boundaries": []any{"fully_unsupervised_complex_mutation_live_proven", "RSI", "credential_use", "provider_call", "policy_bypass"},
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["rollback_root"], node.ID+"-rollback.json"), map[string]any{
+			"schema":                       "ao.atlas.private-rollback-record.v0.1",
+			"node_id":                      node.ID,
+			"task_id":                      node.TaskID,
+			"rollback_escalation_required": true,
+			"kill_switch_required":         true,
+			"safe_to_execute":              false,
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["node_evidence_root"], node.ID+"-completion-evidence.json"), map[string]any{
+			"schema":                      "ao.atlas.private-node-evidence.v0.1",
+			"node_id":                     node.ID,
+			"task_id":                     node.TaskID,
+			"status":                      "ready_evidence_recorded",
+			"completion_evidence_present": true,
+			"repair_evidence_present":     true,
+			"repack_evidence_present":     true,
+			"safe_to_execute":             false,
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["repair_root"], node.ID+"-repair-plan.json"), map[string]any{
+			"schema":                  "ao.atlas.private-repair-plan.v0.1",
+			"node_id":                 node.ID,
+			"task_id":                 node.TaskID,
+			"status":                  "repair_planned",
+			"scope":                   "repair evidence only; no authority widening",
+			"requires_final_evidence": true,
+			"safe_to_execute":         false,
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["repack_root"], node.ID+"-context-repack-plan.json"), map[string]any{
+			"schema":          "ao.atlas.private-context-repack-plan.v0.1",
+			"node_id":         node.ID,
+			"task_id":         node.TaskID,
+			"status":          "context_repack_planned",
+			"reason":          "refresh or narrow context before readiness promotion",
+			"safe_to_execute": false,
+		})
+		workgraphNodes = append(workgraphNodes, map[string]any{
+			"id":           node.ID,
+			"status":       node.Status,
+			"factory_task": task,
+			"dependencies": dependencies,
+			"blockers":     blockers,
+		})
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "fully-unsupervised-complex-readiness-workgraph-test",
+		"nodes":            workgraphNodes,
+	})
+	writeJSONFixtureForTest(t, paths["blueprint_import"], map[string]any{
+		"contract_version":           "ao.atlas.blueprint-import.v0.1",
+		"id":                         "fully-unsupervised-complex-readiness-blueprint-import-test",
+		"project_id":                 "fully_unsupervised_complex_mutation-readiness-blueprint",
+		"status":                     "ready",
+		"workgraph_id":               "fully-unsupervised-complex-readiness-workgraph-test",
+		"mutation_class":             "complex_repo_mutation",
+		"ready_for_foundry":          true,
+		"safe_to_execute":            false,
+		"live_execution_proven":      false,
+		"schedules_work":             false,
+		"executes_work":              false,
+		"approves_work":              false,
+		"mutates_repositories":       false,
+		"calls_providers":            false,
+		"release_or_publish_allowed": false,
+	})
+	writeJSONFixtureForTest(t, paths["foundry_import"], map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "fully-unsupervised-complex-readiness-foundry-import-test",
+		"workgraph_id":     "fully-unsupervised-complex-readiness-workgraph-test",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":           nodes[0].ID,
+				"task_id":           nodes[0].TaskID,
+				"mutation_class":    "complex_repo_mutation",
+				"required_evidence": []any{"safe_to_execute:false"},
+			},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["atlas_summary"], map[string]any{
+		"schema":                    "ao.atlas.private-fully-unsupervised-readiness-summary.v0.1",
+		"planned_node_count":        2,
+		"ready_node_count":          1,
+		"blocked_node_count":        1,
+		"sdd_slice_count":           20,
+		"completed_sdd_slice_count": 20,
+		"safe_to_execute":           false,
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                           "denied",
+		"highest_proven_live_class":     "complex_repo_mutation",
+		"next_denied_class":             "fully_unsupervised_complex_mutation",
+		"foundry_import_task_count":     1,
+		"foundry_import_selected_node":  nodes[0].ID,
+		"foundry_import_schedules_work": false,
+		"foundry_import_executes_work":  false,
+		"foundry_import_approves_work":  false,
+	})
+	writeJSONFixtureForTest(t, paths["slice_manifest"], map[string]any{
+		"schema":           "ao.atlas.private-sdd-slice-completion-manifest.v0.1",
+		"total_slices":     20,
+		"completed_slices": 20,
+		"rsi":              "denied",
+	})
+	writeJSONFixtureForTest(t, paths["final_synthesis"], map[string]any{
+		"schema":                    "ao.atlas.private-fully-unsupervised-readiness-final-synthesis.v0.1",
+		"status":                    "atlas_first_readiness_phase_complete",
+		"ready_nodes":               1,
+		"blocked_nodes":             1,
+		"highest_proven_live_class": "complex_repo_mutation",
+		"next_denied_class":         "fully_unsupervised_complex_mutation",
+		"rsi":                       "denied",
+	})
+	writeJSONFixtureForTest(t, paths["first_node_gate"], map[string]any{
+		"schema_version":                      "ao.foundry.complex-repo-mutation-node-gate.v0.1",
+		"status":                              "blocked",
+		"mutation_class":                      "complex_repo_mutation",
+		"node_id":                             nodes[0].ID,
+		"task_id":                             nodes[0].TaskID,
+		"safe_to_request":                     true,
+		"safe_to_execute":                     false,
+		"live_execution_authority":            false,
+		"fully_unsupervised_complex_mutation": "denied",
+		"rsi":                                 "denied",
+	})
+	if mutate != nil {
+		mutate(paths)
 	}
 	return paths
 }
