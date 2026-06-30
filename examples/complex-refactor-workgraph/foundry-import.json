@@ -19,12 +19,33 @@
       "node_id": "pulse-runner-module-split",
       "task_id": "complex-refactor-pulse-runner-split-task",
       "path": "tasks/complex-refactor-pulse-runner-split-task.json",
+      "mutation_class": "complex_repo_mutation",
+      "write_scope": [
+        "internal/cli",
+        "docs/sdd",
+        "docs/operations"
+      ],
+      "rollback_scope": [
+        "internal/cli",
+        "docs/sdd",
+        "docs/operations"
+      ],
+      "required_gates": [
+        "atlas_classification",
+        "context_repack",
+        "rollback_plan"
+      ],
+      "required_evidence": [
+        "target/complex-refactor/pulse-runner-tests.json"
+      ],
+      "authority_boundary": "atlas_classification_only",
       "task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "complex-refactor-pulse-runner-split-task",
         "objective": "Split Pulse runner start-decision and bundle-building code into clearer typed modules.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/complex-refactor/pulse-runner-module-split",
+        "mutation_class": "complex_repo_mutation",
         "acceptance_criteria": [
           "runner gate behavior stays fail-closed",
           "existing Pulse tests and active-stack readiness stay green"
@@ -34,6 +55,16 @@
           "do not run live provider or release actions"
         ],
         "write_scope": [
+          "internal/cli",
+          "docs/sdd",
+          "docs/operations"
+        ],
+        "required_gates": [
+          "atlas_classification",
+          "context_repack",
+          "rollback_plan"
+        ],
+        "rollback_scope": [
           "internal/cli",
           "docs/sdd",
           "docs/operations"
@@ -51,6 +82,7 @@
           "one PR at a time",
           "public-safe evidence only"
         ],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [
           "boundary-audit"
         ],
@@ -58,18 +90,39 @@
           "examples/complex-refactor-workgraph/context-packs/pulse-runner-split.context-pack.json"
         ]
       },
-      "task_digest": "sha256:333de61e81a93a59d90828093cde40193ea0f35696b78def829ac5af9eeca051"
+      "task_digest": "sha256:df3eb11e7b4b24cb98e58b83adf7a7ff3b57057ecdf1e1874f137048e4ad9a22"
     },
     {
       "node_id": "atlas-foundry-fixture-path",
       "task_id": "complex-refactor-atlas-foundry-path-task",
       "path": "tasks/complex-refactor-atlas-foundry-path-task.json",
+      "mutation_class": "complex_repo_mutation",
+      "write_scope": [
+        "examples",
+        "scripts",
+        "docs"
+      ],
+      "rollback_scope": [
+        "examples",
+        "scripts",
+        "docs"
+      ],
+      "required_gates": [
+        "atlas_classification",
+        "context_repack",
+        "rollback_plan"
+      ],
+      "required_evidence": [
+        "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+      ],
+      "authority_boundary": "atlas_classification_only",
       "task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "complex-refactor-atlas-foundry-path-task",
         "objective": "Harden the Atlas-to-Foundry fixture import/readback path for large refactor task packets.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/complex-refactor/atlas-foundry-path",
+        "mutation_class": "complex_repo_mutation",
         "acceptance_criteria": [
           "Atlas import remains schedules_work=false executes_work=false approves_work=false",
           "Foundry readback links run-link evidence without executing work"
@@ -79,6 +132,16 @@
           "do not start Foundry scheduling"
         ],
         "write_scope": [
+          "examples",
+          "scripts",
+          "docs"
+        ],
+        "required_gates": [
+          "atlas_classification",
+          "context_repack",
+          "rollback_plan"
+        ],
+        "rollback_scope": [
           "examples",
           "scripts",
           "docs"
@@ -95,6 +158,7 @@
           "no sibling repo mutation",
           "no provider calls"
         ],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [
           "boundary-audit"
         ],
@@ -102,7 +166,7 @@
           "examples/complex-refactor-workgraph/context-packs/atlas-foundry-path.context-pack.json"
         ]
       },
-      "task_digest": "sha256:e583e400a0c82c3741ac00652b64ee2201299e39cec7ace7d4dde38c2e6370ca"
+      "task_digest": "sha256:f8117940426d91227630f6b9861493da61eef249435c6892daefbab0cc63e3da"
     }
   ],
   "schedules_work": false,

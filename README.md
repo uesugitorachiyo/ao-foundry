@@ -227,7 +227,9 @@ task demo. It validates an Atlas workgraph with completed, ready, blocked, and
 stitch nodes; validates Foundry import/readback; runs the Pulse gate e2e proof;
 emits blocked-node repair and needs-context repack artifacts; writes AO Command
 complex-refactor status readback; and reports the next ready factory task
-without starting blocked work.
+without starting blocked work. It also asks Atlas to emit a Foundry import for
+only the `workgraph next` node and fails if the selected import contains more
+than that one dependency-safe task.
 
 `scripts/overnight-rehearsal-runner.sh` wraps that rehearsal as a dry-run
 overnight control-chain check. It validates Pulse gate/lifecycle state, Atlas

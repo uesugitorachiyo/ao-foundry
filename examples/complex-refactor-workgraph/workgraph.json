@@ -57,6 +57,7 @@
         "objective": "Split Pulse runner start-decision and bundle-building code into clearer typed modules.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/complex-refactor/pulse-runner-module-split",
+        "mutation_class": "complex_repo_mutation",
         "acceptance_criteria": [
           "runner gate behavior stays fail-closed",
           "existing Pulse tests and active-stack readiness stay green"
@@ -66,6 +67,16 @@
           "do not run live provider or release actions"
         ],
         "write_scope": [
+          "internal/cli",
+          "docs/sdd",
+          "docs/operations"
+        ],
+        "required_gates": [
+          "atlas_classification",
+          "context_repack",
+          "rollback_plan"
+        ],
+        "rollback_scope": [
           "internal/cli",
           "docs/sdd",
           "docs/operations"
@@ -83,6 +94,7 @@
           "one PR at a time",
           "public-safe evidence only"
         ],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [
           "boundary-audit"
         ],
@@ -105,6 +117,7 @@
         "objective": "Harden the Atlas-to-Foundry fixture import/readback path for large refactor task packets.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/complex-refactor/atlas-foundry-path",
+        "mutation_class": "complex_repo_mutation",
         "acceptance_criteria": [
           "Atlas import remains schedules_work=false executes_work=false approves_work=false",
           "Foundry readback links run-link evidence without executing work"
@@ -114,6 +127,16 @@
           "do not start Foundry scheduling"
         ],
         "write_scope": [
+          "examples",
+          "scripts",
+          "docs"
+        ],
+        "required_gates": [
+          "atlas_classification",
+          "context_repack",
+          "rollback_plan"
+        ],
+        "rollback_scope": [
           "examples",
           "scripts",
           "docs"
@@ -130,6 +153,7 @@
           "no sibling repo mutation",
           "no provider calls"
         ],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [
           "boundary-audit"
         ],
