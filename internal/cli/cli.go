@@ -2685,51 +2685,52 @@ func buildComplexRepoMutationPromotionRollup(paths complexPromotionRollupPaths) 
 
 func loadComplexPromotionClosureEvidence(paths complexPromotionRollupPaths, spec complexClosureRoleSpec, nodeID, runLinkSHA, nodeGateSHA, missionSHA, workgraphSHA string, completedAction map[string]string) (string, MutationClassGateEvidence, string) {
 	rel := filepath.Join(nodeID, spec.Filename)
+	relDisplay := filepath.ToSlash(rel)
 	path := filepath.Join(paths.ClosureRoot, rel)
 	source, object, err := readComplexNodeGateObject("closure:"+nodeID+":"+spec.Field, path)
 	if err != nil {
-		return "", MutationClassGateEvidence{}, "closure evidence " + rel + " is missing"
+		return "", MutationClassGateEvidence{}, "closure evidence " + relDisplay + " is missing"
 	}
 	if classGateString(object, "schema_version") != spec.SchemaVersion {
-		return "", source, "closure evidence " + rel + " schema mismatch"
+		return "", source, "closure evidence " + relDisplay + " schema mismatch"
 	}
 	if classGateString(object, "status") != spec.Status {
-		return "", source, "closure evidence " + rel + " status mismatch"
+		return "", source, "closure evidence " + relDisplay + " status mismatch"
 	}
 	if classGateString(object, "mutation_class") != "complex_repo_mutation" {
-		return "", source, "closure evidence " + rel + " mutation_class mismatch"
+		return "", source, "closure evidence " + relDisplay + " mutation_class mismatch"
 	}
 	if classGateString(object, "node_id") != nodeID {
-		return "", source, "closure evidence " + rel + " node_id mismatch"
+		return "", source, "closure evidence " + relDisplay + " node_id mismatch"
 	}
 	if classGateString(object, "run_link_sha256") != runLinkSHA {
-		return "", source, "closure evidence " + rel + " run-link digest mismatch"
+		return "", source, "closure evidence " + relDisplay + " run-link digest mismatch"
 	}
 	if classGateString(object, "node_gate_sha256") != nodeGateSHA {
-		return "", source, "closure evidence " + rel + " node-gate digest mismatch"
+		return "", source, "closure evidence " + relDisplay + " node-gate digest mismatch"
 	}
 	if classGateString(object, "mission_sha256") != missionSHA {
-		return "", source, "closure evidence " + rel + " mission digest mismatch"
+		return "", source, "closure evidence " + relDisplay + " mission digest mismatch"
 	}
 	if classGateString(object, "workgraph_sha256") != workgraphSHA {
-		return "", source, "closure evidence " + rel + " workgraph digest mismatch"
+		return "", source, "closure evidence " + relDisplay + " workgraph digest mismatch"
 	}
 	if classGateString(object, "forbidden_surface_result") != "clear" {
-		return "", source, "closure evidence " + rel + " forbidden surface result must be clear"
+		return "", source, "closure evidence " + relDisplay + " forbidden surface result must be clear"
 	}
 	if classGateString(object, "rollback_disposition") != "ready" {
-		return "", source, "closure evidence " + rel + " rollback disposition must be ready"
+		return "", source, "closure evidence " + relDisplay + " rollback disposition must be ready"
 	}
 	if classGateBool(object, "schedules_work") || classGateBool(object, "executes_work") || classGateBool(object, "approves_work") || classGateBool(object, "mutates_repositories") {
-		return "", source, "closure evidence " + rel + " expands forbidden authority"
+		return "", source, "closure evidence " + relDisplay + " expands forbidden authority"
 	}
 	if classGateString(object, "fully_unsupervised_complex_mutation") != "denied" || classGateString(object, "rsi") != "denied" {
-		return "", source, "closure evidence " + rel + " must keep higher classes denied"
+		return "", source, "closure evidence " + relDisplay + " must keep higher classes denied"
 	}
 	action, _ := object["completed_action"].(map[string]any)
 	for key, want := range completedAction {
 		if classGateString(action, key) != want {
-			return "", source, "closure evidence " + rel + " completed action mismatch"
+			return "", source, "closure evidence " + relDisplay + " completed action mismatch"
 		}
 	}
 	return path, source, ""
