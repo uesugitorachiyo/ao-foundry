@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+  "status": "no_hold",
+  "mutation_class": "low_risk_code",
+  "hold_reasons": []
+}

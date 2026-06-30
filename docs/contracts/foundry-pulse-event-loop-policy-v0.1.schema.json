@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-pulse-event-loop-policy-v0.1.schema.json",
+  "title": "AO Foundry Pulse Event Loop Policy v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "mutation_class",
+    "allowed_next_action",
+    "safe_to_continue",
+    "safe_to_request",
+    "safe_to_execute",
+    "operator_prompt_required",
+    "first_failing_check",
+    "required_checks",
+    "source_evidence",
+    "blocking_next_actions",
+    "authority_boundary",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "mutates_repositories",
+    "calls_providers",
+    "opens_pr",
+    "merges_pr"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.pulse-event-loop-policy.v0.1" },
+    "status": { "enum": ["ready", "blocked"] },
+    "mutation_class": { "$ref": "#/$defs/mutation_class" },
+    "allowed_next_action": { "enum": ["continue_next_slice", "stop_event_loop"] },
+    "safe_to_continue": { "type": "boolean" },
+    "safe_to_request": { "type": "boolean" },
+    "safe_to_execute": { "type": "boolean" },
+    "operator_prompt_required": { "const": false },
+    "first_failing_check": {
+      "enum": [
+        "",
+        "class_gate",
+        "ci_status",
+        "repo_cleanliness",
+        "evidence_freshness",
+        "sentinel_hold",
+        "promoter_readiness",
+        "branch_cleanup",
+        "scope_boundary"
+      ]
+    },
+    "required_checks": {
+      "type": "array",
+      "minItems": 8,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "source_evidence": {
+      "type": "array",
+      "minItems": 8,
+      "items": { "$ref": "#/$defs/source_evidence" }
+    },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authority_boundary": { "const": "policy_approved_class_only" },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false },
+    "calls_providers": { "const": false },
+    "opens_pr": { "const": false },
+    "merges_pr": { "const": false }
+  },
+  "$defs": {
+    "mutation_class": {
+      "enum": [
+        "docs_only_single_file",
+        "docs_only_multi_file",
+        "docs_config_only",
+        "test_only",
+        "low_risk_code",
+        "multi_repo_low_risk",
+        "complex_repo_mutation"
+      ]
+    },
+    "source_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "schema_version", "status", "sha256"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "schema_version": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    }
+  }
+}

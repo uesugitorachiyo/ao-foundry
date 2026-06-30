@@ -19,27 +19,28 @@ import (
 )
 
 const (
-	registrySchema       = "ao.foundry.registry.v0.1"
-	taskSchema           = "ao.foundry.task.v0.1"
-	readinessSchema      = "ao.foundry.production-readiness-audit.v0.1"
-	goalRunSchema        = "ao.foundry.goal-run.v0.1"
-	goalReadinessSchema  = "ao.foundry.goal-readiness-audit.v0.1"
-	runSchema            = "ao.foundry.run.v0.1"
-	repoHealthSchema     = "ao.foundry.repo-health.v0.1"
-	repoBoardSchema      = "ao.foundry.repo-board.v0.1"
-	loopLeaseSchema      = "ao.foundry.loop-lease.v0.1"
-	forgePacketSchema    = "ao.forge.factory-packet.v0.1"
-	pulseEventSchema     = "ao.foundry.pulse-event.v0.1"
-	atlasImportSchema    = "ao.atlas.foundry-import.v0.1"
-	atlasTaskSchema      = "ao.atlas.factory-task.v0.1"
-	atlasRunLinkSchema   = "ao.atlas.run-link.v0.1"
-	atlasReadbackSchema  = "ao.foundry.atlas-readback.v0.1"
-	atlasStatusSchema    = "ao.foundry.atlas-status.v0.1"
-	pulseIntakeSchema    = "ao.foundry.pulse-intake-preflight.v0.1"
-	pulseLifecycleSchema = "ao.foundry.pulse-pr-lifecycle.v0.1"
-	pulseStartGateSchema = "ao.foundry.pulse-overnight-start-gate.v0.1"
-	pulseRunnerSchema    = "ao.foundry.pulse-runner-start-decision.v0.1"
-	classGateSchema      = "ao.foundry.mutation-class-gate.v0.1"
+	registrySchema        = "ao.foundry.registry.v0.1"
+	taskSchema            = "ao.foundry.task.v0.1"
+	readinessSchema       = "ao.foundry.production-readiness-audit.v0.1"
+	goalRunSchema         = "ao.foundry.goal-run.v0.1"
+	goalReadinessSchema   = "ao.foundry.goal-readiness-audit.v0.1"
+	runSchema             = "ao.foundry.run.v0.1"
+	repoHealthSchema      = "ao.foundry.repo-health.v0.1"
+	repoBoardSchema       = "ao.foundry.repo-board.v0.1"
+	loopLeaseSchema       = "ao.foundry.loop-lease.v0.1"
+	forgePacketSchema     = "ao.forge.factory-packet.v0.1"
+	pulseEventSchema      = "ao.foundry.pulse-event.v0.1"
+	atlasImportSchema     = "ao.atlas.foundry-import.v0.1"
+	atlasTaskSchema       = "ao.atlas.factory-task.v0.1"
+	atlasRunLinkSchema    = "ao.atlas.run-link.v0.1"
+	atlasReadbackSchema   = "ao.foundry.atlas-readback.v0.1"
+	atlasStatusSchema     = "ao.foundry.atlas-status.v0.1"
+	pulseIntakeSchema     = "ao.foundry.pulse-intake-preflight.v0.1"
+	pulseLifecycleSchema  = "ao.foundry.pulse-pr-lifecycle.v0.1"
+	pulseStartGateSchema  = "ao.foundry.pulse-overnight-start-gate.v0.1"
+	pulseLoopPolicySchema = "ao.foundry.pulse-event-loop-policy.v0.1"
+	pulseRunnerSchema     = "ao.foundry.pulse-runner-start-decision.v0.1"
+	classGateSchema       = "ao.foundry.mutation-class-gate.v0.1"
 )
 
 const liveEvidenceFreshnessWindow = 24 * time.Hour
@@ -716,6 +717,37 @@ type PulseOvernightStartGate struct {
 	SourceHashes           []PulseStartGateSource `json:"source_hashes"`
 }
 
+type PulseEventLoopPolicy struct {
+	SchemaVersion          string                       `json:"schema_version"`
+	Status                 string                       `json:"status"`
+	MutationClass          string                       `json:"mutation_class"`
+	AllowedNextAction      string                       `json:"allowed_next_action"`
+	SafeToContinue         bool                         `json:"safe_to_continue"`
+	SafeToRequest          bool                         `json:"safe_to_request"`
+	SafeToExecute          bool                         `json:"safe_to_execute"`
+	OperatorPromptRequired bool                         `json:"operator_prompt_required"`
+	FirstFailingCheck      string                       `json:"first_failing_check"`
+	RequiredChecks         []string                     `json:"required_checks"`
+	SourceEvidence         []PulseEventLoopPolicySource `json:"source_evidence"`
+	BlockingNextActions    []string                     `json:"blocking_next_actions"`
+	AuthorityBoundary      string                       `json:"authority_boundary"`
+	SchedulesWork          bool                         `json:"schedules_work"`
+	ExecutesWork           bool                         `json:"executes_work"`
+	ApprovesWork           bool                         `json:"approves_work"`
+	MutatesRepositories    bool                         `json:"mutates_repositories"`
+	CallsProviders         bool                         `json:"calls_providers"`
+	OpensPR                bool                         `json:"opens_pr"`
+	MergesPR               bool                         `json:"merges_pr"`
+}
+
+type PulseEventLoopPolicySource struct {
+	Name          string `json:"name"`
+	Path          string `json:"path"`
+	SchemaVersion string `json:"schema_version"`
+	Status        string `json:"status"`
+	SHA256        string `json:"sha256"`
+}
+
 type PulseStartGateSource struct {
 	Name          string `json:"name"`
 	Path          string `json:"path"`
@@ -1161,6 +1193,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse intake-preflight [--blueprint-authorization <path> | --blueprint-request <path>] [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>] [--json]")
 	fmt.Fprintln(w, "  foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]")
 	fmt.Fprintln(w, "  foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]")
+	fmt.Fprintln(w, "  foundry pulse event-loop-policy --class-gate <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --branch-cleanup <path> --scope <path> --out <path> [--json]")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
@@ -3164,7 +3197,7 @@ func runCompetitive(args []string, stdout, stderr io.Writer) int {
 
 func runPulse(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "pulse: expected subcommand run, intake-preflight, lifecycle, overnight-start-gate, or signed-smoke-script")
+		fmt.Fprintln(stderr, "pulse: expected subcommand run, intake-preflight, lifecycle, overnight-start-gate, event-loop-policy, or signed-smoke-script")
 		return 2
 	}
 	switch args[0] {
@@ -3176,6 +3209,8 @@ func runPulse(args []string, stdout, stderr io.Writer) int {
 		return runPulseLifecycle(args[1:], stdout, stderr)
 	case "overnight-start-gate":
 		return runPulseOvernightStartGate(args[1:], stdout, stderr)
+	case "event-loop-policy":
+		return runPulseEventLoopPolicy(args[1:], stdout, stderr)
 	case "signed-smoke-script":
 		return runPulseSignedSmokeScript(args[1:], stdout, stderr)
 	case "signed-smoke-preflight":
@@ -3808,6 +3843,309 @@ func failPulseStartGate(result PulseOvernightStartGate, checkName, status, reaso
 	result.FirstFailingCheck = checkName
 	result.BlockingNextActions = append(result.BlockingNextActions, nextAction)
 	return result, errors.New(reason)
+}
+
+func runPulseEventLoopPolicy(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("pulse event-loop-policy", stderr)
+	classGatePath := fs.String("class-gate", "", "Foundry mutation class gate output")
+	ciPath := fs.String("ci", "", "CI readiness evidence")
+	repoStatePath := fs.String("repo-state", "", "repo cleanliness evidence")
+	evidenceFreshnessPath := fs.String("evidence-freshness", "", "evidence freshness evidence")
+	sentinelPath := fs.String("sentinel", "", "Sentinel mutation-class hold verdict")
+	promoterPath := fs.String("promoter", "", "Promoter mutation-class readiness evidence")
+	branchCleanupPath := fs.String("branch-cleanup", "", "branch cleanup evidence")
+	scopePath := fs.String("scope", "", "scope boundary evidence")
+	outPath := fs.String("out", "", "event-loop policy output path")
+	jsonOut := fs.Bool("json", false, "emit JSON result to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	inputs := []string{*classGatePath, *ciPath, *repoStatePath, *evidenceFreshnessPath, *sentinelPath, *promoterPath, *branchCleanupPath, *scopePath}
+	for _, input := range inputs {
+		if strings.TrimSpace(input) == "" {
+			fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --branch-cleanup, --scope, and --out are required")
+			return 2
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "pulse event-loop-policy: --class-gate, --ci, --repo-state, --evidence-freshness, --sentinel, --promoter, --branch-cleanup, --scope, and --out are required")
+		return 2
+	}
+	for _, input := range inputs {
+		if sameCleanPath(*outPath, input) {
+			fmt.Fprintln(stderr, "pulse event-loop-policy: --out must not overwrite input artifacts")
+			return 2
+		}
+	}
+	result, err := buildPulseEventLoopPolicy(pulseEventLoopPolicyPaths{
+		ClassGate:         *classGatePath,
+		CI:                *ciPath,
+		RepoState:         *repoStatePath,
+		EvidenceFreshness: *evidenceFreshnessPath,
+		Sentinel:          *sentinelPath,
+		Promoter:          *promoterPath,
+		BranchCleanup:     *branchCleanupPath,
+		Scope:             *scopePath,
+	})
+	if writeErr := writeJSONFile(*outPath, result); writeErr != nil {
+		fmt.Fprintf(stderr, "pulse event-loop-policy: write result: %v\n", writeErr)
+		return 2
+	}
+	if *jsonOut {
+		if writeErr := writeJSON(stdout, result); writeErr != nil {
+			fmt.Fprintf(stderr, "pulse event-loop-policy: marshal result: %v\n", writeErr)
+			return 2
+		}
+	} else {
+		fmt.Fprintf(stdout, "pulse_event_loop_policy=%s\n", result.Status)
+		fmt.Fprintf(stdout, "allowed_next_action=%s\n", result.AllowedNextAction)
+		fmt.Fprintf(stdout, "safe_to_continue=%t\n", result.SafeToContinue)
+		fmt.Fprintf(stdout, "policy_result=%s\n", *outPath)
+	}
+	if err != nil {
+		fmt.Fprintf(stderr, "pulse event-loop-policy: %v\n", err)
+		return 1
+	}
+	if result.Status != "ready" {
+		return 1
+	}
+	return 0
+}
+
+type pulseEventLoopPolicyPaths struct {
+	ClassGate         string
+	CI                string
+	RepoState         string
+	EvidenceFreshness string
+	Sentinel          string
+	Promoter          string
+	BranchCleanup     string
+	Scope             string
+}
+
+type pulseEventLoopPolicyCheck struct {
+	Name          string
+	Path          string
+	SchemaVersion string
+	StatusField   string
+	ReadyStatuses []string
+}
+
+func buildPulseEventLoopPolicy(paths pulseEventLoopPolicyPaths) (PulseEventLoopPolicy, error) {
+	requiredChecks := []string{
+		"class_gate",
+		"ci_status",
+		"repo_cleanliness",
+		"evidence_freshness",
+		"sentinel_hold",
+		"promoter_readiness",
+		"branch_cleanup",
+		"scope_boundary",
+	}
+	result := PulseEventLoopPolicy{
+		SchemaVersion:          pulseLoopPolicySchema,
+		Status:                 "ready",
+		AllowedNextAction:      "continue_next_slice",
+		SafeToContinue:         true,
+		OperatorPromptRequired: false,
+		RequiredChecks:         requiredChecks,
+		SourceEvidence:         []PulseEventLoopPolicySource{},
+		BlockingNextActions:    []string{},
+		AuthorityBoundary:      "policy_approved_class_only",
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		MutatesRepositories:    false,
+		CallsProviders:         false,
+		OpensPR:                false,
+		MergesPR:               false,
+	}
+
+	classGate, classGateSource, blocker, err := evaluatePulseEventLoopClassGate(paths.ClassGate)
+	if err != nil {
+		return failPulseEventLoopPolicy(result, "class_gate", err.Error(), "Regenerate the mutation class gate evidence.")
+	}
+	result.SourceEvidence = append(result.SourceEvidence, classGateSource)
+	result.MutationClass = classGate.MutationClass
+	result.SafeToRequest = classGate.SafeToRequest
+	result.SafeToExecute = classGate.SafeToExecute
+	if blocker != "" {
+		return failPulseEventLoopPolicy(result, "class_gate", blocker, "Stop the event loop and rerun the Foundry mutation class gate.")
+	}
+
+	checks := []pulseEventLoopPolicyCheck{
+		{Name: "ci_status", Path: paths.CI, SchemaVersion: "ao.foundry.ci-readiness.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
+		{Name: "repo_cleanliness", Path: paths.RepoState, SchemaVersion: "ao.foundry.repo-cleanliness.v0.1", StatusField: "status", ReadyStatuses: []string{"clean"}},
+		{Name: "evidence_freshness", Path: paths.EvidenceFreshness, SchemaVersion: "ao.foundry.evidence-freshness.v0.1", StatusField: "status", ReadyStatuses: []string{"fresh"}},
+		{Name: "sentinel_hold", Path: paths.Sentinel, SchemaVersion: "ao.sentinel.mutation-class-hold.v0.1", StatusField: "status", ReadyStatuses: []string{"no_hold"}},
+		{Name: "promoter_readiness", Path: paths.Promoter, SchemaVersion: "ao.promoter.mutation-class-promotion.v0.1", StatusField: "status", ReadyStatuses: []string{"ready"}},
+		{Name: "branch_cleanup", Path: paths.BranchCleanup, SchemaVersion: "ao.foundry.branch-cleanup.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
+		{Name: "scope_boundary", Path: paths.Scope, SchemaVersion: "ao.foundry.scope-boundary.v0.1", StatusField: "status", ReadyStatuses: []string{"passed"}},
+	}
+	for _, check := range checks {
+		source, blocker, err := evaluatePulseEventLoopCheck(check, result.MutationClass)
+		if err != nil {
+			return failPulseEventLoopPolicy(result, check.Name, err.Error(), "Regenerate the "+check.Name+" evidence.")
+		}
+		result.SourceEvidence = append(result.SourceEvidence, source)
+		if blocker != "" {
+			return failPulseEventLoopPolicy(result, check.Name, blocker, pulseEventLoopBlockerAction(check.Name))
+		}
+	}
+	return result, nil
+}
+
+func evaluatePulseEventLoopClassGate(path string) (MutationClassGate, PulseEventLoopPolicySource, string, error) {
+	if err := validateEvidencePath(path); err != nil {
+		return MutationClassGate{}, PulseEventLoopPolicySource{}, "", fmt.Errorf("unsafe class gate path: %w", err)
+	}
+	var gate MutationClassGate
+	if err := readJSONFile(path, &gate); err != nil {
+		return gate, PulseEventLoopPolicySource{}, "", fmt.Errorf("read class gate: %w", err)
+	}
+	if err := validatePublicSafeJSONStrings(gate); err != nil {
+		return gate, PulseEventLoopPolicySource{}, "", err
+	}
+	source, err := pulseEventLoopPolicySourceFromFile("class_gate", path, gate.SchemaVersion, gate.Status)
+	if err != nil {
+		return gate, source, "", err
+	}
+	switch {
+	case gate.SchemaVersion != classGateSchema:
+		return gate, source, "class_gate schema_version must be " + classGateSchema, nil
+	case !isKnownMutationClass(gate.MutationClass):
+		return gate, source, "class_gate missing known mutation_class", nil
+	case gate.Status != "ready":
+		return gate, source, "class_gate status is " + gate.Status, nil
+	case !gate.SafeToRequest:
+		return gate, source, "class_gate safe_to_request is false", nil
+	case gate.SchedulesWork || gate.ExecutesWork || gate.ApprovesWork || gate.MutatesRepositories:
+		return gate, source, "class_gate must not schedule, execute, approve, or mutate repositories", nil
+	default:
+		return gate, source, "", nil
+	}
+}
+
+func evaluatePulseEventLoopCheck(check pulseEventLoopPolicyCheck, mutationClass string) (PulseEventLoopPolicySource, string, error) {
+	if err := validateEvidencePath(check.Path); err != nil {
+		return PulseEventLoopPolicySource{}, "", fmt.Errorf("unsafe %s path: %w", check.Name, err)
+	}
+	document, err := readArbitraryJSON(check.Path)
+	if err != nil {
+		return PulseEventLoopPolicySource{}, "", fmt.Errorf("read %s evidence: %w", check.Name, err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return PulseEventLoopPolicySource{}, "", fmt.Errorf("%s evidence must be a JSON object", check.Name)
+	}
+	if err := validatePublicSafeJSONStrings(object); err != nil {
+		return PulseEventLoopPolicySource{}, "", err
+	}
+	status := classGateString(object, check.StatusField)
+	source, err := pulseEventLoopPolicySourceFromFile(check.Name, check.Path, classGateString(object, "schema_version"), status)
+	if err != nil {
+		return source, "", err
+	}
+	if source.SchemaVersion != check.SchemaVersion {
+		return source, fmt.Sprintf("%s schema_version must be %s", check.Name, check.SchemaVersion), nil
+	}
+	if !classGateStringSliceContains(check.ReadyStatuses, status) {
+		return source, fmt.Sprintf("%s status is %s", check.Name, status), nil
+	}
+	documentClass := classGateString(object, "mutation_class")
+	if documentClass == "" {
+		return source, check.Name + " missing mutation_class", nil
+	}
+	if mutationClass != "" && documentClass != mutationClass {
+		return source, fmt.Sprintf("%s mutation_class %s does not match %s", check.Name, documentClass, mutationClass), nil
+	}
+	switch check.Name {
+	case "repo_cleanliness":
+		switch {
+		case classGateBool(object, "dirty_repo"):
+			return source, "repo_cleanliness dirty_repo is true", nil
+		case !classGateBool(object, "main_synced"):
+			return source, "repo_cleanliness main_synced is false", nil
+		case classGateBool(object, "stale_codex_branches"):
+			return source, "repo_cleanliness stale_codex_branches is true", nil
+		}
+	case "evidence_freshness":
+		if classGateBool(object, "stale_evidence") {
+			return source, "evidence_freshness stale_evidence is true", nil
+		}
+	case "branch_cleanup":
+		switch {
+		case classGateBool(object, "stale_codex_branches"):
+			return source, "branch_cleanup stale_codex_branches is true", nil
+		case !classGateBool(object, "local_branch_deleted"):
+			return source, "branch_cleanup local_branch_deleted is false", nil
+		case !classGateBool(object, "remote_branch_deleted"):
+			return source, "branch_cleanup remote_branch_deleted is false", nil
+		}
+	case "scope_boundary":
+		if classGateBool(object, "broadened_scope") {
+			return source, "scope_boundary broadened_scope is true", nil
+		}
+	}
+	return source, "", nil
+}
+
+func pulseEventLoopPolicySourceFromFile(name, path, schemaVersion, status string) (PulseEventLoopPolicySource, error) {
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return PulseEventLoopPolicySource{}, err
+	}
+	return PulseEventLoopPolicySource{
+		Name:          name,
+		Path:          filepath.ToSlash(filepath.Clean(path)),
+		SchemaVersion: schemaVersion,
+		Status:        status,
+		SHA256:        sum,
+	}, nil
+}
+
+func failPulseEventLoopPolicy(result PulseEventLoopPolicy, checkName, reason, nextAction string) (PulseEventLoopPolicy, error) {
+	result.Status = "blocked"
+	result.AllowedNextAction = "stop_event_loop"
+	result.SafeToContinue = false
+	result.SafeToRequest = false
+	result.SafeToExecute = false
+	result.FirstFailingCheck = checkName
+	result.BlockingNextActions = append(result.BlockingNextActions, nextAction)
+	return result, errors.New(reason)
+}
+
+func pulseEventLoopBlockerAction(checkName string) string {
+	switch checkName {
+	case "ci_status":
+		return "Stop the event loop until CI passes."
+	case "repo_cleanliness":
+		return "Stop the event loop until every touched repo is clean and synced with origin/main."
+	case "evidence_freshness":
+		return "Stop the event loop until stale evidence is regenerated."
+	case "sentinel_hold":
+		return "Stop the event loop until Sentinel reports no active hold."
+	case "promoter_readiness":
+		return "Stop the event loop until Promoter reports class promotion readiness."
+	case "branch_cleanup":
+		return "Stop the event loop until local and remote codex branches are cleaned up."
+	case "scope_boundary":
+		return "Stop the event loop because the requested scope broadened."
+	default:
+		return "Stop the event loop and regenerate required evidence."
+	}
+}
+
+func isKnownMutationClass(className string) bool {
+	return classGateStringSliceContains([]string{
+		"docs_only_single_file",
+		"docs_only_multi_file",
+		"docs_config_only",
+		"test_only",
+		"low_risk_code",
+		"multi_repo_low_risk",
+		"complex_repo_mutation",
+	}, className)
 }
 
 func buildPulseRunnerStartDecision(startGatePath string) (PulseRunnerStartDecision, error) {
@@ -8626,6 +8964,7 @@ func publicSchemaNames() []string {
 		"foundry-live-mutation-rollback-rehearsal-v0.1",
 		"foundry-mutation-class-gate-v0.1",
 		"foundry-production-readiness-audit-v0.1",
+		"foundry-pulse-event-loop-policy-v0.1",
 		"foundry-pulse-intake-preflight-v0.1",
 		"foundry-pulse-overnight-start-gate-v0.1",
 		"foundry-pulse-pr-lifecycle-v0.1",

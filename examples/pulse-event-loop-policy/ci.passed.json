@@ -1,0 +1,10 @@
+{
+  "schema_version": "ao.foundry.ci-readiness.v0.1",
+  "status": "passed",
+  "mutation_class": "low_risk_code",
+  "required_checks": [
+    "go test ./...",
+    "go vet ./...",
+    "production readiness"
+  ]
+}

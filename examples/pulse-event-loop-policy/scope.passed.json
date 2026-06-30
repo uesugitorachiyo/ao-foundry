@@ -1,0 +1,12 @@
+{
+  "schema_version": "ao.foundry.scope-boundary.v0.1",
+  "status": "passed",
+  "mutation_class": "low_risk_code",
+  "broadened_scope": false,
+  "allowed_paths": [
+    "internal/**/*.go"
+  ],
+  "forbidden_paths": [
+    ".github/**"
+  ]
+}

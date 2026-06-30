@@ -1,0 +1,9 @@
+{
+  "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+  "status": "denied",
+  "mutation_class": "low_risk_code",
+  "promotion_ready": false,
+  "denial_reasons": [
+    "active hold exists"
+  ]
+}

@@ -4716,6 +4716,125 @@ func TestPulseOvernightStartGateContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestPulseEventLoopPolicyAllowsNextSliceWhenApprovedAndGatesPass(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-event-loop-policy.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "event-loop-policy",
+		"--class-gate", "examples/class-gate/gate.dry-run.low-risk-code.json",
+		"--ci", "examples/pulse-event-loop-policy/ci.passed.json",
+		"--repo-state", "examples/pulse-event-loop-policy/repo.clean.json",
+		"--evidence-freshness", "examples/pulse-event-loop-policy/evidence.fresh.json",
+		"--sentinel", "examples/pulse-event-loop-policy/sentinel.no-hold.json",
+		"--promoter", "examples/pulse-event-loop-policy/promoter.ready.json",
+		"--branch-cleanup", "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
+		"--scope", "examples/pulse-event-loop-policy/scope.passed.json",
+		"--out", outPath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["schema_version"] != "ao.foundry.pulse-event-loop-policy.v0.1" ||
+		result["status"] != "ready" ||
+		result["mutation_class"] != "low_risk_code" ||
+		result["allowed_next_action"] != "continue_next_slice" ||
+		result["first_failing_check"] != "" {
+		t.Fatalf("unexpected event-loop policy result: %#v", result)
+	}
+	if result["safe_to_continue"] != true || result["safe_to_request"] != true || result["safe_to_execute"] != false {
+		t.Fatalf("policy did not preserve request/execute boundary: %#v", result)
+	}
+	for _, field := range []string{"operator_prompt_required", "schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
+		if result[field] != false {
+			t.Fatalf("event-loop policy must not grant side-effect authority, %s=%#v in %#v", field, result[field], result)
+		}
+	}
+	if !strings.Contains(stdout.String(), `"safe_to_continue": true`) {
+		t.Fatalf("expected JSON stdout for ready policy, got %s", stdout.String())
+	}
+}
+
+func TestPulseEventLoopPolicyStopsOnRequiredBlockers(t *testing.T) {
+	base := map[string]string{
+		"class-gate":         "examples/class-gate/gate.dry-run.low-risk-code.json",
+		"ci":                 "examples/pulse-event-loop-policy/ci.passed.json",
+		"repo-state":         "examples/pulse-event-loop-policy/repo.clean.json",
+		"evidence-freshness": "examples/pulse-event-loop-policy/evidence.fresh.json",
+		"sentinel":           "examples/pulse-event-loop-policy/sentinel.no-hold.json",
+		"promoter":           "examples/pulse-event-loop-policy/promoter.ready.json",
+		"branch-cleanup":     "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
+		"scope":              "examples/pulse-event-loop-policy/scope.passed.json",
+	}
+	for _, tc := range []struct {
+		name      string
+		flag      string
+		fixture   string
+		wantCheck string
+	}{
+		{name: "class_gate", flag: "class-gate", fixture: "examples/class-gate/gate.blocked.low-risk-code.json", wantCheck: "class_gate"},
+		{name: "failing_ci", flag: "ci", fixture: "examples/pulse-event-loop-policy/ci.failed.json", wantCheck: "ci_status"},
+		{name: "dirty_repo", flag: "repo-state", fixture: "examples/pulse-event-loop-policy/repo.dirty.json", wantCheck: "repo_cleanliness"},
+		{name: "stale_evidence", flag: "evidence-freshness", fixture: "examples/pulse-event-loop-policy/evidence.stale.json", wantCheck: "evidence_freshness"},
+		{name: "sentinel_hold", flag: "sentinel", fixture: "examples/pulse-event-loop-policy/sentinel.hold.json", wantCheck: "sentinel_hold"},
+		{name: "promoter_denial", flag: "promoter", fixture: "examples/pulse-event-loop-policy/promoter.denied.json", wantCheck: "promoter_readiness"},
+		{name: "branch_cleanup_failure", flag: "branch-cleanup", fixture: "examples/pulse-event-loop-policy/branch-cleanup.failed.json", wantCheck: "branch_cleanup"},
+		{name: "broadened_scope", flag: "scope", fixture: "examples/pulse-event-loop-policy/scope.broadened.json", wantCheck: "scope_boundary"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			paths := make(map[string]string, len(base))
+			for key, value := range base {
+				paths[key] = value
+			}
+			paths[tc.flag] = tc.fixture
+			outPath := filepath.Join(t.TempDir(), "pulse-event-loop-policy.json")
+			args := []string{"pulse", "event-loop-policy"}
+			for _, flag := range []string{"class-gate", "ci", "repo-state", "evidence-freshness", "sentinel", "promoter", "branch-cleanup", "scope"} {
+				args = append(args, "--"+flag, paths[flag])
+			}
+			args = append(args, "--out", outPath)
+			var stdout, stderr bytes.Buffer
+			code := Run(args, &stdout, &stderr)
+			if code == 0 {
+				t.Fatalf("Run returned success for blocker %s; stdout=%s stderr=%s", tc.name, stdout.String(), stderr.String())
+			}
+			result := readObjectFixture(t, outPath)
+			if result["status"] != "blocked" ||
+				result["allowed_next_action"] != "stop_event_loop" ||
+				result["safe_to_continue"] != false ||
+				result["first_failing_check"] != tc.wantCheck {
+				t.Fatalf("unexpected blocked event-loop policy result: %#v", result)
+			}
+		})
+	}
+}
+
+func TestPulseEventLoopPolicyContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-pulse-event-loop-policy-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read pulse event-loop policy schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("pulse event-loop policy schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-pulse-event-loop-policy-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid pulse event-loop policy fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid pulse event-loop policy fixture failed schema: %v", err)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-pulse-event-loop-policy-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid pulse event-loop policy fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid pulse event-loop policy fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunWritesFailedEventForBlockedReadiness(t *testing.T) {
 	outDir := t.TempDir()
 	var stdout, stderr bytes.Buffer

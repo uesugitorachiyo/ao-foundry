@@ -1,0 +1,8 @@
+{
+  "schema_version": "ao.foundry.branch-cleanup.v0.1",
+  "status": "failed",
+  "mutation_class": "low_risk_code",
+  "stale_codex_branches": true,
+  "local_branch_deleted": false,
+  "remote_branch_deleted": false
+}
