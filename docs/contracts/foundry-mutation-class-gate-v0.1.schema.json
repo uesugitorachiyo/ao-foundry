@@ -60,6 +60,60 @@
       "minItems": 1,
       "items": { "type": "string", "minLength": 1 }
     },
+    "denial_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "mutation_class",
+        "current_proven_live_class",
+        "next_denied_class",
+        "safe_to_request",
+        "safe_to_execute",
+        "missing_policy_evidence",
+        "missing_rollback_evidence",
+        "missing_sentinel_promoter_evidence",
+        "sentinel_state",
+        "promoter_state",
+        "ci_requirements",
+        "exact_next_action",
+        "denial_reason"
+      ],
+      "properties": {
+        "schema_version": { "const": "ao.foundry.low-risk-code-denial-audit.v0.1" },
+        "status": { "const": "blocked" },
+        "mutation_class": { "const": "low_risk_code" },
+        "current_proven_live_class": { "const": "test_only" },
+        "next_denied_class": { "const": "low_risk_code" },
+        "safe_to_request": { "type": "boolean" },
+        "safe_to_execute": { "const": false },
+        "missing_policy_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "missing_rollback_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "missing_sentinel_promoter_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "sentinel_state": { "type": "string", "minLength": 1 },
+        "promoter_state": { "type": "string", "minLength": 1 },
+        "ci_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "exact_next_action": { "const": "build_low_risk_code_promotion_prerequisites" },
+        "denial_reason": { "type": "string", "minLength": 1 }
+      }
+    },
     "repo_execution_plan": {
       "type": "array",
       "minItems": 2,

@@ -212,12 +212,31 @@ type MutationClassGate struct {
 	DeniedClasses       []string                    `json:"denied_classes"`
 	AuthorityBoundary   string                      `json:"authority_boundary"`
 	NextActions         []string                    `json:"next_actions"`
+	DenialAudit         *LowRiskCodeDenialAudit     `json:"denial_audit,omitempty"`
 	RepoExecutionPlan   []MutationClassRepoState    `json:"repo_execution_plan,omitempty"`
 	RepoSafety          *MutationClassRepoSafety    `json:"repo_safety,omitempty"`
 	SchedulesWork       bool                        `json:"schedules_work"`
 	ExecutesWork        bool                        `json:"executes_work"`
 	ApprovesWork        bool                        `json:"approves_work"`
 	MutatesRepositories bool                        `json:"mutates_repositories"`
+}
+
+type LowRiskCodeDenialAudit struct {
+	SchemaVersion                   string   `json:"schema_version"`
+	Status                          string   `json:"status"`
+	MutationClass                   string   `json:"mutation_class"`
+	CurrentProvenLiveClass          string   `json:"current_proven_live_class"`
+	NextDeniedClass                 string   `json:"next_denied_class"`
+	SafeToRequest                   bool     `json:"safe_to_request"`
+	SafeToExecute                   bool     `json:"safe_to_execute"`
+	MissingPolicyEvidence           []string `json:"missing_policy_evidence"`
+	MissingRollbackEvidence         []string `json:"missing_rollback_evidence"`
+	MissingSentinelPromoterEvidence []string `json:"missing_sentinel_promoter_evidence"`
+	SentinelState                   string   `json:"sentinel_state"`
+	PromoterState                   string   `json:"promoter_state"`
+	CIRequirements                  []string `json:"ci_requirements"`
+	ExactNextAction                 string   `json:"exact_next_action"`
+	DenialReason                    string   `json:"denial_reason"`
 }
 
 type MutationClassGateEvidence struct {
@@ -2026,6 +2045,7 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 				blockers = append(blockers, blocker)
 			}
 		}
+		gate.DenialAudit = lowRiskCodeDenialAudit(len(blockers) == 0)
 		if len(blockers) == 0 {
 			gate.Status = "ready"
 			gate.SafeToRequest = true
@@ -2069,6 +2089,34 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	gate.FirstFailingCheck = blockers[0]
 	gate.NextActions = blockers
 	return gate, nil
+}
+
+func lowRiskCodeDenialAudit(safeToRequest bool) *LowRiskCodeDenialAudit {
+	return &LowRiskCodeDenialAudit{
+		SchemaVersion:          "ao.foundry.low-risk-code-denial-audit.v0.1",
+		Status:                 "blocked",
+		MutationClass:          "low_risk_code",
+		CurrentProvenLiveClass: "test_only",
+		NextDeniedClass:        "low_risk_code",
+		SafeToRequest:          safeToRequest,
+		SafeToExecute:          false,
+		MissingPolicyEvidence: []string{
+			"policy:low_risk_code_live_promotion",
+			"command_readback:low_risk_code_live",
+		},
+		MissingRollbackEvidence: []string{
+			"rollback_proof:low_risk_code_live",
+		},
+		MissingSentinelPromoterEvidence: []string{
+			"sentinel_clear:low_risk_code_live",
+			"promoter_promotion:low_risk_code_live",
+		},
+		SentinelState:   "missing_live_no_hold",
+		PromoterState:   "missing_live_promotion",
+		CIRequirements:  []string{"ci_passed:low_risk_code_live"},
+		ExactNextAction: "build_low_risk_code_promotion_prerequisites",
+		DenialReason:    "low_risk_code live execution remains denied until policy promotion, rollback proof, Sentinel clear verdict, Promoter promotion, Command readback, and PR CI evidence all exist for the exact class scope.",
+	}
 }
 
 func evaluateTestOnlySuccessEvidence(path string) (MutationClassGateEvidence, string, error) {

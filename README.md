@@ -181,8 +181,12 @@ evidence. Without that evidence Foundry keeps `safe_to_request=false` and
 `safe_to_execute=false` even if the generic class evidence is otherwise ready.
 With checked test-only live rehearsal evidence, Foundry may report
 `safe_to_request=true` for a low-risk-code dry-run design while still keeping
-`safe_to_execute=false`. The gate does not schedule, execute, approve, publish,
-call providers, or mutate repositories.
+`safe_to_execute=false`. The low-risk-code gate also emits a
+`denial_audit` readback listing the missing live policy promotion, rollback
+proof, Sentinel clear verdict, Promoter promotion, Command readback, and PR CI
+evidence, with `exact_next_action=build_low_risk_code_promotion_prerequisites`.
+The gate does not schedule, execute, approve, publish, call providers, or
+mutate repositories.
 For `multi_repo_low_risk`, Foundry also requires a serialized per-repo dry-run
 plan with rollback ready for each repo and `max_active_repos=1`. It reports the
 repo plan for readback, keeps `safe_to_execute=false`, and fails closed on

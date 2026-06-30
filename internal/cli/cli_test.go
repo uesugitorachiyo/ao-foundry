@@ -5228,12 +5228,38 @@ func TestMutationClassGateLowRiskCodeDryRunReadyWithTestOnlySuccess(t *testing.T
 	if !strings.Contains(fmt.Sprint(gate["next_actions"]), "dry-run") {
 		t.Fatalf("low_risk_code next action must stay dry-run only: %#v", gate["next_actions"])
 	}
+	audit, ok := gate["denial_audit"].(map[string]any)
+	if !ok {
+		t.Fatalf("low_risk_code gate must include denial_audit readback: %#v", gate)
+	}
+	if audit["next_denied_class"] != "low_risk_code" ||
+		audit["safe_to_execute"] != false ||
+		audit["exact_next_action"] != "build_low_risk_code_promotion_prerequisites" {
+		t.Fatalf("low_risk_code denial audit drifted: %#v", audit)
+	}
+	for _, want := range []string{
+		"policy:low_risk_code_live_promotion",
+		"rollback_proof:low_risk_code_live",
+		"sentinel_clear:low_risk_code_live",
+		"promoter_promotion:low_risk_code_live",
+		"ci_passed:low_risk_code_live",
+	} {
+		if !objectStringSliceContains(audit, "missing_policy_evidence", want) &&
+			!objectStringSliceContains(audit, "missing_rollback_evidence", want) &&
+			!objectStringSliceContains(audit, "missing_sentinel_promoter_evidence", want) &&
+			!objectStringSliceContains(audit, "ci_requirements", want) {
+			t.Fatalf("low_risk_code denial audit missing %s: %#v", want, audit)
+		}
+	}
 	checked := readObjectFixture(t, "examples/class-gate/gate.dry-run.low-risk-code.json")
 	if checked["status"] != "ready" ||
 		checked["mutation_class"] != "low_risk_code" ||
 		checked["safe_to_request"] != true ||
 		checked["safe_to_execute"] != false {
 		t.Fatalf("checked low_risk_code dry-run fixture drifted: %#v", checked)
+	}
+	if _, ok := checked["denial_audit"].(map[string]any); !ok {
+		t.Fatalf("checked low_risk_code dry-run fixture must include denial audit: %#v", checked)
 	}
 }
 
@@ -6525,6 +6551,19 @@ func readObjectFixture(t *testing.T, path string) map[string]any {
 		t.Fatalf("JSON fixture %s is not an object: %#v", path, value)
 	}
 	return object
+}
+
+func objectStringSliceContains(object map[string]any, key, want string) bool {
+	values, ok := object[key].([]any)
+	if !ok {
+		return false
+	}
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
 }
 
 func readmeBlock(t *testing.T, text, startMarker, endMarker string) string {

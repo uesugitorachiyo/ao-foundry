@@ -1,0 +1,27 @@
+{
+  "schema_version": "ao.foundry.low-risk-code-denial-audit.v0.1",
+  "status": "blocked",
+  "mutation_class": "low_risk_code",
+  "current_proven_live_class": "test_only",
+  "next_denied_class": "low_risk_code",
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "missing_policy_evidence": [
+    "policy:low_risk_code_live_promotion",
+    "command_readback:low_risk_code_live"
+  ],
+  "missing_rollback_evidence": [
+    "rollback_proof:low_risk_code_live"
+  ],
+  "missing_sentinel_promoter_evidence": [
+    "sentinel_clear:low_risk_code_live",
+    "promoter_promotion:low_risk_code_live"
+  ],
+  "sentinel_state": "missing_live_no_hold",
+  "promoter_state": "missing_live_promotion",
+  "ci_requirements": [
+    "ci_passed:low_risk_code_live"
+  ],
+  "exact_next_action": "build_low_risk_code_promotion_prerequisites",
+  "denial_reason": "low_risk_code live execution remains denied until policy promotion, rollback proof, Sentinel clear verdict, Promoter promotion, Command readback, and PR CI evidence all exist for the exact class scope."
+}
