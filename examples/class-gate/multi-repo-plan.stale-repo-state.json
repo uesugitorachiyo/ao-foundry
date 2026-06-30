@@ -7,9 +7,9 @@
   "kill_switch_state": "armed",
   "concurrency_policy": {
     "policy": "prevent_concurrent_unsafe_execution",
-    "max_active_repos": 2,
-    "concurrent_execution_allowed": true,
-    "required_serialized_dependency_order": false
+    "max_active_repos": 1,
+    "concurrent_execution_allowed": false,
+    "required_serialized_dependency_order": true
   },
   "repo_states": [
     {
@@ -17,7 +17,7 @@
       "order": 1,
       "planned_pr": "dry-run-pr:ao-atlas",
       "status": "ready",
-      "execution_status": "ready_to_execute",
+      "execution_status": "sequenced_dry_run_only",
       "write_scope": ["repo:ao-atlas:internal/**"],
       "rollback_scope": ["repo:ao-atlas:internal/**"],
       "rollback_required": true,
@@ -33,16 +33,16 @@
       "order": 2,
       "planned_pr": "dry-run-pr:ao-foundry",
       "status": "ready",
-      "execution_status": "ready_to_execute",
+      "execution_status": "sequenced_dry_run_only",
       "write_scope": ["repo:ao-foundry:internal/**"],
       "rollback_scope": ["repo:ao-foundry:internal/**"],
       "rollback_required": true,
       "rollback_status": "ready",
-      "repo_state_status": "clean_synced",
+      "repo_state_status": "stale",
       "repo_state_observed_at_utc": "2026-06-30T00:00:00Z",
-      "repo_state_expires_at_utc": "2999-01-01T00:00:00Z",
-      "depends_on": [],
-      "merge_after": []
+      "repo_state_expires_at_utc": "2000-01-01T00:00:00Z",
+      "depends_on": ["ao-atlas"],
+      "merge_after": ["ao-atlas"]
     }
   ],
   "schedules_work": false,

@@ -5591,6 +5591,71 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		!strings.Contains(fmt.Sprint(unordered["first_failing_check"]), "must appear earlier in dependency order") {
 		t.Fatalf("unordered multi-repo plan must fail closed: %#v", unordered)
 	}
+
+	for _, tc := range []struct {
+		name       string
+		planPath   string
+		rollback   string
+		ci         string
+		wantReason string
+	}{
+		{
+			name:       "stale_repo_state",
+			planPath:   "examples/class-gate/multi-repo-plan.stale-repo-state.json",
+			rollback:   "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+			ci:         "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+			wantReason: "repo ao-foundry state evidence is stale",
+		},
+		{
+			name:       "partial_rollback",
+			planPath:   "examples/class-gate/multi-repo-plan.safe.json",
+			rollback:   "examples/class-gate/rollback.partial.multi-repo-low-risk.json",
+			ci:         "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+			wantReason: "per_repo_rollback missing ready rollback for ao-command",
+		},
+		{
+			name:       "missing_per_repo_ci",
+			planPath:   "examples/class-gate/multi-repo-plan.safe.json",
+			rollback:   "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+			ci:         "examples/class-gate/ci.partial.multi-repo-low-risk.json",
+			wantReason: "per_repo_ci missing passing CI for ao-command",
+		},
+		{
+			name:       "kill_switch_not_armed",
+			planPath:   "examples/class-gate/multi-repo-plan.kill-switch-disarmed.json",
+			rollback:   "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+			ci:         "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+			wantReason: "kill switch must be armed",
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			out := filepath.Join(t.TempDir(), tc.name+".json")
+			stdout.Reset()
+			stderr.Reset()
+			code := Run([]string{
+				"class-gate", "evaluate",
+				"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+				"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+				"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+				"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+				"--rollback", tc.rollback,
+				"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+				"--ci", tc.ci,
+				"--multi-repo-plan", tc.planPath,
+				"--out", out,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked class gate should still emit a decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			blocked := readObjectFixture(t, out)
+			if blocked["status"] != "blocked" ||
+				blocked["safe_to_request"] != false ||
+				blocked["safe_to_execute"] != false ||
+				!strings.Contains(fmt.Sprint(blocked["first_failing_check"]), tc.wantReason) {
+				t.Fatalf("%s must fail closed with %q: %#v", tc.name, tc.wantReason, blocked)
+			}
+		})
+	}
 }
 
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {

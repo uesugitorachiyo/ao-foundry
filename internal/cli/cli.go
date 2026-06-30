@@ -274,17 +274,20 @@ type MutationClassBoundaryChecks struct {
 }
 
 type MutationClassRepoState struct {
-	Repo             string   `json:"repo"`
-	Order            int      `json:"order"`
-	PlannedPR        string   `json:"planned_pr"`
-	Status           string   `json:"status"`
-	ExecutionStatus  string   `json:"execution_status"`
-	WriteScope       []string `json:"write_scope"`
-	RollbackScope    []string `json:"rollback_scope"`
-	RollbackRequired bool     `json:"rollback_required"`
-	RollbackStatus   string   `json:"rollback_status"`
-	DependsOn        []string `json:"depends_on"`
-	MergeAfter       []string `json:"merge_after"`
+	Repo                   string   `json:"repo"`
+	Order                  int      `json:"order"`
+	PlannedPR              string   `json:"planned_pr"`
+	Status                 string   `json:"status"`
+	ExecutionStatus        string   `json:"execution_status"`
+	WriteScope             []string `json:"write_scope"`
+	RollbackScope          []string `json:"rollback_scope"`
+	RollbackRequired       bool     `json:"rollback_required"`
+	RollbackStatus         string   `json:"rollback_status"`
+	RepoStateStatus        string   `json:"repo_state_status"`
+	RepoStateObservedAtUTC string   `json:"repo_state_observed_at_utc"`
+	RepoStateExpiresAtUTC  string   `json:"repo_state_expires_at_utc"`
+	DependsOn              []string `json:"depends_on"`
+	MergeAfter             []string `json:"merge_after"`
 }
 
 type MutationClassRepoSafety struct {
@@ -293,6 +296,7 @@ type MutationClassRepoSafety struct {
 	ConcurrentExecutionAllowed         bool   `json:"concurrent_execution_allowed"`
 	UnsafeConcurrentExecutionPrevented bool   `json:"unsafe_concurrent_execution_prevented"`
 	RequiredSerializedDependencyOrder  bool   `json:"required_serialized_dependency_order"`
+	KillSwitchState                    string `json:"kill_switch_state"`
 	LiveMultiRepoExecutionAuthority    bool   `json:"live_multi_repo_execution_authority"`
 }
 
@@ -2093,7 +2097,7 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 		}
 	}
 	if className == "multi_repo_low_risk" {
-		requiredEvidence = append(requiredEvidence, "multi_repo_sequencing_plan")
+		requiredEvidence = append(requiredEvidence, "multi_repo_sequencing_plan", "per_repo_rollback", "ci_per_repo", "operator_kill_switch", "fresh_repo_state")
 		gate.RequiredEvidence = requiredEvidence
 		if strings.TrimSpace(paths.MultiRepoPlan) == "" {
 			blockers = append(blockers, "multi_repo_sequencing_plan evidence is required for multi_repo_low_risk")
@@ -2107,6 +2111,8 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 			gate.RepoSafety = repoSafety
 			if blocker != "" {
 				blockers = append(blockers, blocker)
+			} else {
+				blockers = append(blockers, evaluateMultiRepoAuthorityEvidence(repoPlan, documents["rollback_proof"], documents["ci_passed"])...)
 			}
 		}
 		if len(blockers) == 0 {
@@ -2286,6 +2292,13 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 	case classGateBool(object, "schedules_work") || classGateBool(object, "executes_work") || classGateBool(object, "mutates_repositories"):
 		return evidence, nil, nil, "multi_repo_sequencing_plan must not schedule, execute, or mutate repositories", nil
 	}
+	killSwitchState := classGateString(object, "kill_switch_state")
+	if killSwitchState != "armed" {
+		return evidence, nil, &MutationClassRepoSafety{
+			KillSwitchState:                 killSwitchState,
+			LiveMultiRepoExecutionAuthority: false,
+		}, "multi_repo_sequencing_plan kill switch must be armed", nil
+	}
 	policyObject, _ := object["concurrency_policy"].(map[string]any)
 	maxActiveRepos := classGateInt(policyObject, "max_active_repos")
 	concurrentExecutionAllowed := classGateBool(policyObject, "concurrent_execution_allowed")
@@ -2297,6 +2310,7 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 			ConcurrentExecutionAllowed:         concurrentExecutionAllowed,
 			UnsafeConcurrentExecutionPrevented: false,
 			RequiredSerializedDependencyOrder:  requiredSerializedDependencyOrder,
+			KillSwitchState:                    killSwitchState,
 			LiveMultiRepoExecutionAuthority:    false,
 		}, "multi_repo_sequencing_plan has unsafe concurrent execution", nil
 	}
@@ -2313,17 +2327,20 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 			return evidence, states, nil, "multi_repo_sequencing_plan repo_states must be objects", nil
 		}
 		state := MutationClassRepoState{
-			Repo:             classGateString(stateObject, "repo"),
-			Order:            classGateInt(stateObject, "order"),
-			PlannedPR:        classGateString(stateObject, "planned_pr"),
-			Status:           classGateString(stateObject, "status"),
-			ExecutionStatus:  classGateString(stateObject, "execution_status"),
-			WriteScope:       classGateStringSlice(stateObject, "write_scope"),
-			RollbackScope:    classGateStringSlice(stateObject, "rollback_scope"),
-			RollbackRequired: classGateBool(stateObject, "rollback_required"),
-			RollbackStatus:   classGateString(stateObject, "rollback_status"),
-			DependsOn:        classGateStringSlice(stateObject, "depends_on"),
-			MergeAfter:       classGateStringSlice(stateObject, "merge_after"),
+			Repo:                   classGateString(stateObject, "repo"),
+			Order:                  classGateInt(stateObject, "order"),
+			PlannedPR:              classGateString(stateObject, "planned_pr"),
+			Status:                 classGateString(stateObject, "status"),
+			ExecutionStatus:        classGateString(stateObject, "execution_status"),
+			WriteScope:             classGateStringSlice(stateObject, "write_scope"),
+			RollbackScope:          classGateStringSlice(stateObject, "rollback_scope"),
+			RollbackRequired:       classGateBool(stateObject, "rollback_required"),
+			RollbackStatus:         classGateString(stateObject, "rollback_status"),
+			RepoStateStatus:        classGateString(stateObject, "repo_state_status"),
+			RepoStateObservedAtUTC: classGateString(stateObject, "repo_state_observed_at_utc"),
+			RepoStateExpiresAtUTC:  classGateString(stateObject, "repo_state_expires_at_utc"),
+			DependsOn:              classGateStringSlice(stateObject, "depends_on"),
+			MergeAfter:             classGateStringSlice(stateObject, "merge_after"),
 		}
 		expectedOrder := len(states) + 1
 		switch {
@@ -2347,6 +2364,8 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires write_scope and rollback_scope", nil
 		case !state.RollbackRequired || state.RollbackStatus != "ready":
 			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " requires ready rollback", nil
+		case state.RepoStateStatus != "clean_synced" || classGateTimestampExpired(state.RepoStateExpiresAtUTC) || state.RepoStateObservedAtUTC == "":
+			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " state evidence is stale", nil
 		}
 		if !equalStringSlices(state.DependsOn, state.MergeAfter) {
 			return evidence, states, nil, "multi_repo_sequencing_plan repo " + state.Repo + " merge_after must match depends_on", nil
@@ -2368,8 +2387,27 @@ func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []Mu
 		ConcurrentExecutionAllowed:         false,
 		UnsafeConcurrentExecutionPrevented: true,
 		RequiredSerializedDependencyOrder:  requiredSerializedDependencyOrder,
+		KillSwitchState:                    killSwitchState,
 		LiveMultiRepoExecutionAuthority:    false,
 	}, "", nil
+}
+
+func evaluateMultiRepoAuthorityEvidence(repoPlan []MutationClassRepoState, rollback map[string]any, ci map[string]any) []string {
+	blockers := []string{}
+	rollbackByRepo := classGateMapSliceByRepo(rollback["per_repo_rollback"])
+	ciByRepo := classGateMapSliceByRepo(ci["per_repo_ci"])
+	for _, repoState := range repoPlan {
+		rollbackState := rollbackByRepo[repoState.Repo]
+		if rollbackState == nil || classGateString(rollbackState, "status") != "ready" || len(classGateStringSlice(rollbackState, "rollback_scope")) == 0 {
+			blockers = append(blockers, "per_repo_rollback missing ready rollback for "+repoState.Repo)
+		}
+		ciState := ciByRepo[repoState.Repo]
+		ciStatus := classGateString(ciState, "status")
+		if ciState == nil || !classGateBool(ciState, "required") || (ciStatus != "passed" && ciStatus != "success") {
+			blockers = append(blockers, "per_repo_ci missing passing CI for "+repoState.Repo)
+		}
+	}
+	return blockers
 }
 
 type classGateCheck struct {
@@ -2470,6 +2508,33 @@ func classGateStringSlice(document map[string]any, key string) []string {
 		}
 	}
 	return values
+}
+
+func classGateMapSliceByRepo(value any) map[string]map[string]any {
+	rawValues, _ := value.([]any)
+	byRepo := map[string]map[string]any{}
+	for _, raw := range rawValues {
+		document, ok := raw.(map[string]any)
+		if !ok {
+			continue
+		}
+		repo := classGateString(document, "repo")
+		if repo != "" {
+			byRepo[repo] = document
+		}
+	}
+	return byRepo
+}
+
+func classGateTimestampExpired(value string) bool {
+	if strings.TrimSpace(value) == "" {
+		return true
+	}
+	expiresAt, err := time.Parse(time.RFC3339, value)
+	if err != nil {
+		return true
+	}
+	return !expiresAt.After(time.Now().UTC())
 }
 
 func classGateContainsAll(document map[string]any, key string, wants []string) bool {

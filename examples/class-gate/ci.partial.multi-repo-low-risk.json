@@ -15,7 +15,7 @@
     },
     {
       "repo": "ao-command",
-      "status": "passed",
+      "status": "pending",
       "required": true
     }
   ]
