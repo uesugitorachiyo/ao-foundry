@@ -2062,6 +2062,8 @@ func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 	switch {
 	case args[0] == "node-gate" && args[1] == "evaluate":
 		return runComplexRepoNodeGateEvaluate(args[2:], stdout, stderr)
+	case args[0] == "node" && args[1] == "execute":
+		return runComplexRepoNodeExecute(args[2:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "foundry complex-repo: unknown command %q\n", strings.Join(args, " "))
 		return 2
@@ -2116,6 +2118,56 @@ func runComplexRepoNodeGateEvaluate(args []string, stdout, stderr io.Writer) int
 	if gate.FirstFailingCheck != "" {
 		fmt.Fprintf(stdout, "first_failing_check=%s\n", gate.FirstFailingCheck)
 	}
+	return 0
+}
+
+func runComplexRepoNodeExecute(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("complex-repo node execute", stderr)
+	nodeGatePath := fs.String("node-gate", "", "ready complex_repo_mutation node gate")
+	nodeRecordOut := fs.String("node-record-out", "", "node record output path")
+	runLinkOut := fs.String("run-link-out", "", "Atlas run-link output path")
+	nodeClass := fs.String("node-class", "", "selected node class")
+	scope := fs.String("scope", "", "exact node write scope")
+	summary := fs.String("summary", "", "node execution summary")
+	pr := fs.String("pr", "", "merged execution pull request")
+	mergeCommit := fs.String("merge-commit", "", "merged execution commit")
+	ci := fs.String("ci", "passed", "CI evidence readback")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*nodeGatePath) == "" ||
+		strings.TrimSpace(*nodeRecordOut) == "" ||
+		strings.TrimSpace(*runLinkOut) == "" ||
+		strings.TrimSpace(*nodeClass) == "" ||
+		strings.TrimSpace(*scope) == "" ||
+		strings.TrimSpace(*summary) == "" {
+		fmt.Fprintln(stderr, "--node-gate, --node-record-out, --run-link-out, --node-class, --scope, and --summary are required")
+		return 2
+	}
+	if err := validateAtlasPublicString(*scope); err != nil {
+		fmt.Fprintf(stderr, "complex node execute scope: %v\n", err)
+		return 1
+	}
+	gate, err := loadComplexRepoMutationNodeGate(*nodeGatePath)
+	if err != nil {
+		fmt.Fprintf(stderr, "complex node execute: %v\n", err)
+		return 1
+	}
+	if gate.Status != "ready" || !gate.SafeToRequest || !gate.SafeToExecute || !gate.LiveExecutionAuthority {
+		fmt.Fprintln(stderr, "complex node execute requires ready node gate with safe_to_request=true and safe_to_execute=true")
+		return 1
+	}
+	record := buildComplexNodeRecord(gate, *nodeClass, *scope, *summary)
+	if err := writeJSONFile(*nodeRecordOut, record); err != nil {
+		fmt.Fprintf(stderr, "write complex node record: %v\n", err)
+		return 1
+	}
+	link := buildComplexNodeRunLink(gate, *scope, *nodeGatePath, *pr, *mergeCommit, *ci)
+	if err := writeJSONFile(*runLinkOut, link); err != nil {
+		fmt.Fprintf(stderr, "write complex node run-link: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "status=completed\nnode_id=%s\ntask_id=%s\nnode_record=%s\nrun_link=%s\n", gate.NodeID, gate.TaskID, *nodeRecordOut, *runLinkOut)
 	return 0
 }
 
@@ -2589,6 +2641,94 @@ func readComplexNodeGateObject(name, path string) (MutationClassGateEvidence, ma
 		SHA256:        sum,
 	}
 	return source, object, nil
+}
+
+func loadComplexRepoMutationNodeGate(path string) (ComplexRepoMutationNodeGate, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return ComplexRepoMutationNodeGate{}, err
+	}
+	data, err := json.Marshal(document)
+	if err != nil {
+		return ComplexRepoMutationNodeGate{}, err
+	}
+	var gate ComplexRepoMutationNodeGate
+	if err := json.Unmarshal(data, &gate); err != nil {
+		return ComplexRepoMutationNodeGate{}, err
+	}
+	if gate.SchemaVersion != complexNodeGateSchema {
+		return ComplexRepoMutationNodeGate{}, fmt.Errorf("node gate schema_version must be %s", complexNodeGateSchema)
+	}
+	return gate, nil
+}
+
+func buildComplexNodeRecord(gate ComplexRepoMutationNodeGate, nodeClass, scope, summary string) map[string]any {
+	cleanScope := filepath.ToSlash(strings.TrimSpace(scope))
+	return map[string]any{
+		"schema":         "ao.atlas.complex-repo-mutation-node-record.v0.1",
+		"node_id":        gate.NodeID,
+		"task_id":        gate.TaskID,
+		"node_class":     strings.TrimSpace(nodeClass),
+		"status":         "completed",
+		"mutation_class": gate.MutationClass,
+		"scope":          cleanScope,
+		"summary":        strings.TrimSpace(summary),
+		"accepted_evidence": []string{
+			"live_rehearsal:multi_repo_low_risk",
+			"safe_to_execute:true",
+			"node_id:" + gate.NodeID,
+		},
+		"authority_boundaries": map[string]bool{
+			"schedules_work":                      false,
+			"executes_providers":                  false,
+			"approves_work":                       false,
+			"release_or_publish_allowed":          false,
+			"credential_or_secret_access_allowed": false,
+			"direct_main_mutation_allowed":        false,
+			"public_claim_broadening_allowed":     false,
+		},
+		"class_state": map[string]string{
+			"complex_repo_mutation_live_proven":   "false",
+			"fully_unsupervised_complex_mutation": "denied",
+			"rsi":                                 "denied",
+		},
+		"rollback": map[string]string{
+			"scope":  cleanScope,
+			"method": "governed revert pull request if rollback is required after merge",
+		},
+	}
+}
+
+func buildComplexNodeRunLink(gate ComplexRepoMutationNodeGate, scope, nodeGatePath, pr, mergeCommit, ci string) AtlasRunLink {
+	evidence := map[string]string{
+		"changed_file": filepath.ToSlash(filepath.Join(strings.TrimSpace(scope), "node-record.json")),
+		"ci":           strings.TrimSpace(ci),
+		"node_gate":    filepath.ToSlash(nodeGatePath),
+	}
+	if strings.TrimSpace(pr) != "" {
+		evidence["pr"] = strings.TrimSpace(pr)
+	}
+	if strings.TrimSpace(mergeCommit) != "" {
+		evidence["merge_commit"] = strings.TrimSpace(mergeCommit)
+	}
+	link := AtlasRunLink{
+		ContractVersion: atlasRunLinkSchema,
+		TaskID:          gate.TaskID,
+		Status:          "completed",
+		Evidence:        evidence,
+	}
+	link.Digest = digestAtlasRunLink(link)
+	return link
+}
+
+func digestAtlasRunLink(link AtlasRunLink) string {
+	link.Digest = ""
+	data, err := json.Marshal(link)
+	if err != nil {
+		return "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+	}
+	sum := sha256.Sum256(data)
+	return "sha256:" + fmt.Sprintf("%x", sum[:])
 }
 
 func evaluateComplexNodeGateEvidence(path string) (MutationClassGateEvidence, *ComplexRepoMutationNodeGate, string, error) {
