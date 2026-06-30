@@ -44,6 +44,11 @@ const (
 	classGateSchema              = "ao.foundry.mutation-class-gate.v0.1"
 	complexNodeGateSchema        = "ao.foundry.complex-repo-mutation-node-gate.v0.1"
 	complexPromotionRollupSchema = "ao.foundry.complex-repo-mutation-promotion-rollup.v0.1"
+	complexClosureManifestSchema = "ao.foundry.complex-repo-mutation-node-closure-manifest.v0.1"
+	complexRollbackClosureSchema = "ao.foundry.complex-repo-mutation-node-rollback-closure.v0.1"
+	complexSentinelClosureSchema = "ao.sentinel.complex-repo-mutation-node-closure-verdict.v0.1"
+	complexPromoterClosureSchema = "ao.promoter.complex-repo-mutation-node-closure-verdict.v0.1"
+	complexCommandClosureSchema  = "ao.command.complex-repo-mutation-node-closure-readback.v0.1"
 )
 
 var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -2101,7 +2106,7 @@ func runClassGate(args []string, stdout, stderr io.Writer) int {
 
 func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 	if len(args) < 2 {
-		fmt.Fprintln(stderr, "usage: foundry complex-repo <node-gate evaluate|node execute|promotion-rollup evaluate> ...")
+		fmt.Fprintln(stderr, "usage: foundry complex-repo <node-gate evaluate|node execute|closure backfill|promotion-rollup evaluate> ...")
 		return 2
 	}
 	switch {
@@ -2109,6 +2114,8 @@ func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 		return runComplexRepoNodeGateEvaluate(args[2:], stdout, stderr)
 	case args[0] == "node" && args[1] == "execute":
 		return runComplexRepoNodeExecute(args[2:], stdout, stderr)
+	case args[0] == "closure" && args[1] == "backfill":
+		return runComplexRepoClosureBackfill(args[2:], stdout, stderr)
 	case args[0] == "promotion-rollup" && args[1] == "evaluate":
 		return runComplexRepoPromotionRollupEvaluate(args[2:], stdout, stderr)
 	default:
@@ -2132,11 +2139,232 @@ func (f *repeatedStringFlag) Set(value string) error {
 	return nil
 }
 
+func runComplexRepoClosureBackfill(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("complex-repo closure backfill", stderr)
+	missionPath := fs.String("mission", "", "Atlas mission continuation evidence")
+	workgraphPath := fs.String("workgraph", "", "Atlas final complex_repo_mutation workgraph")
+	runLinksRoot := fs.String("run-links-root", "", "root containing per-node run-link.json evidence")
+	closureRoot := fs.String("closure-root", "", "output root for digest-bound per-node closure evidence")
+	finalNodeGatePath := fs.String("final-node-gate", "", "final synthesis node gate evidence")
+	var nodeGatePaths repeatedStringFlag
+	fs.Var(&nodeGatePaths, "node-gate", "additional per-node gate evidence; may be repeated")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*missionPath) == "" ||
+		strings.TrimSpace(*workgraphPath) == "" ||
+		strings.TrimSpace(*runLinksRoot) == "" ||
+		strings.TrimSpace(*closureRoot) == "" ||
+		strings.TrimSpace(*finalNodeGatePath) == "" {
+		fmt.Fprintln(stderr, "--mission, --workgraph, --run-links-root, --closure-root, and --final-node-gate are required")
+		return 2
+	}
+	manifest, err := buildComplexRepoClosureEvidence(complexPromotionRollupPaths{
+		Mission:       *missionPath,
+		Workgraph:     *workgraphPath,
+		RunLinksRoot:  *runLinksRoot,
+		ClosureRoot:   *closureRoot,
+		NodeGates:     nodeGatePaths,
+		FinalNodeGate: *finalNodeGatePath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "complex closure backfill: %v\n", err)
+		return 1
+	}
+	manifestPath := filepath.Join(*closureRoot, "closure-manifest.json")
+	if err := writeJSONFile(manifestPath, manifest); err != nil {
+		fmt.Fprintf(stderr, "write complex closure manifest: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "complex_closure_root=%s\n", *closureRoot)
+	fmt.Fprintf(stdout, "node_count=%v\n", manifest["node_count"])
+	fmt.Fprintf(stdout, "evidence_item_count=%v\n", manifest["evidence_item_count"])
+	return 0
+}
+
+type complexClosureRoleSpec struct {
+	Field         string
+	Filename      string
+	SchemaVersion string
+	Status        string
+	Extra         map[string]any
+}
+
+func complexClosureRoleSpecs() []complexClosureRoleSpec {
+	return []complexClosureRoleSpec{
+		{
+			Field:         "rollback",
+			Filename:      "rollback.json",
+			SchemaVersion: complexRollbackClosureSchema,
+			Status:        "ready",
+			Extra: map[string]any{
+				"rollback_disposition": "ready",
+			},
+		},
+		{
+			Field:         "sentinel",
+			Filename:      "sentinel.json",
+			SchemaVersion: complexSentinelClosureSchema,
+			Status:        "clear",
+			Extra: map[string]any{
+				"hold_required":          false,
+				"promoter_hold_required": false,
+			},
+		},
+		{
+			Field:         "promoter",
+			Filename:      "promoter.json",
+			SchemaVersion: complexPromoterClosureSchema,
+			Status:        "no_promotion",
+			Extra: map[string]any{
+				"promotion_allowed": false,
+				"promotion_scope":   "per_node_closure_only",
+			},
+		},
+		{
+			Field:         "command_readback",
+			Filename:      "command-readback.json",
+			SchemaVersion: complexCommandClosureSchema,
+			Status:        "ready",
+			Extra: map[string]any{
+				"read_only":       true,
+				"safe_to_execute": false,
+			},
+		},
+	}
+}
+
+func buildComplexRepoClosureEvidence(paths complexPromotionRollupPaths) (map[string]any, error) {
+	missionSource, mission, err := readComplexNodeGateObject("mission_continuation_evidence", paths.Mission)
+	if err != nil {
+		return nil, err
+	}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_final_workgraph", paths.Workgraph)
+	if err != nil {
+		return nil, err
+	}
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	if len(nodes) == 0 {
+		return nil, errors.New("workgraph must contain completed nodes")
+	}
+	if classGateString(mission, "status") != "all_nodes_completed_with_foundry_evidence" {
+		return nil, errors.New("mission continuation evidence must report all nodes completed")
+	}
+	gateOverrides, _, err := loadComplexPromotionNodeGateOverrides(paths.NodeGates, paths.FinalNodeGate)
+	if err != nil {
+		return nil, err
+	}
+	generated := []map[string]any{}
+	for _, node := range nodes {
+		nodeID := classGateString(node, "id")
+		if nodeID == "" {
+			return nil, errors.New("workgraph node missing id")
+		}
+		if classGateString(node, "status") != "completed" {
+			return nil, fmt.Errorf("workgraph node %s must be completed", nodeID)
+		}
+		runLinkPath := filepath.Join(paths.RunLinksRoot, nodeID, "run-link.json")
+		runLinkSource, runLink, err := readComplexNodeGateObject("run_link:"+nodeID, runLinkPath)
+		if err != nil {
+			return nil, fmt.Errorf("run-link %s is missing: %w", nodeID, err)
+		}
+		evidence, _ := runLink["evidence"].(map[string]any)
+		nodeGatePath := classGateString(evidence, "node_gate")
+		if nodeGatePath == "" {
+			nodeGatePath = gateOverrides[nodeID]
+		}
+		gate, gateSource, err := loadComplexPromotionNodeGate(nodeGatePath)
+		if err != nil {
+			return nil, fmt.Errorf("node gate %s is missing: %w", nodeID, err)
+		}
+		if gate.Status != "ready" || gate.NodeID != nodeID || !gate.SafeToExecute || !gate.SafeToRequest || len(gate.Blockers) != 0 {
+			return nil, fmt.Errorf("node gate %s must be ready and safe_to_execute=true", nodeID)
+		}
+		if gate.SchedulesWork || gate.ExecutesWork || gate.ApprovesWork || gate.MutatesRepositories {
+			return nil, fmt.Errorf("node gate %s expands forbidden authority", nodeID)
+		}
+		completedAction := map[string]any{
+			"task_id":        classGateString(runLink, "task_id"),
+			"changed_file":   classGateString(evidence, "changed_file"),
+			"pull_request":   classGateString(evidence, "pr"),
+			"merge_commit":   classGateString(evidence, "merge_commit"),
+			"ci":             classGateString(evidence, "ci"),
+			"run_status":     classGateString(runLink, "status"),
+			"node_gate":      nodeGatePath,
+			"mutation_class": "complex_repo_mutation",
+		}
+		if completedAction["changed_file"] == "" || completedAction["pull_request"] == "" || completedAction["merge_commit"] == "" || !statusPassed(classGateString(evidence, "ci")) {
+			return nil, fmt.Errorf("run-link %s requires changed_file, PR, merge commit, and passed CI evidence", nodeID)
+		}
+		for _, spec := range complexClosureRoleSpecs() {
+			doc := map[string]any{
+				"schema_version":                      spec.SchemaVersion,
+				"status":                              spec.Status,
+				"mutation_class":                      "complex_repo_mutation",
+				"evidence_role":                       spec.Field,
+				"node_id":                             nodeID,
+				"task_id":                             classGateString(runLink, "task_id"),
+				"run_link_path":                       filepath.ToSlash(runLinkPath),
+				"run_link_sha256":                     runLinkSource.SHA256,
+				"node_gate_path":                      filepath.ToSlash(nodeGatePath),
+				"node_gate_sha256":                    gateSource.SHA256,
+				"workgraph_path":                      filepath.ToSlash(paths.Workgraph),
+				"workgraph_sha256":                    workgraphSource.SHA256,
+				"mission_path":                        filepath.ToSlash(paths.Mission),
+				"mission_sha256":                      missionSource.SHA256,
+				"completed_action":                    completedAction,
+				"forbidden_surface_result":            "clear",
+				"rollback_disposition":                "ready",
+				"safe_to_execute_before_run":          true,
+				"schedules_work":                      false,
+				"executes_work":                       false,
+				"approves_work":                       false,
+				"mutates_repositories":                false,
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+				"generated_at_utc":                    nowUTC(),
+			}
+			for key, value := range spec.Extra {
+				doc[key] = value
+			}
+			path := filepath.Join(paths.ClosureRoot, nodeID, spec.Filename)
+			if err := writeJSONFile(path, doc); err != nil {
+				return nil, err
+			}
+			sha, err := fileSHA256(path)
+			if err != nil {
+				return nil, err
+			}
+			generated = append(generated, map[string]any{
+				"node_id":        nodeID,
+				"evidence_role":  spec.Field,
+				"path":           filepath.ToSlash(path),
+				"schema_version": spec.SchemaVersion,
+				"status":         spec.Status,
+				"sha256":         sha,
+			})
+		}
+	}
+	return map[string]any{
+		"schema_version":                      complexClosureManifestSchema,
+		"status":                              "ready",
+		"mutation_class":                      "complex_repo_mutation",
+		"mission":                             classGateString(mission, "mission"),
+		"node_count":                          len(nodes),
+		"evidence_item_count":                 len(generated),
+		"evidence":                            generated,
+		"fully_unsupervised_complex_mutation": "denied",
+		"rsi":                                 "denied",
+		"generated_at_utc":                    nowUTC(),
+	}, nil
+}
+
 func runComplexRepoPromotionRollupEvaluate(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("complex-repo promotion-rollup evaluate", stderr)
 	missionPath := fs.String("mission", "", "Atlas mission continuation evidence")
 	workgraphPath := fs.String("workgraph", "", "Atlas final complex_repo_mutation workgraph")
 	runLinksRoot := fs.String("run-links-root", "", "root containing per-node run-link.json evidence")
+	closureRoot := fs.String("closure-root", "", "root containing digest-bound per-node closure evidence")
 	finalNodeGatePath := fs.String("final-node-gate", "", "final synthesis node gate evidence")
 	outPath := fs.String("out", "", "promotion rollup output path")
 	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
@@ -2157,6 +2385,7 @@ func runComplexRepoPromotionRollupEvaluate(args []string, stdout, stderr io.Writ
 		Mission:       *missionPath,
 		Workgraph:     *workgraphPath,
 		RunLinksRoot:  *runLinksRoot,
+		ClosureRoot:   *closureRoot,
 		NodeGates:     nodeGatePaths,
 		FinalNodeGate: *finalNodeGatePath,
 	})
@@ -2188,6 +2417,7 @@ type complexPromotionRollupPaths struct {
 	Mission       string
 	Workgraph     string
 	RunLinksRoot  string
+	ClosureRoot   string
 	NodeGates     []string
 	FinalNodeGate string
 }
@@ -2360,6 +2590,57 @@ func buildComplexRepoMutationPromotionRollup(paths complexPromotionRollupPaths) 
 				}
 			}
 		}
+		completedAction := map[string]string{
+			"task_id":      nodeSummary.TaskID,
+			"changed_file": nodeSummary.ChangedFile,
+			"pull_request": nodeSummary.PullRequest,
+			"merge_commit": nodeSummary.MergeCommit,
+			"ci":           nodeSummary.CI,
+		}
+		if strings.TrimSpace(paths.ClosureRoot) != "" {
+			for _, spec := range complexClosureRoleSpecs() {
+				current := ""
+				switch spec.Field {
+				case "rollback":
+					current = nodeSummary.RollbackEvidence
+				case "sentinel":
+					current = nodeSummary.SentinelEvidence
+				case "promoter":
+					current = nodeSummary.PromoterEvidence
+				case "command_readback":
+					current = nodeSummary.CommandReadback
+				}
+				if current != "" {
+					continue
+				}
+				closurePath, closureSource, blocker := loadComplexPromotionClosureEvidence(paths, spec, nodeID, runLinkSource.SHA256, nodeSummary.NodeGateSHA256, missionSource.SHA256, workgraphSource.SHA256, completedAction)
+				if blocker != "" {
+					blockers = append(blockers, blocker)
+					switch spec.Field {
+					case "rollback":
+						rollbackOK = false
+					case "sentinel":
+						sentinelOK = false
+					case "promoter":
+						promoterOK = false
+					case "command_readback":
+						commandOK = false
+					}
+					continue
+				}
+				rollup.SourceEvidence = append(rollup.SourceEvidence, closureSource)
+				switch spec.Field {
+				case "rollback":
+					nodeSummary.RollbackEvidence = closurePath
+				case "sentinel":
+					nodeSummary.SentinelEvidence = closurePath
+				case "promoter":
+					nodeSummary.PromoterEvidence = closurePath
+				case "command_readback":
+					nodeSummary.CommandReadback = closurePath
+				}
+			}
+		}
 		if nodeSummary.RollbackEvidence == "" {
 			rollbackOK = false
 			blockers = append(blockers, "run-link "+nodeID+" requires rollback evidence")
@@ -2400,6 +2681,58 @@ func buildComplexRepoMutationPromotionRollup(paths complexPromotionRollupPaths) 
 	rollup.HighestProvenLiveClass = "complex_repo_mutation"
 	rollup.NextDeniedClass = "fully_unsupervised_complex_mutation"
 	return rollup, nil
+}
+
+func loadComplexPromotionClosureEvidence(paths complexPromotionRollupPaths, spec complexClosureRoleSpec, nodeID, runLinkSHA, nodeGateSHA, missionSHA, workgraphSHA string, completedAction map[string]string) (string, MutationClassGateEvidence, string) {
+	rel := filepath.Join(nodeID, spec.Filename)
+	path := filepath.Join(paths.ClosureRoot, rel)
+	source, object, err := readComplexNodeGateObject("closure:"+nodeID+":"+spec.Field, path)
+	if err != nil {
+		return "", MutationClassGateEvidence{}, "closure evidence " + rel + " is missing"
+	}
+	if classGateString(object, "schema_version") != spec.SchemaVersion {
+		return "", source, "closure evidence " + rel + " schema mismatch"
+	}
+	if classGateString(object, "status") != spec.Status {
+		return "", source, "closure evidence " + rel + " status mismatch"
+	}
+	if classGateString(object, "mutation_class") != "complex_repo_mutation" {
+		return "", source, "closure evidence " + rel + " mutation_class mismatch"
+	}
+	if classGateString(object, "node_id") != nodeID {
+		return "", source, "closure evidence " + rel + " node_id mismatch"
+	}
+	if classGateString(object, "run_link_sha256") != runLinkSHA {
+		return "", source, "closure evidence " + rel + " run-link digest mismatch"
+	}
+	if classGateString(object, "node_gate_sha256") != nodeGateSHA {
+		return "", source, "closure evidence " + rel + " node-gate digest mismatch"
+	}
+	if classGateString(object, "mission_sha256") != missionSHA {
+		return "", source, "closure evidence " + rel + " mission digest mismatch"
+	}
+	if classGateString(object, "workgraph_sha256") != workgraphSHA {
+		return "", source, "closure evidence " + rel + " workgraph digest mismatch"
+	}
+	if classGateString(object, "forbidden_surface_result") != "clear" {
+		return "", source, "closure evidence " + rel + " forbidden surface result must be clear"
+	}
+	if classGateString(object, "rollback_disposition") != "ready" {
+		return "", source, "closure evidence " + rel + " rollback disposition must be ready"
+	}
+	if classGateBool(object, "schedules_work") || classGateBool(object, "executes_work") || classGateBool(object, "approves_work") || classGateBool(object, "mutates_repositories") {
+		return "", source, "closure evidence " + rel + " expands forbidden authority"
+	}
+	if classGateString(object, "fully_unsupervised_complex_mutation") != "denied" || classGateString(object, "rsi") != "denied" {
+		return "", source, "closure evidence " + rel + " must keep higher classes denied"
+	}
+	action, _ := object["completed_action"].(map[string]any)
+	for key, want := range completedAction {
+		if classGateString(action, key) != want {
+			return "", source, "closure evidence " + rel + " completed action mismatch"
+		}
+	}
+	return path, source, ""
 }
 
 func loadComplexPromotionNodeGateOverrides(nodeGatePaths []string, finalNodeGatePath string) (map[string]string, []MutationClassGateEvidence, error) {

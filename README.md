@@ -209,9 +209,13 @@ clean-main CI evidence were complete. The 2026-06-30 Atlas-first rehearsal then
 completed repo one through AO Command PR #56 and repo two through AO Foundry PR
 #122, both with exact test-only scope, passing CI, branch cleanup, rollback
 readiness, Sentinel/Promoter/Command evidence, and public-safety review. That
-evidence makes `multi_repo_low_risk` the highest proven live class. The next
-denied class is `complex_repo_mutation`; complex mutation, fully unsupervised
-complex mutation, and RSI remain denied.
+evidence made `multi_repo_low_risk` the highest proven live class. The
+2026-06-30 complex_repo_mutation mission then completed all 12 governed nodes
+with digest-bound run-link, node-gate, rollback, Sentinel, Promoter, Command,
+CI, merge, and forbidden-surface closure evidence. That evidence makes
+`complex_repo_mutation` the highest proven live class for this governed
+rehearsal boundary. The next denied class is fully unsupervised complex
+mutation; fully unsupervised complex mutation and RSI remain denied.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus
 promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
