@@ -8,6 +8,8 @@
     "schema_version",
     "status",
     "mutation_class",
+    "proven_live_class",
+    "approved_mutation_class",
     "allowed_next_action",
     "safe_to_continue",
     "safe_to_request",
@@ -30,6 +32,8 @@
     "schema_version": { "const": "ao.foundry.pulse-event-loop-policy.v0.1" },
     "status": { "enum": ["ready", "blocked"] },
     "mutation_class": { "$ref": "#/$defs/mutation_class" },
+    "proven_live_class": { "$ref": "#/$defs/mutation_class_or_empty" },
+    "approved_mutation_class": { "$ref": "#/$defs/mutation_class_or_empty" },
     "allowed_next_action": { "enum": ["continue_next_slice", "stop_event_loop"] },
     "safe_to_continue": { "type": "boolean" },
     "safe_to_request": { "type": "boolean" },
@@ -39,23 +43,25 @@
       "enum": [
         "",
         "class_gate",
+        "promotion_state",
         "ci_status",
         "repo_cleanliness",
         "evidence_freshness",
         "sentinel_hold",
         "promoter_readiness",
+        "rollback_integrity",
         "branch_cleanup",
         "scope_boundary"
       ]
     },
     "required_checks": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 10,
       "items": { "type": "string", "minLength": 1 }
     },
     "source_evidence": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 1,
       "items": { "$ref": "#/$defs/source_evidence" }
     },
     "blocking_next_actions": {
@@ -74,6 +80,18 @@
   "$defs": {
     "mutation_class": {
       "enum": [
+        "docs_only_single_file",
+        "docs_only_multi_file",
+        "docs_config_only",
+        "test_only",
+        "low_risk_code",
+        "multi_repo_low_risk",
+        "complex_repo_mutation"
+      ]
+    },
+    "mutation_class_or_empty": {
+      "enum": [
+        "",
         "docs_only_single_file",
         "docs_only_multi_file",
         "docs_config_only",

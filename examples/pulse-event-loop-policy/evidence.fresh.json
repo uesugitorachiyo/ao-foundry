@@ -1,7 +1,7 @@
 {
   "schema_version": "ao.foundry.evidence-freshness.v0.1",
   "status": "fresh",
-  "mutation_class": "low_risk_code",
+  "mutation_class": "test_only",
   "stale_evidence": false,
   "max_age_hours": 24,
   "oldest_age_hours": 1

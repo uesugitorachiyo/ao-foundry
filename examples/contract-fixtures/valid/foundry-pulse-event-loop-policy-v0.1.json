@@ -1,79 +1,97 @@
 {
   "schema_version": "ao.foundry.pulse-event-loop-policy.v0.1",
   "status": "ready",
-  "mutation_class": "low_risk_code",
+  "mutation_class": "test_only",
+  "proven_live_class": "test_only",
+  "approved_mutation_class": "test_only",
   "allowed_next_action": "continue_next_slice",
   "safe_to_continue": true,
   "safe_to_request": true,
-  "safe_to_execute": false,
+  "safe_to_execute": true,
   "operator_prompt_required": false,
   "first_failing_check": "",
   "required_checks": [
     "class_gate",
+    "promotion_state",
     "ci_status",
     "repo_cleanliness",
     "evidence_freshness",
     "sentinel_hold",
     "promoter_readiness",
+    "rollback_integrity",
     "branch_cleanup",
     "scope_boundary"
   ],
   "source_evidence": [
     {
       "name": "class_gate",
-      "path": "examples/class-gate/gate.dry-run.low-risk-code.json",
+      "path": "examples/class-gate/gate.ready.test-only.json",
       "schema_version": "ao.foundry.mutation-class-gate.v0.1",
       "status": "ready",
       "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "name": "promotion_state",
+      "path": "examples/pulse-event-loop-policy/promotion-state.proven-test-only.json",
+      "schema_version": "ao.foundry.mutation-class-promotion-state.v0.1",
+      "status": "ready",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
     },
     {
       "name": "ci_status",
       "path": "examples/pulse-event-loop-policy/ci.passed.json",
       "schema_version": "ao.foundry.ci-readiness.v0.1",
       "status": "passed",
-      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
     },
     {
       "name": "repo_cleanliness",
       "path": "examples/pulse-event-loop-policy/repo.clean.json",
       "schema_version": "ao.foundry.repo-cleanliness.v0.1",
       "status": "clean",
-      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
     },
     {
       "name": "evidence_freshness",
       "path": "examples/pulse-event-loop-policy/evidence.fresh.json",
       "schema_version": "ao.foundry.evidence-freshness.v0.1",
       "status": "fresh",
-      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
     {
       "name": "sentinel_hold",
       "path": "examples/pulse-event-loop-policy/sentinel.no-hold.json",
       "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
       "status": "no_hold",
-      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
     },
     {
       "name": "promoter_readiness",
       "path": "examples/pulse-event-loop-policy/promoter.ready.json",
       "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
       "status": "ready",
-      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "name": "rollback_integrity",
+      "path": "examples/pulse-event-loop-policy/rollback.passed.json",
+      "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+      "status": "passed",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
     },
     {
       "name": "branch_cleanup",
       "path": "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
       "schema_version": "ao.foundry.branch-cleanup.v0.1",
       "status": "passed",
-      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
     },
     {
       "name": "scope_boundary",
       "path": "examples/pulse-event-loop-policy/scope.passed.json",
       "schema_version": "ao.foundry.scope-boundary.v0.1",
       "status": "passed",
-      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
     }
   ],
   "blocking_next_actions": [],

@@ -4841,12 +4841,14 @@ func TestPulseEventLoopPolicyAllowsNextSliceWhenApprovedAndGatesPass(t *testing.
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{
 		"pulse", "event-loop-policy",
-		"--class-gate", "examples/class-gate/gate.dry-run.low-risk-code.json",
+		"--class-gate", "examples/class-gate/gate.ready.test-only.json",
+		"--promotion-state", "examples/pulse-event-loop-policy/promotion-state.proven-test-only.json",
 		"--ci", "examples/pulse-event-loop-policy/ci.passed.json",
 		"--repo-state", "examples/pulse-event-loop-policy/repo.clean.json",
 		"--evidence-freshness", "examples/pulse-event-loop-policy/evidence.fresh.json",
 		"--sentinel", "examples/pulse-event-loop-policy/sentinel.no-hold.json",
 		"--promoter", "examples/pulse-event-loop-policy/promoter.ready.json",
+		"--rollback", "examples/pulse-event-loop-policy/rollback.passed.json",
 		"--branch-cleanup", "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
 		"--scope", "examples/pulse-event-loop-policy/scope.passed.json",
 		"--out", outPath,
@@ -4858,13 +4860,15 @@ func TestPulseEventLoopPolicyAllowsNextSliceWhenApprovedAndGatesPass(t *testing.
 	result := readObjectFixture(t, outPath)
 	if result["schema_version"] != "ao.foundry.pulse-event-loop-policy.v0.1" ||
 		result["status"] != "ready" ||
-		result["mutation_class"] != "low_risk_code" ||
+		result["mutation_class"] != "test_only" ||
+		result["proven_live_class"] != "test_only" ||
+		result["approved_mutation_class"] != "test_only" ||
 		result["allowed_next_action"] != "continue_next_slice" ||
 		result["first_failing_check"] != "" {
 		t.Fatalf("unexpected event-loop policy result: %#v", result)
 	}
-	if result["safe_to_continue"] != true || result["safe_to_request"] != true || result["safe_to_execute"] != false {
-		t.Fatalf("policy did not preserve request/execute boundary: %#v", result)
+	if result["safe_to_continue"] != true || result["safe_to_request"] != true || result["safe_to_execute"] != true {
+		t.Fatalf("policy did not require proven-class execution authority: %#v", result)
 	}
 	for _, field := range []string{"operator_prompt_required", "schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
 		if result[field] != false {
@@ -4878,12 +4882,14 @@ func TestPulseEventLoopPolicyAllowsNextSliceWhenApprovedAndGatesPass(t *testing.
 
 func TestPulseEventLoopPolicyStopsOnRequiredBlockers(t *testing.T) {
 	base := map[string]string{
-		"class-gate":         "examples/class-gate/gate.dry-run.low-risk-code.json",
+		"class-gate":         "examples/class-gate/gate.ready.test-only.json",
+		"promotion-state":    "examples/pulse-event-loop-policy/promotion-state.proven-test-only.json",
 		"ci":                 "examples/pulse-event-loop-policy/ci.passed.json",
 		"repo-state":         "examples/pulse-event-loop-policy/repo.clean.json",
 		"evidence-freshness": "examples/pulse-event-loop-policy/evidence.fresh.json",
 		"sentinel":           "examples/pulse-event-loop-policy/sentinel.no-hold.json",
 		"promoter":           "examples/pulse-event-loop-policy/promoter.ready.json",
+		"rollback":           "examples/pulse-event-loop-policy/rollback.passed.json",
 		"branch-cleanup":     "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
 		"scope":              "examples/pulse-event-loop-policy/scope.passed.json",
 	}
@@ -4893,12 +4899,14 @@ func TestPulseEventLoopPolicyStopsOnRequiredBlockers(t *testing.T) {
 		fixture   string
 		wantCheck string
 	}{
-		{name: "class_gate", flag: "class-gate", fixture: "examples/class-gate/gate.blocked.low-risk-code.json", wantCheck: "class_gate"},
+		{name: "class_gate", flag: "class-gate", fixture: "examples/class-gate/gate.dry-run.low-risk-code.json", wantCheck: "class_gate"},
+		{name: "class_jump", flag: "promotion-state", fixture: "examples/pulse-event-loop-policy/promotion-state.class-jump.json", wantCheck: "promotion_state"},
 		{name: "failing_ci", flag: "ci", fixture: "examples/pulse-event-loop-policy/ci.failed.json", wantCheck: "ci_status"},
 		{name: "dirty_repo", flag: "repo-state", fixture: "examples/pulse-event-loop-policy/repo.dirty.json", wantCheck: "repo_cleanliness"},
 		{name: "stale_evidence", flag: "evidence-freshness", fixture: "examples/pulse-event-loop-policy/evidence.stale.json", wantCheck: "evidence_freshness"},
 		{name: "sentinel_hold", flag: "sentinel", fixture: "examples/pulse-event-loop-policy/sentinel.hold.json", wantCheck: "sentinel_hold"},
 		{name: "promoter_denial", flag: "promoter", fixture: "examples/pulse-event-loop-policy/promoter.denied.json", wantCheck: "promoter_readiness"},
+		{name: "rollback_failure", flag: "rollback", fixture: "examples/pulse-event-loop-policy/rollback.failed.json", wantCheck: "rollback_integrity"},
 		{name: "branch_cleanup_failure", flag: "branch-cleanup", fixture: "examples/pulse-event-loop-policy/branch-cleanup.failed.json", wantCheck: "branch_cleanup"},
 		{name: "broadened_scope", flag: "scope", fixture: "examples/pulse-event-loop-policy/scope.broadened.json", wantCheck: "scope_boundary"},
 	} {
@@ -4910,7 +4918,7 @@ func TestPulseEventLoopPolicyStopsOnRequiredBlockers(t *testing.T) {
 			paths[tc.flag] = tc.fixture
 			outPath := filepath.Join(t.TempDir(), "pulse-event-loop-policy.json")
 			args := []string{"pulse", "event-loop-policy"}
-			for _, flag := range []string{"class-gate", "ci", "repo-state", "evidence-freshness", "sentinel", "promoter", "branch-cleanup", "scope"} {
+			for _, flag := range []string{"class-gate", "promotion-state", "ci", "repo-state", "evidence-freshness", "sentinel", "promoter", "rollback", "branch-cleanup", "scope"} {
 				args = append(args, "--"+flag, paths[flag])
 			}
 			args = append(args, "--out", outPath)

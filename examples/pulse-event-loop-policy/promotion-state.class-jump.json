@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.foundry.mutation-class-promotion-state.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "proven_live_class": "test_only",
+  "approved_mutation_class": "low_risk_code",
+  "live_evidence_merged": true,
+  "promotion_evidence_present": false,
+  "class_jump_requested": true,
+  "operator_prompt_required": false,
+  "denied_next_classes": {
+    "low_risk_code": "denied because the policy state proves only test_only"
+  }
+}

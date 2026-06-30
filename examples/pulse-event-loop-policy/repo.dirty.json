@@ -1,7 +1,7 @@
 {
   "schema_version": "ao.foundry.repo-cleanliness.v0.1",
   "status": "blocked",
-  "mutation_class": "low_risk_code",
+  "mutation_class": "test_only",
   "dirty_repo": true,
   "main_synced": true,
   "stale_codex_branches": false
