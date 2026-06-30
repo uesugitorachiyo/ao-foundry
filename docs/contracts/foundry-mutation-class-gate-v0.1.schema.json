@@ -174,16 +174,21 @@
         "additionalProperties": false,
         "required": [
           "repo",
+          "order",
+          "planned_pr",
           "status",
           "execution_status",
           "write_scope",
           "rollback_scope",
           "rollback_required",
           "rollback_status",
-          "depends_on"
+          "depends_on",
+          "merge_after"
         ],
         "properties": {
           "repo": { "type": "string", "minLength": 1 },
+          "order": { "type": "integer", "minimum": 1 },
+          "planned_pr": { "type": "string", "minLength": 1 },
           "status": { "enum": ["ready"] },
           "execution_status": { "enum": ["sequenced_dry_run_only", "ready_to_execute"] },
           "write_scope": {
@@ -199,6 +204,10 @@
           "rollback_required": { "const": true },
           "rollback_status": { "enum": ["ready"] },
           "depends_on": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "merge_after": {
             "type": "array",
             "items": { "type": "string", "minLength": 1 }
           }
