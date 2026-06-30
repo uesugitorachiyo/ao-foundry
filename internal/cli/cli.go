@@ -201,25 +201,26 @@ type AtlasStatus struct {
 }
 
 type MutationClassGate struct {
-	SchemaVersion       string                       `json:"schema_version"`
-	Status              string                       `json:"status"`
-	MutationClass       string                       `json:"mutation_class"`
-	SafeToRequest       bool                         `json:"safe_to_request"`
-	SafeToExecute       bool                         `json:"safe_to_execute"`
-	FirstFailingCheck   string                       `json:"first_failing_check"`
-	RequiredEvidence    []string                     `json:"required_evidence"`
-	SourceEvidence      []MutationClassGateEvidence  `json:"source_evidence"`
-	ClassBoundaryChecks *MutationClassBoundaryChecks `json:"class_boundary_checks,omitempty"`
-	DeniedClasses       []string                     `json:"denied_classes"`
-	AuthorityBoundary   string                       `json:"authority_boundary"`
-	NextActions         []string                     `json:"next_actions"`
-	DenialAudit         *LowRiskCodeDenialAudit      `json:"denial_audit,omitempty"`
-	RepoExecutionPlan   []MutationClassRepoState     `json:"repo_execution_plan,omitempty"`
-	RepoSafety          *MutationClassRepoSafety     `json:"repo_safety,omitempty"`
-	SchedulesWork       bool                         `json:"schedules_work"`
-	ExecutesWork        bool                         `json:"executes_work"`
-	ApprovesWork        bool                         `json:"approves_work"`
-	MutatesRepositories bool                         `json:"mutates_repositories"`
+	SchemaVersion         string                          `json:"schema_version"`
+	Status                string                          `json:"status"`
+	MutationClass         string                          `json:"mutation_class"`
+	SafeToRequest         bool                            `json:"safe_to_request"`
+	SafeToExecute         bool                            `json:"safe_to_execute"`
+	FirstFailingCheck     string                          `json:"first_failing_check"`
+	RequiredEvidence      []string                        `json:"required_evidence"`
+	SourceEvidence        []MutationClassGateEvidence     `json:"source_evidence"`
+	ClassBoundaryChecks   *MutationClassBoundaryChecks    `json:"class_boundary_checks,omitempty"`
+	DeniedClasses         []string                        `json:"denied_classes"`
+	AuthorityBoundary     string                          `json:"authority_boundary"`
+	NextActions           []string                        `json:"next_actions"`
+	DenialAudit           *LowRiskCodeDenialAudit         `json:"denial_audit,omitempty"`
+	LiveRehearsalDecision *MultiRepoLiveRehearsalDecision `json:"live_rehearsal_decision,omitempty"`
+	RepoExecutionPlan     []MutationClassRepoState        `json:"repo_execution_plan,omitempty"`
+	RepoSafety            *MutationClassRepoSafety        `json:"repo_safety,omitempty"`
+	SchedulesWork         bool                            `json:"schedules_work"`
+	ExecutesWork          bool                            `json:"executes_work"`
+	ApprovesWork          bool                            `json:"approves_work"`
+	MutatesRepositories   bool                            `json:"mutates_repositories"`
 }
 
 type LowRiskCodeDenialAudit struct {
@@ -238,6 +239,26 @@ type LowRiskCodeDenialAudit struct {
 	CIRequirements                  []string `json:"ci_requirements"`
 	ExactNextAction                 string   `json:"exact_next_action"`
 	DenialReason                    string   `json:"denial_reason"`
+}
+
+type MultiRepoLiveRehearsalDecision struct {
+	SchemaVersion                string   `json:"schema_version"`
+	Status                       string   `json:"status"`
+	MutationClass                string   `json:"mutation_class"`
+	CurrentClass                 string   `json:"current_class"`
+	NextClass                    string   `json:"next_class"`
+	CurrentProvenLiveClass       string   `json:"current_proven_live_class"`
+	LowerClassLiveEvidenceStatus string   `json:"lower_class_live_evidence_status"`
+	SafeToRequest                bool     `json:"safe_to_request"`
+	SafeToExecute                bool     `json:"safe_to_execute"`
+	LiveExecutionAuthority       bool     `json:"live_execution_authority"`
+	MissingEvidence              []string `json:"missing_evidence"`
+	DenialReason                 string   `json:"denial_reason"`
+	ExactNextAction              string   `json:"exact_next_action"`
+	RepoExecutionPolicy          string   `json:"repo_execution_policy"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	MutatesRepositories          bool     `json:"mutates_repositories"`
 }
 
 type MutationClassGateEvidence struct {
@@ -2115,6 +2136,7 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 				blockers = append(blockers, evaluateMultiRepoAuthorityEvidence(repoPlan, documents["rollback_proof"], documents["ci_passed"])...)
 			}
 		}
+		gate.LiveRehearsalDecision = multiRepoLiveRehearsalDecision(documents["command_readback"], len(blockers) == 0)
 		if len(blockers) == 0 {
 			gate.Status = "ready"
 			gate.SafeToRequest = true
@@ -2133,6 +2155,49 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	gate.FirstFailingCheck = blockers[0]
 	gate.NextActions = blockers
 	return gate, nil
+}
+
+func multiRepoLiveRehearsalDecision(command map[string]any, safeToRequest bool) *MultiRepoLiveRehearsalDecision {
+	currentClass := classGateFirstNonEmpty(classGateString(command, "current_class"), "low_risk_code")
+	nextClass := classGateFirstNonEmpty(classGateString(command, "next_class"), "multi_repo_low_risk")
+	provenClass := classGateFirstNonEmpty(classGateString(command, "highest_proven_live_class"), "test_only")
+	lowerEvidenceStatus := classGateFirstNonEmpty(classGateString(command, "low_risk_code_live_evidence_status"), "missing")
+	denialReason := classGateFirstNonEmpty(classGateString(command, "next_denied_reason"), "denied until low_risk_code live rehearsal evidence is recorded")
+	return &MultiRepoLiveRehearsalDecision{
+		SchemaVersion:                "ao.foundry.multi-repo-live-rehearsal-decision.v0.1",
+		Status:                       "denied",
+		MutationClass:                "multi_repo_low_risk",
+		CurrentClass:                 currentClass,
+		NextClass:                    nextClass,
+		CurrentProvenLiveClass:       provenClass,
+		LowerClassLiveEvidenceStatus: lowerEvidenceStatus,
+		SafeToRequest:                safeToRequest,
+		SafeToExecute:                false,
+		LiveExecutionAuthority:       false,
+		MissingEvidence: []string{
+			"low_risk_code_live_success",
+			"rollback_proof:low_risk_code_live",
+			"sentinel_no_hold:low_risk_code_live",
+			"promoter_promotion:low_risk_code_live",
+			"command_readback:low_risk_code_live",
+			"clean_main_ci:low_risk_code_live",
+		},
+		DenialReason:        denialReason,
+		ExactNextAction:     "complete_low_risk_code_live_rehearsal_before_multi_repo_live",
+		RepoExecutionPolicy: "sequenced_dry_run_only",
+		SchedulesWork:       false,
+		ExecutesWork:        false,
+		MutatesRepositories: false,
+	}
+}
+
+func classGateFirstNonEmpty(values ...string) string {
+	for _, value := range values {
+		if strings.TrimSpace(value) != "" {
+			return value
+		}
+	}
+	return ""
 }
 
 func evaluateLowRiskCodeBoundaryChecks(documents map[string]map[string]any, testOnlySuccessReady bool) (*MutationClassBoundaryChecks, []string) {

@@ -166,6 +166,52 @@
         "denial_reason": { "type": "string", "minLength": 1 }
       }
     },
+    "live_rehearsal_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "mutation_class",
+        "current_class",
+        "next_class",
+        "current_proven_live_class",
+        "lower_class_live_evidence_status",
+        "safe_to_request",
+        "safe_to_execute",
+        "live_execution_authority",
+        "missing_evidence",
+        "denial_reason",
+        "exact_next_action",
+        "repo_execution_policy",
+        "schedules_work",
+        "executes_work",
+        "mutates_repositories"
+      ],
+      "properties": {
+        "schema_version": { "const": "ao.foundry.multi-repo-live-rehearsal-decision.v0.1" },
+        "status": { "const": "denied" },
+        "mutation_class": { "const": "multi_repo_low_risk" },
+        "current_class": { "const": "low_risk_code" },
+        "next_class": { "const": "multi_repo_low_risk" },
+        "current_proven_live_class": { "$ref": "#/$defs/mutation_class" },
+        "lower_class_live_evidence_status": { "type": "string", "minLength": 1 },
+        "safe_to_request": { "type": "boolean" },
+        "safe_to_execute": { "const": false },
+        "live_execution_authority": { "const": false },
+        "missing_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "denial_reason": { "type": "string", "minLength": 1 },
+        "exact_next_action": { "const": "complete_low_risk_code_live_rehearsal_before_multi_repo_live" },
+        "repo_execution_policy": { "const": "sequenced_dry_run_only" },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "mutates_repositories": { "const": false }
+      }
+    },
     "repo_execution_plan": {
       "type": "array",
       "minItems": 2,

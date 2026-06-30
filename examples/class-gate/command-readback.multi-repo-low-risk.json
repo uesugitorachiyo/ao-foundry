@@ -5,6 +5,12 @@
   "mutation_class": "multi_repo_low_risk",
   "current_class": "low_risk_code",
   "next_class": "multi_repo_low_risk",
+  "highest_proven_live_class": "test_only",
+  "low_risk_code_live_evidence_status": "missing",
+  "next_denied_class": "multi_repo_low_risk",
+  "next_denied_reason": "denied until low_risk_code live rehearsal evidence is recorded",
+  "safe_to_request": true,
+  "safe_to_execute": false,
   "required_evidence": [
     "low_risk_code_live_success",
     "multi_repo_sequencing_plan",

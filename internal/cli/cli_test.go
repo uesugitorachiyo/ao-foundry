@@ -5539,6 +5539,44 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 	if !strings.Contains(fmt.Sprint(gate["repo_safety"]), "prevent_concurrent_unsafe_execution") {
 		t.Fatalf("multi_repo_low_risk gate must record unsafe concurrency prevention: %#v", gate["repo_safety"])
 	}
+	decision, ok := gate["live_rehearsal_decision"].(map[string]any)
+	if !ok {
+		t.Fatalf("multi_repo_low_risk gate must include live rehearsal denial readback: %#v", gate)
+	}
+	if decision["status"] != "denied" ||
+		decision["mutation_class"] != "multi_repo_low_risk" ||
+		decision["current_proven_live_class"] != "test_only" ||
+		decision["lower_class_live_evidence_status"] != "missing" ||
+		decision["safe_to_request"] != true ||
+		decision["safe_to_execute"] != false ||
+		decision["live_execution_authority"] != false ||
+		decision["exact_next_action"] != "complete_low_risk_code_live_rehearsal_before_multi_repo_live" ||
+		decision["repo_execution_policy"] != "sequenced_dry_run_only" {
+		t.Fatalf("multi_repo_low_risk live rehearsal denial readback drifted: %#v", decision)
+	}
+	for _, want := range []string{
+		"low_risk_code_live_success",
+		"rollback_proof:low_risk_code_live",
+		"sentinel_no_hold:low_risk_code_live",
+		"promoter_promotion:low_risk_code_live",
+		"command_readback:low_risk_code_live",
+		"clean_main_ci:low_risk_code_live",
+	} {
+		if !objectStringSliceContains(decision, "missing_evidence", want) {
+			t.Fatalf("multi_repo_low_risk denial readback missing %s: %#v", want, decision)
+		}
+	}
+	schema, err := readArbitraryJSON("docs/contracts/foundry-mutation-class-gate-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read class gate schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("class gate schema is not an object: %#v", schema)
+	}
+	if err := validateJSONSchemaValue(root, root, gate, "$"); err != nil {
+		t.Fatalf("multi_repo_low_risk gate should validate against class gate schema: %v", err)
+	}
 
 	blockedOut := filepath.Join(t.TempDir(), "class-gate-blocked.json")
 	stdout.Reset()
