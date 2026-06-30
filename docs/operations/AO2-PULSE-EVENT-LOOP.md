@@ -135,6 +135,30 @@ is not being started. It does not start a loop or mutate repositories.
 ready for local smoke runs, but production overnight operation should pass the
 freshly generated gate result for the current intake and lifecycle state.
 
+The class-aware continuation policy is the next read-only stop line after the
+class gate:
+
+```sh
+go run ./cmd/foundry pulse event-loop-policy \
+  --class-gate examples/class-gate/gate.dry-run.low-risk-code.json \
+  --ci examples/pulse-event-loop-policy/ci.passed.json \
+  --repo-state examples/pulse-event-loop-policy/repo.clean.json \
+  --evidence-freshness examples/pulse-event-loop-policy/evidence.fresh.json \
+  --sentinel examples/pulse-event-loop-policy/sentinel.no-hold.json \
+  --promoter examples/pulse-event-loop-policy/promoter.ready.json \
+  --branch-cleanup examples/pulse-event-loop-policy/branch-cleanup.passed.json \
+  --scope examples/pulse-event-loop-policy/scope.passed.json \
+  --out tmp/pulse-event-loop-policy.json
+```
+
+It emits `ao.foundry.pulse-event-loop-policy.v0.1` and allows
+`continue_next_slice` only when the class gate, CI, repo cleanliness, evidence
+freshness, Sentinel, Promoter, branch cleanup, and scope boundary are all ready
+for the same mutation class. It stops on failing CI, dirty repos, stale
+evidence, Sentinel holds, Promoter denial, branch cleanup failure, or broadened
+scope. It carries the class gate's `safe_to_execute` value forward and does not
+schedule work, open PRs, merge PRs, call providers, or mutate repositories.
+
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the
 `bounded_governed_rsi` claim, then AO Command RSI health and AO Covenant retain
