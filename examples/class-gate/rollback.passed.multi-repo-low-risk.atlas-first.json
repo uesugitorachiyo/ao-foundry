@@ -1,0 +1,21 @@
+{
+  "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+  "status": "passed",
+  "mutation_class": "multi_repo_low_risk",
+  "per_repo_rollback": [
+    {
+      "repo": "ao-command",
+      "rollback_scope": [
+        "repo:ao-command:internal/cli/cli_test.go"
+      ],
+      "status": "ready"
+    },
+    {
+      "repo": "ao-foundry",
+      "rollback_scope": [
+        "repo:ao-foundry:internal/cli/cli_test.go"
+      ],
+      "status": "ready"
+    }
+  ]
+}

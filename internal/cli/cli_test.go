@@ -5723,12 +5723,12 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
 	}
 	gate := readObjectFixture(t, outPath)
-	if gate["status"] != "ready" ||
+	if gate["status"] != "blocked" ||
 		gate["mutation_class"] != "multi_repo_low_risk" ||
-		gate["safe_to_request"] != true ||
+		gate["safe_to_request"] != false ||
 		gate["safe_to_execute"] != false ||
-		gate["first_failing_check"] != "" {
-		t.Fatalf("multi_repo_low_risk dry-run gate should be requestable but not executable: %#v", gate)
+		gate["first_failing_check"] != "low_risk_code_live_success evidence is required for multi_repo_low_risk" {
+		t.Fatalf("multi_repo_low_risk gate should fail closed without low_risk_code prerequisite evidence: %#v", gate)
 	}
 	if !strings.Contains(fmt.Sprint(gate["required_evidence"]), "multi_repo_sequencing_plan") {
 		t.Fatalf("multi_repo_low_risk gate must require sequencing plan evidence: %#v", gate["required_evidence"])
@@ -5751,7 +5751,7 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		decision["mutation_class"] != "multi_repo_low_risk" ||
 		decision["current_proven_live_class"] != "test_only" ||
 		decision["lower_class_live_evidence_status"] != "missing" ||
-		decision["safe_to_request"] != true ||
+		decision["safe_to_request"] != false ||
 		decision["safe_to_execute"] != false ||
 		decision["live_execution_authority"] != false ||
 		decision["exact_next_action"] != "complete_low_risk_code_live_rehearsal_before_multi_repo_live" ||
@@ -5782,6 +5782,7 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		t.Fatalf("multi_repo_low_risk gate should validate against class gate schema: %v", err)
 	}
 
+	liveSuccess := writeLowRiskCodeLiveSuccessFixture(t, t.TempDir(), nil)
 	blockedOut := filepath.Join(t.TempDir(), "class-gate-blocked.json")
 	stdout.Reset()
 	stderr.Reset()
@@ -5795,6 +5796,7 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
 		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
 		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.unsafe-concurrent.json",
+		"--low-risk-code-live-success", liveSuccess,
 		"--out", blockedOut,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -5821,6 +5823,7 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
 		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
 		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.unordered-dependency.json",
+		"--low-risk-code-live-success", liveSuccess,
 		"--out", unorderedOut,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -5884,6 +5887,7 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 				"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
 				"--ci", tc.ci,
 				"--multi-repo-plan", tc.planPath,
+				"--low-risk-code-live-success", liveSuccess,
 				"--out", out,
 			}, &stdout, &stderr)
 			if code != 0 {
@@ -5895,6 +5899,153 @@ func TestMutationClassGateMultiRepoLowRiskDryRunRequiresSafeSequencedPlan(t *tes
 				blocked["safe_to_execute"] != false ||
 				!strings.Contains(fmt.Sprint(blocked["first_failing_check"]), tc.wantReason) {
 				t.Fatalf("%s must fail closed with %q: %#v", tc.name, tc.wantReason, blocked)
+			}
+		})
+	}
+}
+
+func TestMutationClassGateMultiRepoLowRiskAcceptsLowRiskLivePrerequisite(t *testing.T) {
+	dir := t.TempDir()
+	liveSuccess := writeLowRiskCodeLiveSuccessFixture(t, dir, nil)
+	outPath := filepath.Join(dir, "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+		"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+		"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+		"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+		"--rollback", "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+		"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+		"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+		"--multi-repo-plan", "examples/class-gate/multi-repo-plan.safe.json",
+		"--low-risk-code-live-success", liveSuccess,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate failed: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "ready" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != true {
+		t.Fatalf("accepted low_risk_code live prerequisite should unlock exact multi_repo_low_risk execution request: %#v", gate)
+	}
+	if !objectStringSliceContains(gate, "required_evidence", "low_risk_code_live_success") {
+		t.Fatalf("multi_repo_low_risk gate must record low_risk_code_live_success requirement: %#v", gate["required_evidence"])
+	}
+	decision := gate["live_rehearsal_decision"].(map[string]any)
+	if decision["status"] != "accepted" ||
+		decision["current_proven_live_class"] != "low_risk_code" ||
+		decision["lower_class_live_evidence_status"] != "accepted" ||
+		decision["safe_to_request"] != true ||
+		decision["safe_to_execute"] != true ||
+		decision["live_execution_authority"] != true ||
+		len(decision["missing_evidence"].([]any)) != 0 ||
+		decision["exact_next_action"] != "request_repo_one_multi_repo_low_risk_live_rehearsal" {
+		t.Fatalf("multi_repo_low_risk accepted decision drifted: %#v", decision)
+	}
+	schema := readObjectFixture(t, "docs/contracts/foundry-mutation-class-gate-v0.1.schema.json")
+	if err := validateJSONSchemaValue(schema, schema, gate, "$"); err != nil {
+		t.Fatalf("accepted multi_repo_low_risk gate should validate against class gate schema: %v", err)
+	}
+}
+
+func TestMutationClassGateMultiRepoLowRiskPrerequisiteFailsClosed(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		mutate func(map[string]any)
+		want   string
+	}{
+		{
+			name: "missing_ci",
+			mutate: func(success map[string]any) {
+				success["ci_evidence"] = map[string]any{"status": "missing"}
+			},
+			want: "low_risk_code_live_success requires clean main CI evidence",
+		},
+		{
+			name: "missing_rollback",
+			mutate: func(success map[string]any) {
+				success["rollback_proof"] = map[string]any{"status": "missing"}
+			},
+			want: "low_risk_code_live_success requires rollback proof",
+		},
+		{
+			name: "missing_sentinel",
+			mutate: func(success map[string]any) {
+				success["sentinel_verdict"] = map[string]any{"status": "hold"}
+			},
+			want: "low_risk_code_live_success requires Sentinel no-hold evidence",
+		},
+		{
+			name: "missing_promoter",
+			mutate: func(success map[string]any) {
+				success["promoter_verdict"] = map[string]any{"status": "blocked"}
+			},
+			want: "low_risk_code_live_success requires Promoter class-boundary evidence",
+		},
+		{
+			name: "missing_command_readback",
+			mutate: func(success map[string]any) {
+				success["command_readback"] = map[string]any{"status": "blocked"}
+			},
+			want: "low_risk_code_live_success requires Command readback",
+		},
+		{
+			name: "wrong_class",
+			mutate: func(success map[string]any) {
+				success["mutation_class"] = "multi_repo_low_risk"
+			},
+			want: "low_risk_code_live_success mutation_class must be low_risk_code",
+		},
+		{
+			name: "stale_digest",
+			mutate: func(success map[string]any) {
+				success["source_artifacts"] = []any{
+					map[string]any{
+						"name":   "final_live_rehearsal_evidence",
+						"path":   "source.json",
+						"sha256": strings.Repeat("0", 64),
+					},
+				}
+			},
+			want: "low_risk_code_live_success source artifact digest mismatch",
+		},
+		{
+			name: "wrong_scope",
+			mutate: func(success map[string]any) {
+				success["changed_files"] = []any{"internal/atlas/validate.go", "go.mod"}
+			},
+			want: "low_risk_code_live_success scope must match AO Atlas PR #37",
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			dir := t.TempDir()
+			liveSuccess := writeLowRiskCodeLiveSuccessFixture(t, dir, tc.mutate)
+			outPath := filepath.Join(dir, "class-gate.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"class-gate", "evaluate",
+				"--atlas", "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+				"--covenant", "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+				"--sentinel", "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+				"--promoter", "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+				"--rollback", "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+				"--command", "examples/class-gate/command-readback.multi-repo-low-risk.json",
+				"--ci", "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+				"--multi-repo-plan", "examples/class-gate/multi-repo-plan.safe.json",
+				"--low-risk-code-live-success", liveSuccess,
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked class gate should still emit a decision, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			gate := readObjectFixture(t, outPath)
+			if gate["status"] != "blocked" ||
+				gate["safe_to_execute"] != false ||
+				!strings.Contains(fmt.Sprint(gate["first_failing_check"]), tc.want) {
+				t.Fatalf("%s must fail closed with %q: %#v", tc.name, tc.want, gate)
 			}
 		})
 	}
@@ -7193,6 +7344,84 @@ func writeLowRiskLiveDownstreamProofFixture(t *testing.T, path string, schemaVer
 			},
 		},
 	})
+}
+
+func writeLowRiskCodeLiveSuccessFixture(t *testing.T, dir string, mutate func(map[string]any)) string {
+	t.Helper()
+	sourcePath := filepath.Join(dir, "source.json")
+	writeJSONFixtureForTest(t, sourcePath, map[string]any{
+		"schema_version": "ao.foundry.low-risk-code-live-rehearsal-final.v0.1",
+		"status":         "merged",
+		"mutation_class": "low_risk_code",
+		"pull_request": map[string]any{
+			"repo":         "ao-atlas",
+			"number":       37,
+			"merge_commit": "a6aee5621dd367a7169f099a87050f1cbd0f88da",
+			"state":        "merged",
+		},
+		"scope": map[string]any{
+			"changed_files": []string{"internal/atlas/validate.go"},
+		},
+	})
+	success := map[string]any{
+		"schema_version":      "ao.foundry.low-risk-code-live-success-readback.v0.1",
+		"status":              "accepted",
+		"mutation_class":      "low_risk_code",
+		"proven_live_class":   "low_risk_code",
+		"repo":                "ao-atlas",
+		"pull_request":        "https://github.com/uesugitorachiyo/ao-atlas/pull/37",
+		"pull_request_number": float64(37),
+		"base_branch":         "main",
+		"work_branch":         "codex/low-risk-code-rehearsal-one",
+		"merge_commit":        "a6aee5621dd367a7169f099a87050f1cbd0f88da",
+		"merge_state":         "merged",
+		"changed_files":       []any{"internal/atlas/validate.go"},
+		"file_allowlist":      []any{"internal/atlas/validate.go"},
+		"ci_evidence": map[string]any{
+			"status": "passed",
+			"checks": []any{"macos-latest", "ubuntu-latest", "windows-latest"},
+		},
+		"rollback_proof": map[string]any{
+			"status": "ready",
+			"mode":   "governed_revert_pr_after_merge",
+			"scope":  []any{"internal/atlas/validate.go"},
+		},
+		"sentinel_verdict": map[string]any{
+			"status":        "no_hold",
+			"hold_required": false,
+		},
+		"promoter_verdict": map[string]any{
+			"status":             "ready",
+			"promotion_boundary": "low_risk_code_to_multi_repo_low_risk",
+		},
+		"command_readback": map[string]any{
+			"status":          "ready",
+			"operator_mode":   "read_only",
+			"safe_to_execute": false,
+		},
+		"public_safety_scope": map[string]any{
+			"status":                     "passed",
+			"forbidden_surfaces_changed": false,
+			"dependencies_added":         false,
+		},
+		"source_artifacts": []any{
+			map[string]any{
+				"name":   "final_live_rehearsal_evidence",
+				"path":   sourcePath,
+				"sha256": fileSHA256HexForTest(t, sourcePath),
+			},
+		},
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}
+	if mutate != nil {
+		mutate(success)
+	}
+	path := filepath.Join(dir, "low-risk-live-success.json")
+	writeJSONFixtureForTest(t, path, success)
+	return path
 }
 
 func writeJSONFixtureForTest(t *testing.T, path string, value any) {

@@ -44,6 +44,8 @@ const (
 	classGateSchema            = "ao.foundry.mutation-class-gate.v0.1"
 )
 
+var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
+
 const liveEvidenceFreshnessWindow = 24 * time.Hour
 
 type Registry struct {
@@ -241,6 +243,7 @@ type MutationClassGate struct {
 	NextActions           []string                        `json:"next_actions"`
 	DenialAudit           *LowRiskCodeDenialAudit         `json:"denial_audit,omitempty"`
 	LiveRehearsalDecision *MultiRepoLiveRehearsalDecision `json:"live_rehearsal_decision,omitempty"`
+	LowRiskLiveSuccess    *LowRiskCodeLiveSuccessReadback `json:"low_risk_code_live_success,omitempty"`
 	RepoExecutionPlan     []MutationClassRepoState        `json:"repo_execution_plan,omitempty"`
 	RepoSafety            *MutationClassRepoSafety        `json:"repo_safety,omitempty"`
 	SchedulesWork         bool                            `json:"schedules_work"`
@@ -285,6 +288,22 @@ type MultiRepoLiveRehearsalDecision struct {
 	SchedulesWork                bool     `json:"schedules_work"`
 	ExecutesWork                 bool     `json:"executes_work"`
 	MutatesRepositories          bool     `json:"mutates_repositories"`
+}
+
+type LowRiskCodeLiveSuccessReadback struct {
+	SchemaVersion     string   `json:"schema_version"`
+	Status            string   `json:"status"`
+	MutationClass     string   `json:"mutation_class"`
+	ProvenLiveClass   string   `json:"proven_live_class"`
+	Repo              string   `json:"repo"`
+	PullRequest       string   `json:"pull_request"`
+	PullRequestNumber int      `json:"pull_request_number"`
+	BaseBranch        string   `json:"base_branch"`
+	WorkBranch        string   `json:"work_branch"`
+	MergeCommit       string   `json:"merge_commit"`
+	MergeState        string   `json:"merge_state"`
+	ChangedFiles      []string `json:"changed_files"`
+	FileAllowlist     []string `json:"file_allowlist"`
 }
 
 type MutationClassGateEvidence struct {
@@ -2004,6 +2023,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	ciPath := fs.String("ci", "", "CI status evidence")
 	testOnlySuccessPath := fs.String("test-only-success", "", "completed test_only live rehearsal evidence for low_risk_code dry-run readiness")
 	multiRepoPlanPath := fs.String("multi-repo-plan", "", "multi-repo low-risk sequencing and rollback plan evidence")
+	lowRiskCodeLiveSuccessPath := fs.String("low-risk-code-live-success", "", "completed low_risk_code live rehearsal success readback for multi_repo_low_risk readiness")
 	outPath := fs.String("out", "", "class gate output path")
 	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
 	if !parseFlags(fs, args, stderr) {
@@ -2021,15 +2041,16 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	gate, err := evaluateMutationClassGate(classGateEvidencePaths{
-		Atlas:           *atlasPath,
-		Covenant:        *covenantPath,
-		Sentinel:        *sentinelPath,
-		Promoter:        *promoterPath,
-		Rollback:        *rollbackPath,
-		Command:         *commandPath,
-		CI:              *ciPath,
-		TestOnlySuccess: *testOnlySuccessPath,
-		MultiRepoPlan:   *multiRepoPlanPath,
+		Atlas:                  *atlasPath,
+		Covenant:               *covenantPath,
+		Sentinel:               *sentinelPath,
+		Promoter:               *promoterPath,
+		Rollback:               *rollbackPath,
+		Command:                *commandPath,
+		CI:                     *ciPath,
+		TestOnlySuccess:        *testOnlySuccessPath,
+		MultiRepoPlan:          *multiRepoPlanPath,
+		LowRiskCodeLiveSuccess: *lowRiskCodeLiveSuccessPath,
 	})
 	if err != nil {
 		fmt.Fprintf(stderr, "class gate: %v\n", err)
@@ -2055,15 +2076,16 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 }
 
 type classGateEvidencePaths struct {
-	Atlas           string
-	Covenant        string
-	Sentinel        string
-	Promoter        string
-	Rollback        string
-	Command         string
-	CI              string
-	TestOnlySuccess string
-	MultiRepoPlan   string
+	Atlas                  string
+	Covenant               string
+	Sentinel               string
+	Promoter               string
+	Rollback               string
+	Command                string
+	CI                     string
+	TestOnlySuccess        string
+	MultiRepoPlan          string
+	LowRiskCodeLiveSuccess string
 }
 
 func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate, error) {
@@ -2147,8 +2169,24 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 		}
 	}
 	if className == "multi_repo_low_risk" {
-		requiredEvidence = append(requiredEvidence, "multi_repo_sequencing_plan", "per_repo_rollback", "ci_per_repo", "operator_kill_switch", "fresh_repo_state")
+		requiredEvidence = append(requiredEvidence, "low_risk_code_live_success", "multi_repo_sequencing_plan", "per_repo_rollback", "ci_per_repo", "operator_kill_switch", "fresh_repo_state")
 		gate.RequiredEvidence = requiredEvidence
+		lowRiskLiveReady := false
+		if strings.TrimSpace(paths.LowRiskCodeLiveSuccess) == "" {
+			blockers = append(blockers, "low_risk_code_live_success evidence is required for multi_repo_low_risk")
+		} else {
+			evidence, success, blocker, err := evaluateLowRiskCodeLiveSuccessEvidence(paths.LowRiskCodeLiveSuccess)
+			if err != nil {
+				return gate, err
+			}
+			gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+			gate.LowRiskLiveSuccess = success
+			if blocker != "" {
+				blockers = append(blockers, blocker)
+			} else {
+				lowRiskLiveReady = true
+			}
+		}
 		if strings.TrimSpace(paths.MultiRepoPlan) == "" {
 			blockers = append(blockers, "multi_repo_sequencing_plan evidence is required for multi_repo_low_risk")
 		} else {
@@ -2165,12 +2203,16 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 				blockers = append(blockers, evaluateMultiRepoAuthorityEvidence(repoPlan, documents["rollback_proof"], documents["ci_passed"])...)
 			}
 		}
-		gate.LiveRehearsalDecision = multiRepoLiveRehearsalDecision(documents["command_readback"], len(blockers) == 0)
+		gate.LiveRehearsalDecision = multiRepoLiveRehearsalDecision(documents["command_readback"], len(blockers) == 0, lowRiskLiveReady)
 		if len(blockers) == 0 {
 			gate.Status = "ready"
 			gate.SafeToRequest = true
-			gate.SafeToExecute = false
-			gate.NextActions = []string{"Request multi_repo_low_risk dry-run sequencing only; live multi-repo execution remains denied until per-repo live evidence, rollback, CI, Sentinel, Promoter, and Command readback pass."}
+			gate.SafeToExecute = lowRiskLiveReady
+			if lowRiskLiveReady {
+				gate.NextActions = []string{"Repo-one multi_repo_low_risk live rehearsal is ready for the exact approved candidate; do not execute without the operator prompt that explicitly authorizes that live step."}
+			} else {
+				gate.NextActions = []string{"Request multi_repo_low_risk dry-run sequencing only; live multi-repo execution remains denied until per-repo live evidence, rollback, CI, Sentinel, Promoter, and Command readback pass."}
+			}
 			return gate, nil
 		}
 	}
@@ -2186,37 +2228,48 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 	return gate, nil
 }
 
-func multiRepoLiveRehearsalDecision(command map[string]any, safeToRequest bool) *MultiRepoLiveRehearsalDecision {
+func multiRepoLiveRehearsalDecision(command map[string]any, safeToRequest bool, lowRiskLiveReady bool) *MultiRepoLiveRehearsalDecision {
 	currentClass := classGateFirstNonEmpty(classGateString(command, "current_class"), "low_risk_code")
 	nextClass := classGateFirstNonEmpty(classGateString(command, "next_class"), "multi_repo_low_risk")
 	provenClass := classGateFirstNonEmpty(classGateString(command, "highest_proven_live_class"), "test_only")
 	lowerEvidenceStatus := classGateFirstNonEmpty(classGateString(command, "low_risk_code_live_evidence_status"), "missing")
 	denialReason := classGateFirstNonEmpty(classGateString(command, "next_denied_reason"), "denied until low_risk_code live rehearsal evidence is recorded")
+	missingEvidence := []string{
+		"low_risk_code_live_success",
+		"rollback_proof:low_risk_code_live",
+		"sentinel_no_hold:low_risk_code_live",
+		"promoter_promotion:low_risk_code_live",
+		"command_readback:low_risk_code_live",
+		"clean_main_ci:low_risk_code_live",
+	}
+	status := "denied"
+	exactNextAction := "complete_low_risk_code_live_rehearsal_before_multi_repo_live"
+	if lowRiskLiveReady {
+		status = "accepted"
+		provenClass = "low_risk_code"
+		lowerEvidenceStatus = "accepted"
+		denialReason = "low_risk_code live rehearsal evidence accepted"
+		missingEvidence = []string{}
+		exactNextAction = "request_repo_one_multi_repo_low_risk_live_rehearsal"
+	}
 	return &MultiRepoLiveRehearsalDecision{
 		SchemaVersion:                "ao.foundry.multi-repo-live-rehearsal-decision.v0.1",
-		Status:                       "denied",
+		Status:                       status,
 		MutationClass:                "multi_repo_low_risk",
 		CurrentClass:                 currentClass,
 		NextClass:                    nextClass,
 		CurrentProvenLiveClass:       provenClass,
 		LowerClassLiveEvidenceStatus: lowerEvidenceStatus,
 		SafeToRequest:                safeToRequest,
-		SafeToExecute:                false,
-		LiveExecutionAuthority:       false,
-		MissingEvidence: []string{
-			"low_risk_code_live_success",
-			"rollback_proof:low_risk_code_live",
-			"sentinel_no_hold:low_risk_code_live",
-			"promoter_promotion:low_risk_code_live",
-			"command_readback:low_risk_code_live",
-			"clean_main_ci:low_risk_code_live",
-		},
-		DenialReason:        denialReason,
-		ExactNextAction:     "complete_low_risk_code_live_rehearsal_before_multi_repo_live",
-		RepoExecutionPolicy: "sequenced_dry_run_only",
-		SchedulesWork:       false,
-		ExecutesWork:        false,
-		MutatesRepositories: false,
+		SafeToExecute:                safeToRequest && lowRiskLiveReady,
+		LiveExecutionAuthority:       safeToRequest && lowRiskLiveReady,
+		MissingEvidence:              missingEvidence,
+		DenialReason:                 denialReason,
+		ExactNextAction:              exactNextAction,
+		RepoExecutionPolicy:          "sequenced_dry_run_only",
+		SchedulesWork:                false,
+		ExecutesWork:                 false,
+		MutatesRepositories:          false,
 	}
 }
 
@@ -2354,6 +2407,140 @@ func evaluateTestOnlySuccessEvidence(path string) (MutationClassGateEvidence, st
 	default:
 		return evidence, "", nil
 	}
+}
+
+func evaluateLowRiskCodeLiveSuccessEvidence(path string) (MutationClassGateEvidence, *LowRiskCodeLiveSuccessReadback, string, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("read low_risk_code_live_success evidence: %w", err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return MutationClassGateEvidence{}, nil, "", errors.New("low_risk_code_live_success evidence must be a JSON object")
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("hash low_risk_code_live_success evidence: %w", err)
+	}
+	status := classGateString(object, "status")
+	evidence := MutationClassGateEvidence{
+		Name:          "low_risk_code_live_success",
+		Path:          path,
+		SchemaVersion: classGateString(object, "schema_version"),
+		Status:        status,
+		SHA256:        sum,
+	}
+	success := &LowRiskCodeLiveSuccessReadback{
+		SchemaVersion:     evidence.SchemaVersion,
+		Status:            status,
+		MutationClass:     classGateString(object, "mutation_class"),
+		ProvenLiveClass:   classGateString(object, "proven_live_class"),
+		Repo:              classGateString(object, "repo"),
+		PullRequest:       classGateString(object, "pull_request"),
+		PullRequestNumber: classGateInt(object, "pull_request_number"),
+		BaseBranch:        classGateString(object, "base_branch"),
+		WorkBranch:        classGateString(object, "work_branch"),
+		MergeCommit:       classGateString(object, "merge_commit"),
+		MergeState:        classGateString(object, "merge_state"),
+		ChangedFiles:      classGateStringSlice(object, "changed_files"),
+		FileAllowlist:     classGateStringSlice(object, "file_allowlist"),
+	}
+	switch {
+	case success.SchemaVersion != "ao.foundry.low-risk-code-live-success-readback.v0.1":
+		return evidence, success, "low_risk_code_live_success schema_version must be ao.foundry.low-risk-code-live-success-readback.v0.1", nil
+	case status != "accepted" && status != "passed":
+		return evidence, success, "low_risk_code_live_success status must be accepted", nil
+	case success.MutationClass != "low_risk_code" || success.ProvenLiveClass != "low_risk_code":
+		return evidence, success, "low_risk_code_live_success mutation_class must be low_risk_code", nil
+	case success.Repo != "ao-atlas" || success.PullRequestNumber != 37 || !strings.Contains(success.PullRequest, "/ao-atlas/pull/37"):
+		return evidence, success, "low_risk_code_live_success must reference AO Atlas PR #37", nil
+	case success.BaseBranch != "main" || success.WorkBranch != "codex/low-risk-code-rehearsal-one" || success.MergeState != "merged" || success.MergeCommit != "a6aee5621dd367a7169f099a87050f1cbd0f88da":
+		return evidence, success, "low_risk_code_live_success branch, PR, and merge evidence must match AO Atlas PR #37", nil
+	case !equalStringSlices(success.ChangedFiles, []string{"internal/atlas/validate.go"}) || !equalStringSlices(success.FileAllowlist, []string{"internal/atlas/validate.go"}):
+		return evidence, success, "low_risk_code_live_success scope must match AO Atlas PR #37", nil
+	case classGateNestedString(object, "ci_evidence", "status") != "passed" || len(classGateNestedStringSlice(object, "ci_evidence", "checks")) == 0:
+		return evidence, success, "low_risk_code_live_success requires clean main CI evidence", nil
+	case !lowRiskLiveRollbackAccepted(object):
+		return evidence, success, "low_risk_code_live_success requires rollback proof", nil
+	case !lowRiskLiveSentinelAccepted(object):
+		return evidence, success, "low_risk_code_live_success requires Sentinel no-hold evidence", nil
+	case !lowRiskLivePromoterAccepted(object):
+		return evidence, success, "low_risk_code_live_success requires Promoter class-boundary evidence", nil
+	case !lowRiskLiveCommandAccepted(object):
+		return evidence, success, "low_risk_code_live_success requires Command readback", nil
+	case !lowRiskLivePublicSafetyAccepted(object):
+		return evidence, success, "low_risk_code_live_success requires public-safety scope validation", nil
+	}
+	if blocker := validateLowRiskLiveSourceArtifactDigests(path, object); blocker != "" {
+		return evidence, success, blocker, nil
+	}
+	return evidence, success, "", nil
+}
+
+func classGateNestedStringSlice(document map[string]any, outer, inner string) []string {
+	nested, _ := document[outer].(map[string]any)
+	return classGateStringSlice(nested, inner)
+}
+
+func lowRiskLiveRollbackAccepted(object map[string]any) bool {
+	rollback, _ := object["rollback_proof"].(map[string]any)
+	status := classGateString(rollback, "status")
+	return (status == "ready" || status == "passed") && equalStringSlices(classGateStringSlice(rollback, "scope"), []string{"internal/atlas/validate.go"})
+}
+
+func lowRiskLiveSentinelAccepted(object map[string]any) bool {
+	sentinel, _ := object["sentinel_verdict"].(map[string]any)
+	status := classGateString(sentinel, "status")
+	return (status == "no_hold" || status == "clear") && !classGateBool(sentinel, "hold_required")
+}
+
+func lowRiskLivePromoterAccepted(object map[string]any) bool {
+	promoter, _ := object["promoter_verdict"].(map[string]any)
+	status := classGateString(promoter, "status")
+	boundary := classGateString(promoter, "promotion_boundary")
+	return (status == "ready" || status == "passed" || status == "accepted") && boundary != ""
+}
+
+func lowRiskLiveCommandAccepted(object map[string]any) bool {
+	command, _ := object["command_readback"].(map[string]any)
+	return classGateString(command, "status") == "ready" && classGateString(command, "operator_mode") == "read_only"
+}
+
+func lowRiskLivePublicSafetyAccepted(object map[string]any) bool {
+	publicSafety, _ := object["public_safety_scope"].(map[string]any)
+	return classGateString(publicSafety, "status") == "passed" &&
+		!classGateBool(publicSafety, "forbidden_surfaces_changed") &&
+		!classGateBool(publicSafety, "dependencies_added")
+}
+
+func validateLowRiskLiveSourceArtifactDigests(evidencePath string, object map[string]any) string {
+	rawArtifacts, _ := object["source_artifacts"].([]any)
+	if len(rawArtifacts) == 0 {
+		return "low_risk_code_live_success requires digest-bound source artifacts"
+	}
+	for _, raw := range rawArtifacts {
+		artifact, ok := raw.(map[string]any)
+		if !ok {
+			return "low_risk_code_live_success source artifacts must be objects"
+		}
+		artifactPath := classGateString(artifact, "path")
+		expectedSHA := classGateString(artifact, "sha256")
+		if artifactPath == "" || !classGateSHA256Pattern.MatchString(expectedSHA) {
+			return "low_risk_code_live_success source artifact path and sha256 are required"
+		}
+		resolvedPath := artifactPath
+		if !filepath.IsAbs(resolvedPath) {
+			resolvedPath = filepath.Join(filepath.Dir(evidencePath), filepath.FromSlash(artifactPath))
+		}
+		actualSHA, err := fileSHA256(resolvedPath)
+		if err != nil {
+			return "low_risk_code_live_success source artifact is missing"
+		}
+		if actualSHA != expectedSHA {
+			return "low_risk_code_live_success source artifact digest mismatch"
+		}
+	}
+	return ""
 }
 
 func evaluateMultiRepoPlanEvidence(path string) (MutationClassGateEvidence, []MutationClassRepoState, *MutationClassRepoSafety, string, error) {
