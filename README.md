@@ -201,7 +201,10 @@ for each repo, CI passing for each repo, an armed kill switch, and
 `max_active_repos=1`. It reports the repo plan for readback, keeps
 `safe_to_execute=false`, and fails closed on unsafe concurrent execution,
 missing per-repo rollback or CI, stale repo state, disarmed kill switch, or a
-dependency that does not point to an earlier repo in the serialized order.
+dependency that does not point to an earlier repo in the serialized order. It
+also emits a `live_rehearsal_decision` denial readback showing that the first
+live multi-repo rehearsal remains blocked until `low_risk_code` live evidence,
+rollback, Sentinel, Promoter, Command, and clean-main CI evidence are complete.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus CI,
 repo-cleanliness, evidence-freshness, Sentinel, Promoter, branch-cleanup, and
