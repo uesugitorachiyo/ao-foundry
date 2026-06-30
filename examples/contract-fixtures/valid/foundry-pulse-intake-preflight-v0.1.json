@@ -2,6 +2,7 @@
   "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
   "status": "ready",
   "blueprint_status": "ready",
+  "atlas_blueprint_status": "ready",
   "atlas_status": "ready",
   "first_failing_check": "",
   "checks": [
@@ -9,6 +10,11 @@
       "name": "blueprint_build_authorization",
       "status": "pass",
       "reason": "Blueprint build authorization is ready."
+    },
+    {
+      "name": "atlas_blueprint_import",
+      "status": "pass",
+      "reason": "Atlas Blueprint import is ready and digest-bound."
     },
     {
       "name": "atlas_handoff_readback",
@@ -39,6 +45,13 @@
       "schema_version": "ao.atlas.foundry-import.v0.1",
       "status": "ready_for_foundry_fixture_import",
       "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "name": "atlas_blueprint_import",
+      "path": "examples/atlas/blueprint-import.low-risk-code.json",
+      "schema_version": "ao.atlas.blueprint-import.v0.1",
+      "status": "ready",
+      "sha256": "2301c40533dfc196931b532bc4310dad0727fbe5a6a956b1596b6c3a1a2847b1"
     },
     {
       "name": "atlas_status",

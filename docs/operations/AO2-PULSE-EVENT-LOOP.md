@@ -37,6 +37,7 @@ Run the local clean-clone-safe pulse:
 go run ./cmd/foundry pulse intake-preflight \
   --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
   --requires-atlas \
+  --atlas-blueprint-import examples/atlas/blueprint-import.low-risk-code.json \
   --atlas-import examples/atlas/foundry-import.json \
   --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json \
   --out tmp/pulse-intake-preflight.json
@@ -111,8 +112,10 @@ The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
 when Blueprint authorization is ready and required Atlas import/status readback
 artifacts preserve `schedules_work=false`, `executes_work=false`, and
-`approves_work=false`. A Blueprint clarification request returns a blocked
-preflight instead of pretending work is ready.
+`approves_work=false`. Oversized and live-mutation work also requires a ready
+Atlas Blueprint import before Foundry accepts Atlas import/readback evidence. A
+Blueprint clarification request returns a blocked preflight instead of
+pretending work is ready.
 
 The lifecycle inspect command reads
 `ao.foundry.pulse-pr-lifecycle.v0.1` and reports whether Pulse may start another

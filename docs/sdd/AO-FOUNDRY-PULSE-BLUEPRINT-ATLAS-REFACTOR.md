@@ -116,6 +116,7 @@ The executable slice is:
 go run ./cmd/foundry pulse intake-preflight \
   --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
   --requires-atlas \
+  --atlas-blueprint-import examples/atlas/blueprint-import.low-risk-code.json \
   --atlas-import examples/atlas/foundry-import.json \
   --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json \
   --out tmp/pulse-intake-preflight.json
@@ -124,9 +125,12 @@ go run ./cmd/foundry pulse intake-preflight \
 It emits `ao.foundry.pulse-intake-preflight.v0.1`. A blocked Blueprint request
 is a valid blocked intake result, not a ready scheduling signal. Missing
 Blueprint authorization, blocked authorization treated as ready, missing Atlas
-handoff/readback, Atlas authority claims, and unsafe source artifact paths fail
-closed. This preflight does not schedule, execute, approve, upload, publish,
-call providers, or mutate sibling repositories.
+Blueprint import, missing Atlas handoff/readback, Atlas authority claims, and
+unsafe source artifact paths fail closed. For oversized and live-mutation work,
+Foundry accepts Blueprint material only after Atlas has compiled it into a ready
+Blueprint import, Foundry import, and Foundry status/readback chain. This
+preflight does not schedule, execute, approve, upload, publish, call providers,
+or mutate sibling repositories.
 
 ### Slice C: One-Slice PR Lifecycle State
 

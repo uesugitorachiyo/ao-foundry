@@ -1,0 +1,48 @@
+{
+  "contract_version": "ao.atlas.blueprint-import.v0.1",
+  "id": "atlas-readiness-workgraph-blueprint-import",
+  "project_id": "low-risk-code-rehearsal-public-placeholder",
+  "status": "ready",
+  "reason": "Public-safe fixture proving Foundry requires Atlas Blueprint import before live-mutation gates.",
+  "blueprint_pack": {
+    "ref": "examples/blueprint-packs/low-risk-code-public-shape.json",
+    "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "build_authorization": {
+    "ref": "examples/pulse-intake/blueprint-authorization.ready.json",
+    "digest": "sha256:1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+  },
+  "target_instance": "demo-stack",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "mutation_class": "low_risk_code",
+  "downstream_foundry_import": {
+    "ref": "examples/atlas/foundry-import.json",
+    "digest": "sha256:6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+  },
+  "digests": {
+    "blueprint_pack": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "build_authorization": "sha256:1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597",
+    "implementation_spec": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "quality_profile": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "candidate_rules": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "mutation_class_model": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "candidate_selection": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "workgraph": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "downstream_foundry_import": "sha256:6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+  },
+  "safety_limits": [
+    "fixture only",
+    "no provider calls",
+    "no repository mutation",
+    "no live execution authority"
+  ],
+  "ready_for_foundry": true,
+  "safe_to_execute": false,
+  "live_execution_proven": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "release_or_publish_allowed": false
+}

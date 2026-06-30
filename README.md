@@ -52,7 +52,7 @@ This first slice provides:
   - `foundry goal validate --goal-run <path>`
   - `foundry goal readiness --goal-run <path> --registry <path> --task <path> [--out <path>]`
   - `foundry pulse run [--start-gate <pulse-overnight-start-gate.json>] --out <dir> [--rsi-baseline <eval.json>] [--rsi-min-improvement <percent>]`
-  - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
+  - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-blueprint-import <path> --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
   - `foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]`
@@ -114,7 +114,7 @@ go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine
 go run ./cmd/foundry goal validate --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json
 go run ./cmd/foundry goal readiness --goal-run examples/goals/ao-foundry-production-readiness.goal-run.json --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json
 go run ./cmd/foundry pulse run --start-gate examples/pulse-overnight-start-gate/ready.json --out tmp/pulse --rsi-baseline examples/evals/rsi-baseline.eval-result.json --rsi-min-improvement 5
-go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
+go run ./cmd/foundry pulse intake-preflight --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json --requires-atlas --atlas-blueprint-import examples/atlas/blueprint-import.low-risk-code.json --atlas-import examples/atlas/foundry-import.json --atlas-status examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json --out tmp/pulse-intake-preflight.json
 go run ./cmd/foundry pulse lifecycle inspect --state examples/pulse-lifecycle/ready-to-start-next-slice.json --json
 go run ./cmd/foundry pulse overnight-start-gate --intake-preflight examples/pulse-overnight-start-gate/ready.intake-preflight.json --lifecycle examples/pulse-lifecycle/ready-to-start-next-slice.json --out tmp/pulse-overnight-start-gate.json
 go run ./cmd/foundry class-gate evaluate --atlas examples/class-gate/atlas-classification.docs-multi.json --covenant examples/class-gate/covenant-ticket.docs-multi.json --sentinel examples/class-gate/sentinel.no-hold.docs-multi.json --promoter examples/class-gate/promoter.ready.docs-multi.json --rollback examples/class-gate/rollback.passed.docs-multi.json --command examples/class-gate/command-readback.docs-multi.json --ci examples/class-gate/ci.passed.docs-multi.json --out tmp/class-gate.json
@@ -148,10 +148,11 @@ implementation remains delegated to AO Forge.
 `foundry pulse intake-preflight` is the Blueprint/Atlas-aware intake gate before
 future automated scheduling. It emits
 `ao.foundry.pulse-intake-preflight.v0.1`, fails closed when Blueprint
-authorization is missing or blocked, and requires Atlas handoff/readback for
-oversized work. The command is fixture/local only: it does not schedule,
-execute, approve, upload, publish, call providers, or mutate sibling
-repositories.
+authorization is missing or blocked, and for oversized or live-mutation work
+requires a ready Atlas Blueprint import before accepting Atlas Foundry import
+and Foundry Atlas status/readback evidence. The command is fixture/local only:
+it does not schedule, execute, approve, upload, publish, call providers, or
+mutate sibling repositories.
 
 `foundry pulse lifecycle inspect` is the one-slice PR lifecycle gate before
 starting another automated slice. It reads
@@ -219,9 +220,10 @@ open PRs, merge PRs, call providers, or mutate repositories.
 
 `scripts/blueprint-atlas-pulse-e2e-dry-run.sh` proves the fixture-only
 Blueprint -> Atlas -> Foundry -> AO Command control path. The ready path starts
-the runner after digest-bound gates pass. The blocked Blueprint path writes a
-blocked runner decision and AO Command readback, but does not produce
-`pulse-event.json` or start implementation.
+the runner after digest-bound Blueprint authorization, Atlas Blueprint import,
+Atlas Foundry import, Foundry readback, and Pulse gates pass. The blocked
+Blueprint path writes a blocked runner decision and AO Command readback, but
+does not produce `pulse-event.json` or start implementation.
 
 `scripts/complex-refactor-workgraph-rehearsal.sh` is the reference oversized
 task demo. It validates an Atlas workgraph with completed, ready, blocked, and
