@@ -1,0 +1,19 @@
+{
+  "schema_version": "ao.foundry.ci-readiness.v0.1",
+  "status": "passed",
+  "mutation_class": "multi_repo_low_risk",
+  "per_repo_ci": [
+    {
+      "repo": "ao-atlas",
+      "status": "passed"
+    },
+    {
+      "repo": "ao-foundry",
+      "status": "passed"
+    },
+    {
+      "repo": "ao-command",
+      "status": "passed"
+    }
+  ]
+}

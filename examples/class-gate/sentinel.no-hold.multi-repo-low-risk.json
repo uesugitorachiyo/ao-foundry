@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+  "status": "no_hold",
+  "mutation_class": "multi_repo_low_risk",
+  "reason": "No Sentinel hold for multi_repo_low_risk dry-run fixture; live execution remains denied."
+}

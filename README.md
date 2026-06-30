@@ -55,7 +55,7 @@ This first slice provides:
   - `foundry pulse intake-preflight --blueprint-authorization <path> [--requires-atlas --atlas-import <path> --atlas-status <path>] [--out <path>]`
   - `foundry pulse lifecycle inspect --state <pulse-pr-lifecycle.json> [--json]`
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
-  - `foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> --out <path>`
+  - `foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> [--test-only-success <path>] [--multi-repo-plan <path>] --out <path>`
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`
   - `scripts/overnight-rehearsal-runner.sh --out <public-safe-relative-dir>`
@@ -182,6 +182,10 @@ With checked test-only live rehearsal evidence, Foundry may report
 `safe_to_request=true` for a low-risk-code dry-run design while still keeping
 `safe_to_execute=false`. The gate does not schedule, execute, approve, publish,
 call providers, or mutate repositories.
+For `multi_repo_low_risk`, Foundry also requires a serialized per-repo dry-run
+plan with rollback ready for each repo and `max_active_repos=1`. It reports the
+repo plan for readback, keeps `safe_to_execute=false`, and fails closed on
+unsafe concurrent execution.
 
 `scripts/blueprint-atlas-pulse-e2e-dry-run.sh` proves the fixture-only
 Blueprint -> Atlas -> Foundry -> AO Command control path. The ready path starts

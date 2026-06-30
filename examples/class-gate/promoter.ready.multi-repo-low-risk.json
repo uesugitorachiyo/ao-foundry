@@ -1,0 +1,8 @@
+{
+  "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+  "status": "ready",
+  "mutation_class": "multi_repo_low_risk",
+  "promotion_boundary": "multi_repo_low_risk_dry_run_only",
+  "safe_to_promote_next_class": true,
+  "dry_run_only": true
+}
