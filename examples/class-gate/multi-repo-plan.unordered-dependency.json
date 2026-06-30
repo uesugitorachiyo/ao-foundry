@@ -4,6 +4,7 @@
   "mutation_class": "multi_repo_low_risk",
   "current_mutation_class": "low_risk_code",
   "next_mutation_class": "multi_repo_low_risk",
+  "kill_switch_state": "armed",
   "concurrency_policy": {
     "policy": "prevent_concurrent_unsafe_execution",
     "max_active_repos": 1,
@@ -21,6 +22,9 @@
       "rollback_scope": ["repo:ao-command:internal/**"],
       "rollback_required": true,
       "rollback_status": "ready",
+      "repo_state_status": "clean_synced",
+      "repo_state_observed_at_utc": "2026-06-30T00:00:00Z",
+      "repo_state_expires_at_utc": "2999-01-01T00:00:00Z",
       "depends_on": ["ao-foundry"],
       "merge_after": ["ao-foundry"]
     },
@@ -34,6 +38,9 @@
       "rollback_scope": ["repo:ao-foundry:internal/**"],
       "rollback_required": true,
       "rollback_status": "ready",
+      "repo_state_status": "clean_synced",
+      "repo_state_observed_at_utc": "2026-06-30T00:00:00Z",
+      "repo_state_expires_at_utc": "2999-01-01T00:00:00Z",
       "depends_on": [],
       "merge_after": []
     }
