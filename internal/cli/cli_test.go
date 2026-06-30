@@ -6324,7 +6324,7 @@ func TestComplexRepoPromotionRollupFailsClosedOnInvalidClosureEvidence(t *testin
 					t.Fatal(err)
 				}
 			},
-			want: "closure evidence " + filepath.Join("node-a", "rollback.json") + " is missing",
+			want: "closure evidence node-a/rollback.json is missing",
 		},
 		{
 			name: "stale_digest",
@@ -6356,7 +6356,7 @@ func TestComplexRepoPromotionRollupFailsClosedOnInvalidClosureEvidence(t *testin
 					t.Fatal(err)
 				}
 			},
-			want: "closure evidence " + filepath.Join("node-b", "rollback.json") + " is missing",
+			want: "closure evidence node-b/rollback.json is missing",
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
