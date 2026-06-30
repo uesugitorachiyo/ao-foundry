@@ -6097,6 +6097,97 @@ func TestComplexRepoNodeGateBlocksAtlasSafeToExecuteFalse(t *testing.T) {
 	}
 }
 
+func TestComplexRepoNodeExecuteWritesNodeRecordAndRunLink(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "gate"), true, true, "safe_to_execute:true", nil)
+	nodeGatePath := filepath.Join(dir, "complex-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", nodeGatePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("node gate failed: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+
+	nodeRecordPath := filepath.Join(dir, "node-record.json")
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"complex-repo", "node", "execute",
+		"--node-gate", nodeGatePath,
+		"--node-record-out", nodeRecordPath,
+		"--run-link-out", runLinkPath,
+		"--node-class", "docs-only node",
+		"--scope", "factory/complex-repo-mutation-rehearsal/00-docs-intake",
+		"--summary", "First bounded docs-only intake node.",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("execute failed: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	record := readObjectFixture(t, nodeRecordPath)
+	if record["schema"] != "ao.atlas.complex-repo-mutation-node-record.v0.1" ||
+		record["node_id"] != "complex-docs-intake" ||
+		record["task_id"] != "complex-docs-intake-task" ||
+		record["status"] != "completed" ||
+		record["scope"] != "factory/complex-repo-mutation-rehearsal/00-docs-intake" {
+		t.Fatalf("unexpected node record: %#v", record)
+	}
+	link := readObjectFixture(t, runLinkPath)
+	if link["contract_version"] != "ao.atlas.run-link.v0.1" ||
+		link["task_id"] != "complex-docs-intake-task" ||
+		link["status"] != "completed" ||
+		!strings.HasPrefix(fmt.Sprint(link["digest"]), "sha256:") {
+		t.Fatalf("unexpected run-link: %#v", link)
+	}
+	evidence, ok := link["evidence"].(map[string]any)
+	if !ok || evidence["changed_file"] != "factory/complex-repo-mutation-rehearsal/00-docs-intake/node-record.json" ||
+		evidence["node_gate"] != filepath.ToSlash(nodeGatePath) {
+		t.Fatalf("run-link evidence must bind changed file and node gate: %#v", link)
+	}
+}
+
+func TestComplexRepoNodeExecuteBlocksUnsafeNodeGate(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "gate"), false, false, "safe_to_execute:false", nil)
+	nodeGatePath := filepath.Join(dir, "complex-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", nodeGatePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("node gate failed: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"complex-repo", "node", "execute",
+		"--node-gate", nodeGatePath,
+		"--node-record-out", filepath.Join(dir, "node-record.json"),
+		"--run-link-out", filepath.Join(dir, "run-link.json"),
+		"--node-class", "docs-only node",
+		"--scope", "factory/complex-repo-mutation-rehearsal/00-docs-intake",
+		"--summary", "First bounded docs-only intake node.",
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("unsafe node gate must not execute: stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), "safe_to_execute=true") {
+		t.Fatalf("expected safe_to_execute error, got stderr=%s", stderr.String())
+	}
+}
+
 func TestMutationClassGateBlocksComplexRepoMutationWithoutNodeGate(t *testing.T) {
 	dir := t.TempDir()
 	common := writeComplexRepoClassGateCommonEvidence(t, dir)
