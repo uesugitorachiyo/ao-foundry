@@ -42,6 +42,7 @@ const (
 	pulseLoopPolicySchema      = "ao.foundry.pulse-event-loop-policy.v0.1"
 	pulseRunnerSchema          = "ao.foundry.pulse-runner-start-decision.v0.1"
 	classGateSchema            = "ao.foundry.mutation-class-gate.v0.1"
+	complexNodeGateSchema      = "ao.foundry.complex-repo-mutation-node-gate.v0.1"
 )
 
 var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -244,6 +245,7 @@ type MutationClassGate struct {
 	DenialAudit           *LowRiskCodeDenialAudit         `json:"denial_audit,omitempty"`
 	LiveRehearsalDecision *MultiRepoLiveRehearsalDecision `json:"live_rehearsal_decision,omitempty"`
 	LowRiskLiveSuccess    *LowRiskCodeLiveSuccessReadback `json:"low_risk_code_live_success,omitempty"`
+	ComplexNodeGate       *ComplexRepoMutationNodeGate    `json:"complex_node_gate,omitempty"`
 	RepoExecutionPlan     []MutationClassRepoState        `json:"repo_execution_plan,omitempty"`
 	RepoSafety            *MutationClassRepoSafety        `json:"repo_safety,omitempty"`
 	SchedulesWork         bool                            `json:"schedules_work"`
@@ -312,6 +314,43 @@ type MutationClassGateEvidence struct {
 	SchemaVersion string `json:"schema_version"`
 	Status        string `json:"status"`
 	SHA256        string `json:"sha256"`
+}
+
+type ComplexRepoMutationNodeGate struct {
+	SchemaVersion                    string                      `json:"schema_version"`
+	Status                           string                      `json:"status"`
+	MutationClass                    string                      `json:"mutation_class"`
+	HighestProvenLiveClass           string                      `json:"highest_proven_live_class"`
+	NextDeniedClass                  string                      `json:"next_denied_class"`
+	WorkgraphID                      string                      `json:"workgraph_id"`
+	NodeID                           string                      `json:"node_id"`
+	TaskID                           string                      `json:"task_id"`
+	SafeToRequest                    bool                        `json:"safe_to_request"`
+	SafeToExecute                    bool                        `json:"safe_to_execute"`
+	LiveExecutionAuthority           bool                        `json:"live_execution_authority"`
+	FirstFailingCheck                string                      `json:"first_failing_check"`
+	Blockers                         []string                    `json:"blockers"`
+	ExactNextAction                  string                      `json:"exact_next_action"`
+	FoundryImportID                  string                      `json:"foundry_import_id"`
+	FoundryImportStatus              string                      `json:"foundry_import_status"`
+	FoundryImportTaskCount           int                         `json:"foundry_import_task_count"`
+	FoundryImportSchedulesWork       bool                        `json:"foundry_import_schedules_work"`
+	FoundryImportExecutesWork        bool                        `json:"foundry_import_executes_work"`
+	FoundryImportApprovesWork        bool                        `json:"foundry_import_approves_work"`
+	CandidateStatus                  string                      `json:"candidate_status"`
+	CandidateExecutableReady         bool                        `json:"candidate_executable_ready"`
+	CandidateSafeToExecute           bool                        `json:"candidate_safe_to_execute"`
+	RollbackStatus                   string                      `json:"rollback_status"`
+	RollbackSafeToExecute            bool                        `json:"rollback_safe_to_execute"`
+	AuthorityBoundary                string                      `json:"authority_boundary"`
+	RequiredGates                    []string                    `json:"required_gates"`
+	SourceEvidence                   []MutationClassGateEvidence `json:"source_evidence"`
+	SchedulesWork                    bool                        `json:"schedules_work"`
+	ExecutesWork                     bool                        `json:"executes_work"`
+	ApprovesWork                     bool                        `json:"approves_work"`
+	MutatesRepositories              bool                        `json:"mutates_repositories"`
+	FullyUnsupervisedComplexMutation string                      `json:"fully_unsupervised_complex_mutation"`
+	RSI                              string                      `json:"rsi"`
 }
 
 type MutationClassBoundaryChecks struct {
@@ -1226,6 +1265,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		return runAtlas(args[1:], stdout, stderr)
 	case "class-gate":
 		return runClassGate(args[1:], stdout, stderr)
+	case "complex-repo":
+		return runComplexRepo(args[1:], stdout, stderr)
 	case "repo":
 		return runRepo(args[1:], stdout, stderr)
 	case "loop":
@@ -1285,6 +1326,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry atlas readback --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-readback.json>]")
 	fmt.Fprintln(w, "  foundry atlas status --registry <registry.json> --import <atlas-foundry-import.json> --run-link <atlas-run-link.json> [--out <foundry-atlas-status.json>] [--json]")
 	fmt.Fprintln(w, "  foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> --out <path>")
+	fmt.Fprintln(w, "  foundry complex-repo node-gate evaluate --workgraph <path> --foundry-import <path> --candidate <path> --rollback <path> --out <path>")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
 	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
@@ -2012,6 +2054,78 @@ func runClassGate(args []string, stdout, stderr io.Writer) int {
 	}
 }
 
+func runComplexRepo(args []string, stdout, stderr io.Writer) int {
+	if len(args) < 2 {
+		fmt.Fprintln(stderr, "usage: foundry complex-repo node-gate evaluate --workgraph <path> --foundry-import <path> --candidate <path> --rollback <path> --out <path>")
+		return 2
+	}
+	switch {
+	case args[0] == "node-gate" && args[1] == "evaluate":
+		return runComplexRepoNodeGateEvaluate(args[2:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "foundry complex-repo: unknown command %q\n", strings.Join(args, " "))
+		return 2
+	}
+}
+
+func runComplexRepoNodeGateEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("complex-repo node-gate evaluate", stderr)
+	workgraphPath := fs.String("workgraph", "", "Atlas complex_repo_mutation workgraph")
+	foundryImportPath := fs.String("foundry-import", "", "Atlas Foundry import for the selected complex node")
+	candidatePath := fs.String("candidate", "", "Atlas candidate record for the selected complex node")
+	rollbackPath := fs.String("rollback", "", "Atlas rollback record for the selected complex node")
+	outPath := fs.String("out", "", "complex node gate output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if strings.TrimSpace(*workgraphPath) == "" ||
+		strings.TrimSpace(*foundryImportPath) == "" ||
+		strings.TrimSpace(*candidatePath) == "" ||
+		strings.TrimSpace(*rollbackPath) == "" ||
+		strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(stderr, "--workgraph, --foundry-import, --candidate, --rollback, and --out are required")
+		return 2
+	}
+	gate, err := buildComplexRepoMutationNodeGate(complexNodeGatePaths{
+		Workgraph:     *workgraphPath,
+		FoundryImport: *foundryImportPath,
+		Candidate:     *candidatePath,
+		Rollback:      *rollbackPath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "complex node gate: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, gate); err != nil {
+		fmt.Fprintf(stderr, "write complex node gate: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, gate); err != nil {
+			fmt.Fprintf(stderr, "write complex node gate json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "complex_node_gate=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", gate.Status)
+	fmt.Fprintf(stdout, "node_id=%s\n", gate.NodeID)
+	fmt.Fprintf(stdout, "safe_to_request=%t\n", gate.SafeToRequest)
+	fmt.Fprintf(stdout, "safe_to_execute=%t\n", gate.SafeToExecute)
+	if gate.FirstFailingCheck != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", gate.FirstFailingCheck)
+	}
+	return 0
+}
+
+type complexNodeGatePaths struct {
+	Workgraph     string
+	FoundryImport string
+	Candidate     string
+	Rollback      string
+}
+
 func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("class-gate evaluate", stderr)
 	atlasPath := fs.String("atlas", "", "Atlas mutation-class classification evidence")
@@ -2024,6 +2138,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	testOnlySuccessPath := fs.String("test-only-success", "", "completed test_only live rehearsal evidence for low_risk_code dry-run readiness")
 	multiRepoPlanPath := fs.String("multi-repo-plan", "", "multi-repo low-risk sequencing and rollback plan evidence")
 	lowRiskCodeLiveSuccessPath := fs.String("low-risk-code-live-success", "", "completed low_risk_code live rehearsal success readback for multi_repo_low_risk readiness")
+	complexNodeGatePath := fs.String("complex-node-gate", "", "complex_repo_mutation node gate readback evidence")
 	outPath := fs.String("out", "", "class gate output path")
 	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
 	if !parseFlags(fs, args, stderr) {
@@ -2051,6 +2166,7 @@ func runClassGateEvaluate(args []string, stdout, stderr io.Writer) int {
 		TestOnlySuccess:        *testOnlySuccessPath,
 		MultiRepoPlan:          *multiRepoPlanPath,
 		LowRiskCodeLiveSuccess: *lowRiskCodeLiveSuccessPath,
+		ComplexNodeGate:        *complexNodeGatePath,
 	})
 	if err != nil {
 		fmt.Fprintf(stderr, "class gate: %v\n", err)
@@ -2086,6 +2202,7 @@ type classGateEvidencePaths struct {
 	TestOnlySuccess        string
 	MultiRepoPlan          string
 	LowRiskCodeLiveSuccess string
+	ComplexNodeGate        string
 }
 
 func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate, error) {
@@ -2216,6 +2333,30 @@ func evaluateMutationClassGate(paths classGateEvidencePaths) (MutationClassGate,
 			return gate, nil
 		}
 	}
+	if className == "complex_repo_mutation" {
+		requiredEvidence = append(requiredEvidence, "complex_node_gate")
+		gate.RequiredEvidence = requiredEvidence
+		if strings.TrimSpace(paths.ComplexNodeGate) == "" {
+			blockers = append(blockers, "complex_repo_mutation requires complex_node_gate evidence")
+		} else {
+			evidence, nodeGate, blocker, err := evaluateComplexNodeGateEvidence(paths.ComplexNodeGate)
+			if err != nil {
+				return gate, err
+			}
+			gate.SourceEvidence = append(gate.SourceEvidence, evidence)
+			gate.ComplexNodeGate = nodeGate
+			if blocker != "" {
+				blockers = append(blockers, blocker)
+			}
+		}
+		if len(blockers) == 0 {
+			gate.Status = "ready"
+			gate.SafeToRequest = true
+			gate.SafeToExecute = true
+			gate.NextActions = []string{"Execute only the exact complex_repo_mutation node named by complex_node_gate; keep one executable node active and require PR, CI, merge, rollback, Sentinel, Promoter, and Command readback before selecting the next node."}
+			return gate, nil
+		}
+	}
 	if len(blockers) == 0 {
 		gate.Status = "ready"
 		gate.SafeToRequest = true
@@ -2280,6 +2421,248 @@ func classGateFirstNonEmpty(values ...string) string {
 		}
 	}
 	return ""
+}
+
+func buildComplexRepoMutationNodeGate(paths complexNodeGatePaths) (ComplexRepoMutationNodeGate, error) {
+	gate := ComplexRepoMutationNodeGate{
+		SchemaVersion:                    complexNodeGateSchema,
+		Status:                           "blocked",
+		MutationClass:                    "complex_repo_mutation",
+		HighestProvenLiveClass:           "multi_repo_low_risk",
+		NextDeniedClass:                  "complex_repo_mutation",
+		ExactNextAction:                  "complete_complex_node_gate_prerequisites_before_execution",
+		AuthorityBoundary:                "complex_node_exact_scope_only",
+		SourceEvidence:                   []MutationClassGateEvidence{},
+		Blockers:                         []string{},
+		FullyUnsupervisedComplexMutation: "denied",
+		RSI:                              "denied",
+		SchedulesWork:                    false,
+		ExecutesWork:                     false,
+		ApprovesWork:                     false,
+		MutatesRepositories:              false,
+		LiveExecutionAuthority:           false,
+	}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_workgraph", paths.Workgraph)
+	if err != nil {
+		return gate, err
+	}
+	importSource, foundryImport, err := readComplexNodeGateObject("foundry_import", paths.FoundryImport)
+	if err != nil {
+		return gate, err
+	}
+	candidateSource, candidate, err := readComplexNodeGateObject("candidate_record", paths.Candidate)
+	if err != nil {
+		return gate, err
+	}
+	rollbackSource, rollback, err := readComplexNodeGateObject("rollback_record", paths.Rollback)
+	if err != nil {
+		return gate, err
+	}
+	gate.SourceEvidence = append(gate.SourceEvidence, workgraphSource, importSource, candidateSource, rollbackSource)
+	gate.WorkgraphID = classGateString(workgraph, "id")
+	gate.FoundryImportID = classGateString(foundryImport, "id")
+	gate.FoundryImportStatus = classGateString(foundryImport, "status")
+	gate.FoundryImportSchedulesWork = classGateBool(foundryImport, "schedules_work")
+	gate.FoundryImportExecutesWork = classGateBool(foundryImport, "executes_work")
+	gate.FoundryImportApprovesWork = classGateBool(foundryImport, "approves_work")
+	gate.CandidateStatus = classGateString(candidate, "status")
+	gate.CandidateExecutableReady = classGateBool(candidate, "executable_ready")
+	gate.CandidateSafeToExecute = classGateBool(candidate, "safe_to_execute")
+	gate.RollbackStatus = classGateString(rollback, "status")
+	gate.RollbackSafeToExecute = classGateBool(rollback, "safe_to_execute")
+	gate.RequiredGates = classGateStringSlice(candidate, "required_gates")
+
+	tasks := classGateObjectSlice(foundryImport["tasks"])
+	gate.FoundryImportTaskCount = len(tasks)
+	var task map[string]any
+	if len(tasks) == 1 {
+		task = tasks[0]
+	}
+	taskNodeID := classGateString(task, "node_id")
+	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "factory_task", "id"))
+	candidateNodeID := classGateString(candidate, "node_id")
+	rollbackNodeID := classGateString(rollback, "node_id")
+	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
+	gate.TaskID = classGateFirstNonEmpty(classGateString(candidate, "task_id"), taskID, classGateString(rollback, "task_id"))
+	node, nodeFound := findWorkgraphNode(workgraph, gate.NodeID)
+	nodeStatus := classGateString(node, "status")
+	taskMutationClass := classGateFirstNonEmpty(classGateString(task, "mutation_class"), classGateNestedString(task, "factory_task", "mutation_class"))
+	importRequiredEvidence := classGateStringSlice(task, "required_evidence")
+	if len(importRequiredEvidence) == 0 {
+		importRequiredEvidence = classGateNestedStringSlice(task, "factory_task", "required_evidence")
+	}
+	gate.SafeToRequest = gate.FoundryImportStatus != "" &&
+		gate.CandidateStatus == "ready" &&
+		nodeStatus == "ready" &&
+		len(tasks) == 1 &&
+		!gate.FoundryImportSchedulesWork &&
+		!gate.FoundryImportExecutesWork &&
+		!gate.FoundryImportApprovesWork
+
+	var blockers []string
+	switch gate.FoundryImportStatus {
+	case "ready", "ready_for_foundry_fixture_import":
+	default:
+		blockers = append(blockers, "foundry import status must be ready")
+	}
+	if gate.FoundryImportSchedulesWork || gate.FoundryImportExecutesWork || gate.FoundryImportApprovesWork {
+		blockers = append(blockers, "foundry import must not schedule, execute, or approve work")
+	}
+	if len(tasks) != 1 {
+		blockers = append(blockers, "foundry import must contain exactly one selected node")
+	}
+	if gate.NodeID == "" || gate.TaskID == "" {
+		blockers = append(blockers, "complex node gate requires node_id and task_id")
+	}
+	if taskNodeID != "" && candidateNodeID != "" && taskNodeID != candidateNodeID {
+		blockers = append(blockers, "foundry import node_id must match candidate record")
+	}
+	if rollbackNodeID != "" && gate.NodeID != "" && rollbackNodeID != gate.NodeID {
+		blockers = append(blockers, "rollback record node_id must match selected node")
+	}
+	if !nodeFound {
+		blockers = append(blockers, "workgraph must contain the selected node")
+	} else if nodeStatus != "ready" {
+		blockers = append(blockers, "workgraph selected node status must be ready")
+	}
+	if taskMutationClass != "complex_repo_mutation" {
+		blockers = append(blockers, "selected node evidence must be class complex_repo_mutation")
+	}
+	if gate.CandidateStatus != "ready" {
+		blockers = append(blockers, "complex candidate record status must be ready")
+	}
+	if !gate.CandidateExecutableReady {
+		blockers = append(blockers, "complex candidate record executable_ready must be true")
+	}
+	if !gate.CandidateSafeToExecute {
+		blockers = append(blockers, "complex candidate record safe_to_execute is false")
+	}
+	if classGateStringSliceContains(gate.RequiredGates, "safe_to_execute:false") {
+		blockers = append(blockers, "complex candidate record requires safe_to_execute:false")
+	}
+	if gate.RollbackStatus != "" && gate.RollbackStatus != "ready" {
+		blockers = append(blockers, "complex rollback record status must be ready")
+	}
+	if !gate.RollbackSafeToExecute {
+		blockers = append(blockers, "complex rollback record safe_to_execute is false")
+	}
+	if classGateStringSliceContains(importRequiredEvidence, "safe_to_execute:false") {
+		blockers = append(blockers, "complex Foundry import requires safe_to_execute:false")
+	} else if !classGateStringSliceContains(importRequiredEvidence, "safe_to_execute:true") {
+		blockers = append(blockers, "complex Foundry import must bind safe_to_execute:true before execution")
+	}
+	if blockers == nil {
+		blockers = []string{}
+	}
+	gate.Blockers = blockers
+	if len(blockers) > 0 {
+		gate.FirstFailingCheck = blockers[0]
+		return gate, nil
+	}
+	gate.Status = "ready"
+	gate.SafeToRequest = true
+	gate.SafeToExecute = true
+	gate.LiveExecutionAuthority = true
+	gate.ExactNextAction = "execute_exact_complex_node_candidate"
+	return gate, nil
+}
+
+func readComplexNodeGateObject(name, path string) (MutationClassGateEvidence, map[string]any, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, fmt.Errorf("read %s: %w", name, err)
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return MutationClassGateEvidence{}, nil, fmt.Errorf("%s must be a JSON object", name)
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, fmt.Errorf("hash %s: %w", name, err)
+	}
+	status := classGateFirstNonEmpty(classGateString(object, "status"), "validated")
+	source := MutationClassGateEvidence{
+		Name:          name,
+		Path:          path,
+		SchemaVersion: classGateFirstNonEmpty(classGateString(object, "schema_version"), classGateString(object, "contract_version"), classGateString(object, "schema")),
+		Status:        status,
+		SHA256:        sum,
+	}
+	return source, object, nil
+}
+
+func evaluateComplexNodeGateEvidence(path string) (MutationClassGateEvidence, *ComplexRepoMutationNodeGate, string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("read complex_node_gate: %w", err)
+	}
+	var nodeGate ComplexRepoMutationNodeGate
+	if err := json.Unmarshal(data, &nodeGate); err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("parse complex_node_gate: %w", err)
+	}
+	sum, err := fileSHA256(path)
+	if err != nil {
+		return MutationClassGateEvidence{}, nil, "", fmt.Errorf("hash complex_node_gate: %w", err)
+	}
+	evidence := MutationClassGateEvidence{
+		Name:          "complex_node_gate",
+		Path:          path,
+		SchemaVersion: nodeGate.SchemaVersion,
+		Status:        nodeGate.Status,
+		SHA256:        sum,
+	}
+	switch {
+	case nodeGate.SchemaVersion != complexNodeGateSchema:
+		return evidence, &nodeGate, "complex_node_gate schema_version must be " + complexNodeGateSchema, nil
+	case nodeGate.MutationClass != "complex_repo_mutation":
+		return evidence, &nodeGate, "complex_node_gate mutation_class must be complex_repo_mutation", nil
+	case nodeGate.Status != "ready":
+		if nodeGate.FirstFailingCheck != "" {
+			return evidence, &nodeGate, nodeGate.FirstFailingCheck, nil
+		}
+		return evidence, &nodeGate, "complex_node_gate status must be ready", nil
+	case !nodeGate.SafeToRequest || !nodeGate.SafeToExecute || !nodeGate.LiveExecutionAuthority:
+		return evidence, &nodeGate, "complex_node_gate must grant exact safe_to_execute authority", nil
+	case nodeGate.NodeID == "" || nodeGate.TaskID == "":
+		return evidence, &nodeGate, "complex_node_gate requires node_id and task_id", nil
+	case nodeGate.SchedulesWork || nodeGate.ExecutesWork || nodeGate.ApprovesWork || nodeGate.MutatesRepositories:
+		return evidence, &nodeGate, "complex_node_gate evidence must not schedule, execute, approve, or mutate repositories", nil
+	default:
+		return evidence, &nodeGate, "", nil
+	}
+}
+
+func findWorkgraphNode(workgraph map[string]any, nodeID string) (map[string]any, bool) {
+	for _, node := range classGateObjectSlice(workgraph["nodes"]) {
+		if classGateString(node, "id") == nodeID {
+			return node, true
+		}
+	}
+	return nil, false
+}
+
+func classGateNestedStringSlice(document map[string]any, outer, inner string) []string {
+	nested := classGateObject(document[outer])
+	return classGateStringSlice(nested, inner)
+}
+
+func classGateObject(value any) map[string]any {
+	object, _ := value.(map[string]any)
+	return object
+}
+
+func classGateObjectSlice(value any) []map[string]any {
+	values, ok := value.([]any)
+	if !ok {
+		return nil
+	}
+	objects := make([]map[string]any, 0, len(values))
+	for _, value := range values {
+		if object, ok := value.(map[string]any); ok {
+			objects = append(objects, object)
+		}
+	}
+	return objects
 }
 
 func evaluateLowRiskCodeBoundaryChecks(documents map[string]map[string]any, testOnlySuccessReady bool) (*MutationClassBoundaryChecks, []string) {
@@ -2475,11 +2858,6 @@ func evaluateLowRiskCodeLiveSuccessEvidence(path string) (MutationClassGateEvide
 		return evidence, success, blocker, nil
 	}
 	return evidence, success, "", nil
-}
-
-func classGateNestedStringSlice(document map[string]any, outer, inner string) []string {
-	nested, _ := document[outer].(map[string]any)
-	return classGateStringSlice(nested, inner)
 }
 
 func lowRiskLiveRollbackAccepted(object map[string]any) bool {

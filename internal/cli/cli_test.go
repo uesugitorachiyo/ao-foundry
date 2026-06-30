@@ -6055,6 +6055,172 @@ func TestMutationClassGateMultiRepoLowRiskPrerequisiteFailsClosed(t *testing.T) 
 	}
 }
 
+func TestComplexRepoNodeGateBlocksAtlasSafeToExecuteFalse(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeComplexRepoNodeGateArtifacts(t, dir, false, false, "safe_to_execute:false", nil)
+	outPath := filepath.Join(dir, "complex-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("complex node gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["schema_version"] != "ao.foundry.complex-repo-mutation-node-gate.v0.1" ||
+		gate["status"] != "blocked" ||
+		gate["mutation_class"] != "complex_repo_mutation" ||
+		gate["highest_proven_live_class"] != "multi_repo_low_risk" ||
+		gate["next_denied_class"] != "complex_repo_mutation" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != false ||
+		gate["live_execution_authority"] != false ||
+		gate["first_failing_check"] != "complex candidate record safe_to_execute is false" ||
+		gate["fully_unsupervised_complex_mutation"] != "denied" ||
+		gate["rsi"] != "denied" {
+		t.Fatalf("complex node gate must fail closed on Atlas safe_to_execute=false: %#v", gate)
+	}
+	for _, want := range []string{
+		"complex candidate record safe_to_execute is false",
+		"complex candidate record requires safe_to_execute:false",
+		"complex rollback record safe_to_execute is false",
+		"complex Foundry import requires safe_to_execute:false",
+	} {
+		if !objectStringSliceContains(gate, "blockers", want) {
+			t.Fatalf("complex node gate blockers missing %q: %#v", want, gate)
+		}
+	}
+}
+
+func TestMutationClassGateBlocksComplexRepoMutationWithoutNodeGate(t *testing.T) {
+	dir := t.TempDir()
+	common := writeComplexRepoClassGateCommonEvidence(t, dir)
+	outPath := filepath.Join(dir, "class-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", common["atlas"],
+		"--covenant", common["covenant"],
+		"--sentinel", common["sentinel"],
+		"--promoter", common["promoter"],
+		"--rollback", common["rollback"],
+		"--command", common["command"],
+		"--ci", common["ci"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "blocked" ||
+		gate["mutation_class"] != "complex_repo_mutation" ||
+		gate["safe_to_request"] != false ||
+		gate["safe_to_execute"] != false ||
+		gate["first_failing_check"] != "complex_repo_mutation requires complex_node_gate evidence" {
+		t.Fatalf("complex_repo_mutation must require node gate evidence: %#v", gate)
+	}
+	if !objectStringSliceContains(gate, "required_evidence", "complex_node_gate") {
+		t.Fatalf("complex_repo_mutation required evidence missing complex_node_gate: %#v", gate["required_evidence"])
+	}
+}
+
+func TestMutationClassGateComplexRepoMutationUsesNodeGate(t *testing.T) {
+	dir := t.TempDir()
+	common := writeComplexRepoClassGateCommonEvidence(t, dir)
+	readyArtifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "ready"), true, true, "safe_to_execute:true", nil)
+	readyNodeGate := filepath.Join(dir, "ready-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", readyArtifacts["workgraph"],
+		"--foundry-import", readyArtifacts["foundry_import"],
+		"--candidate", readyArtifacts["candidate"],
+		"--rollback", readyArtifacts["rollback"],
+		"--out", readyNodeGate,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("ready node gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	classGatePath := filepath.Join(dir, "class-gate.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", common["atlas"],
+		"--covenant", common["covenant"],
+		"--sentinel", common["sentinel"],
+		"--promoter", common["promoter"],
+		"--rollback", common["rollback"],
+		"--command", common["command"],
+		"--ci", common["ci"],
+		"--complex-node-gate", readyNodeGate,
+		"--out", classGatePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, classGatePath)
+	if gate["status"] != "ready" ||
+		gate["mutation_class"] != "complex_repo_mutation" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != true {
+		t.Fatalf("ready complex node gate should unlock exact class gate execution: %#v", gate)
+	}
+	nodeGate, ok := gate["complex_node_gate"].(map[string]any)
+	if !ok || nodeGate["node_id"] != "complex-docs-intake" || nodeGate["safe_to_execute"] != true {
+		t.Fatalf("class gate must retain complex node gate readback: %#v", gate)
+	}
+	schema := readObjectFixture(t, "docs/contracts/foundry-mutation-class-gate-v0.1.schema.json")
+	if err := validateJSONSchemaValue(schema, schema, gate, "$"); err != nil {
+		t.Fatalf("complex_repo_mutation class gate should validate against schema: %v", err)
+	}
+
+	blockedArtifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "blocked"), false, false, "safe_to_execute:false", nil)
+	blockedNodeGate := filepath.Join(dir, "blocked-node-gate.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", blockedArtifacts["workgraph"],
+		"--foundry-import", blockedArtifacts["foundry_import"],
+		"--candidate", blockedArtifacts["candidate"],
+		"--rollback", blockedArtifacts["rollback"],
+		"--out", blockedNodeGate,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked node gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	blockedClassGate := filepath.Join(dir, "blocked-class-gate.json")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"class-gate", "evaluate",
+		"--atlas", common["atlas"],
+		"--covenant", common["covenant"],
+		"--sentinel", common["sentinel"],
+		"--promoter", common["promoter"],
+		"--rollback", common["rollback"],
+		"--command", common["command"],
+		"--ci", common["ci"],
+		"--complex-node-gate", blockedNodeGate,
+		"--out", blockedClassGate,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked class gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	blocked := readObjectFixture(t, blockedClassGate)
+	if blocked["status"] != "blocked" ||
+		blocked["safe_to_execute"] != false ||
+		blocked["first_failing_check"] != "complex candidate record safe_to_execute is false" {
+		t.Fatalf("blocked complex node gate must keep class gate blocked: %#v", blocked)
+	}
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
@@ -7426,6 +7592,141 @@ func writeLowRiskCodeLiveSuccessFixture(t *testing.T, dir string, mutate func(ma
 	path := filepath.Join(dir, "low-risk-live-success.json")
 	writeJSONFixtureForTest(t, path, success)
 	return path
+}
+
+func writeComplexRepoClassGateCommonEvidence(t *testing.T, dir string) map[string]string {
+	t.Helper()
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		t.Fatalf("mkdir complex common evidence dir: %v", err)
+	}
+	fixtures := map[string]map[string]any{
+		"atlas": {
+			"schema_version": "ao.atlas.mutation-classification.v0.1",
+			"status":         "ready",
+			"mutation_class": "complex_repo_mutation",
+		},
+		"covenant": {
+			"schema_version": "covenant.mutation-class-authority-ticket.v1",
+			"approval_state": "approved",
+			"mutation_class": "complex_repo_mutation",
+			"consumed":       false,
+		},
+		"sentinel": {
+			"schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+			"status":         "no_hold",
+			"mutation_class": "complex_repo_mutation",
+			"hold":           false,
+		},
+		"promoter": {
+			"schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+			"status":         "ready",
+			"mutation_class": "complex_repo_mutation",
+		},
+		"rollback": {
+			"schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+			"status":         "passed",
+			"mutation_class": "complex_repo_mutation",
+		},
+		"command": {
+			"schema_version":  "ao.command.atlas-authority-ladder.v0.1",
+			"readback_status": "ready",
+			"mutation_class":  "complex_repo_mutation",
+			"current_class":   "multi_repo_low_risk",
+			"next_class":      "complex_repo_mutation",
+			"operator_mode":   "read_only",
+		},
+		"ci": {
+			"schema_version":  "ao.foundry.ci-readiness.v0.1",
+			"status":          "passed",
+			"mutation_class":  "complex_repo_mutation",
+			"required_checks": []any{"unit"},
+		},
+	}
+	paths := map[string]string{}
+	for name, value := range fixtures {
+		path := filepath.Join(dir, name+".json")
+		mustWriteJSONForTest(t, path, value)
+		paths[name] = path
+	}
+	return paths
+}
+
+func writeComplexRepoNodeGateArtifacts(t *testing.T, dir string, candidateSafe bool, rollbackSafe bool, importSafeRequirement string, mutate func(map[string]map[string]any)) map[string]string {
+	t.Helper()
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		t.Fatalf("mkdir complex node gate fixture dir: %v", err)
+	}
+	nodeID := "complex-docs-intake"
+	taskID := "complex-docs-intake-task"
+	workgraph := map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "complex-repo-mutation-rehearsal-workgraph-test",
+		"nodes": []any{
+			map[string]any{
+				"id":     nodeID,
+				"status": "ready",
+				"factory_task": map[string]any{
+					"id":             taskID,
+					"mutation_class": "complex_repo_mutation",
+				},
+			},
+		},
+	}
+	foundryImport := map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "complex-node-foundry-import-test",
+		"workgraph_id":     "complex-repo-mutation-rehearsal-workgraph-test",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":           nodeID,
+				"task_id":           taskID,
+				"mutation_class":    "complex_repo_mutation",
+				"required_evidence": []any{importSafeRequirement},
+				"factory_task": map[string]any{
+					"id":                taskID,
+					"mutation_class":    "complex_repo_mutation",
+					"required_evidence": []any{importSafeRequirement},
+				},
+			},
+		},
+	}
+	candidate := map[string]any{
+		"schema":           "ao.atlas.private-candidate-record.v0.1",
+		"node_id":          nodeID,
+		"task_id":          taskID,
+		"status":           "ready",
+		"mutation_class":   "complex_repo_mutation",
+		"executable_ready": true,
+		"safe_to_execute":  candidateSafe,
+		"required_gates":   []any{"covenant_ticket_required", "foundry_class_gate_required", importSafeRequirement},
+	}
+	rollback := map[string]any{
+		"schema":          "ao.atlas.private-rollback-record.v0.1",
+		"node_id":         nodeID,
+		"task_id":         taskID,
+		"status":          "ready",
+		"safe_to_execute": rollbackSafe,
+	}
+	objects := map[string]map[string]any{
+		"workgraph":      workgraph,
+		"foundry_import": foundryImport,
+		"candidate":      candidate,
+		"rollback":       rollback,
+	}
+	if mutate != nil {
+		mutate(objects)
+	}
+	paths := map[string]string{}
+	for name, value := range objects {
+		path := filepath.Join(dir, name+".json")
+		mustWriteJSONForTest(t, path, value)
+		paths[name] = path
+	}
+	return paths
 }
 
 func writeJSONFixtureForTest(t *testing.T, path string, value any) {
