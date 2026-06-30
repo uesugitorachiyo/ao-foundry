@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "promotion_boundary": "test_only_only"
+}

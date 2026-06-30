@@ -1,0 +1,20 @@
+{
+  "schema_version": "ao.atlas.mutation-classification.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "write_scope": [
+    "internal/atlas/atlas_test.go"
+  ],
+  "required_gates": [
+    "atlas_classification",
+    "covenant_class_ticket",
+    "sentinel_no_hold",
+    "promoter_ready",
+    "rollback_proof",
+    "command_readback",
+    "ci_passed"
+  ],
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "authority_boundary": "atlas_classification_only"
+}
