@@ -59,6 +59,9 @@ const (
 	firstNonPlanningPromoterFinalSchema     = "ao.promoter.fully-unsupervised-first-non-planning-final-verdict.v0.1"
 	firstNonPlanningCommandFinalSchema      = "ao.command.fully-unsupervised-first-non-planning-class-decision-readback.v0.1"
 	rsiReadinessStopGateClearanceSchema     = "ao.foundry.rsi-readiness-stop-gate-clearance.v0.1"
+	rsiFinalRollupSchema                    = "ao.foundry.rsi-first-bounded-evidence-final-rollup.v0.1"
+	rsiPromoterFinalSchema                  = "ao.promoter.rsi-first-bounded-evidence-final-verdict.v0.1"
+	rsiCommandFinalSchema                   = "ao.command.rsi-first-bounded-evidence-class-decision-readback.v0.1"
 )
 
 var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -1407,6 +1410,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>")
 	fmt.Fprintln(w, "  foundry rsi readiness-gate evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --continuation-handoff <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --candidate <path> --rollback <path> --out <path>")
 	fmt.Fprintln(w, "  foundry rsi readiness-stop-gate evaluate --workgraph <path> --stop-gate-graph <path> --node-gate <path> --run-link <path> --rollback <path> --sentinel <path> --promoter <path> --command-readback <path> --out <path> [--workgraph-out <path>]")
+	fmt.Fprintln(w, "  foundry rsi final-closure evaluate --workgraph <path> --run-links-root <path> --stop-gates-root <path> --out <path> [--terminal-run-link <path>] [--terminal-node-record <path>] [--promoter-out <path>] [--command-readback-out <path>]")
 	fmt.Fprintln(w, "  foundry trace inspect --trace <path> [--json]")
 	fmt.Fprintln(w, "  foundry import ao2-sdd --plan <ao2.sdd-plan.json> --out <foundry-task.json>")
 	fmt.Fprintln(w, "  foundry export forge-brief --task <foundry-task.json> --registry <path> --out <forge-brief.json>")
@@ -6500,7 +6504,7 @@ func runEval(args []string, stdout, stderr io.Writer) int {
 
 func runRSI(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate, readiness-gate evaluate, or readiness-stop-gate evaluate")
+		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate, readiness-gate evaluate, readiness-stop-gate evaluate, or final-closure evaluate")
 		return 2
 	}
 	if len(args) >= 2 && args[0] == "readiness-gate" && args[1] == "evaluate" {
@@ -6508,6 +6512,9 @@ func runRSI(args []string, stdout, stderr io.Writer) int {
 	}
 	if len(args) >= 2 && args[0] == "readiness-stop-gate" && args[1] == "evaluate" {
 		return runRSIReadinessStopGateEvaluate(args[2:], stdout, stderr)
+	}
+	if len(args) >= 2 && args[0] == "final-closure" && args[1] == "evaluate" {
+		return runRSIFinalClosureEvaluate(args[2:], stdout, stderr)
 	}
 	if args[0] != "improvement-gate" {
 		fmt.Fprintf(stderr, "rsi: unknown command %q\n", strings.Join(args, " "))
@@ -6563,6 +6570,16 @@ type rsiReadinessStopGatePaths struct {
 	Promoter        string
 	CommandReadback string
 	WorkgraphOut    string
+}
+
+type rsiFinalClosurePaths struct {
+	Workgraph          string
+	RunLinksRoot       string
+	StopGatesRoot      string
+	TerminalRunLink    string
+	TerminalNodeRecord string
+	Promoter           string
+	CommandReadback    string
 }
 
 func runRSIReadinessGateEvaluate(args []string, stdout, stderr io.Writer) int {
@@ -6717,6 +6734,490 @@ func runRSIReadinessStopGateEvaluate(args []string, stdout, stderr io.Writer) in
 		fmt.Fprintf(stdout, "first_failing_check=%s\n", first)
 	}
 	return 0
+}
+
+func runRSIFinalClosureEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("rsi final-closure evaluate", stderr)
+	workgraphPath := fs.String("workgraph", "", "final Atlas RSI evidence workgraph after all nodes complete")
+	runLinksRoot := fs.String("run-links-root", "", "Atlas foundry-execution root containing per-node run-links")
+	stopGatesRoot := fs.String("stop-gates-root", "", "Foundry evidence root containing RSI stop-gate evidence")
+	terminalRunLinkPath := fs.String("terminal-run-link", "", "optional terminal run-link to bind the class decision")
+	terminalNodeRecordPath := fs.String("terminal-node-record", "", "optional terminal node record to bind the class decision")
+	promoterOut := fs.String("promoter-out", "", "optional Promoter bounded RSI final verdict output path")
+	commandReadbackOut := fs.String("command-readback-out", "", "optional Command bounded RSI class decision readback output path")
+	outPath := fs.String("out", "", "Foundry RSI final promotion rollup output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	required := map[string]string{
+		"--workgraph":       *workgraphPath,
+		"--run-links-root":  *runLinksRoot,
+		"--stop-gates-root": *stopGatesRoot,
+		"--out":             *outPath,
+	}
+	missing := []string{}
+	for flagName, value := range required {
+		if strings.TrimSpace(value) == "" {
+			missing = append(missing, flagName)
+		}
+	}
+	if len(missing) > 0 {
+		sort.Strings(missing)
+		fmt.Fprintf(stderr, "%s are required\n", strings.Join(missing, ", "))
+		return 2
+	}
+	rollup, promoter, commandReadback, err := buildRSIFinalClosure(rsiFinalClosurePaths{
+		Workgraph:          *workgraphPath,
+		RunLinksRoot:       *runLinksRoot,
+		StopGatesRoot:      *stopGatesRoot,
+		TerminalRunLink:    *terminalRunLinkPath,
+		TerminalNodeRecord: *terminalNodeRecordPath,
+		Promoter:           *promoterOut,
+		CommandReadback:    *commandReadbackOut,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "rsi final-closure: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, rollup); err != nil {
+		fmt.Fprintf(stderr, "write rsi final rollup: %v\n", err)
+		return 1
+	}
+	if strings.TrimSpace(*promoterOut) != "" {
+		if err := writeJSONFile(*promoterOut, promoter); err != nil {
+			fmt.Fprintf(stderr, "write rsi promoter final verdict: %v\n", err)
+			return 1
+		}
+	}
+	if strings.TrimSpace(*commandReadbackOut) != "" {
+		if err := writeJSONFile(*commandReadbackOut, commandReadback); err != nil {
+			fmt.Fprintf(stderr, "write rsi command final readback: %v\n", err)
+			return 1
+		}
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, rollup); err != nil {
+			fmt.Fprintf(stderr, "write rsi final rollup json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "rsi_final_rollup=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", classGateString(rollup, "status"))
+	fmt.Fprintf(stdout, "safe_to_promote=%t\n", classGateBool(rollup, "safe_to_promote"))
+	fmt.Fprintf(stdout, "bounded_rsi_evidence_rehearsal_live_proven=%t\n", classGateBool(rollup, "bounded_rsi_evidence_rehearsal_live_proven"))
+	fmt.Fprintf(stdout, "broad_rsi=%s\n", classGateString(rollup, "broad_rsi"))
+	if first := classGateString(rollup, "first_failing_check"); first != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", first)
+	}
+	return 0
+}
+
+func buildRSIFinalClosure(paths rsiFinalClosurePaths) (map[string]any, map[string]any, map[string]any, error) {
+	sources := []MutationClassGateEvidence{}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("final_workgraph", paths.Workgraph)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	sources = append(sources, workgraphSource)
+	if strings.TrimSpace(paths.TerminalRunLink) != "" {
+		terminalRunLinkSource, terminalRunLink, err := readComplexNodeGateObject("terminal_run_link", paths.TerminalRunLink)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		sources = append(sources, terminalRunLinkSource)
+		if classGateString(terminalRunLink, "contract_version") != atlasRunLinkSchema ||
+			classGateString(terminalRunLink, "status") != "completed" ||
+			classGateString(terminalRunLink, "task_id") != "terminal-manifest-task" {
+			return nil, nil, nil, errors.New("terminal run-link must bind to completed terminal-manifest evidence")
+		}
+	}
+	if strings.TrimSpace(paths.TerminalNodeRecord) != "" {
+		terminalNodeSource, terminalNode, err := readComplexNodeGateObject("terminal_node_record", paths.TerminalNodeRecord)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		sources = append(sources, terminalNodeSource)
+		classState := classGateObject(terminalNode["class_state"])
+		boundaries := classGateObject(terminalNode["authority_boundaries"])
+		if classGateString(terminalNode, "node_id") != "terminal-manifest" ||
+			classGateString(terminalNode, "status") != "completed" ||
+			classGateString(classState, "fully_unsupervised_complex_mutation") != "live-proven" ||
+			classGateString(classState, "rsi") != "denied" ||
+			classGateBool(boundaries, "approves_work") ||
+			classGateBool(boundaries, "direct_main_mutation_allowed") ||
+			classGateBool(boundaries, "executes_providers") ||
+			classGateBool(boundaries, "public_claim_broadening_allowed") ||
+			classGateBool(boundaries, "release_or_publish_allowed") ||
+			classGateBool(boundaries, "schedules_work") {
+			return nil, nil, nil, errors.New("terminal node record must preserve bounded RSI denial authority")
+		}
+	}
+
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	totalNodes := len(nodes)
+	completedNodes := countWorkgraphNodesWithStatus(nodes, "completed")
+	readyNodes := countWorkgraphNodesWithStatus(nodes, "ready")
+	blockedNodes := countWorkgraphNodesWithStatus(nodes, "blocked")
+	blockers := []string{}
+	nodeIDs := []string{}
+	nodeIDSet := map[string]bool{}
+	allNodeEvidence := totalNodes > 0
+	allCI := true
+	allPRMerged := true
+	noForbiddenSurfaces := true
+	rsiDenied := true
+	rollbackEvidenceCount := 0
+	sentinelEvidenceCount := 0
+	promoterEvidenceCount := 0
+	commandReadbackCount := 0
+	evalRegressionEvidenceCount := 0
+	measurementEvidenceCount := 0
+
+	if totalNodes != 32 {
+		blockers = append(blockers, fmt.Sprintf("workgraph must contain 32 nodes, got %d", totalNodes))
+	}
+	if completedNodes != totalNodes || readyNodes != 0 || blockedNodes != 0 {
+		blockers = append(blockers, "workgraph must have all nodes completed with zero ready or blocked nodes")
+	}
+	requiredNodes := []string{
+		"baseline-measurement",
+		"candidate-proposal",
+		"candidate-docs-test-readback-scope",
+		"covenant-ticket",
+		"foundry-gated-execution-path",
+		"forge-ao2-bounded-packet",
+		"sentinel-verdict",
+		"promoter-verdict",
+		"command-readback",
+		"regression-eval-suite",
+		"rollback-rehearsal",
+		"post-change-measurement",
+		"improvement-threshold",
+		"public-claim-guard",
+		"hidden-instruction-denial",
+		"broad-rsi-denial",
+		"terminal-manifest",
+	}
+	for _, node := range nodes {
+		nodeID := classGateString(node, "id")
+		if strings.TrimSpace(nodeID) == "" {
+			allNodeEvidence = false
+			blockers = append(blockers, "workgraph node missing id")
+			continue
+		}
+		nodeIDs = append(nodeIDs, nodeID)
+		nodeIDSet[nodeID] = true
+		if classGateString(node, "status") != "completed" {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node %s must be completed before RSI final closure", nodeID))
+		}
+		runLinkPath := filepath.Join(paths.RunLinksRoot, nodeID, "run-link.json")
+		runLinkSource, runLink, found, err := readFullyUnsupervisedClosureObject("run-link "+nodeID, runLinkPath)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("run-link missing for %s", nodeID))
+			continue
+		}
+		sources = append(sources, runLinkSource)
+		if classGateString(runLink, "contract_version") != atlasRunLinkSchema || classGateString(runLink, "status") != "completed" {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("run-link %s must be completed terminal evidence", nodeID))
+		}
+		evidence := classGateObject(runLink["evidence"])
+		if !statusPassed(classGateString(evidence, "ci")) {
+			allCI = false
+			blockers = append(blockers, fmt.Sprintf("run-link %s requires passed CI evidence", nodeID))
+		}
+		if classGateString(evidence, "pr") == "" || classGateString(evidence, "merge_commit") == "" {
+			allPRMerged = false
+			blockers = append(blockers, fmt.Sprintf("run-link %s requires PR and merge evidence", nodeID))
+		}
+		if classGateString(evidence, "changed_file") == "" {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("run-link %s requires changed file evidence", nodeID))
+		}
+		gatePath := classGateString(evidence, "node_gate")
+		if strings.TrimSpace(gatePath) == "" {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("run-link %s requires node gate evidence", nodeID))
+			continue
+		}
+		nodeGateSource, nodeGate, found, err := readFullyUnsupervisedClosureObject("node-gate "+nodeID, gatePath)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node gate missing for %s", nodeID))
+			continue
+		}
+		sources = append(sources, nodeGateSource)
+		if classGateString(nodeGate, "schema_version") != complexNodeGateSchema ||
+			classGateString(nodeGate, "status") != "ready" ||
+			!classGateBool(nodeGate, "safe_to_request") ||
+			!classGateBool(nodeGate, "safe_to_execute") ||
+			!classGateBool(nodeGate, "live_execution_authority") {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s must be ready and executable", nodeID))
+		}
+		if classGateString(nodeGate, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
+			classGateString(nodeGate, "next_denied_class") != "RSI" ||
+			classGateString(nodeGate, "fully_unsupervised_complex_mutation") != "live-proven" {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s must carry forward fully_unsupervised_complex_mutation as highest proven live class", nodeID))
+		}
+		if classGateBool(nodeGate, "schedules_work") ||
+			classGateBool(nodeGate, "executes_work") ||
+			classGateBool(nodeGate, "approves_work") ||
+			classGateBool(nodeGate, "mutates_repositories") ||
+			classGateBool(nodeGate, "hidden_instruction_mutation_detected") ||
+			classGateBool(nodeGate, "authority_broadening_detected") ||
+			classGateBool(nodeGate, "public_rsi_claim_detected") {
+			noForbiddenSurfaces = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s expands forbidden authority", nodeID))
+		}
+		if classGateString(nodeGate, "rsi") != "denied" {
+			rsiDenied = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s must keep RSI denied", nodeID))
+		}
+		if !classGateEvidenceContainsName(nodeGate, "rollback_record") {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s requires rollback evidence binding", nodeID))
+		} else {
+			rollbackEvidenceCount++
+		}
+		if !classGateEvidenceContainsName(nodeGate, "candidate_record") {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("node gate %s requires candidate evidence binding", nodeID))
+		}
+		switch nodeID {
+		case "baseline-measurement", "post-change-measurement":
+			measurementEvidenceCount++
+		case "regression-eval-suite", "improvement-threshold":
+			evalRegressionEvidenceCount++
+		}
+	}
+	for _, nodeID := range requiredNodes {
+		if !nodeIDSet[nodeID] {
+			allNodeEvidence = false
+			blockers = append(blockers, fmt.Sprintf("required RSI evidence node %s is missing", nodeID))
+		}
+	}
+
+	everyStopGateCleared := totalNodes > 1
+	for i := 1; i < len(nodeIDs); i++ {
+		afterNode := nodeIDs[i-1]
+		beforeNode := nodeIDs[i]
+		stopGateID := fmt.Sprintf("stop-gate-%02d-%s-to-%s", i, afterNode, beforeNode)
+		stopGateDir := filepath.Join(paths.StopGatesRoot, stopGateID)
+		clearancePath := filepath.Join(stopGateDir, "clearance.json")
+		if _, err := os.Stat(clearancePath); err != nil {
+			clearancePath = filepath.Join(stopGateDir, "stop-gate-clearance.json")
+		}
+		clearanceSource, clearance, found, err := readFullyUnsupervisedClosureObject("stop-gate clearance "+stopGateID, clearancePath)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("stop-gate clearance missing for %s", stopGateID))
+			continue
+		}
+		sources = append(sources, clearanceSource)
+		if classGateString(clearance, "schema_version") != rsiReadinessStopGateClearanceSchema ||
+			classGateString(clearance, "status") != "ready" ||
+			!classGateBool(clearance, "safe_to_continue") ||
+			classGateString(clearance, "after_node") != afterNode ||
+			classGateString(clearance, "before_node") != beforeNode {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("stop-gate clearance must be ready for %s", stopGateID))
+		}
+		if classGateString(clearance, "fully_unsupervised_complex_mutation") != "live-proven" ||
+			classGateString(clearance, "rsi") != "denied" ||
+			classGateString(clearance, "public_claim_guard") != "passed" ||
+			!classGateBool(clearance, "hidden_instruction_mutation_denied") ||
+			!classGateBool(clearance, "self_modification_authorized_false") ||
+			classGateBool(clearance, "hidden_instruction_mutation_detected") ||
+			classGateBool(clearance, "authority_broadening_detected") {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("stop-gate clearance %s must preserve RSI denial and public claim guards", stopGateID))
+		}
+		sentinelSource, sentinel, found, err := readFullyUnsupervisedClosureObject("Sentinel verdict "+stopGateID, filepath.Join(stopGateDir, "sentinel-verdict.json"))
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("Sentinel verdict missing for %s", stopGateID))
+		} else {
+			sources = append(sources, sentinelSource)
+			if classGateString(sentinel, "status") != "clear" ||
+				classGateString(sentinel, "fully_unsupervised_complex_mutation") != "live-proven" ||
+				classGateString(sentinel, "rsi") != "denied" ||
+				classGateBool(sentinel, "hidden_instruction_mutation_detected") ||
+				classGateBool(sentinel, "authority_broadening_detected") ||
+				classGateBool(sentinel, "public_rsi_claim_detected") ||
+				classGateBool(sentinel, "kill_switch") {
+				everyStopGateCleared = false
+				blockers = append(blockers, fmt.Sprintf("Sentinel verdict must be clear for %s", stopGateID))
+			} else {
+				sentinelEvidenceCount++
+			}
+		}
+		promoterSource, promoter, found, err := readFullyUnsupervisedClosureObject("Promoter verdict "+stopGateID, filepath.Join(stopGateDir, "promoter-verdict.json"))
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("Promoter verdict missing for %s", stopGateID))
+		} else {
+			sources = append(sources, promoterSource)
+			if classGateString(promoter, "verdict") != "no_promotion" ||
+				classGateString(promoter, "fully_unsupervised_complex_mutation") != "live-proven" ||
+				classGateString(promoter, "rsi") != "denied" ||
+				classGateBool(promoter, "promotion_allowed") {
+				everyStopGateCleared = false
+				blockers = append(blockers, fmt.Sprintf("Promoter verdict must be no_promotion for %s", stopGateID))
+			} else {
+				promoterEvidenceCount++
+			}
+		}
+		commandSource, commandReadback, found, err := readFullyUnsupervisedClosureObject("Command readback "+stopGateID, filepath.Join(stopGateDir, "command-readback.json"))
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		if !found {
+			everyStopGateCleared = false
+			blockers = append(blockers, fmt.Sprintf("Command readback missing for %s", stopGateID))
+		} else {
+			sources = append(sources, commandSource)
+			if classGateString(commandReadback, "status") != "accepted" ||
+				!classGateBool(commandReadback, "safe_to_continue") ||
+				classGateString(commandReadback, "fully_unsupervised_complex_mutation") != "live-proven" ||
+				classGateString(commandReadback, "rsi") != "denied" ||
+				classGateString(commandReadback, "public_claim_guard") != "passed" ||
+				!classGateBool(commandReadback, "hidden_instruction_mutation_denied") ||
+				!classGateBool(commandReadback, "self_modification_authorized_false") {
+				everyStopGateCleared = false
+				blockers = append(blockers, fmt.Sprintf("Command readback must agree for %s", stopGateID))
+			} else {
+				commandReadbackCount++
+			}
+		}
+	}
+
+	if measurementEvidenceCount < 2 {
+		blockers = append(blockers, "baseline and post-change measurement evidence are required")
+	}
+	if evalRegressionEvidenceCount < 2 {
+		blockers = append(blockers, "regression/eval and improvement-threshold evidence are required")
+	}
+	blockers = uniqueStrings(blockers)
+	promoted := len(blockers) == 0
+	status := "blocked"
+	exactNextAction := "repair_rsi_final_closure_evidence_before_bounded_promotion"
+	promoterVerdict := "deny_promotion"
+	commandDecision := "deny_bounded_rsi_evidence_rehearsal_promotion"
+	if promoted {
+		status = "promoted"
+		exactNextAction = "record_bounded_rsi_evidence_rehearsal_only_keep_broad_rsi_denied"
+		promoterVerdict = "promote_bounded_rsi_evidence_rehearsal"
+		commandDecision = "promote_bounded_rsi_evidence_rehearsal_keep_broad_rsi_denied"
+	}
+	rollup := map[string]any{
+		"schema":          rsiFinalRollupSchema,
+		"status":          status,
+		"safe_to_promote": promoted,
+		"bounded_rsi_evidence_rehearsal_live_proven": promoted,
+		"broad_rsi":                                  "denied",
+		"unrestricted_self_modification":             "denied",
+		"rsi":                                        "denied",
+		"rsi_denied":                                 rsiDenied && promoted,
+		"highest_proven_live_class":                  "fully_unsupervised_complex_mutation",
+		"next_denied_class":                          "RSI",
+		"total_nodes":                                float64(totalNodes),
+		"completed_nodes":                            float64(completedNodes),
+		"blocked_nodes":                              float64(blockedNodes),
+		"ready_nodes":                                float64(readyNodes),
+		"every_node_has_evidence":                    allNodeEvidence && promoted,
+		"every_stop_gate_cleared":                    everyStopGateCleared && promoted,
+		"all_node_prs_merged":                        allPRMerged && promoted,
+		"all_ci_passed":                              allCI && promoted,
+		"rollback_evidence_count":                    float64(rollbackEvidenceCount),
+		"sentinel_evidence_count":                    float64(sentinelEvidenceCount),
+		"promoter_evidence_count":                    float64(promoterEvidenceCount),
+		"command_readback_count":                     float64(commandReadbackCount),
+		"measurement_evidence_count":                 float64(measurementEvidenceCount),
+		"eval_regression_evidence_count":             float64(evalRegressionEvidenceCount),
+		"covenant_exact_scope_boundary":              nodeIDSet["covenant-ticket"] && promoted,
+		"forge_ao2_bounded_packet_enforced":          nodeIDSet["forge-ao2-bounded-packet"] && promoted,
+		"exact_scope_gated_change_evidence_exists":   nodeIDSet["candidate-docs-test-readback-scope"] && nodeIDSet["foundry-gated-execution-path"] && promoted,
+		"candidate_self_improvement_proposal_exists": nodeIDSet["candidate-proposal"] && promoted,
+		"baseline_measurement_exists":                nodeIDSet["baseline-measurement"] && promoted,
+		"post_change_measurement_exists":             nodeIDSet["post-change-measurement"] && promoted,
+		"improvement_threshold_result_exists":        nodeIDSet["improvement-threshold"] && promoted,
+		"regression_eval_evidence_exists":            nodeIDSet["regression-eval-suite"] && promoted,
+		"no_hidden_instruction_mutation":             noForbiddenSurfaces && promoted,
+		"no_authority_broadening":                    noForbiddenSurfaces && promoted,
+		"no_forbidden_surfaces":                      noForbiddenSurfaces && promoted,
+		"no_broad_public_rsi_claim":                  noForbiddenSurfaces && promoted,
+		"first_failing_check":                        "",
+		"blockers":                                   blockers,
+		"exact_next_action":                          exactNextAction,
+		"public_wording_review":                      "bounded_rsi_evidence_rehearsal is live-proven for this governed evidence rehearsal only; broad RSI and unrestricted self-modification remain denied.",
+		"source_evidence":                            sources,
+		"generated_at":                               nowUTC(),
+	}
+	if len(blockers) > 0 {
+		rollup["first_failing_check"] = blockers[0]
+	}
+	promoter := map[string]any{
+		"schema":  rsiPromoterFinalSchema,
+		"status":  "accepted",
+		"verdict": promoterVerdict,
+		"bounded_rsi_evidence_rehearsal_live_proven": promoted,
+		"broad_rsi":                      "denied",
+		"unrestricted_self_modification": "denied",
+		"rsi":                            "denied",
+		"highest_proven_live_class":      "fully_unsupervised_complex_mutation",
+		"next_denied_class":              "RSI",
+		"safe_to_promote":                promoted,
+		"blockers":                       blockers,
+		"public_wording_review":          rollup["public_wording_review"],
+		"generated_at":                   nowUTC(),
+	}
+	commandReadback := map[string]any{
+		"schema":   rsiCommandFinalSchema,
+		"status":   "accepted",
+		"decision": commandDecision,
+		"bounded_rsi_evidence_rehearsal_live_proven": promoted,
+		"broad_rsi":                      "denied",
+		"unrestricted_self_modification": "denied",
+		"rsi":                            "denied",
+		"highest_proven_live_class":      "fully_unsupervised_complex_mutation",
+		"next_denied_class":              "RSI",
+		"safe_to_promote":                promoted,
+		"blockers":                       blockers,
+		"exact_next_action":              exactNextAction,
+		"operator_readback":              "bounded_rsi_evidence_rehearsal may be reported as live-proven; broad RSI, hidden self-modification, and unrestricted self-modification remain denied.",
+		"generated_at":                   nowUTC(),
+	}
+	return rollup, promoter, commandReadback, nil
+}
+
+func classGateEvidenceContainsName(object map[string]any, want string) bool {
+	for _, evidence := range classGateObjectSlice(object["source_evidence"]) {
+		if classGateString(evidence, "name") == want && classGateString(evidence, "sha256") != "" {
+			return true
+		}
+	}
+	return false
 }
 
 func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNodeGate, error) {
