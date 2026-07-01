@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.ricc.measurement.v0.1",
+  "cycle_id": "cycle-a",
+  "candidate": "causal influence trace quality",
+  "baseline": 0.58,
+  "post": 0.89,
+  "improvement": 0.31,
+  "threshold": 0.2,
+  "result": "passed"
+}

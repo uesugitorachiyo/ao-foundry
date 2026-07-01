@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.ricc.causal-influence-trace.v0.1",
+  "cycle_id": "cycle-b",
+  "prior_signal": "Cycle A improved trace quality but exposed that independent readers still need a reproducible step-by-step chain runbook.",
+  "candidate": "causal chain reproducibility runbook quality",
+  "selection_reason": "Use Cycle A post-measurement to select a runbook-quality improvement that makes the causal chain independently reviewable.",
+  "causal_chain": [
+    "prior measured evidence reviewed",
+    "blocker mapped to bounded candidate",
+    "candidate scoped as reversible public-safe evidence task",
+    "post-change measurement compared against baseline",
+    "promotion or denial routed through exact wording gates"
+  ],
+  "public_safe": true
+}

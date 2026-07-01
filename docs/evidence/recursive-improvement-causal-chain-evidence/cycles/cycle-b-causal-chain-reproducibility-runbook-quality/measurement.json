@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.ricc.measurement.v0.1",
+  "cycle_id": "cycle-b",
+  "candidate": "causal chain reproducibility runbook quality",
+  "baseline": 0.62,
+  "post": 0.9,
+  "improvement": 0.28,
+  "threshold": 0.2,
+  "result": "passed"
+}

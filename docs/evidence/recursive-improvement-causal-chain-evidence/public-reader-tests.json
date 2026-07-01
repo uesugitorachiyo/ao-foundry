@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.ricc.public-reader.v0.1",
+  "result": "approved_bounded_causal_improvement_chain_evidence_wording",
+  "candidate_results": [
+    {
+      "id": "current-approved-repeated-bounded-evidence",
+      "result": "approved"
+    },
+    {
+      "id": "bounded-causal-improvement-chain-evidence",
+      "result": "approved"
+    },
+    {
+      "id": "governed-recursive-improvement-evidence",
+      "result": "denied_recursive_improvement_phrase_overstates_public_evidence"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "result": "denied_overbroad"
+    }
+  ]
+}

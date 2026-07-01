@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.ricc.prior-evidence.v0.1",
+  "prior_class": "repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "prior_evidence_path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/final-rollup.json",
+  "usable_signal": "attempts with freshness, rollback, CI/readiness, and contract/schema evidence produced repeatable bounded improvements while stronger recursive-improvement wording remained denied"
+}

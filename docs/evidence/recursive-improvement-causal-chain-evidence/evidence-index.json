@@ -1,0 +1,115 @@
+{
+  "schema": "ao.foundry.ricc.evidence-index.v0.1",
+  "mission": "recursive-improvement-causal-chain-evidence",
+  "highest_prior_class": "repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "new_class": "public_safe_bounded_causal_improvement_chain_evidence",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "cycles_completed": 2,
+  "public_safe_artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/README.md",
+      "sha256": "sha256:15c45023dbb46a04ae030da2051da90078165e3578f6a6d43ecf801aeee5d72d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/adversarial-wording-tests.json",
+      "sha256": "sha256:60560841c4fc903a73edc01c59a275f10b8233b4adc77b2aeef33254fef7b48e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/architecture-wording-gate.json",
+      "sha256": "sha256:f2e9d3f08e7d11e6b92ddae8f36a32391ab82ddceeb7963979dc7ed4deaef9f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/causal-chain-summary.json",
+      "sha256": "sha256:af04b7b13f97a54816b140587bf25bd102743e47af61bcfe00561013be888e31"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/command-readback.json",
+      "sha256": "sha256:359b8e26a57de00b93ed524825f1e3acba6e42a73246eeb46fca196e95c93f30"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/covenant-publication-gate.json",
+      "sha256": "sha256:c68d23af2cc73a37535158f017a500d11bc893fdfd5cdc53e47eb96effb37c24"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/README.md",
+      "sha256": "sha256:2d4c6d25e28f9dd354277ce3ffdb7391297888ee520990169d745d471dd8f669"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/causal-influence-trace.json",
+      "sha256": "sha256:9f160c3d9c45bdc13963f9889ae65ac9a96286f3db25cb9297d3a8e4cc2d8fb1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/eval-regression.json",
+      "sha256": "sha256:922b750f42d6b5897b68099d2c3fdbae44e2121534e689d902340c79d1a12063"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/measurement.json",
+      "sha256": "sha256:df0d0cb09526044044013f6685ed6cc9f58dd091b4c38c6481cd85b173d2f240"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/reproducibility-runbook.md",
+      "sha256": "sha256:2e20a6f60d8127863e83ffaab602186b5bc2061d8883295c3c7a80a333696bda"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-a-causal-influence-trace-quality/rollback-proof.json",
+      "sha256": "sha256:e38ef22d0657fd682fd91f9688202f0dc4389fc51eafe661b1357d2fe368321a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/README.md",
+      "sha256": "sha256:f46b73e3d8360dd56e62720aee947603949236f5f66d7b40a9f1c8015f475468"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/causal-influence-trace.json",
+      "sha256": "sha256:49c531c31315d8f18d349916c4b7519339ba76d9f95033e4027738883e96f68d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/eval-regression.json",
+      "sha256": "sha256:41323e4092d8b5ecd9d4b0fb374b3357d27d62032033028cfe40f124dd7b33e2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/measurement.json",
+      "sha256": "sha256:0b4e33a5f5bf1a2e97d3b1c20d166171eb356c18eaf74f39e890f5a82c8aea48"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/reproducibility-runbook.md",
+      "sha256": "sha256:886b0a3d77497e810552ae3e05f9b9bfaf33bff6aab830d2ca81dcb1576c83c2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/cycles/cycle-b-causal-chain-reproducibility-runbook-quality/rollback-proof.json",
+      "sha256": "sha256:54595d128302796b190e6068872c9351756c654e7e4588a08bd306f76e66c386"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/final-rollup.json",
+      "sha256": "sha256:cd3a9abf8c23132878064f8dc4c9d34a68cf7d18f59bc27367135d87a893c960"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/prior-evidence-carry-forward.json",
+      "sha256": "sha256:55f5dbaf10059815042aa42df37d829189ede5899527efb06d44d3555a624745"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/promoter-verdict.json",
+      "sha256": "sha256:bb7ebab1d4e0d4e9c00a6575a63020b69e017fe135de74680c029e599b9072d4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/public-reader-tests.json",
+      "sha256": "sha256:66e4b3dfac7c96b94eb70d8594c9b95842394a84e0e19ef13c1eb96cc6251709"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/public-safety-scan.json",
+      "sha256": "sha256:c19067eb5ca73a1982ead485e623a930fe98dff37a2f88dda7428cf54e4fa156"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/sentinel-public-risk-gate.json",
+      "sha256": "sha256:892934c9ce89e37116d54eeec2617c088024b007f2e4c321cbb614c2fdc591ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/stale-language-guard.json",
+      "sha256": "sha256:beff386ae4a576c05de063387bc88414eae55732992c7a1f80c417d8018f7066"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-causal-chain-evidence/wording-candidate-results.json",
+      "sha256": "sha256:8ffd8d4965a8295ed46f49fea1ceb8a8e450d8c78f040dbc9bb86cbdf5b75595"
+    }
+  ]
+}
