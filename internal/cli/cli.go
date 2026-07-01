@@ -1403,6 +1403,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry approval validate --decision <approval-decision.json> --task <path>")
 	fmt.Fprintln(w, "  foundry eval run --run <foundry-run.json> --scorecard <scorecard.json> --out <eval-result.json>")
 	fmt.Fprintln(w, "  foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>")
+	fmt.Fprintln(w, "  foundry rsi readiness-gate evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --continuation-handoff <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --candidate <path> --rollback <path> --out <path>")
 	fmt.Fprintln(w, "  foundry trace inspect --trace <path> [--json]")
 	fmt.Fprintln(w, "  foundry import ao2-sdd --plan <ao2.sdd-plan.json> --out <foundry-task.json>")
 	fmt.Fprintln(w, "  foundry export forge-brief --task <foundry-task.json> --registry <path> --out <forge-brief.json>")
@@ -6481,8 +6482,15 @@ func runEval(args []string, stdout, stderr io.Writer) int {
 }
 
 func runRSI(args []string, stdout, stderr io.Writer) int {
-	if len(args) == 0 || args[0] != "improvement-gate" {
-		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate")
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate or readiness-gate evaluate")
+		return 2
+	}
+	if len(args) >= 2 && args[0] == "readiness-gate" && args[1] == "evaluate" {
+		return runRSIReadinessGateEvaluate(args[2:], stdout, stderr)
+	}
+	if args[0] != "improvement-gate" {
+		fmt.Fprintf(stderr, "rsi: unknown command %q\n", strings.Join(args, " "))
 		return 2
 	}
 	fs := newFlagSet("rsi improvement-gate", stderr)
@@ -6510,6 +6518,335 @@ func runRSI(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	return 0
+}
+
+type rsiReadinessGatePaths struct {
+	BlueprintImport     string
+	Workgraph           string
+	FoundryImport       string
+	ContinuationHandoff string
+	AtlasSummary        string
+	SliceManifest       string
+	FinalSynthesis      string
+	Candidate           string
+	Rollback            string
+	StopGateClearance   string
+}
+
+func runRSIReadinessGateEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("rsi readiness-gate evaluate", stderr)
+	blueprintImportPath := fs.String("blueprint-import", "", "Atlas Blueprint import")
+	workgraphPath := fs.String("workgraph", "", "Atlas RSI readiness workgraph")
+	foundryImportPath := fs.String("foundry-import", "", "Atlas Foundry import")
+	continuationHandoffPath := fs.String("continuation-handoff", "", "Atlas Foundry continuation handoff")
+	atlasSummaryPath := fs.String("atlas-summary", "", "Atlas first-phase summary")
+	sliceManifestPath := fs.String("slice-manifest", "", "Atlas SDD slice completion manifest")
+	finalSynthesisPath := fs.String("final-synthesis", "", "Atlas final evidence synthesis")
+	candidatePath := fs.String("candidate", "", "Atlas RSI readiness candidate record")
+	rollbackPath := fs.String("rollback", "", "Atlas RSI readiness rollback record")
+	stopGateClearancePath := fs.String("stop-gate-clearance", "", "optional prior stop-gate clearance for serialized RSI readiness nodes")
+	outPath := fs.String("out", "", "RSI readiness node gate output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	required := map[string]string{
+		"--blueprint-import":     *blueprintImportPath,
+		"--workgraph":            *workgraphPath,
+		"--foundry-import":       *foundryImportPath,
+		"--continuation-handoff": *continuationHandoffPath,
+		"--atlas-summary":        *atlasSummaryPath,
+		"--slice-manifest":       *sliceManifestPath,
+		"--final-synthesis":      *finalSynthesisPath,
+		"--candidate":            *candidatePath,
+		"--rollback":             *rollbackPath,
+		"--out":                  *outPath,
+	}
+	missing := []string{}
+	for flagName, value := range required {
+		if strings.TrimSpace(value) == "" {
+			missing = append(missing, flagName)
+		}
+	}
+	if len(missing) > 0 {
+		sort.Strings(missing)
+		fmt.Fprintf(stderr, "%s are required\n", strings.Join(missing, ", "))
+		return 2
+	}
+	gate, err := buildRSIReadinessGate(rsiReadinessGatePaths{
+		BlueprintImport:     *blueprintImportPath,
+		Workgraph:           *workgraphPath,
+		FoundryImport:       *foundryImportPath,
+		ContinuationHandoff: *continuationHandoffPath,
+		AtlasSummary:        *atlasSummaryPath,
+		SliceManifest:       *sliceManifestPath,
+		FinalSynthesis:      *finalSynthesisPath,
+		Candidate:           *candidatePath,
+		Rollback:            *rollbackPath,
+		StopGateClearance:   *stopGateClearancePath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "rsi readiness-gate: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, gate); err != nil {
+		fmt.Fprintf(stderr, "write rsi readiness gate: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, gate); err != nil {
+			fmt.Fprintf(stderr, "write rsi readiness gate json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "rsi_readiness_node_gate=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", gate.Status)
+	fmt.Fprintf(stdout, "node_id=%s\n", gate.NodeID)
+	fmt.Fprintf(stdout, "safe_to_request=%t\n", gate.SafeToRequest)
+	fmt.Fprintf(stdout, "safe_to_execute=%t\n", gate.SafeToExecute)
+	if gate.FirstFailingCheck != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", gate.FirstFailingCheck)
+	}
+	return 0
+}
+
+func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNodeGate, error) {
+	gate := ComplexRepoMutationNodeGate{
+		SchemaVersion:                    complexNodeGateSchema,
+		Status:                           "blocked",
+		MutationClass:                    "complex_repo_mutation",
+		HighestProvenLiveClass:           "fully_unsupervised_complex_mutation",
+		NextDeniedClass:                  "RSI",
+		ExactNextAction:                  "repair_rsi_readiness_gate_evidence_before_execution",
+		AuthorityBoundary:                "rsi_readiness_definition_evidence_only",
+		SourceEvidence:                   []MutationClassGateEvidence{},
+		Blockers:                         []string{},
+		FullyUnsupervisedComplexMutation: "live-proven",
+		RSI:                              "denied",
+		SchedulesWork:                    false,
+		ExecutesWork:                     false,
+		ApprovesWork:                     false,
+		MutatesRepositories:              false,
+		LiveExecutionAuthority:           false,
+	}
+	blueprintSource, blueprintImport, err := readComplexNodeGateObject("atlas_blueprint_import", paths.BlueprintImport)
+	if err != nil {
+		return gate, err
+	}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_workgraph", paths.Workgraph)
+	if err != nil {
+		return gate, err
+	}
+	foundryImportSource, foundryImport, err := readComplexNodeGateObject("foundry_import", paths.FoundryImport)
+	if err != nil {
+		return gate, err
+	}
+	handoffSource, handoff, err := readComplexNodeGateObject("foundry_continuation_handoff", paths.ContinuationHandoff)
+	if err != nil {
+		return gate, err
+	}
+	summarySource, summary, err := readComplexNodeGateObject("atlas_first_summary", paths.AtlasSummary)
+	if err != nil {
+		return gate, err
+	}
+	manifestSource, manifest, err := readComplexNodeGateObject("sdd_slice_completion_manifest", paths.SliceManifest)
+	if err != nil {
+		return gate, err
+	}
+	finalSource, finalSynthesis, err := readComplexNodeGateObject("atlas_final_synthesis", paths.FinalSynthesis)
+	if err != nil {
+		return gate, err
+	}
+	candidateSource, candidate, err := readComplexNodeGateObject("candidate_record", paths.Candidate)
+	if err != nil {
+		return gate, err
+	}
+	rollbackSource, rollback, err := readComplexNodeGateObject("rollback_record", paths.Rollback)
+	if err != nil {
+		return gate, err
+	}
+	gate.SourceEvidence = append(gate.SourceEvidence, blueprintSource, workgraphSource, foundryImportSource, handoffSource, summarySource, manifestSource, finalSource, candidateSource, rollbackSource)
+
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	totalNodes := len(nodes)
+	readyNodes := countWorkgraphNodesWithStatus(nodes, "ready")
+	blockedNodes := countWorkgraphNodesWithStatus(nodes, "blocked")
+	tasks := classGateObjectSlice(foundryImport["tasks"])
+	gate.FoundryImportID = classGateString(foundryImport, "id")
+	gate.FoundryImportStatus = classGateString(foundryImport, "status")
+	gate.FoundryImportTaskCount = len(tasks)
+	gate.FoundryImportSchedulesWork = classGateBool(foundryImport, "schedules_work")
+	gate.FoundryImportExecutesWork = classGateBool(foundryImport, "executes_work")
+	gate.FoundryImportApprovesWork = classGateBool(foundryImport, "approves_work")
+	gate.WorkgraphID = classGateString(workgraph, "id")
+	gate.CandidateStatus = classGateString(candidate, "status")
+	gate.RollbackStatus = classGateFirstNonEmpty(classGateString(rollback, "status"), "validated")
+	gate.CandidateExecutableReady = classGateBool(candidate, "selected_first_safe_node")
+	gate.CandidateSafeToExecute = classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), "self_modification_authorized:false")
+	gate.RollbackSafeToExecute = len(classGateStringSlice(rollback, "rollback_scope")) > 0 && len(classGateStringSlice(rollback, "auto_stop_triggers")) > 0
+
+	var task map[string]any
+	if len(tasks) == 1 {
+		task = tasks[0]
+	}
+	taskNodeID := classGateString(task, "node_id")
+	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "task", "id"))
+	candidateNodeID := classGateString(candidate, "node_id")
+	rollbackNodeID := classGateString(rollback, "node_id")
+	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
+	gate.TaskID = classGateFirstNonEmpty(classGateString(candidate, "task_id"), taskID, classGateString(rollback, "task_id"))
+	gate.RequiredGates = classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "required_gates"), classGateStringSlice(candidate, "required_gates"), classGateNestedStringSlice(task, "task", "required_gates"))
+	importWriteScope := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "write_scope"), classGateNestedStringSlice(task, "task", "write_scope"))
+	importRollbackScope := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "rollback_scope"), classGateNestedStringSlice(task, "task", "rollback_scope"))
+	importRequiredEvidence := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "required_evidence"), classGateNestedStringSlice(task, "task", "required_evidence"))
+	scope := ""
+	if len(importWriteScope) == 1 {
+		scope = importWriteScope[0]
+	}
+	node, nodeFound := findWorkgraphNode(workgraph, gate.NodeID)
+	nodeStatus := classGateString(node, "status")
+	taskMutationClass := classGateFirstNonEmpty(classGateString(task, "mutation_class"), classGateNestedString(task, "task", "mutation_class"))
+
+	blockers := []string{}
+	if classGateString(blueprintImport, "contract_version") != atlasBlueprintImportSchema ||
+		classGateString(blueprintImport, "status") != "ready" ||
+		classGateString(blueprintImport, "mutation_class") != "complex_repo_mutation" ||
+		classGateBool(blueprintImport, "safe_to_execute") ||
+		classGateBool(blueprintImport, "live_execution_proven") ||
+		classGateBool(blueprintImport, "schedules_work") ||
+		classGateBool(blueprintImport, "executes_work") ||
+		classGateBool(blueprintImport, "approves_work") ||
+		classGateBool(blueprintImport, "mutates_repositories") {
+		blockers = append(blockers, "Atlas Blueprint import must be ready, complex_repo_mutation, and non-executable")
+	}
+	if classGateString(foundryImport, "contract_version") != atlasImportSchema ||
+		gate.FoundryImportStatus != "ready_for_foundry_fixture_import" ||
+		len(tasks) != 1 ||
+		gate.FoundryImportSchedulesWork ||
+		gate.FoundryImportExecutesWork ||
+		gate.FoundryImportApprovesWork {
+		blockers = append(blockers, "Foundry import must contain exactly one non-scheduling RSI readiness node")
+	}
+	if classGateString(handoff, "contract_version") != "ao.atlas.foundry-continuation-handoff.v0.1" ||
+		classGateString(handoff, "first_safe_node") != gate.NodeID ||
+		int(classGateNumber(handoff, "total_node_count")) != totalNodes ||
+		int(classGateNumber(handoff, "ready_node_count")) != readyNodes ||
+		int(classGateNumber(handoff, "blocked_node_count")) != blockedNodes ||
+		classGateBool(handoff, "schedules_work") ||
+		classGateBool(handoff, "executes_work") ||
+		classGateBool(handoff, "approves_work") {
+		blockers = append(blockers, "Foundry continuation handoff must match workgraph counts and remain non-scheduling")
+	}
+	if classGateString(summary, "schema") != "ao.atlas.private-rsi-readiness-summary.v0.1" ||
+		classGateString(summary, "first_safe_node") != gate.NodeID ||
+		int(classGateNumber(summary, "planned_node_count")) != totalNodes ||
+		int(classGateNumber(summary, "ready_node_count")) != readyNodes ||
+		int(classGateNumber(summary, "blocked_node_count")) != blockedNodes ||
+		classGateBool(summary, "atlas_executes_work") ||
+		classGateBool(summary, "atlas_approves_work") ||
+		classGateString(summary, "rsi") != "denied" ||
+		classGateString(summary, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
+		classGateString(summary, "next_denied_class") != "RSI" {
+		blockers = append(blockers, "Atlas RSI readiness summary must match workgraph counts and preserve denial boundaries")
+	}
+	if classGateString(manifest, "schema") != "ao.atlas.private-rsi-readiness-slice-manifest.v0.1" ||
+		int(classGateNumber(manifest, "total_slices")) == 0 ||
+		int(classGateNumber(manifest, "total_slices")) != int(classGateNumber(manifest, "completed_slices")) ||
+		classGateString(manifest, "rsi") != "denied" {
+		blockers = append(blockers, "Atlas RSI readiness slice manifest must be complete and keep RSI denied")
+	}
+	if classGateString(finalSynthesis, "schema") != "ao.atlas.private-rsi-readiness-final-evidence-synthesis.v0.1" ||
+		classGateString(finalSynthesis, "first_safe_node") != gate.NodeID ||
+		classGateBool(finalSynthesis, "atlas_executes_work") ||
+		classGateBool(finalSynthesis, "atlas_approves_work") ||
+		classGateBool(finalSynthesis, "rsi_live_proven") ||
+		classGateBool(finalSynthesis, "live_self_modification_performed_by_atlas") ||
+		classGateString(finalSynthesis, "rsi") != "denied" ||
+		classGateString(finalSynthesis, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
+		classGateString(finalSynthesis, "next_denied_class") != "RSI" {
+		blockers = append(blockers, "Atlas RSI readiness final synthesis must preserve no-execution RSI denial boundaries")
+	}
+	if gate.NodeID == "" || gate.TaskID == "" {
+		blockers = append(blockers, "RSI readiness gate requires node_id and task_id")
+	}
+	if !nodeFound || nodeStatus != "ready" {
+		blockers = append(blockers, "workgraph selected RSI readiness node must be ready")
+	}
+	if taskNodeID != "" && candidateNodeID != "" && taskNodeID != candidateNodeID {
+		blockers = append(blockers, "Foundry import node_id must match RSI readiness candidate")
+	}
+	if rollbackNodeID != "" && gate.NodeID != "" && rollbackNodeID != gate.NodeID {
+		blockers = append(blockers, "rollback record node_id must match selected RSI readiness node")
+	}
+	if taskMutationClass != "complex_repo_mutation" {
+		blockers = append(blockers, "RSI readiness node must remain class complex_repo_mutation")
+	}
+	if classGateString(task, "authority_boundary") != "rsi_readiness_definition_evidence_only" {
+		blockers = append(blockers, "Foundry import authority boundary must be RSI readiness definition evidence only")
+	}
+	if classGateString(candidate, "schema") != "ao.atlas.private-rsi-readiness-candidate.v0.1" ||
+		gate.CandidateStatus != "ready" ||
+		!gate.CandidateExecutableReady ||
+		classGateString(candidate, "candidate_class") != "RSI definition node" {
+		blockers = append(blockers, "RSI readiness candidate must be the ready selected definition node")
+	}
+	if classGateString(candidate, "rsi") != "denied" {
+		blockers = append(blockers, "RSI readiness candidate must keep RSI denied")
+	}
+	if classGateString(candidate, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
+		classGateString(rollback, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" {
+		blockers = append(blockers, "RSI readiness evidence must carry forward fully_unsupervised_complex_mutation as highest proven class")
+	}
+	if scope == "" || !classGateStringSliceContains(classGateStringSlice(candidate, "allowed_surfaces"), scope) {
+		blockers = append(blockers, "RSI readiness candidate allowed surface must match imported write scope")
+	}
+	if !classGateStringSliceEqual(importWriteScope, importRollbackScope) || !classGateStringSliceEqual(importWriteScope, classGateStringSlice(rollback, "rollback_scope")) {
+		blockers = append(blockers, "RSI readiness rollback scope must match imported write scope")
+	}
+	for _, want := range []string{
+		"highest_proven_live_class:fully_unsupervised_complex_mutation",
+		"next_denied_class:RSI",
+		"rsi:denied",
+		"self_modification_authorized:false",
+		"hidden_instruction_mutation_denied:true",
+		"node_id:" + gate.NodeID,
+	} {
+		if !classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), want) ||
+			!classGateStringSliceContains(importRequiredEvidence, want) {
+			blockers = append(blockers, "RSI readiness required evidence missing "+want)
+			break
+		}
+	}
+	for _, want := range []string{"no RSI execution from Atlas", "no unrestricted self-modification", "no policy auth secret provider deploy release expansion", "no credential use", "no dependency update", "no direct main mutation", "no hidden prompt or instruction mutation", "no public claim RSI proven", "no authority broadening"} {
+		if !classGateStringSliceContains(classGateStringSlice(candidate, "denied_surfaces"), want) {
+			blockers = append(blockers, "RSI readiness candidate denied surfaces missing "+want)
+			break
+		}
+	}
+	for _, want := range []string{"Sentinel hold", "kill switch", "hidden instruction mutation", "authority broadening", "public RSI claim"} {
+		if !classGateStringSliceContains(classGateStringSlice(rollback, "auto_stop_triggers"), want) {
+			blockers = append(blockers, "RSI readiness rollback auto-stop triggers missing "+want)
+			break
+		}
+	}
+	if classGateString(rollback, "rsi") != "denied" {
+		blockers = append(blockers, "RSI readiness rollback must keep RSI denied")
+	}
+
+	gate.SafeToRequest = gate.FoundryImportStatus != "" && gate.CandidateStatus == "ready" && nodeStatus == "ready" && len(tasks) == 1 && !gate.FoundryImportSchedulesWork && !gate.FoundryImportExecutesWork && !gate.FoundryImportApprovesWork
+	if len(blockers) > 0 {
+		gate.Blockers = blockers
+		gate.FirstFailingCheck = blockers[0]
+		return gate, nil
+	}
+	gate.Status = "ready"
+	gate.SafeToRequest = true
+	gate.SafeToExecute = true
+	gate.LiveExecutionAuthority = true
+	gate.ExactNextAction = "execute_exact_rsi_readiness_definition_node"
+	gate.Blockers = []string{}
+	return gate, nil
 }
 
 func runTrace(args []string, stdout, stderr io.Writer) int {
