@@ -1,0 +1,34 @@
+{
+  "accepted_evidence": [
+    "mutation_class:complex_repo_mutation",
+    "highest_proven_live_class:complex_repo_mutation",
+    "safe_to_execute:true",
+    "node_id:first-bounded-candidate"
+  ],
+  "authority_boundaries": {
+    "approves_work": false,
+    "credential_or_secret_access_allowed": false,
+    "direct_main_mutation_allowed": false,
+    "executes_providers": false,
+    "public_claim_broadening_allowed": false,
+    "release_or_publish_allowed": false,
+    "schedules_work": false
+  },
+  "class_state": {
+    "complex_repo_mutation_live_proven": "true",
+    "fully_unsupervised_complex_mutation": "denied",
+    "rsi": "denied"
+  },
+  "mutation_class": "complex_repo_mutation",
+  "node_class": "candidate node",
+  "node_id": "first-bounded-candidate",
+  "rollback": {
+    "method": "governed revert pull request if rollback is required after merge",
+    "scope": "factory/fully-unsupervised-first-non-planning/03-first-bounded-candidate"
+  },
+  "schema": "ao.atlas.complex-repo-mutation-node-record.v0.1",
+  "scope": "factory/fully-unsupervised-first-non-planning/03-first-bounded-candidate",
+  "status": "completed",
+  "summary": "Serialized first bounded candidate node for the fully_unsupervised_complex_mutation first non-planning rehearsal; class promotion remains denied pending final synthesis.",
+  "task_id": "first-bounded-candidate-task"
+}
