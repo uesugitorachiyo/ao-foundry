@@ -6876,6 +6876,338 @@ func TestFullyUnsupervisedAuthorityGatesEvaluateBlocksMissingNodeEvidence(t *tes
 	}
 }
 
+func TestFullyUnsupervisedFirstNonPlanningGateAllowsExactFirstSupportDocsNode(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "first-non-planning-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("first non-planning gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["schema_version"] != "ao.foundry.complex-repo-mutation-node-gate.v0.1" ||
+		gate["status"] != "ready" ||
+		gate["node_id"] != "unsupervised-mission-ticket" ||
+		gate["safe_to_request"] != true ||
+		gate["safe_to_execute"] != true ||
+		gate["live_execution_authority"] != true ||
+		gate["highest_proven_live_class"] != "complex_repo_mutation" ||
+		gate["next_denied_class"] != "fully_unsupervised_complex_mutation" ||
+		gate["fully_unsupervised_complex_mutation"] != "denied" ||
+		gate["rsi"] != "denied" ||
+		gate["authority_boundary"] != "first_bounded_non_planning_executable_support_docs_node" {
+		t.Fatalf("first non-planning gate must unlock only the exact first node: %#v", gate)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningGateBlocksUnsafeCandidateClaim(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningArtifacts(t, dir, func(paths map[string]string) {
+		candidate := readObjectFixture(t, paths["candidate"])
+		candidate["fully_unsupervised_complex_mutation_live_proven"] = true
+		writeJSONFixtureForTest(t, paths["candidate"], candidate)
+	})
+	outPath := filepath.Join(dir, "first-non-planning-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked first non-planning gate should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		!objectStringSliceContains(gate, "blockers", "first non-planning candidate must not claim fully_unsupervised_complex_mutation live-proven") {
+		t.Fatalf("unsafe first non-planning candidate must block: %#v", gate)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningGateBlocksScopeDrift(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningArtifacts(t, dir, func(paths map[string]string) {
+		candidate := readObjectFixture(t, paths["candidate"])
+		candidate["allowed_surfaces"] = []any{"factory/fully-unsupervised-first-non-planning/other"}
+		writeJSONFixtureForTest(t, paths["candidate"], candidate)
+	})
+	outPath := filepath.Join(dir, "first-non-planning-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("scope drift first non-planning gate should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		!objectStringSliceContains(gate, "blockers", "first non-planning candidate allowed surface must match imported write scope") {
+		t.Fatalf("scope drift must block first non-planning gate: %#v", gate)
+	}
+}
+
+func writeFullyUnsupervisedFirstNonPlanningArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	scope := "factory/fully-unsupervised-first-non-planning/00-unsupervised-mission-ticket"
+	paths := map[string]string{
+		"blueprint_import":     filepath.Join(dir, "blueprint-import.json"),
+		"workgraph":            filepath.Join(dir, "workgraph.json"),
+		"foundry_import":       filepath.Join(dir, "foundry-import.json"),
+		"continuation_handoff": filepath.Join(dir, "foundry-continuation-handoff.json"),
+		"atlas_summary":        filepath.Join(dir, "atlas-first-summary.json"),
+		"slice_manifest":       filepath.Join(dir, "sdd-slice-completion-manifest.json"),
+		"final_synthesis":      filepath.Join(dir, "final-evidence-synthesis.json"),
+		"candidate":            filepath.Join(dir, "unsupervised-mission-ticket-candidate.json"),
+		"rollback":             filepath.Join(dir, "unsupervised-mission-ticket-rollback.json"),
+	}
+	requiredEvidence := []any{
+		"highest_proven_live_class:complex_repo_mutation",
+		"next_denied_class:fully_unsupervised_complex_mutation",
+		"rsi:denied",
+		"readiness_only:false",
+		"readback_only:false",
+		"non_planning_rehearsal:true",
+		"node_id:unsupervised-mission-ticket",
+		"node_class:first executable support/docs ticket node",
+		"safe_to_execute_in_foundry_only_under_gates:true",
+	}
+	requiredGates := []any{
+		"atlas_blueprint_import",
+		"covenant_unsupervised_mission_ticket",
+		"no_reprompt_policy",
+		"autonomous_next_node_selection",
+		"foundry_autonomous_runner_gate",
+		"forge_ao2_bounded_packet",
+		"sentinel_monitoring",
+		"kill_switch",
+		"promoter_no_promotion",
+		"command_readback",
+		"ci_failure_stop",
+		"rollback_escalation",
+		"evidence_closure",
+		"public_claim_guard",
+		"rsi_denial_boundary",
+	}
+	safetyLimits := []any{
+		"one bounded mission only",
+		"max two repos",
+		"serialized nodes only",
+		"tiny docs test support-code changes only",
+		"no production behavior change unless separately proven",
+		"no release deploy publish upload tag",
+		"no provider calls",
+		"no credentials",
+		"no dependency updates",
+		"no auth policy config widening",
+		"no secret env exposure",
+		"no direct main mutation",
+		"no concurrent mutation",
+		"no RSI claim",
+	}
+	task := map[string]any{
+		"contract_version":    "ao.atlas.factory-task.v0.1",
+		"id":                  "unsupervised-mission-ticket-task",
+		"objective":           "Unsupervised mission ticket for the first bounded non-planning rehearsal.",
+		"target_factory_repo": "ao-foundry",
+		"factory_folder":      scope,
+		"mutation_class":      "complex_repo_mutation",
+		"acceptance_criteria": []any{
+			"first executable support/docs ticket node terminal evidence exists",
+			"fully_unsupervised_complex_mutation is proven only by final synthesis or remains denied",
+			"RSI remains denied",
+		},
+		"non_goals": []any{
+			"do not execute from Atlas",
+			"do not claim fully_unsupervised_complex_mutation proven before final synthesis",
+			"do not claim RSI proven",
+			"do not touch forbidden surfaces",
+		},
+		"write_scope":        []any{scope},
+		"required_gates":     requiredGates,
+		"rollback_scope":     []any{scope},
+		"required_evidence":  requiredEvidence,
+		"safety_limits":      safetyLimits,
+		"authority_boundary": "first_bounded_non_planning_executable_support_docs_node",
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "fully-unsupervised-complex-first-non-planning-workgraph-test",
+		"nodes": []any{
+			map[string]any{"id": "unsupervised-mission-ticket", "status": "ready", "factory_task": task, "dependencies": []any{}, "blockers": []any{}},
+			map[string]any{"id": "no-reprompt-policy", "status": "blocked", "factory_task": map[string]any{
+				"id":                  "no-reprompt-policy-task",
+				"target_factory_repo": "ao-foundry",
+				"mutation_class":      "complex_repo_mutation",
+				"write_scope":         []any{"factory/fully-unsupervised-first-non-planning/01-no-reprompt-policy"},
+				"authority_boundary":  "blocked_until_predecessor_terminal_evidence_and_stop_gate_clear",
+			}, "dependencies": []any{"unsupervised-mission-ticket"}, "blockers": []any{"waits for predecessor terminal evidence"}},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["blueprint_import"], map[string]any{
+		"contract_version":           "ao.atlas.blueprint-import.v0.1",
+		"id":                         "fully-unsupervised-complex-first-non-planning-blueprint-import-test",
+		"project_id":                 "fully_unsupervised_complex_mutation-first-non-planning-rehearsal-blueprint",
+		"status":                     "ready",
+		"workgraph_id":               "fully-unsupervised-complex-first-non-planning-workgraph-test",
+		"mutation_class":             "complex_repo_mutation",
+		"ready_for_foundry":          true,
+		"safe_to_execute":            false,
+		"live_execution_proven":      false,
+		"schedules_work":             false,
+		"executes_work":              false,
+		"approves_work":              false,
+		"mutates_repositories":       false,
+		"calls_providers":            false,
+		"release_or_publish_allowed": false,
+	})
+	writeJSONFixtureForTest(t, paths["foundry_import"], map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "fully-unsupervised-complex-first-non-planning-foundry-import-test",
+		"workgraph_id":     "fully-unsupervised-complex-first-non-planning-workgraph-test",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":            "unsupervised-mission-ticket",
+				"task_id":            "unsupervised-mission-ticket-task",
+				"mutation_class":     "complex_repo_mutation",
+				"write_scope":        []any{scope},
+				"rollback_scope":     []any{scope},
+				"required_gates":     requiredGates,
+				"required_evidence":  requiredEvidence,
+				"authority_boundary": "first_bounded_non_planning_executable_support_docs_node",
+				"task":               task,
+			},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["continuation_handoff"], map[string]any{
+		"contract_version":     "ao.atlas.foundry-continuation-handoff.v0.1",
+		"id":                   "fully-unsupervised-complex-first-non-planning-continuation-handoff-test",
+		"target_folder":        "/" + "Users/torachiyouesugi/Documents/public/ao-foundry",
+		"command":              "codex --yolo",
+		"first_safe_node":      "unsupervised-mission-ticket",
+		"total_node_count":     2,
+		"completed_node_count": 0,
+		"ready_node_count":     1,
+		"blocked_node_count":   1,
+		"class_boundary":       "complex_repo_mutation is live-proven; this handoff requests the first bounded non-planning rehearsal for fully_unsupervised_complex_mutation and preserves Atlas no-execution/no-approval boundaries",
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+	})
+	writeJSONFixtureForTest(t, paths["atlas_summary"], map[string]any{
+		"schema":                     "ao.atlas.private-first-non-planning-summary.v0.1",
+		"first_safe_executable_node": "unsupervised-mission-ticket",
+		"planned_node_count":         2,
+		"ready_node_count":           1,
+		"blocked_node_count":         1,
+		"sdd_slice_count":            8,
+		"completed_sdd_slice_count":  8,
+		"atlas_executes_work":        false,
+		"atlas_approves_work":        false,
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                           "denied",
+		"highest_proven_live_class":     "complex_repo_mutation",
+		"next_denied_class":             "fully_unsupervised_complex_mutation",
+		"foundry_import_task_count":     1,
+		"foundry_import_selected_node":  "unsupervised-mission-ticket",
+		"foundry_import_schedules_work": false,
+		"foundry_import_executes_work":  false,
+		"foundry_import_approves_work":  false,
+	})
+	writeJSONFixtureForTest(t, paths["slice_manifest"], map[string]any{
+		"schema":           "ao.atlas.private-first-non-planning-slice-manifest.v0.1",
+		"total_slices":     8,
+		"completed_slices": 8,
+		"all_slices_completed_for_atlas_first_non_planning_planning": true,
+		"fully_unsupervised_complex_mutation_live_proven":            false,
+		"rsi": "denied",
+	})
+	writeJSONFixtureForTest(t, paths["final_synthesis"], map[string]any{
+		"schema":                     "ao.atlas.private-first-non-planning-final-evidence-synthesis.v0.1",
+		"first_safe_executable_node": "unsupervised-mission-ticket",
+		"planned_node_count":         2,
+		"ready_node_count":           1,
+		"blocked_node_count":         1,
+		"atlas_executes_work":        false,
+		"atlas_approves_work":        false,
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                               "denied",
+		"highest_proven_live_class":         "complex_repo_mutation",
+		"next_denied_class":                 "fully_unsupervised_complex_mutation",
+		"live_execution_performed_by_atlas": false,
+		"first_bounded_non_planning_rehearsal_requested": true,
+		"foundry_import_task_count":                      1,
+		"foundry_import_selected_node":                   "unsupervised-mission-ticket",
+		"foundry_import_schedules_work":                  false,
+		"foundry_import_executes_work":                   false,
+		"foundry_import_approves_work":                   false,
+	})
+	writeJSONFixtureForTest(t, paths["candidate"], map[string]any{
+		"schema":  "ao.atlas.private-first-non-planning-candidate.v0.1",
+		"node_id": "unsupervised-mission-ticket",
+		"task_id": "unsupervised-mission-ticket-task",
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                                 "denied",
+		"status":                              "ready",
+		"candidate_class":                     "first executable support/docs ticket node",
+		"selected_first_safe_executable_node": true,
+		"safe_first_node_reason":              "tiny support/docs mission ticket proving non-planning continuation",
+		"allowed_surfaces":                    []any{scope},
+		"denied_surfaces":                     safetyLimits,
+		"required_evidence":                   requiredEvidence,
+	})
+	writeJSONFixtureForTest(t, paths["rollback"], map[string]any{
+		"schema":  "ao.atlas.private-first-non-planning-rollback.v0.1",
+		"node_id": "unsupervised-mission-ticket",
+		"task_id": "unsupervised-mission-ticket-task",
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"rsi":                "denied",
+		"rollback_scope":     []any{scope},
+		"rollback_plan":      []any{"remove generated node artifacts", "restore prior denial readback", "record rollback terminal evidence", "stop or repair under policy"},
+		"auto_stop_triggers": []any{"CI failure", "Sentinel hold", "kill switch", "rollback failure", "unsafe scope drift", "RSI boundary crossing"},
+	})
+	if mutate != nil {
+		mutate(paths)
+	}
+	return paths
+}
+
 func TestMutationClassGateFailsClosedWithoutSentinel(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "class-gate.json")
 	var stdout, stderr bytes.Buffer
