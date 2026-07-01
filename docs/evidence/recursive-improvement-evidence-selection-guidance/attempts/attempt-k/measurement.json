@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.ries.measurement.v0.1",
+  "project_id": "recursive-improvement-evidence-selection-guidance",
+  "id": "attempt-k",
+  "title": "Independent review-role guidance",
+  "task_type": "independent review-role consistency",
+  "baseline": 0.64,
+  "post": 0.89,
+  "improvement": 0.25,
+  "artifact": "independent-review-role-guidance",
+  "eval_regression": "passed",
+  "rollback_proof": "recorded",
+  "public_safe": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

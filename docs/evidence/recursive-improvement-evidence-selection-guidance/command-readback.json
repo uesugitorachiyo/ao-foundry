@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "readback": "public_safe_causal_review_evidence_selection_guidance_proven_stronger_recursive_improvement_denied_broad_RSI_denied",
+  "highest_proven_live_class": "public_safe_causal_review_evidence_selection_guidance",
+  "next_denied_class": "broad_RSI",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied"
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "ao.foundry.ries.evidence-index.v0.1",
+  "project_id": "recursive-improvement-evidence-selection-guidance",
+  "proven_class": "public_safe_causal_review_evidence_selection_guidance",
+  "highest_prior_class": "public_safe_intermediate_causal_review_claim_evidence",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 640,
+  "total_nodes": 640,
+  "public_safe": true,
+  "approved_wording": "AO has public-safe causal-review evidence that prior bounded evidence can guide later evidence-selection and blocker prioritization under independent review gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "evidence_categories": [
+    "carry-forward intermediate causal-review proof",
+    "guided evidence-selection measurement",
+    "guided blocker-prioritization measurement",
+    "independent review-role consistency",
+    "cross-role consistency",
+    "public-reader review",
+    "adversarial wording review",
+    "Covenant publication gate",
+    "Architecture wording gate",
+    "Sentinel public-risk gate",
+    "Promoter verdict",
+    "Command readback",
+    "rollback/retraction evidence",
+    "stale-language guard"
+  ],
+  "attempts": [
+    {
+      "id": "attempt-i",
+      "title": "Evidence-selection guidance",
+      "task_type": "public-safe evidence-selection quality",
+      "baseline": 0.69,
+      "post": 0.92,
+      "improvement": 0.23,
+      "artifact": "evidence-selection-guidance"
+    },
+    {
+      "id": "attempt-j",
+      "title": "Blocker-prioritization guidance",
+      "task_type": "claim blocker prioritization quality",
+      "baseline": 0.66,
+      "post": 0.91,
+      "improvement": 0.25,
+      "artifact": "blocker-prioritization-guidance"
+    },
+    {
+      "id": "attempt-k",
+      "title": "Independent review-role guidance",
+      "task_type": "independent review-role consistency",
+      "baseline": 0.64,
+      "post": 0.89,
+      "improvement": 0.25,
+      "artifact": "independent-review-role-guidance"
+    },
+    {
+      "id": "attempt-l",
+      "title": "Cross-role consistency guidance",
+      "task_type": "cross-role evidence consistency",
+      "baseline": 0.63,
+      "post": 0.9,
+      "improvement": 0.27,
+      "artifact": "cross-role-consistency-guidance"
+    }
+  ],
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}
