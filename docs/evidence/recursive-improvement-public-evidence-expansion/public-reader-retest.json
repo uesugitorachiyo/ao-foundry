@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.public-reader-retest.v0.1",
+  "result": "approved_narrow_evidence_expansion_only",
+  "current_conservative_wording": "approved",
+  "stronger_recursive_improvement_wording": "denied",
+  "reason": "New artifacts improve public-safe evidence diversity, but a public reader still cannot infer a general recursive-improvement capability without overbreadth.",
+  "approved_narrow_wording": "AO has public-safe tracked evidence for four additional bounded improvement-evidence attempts; stronger recursive-improvement claims remain denied."
+}

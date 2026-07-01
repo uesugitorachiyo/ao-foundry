@@ -1,0 +1,6 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "readback": "public_safe_bounded_improvement_evidence_expansion_four_attempts proven; stronger recursive-improvement wording denied; broad_RSI denied",
+  "highest_proven_live_class": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "next_denied_class": "broad_RSI"
+}

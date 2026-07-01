@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.stale-language-guard.v0.1",
+  "result": "passed",
+  "allowed_denial_language_present": true,
+  "forbidden_positive_claim_categories_absent": [
+    "positive broad recursive system claim",
+    "positive generic RSI claim",
+    "positive unrestricted self-modification claim",
+    "positive hidden instruction mutation claim",
+    "positive policy-changing autonomy claim",
+    "positive stronger recursive-improvement claim"
+  ]
+}

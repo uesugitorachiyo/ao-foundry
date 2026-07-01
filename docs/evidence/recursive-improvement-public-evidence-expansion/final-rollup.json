@@ -1,0 +1,78 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "recursive-improvement-public-evidence-expansion",
+  "completed_nodes": 220,
+  "total_nodes": 220,
+  "new_independent_attempts_completed": 4,
+  "new_task_types_covered": [
+    "release_readiness_evidence_quality",
+    "security_public_safety_scan_quality",
+    "operator_readback_ux",
+    "cross_repo_evidence_linking"
+  ],
+  "measurements": [
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "baseline": 0.68,
+      "post_change": 0.91,
+      "improvement": 0.23,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "baseline": 0.64,
+      "post_change": 0.9,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "baseline": 0.62,
+      "post_change": 0.88,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "baseline": 0.6,
+      "post_change": 0.87,
+      "improvement": 0.27,
+      "threshold": 0.15,
+      "passed": true
+    }
+  ],
+  "public_tracked_evidence_root": "docs/evidence/recursive-improvement-public-evidence-expansion",
+  "public_safe_evidence_index": "docs/evidence/recursive-improvement-public-evidence-expansion/evidence-index.json",
+  "reproducibility_runbooks": [
+    "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/reproducibility-runbook.md",
+    "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/reproducibility-runbook.md",
+    "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/reproducibility-runbook.md",
+    "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/reproducibility-runbook.md"
+  ],
+  "public_reader_retest": "approved_narrow_evidence_expansion_only",
+  "adversarial_wording_retest": "stronger_recursive_improvement_wording_denied",
+  "covenant_result": "approve_narrow_evidence_expansion_deny_stronger_recursive_improvement",
+  "architecture_wording_result": "approve_narrow_evidence_expansion_deny_stronger_recursive_improvement",
+  "sentinel_result": "clear_for_narrow_evidence_expansion_hold_for_stronger_recursive_improvement",
+  "promoter_verdict": "promote_public_safe_bounded_improvement_evidence_expansion_four_attempts_broad_RSI_denied",
+  "command_readback": "public_safe_bounded_improvement_evidence_expansion_four_attempts proven; stronger recursive-improvement wording denied; broad_RSI denied",
+  "new_narrow_class_proven": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "highest_proven_live_class": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "next_denied_class": "broad_RSI",
+  "exact_blockers_if_denied": [
+    "public-reader still denies stronger recursive-improvement wording as overbroad",
+    "adversarial wording still flags recursive-improvement phrasing as capability-adjacent",
+    "Covenant approves only narrow evidence-expansion wording",
+    "Architecture approves only narrow evidence-expansion wording",
+    "Sentinel holds stronger recursive-improvement public-risk wording"
+  ]
+}

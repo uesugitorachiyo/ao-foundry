@@ -1,0 +1,20 @@
+{
+  "schema": "ao.foundry.public-evidence.bounded-application.v0.1",
+  "attempt_id": "attempt-h",
+  "change": "Add digest-bound relative evidence-linking records across Blueprint, Atlas, and Foundry outputs.",
+  "safe_to_execute": true,
+  "allowed_scope": [
+    "public-safe tracked evidence artifact",
+    "readback/eval support only"
+  ],
+  "denied_scope": [
+    "broad_RSI publication",
+    "stronger recursive-improvement publication without all gates",
+    "hidden instruction mutation",
+    "unrestricted self-modification",
+    "policy-changing autonomy",
+    "authority expansion",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

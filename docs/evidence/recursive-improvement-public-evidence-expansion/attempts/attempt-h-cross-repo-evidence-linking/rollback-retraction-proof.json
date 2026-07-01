@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.public-evidence.rollback-retraction.v0.1",
+  "attempt_id": "attempt-h",
+  "rollback_plan": "Remove attempt H public evidence folder and revert link-index references.",
+  "retraction_rehearsal": "accepted for this bounded evidence artifact",
+  "verification": [
+    "remove attempt folder",
+    "remove evidence-index entries",
+    "rerun public-safety scan",
+    "rerun stale-language sweep"
+  ],
+  "claim_boundary": "Retraction does not publish or retract any broad_RSI claim because no such claim is made."
+}

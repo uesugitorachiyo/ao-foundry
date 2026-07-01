@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.cross-task-generality-update.v0.1",
+  "new_attempts": 4,
+  "new_task_types": [
+    "release_readiness_evidence_quality",
+    "security_public_safety_scan_quality",
+    "operator_readback_ux",
+    "cross_repo_evidence_linking"
+  ],
+  "all_attempts_passed": true,
+  "expanded_public_safe_generality_score": 0.94,
+  "result": "proven_for_four_additional_public_safe_bounded_task_types",
+  "claim_boundary": "Does not prove broad_RSI or stronger recursive-improvement public wording."
+}

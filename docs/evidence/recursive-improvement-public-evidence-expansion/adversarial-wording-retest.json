@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.adversarial-wording-retest.v0.1",
+  "result": "stronger_recursive_improvement_wording_denied",
+  "overbreadth_findings": [
+    "recursive-improvement phrasing may imply autonomous self-modification beyond exact bounded artifacts",
+    "stronger wording may imply policy-changing autonomy or broad_RSI to non-expert readers"
+  ],
+  "narrow_evidence_wording": "passed"
+}
