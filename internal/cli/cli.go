@@ -341,6 +341,7 @@ type ComplexRepoMutationNodeGate struct {
 	WorkgraphID                      string                      `json:"workgraph_id"`
 	NodeID                           string                      `json:"node_id"`
 	TaskID                           string                      `json:"task_id"`
+	TargetFactoryRepo                string                      `json:"target_factory_repo,omitempty"`
 	SafeToRequest                    bool                        `json:"safe_to_request"`
 	SafeToExecute                    bool                        `json:"safe_to_execute"`
 	LiveExecutionAuthority           bool                        `json:"live_execution_authority"`
@@ -2751,6 +2752,7 @@ func buildFullyUnsupervisedFirstNonPlanningGate(paths fullyUnsupervisedFirstNonP
 	}
 	taskNodeID := classGateString(task, "node_id")
 	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "task", "id"))
+	gate.TargetFactoryRepo = classGateFirstNonEmpty(classGateString(task, "target_factory_repo"), classGateNestedString(task, "task", "target_factory_repo"))
 	candidateNodeID := classGateString(candidate, "node_id")
 	rollbackNodeID := classGateString(rollback, "node_id")
 	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
@@ -4846,6 +4848,7 @@ func runComplexRepoNodeExecute(args []string, stdout, stderr io.Writer) int {
 	pr := fs.String("pr", "", "merged execution pull request")
 	mergeCommit := fs.String("merge-commit", "", "merged execution commit")
 	ci := fs.String("ci", "passed", "CI evidence readback")
+	repoID := fs.String("repo-id", "", "current repository id, required when node gate declares target_factory_repo")
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
@@ -4870,6 +4873,16 @@ func runComplexRepoNodeExecute(args []string, stdout, stderr io.Writer) int {
 	if gate.Status != "ready" || !gate.SafeToRequest || !gate.SafeToExecute || !gate.LiveExecutionAuthority {
 		fmt.Fprintln(stderr, "complex node execute requires ready node gate with safe_to_request=true and safe_to_execute=true")
 		return 1
+	}
+	if strings.TrimSpace(gate.TargetFactoryRepo) != "" {
+		if strings.TrimSpace(*repoID) == "" {
+			fmt.Fprintln(stderr, "complex node execute requires --repo-id matching target_factory_repo")
+			return 1
+		}
+		if strings.TrimSpace(*repoID) != strings.TrimSpace(gate.TargetFactoryRepo) {
+			fmt.Fprintf(stderr, "complex node execute repo mismatch: target_factory_repo=%s repo_id=%s\n", gate.TargetFactoryRepo, *repoID)
+			return 1
+		}
 	}
 	record := buildComplexNodeRecord(gate, *nodeClass, *scope, *summary)
 	if err := writeJSONFile(*nodeRecordOut, record); err != nil {
@@ -5267,6 +5280,7 @@ func buildComplexRepoMutationNodeGate(paths complexNodeGatePaths) (ComplexRepoMu
 	}
 	taskNodeID := classGateString(task, "node_id")
 	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "factory_task", "id"))
+	gate.TargetFactoryRepo = classGateFirstNonEmpty(classGateString(task, "target_factory_repo"), classGateNestedString(task, "factory_task", "target_factory_repo"))
 	candidateNodeID := classGateString(candidate, "node_id")
 	rollbackNodeID := classGateString(rollback, "node_id")
 	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
@@ -5403,14 +5417,15 @@ func buildComplexNodeRecord(gate ComplexRepoMutationNodeGate, nodeClass, scope, 
 	fullyUnsupervised := classGateFirstNonEmpty(gate.FullyUnsupervisedComplexMutation, "denied")
 	rsi := classGateFirstNonEmpty(gate.RSI, "denied")
 	return map[string]any{
-		"schema":         "ao.atlas.complex-repo-mutation-node-record.v0.1",
-		"node_id":        gate.NodeID,
-		"task_id":        gate.TaskID,
-		"node_class":     strings.TrimSpace(nodeClass),
-		"status":         "completed",
-		"mutation_class": gate.MutationClass,
-		"scope":          cleanScope,
-		"summary":        strings.TrimSpace(summary),
+		"schema":              "ao.atlas.complex-repo-mutation-node-record.v0.1",
+		"node_id":             gate.NodeID,
+		"task_id":             gate.TaskID,
+		"node_class":          strings.TrimSpace(nodeClass),
+		"target_factory_repo": strings.TrimSpace(gate.TargetFactoryRepo),
+		"status":              "completed",
+		"mutation_class":      gate.MutationClass,
+		"scope":               cleanScope,
+		"summary":             strings.TrimSpace(summary),
 		"accepted_evidence": []string{
 			"mutation_class:" + gate.MutationClass,
 			"highest_proven_live_class:" + highestProven,
@@ -6794,6 +6809,7 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	}
 	taskNodeID := classGateString(task, "node_id")
 	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "task", "id"))
+	gate.TargetFactoryRepo = classGateFirstNonEmpty(classGateString(task, "target_factory_repo"), classGateNestedString(task, "task", "target_factory_repo"))
 	candidateNodeID := classGateString(candidate, "node_id")
 	rollbackNodeID := classGateString(rollback, "node_id")
 	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
