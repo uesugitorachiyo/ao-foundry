@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.ricg.stale-language.v0.1",
+  "result": "passed",
+  "blocked_implication_categories": [
+    "broad class proven claim",
+    "unrestricted autonomy permission",
+    "hidden instruction mutation permission",
+    "policy-changing autonomy permission",
+    "stronger recursive-improvement approval claim"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.ricg.independence-trace.v0.1",
+  "cycle_id": "cycle-f",
+  "blocker_class": "Sentinel public-risk mitigation",
+  "independence_basis": "distinct blocker class, candidate, and gate focus from the other cycles",
+  "candidate": "Sentinel public-risk mitigation trace quality",
+  "public_safe": true
+}

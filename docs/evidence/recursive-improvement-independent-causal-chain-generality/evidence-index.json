@@ -1,0 +1,179 @@
+{
+  "schema": "ao.foundry.ricg.evidence-index.v0.1",
+  "mission": "recursive-improvement-independent-causal-chain-generality",
+  "highest_prior_class": "public_safe_bounded_causal_improvement_chain_evidence",
+  "new_class": "public_safe_bounded_causal_chain_generality_four_independent_cycles",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "independent_cycles_completed": 4,
+  "public_safe_artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/README.md",
+      "sha256": "sha256:cae3e31f0a2de2faf9de4aaad6d97c7ed042303f1c0da5f68af135859d4c4888"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/adversarial-wording-tests.json",
+      "sha256": "sha256:52939e03a7626334c12b48b8a7e389224792587595c96933f8735e7fc8a7a89e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/architecture-wording-gate.json",
+      "sha256": "sha256:7295ac62e3e60f5f1ecdb05e0fd30bb890aa48cac40d463b4e5c1a6c21bdf6ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/command-readback.json",
+      "sha256": "sha256:1f71baa02c0c80d0982b43b4393982079f8f58a1ac79f87ebb5ba440223df1ad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/covenant-publication-gate.json",
+      "sha256": "sha256:7fc4a9ca9c318412a27410d9d6df18a4bce41225d936db411acf815542ba303d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/README.md",
+      "sha256": "sha256:d77f4cbdabc8ee1ce00732dfb33b08f2cf774b95f2b84ef4732246d7da48bfac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/causal-influence-trace.json",
+      "sha256": "sha256:0d4a46ba1ac1b234578f64dd84bd11d854c4717d58330682940fdb2de53fc320"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/eval-regression.json",
+      "sha256": "sha256:116e8b678a63b00e1fe5187bac674f0167667c69b23dfceec8fb3b18d9b999e2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/independence-trace.json",
+      "sha256": "sha256:ee8a8d9e2eb1b5697dd477e99b71c1bff6d86e1420bd9d71bc13880239fad5b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/measurement.json",
+      "sha256": "sha256:1826b0d01992247e4e2176e8a6d6e86097bef506fc3413f13d12844f5ad76c99"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/reproducibility-runbook.md",
+      "sha256": "sha256:ccc37c82e0cd504f1c292877fcae79a93ce5a9a320fde0bf4caae0f2ef4fef26"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-c-public-reader-blocker-trace/rollback-proof.json",
+      "sha256": "sha256:d5d9ca6615f553a3ad48b6d13faa4c4e7f85d05b6751eed79e1fe150ba63fbaa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/README.md",
+      "sha256": "sha256:4ee15bb0d4e9becb93e0c57f8314eaa449b19f876ea7f3f78e1176219dca6ade"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/causal-influence-trace.json",
+      "sha256": "sha256:6b8569ecd429035a3934e70e7ff8462d2036086c63c90c42f879e99b277551f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/eval-regression.json",
+      "sha256": "sha256:731052f7995df90d47097bdb89e6969d73ddb5c9271681414399339cc580ebd7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/independence-trace.json",
+      "sha256": "sha256:93bba77c263ba15e4010c2ccc11bd6cb9b2a374246b932139f34cb990b23c79e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/measurement.json",
+      "sha256": "sha256:ee77fc3cf35ccb089e59a479c2a0cb7cd051c16c7f6a9f4b6c1ac146a88e77b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/reproducibility-runbook.md",
+      "sha256": "sha256:8d9fda1971b87fbe22edf8ea7763275b592cc3485b88463226f81d93b3aa25e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-d-adversarial-overbreadth-remediation/rollback-proof.json",
+      "sha256": "sha256:da9d78f42872826ee41e198cd9f965b40143a02ebcf8e7459477b65eb9363923"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/README.md",
+      "sha256": "sha256:28dd6c9c8c82c276377b97daeb8ee5bd8a7277ed8d3a5cd1ba515016c1c68ff4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/causal-influence-trace.json",
+      "sha256": "sha256:7b8cc218d4ba7fbb3ac7be9abf34832be309536dd07fa46e9f5b220fae264b1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/eval-regression.json",
+      "sha256": "sha256:9cdcf752072bec2e070f9b7e50a010c084ca6c39da5255793d22495d98b309e8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/independence-trace.json",
+      "sha256": "sha256:d6bf99d92ce0fe0c7c3f823017dae1da91fe45cf1a181ca28d1bbe834f4c1cb2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/measurement.json",
+      "sha256": "sha256:c1096a058f24391c509fba93e560924992f48f62c34ffd3708e8ff0803a5e23e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/reproducibility-runbook.md",
+      "sha256": "sha256:db8986970bb5b44fe7bb90b8cee38359ea7ff4aee3377afa1dd93a94e0f07c6f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-e-covenant-architecture-threshold/rollback-proof.json",
+      "sha256": "sha256:6a8091ea520d4de469c171a326c7163708bba95592f4a7c3b71a95c66479ee8a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/README.md",
+      "sha256": "sha256:5e92c937998edfda4651c2dfe944cda0216a9002c047456bb8fdd388394d4b2b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/causal-influence-trace.json",
+      "sha256": "sha256:d0322f9c51d70edf9e4f400e29077e8a3930963258c23f81efabfecbac203acc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/eval-regression.json",
+      "sha256": "sha256:8ba75c491a3d5ed0050bcb154634bf49b90248ddee9db92aa07aaa793b2dcab1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/independence-trace.json",
+      "sha256": "sha256:47ea2cecab9eda6cbefd76f571a977c7dd15c89cc698e4b8af7e8661a9c5747a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/measurement.json",
+      "sha256": "sha256:102a4bd3fb626115a8d1ecaf511b983a0c090f907dcbd10a3e32299d2ef5a441"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/reproducibility-runbook.md",
+      "sha256": "sha256:cbaf076f1a3c54500d6bb38349aa0d92d21373d6d8b148f87c724958d8ebc46e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/cycles/cycle-f-sentinel-public-risk-mitigation/rollback-proof.json",
+      "sha256": "sha256:42e2c2c5682cd5d03e77550a329cf7920a5f9764ef59ff650058b02ceaa34e6a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/final-rollup.json",
+      "sha256": "sha256:6d4afd97132f2b9c04a5c5faae93478816aea20146c97d0ad5ac01f47340801c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/independent-generality-summary.json",
+      "sha256": "sha256:1ee44ba9291eff6b0c4d50faa737831d0f4794ccbe91a65eecf4f2ebfc9dbf81"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/prior-evidence-carry-forward.json",
+      "sha256": "sha256:b9863dec7f057959ae04da6ae368c46636f6b18978731705cfe5b789a03b012a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/promoter-verdict.json",
+      "sha256": "sha256:36e7978453e9b5e8d30ab09d87dcef3497263a556e9e3335bd54ab20f59c2d59"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/public-reader-tests.json",
+      "sha256": "sha256:e884f79e47b7e5499cff8efe0a22996cc18ec3d121d8722108dd6c56e9893c86"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/public-safety-scan.json",
+      "sha256": "sha256:2d9a4439d1f9ebc30dd0595df422de35d0cb81b9a3c2cb4242440e8ab5e592be"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/sentinel-public-risk-gate.json",
+      "sha256": "sha256:735210eecc225e961dae6379bd944919c7ae7b42788f92bbc79c78141a248891"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/stale-language-guard.json",
+      "sha256": "sha256:0b52d9883e3e750df68816729655b4d90af8a8046a577f35f36671b98a542921"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/wording-candidate-results.json",
+      "sha256": "sha256:1091ca4018c2229d876e432bf444779e8119dbed86bce3e771eaf6948be3c04c"
+    }
+  ]
+}

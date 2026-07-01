@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.ricg.independence-trace.v0.1",
+  "cycle_id": "cycle-c",
+  "blocker_class": "public-reader blocker trace",
+  "independence_basis": "distinct blocker class, candidate, and gate focus from the other cycles",
+  "candidate": "public-reader blocker-to-candidate trace quality",
+  "public_safe": true
+}
