@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.ricg.measurement.v0.1",
+  "cycle_id": "cycle-c",
+  "candidate": "public-reader blocker-to-candidate trace quality",
+  "baseline": 0.6,
+  "post": 0.88,
+  "improvement": 0.28,
+  "threshold": 0.2,
+  "result": "passed"
+}

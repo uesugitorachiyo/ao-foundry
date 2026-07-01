@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.ricg.rollback-proof.v0.1",
+  "cycle_id": "cycle-f",
+  "rollback_rehearsal": "passed",
+  "retraction_needed": false,
+  "notes": "Cycle artifacts are reversible by removing or superseding this evidence before merge if a gate fails."
+}

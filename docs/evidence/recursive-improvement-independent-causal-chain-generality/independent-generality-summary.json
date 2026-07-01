@@ -1,0 +1,56 @@
+{
+  "schema": "ao.foundry.ricg.independent-generality-summary.v0.1",
+  "cycles": [
+    {
+      "id": "cycle-c",
+      "title": "Cycle C",
+      "blocker_class": "public-reader blocker trace",
+      "candidate": "public-reader blocker-to-candidate trace quality",
+      "prior_signal": "Public-reader denied stronger wording when the claim implied broader ability than the reviewed causal cycles proved.",
+      "selection_reason": "Select a bounded trace task that makes public-reader blocker influence explicit.",
+      "baseline": 0.6,
+      "post": 0.88,
+      "improvement": 0.28,
+      "artifact": "cycle-c-public-reader-blocker-trace"
+    },
+    {
+      "id": "cycle-d",
+      "title": "Cycle D",
+      "blocker_class": "adversarial overbreadth remediation",
+      "candidate": "adversarial overbreadth remediation trace quality",
+      "prior_signal": "Adversarial wording flagged recursive-improvement phrasing as capability-adjacent overbreadth.",
+      "selection_reason": "Select a bounded remediation trace that separates causal-chain evidence from recursive-improvement wording.",
+      "baseline": 0.59,
+      "post": 0.87,
+      "improvement": 0.28,
+      "artifact": "cycle-d-adversarial-overbreadth-remediation"
+    },
+    {
+      "id": "cycle-e",
+      "title": "Cycle E",
+      "blocker_class": "Covenant/Architecture evidence threshold",
+      "candidate": "claim-threshold evidence trace quality",
+      "prior_signal": "Covenant and Architecture approved bounded causal-chain wording only and denied stronger wording.",
+      "selection_reason": "Select a bounded threshold trace that names what evidence supports narrow wording and what remains missing for stronger wording.",
+      "baseline": 0.61,
+      "post": 0.9,
+      "improvement": 0.29,
+      "artifact": "cycle-e-covenant-architecture-threshold"
+    },
+    {
+      "id": "cycle-f",
+      "title": "Cycle F",
+      "blocker_class": "Sentinel public-risk mitigation",
+      "candidate": "Sentinel public-risk mitigation trace quality",
+      "prior_signal": "Sentinel cleared bounded causal-chain wording and held stronger public-risk wording.",
+      "selection_reason": "Select a bounded mitigation trace that records public-risk hold reasons and exact narrow clear conditions.",
+      "baseline": 0.58,
+      "post": 0.86,
+      "improvement": 0.28,
+      "artifact": "cycle-f-sentinel-public-risk-mitigation"
+    }
+  ],
+  "generality_result": "proven_for_four_independent_public_safe_bounded_cycles",
+  "generality_property": "distinct blocker classes each generated bounded candidates from prior gate evidence and measured post-change improvement",
+  "broad_RSI": "denied"
+}

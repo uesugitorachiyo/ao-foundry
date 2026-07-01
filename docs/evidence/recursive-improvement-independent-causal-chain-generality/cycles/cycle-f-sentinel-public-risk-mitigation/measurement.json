@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.ricg.measurement.v0.1",
+  "cycle_id": "cycle-f",
+  "candidate": "Sentinel public-risk mitigation trace quality",
+  "baseline": 0.58,
+  "post": 0.86,
+  "improvement": 0.28,
+  "threshold": 0.2,
+  "result": "passed"
+}

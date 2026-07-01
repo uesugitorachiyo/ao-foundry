@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.ricg.prior-evidence.v0.1",
+  "prior_class": "public_safe_bounded_causal_improvement_chain_evidence",
+  "prior_evidence_path": "docs/evidence/recursive-improvement-causal-chain-evidence/final-rollup.json",
+  "usable_signal": "two bounded causal cycles proved prior measured evidence can guide later bounded candidate selection, while stronger recursive-improvement wording remained denied"
+}

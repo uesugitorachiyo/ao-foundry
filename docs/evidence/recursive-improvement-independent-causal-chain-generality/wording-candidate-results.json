@@ -1,0 +1,55 @@
+{
+  "schema": "ao.foundry.ricg.wording-candidates.v0.1",
+  "candidates": [
+    {
+      "id": "current-approved-causal-chain-evidence",
+      "text": "AO has public-safe bounded causal improvement chain evidence showing prior measured evidence guides later bounded improvement attempts; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_existing_causal_chain_evidence",
+      "command": "confirmed",
+      "decision": "approved_baseline"
+    },
+    {
+      "id": "four-independent-causal-chain-generality",
+      "text": "AO has public-safe bounded causal-chain generality evidence across four independent governed cycles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_public_safe_bounded_causal_chain_generality_four_independent_cycles",
+      "command": "confirmed",
+      "decision": "strongest_approved"
+    },
+    {
+      "id": "governed-bounded-recursive-improvement-evidence",
+      "text": "AO has governed bounded recursive-improvement evidence under explicit denial boundaries; broad_RSI remains denied.",
+      "public_reader": "denied_recursive_improvement_phrase_overstates_public_evidence",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied",
+      "decision": "denied"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied",
+      "decision": "denied_control"
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe bounded causal-chain generality evidence across four independent governed cycles; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "broad_RSI": "denied"
+}

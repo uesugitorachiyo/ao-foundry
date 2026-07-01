@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.ricg.causal-influence-trace.v0.1",
+  "cycle_id": "cycle-f",
+  "prior_signal": "Sentinel cleared bounded causal-chain wording and held stronger public-risk wording.",
+  "candidate": "Sentinel public-risk mitigation trace quality",
+  "selection_reason": "Select a bounded mitigation trace that records public-risk hold reasons and exact narrow clear conditions.",
+  "causal_chain": [
+    "prior gate blocker reviewed",
+    "distinct blocker class selected",
+    "bounded candidate scoped from blocker",
+    "post-change measurement compared against baseline",
+    "promotion or denial routed through exact wording gates"
+  ],
+  "public_safe": true
+}

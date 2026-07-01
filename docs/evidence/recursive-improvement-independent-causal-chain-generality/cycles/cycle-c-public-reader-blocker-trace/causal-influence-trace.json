@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.ricg.causal-influence-trace.v0.1",
+  "cycle_id": "cycle-c",
+  "prior_signal": "Public-reader denied stronger wording when the claim implied broader ability than the reviewed causal cycles proved.",
+  "candidate": "public-reader blocker-to-candidate trace quality",
+  "selection_reason": "Select a bounded trace task that makes public-reader blocker influence explicit.",
+  "causal_chain": [
+    "prior gate blocker reviewed",
+    "distinct blocker class selected",
+    "bounded candidate scoped from blocker",
+    "post-change measurement compared against baseline",
+    "promotion or denial routed through exact wording gates"
+  ],
+  "public_safe": true
+}

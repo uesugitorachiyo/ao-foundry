@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricg.architecture.v0.1",
+  "result": "approved_public_safe_bounded_causal_chain_generality_four_independent_cycles_denied_stronger_recursive_improvement_and_broad_RSI",
+  "approved_wording": "AO has public-safe bounded causal-chain generality evidence across four independent governed cycles; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "denied": [
+    "stronger recursive-improvement wording",
+    "broad_RSI wording"
+  ]
+}

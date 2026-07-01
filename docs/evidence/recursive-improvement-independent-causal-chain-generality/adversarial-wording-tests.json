@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.ricg.adversarial-wording.v0.1",
+  "result": "approved_independent_causal_generality_wording_denied_recursive_and_broad_candidates",
+  "candidate_results": [
+    {
+      "id": "current-approved-causal-chain-evidence",
+      "result": "approved"
+    },
+    {
+      "id": "four-independent-causal-chain-generality",
+      "result": "approved"
+    },
+    {
+      "id": "governed-bounded-recursive-improvement-evidence",
+      "result": "denied_capability_adjacent_overbreadth"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "result": "denied_overbreadth"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.ricg.independence-trace.v0.1",
+  "cycle_id": "cycle-d",
+  "blocker_class": "adversarial overbreadth remediation",
+  "independence_basis": "distinct blocker class, candidate, and gate focus from the other cycles",
+  "candidate": "adversarial overbreadth remediation trace quality",
+  "public_safe": true
+}

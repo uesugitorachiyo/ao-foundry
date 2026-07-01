@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.ricg.causal-influence-trace.v0.1",
+  "cycle_id": "cycle-d",
+  "prior_signal": "Adversarial wording flagged recursive-improvement phrasing as capability-adjacent overbreadth.",
+  "candidate": "adversarial overbreadth remediation trace quality",
+  "selection_reason": "Select a bounded remediation trace that separates causal-chain evidence from recursive-improvement wording.",
+  "causal_chain": [
+    "prior gate blocker reviewed",
+    "distinct blocker class selected",
+    "bounded candidate scoped from blocker",
+    "post-change measurement compared against baseline",
+    "promotion or denial routed through exact wording gates"
+  ],
+  "public_safe": true
+}
