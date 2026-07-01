@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricb.counterexample-result.v0.1",
+  "track_id": "track-d",
+  "implication": "broad_RSI semantic approval",
+  "counterexample": "A reader may treat bounded causal-chain generality as broad_RSI approval.",
+  "safe_boundary": "The evidence keeps broad_RSI denied and approves only counterexample-tested bounded causal-chain wording.",
+  "result": "denied_overbroad_implication_approved_safe_boundary",
+  "public_safe": true
+}

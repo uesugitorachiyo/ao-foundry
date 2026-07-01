@@ -1,0 +1,147 @@
+{
+  "schema": "ao.foundry.ricb.evidence-index.v0.1",
+  "mission": "recursive-improvement-claim-boundary-counterexample",
+  "highest_prior_class": "public_safe_bounded_causal_chain_generality_four_independent_cycles",
+  "new_class": "public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "counterexample_tracks_completed": 4,
+  "public_safe_artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/README.md",
+      "sha256": "sha256:59ac776d04f5861beb3a8136af54d00653cdc827d3131911fe60a5efa5af7a12"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/adversarial-wording-tests.json",
+      "sha256": "sha256:742bcbed666253889124531910bfad06fdedace0e926282797be3889e128f69f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/architecture-wording-gate.json",
+      "sha256": "sha256:6ccf0bcff13fada7affe7953f7270b73289aac4dcfa08c694ad09ee0cfb6dd14"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/command-readback.json",
+      "sha256": "sha256:6175aaa1f25e7677922e00bfdb348244e274136a97a02d213b24206fcd2f2a73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexample-summary.json",
+      "sha256": "sha256:9465e59cf1902797d94aca60a30c437b6fb8e465c161c12c991ec72d50533101"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/broad-rsi-semantic-boundary/README.md",
+      "sha256": "sha256:f630e644164ba7c0776367c3c894de9e68237c2057b72a20f8b831d8130d25b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/broad-rsi-semantic-boundary/boundary-measurement.json",
+      "sha256": "sha256:b1d42bee8525bd46946d340845221930a6d790371604e8ccbbf72fa3f982bc5c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/broad-rsi-semantic-boundary/counterexample-result.json",
+      "sha256": "sha256:216e248243a226e0ce02bd36511388436c60269a19ec59c8cd13c9268ef07b77"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/broad-rsi-semantic-boundary/reproducibility-runbook.md",
+      "sha256": "sha256:bdc400ba2c75a584faa065b0d09275a849b800533408342fd4f7abcf4b9d6f30"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/broad-rsi-semantic-boundary/rollback-proof.json",
+      "sha256": "sha256:af2d960c57907c2ce54b1429801d42edee925eb15b797ea6c10831a8e9b98581"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/hidden-instruction-implication/README.md",
+      "sha256": "sha256:131d17ac6f15ab873565e88b1b96741a4b94c1ad9739247ac11aa23ad2d7ea8a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/hidden-instruction-implication/boundary-measurement.json",
+      "sha256": "sha256:86d607137c73db6ea269b7459c52224b139341bfb20628eb7504961c8cfadd08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/hidden-instruction-implication/counterexample-result.json",
+      "sha256": "sha256:8069ff2cdc300cbfb5a526bc41b0e38b5d11d0f3f777f08596d8f1e0dc6c0b59"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/hidden-instruction-implication/reproducibility-runbook.md",
+      "sha256": "sha256:1232d876feee719cfbd70942e3a9cc625ae210185e63845bb5470019a2cc5d2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/hidden-instruction-implication/rollback-proof.json",
+      "sha256": "sha256:87dde74fdf4e4450216ea07035994e4dee079722dacf106b96d8185e5796fb63"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/policy-changing-autonomy-implication/README.md",
+      "sha256": "sha256:d4839d704475f0ff758e5fd0863595884a71a731038f8a1e9b3dcb4cfb09eb1a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/policy-changing-autonomy-implication/boundary-measurement.json",
+      "sha256": "sha256:5e6aa07b84d2a108f7f058fe5175838a00c07b0c7802ae2f2d78f75d9b5efee2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/policy-changing-autonomy-implication/counterexample-result.json",
+      "sha256": "sha256:4e14882796ae3f7c7a3b3eb357bbfc8cdfe1d06c8e23e834a03f206e218af063"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/policy-changing-autonomy-implication/reproducibility-runbook.md",
+      "sha256": "sha256:5efe6e2b18daba320f3454b4ee277c4829a76465470d8ce0888af6bd8edd9a38"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/policy-changing-autonomy-implication/rollback-proof.json",
+      "sha256": "sha256:90f6825f79b58a8c66f3364b100fedac3522314244eb5d322a4411d0964d5323"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/recursive-improvement-overbreadth/README.md",
+      "sha256": "sha256:6c9d6f9f1e57d709f305a8a8a0ed32ffcbd3e8b68ff7ee82011d199d93ad319b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/recursive-improvement-overbreadth/boundary-measurement.json",
+      "sha256": "sha256:4f19264d3d6f003af6d9f498540e3cdbd62d97e1bc49bdf9b34d32d7d796deaf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/recursive-improvement-overbreadth/counterexample-result.json",
+      "sha256": "sha256:f567b6e318bd8cd931e0ea8e28bf9baf75eb4decad90fa76f62da688664d6303"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/recursive-improvement-overbreadth/reproducibility-runbook.md",
+      "sha256": "sha256:ef777ed50b39077b12b8c8fb709d2b1f565c2b6676e20552599e7147c4f3d75a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/counterexamples/recursive-improvement-overbreadth/rollback-proof.json",
+      "sha256": "sha256:2b4d6d51ac8e08f08145e3eb236a9bf95e9de7e2395933176e650188dae4bbe6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/covenant-publication-gate.json",
+      "sha256": "sha256:66bde0cb8d873da743d97277b7adce64aebf9ea434cffe78c46bcf74df4e239f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/final-rollup.json",
+      "sha256": "sha256:48b309c05fc0811cb804f223737e38866c18d6eb9946010793402f2b2669c9c8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/prior-evidence-carry-forward.json",
+      "sha256": "sha256:307f4f0aedbb33c390864bc66850f6ff493a60e14de6dd3a71841b4e5245c2ad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/promoter-verdict.json",
+      "sha256": "sha256:8d729ca5f4b54f80764a36d16a9c88e07623ac2e18f6adef171ee894a23386a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/public-reader-tests.json",
+      "sha256": "sha256:60c5b6edd2171f793bd992e810b2a7d174d04cb10155f1cebcfe7ebb902a5724"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/public-safety-scan.json",
+      "sha256": "sha256:9d6f679401252bae17e1671749aff5a2afa10e22a9cdbc62884bb9f66e90bc64"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/sentinel-public-risk-gate.json",
+      "sha256": "sha256:83b2fd1141a40dc94198f8c703b7b4019e95f49b879e05b8a625738998b4efcf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/stale-language-guard.json",
+      "sha256": "sha256:154f0a6da3dd420acaf88dc4b1c4214c743cb53ac9dff1bde28c884dae079ebb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-claim-boundary-counterexample/wording-candidate-results.json",
+      "sha256": "sha256:dfba1fb166f1e72465b2a287e80a063e63fde56dc3aca48779a82cb55b199bde"
+    }
+  ]
+}

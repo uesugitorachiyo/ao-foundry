@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricb.counterexample-result.v0.1",
+  "track_id": "track-a",
+  "implication": "recursive-improvement overbreadth",
+  "counterexample": "A reader may infer a general recursive-improvement capability from bounded causal-chain evidence.",
+  "safe_boundary": "Bounded causal-chain evidence supports only exact public-safe evidence chains, not general recursive-improvement capability.",
+  "result": "denied_overbroad_implication_approved_safe_boundary",
+  "public_safe": true
+}

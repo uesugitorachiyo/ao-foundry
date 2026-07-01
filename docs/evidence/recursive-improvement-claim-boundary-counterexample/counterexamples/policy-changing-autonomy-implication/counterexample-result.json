@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricb.counterexample-result.v0.1",
+  "track_id": "track-c",
+  "implication": "policy-changing autonomy permission",
+  "counterexample": "A reader may infer AO can change policy or authority boundaries autonomously.",
+  "safe_boundary": "The evidence preserves policy-changing autonomy denial and requires separate gates for authority changes.",
+  "result": "denied_overbroad_implication_approved_safe_boundary",
+  "public_safe": true
+}

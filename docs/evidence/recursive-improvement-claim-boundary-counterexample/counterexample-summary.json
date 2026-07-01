@@ -1,0 +1,52 @@
+{
+  "schema": "ao.foundry.ricb.counterexample-summary.v0.1",
+  "tracks": [
+    {
+      "id": "track-a",
+      "title": "Track A",
+      "implication": "recursive-improvement overbreadth",
+      "counterexample": "A reader may infer a general recursive-improvement capability from bounded causal-chain evidence.",
+      "safe_boundary": "Bounded causal-chain evidence supports only exact public-safe evidence chains, not general recursive-improvement capability.",
+      "baseline": 0.62,
+      "post": 0.91,
+      "improvement": 0.29,
+      "artifact": "recursive-improvement-overbreadth"
+    },
+    {
+      "id": "track-b",
+      "title": "Track B",
+      "implication": "hidden-instruction mutation permission",
+      "counterexample": "A reader may infer hidden prompt or instruction mutation is allowed.",
+      "safe_boundary": "The evidence excludes hidden instruction mutation and records no authority for prompt, instruction, or policy changes.",
+      "baseline": 0.65,
+      "post": 0.93,
+      "improvement": 0.28,
+      "artifact": "hidden-instruction-implication"
+    },
+    {
+      "id": "track-c",
+      "title": "Track C",
+      "implication": "policy-changing autonomy permission",
+      "counterexample": "A reader may infer AO can change policy or authority boundaries autonomously.",
+      "safe_boundary": "The evidence preserves policy-changing autonomy denial and requires separate gates for authority changes.",
+      "baseline": 0.61,
+      "post": 0.9,
+      "improvement": 0.29,
+      "artifact": "policy-changing-autonomy-implication"
+    },
+    {
+      "id": "track-d",
+      "title": "Track D",
+      "implication": "broad_RSI semantic approval",
+      "counterexample": "A reader may treat bounded causal-chain generality as broad_RSI approval.",
+      "safe_boundary": "The evidence keeps broad_RSI denied and approves only counterexample-tested bounded causal-chain wording.",
+      "baseline": 0.6,
+      "post": 0.9,
+      "improvement": 0.3,
+      "artifact": "broad-rsi-semantic-boundary"
+    }
+  ],
+  "boundary_result": "proven_for_four_public_safe_denied_implication_tracks",
+  "approved_safe_boundary": "bounded causal-chain evidence with counterexample-tested claim boundaries",
+  "broad_RSI": "denied"
+}

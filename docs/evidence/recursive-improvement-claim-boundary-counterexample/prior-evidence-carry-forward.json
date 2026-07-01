@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.ricb.prior-evidence.v0.1",
+  "prior_class": "public_safe_bounded_causal_chain_generality_four_independent_cycles",
+  "prior_evidence_path": "docs/evidence/recursive-improvement-independent-causal-chain-generality/final-rollup.json",
+  "usable_signal": "four independent bounded causal-chain cycles proved narrow public-safe generality while stronger recursive-improvement wording remained denied"
+}
