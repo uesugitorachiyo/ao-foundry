@@ -1,0 +1,86 @@
+{
+  "schema": "ao.foundry.rige.evidence-index.v0.1",
+  "project_id": "recursive-improvement-guided-evidence-application",
+  "proven_class": "public_safe_guided_evidence_application_four_attempts",
+  "highest_prior_class": "public_safe_causal_review_evidence_selection_guidance",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 720,
+  "total_nodes": 720,
+  "public_safe": true,
+  "approved_wording": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "evidence_categories": [
+    "carry-forward causal-review guidance proof",
+    "guided candidate-fit measurement",
+    "reviewer-blocker triage measurement",
+    "cross-evidence dependency selection measurement",
+    "safe-next-evidence prioritization measurement",
+    "public-reader review",
+    "adversarial wording review",
+    "Covenant publication gate",
+    "Architecture wording gate",
+    "Sentinel public-risk gate",
+    "Promoter verdict",
+    "Command readback",
+    "rollback/retraction evidence",
+    "stale-language guard"
+  ],
+  "attempts": [
+    {
+      "id": "attempt-m",
+      "title": "Guided candidate-fit application",
+      "task_type": "guided candidate-fit evaluation quality",
+      "baseline": 0.67,
+      "post": 0.92,
+      "improvement": 0.25,
+      "artifact": "guided-candidate-fit-application",
+      "prior_signal": "Prior guidance evidence showed causal-review artifacts can guide evidence selection, but not yet application to later bounded attempts.",
+      "selection_reason": "Use guidance to select a candidate-fit rubric that improves whether later evidence attempts match exact blockers."
+    },
+    {
+      "id": "attempt-n",
+      "title": "Reviewer-blocker triage application",
+      "task_type": "reviewer-blocker triage quality",
+      "baseline": 0.65,
+      "post": 0.91,
+      "improvement": 0.26,
+      "artifact": "reviewer-blocker-triage-application",
+      "prior_signal": "Public-reader and adversarial wording blockers remained the decisive denial reasons for stronger wording.",
+      "selection_reason": "Use guidance to prioritize reviewer-specific blocker triage before retesting wording."
+    },
+    {
+      "id": "attempt-o",
+      "title": "Cross-evidence dependency selection",
+      "task_type": "cross-evidence dependency selection quality",
+      "baseline": 0.64,
+      "post": 0.9,
+      "improvement": 0.26,
+      "artifact": "cross-evidence-dependency-selection",
+      "prior_signal": "Guidance evidence linked prior and later claims but still needed dependency selection across evidence categories.",
+      "selection_reason": "Use guidance to select dependency records that make later evidence attempts independently reviewable."
+    },
+    {
+      "id": "attempt-p",
+      "title": "Safe next-evidence prioritization",
+      "task_type": "safe-next-evidence prioritization quality",
+      "baseline": 0.62,
+      "post": 0.89,
+      "improvement": 0.27,
+      "artifact": "safe-next-evidence-prioritization",
+      "prior_signal": "Sentinel held stronger wording because safe next-evidence boundaries were not explicit enough.",
+      "selection_reason": "Use guidance to prioritize the safest next evidence target while preserving denied boundaries."
+    }
+  ],
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

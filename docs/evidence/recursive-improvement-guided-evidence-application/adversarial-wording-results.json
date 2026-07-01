@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.rige.adversarial-wording.v0.1",
+  "result": "approved_narrow_guided_evidence_application_denied_capability_overbreadth",
+  "approved_wording": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "holds": [
+    "stronger recursive-improvement wording",
+    "broad_RSI wording"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.rollback-retraction.v0.1",
+  "project_id": "recursive-improvement-guided-evidence-application",
+  "rollback_ready": true,
+  "retraction_ready": true,
+  "plan": "Remove or revert this evidence directory and preserve prior causal-review evidence-selection guidance wording if any gate is invalidated."
+}

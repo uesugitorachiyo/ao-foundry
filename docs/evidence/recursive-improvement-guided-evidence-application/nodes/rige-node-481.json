@@ -1,0 +1,28 @@
+{
+  "schema": "ao.foundry.rige.node-evidence.v0.1",
+  "project_id": "recursive-improvement-guided-evidence-application",
+  "node_id": "rige-node-481",
+  "status": "completed",
+  "phase": "carry-forward causal-review evidence-selection guidance proof",
+  "review_role": "public-reader",
+  "wording_candidate_focus": "current-guidance-control",
+  "safe_to_execute": true,
+  "run_link": "run-link-id:rige-node-481.json",
+  "public_safe": true,
+  "rollback_recorded": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ],
+  "result": "completed_public_safe_guided_evidence_or_readback_node",
+  "notes": "Serialized continuation consumed this node without broadening public claims."
+}

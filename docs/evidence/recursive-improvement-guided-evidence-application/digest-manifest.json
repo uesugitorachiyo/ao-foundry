@@ -1,0 +1,2994 @@
+{
+  "schema": "ao.foundry.rige.digest-manifest.v0.1",
+  "project_id": "recursive-improvement-guided-evidence-application",
+  "artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/README.md",
+      "sha256": "960d28756798b2d80a3b6af8e14bf74c31c1c279e1aba966f28bd6e7e35bee7d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/adversarial-wording-results.json",
+      "sha256": "8c9879933354c3dc3b72156db65d40d3b02d94062fe093f13c54941d34eaf58f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/architecture-wording-gate.json",
+      "sha256": "8783bff2c2739d037a9a968c33bf17f4d854ee5fc52adaf81698114c800e2e08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/cross-evidence-dependency-selection/README.md",
+      "sha256": "082122f65345950a405f48172f31cf8452055f0c9c7c46048d1bc06d67bf621d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/cross-evidence-dependency-selection/measurement.json",
+      "sha256": "77b3b4ec7652ff9ac02ee8623cc946dbd54446769ef9d1e81d882cdb1b5f1c35"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/cross-evidence-dependency-selection/reproducibility-runbook.md",
+      "sha256": "f7e195564a885eeca04eea3c0647442a15585f91d632f1bbd1adacc2c6c77b19"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/guided-candidate-fit-application/README.md",
+      "sha256": "43c94902361b6d183d75bc846f60533ee1feb1b328e0670e1a8078f7be85cf46"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/guided-candidate-fit-application/measurement.json",
+      "sha256": "6b0de06037c8c11fb058926f78714338bf7c8f751602613e7268d09d051746c0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/guided-candidate-fit-application/reproducibility-runbook.md",
+      "sha256": "d79903567596b05d631fe4379906069257e85ac3e1e35ed5cca5131ef840ba2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/reviewer-blocker-triage-application/README.md",
+      "sha256": "a145d6f77ee8c6dc1eb5575e70c264e3027a6e32af531a38edb329f40fb36055"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/reviewer-blocker-triage-application/measurement.json",
+      "sha256": "da67fc14e12a715f7a8683e8cf36e8282d14386a9f120620e93d7e0099702310"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/reviewer-blocker-triage-application/reproducibility-runbook.md",
+      "sha256": "9c3ef3c003d8da43466e13138af898d1fe6f61e07ea07af79d36807b3a722c03"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/safe-next-evidence-prioritization/README.md",
+      "sha256": "ecb912c1df0a3071cfba371c5b210c09bdf396f379baec618b1052cff0a23a1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/safe-next-evidence-prioritization/measurement.json",
+      "sha256": "7b7c152b60c97b22460bb7aa0e9bbd98c3eec158b5d0c8d5eeb0c919b794df7f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/attempts/safe-next-evidence-prioritization/reproducibility-runbook.md",
+      "sha256": "2565e642fc6ecfbb2b966d5c50b9be604e17dbac48f3996be305137cc262f0da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/command-readback.json",
+      "sha256": "25a26e6718beba908b0d8daf92c1fc45e660b9772fd57e5a334badcda364a3b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/covenant-publication-gate.json",
+      "sha256": "7f039b14ae0c8788082c1c60fde97eda111a163a11f42501551bafeb7001fb34"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/eval-regression-results.json",
+      "sha256": "095bc9f2d116836f7692f1930f980bc545255c425c3a144852f5989f52b1e9f0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/evidence-index.json",
+      "sha256": "5551c0f9caa5d10e9d68c34224a600d0d6434e2c2526e442a8977045485f6638"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/final-rollup.json",
+      "sha256": "0c70be6ab913844f1c590d61257f20b9ec19d9835af4890e575d0d4412dc63dc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-001.json",
+      "sha256": "af8b096766ae007903f5b8b538c7663559b271358e39d162210edbef8eeaaf80"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-002.json",
+      "sha256": "8117ea642a037965177d9636ebfa495f73ea3e97e7f980c526430f794fa0f236"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-003.json",
+      "sha256": "87bcdfcf5f8bf770814cc9986d0139a246f12c3995bd253e14c95b884b1e67f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-004.json",
+      "sha256": "7c9bdfd6fe42753be45808255b9533434ead2b8cfe7199d3077a6cdda932b002"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-005.json",
+      "sha256": "116102ecbb62372939f3dc5a79642682e755a2c9c3d944503d8c7d26b1ac693b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-006.json",
+      "sha256": "502690eb9783659755a1b6b039462852415942edae63c8978b68fab928bb7bae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-007.json",
+      "sha256": "e315d3ce945a48cb5c539dad48f203888b4e30f739b88d15802f92dbed627ecc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-008.json",
+      "sha256": "208b5798365e87e8fbd6d40c5d64c16c5c1d0769dc80f7e9e953ff9de4a52eb9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-009.json",
+      "sha256": "e054fb4bcba54ff0648f1d141be0aa82064f6609a20b70ed5e368aadcc3ae1f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-010.json",
+      "sha256": "f6c5f2f84838ebe6d597b10d47f64d920c0afb41d78a6acda1c3986717e892aa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-011.json",
+      "sha256": "5e60b3f950778db4074bbc645a06f20a07c335153bd0fae96205e921d39f987f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-012.json",
+      "sha256": "244a0a7bc468fec44e9a03a33fe46a9b19e01df8347d087554a243c16e6465e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-013.json",
+      "sha256": "d4c398694b23da953a07a80efba7a4c830c0206e7e9f7b6e67b9a3534e81dbcd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-014.json",
+      "sha256": "3c17b9565e6c7ff9f97a2e0af14a8d2d3a89bf9fb1e6f19ff267454da75d7b2d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-015.json",
+      "sha256": "d5126fec6bafda5bd5f2c1b9a14285864bdbbeb865509e96434b02dbda1b4960"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-016.json",
+      "sha256": "bcd8479a6dd4451bcab51139b7effe16480590f8b6ce2e93a3588ede8dd66ef4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-017.json",
+      "sha256": "b19a6e6c761312b41b9c77f07843fbb041e0234837ca4ffc16974de1a26d9b50"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-018.json",
+      "sha256": "a4b22adcc06de327f3baf521da72549456967d10396adb92a9fba04714c60868"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-019.json",
+      "sha256": "fb0db4e7d7ffdda66e097210050f8a31cd1f2c3a789f1a206df32af3757fe1fd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-020.json",
+      "sha256": "bdfb2b15b0159922d312a6140ee4456189002c8a4164f948577195e94fd84d1a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-021.json",
+      "sha256": "5260d507ef7c8df2bb3dd0c7c773a65bed404ee625cafb9ae41f391f3331fac7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-022.json",
+      "sha256": "7889ca04b1355d41934c41a39cd9e472f758bc753c5e5ef3e97c3b7884ecbbbd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-023.json",
+      "sha256": "685681f856b0d989fe5a1c3b8c14522c340c50d40024fac9736070125abede41"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-024.json",
+      "sha256": "a85886cf4b48e2275310285c4b4204307062f1e1ebf6a0cf6b52fc2c1f4c478b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-025.json",
+      "sha256": "863f68cf6ecc633e133c9b38d0b16f8c788eb3c09cb6e5b540ba54d6ed182a23"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-026.json",
+      "sha256": "cb0345ef92533106b0a6f4e72d5b528358086ed223d8452fa311487ee3e331e1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-027.json",
+      "sha256": "8c8dc475b996ab5e199ada69f1eeebe2b83ad9f668cda72de384db00f5d16a81"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-028.json",
+      "sha256": "092de18f48abb447b0178a4452d1d43610622afd7dbf163453957bcc92474fcf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-029.json",
+      "sha256": "59fae6eb33d52da072e8bfdd58887e45404930184a7a0995d720f1822ee0c73f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-030.json",
+      "sha256": "51d4207af75d098a085ec91ae077a13249ca5477cf76fd036fd79457f5b31b6d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-031.json",
+      "sha256": "ed981d3f2f8fecf7838e2b6af994b73699e6605588e99bf6d7e082730ab9e774"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-032.json",
+      "sha256": "97fbfb5b4da270b77df2cafbe8a4658e565124ef028835465d8c74b4c26ddf49"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-033.json",
+      "sha256": "3e85699f6f3f4c0a551b2d04a654f3415a1fc3570ac825d32a724b86ab4f5d2b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-034.json",
+      "sha256": "d422ee88850c09a8b7edc4e458ef2e41485afb31370487dc1cba648b03c55392"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-035.json",
+      "sha256": "53f60e45bcb30d3830b8d1b8ab6ef415a5dac267b0e3da3f899b109475950535"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-036.json",
+      "sha256": "65ba431dd5b6ffeae3b2a8822cb643f0107134791bac0d61b8d6276b09c2fa37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-037.json",
+      "sha256": "55681df7c1e90da4cf0ae92ca24457c5e0fa92dc18c99ac28e2abbb7b953f831"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-038.json",
+      "sha256": "53f3af010246812b951b3ff27d73811f886b0ffbd095f7cf59f40c95718005c2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-039.json",
+      "sha256": "70f3609ace0b86175c9356d968c7d40724b775587c0d55c0deeb339776cde488"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-040.json",
+      "sha256": "6a0c78a81b9cf08eb50bb16a37cb3c91ebab7a3117eba60d322f5de7ba836d66"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-041.json",
+      "sha256": "68cdd783d47d303056b0a579c55a37ecdf36637faa1baf99bfe0b7ae8079c3c5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-042.json",
+      "sha256": "88ebb77a3fd67807b5df5ef66edd4a0da1faf240e154fe8447a2260c020af399"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-043.json",
+      "sha256": "9da60632a8e56c23a994707b71025b6d990f52fe4b12d7016f109f4eb9e5c915"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-044.json",
+      "sha256": "709836b80853b4f49b60dae42a05448b415181776d74fcf1bd2697ab50e46cde"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-045.json",
+      "sha256": "6dff0e57f977642ba4cd42d22e533c83398147294ba2efce84afc73dbb9ca249"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-046.json",
+      "sha256": "5b598cda471b1143664c167cc1988bb8a46807d6191edff84690bb9388079724"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-047.json",
+      "sha256": "8cbb50935cf6af29206984c94b10f4193190ca195ea4a72845470bbde8e96198"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-048.json",
+      "sha256": "77d03ae057580e5d08257dd2ff79a39fc974a648b20934e81fc650c18da14d36"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-049.json",
+      "sha256": "a61771a82edb814f72ea365d95239628aadc0a5dd7982e745f1f96f1424d5355"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-050.json",
+      "sha256": "d1d0dbeb4716067d12c70bdba295a6febddb372301708c09661a86c6f500c14f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-051.json",
+      "sha256": "c6b310554e9217fb7f2b47490c1748380c05cc7939f22b1b30dd3b83d5582b25"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-052.json",
+      "sha256": "0e87178ed3b39a646d3640167187192cd2989130f702725d8d09a7e4c58dc4cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-053.json",
+      "sha256": "ef32dab0a0abb4501fda0bc055a04bfca3b2a0767ff9a227ab7b2d62e1f0263f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-054.json",
+      "sha256": "6c3b2eff6a7120f24a4124dc33f5b8dc7227963ac2506e5be63e746e152ff99b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-055.json",
+      "sha256": "acdbd7bf2cd6887d0ebd7936c548d22d38ba09adb5d6498adfe5d6def775bd75"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-056.json",
+      "sha256": "30b095223e225a9f48f9d7dd29de69b8a7fd62d3f0e3c95d3908cb5ce3de5f5a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-057.json",
+      "sha256": "e0f22cbe32b87ad5263135d0d1fdbb3a1888ee06c8aed5a44822c11f4b62c68c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-058.json",
+      "sha256": "3166446abbaeb62f61d48f2c825b252c6568950ab4ef949b0967ecb7b6765ba5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-059.json",
+      "sha256": "ca99dd5e2ae322d2db906f7b459c420055832b57c415a8bdb1cb9c6143a0e4e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-060.json",
+      "sha256": "c82394579498f8cffcd7e7df30f61a9bb7a7f6557bd47a0b6d0a586237ef656c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-061.json",
+      "sha256": "9853381e83083a7c14ddffd07224b09e17fe24dc424069237f10278d40c9625f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-062.json",
+      "sha256": "d8fa8afa7b36e52e884ed6e2b5e053b5d52017317a7b30ad43f9c538a2e33b9d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-063.json",
+      "sha256": "83028896b41cdfc5dc822426ab0a30663f9fa54a07b744288e15c54268ad9d4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-064.json",
+      "sha256": "533a230b0cce1e6c5b2a2a9a620d893202f06d760f9c92b2a4c31b7b55d9a611"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-065.json",
+      "sha256": "fa8a757fdb7f3ed4dc0aca5ef9e8d8cb0b6eccd2be60a86fa8946120a4227c2c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-066.json",
+      "sha256": "9c70ecbd1b5dafa01b8e3c973448e09ad738a0c6d5198d0365d79fcb42506076"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-067.json",
+      "sha256": "08017f11d26a36cb689be0772bb27133263b169e587c2de10a9118638ed5024a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-068.json",
+      "sha256": "d5c601fe7b7e7ec0dded48a086682cf392a353fb1321a4d9b122540509b6c4f2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-069.json",
+      "sha256": "0b8429abdd99482177233bf90ee95a81d46f87b2780e4f18b41d02c7f4b05f67"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-070.json",
+      "sha256": "7b2713abe73dd7baeb1bfaeee6360cf6f4be4042f300cddc4fc1a1f65fe70d71"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-071.json",
+      "sha256": "27e98f6e88aa11c403a87f07b75b72b9d03f2315738691c8a3d0d0dbb25d605e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-072.json",
+      "sha256": "e70c7d21624410e73fe7e83a867125634ae559c9fd8840b7520e059759c273f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-073.json",
+      "sha256": "d6898b42b46a90d65d2e031e44b32e51d37e955501aef5553c1a879e2f6b910b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-074.json",
+      "sha256": "7ceb6d7c02af23d96fcabbedd740c409c50ba4089a3c069b0ac9b7032031a5ac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-075.json",
+      "sha256": "b16af0ea910216a93a68083e4a01bb46acd6bf40807b6b4ebca862ef1acef6bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-076.json",
+      "sha256": "9c89fd029af7f7063bf2cd82e4f65712e68d3653634f5e368afcc5bd2e771b9d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-077.json",
+      "sha256": "6acc6812ec6096b7fcd0e79d239cddc8b22ce621fe122c8b50701c0e1e59f5e9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-078.json",
+      "sha256": "901cac49b43abf5c5ee7a640c5482a125210af7d276158b0b41e719dd125cc8b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-079.json",
+      "sha256": "6a1339723cfa7717b334c28673024a1969200ea779faf7a4c06a41d8e437129c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-080.json",
+      "sha256": "5eb110424d248d4fc7181b0b98cc6d02fda6d1ad0449dad0c83321e9f4e6ad61"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-081.json",
+      "sha256": "bb854ffec941af06d1a81b4339aa5c682e804795439bc6b660b68b97d2c64be4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-082.json",
+      "sha256": "8bc5f2615c5c1ec89648e7b171092454ba918776070fc7364b4d375cdf86ef56"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-083.json",
+      "sha256": "f87630863e9cbf3c9ff685a6d2012ad16831dcbd9a6f4f0b960b7f6c478a22b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-084.json",
+      "sha256": "b7c1caec0e53ae85a52b346c8197b189bc90400dc66ced10f5d5fc9c4e405184"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-085.json",
+      "sha256": "f68087bc73e575b5dfce61b797205e279e3445aca4e9649292c5fb2b9214e5fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-086.json",
+      "sha256": "c62b02fefb8188e4e5fafb740281ab3208cd65ebfcbcfa7b57492629c4d8d2b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-087.json",
+      "sha256": "dfd7745060966532160c56f01bbd4f906669faceceacff39ddd52ebbbc67e448"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-088.json",
+      "sha256": "ebeee74bc4ce3bf547869c8abd7ab321fcfc8e21b69709651ce93aea6e0ccff5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-089.json",
+      "sha256": "0d0313d7cf9868f62e6e896b9ef0a5ab5af886bc21e7c5b8f3f68535065dccf1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-090.json",
+      "sha256": "5b97e0ec06bd4b57c5f57dd03aa1eab2c19dd07e02d42dd01873a36805bc150d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-091.json",
+      "sha256": "da48815ad0a587b7f374f0eaa82db7212b456686ff99dbc5fe5910a562a0fad8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-092.json",
+      "sha256": "0391386ecb33e212b2ca914a36e0922fa78e4d1edf2b8e5c14e3b45627d4167c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-093.json",
+      "sha256": "acb03ce9c20ae374c77fb2bf7e888655502166e17e48e7836f13535647148e65"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-094.json",
+      "sha256": "6b02899bdf56a9606baca570627bf9604e9c411220720c7e47aca0990f1109e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-095.json",
+      "sha256": "9722dc216aa64fd38729a9b0762a981d8a9d09c42c8a340f469e3e90919fd56d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-096.json",
+      "sha256": "7650f01c2eecf227413e2ea750e2e2fee1ca6f299c54b2f0b8d10800a9367c6e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-097.json",
+      "sha256": "98bb914c571e6b4dacab0b00092bdc14c5bceb76d67a5c035ec3ca4fe7d3ee9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-098.json",
+      "sha256": "ade25c927b95926c200e629238bafb3c730bd6876e08f43b564e4076dd05ed52"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-099.json",
+      "sha256": "e57a3326e6a861bbe87513b195421ce200d96ecebefec80fd198e1fc47b732bd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-100.json",
+      "sha256": "2a4dbed824c220746fcb1724fc0c363893ec4700119ba5b4dcebdaf4e9f005b8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-101.json",
+      "sha256": "d6c2882d96b84394a39ced3174dddc1fc3749d2c2c0d6dc7934216ccccaaba4a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-102.json",
+      "sha256": "e991508038392f91ca178869758608a231b0c4573e14c2368d1041fbec18bcd8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-103.json",
+      "sha256": "630b771e572b62e44b87f1bbbdfdd3f7e9c0701756619e72e03b681ccb78329c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-104.json",
+      "sha256": "a266736a70be006263497b728375deffa1223da95522a688013a465de919328d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-105.json",
+      "sha256": "fd73385d59f2f0de367f0ab7f9836a02c0692c95526588b90420b647dbb274b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-106.json",
+      "sha256": "bbb2fd0d041edf6b8e9acf25b24226813064bc8243fd5135849aba61745247e8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-107.json",
+      "sha256": "442913d61901f50db5a93cc4a45d93742149863dbbbc2703beb4de82acdf19b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-108.json",
+      "sha256": "30e9a1b7ecc62b7c35bcd8920e1db5fb94ef92039c4f4e5727402223a3ff0840"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-109.json",
+      "sha256": "02473ba2831d73310b4c4bc58279c55f47c6bfd440f3800604d16454c12fa40b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-110.json",
+      "sha256": "0baff9d422c0912c2303e6aa34ece20b43009db78f79f964530c2a7000f0058c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-111.json",
+      "sha256": "1a338e072af843537a27e34dfe246fabacbfa4baa31f40251afed2a5e851a5fc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-112.json",
+      "sha256": "b435a1ca30fc3fe02eed01c3af06d4c11b6ea4fa18bea3f07eb4c7cb624fcc88"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-113.json",
+      "sha256": "8a73f3caeea19cfc7b0f7e39209017b92e7f88993e2ed0faf5cf87193bf84b0a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-114.json",
+      "sha256": "a10f041825ffcee9dbe5b6c7957cc1f0f791e26ac878add312b1be0c04d93cb4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-115.json",
+      "sha256": "f3dd3f94e2a60b40d2d491f6bf5ad46fba60db5cec65b5e96a854b76ec761746"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-116.json",
+      "sha256": "943779fa40138d6047ee0d9603566ff1463e47d1e93e943faec86c27a6a36537"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-117.json",
+      "sha256": "2d42ab09c3688a2c83c13b8e83c3b05c16a58b05571cc1d6db9842d2568777c5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-118.json",
+      "sha256": "3cd6b8295d85c5241b74b0e0023e046e8b4241014823d2ffbe33fe7c4c693b82"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-119.json",
+      "sha256": "ab48f6997b2f2592ce18872fb5fd8bbfb22df120714c9bae199bf35f999e2117"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-120.json",
+      "sha256": "cf75d668c882b47ab961d4e334afd3b907327206b02926fbec0cf5ee89a6d1a4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-121.json",
+      "sha256": "96fc6d6b2bcb5b99fe6dcafd0575d7c8a589485c08293b4e67c73ccc4b19e11b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-122.json",
+      "sha256": "6748fee5d57f615567b262f859b4fe901d962d5d39e5e06a5053ee91eb6f7bb7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-123.json",
+      "sha256": "a3a040054fbb7ca1f59223551334c32a98b76f1641b652d401fdb744c1ee49a2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-124.json",
+      "sha256": "8d44377177ce9db3105c44bd96c3997729f8d7355652f0cbeda3844469c89dbf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-125.json",
+      "sha256": "581509cf64853e5f87bb692e2da12567f7fd1913289d251f8e150d3b044f0d3d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-126.json",
+      "sha256": "e8da6727c1b482f7e42d16e4879135d3eefd7a8dff84c49895ca751254ed73e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-127.json",
+      "sha256": "fac45f6f8f1a8b725315b97f5d44461b0f0ec8c4aa52dd3363c82d79781a3519"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-128.json",
+      "sha256": "aec10c493fb9cb379031d3aefbdc09d2cc10f890a4d78f3fde48e9745271cf8b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-129.json",
+      "sha256": "5bbcaabbefcefac2b173237cbf6b3391a3a37ec07a0e0465e3f0e0df7b517d26"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-130.json",
+      "sha256": "7e74c01ae016d6d7555241b71739a5d2a911dd35acf5b610e0cb0d46794d76d7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-131.json",
+      "sha256": "8ee89c5f499dcd693f1c825de17f2795fbe6db80bb756fb342df740ed8837be1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-132.json",
+      "sha256": "0f6b304561dc11217aabc6a39a641c30fcbc81076836ff71439ed75ff69871dc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-133.json",
+      "sha256": "afb407bc1de1c0d008c0d3f2d36a2fd0ff288cbba1e79aed7393ce17d1fdb5cc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-134.json",
+      "sha256": "881a3b0fe6259f679fb1052afed9a9065483d5183973be0fb70974387ed8ee17"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-135.json",
+      "sha256": "005a648d5d8a053ebf51b98c61e875b73a9c6d50b5b865f9a6856b2879aeae77"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-136.json",
+      "sha256": "f4ded1193580990626e52941f79547f069de2eb74fde1ae9792e2a38af419d57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-137.json",
+      "sha256": "c248cdfde3c63342bc9669f2b8832ea28f72bb463c87a957b5d00b071115db4e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-138.json",
+      "sha256": "7a782219376c87efb1e0b22ba4c82abec54ebac2081a25736bd9a022f3d0ccdd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-139.json",
+      "sha256": "f50ba547d3b092ed87e152cad5038c81c3d4d4670aecaa7be6191c3894f827f2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-140.json",
+      "sha256": "ecaf338c2a92b62ba7bf2f7438d013487dbebaec52263e8edb04828684f6244a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-141.json",
+      "sha256": "9b5b0541c53012a8a8297cf2d521bf2863d6edae21c73a9d30461051fedf78be"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-142.json",
+      "sha256": "c3605b245f56fd4f047c87b3cd7e1bde940c815282663a05ea27c69a30406fc3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-143.json",
+      "sha256": "2c18c27760bfb1ed1a8b55f0876d73952d593b230d157a9560fe2e1345a6e232"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-144.json",
+      "sha256": "b6c47d9e353b8d7480b8ed358a6c2d39a99fb90a7b1e4c0f76ecf0f45c39d7ae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-145.json",
+      "sha256": "6ce785d7d78a56e55aeb8a7b83454b6e8c408069d92b027b3b7943a44c137c0c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-146.json",
+      "sha256": "dbc0cc90d0248a094af3561729eca1514739c9018546d51d4bd754eb7a440681"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-147.json",
+      "sha256": "dfaca9540f0a06ba1c5235a6c627f4fa044b2568f97e22717017c4759b051822"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-148.json",
+      "sha256": "2b078b3bc2cca22fdc277814fffa5b8a3f7442d9a396c2ffa706c2d9bd479180"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-149.json",
+      "sha256": "43a7fc9c190c06d1321799dba0a81337e3c3d92fa59e62bc3321321c26992a90"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-150.json",
+      "sha256": "915d1dfb82091f237b3e28673a9a916109e0ee68d3267d11bb60f74a9bd4d3c5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-151.json",
+      "sha256": "db54c2358e487d1edd9bfe90345672450f495c80af4522fe8dffccdafa4acb3d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-152.json",
+      "sha256": "cc98327562c800369dd5a30b6959462cac188ec597843730ffc956c7bd1e0ced"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-153.json",
+      "sha256": "99c2a5b90b3cc2d2f6ddee2fc1bc16df5dfe63ab2944b5e6ab019bfbb71ab8e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-154.json",
+      "sha256": "4d0b0fbc0dba90ddf7214c14f44631f1fb779e0a5ca0ffac1e379e980d64312c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-155.json",
+      "sha256": "353bab38c5eb21a612a20ab39728fae66b8d82bea52a4ce16b87c5d05f3f48f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-156.json",
+      "sha256": "176c33d4ce055967f6a59d2d602dcadf7dd778f77ac328ebd9cd95c0fc46c66f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-157.json",
+      "sha256": "2d93658adcd65c79db88dea99682a73174ba58fb7b598c80b07d6a068915d092"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-158.json",
+      "sha256": "911c6524f474fc024f8689e012f74009c317a10b5dd83b3feb4c3c813a037949"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-159.json",
+      "sha256": "4d29b9b4fe142ffe91a49aa4bcde45d28a87156f37a08f03f206893429fc7f80"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-160.json",
+      "sha256": "ecb801f2ee94c0d3628cb0d8963560c38feae2d057dd019e1f55f0b800d3e865"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-161.json",
+      "sha256": "fd26673818e88f5e32b32db2b933862a175cd9e2f1a29869a690866b42381300"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-162.json",
+      "sha256": "b8151009fd577aeb7d1de9fc325845a2a76c790295451b426fdbf59de02a46aa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-163.json",
+      "sha256": "0cdec34f28e0e9be5e38f706364f36e16b4ccc17672ef8ba0e36854a362f5641"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-164.json",
+      "sha256": "711f023816df6878a420bfff205e87f2fdef5066dfeaa63eaf13bd7a1114a569"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-165.json",
+      "sha256": "594ef77aa1479443770e1fe0610d672c270d3afc632dff757c6a2cc4cb3d0996"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-166.json",
+      "sha256": "c0a4c6473c26fe59f2a651af410337a1f9e778e1dcf013ea11cfdae1e9aaea77"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-167.json",
+      "sha256": "421f91454218671ce71bf2d5ef55f19c7c3f2987df402e611f9e0607a2923d5d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-168.json",
+      "sha256": "fa2b307e31469f6f73d1acaafec341db0eec5cd1045e0cb3b0c94bd19dc067f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-169.json",
+      "sha256": "4dc5d6a047cfa12bf93fdb1ef616f3ffb4ff61b68ce1a336c622de95bc464323"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-170.json",
+      "sha256": "53814dc1a04dedb507ec03c57c0356c8fabf804ce7264cb65aa07af2aec52876"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-171.json",
+      "sha256": "cf0ad3414c745cd8e26f6577eaabe00fc6335ec6ab05bbc40474325e52221434"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-172.json",
+      "sha256": "769e2a6d9a1962f9ab138153b92fcdb0b9caebca2613514eaeb7fd11bd38157c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-173.json",
+      "sha256": "bfd3a7dec51add45fe534586c8b0c3b940b16ce80983e92e6737fa092057ab47"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-174.json",
+      "sha256": "410ae8e83810fb613b5daac89e32e6c53d8ef8ded3bcab9e4742f911e9d0de2b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-175.json",
+      "sha256": "96b1569d8e277b42b91c17b188609c741be6c81e26e5f6a24ee9b34055c5af8e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-176.json",
+      "sha256": "ea3dec0ad21e4e37102414aa0b64e2f56c77eff9c78b67eb81903860605d9af0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-177.json",
+      "sha256": "f6dd15a5d2b11d5fd03ee9e2fc0e60c95d8ced8f68a78d04dbc6d492c2c09be4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-178.json",
+      "sha256": "57d6228babc45ce178d66a7b6c6297d134543fb4a564a7994c6b0add384bf16e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-179.json",
+      "sha256": "2aa59f2ae0080861079c503c3651fb099ddbca938bb0775fa424680f36871644"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-180.json",
+      "sha256": "229b635727258ed08d2d0d8c6e6b00d339ea271b154655d2f4e5109429598f88"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-181.json",
+      "sha256": "3cffe227a65f53863fd45ad87627031dea52a3ce0c8ea069e5b78eaace7d3a0d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-182.json",
+      "sha256": "9e49c897b78d271609a933d210e5db54eb573f2ec4be71d7672189fa3ac53140"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-183.json",
+      "sha256": "31be6354bd276c3eb0d551d9d286f25e2f89b17e788c0ec6f044623b641e3861"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-184.json",
+      "sha256": "55e5f3ca7083cebe71d64b05a88ea2fcf51b8270dbffe961242fcfa96ea611f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-185.json",
+      "sha256": "91c7e06bee40725e00e5d6597b93be2f8c0495709f6ecf6158473fdf170cd91e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-186.json",
+      "sha256": "c997f67b2fd6820af69a8c22b2db9f4551fd1dfbcf7ffc74c203014c1c5961af"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-187.json",
+      "sha256": "9e1984f4852e122ebe48c36758f7cc5274ef2bd24d3a05037d9d58fc8b904ee0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-188.json",
+      "sha256": "65d6b9c6f5d128de91cc95f4ab24918da3c287700d0902c7cf033eda697f450f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-189.json",
+      "sha256": "6b79126007d83f8d0aeadc56102d38c6a664e9a06d4ef8ea41c6323194a530d6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-190.json",
+      "sha256": "22cb768f668f9a0dbd9d32f9d89cf5cac9e5af1bd11c2f57206051cae7c45940"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-191.json",
+      "sha256": "1b61d767dc626d1e9ebeca588739d5252284c856bc1f6a92af475c84bac7cf55"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-192.json",
+      "sha256": "b569704351f53c78efb32375657ad3be0580599bec39be1d09c41d5e6d2fc85e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-193.json",
+      "sha256": "1eb40cb36d7022baeeff2074de3a2904f538c57030df782729bd63f5f52f8fc6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-194.json",
+      "sha256": "83e0d45df701c562cda2a1bc1cb3fd25e8ebf0e19be7dccf8e0ee72d93708501"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-195.json",
+      "sha256": "7ffec3c5b4fd9084ceedd7bd5ecb37f03e67ad382f418712db661b66ef4ff5db"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-196.json",
+      "sha256": "0738d0b518378db8eb53b996000e1db651c08102fd02050ac41a7c2a84b3bd68"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-197.json",
+      "sha256": "1fa32c0574ae3401be5477ee5c1fcf2b79d426b35d7b8a736fdf80e7f0ba531b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-198.json",
+      "sha256": "8a52f1cd1bb8638e86cb7965e720933441a7ae00c07a8b0ad6b12bb6f3928f32"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-199.json",
+      "sha256": "0776e94d458451c6f85bc92835a6bb42b26ff3963951fffba6d4ad9a161878cf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-200.json",
+      "sha256": "55bcaae0b795419d1ce8f055c9d4878e83bc82be5e0ba96203fb13d74574c3de"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-201.json",
+      "sha256": "952344a4c92739555a4268c3bed6983df684fd9441078eb02d0db601c43fa1a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-202.json",
+      "sha256": "4b3cb61d060c50234ed8629a10c5fa193ba9af1170df2e8a3fcb04ecc6c18227"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-203.json",
+      "sha256": "fd7330d3f703b190b172c1542947223b31fd72207abc1a435dbb8066ef8debe1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-204.json",
+      "sha256": "7c51ae83e63ff6fcfd09f0a9905b1d93e1cdbf051c8d0b176747e5dfbfffdb16"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-205.json",
+      "sha256": "ea85002af9b44f87bd08bd229951284c35983b2b2f6f42faca5d8c5f5abab04a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-206.json",
+      "sha256": "a7e9850729eb05c5b29941986ef4e2faf6223d5a2db24f9b5ac6f90117865af3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-207.json",
+      "sha256": "179af0bd0ad8402eb69273de7e987adbf250e52ad4b0f5f40274e1f06731c612"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-208.json",
+      "sha256": "bc0cf320820c3a4f98ca6171fcd7c7a08635287c1a204f89494afe2e90bc517e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-209.json",
+      "sha256": "6efc4f6f70f8974e8bf6773a28d21ae3e3781da141b5d31759e9fe001dfb14d1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-210.json",
+      "sha256": "2716b1afe470359c2bd8185123f5e62db842002ee4bdc0c962a54b6354cef1a7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-211.json",
+      "sha256": "c32f837a3c815a366619e1f2baab41e854f214a721eb4b929e00f3f01436051d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-212.json",
+      "sha256": "32f28de60f796ab124f06c138ad1fff9e992eac25054e7269e9dd000828603b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-213.json",
+      "sha256": "5a06aead94f1863141da74b398737b82cbc2e94ff7582482ad41b4f7feee8cde"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-214.json",
+      "sha256": "65ce134c42c1253c6f54f18dce5bb34d3ec7e025c13d0dd4b0ea1221b9a86ba6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-215.json",
+      "sha256": "732c1d9d30cc07ef16ba4dac5251014bfeb3be7b4e3437b3d4042df50f875dae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-216.json",
+      "sha256": "928f7d8f2ae4e1127989af80f227824350a5d232aa4044f39541d2031de9e91a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-217.json",
+      "sha256": "f8607bd3c9676d8fff2fac4499017ebb785ad539b5fb1d3032a6f2c8122ee170"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-218.json",
+      "sha256": "7cfab90a5d640ec0177905c2b16afa1e6033789cb6a43bf0be7a9041fbc63444"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-219.json",
+      "sha256": "effc066dc6e8f05eb6c433d16e87d7951ea827c980cd0c019ba98361e0d1f2c8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-220.json",
+      "sha256": "fed7ddd9cc4d95e198b584b2c31784c3f12c9a06628e066d6cd35cebc6bb00ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-221.json",
+      "sha256": "c60c3d39a70e8a67e1f09dc71bf4bd71d4834d60ccf8e25fb2fa7b6b13cf452f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-222.json",
+      "sha256": "ee433ea91ba78a8c4577f5c2dbf66bc0d69fbb03764700adf7f258351f1caa4a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-223.json",
+      "sha256": "a792380684421bce83015ba5ef1a58a67dd7834ada04aa6107a876984a1ef963"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-224.json",
+      "sha256": "c1d91d9453443c59f43d5ad57136f261aac0d8ce05769282c7c4928d9429956d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-225.json",
+      "sha256": "99e6d16d3d7af717dc75721122505f308806f6d4c7d5bd90797ec38d7c160207"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-226.json",
+      "sha256": "0ff051d6eece1290ab693259497b1fa4cd6ea7e11fa20e31deea43cf14395ac2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-227.json",
+      "sha256": "d1722ad78da3063cfc6928cdbdf328b29f503b973092d9581f7a645c51ff8bd2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-228.json",
+      "sha256": "c23bc5aadb9bb6082e793b630d7e4c4a151061cfa0b3316b5674c4943a330599"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-229.json",
+      "sha256": "3c2fc4134fb666d92477dfce2bedf8476ac5b4508fccd011de0059ac1e0a78b8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-230.json",
+      "sha256": "93304229439b958f66727d7b986acfe07f5dd466715cbc3cde2b335af5e1885b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-231.json",
+      "sha256": "bf09e8f79ffe0b5e271718bb3af7db2cb41b48289ef2b6639c46a3d87102dd7b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-232.json",
+      "sha256": "3255c40bec32b1b43ff1fa8d4a9a641dcfd869c0636ac826476dd02a1eafb9ff"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-233.json",
+      "sha256": "3c13b76eefc49d3353dd96998a08bcb5229343c5c2c2318e768f56bf17ed6496"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-234.json",
+      "sha256": "69ee063d7cfb73b5189a806791769f30f9d5554497779a3972abe34acf6578f2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-235.json",
+      "sha256": "84ee63ed5adb8549c7aa0c4d9a6a05725f164f46622ca40a3eda19b8cd1e05d7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-236.json",
+      "sha256": "c0df7d1e12a4cc119e0b5a6a240b6e832d94fced2f5a5cf8a8dcebc93907b3fd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-237.json",
+      "sha256": "ad28474acb6cccfadb8ebbde288aa3816438bce038c91fec7ce589c52aaf82e1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-238.json",
+      "sha256": "746092b62c4b4bb1baf1105fb51ba47c64e2921c05a3380b4f9b4b4bd1c85404"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-239.json",
+      "sha256": "d75c590ae3ce5eec1f6d03655abc0d87b2d08b2a87437d97d356e6d9baa14955"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-240.json",
+      "sha256": "9ea6f1134cc5bd466d77362d4c2d647c7809dec2cb6b8551e2eac4ee3d11e519"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-241.json",
+      "sha256": "ec4d721e37de95e7ff5b3f25fd807a245d779bdc65479ef071a8a0c48ac21e8e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-242.json",
+      "sha256": "2aef55892c13338f29f7967a65328fcc5a0793d01e682a4fae4d46e53012c079"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-243.json",
+      "sha256": "662e92f735abd7b9d5d58e4e5c206549bb10bd8e5acf1477ff7a44ec24bc8578"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-244.json",
+      "sha256": "4f7acbe5e1873ecc98da0b2026449c2bbad5c22a414d034e2f76dd9bf1ce11dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-245.json",
+      "sha256": "e4e95524fddec92ccaefd377a068fa726162f69fd40d6b17de60e01bc3b1ef15"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-246.json",
+      "sha256": "59814d41e5335c45a7611a6aceebb75c154ab47cbe16277f0e8603b614c5f5f5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-247.json",
+      "sha256": "bfff5622766a6acacffc92729117c613baf9352f84cd2e731b9fd91b3a46c02a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-248.json",
+      "sha256": "b9ae825cfff2c52e7f19a41424948033c27922db3abd326758b2185fe6e5c5d4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-249.json",
+      "sha256": "1f75f99ed5f0ae6fa60aa8e2a5486023f46edab68f08980071542ab855bb6afb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-250.json",
+      "sha256": "b59fc63c897d2dddf8a1f4080119fa15705752c3570b0320dc32ccc3167d413c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-251.json",
+      "sha256": "eb1078493d93a1c4ba15963e2597129a6e1e522e99b1ba67b4747d399436b38e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-252.json",
+      "sha256": "da87665e6cefef2c7ef5e140b51e13ebb0cbaeb3d4135a9665c9b81476f4a23f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-253.json",
+      "sha256": "05da575e9f691aa0ed549a2e72896d5ce8a7c4fd084c183989a870bd862d62eb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-254.json",
+      "sha256": "7e05ea90d1dffdc000902a84cb9897a4855b0ca9a08044420abd28a631ba51b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-255.json",
+      "sha256": "32b5538624a7078ab8e511e70824e9fa9123f3a4d498a9ad7cc66e017ec7f22c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-256.json",
+      "sha256": "9cb4b8d89e42bff2d3be808e21d4df508482151eeeefd0a346c3e13a97bab07f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-257.json",
+      "sha256": "07d1b036c31a744c43dfd25c0ab05409817e1b4dd774a04eb57b87285c101dd7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-258.json",
+      "sha256": "6bd333a6c5f8b25a178bf077f9a9670d48f2c14cddcf19a455f62fb070294641"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-259.json",
+      "sha256": "6bc3598ac9d4cbfd51a626a9ec71f157b0f7d12c20fc184ff8b2bfb55ec384b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-260.json",
+      "sha256": "cd6739c08e449d43d2aa320b96fd85a60a5d1f86f612ccc0c778efff29633bd9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-261.json",
+      "sha256": "6891df7484815488b28dcb33126d7a9e7bca0052290c1844c2f9df2563814fd5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-262.json",
+      "sha256": "c4dc9b14fde63fb386037fa10d99b145bbace5de83d466210e669b2f0a851719"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-263.json",
+      "sha256": "931e726b7cad8e78c269fedf726bcd7331fb116e9593bd077becde15a7bc82c8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-264.json",
+      "sha256": "ffceafac5a0680bbe9fd053289ecfefeb7adef968144f48008ed52f59ab828af"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-265.json",
+      "sha256": "96f2e54e48caff5ab8ffa0ba242a9ac7430cc67c11449e5e4b021d649d335867"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-266.json",
+      "sha256": "6796182b88e015c63e80e1f431b3159c3d6b26e66ef79a9e06d561e3b82b4b38"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-267.json",
+      "sha256": "8a21589d82148d4d44dc95cb0bc84f31a7d904a2a4d12d373d457f4386554de9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-268.json",
+      "sha256": "2ed428f25e9be61f20e2eef03e979574467c226bdf1769fd3cf9d8e80f2aaf7c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-269.json",
+      "sha256": "4513d2f44eed82044664600a33e8a246547940b898ff48001247271d344763f0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-270.json",
+      "sha256": "acde5379ceaccf4fb4cfdfdd3424fbea88eb2b1f5e55540add8d6e018db8015c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-271.json",
+      "sha256": "412858454d81e8f4edb0d8601c0340676055631e1c12a7935137cf5043d2f7f5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-272.json",
+      "sha256": "65f9fd2a64be8077881a70ccd73f9d4332a11a12646f0cca000102e91785b421"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-273.json",
+      "sha256": "17623e87ef165fb9104ddec62378c4e128fe9f9ff6752c37dddabe15be865832"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-274.json",
+      "sha256": "c1bb65f32222fd349e81d65321cb9143dc9d8b8075b72e4fddfb5ab8eaab22e2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-275.json",
+      "sha256": "c3f5ff8f1d95f45d3953d4cdb452c89f9ab6f77b34244ff6b33c8f971088225d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-276.json",
+      "sha256": "e9957aae7d2f8d9a1df75a16b6cfaf35ef912e7e7a95bea73f347c4c21997eff"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-277.json",
+      "sha256": "779f1c9d0791bc8706ad9ef2ec0a6a908a203cb4cc22b4c24c216b8f95cc5ef5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-278.json",
+      "sha256": "75ee657386543642bbe0cd6cc3bd27370fe8bb0f76b038f28d4972d3ac4f409d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-279.json",
+      "sha256": "f5213a7f094590f618639398aaa65929b254a28522b2f686770c4eff07cc61f2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-280.json",
+      "sha256": "02741f3ccbd7e42ab99359ea8e660e8b07124cce9280e035d6f40f30de6e2f43"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-281.json",
+      "sha256": "7e59a9a6601797fb322a3055176aadd5dc78ed4943dc0d0eac3781d6168af010"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-282.json",
+      "sha256": "da21f963ce550a8d60441483ac440999604a5e98912a1af39d7187b71b83b401"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-283.json",
+      "sha256": "4e4bea4e741c5a68eb19160011494f23648867522e6b0b0bf5c815305f71c284"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-284.json",
+      "sha256": "3237c2e2212000264fa1a01104aad449db0a8d6485a82d560bd9bdff214c8ec3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-285.json",
+      "sha256": "d3f3da4566f5d29f21d05fba8b04e2460801f5f9c490027ec0ef83e78ead639b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-286.json",
+      "sha256": "0bcdb666ee3c8d7bcf2dcc2b5befaea99f3b5987d37cc1983e9a22222f70835e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-287.json",
+      "sha256": "aaa5a542ca23cd409dc3a9f5c3dad3dce59f651c571c6f7829621f5c33618ebf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-288.json",
+      "sha256": "2b65dc77646242637e923107cc62346c4f7d9af92c5791b261060ec80b73d1cd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-289.json",
+      "sha256": "5f3a56fb327210ef8be98443e6330a58d1a0aa8c2a8396f305e4b54915422f5f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-290.json",
+      "sha256": "e7833cb7c19a797dded90618176fed37904e4b483725d7153c2946ff47e29d14"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-291.json",
+      "sha256": "f7d73a57a14e0a3104b8f7da243d8dc59b757b9ed3554af51fee396a423be41a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-292.json",
+      "sha256": "74805f806b8384ead6aee643d48298c98ab46736e84c80eb997685ee18f64d1f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-293.json",
+      "sha256": "f1c288bc9be95ab0a23c56f5ca24ee7c464eeced582bddfb90393a846f61eb08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-294.json",
+      "sha256": "4099248b8de287eb43b75d98a7a6ffc0a2e62c97ab0fcdf94bc6a1f90d9a11e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-295.json",
+      "sha256": "1f7f1e44f366f304b34a0ce14cbd4be0074bf912839de837814ddf8e7a1e8ad2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-296.json",
+      "sha256": "44feab1f2a09d2c76a3b2f35d8cfcca9affc5cfff4ee257ebb48909bfc3a80b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-297.json",
+      "sha256": "eb6e2babe2b2e6bebf94d5e027a2f067caadebf63f39118c88f4a12a485a05b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-298.json",
+      "sha256": "4cb41f0fa9bc525ee04556d47f1f8f354df8505e39a65a90caecacd9f22c47da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-299.json",
+      "sha256": "85338676a82ef92397c7ee8c6ffa858e81732bbab8bf1d61044d5e4a31798787"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-300.json",
+      "sha256": "be3757cf5e8d9faa8f489dba84d6ec2d1260d111b7aaabdb4ab79b4ce61b8999"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-301.json",
+      "sha256": "06374b9fad10478435b2d2c72dcc5b3c486621f8df38efd111e161f9ff4da605"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-302.json",
+      "sha256": "db02fa00fcb7efc794dcbd6b79b901a2981685ef2eddb5469d2b876761db31e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-303.json",
+      "sha256": "ecd762052359875a6a0f5ef4a99b0aad1f0b234366330def4c0c5c4bea7c3cb0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-304.json",
+      "sha256": "48e5094e9dd874d15a3b91717f745b3716f85a6855c59608ca6d367e5f1d2f0a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-305.json",
+      "sha256": "5edba360b4c96f74d203ed0ab1eea7a8304d93524b07ce4a02e35955fbe46870"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-306.json",
+      "sha256": "1db9f9e9cb137b2b2c1f4ca4dd81252b3880f2c5a089a712701826b0433b8f5e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-307.json",
+      "sha256": "93ec985baf3c03d61cc542d7ed19052ff31311601b2e5814d0b2bfaf814748ad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-308.json",
+      "sha256": "b3571dc5cf47e3dc9c237f40e3d2575f026f6190b6de4a05855f1bc2eeed571d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-309.json",
+      "sha256": "74c0f4dcadb27b025ef61200bded18274584b873cc37c57f14a83851a947c791"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-310.json",
+      "sha256": "5b2ec75c7c90d41bd69a8fd82e9bc9c28b4c13a84b93cd4680260d7ccbf103e4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-311.json",
+      "sha256": "92be327874c923ed277b9419f65fd3a71622142172b3b82917d696b836718dd7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-312.json",
+      "sha256": "a5cac54f919ac3404a33eed1329066daa1b917476b3dbbe7429983e4211e4267"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-313.json",
+      "sha256": "6e3e864fdfe0662d88432ef1fb00774935ddf0cee8b5be0cec6c914d29aa7d08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-314.json",
+      "sha256": "d16b72369a678c807c7378611678e5ba6d41b62f3b71ddbe6760f1d4674065f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-315.json",
+      "sha256": "26525f50d9b30d78637b82f76a15265052db8d68b2326063b14f700987c49515"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-316.json",
+      "sha256": "c0d3348f8a9cab10bf970e264933927782a1be94d86fa37438cc68d63d9a12d9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-317.json",
+      "sha256": "78a816a836e76b403fc7700b16968cda7467a5112e4b66b80443b7ff5a1df6db"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-318.json",
+      "sha256": "ea2411fbae790d9003e7fc14d097f6a72a77925629c5574d45cbf69195ae3aae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-319.json",
+      "sha256": "4953a028d94bf09a7bf5a57883568ad02fff880f04a85c74298d154ba710e963"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-320.json",
+      "sha256": "d6775b8e8a8577638f9b03f84ec99ef44378e243b4428319a6916ed110c4d4d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-321.json",
+      "sha256": "191072f334a63a3d43b243b522e1bd0035e7b6733eeaa5f00af011c36e599a86"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-322.json",
+      "sha256": "850ae63b1b5d9ff3a10eb8d9d5468b828c5323aa278fcdb716382f3cf44a69d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-323.json",
+      "sha256": "8b83c076e1792bbe2106337860a92821e5b63fd03d8326fa9ed920cd8ffd8c79"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-324.json",
+      "sha256": "5084728dec4311666605487b0547db190a2081f85a09ecb2feb0e49c8d9078f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-325.json",
+      "sha256": "82bc12ace5eb1dce244228fb30736e94a16fe7fc7192aed8c878752e6243ea4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-326.json",
+      "sha256": "e43fd3bdda6852cfa0d93f1016d49dd7d3c506d93f6fd3f5a55e35a52a0ab7cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-327.json",
+      "sha256": "e8c6fbda500025b8a3b7e541e4af46334d7163512e248f15835830c7f5dcb553"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-328.json",
+      "sha256": "84ad5d9a2fe116e96c476fe9e397a64b928e465f58f05b8456e121ed1753015f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-329.json",
+      "sha256": "778371ebc26392b3541879dbb9b2573d8b1eb36845178d8502de4c8f4300f3d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-330.json",
+      "sha256": "8054369817b026eec06efbd3fc437906dc69e30d6cb77744918045cfc4198967"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-331.json",
+      "sha256": "f4353a0f9a9bbc588557fd8f7327447d0d72860a8063d674b19ed5a07260e163"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-332.json",
+      "sha256": "dfb6ab25eb961a2477e9361cd4d9513da17df44ac3cdf2335a6974cfa1645c22"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-333.json",
+      "sha256": "ea8570e84c0ac7e3881c5e3622bd0e8767ebeb96d657d92ec7e0bf3f68d4ff0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-334.json",
+      "sha256": "c8bf985d43ec91d6f6c83501e48fd9477878e43c7a8780b1c3fd5a6033858b81"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-335.json",
+      "sha256": "255afa77ae6146dce70f26cf6a5c7ebef158e339f2175c598f1f43e33dc19b4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-336.json",
+      "sha256": "cf36ce15d5e5d234f88e139d5434e199bd0cf9afce49fb5069fc817566e6cbda"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-337.json",
+      "sha256": "359a1e0404a3a7b7e2c3ee63918488a94e294ad20b3d316cac71f06fbc9c4fb4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-338.json",
+      "sha256": "cc2edc3def912960dd8ae60c6c29868bd12d738a543717b11f44634110c85072"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-339.json",
+      "sha256": "8179de483da97e18dab62af25502999a5fc2e4b0cdf401a33516f4a99b74a018"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-340.json",
+      "sha256": "e6c9eba64797cf48a021cf962c433f5c7cd40b4b132581d8d0319ef84eea6845"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-341.json",
+      "sha256": "797fcaeb48048d0c122e0716b9e30e2dd3612781ddecc7f2de134900d0e64f23"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-342.json",
+      "sha256": "24d338b3a46db03e50d3d417d7db42611c4f3d706852d6699592a717c46f911a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-343.json",
+      "sha256": "755fef51f534d4233d4dcb9c71c2930b60a283c5aaae16eb8b653ed0f0cf720d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-344.json",
+      "sha256": "b9e5ae1ce8233e98074b8b96e4c52c3c7f720bf01f7a9dd13f18a64e068982b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-345.json",
+      "sha256": "7c4ab78649dd4d5035164b1764b85330d47fface23b85fc89336a32dc9634b2d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-346.json",
+      "sha256": "5493bdbd605d27f7b56200aa7e20746e88595c5037b80fb049dc78970048e282"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-347.json",
+      "sha256": "0d051d350e9cff54963123f29b68894b22924e78cde4a09c9dcfa8b8ab211f22"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-348.json",
+      "sha256": "1d77ed97f4976d465a9998d17b3fd77cbc4f3643f6ef4da626bc1b498bf4db8f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-349.json",
+      "sha256": "647cd2b33ab60f2909c36892a2ae31afb59d5af6d8189f6d1130f4576d0948fa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-350.json",
+      "sha256": "ff3713683601fcf1c9b053b0c8f5ab49a4ae47f9943eaa7333f59df784f6f25e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-351.json",
+      "sha256": "ca034e3c88dd2a5dbf171575b2f4aaec5d02b6b6a15a12d225a59d1c3d2912e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-352.json",
+      "sha256": "5fc1f440834134951237c1d67d3ff4c81f4a260d929e9cb15553f2c1638e6f15"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-353.json",
+      "sha256": "2cb3a53621b4aa7cb0c9df6ed7d8350a19f739a383224940f61eb1c81a7af4fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-354.json",
+      "sha256": "9f794086b5c980c62aebec3b968b057beac13353f1cff901e0be3c25e823e45e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-355.json",
+      "sha256": "517f2d091f411580a986266e3c1fa2ca5a1131fd8df6680ece0b3dfec268a03b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-356.json",
+      "sha256": "4e705aeebce96c58c1831e1ff975230a6e8600d0e51b6336ea58191ac2e25d73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-357.json",
+      "sha256": "3070434bd8f54f3f200f5ab092ba3f28e2b4f23d3024beca077247c725c6e835"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-358.json",
+      "sha256": "b45347c6cc80886a0fb3c6da2224f34fb9e9dce8e7194c8ddf84abf96c194172"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-359.json",
+      "sha256": "6e6892ff4ff6a91e7a40c351be5b8b45809e2005d1801010557b55e275e61df2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-360.json",
+      "sha256": "4ca38c94cae1a97698e81f8b8b97ce53eba3ebbbbcaff188fe063dc0b373da5f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-361.json",
+      "sha256": "adad1a630acb51bd5f7f22e81eb8dd5ac430950da0f7e2df07d74e6cf20012a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-362.json",
+      "sha256": "9db3403d54d2deace51e9742276f9ab662e98eb0877012b977230d01827a159a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-363.json",
+      "sha256": "0c54ca718cbfb94f86ccc60ec0f6dc1a81a4f80a3bb2deac1547b1e6e2635915"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-364.json",
+      "sha256": "8ae4a0e4531edea419cfa4cd8d42105cd9fe9ce3b01cf0c32cac80561a46308e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-365.json",
+      "sha256": "1c2f43a3d8108f7c8147556c36d1d37e1bbf098f6e34b426547430248bb74240"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-366.json",
+      "sha256": "531a7bd56e3719a54de959c09f267cd9903daa50c90debd7d0493151bb247baa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-367.json",
+      "sha256": "2b40d04f703dcee068096758f8d3a1bcb9ea4c6156ebb9227fdd4acc6e610276"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-368.json",
+      "sha256": "4208e9d5feb7bb549384fabb5a0bfd83e69cbeafcde35bfbf9437faf47f5aed2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-369.json",
+      "sha256": "1d6928df13d89c3dfaab71040e75e9320fba93fd4212c32b5ee8ad2ea0094e43"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-370.json",
+      "sha256": "4d4546222e351879f51c1c491b628c64dcc141acf696d3a52c2da3982ee5b617"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-371.json",
+      "sha256": "2496044390c496a1691df750dda0b7505967e5376ce7d93d2447dac02b70978a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-372.json",
+      "sha256": "5139faed97b905b27ca0131856a48ef37bb88f9a0130dc2fc5cf28c273cfd349"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-373.json",
+      "sha256": "86f771fdb1eb685a1c10863d7a7367f55cd0e43ecc32c2ec73d117bb4850ceeb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-374.json",
+      "sha256": "4cd11eecc14e785041d444b48a4eb0e7e76f6a87a6a79b780c9baf7bc289870d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-375.json",
+      "sha256": "5c6de4900fef4cea20b1e3d468e2d66f6ecb0e2138ceaa72078d0d3e481b0598"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-376.json",
+      "sha256": "c931d138144e2547704b6864e33bff2d23e858e896538eb9176406d0f37ec262"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-377.json",
+      "sha256": "6f2636f94a6f9691a9f526f0b99e04de39c1dc73299dd86d9772ba774510a49a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-378.json",
+      "sha256": "a0818247e4506898fb998fb4b0e47d1b0a0a771a14ec3820843d8a3b5980b879"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-379.json",
+      "sha256": "6817fa811b945ca13927e3fb57734f26f991a8b3f14729eb5134a6a4942048a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-380.json",
+      "sha256": "fc8ef75a49ed9f171a3e4107aa3d4769f82f04c5b8b298b1720a877c6540c38b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-381.json",
+      "sha256": "6d379fe484f2718d3e8af6a2016d2bc6b89cede6f3d0e89a8f68d64f204fbb1e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-382.json",
+      "sha256": "68d275ee2797edfb66497faf570336c320adbd720143a571c76609442ee64b61"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-383.json",
+      "sha256": "94e281c4ec51109a7bb6c27e735cc7c983203cd48ea49f456f6b46556b22c3b7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-384.json",
+      "sha256": "d2f3118916ea071af45ecd9e9e882baead4f72915417341beab5f7cf577546d0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-385.json",
+      "sha256": "39aae2efbc6838f0146fdadf6ecc072fcddaae5183bbb7db04747b1f7fcdb432"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-386.json",
+      "sha256": "24857a926a1a52b1da0055b7f10df0b7b08350ce50d624ab72926da7e53d1bad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-387.json",
+      "sha256": "627501b15817b8036fa992a5c702f31dbefb0bcf4d1d243819c0bb5f071e0422"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-388.json",
+      "sha256": "5ae685e92a121f49d4535abeb72705a2d4bfa87bce136698c29f0b3700387031"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-389.json",
+      "sha256": "f5affa338379a825f3a1e425da9c1fdc15bde67d9b444227ecd014fa38af1af4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-390.json",
+      "sha256": "9799bb08182664a93db38fbc51bb5b601830ccef1ef168dedf97df59792b4537"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-391.json",
+      "sha256": "befe3974f1cbaff48409f369ce36bbf9d2da8df710a594c0aed5ee3de5dcb19b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-392.json",
+      "sha256": "f2a29b47f818a5f97bfec09290edacd435739fe7092c358023feb9500ff77802"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-393.json",
+      "sha256": "27e93840fab03c555f87b8fd9b9b8a62ded35cf1a918ce36e028d35262d13f89"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-394.json",
+      "sha256": "544779bc8d37fbb67f5805ece174356ec737f30e4989cc13f03929298d042f3f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-395.json",
+      "sha256": "56518a9c4687d913845aff9a9aa9ac53f8dc9eddc8ea665d2760a23ebf62892a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-396.json",
+      "sha256": "8fcb7ec2853e2990ea595786dfc986fc28a440f2d094bd382c05ce440d5f6be5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-397.json",
+      "sha256": "c127caa26fc2e68e459257f09f353b64c433b3ba06d035545428c7d8876c524c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-398.json",
+      "sha256": "3cd3626c3283394b328b63e7c844c6206581ec4b7fc52167988deefa7728baf4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-399.json",
+      "sha256": "d86d6c912a6b7e76e183b1b579eae61f0feb515ef19f5f846f51644db1f37113"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-400.json",
+      "sha256": "e21108e0d966f19edd29aefcf7d0d1f7e334398fbd2492351121787f8d6964ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-401.json",
+      "sha256": "6ba0316f182bde3b66d3c9adbe184d80c19bb9527806cf3f613a81664f8339ac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-402.json",
+      "sha256": "7dab37edebb6d63f585bee256e24b4d58b340414f4106d74ce4d1b039f16cded"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-403.json",
+      "sha256": "689a85a249ce028a5b885d59186dd7f7c0e320f7f7202e65d8b8d1762ca17207"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-404.json",
+      "sha256": "1b2d2a0a06bfd154c786749f277402d25209507b8a96e25f396f9217a0ae5ca5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-405.json",
+      "sha256": "a7a59c1327d9c17d81d68e296e281ed34ece4050926022e812e4e5964ff7e9f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-406.json",
+      "sha256": "bebcd45462fb0d7ead7d2e7f57d8e3383ecd23b8fd1490b2b6f4efa2905cbb80"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-407.json",
+      "sha256": "0a8720afd39e94882135cbb37fcc77066a5c8eeeafab6079fd07a2a09f731a0c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-408.json",
+      "sha256": "c3ae0abbe9a52574415f90dad535c1f11ddd433342d62cb9f9c7cca41bec043a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-409.json",
+      "sha256": "656b60b0694810cdf2c2b58799959f749a2726443f250fd514fb44f7853423f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-410.json",
+      "sha256": "d78c8a89f4bbd681ddc1dfa65101630faa9be2d776e9ccecd3086b38611d6b3b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-411.json",
+      "sha256": "6fdc5fb5b4768508d04cd3437920fb75b7288a5499a6ee29a18e7ef7a366e365"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-412.json",
+      "sha256": "608322d92b4344a56faf4d5b164d70e7ccf59ff037a663e9004643b7fea51a73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-413.json",
+      "sha256": "cb212943d4e6be44b8128cc5f444cd41586727d6d939328476f1312d9204770c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-414.json",
+      "sha256": "88082617e1837bc746a025fd8c6b48a73430bd38c23e7dc3da071554e3b78427"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-415.json",
+      "sha256": "274ee2c71e49356a7cf77f5734a4cf170905614deb6e300edfc6743a5e09e717"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-416.json",
+      "sha256": "1857166a8990d0b494209b432c46a8039e5d7d0773e98dab6bb22e4316836251"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-417.json",
+      "sha256": "6c21b9c35f8c39125b4abc96228b3a696a5631bf3c9a68647f248c341b228aa7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-418.json",
+      "sha256": "d532117132a8df9fd49327e5a0c6b6e39b7ee7708730feb1c888038f8bbdce38"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-419.json",
+      "sha256": "60192fbbc9459d92c7e2dd8269c8e5fa174d905aad3c73a99db30f5812eafe08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-420.json",
+      "sha256": "a66ee55365a8e4c755c966da7475d72b7ebb02bbe98a440415f4274878f79ec5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-421.json",
+      "sha256": "b4d1bc7c4d9cdca7c7dd70e00b11556958cd65472f135f3d9be922e1dee50bbc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-422.json",
+      "sha256": "79e989b112cc7e476c816c30525c201b4918ca4d5a87f65814a8805298d24920"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-423.json",
+      "sha256": "546d62392e982e124feec8f718742a74e071fa7a41e09094f8043f8156ca7a22"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-424.json",
+      "sha256": "e0c9ff0399759b341a260269daab936514fd38c5e3548082ca6551f87441a7ef"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-425.json",
+      "sha256": "005fe02577c64aacd12e2e174bc9de436e0d8ab144a66d1e14f6b5729a4edc23"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-426.json",
+      "sha256": "4199cad80415d0d6f5b80596f10b0f2a9fe8b772c0724c4741039bba0f0a5fc8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-427.json",
+      "sha256": "d594adb1f7d28d3df23ac0a0fe046bb034162bee51575044a6060493b219a265"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-428.json",
+      "sha256": "50dcf3d31afe42efffff0e025fe48f224cb07e4e06ff4af66c27d419005591d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-429.json",
+      "sha256": "1626006119cd7724d7fd502fbdeef9710b358a744308232ca9fb800632790d18"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-430.json",
+      "sha256": "fa8b8a34d51800913cc4260ce0a2b5c71924cda721ddd37cdef2074ab9e16d4a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-431.json",
+      "sha256": "4791ecc3e3959a0009be43e0b6be3f45df1ea2f0c675952db5e407a6b211c03f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-432.json",
+      "sha256": "39ed824fcef66e418fbab6284249d0e89b358b91e05b34eb51fb8fce660c410d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-433.json",
+      "sha256": "2132aceea0a2f50d6f5c7fc328dc1b89f9773998d26bd445cc4b66c1da7a88a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-434.json",
+      "sha256": "7fa288a7e7f715b7c87b17079a7ece655accab6651e5c433456e9135edf72de6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-435.json",
+      "sha256": "85819ec2bae94c7a1cd5d61cf137e742da1fe920618904f1d2f02cef3b1d6f7c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-436.json",
+      "sha256": "51c92c5dca3a71b4c93d07860ae962ba126531b86f581a04eeaed44257869cd8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-437.json",
+      "sha256": "6a1f0c93c4b7e875fc122f6375f7d04c248b718b82be60b102d1e9729f1fc714"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-438.json",
+      "sha256": "ac10995d3656c17609e8cd6a0c700986982c608122e7bcd4c769a0943a49773b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-439.json",
+      "sha256": "0e9ada9fc9c741e09f2e07aac5f724a76818b5bad7f708724b852fadd83edd71"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-440.json",
+      "sha256": "a35d93f61328c9ce2f3fbf93af2a37a9142261c249dd38fd888175802fd86991"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-441.json",
+      "sha256": "6611501a48f9e030e41cf9e05af4ccea7b5d2773e8b0a93ee57824e7c1773b3d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-442.json",
+      "sha256": "ba4f08b6294eaec3ca616cdfdf7cc3cb82e78cc3a416414649164bde6d64925b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-443.json",
+      "sha256": "bb7839c96cb600cb197deea9471d92f123955ba9e25e31df0260bb22a12e9338"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-444.json",
+      "sha256": "1f12e99bfc7685847ea570020f564fa73202af61be35051b24e7de91d78b486f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-445.json",
+      "sha256": "aa2e7e769e49756b644fa2751a531de4bb2e6b7171df607441d89b7eda97d11a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-446.json",
+      "sha256": "6fd57192f117ec74904cac1e19c7cd102debfb11e53515fbcc5d0867a3755aaa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-447.json",
+      "sha256": "048a460fe4e715796a8e6609fd73dc263e226b9d49d9f84516c708fe018535d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-448.json",
+      "sha256": "10e1fb881437283419289fcdf5cf3e50a4d7093d9a3c45959342c565bc8c265a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-449.json",
+      "sha256": "7d8aa598a2b1f4ada89404256cabd283bf0dbb092dfdd28b0cc615db0c489d6d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-450.json",
+      "sha256": "df5fb422ea723fb377cf3532186d6c17da6b4cb72e5765ac5a517e960eefcbe1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-451.json",
+      "sha256": "7368d4955dcce151c11908e13b5a2e54148cf1572d47dfa2531c31c383a71a08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-452.json",
+      "sha256": "7d8550ff231331c9ddd3528dace3153cc2fb8bacd265105a2f43bd0ca4dac4a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-453.json",
+      "sha256": "a13f9cfa4042675cc89d1381ecb267cd704b7cd15322e1b30b045e84a9b1a9b0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-454.json",
+      "sha256": "71bd5061fb2654c5d0d2e40d3c4e17be3040b08cb8b2dc613508bf4ef499e893"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-455.json",
+      "sha256": "fe5270a6c9350acfb2ceaf1356261ebaef9caed658075ee41fc152b753cd7bcf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-456.json",
+      "sha256": "9e83b29f33b9a525f0376fd87177689ed65a5f09e3a5afd0a7fe0305da6b13db"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-457.json",
+      "sha256": "f68900eb45db6d671e6cfefe5885301d97b52e94367ea5b36c43fe0a227660ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-458.json",
+      "sha256": "cb348c1fdbadf118cf0f174e6955f2c4594e371c6b26d34406010bfe081e5b61"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-459.json",
+      "sha256": "dac938e87129100a1bbd644f9b61e27f8d064c6998ab445801fc87d11001b0e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-460.json",
+      "sha256": "cd39a68b508ac73bab5eb1a0ab3821b865ab9ba73def7f75451bf76887d520e9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-461.json",
+      "sha256": "8d260d7817df4af8d4ce53258cad4ae5a1b96c9ff868e9efaf684fb79a239855"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-462.json",
+      "sha256": "43a9cdf887edfa05d544f83024b8d17605157846cacab3f2b72fb72bb85e6245"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-463.json",
+      "sha256": "f7acb0cefe1e945807b987cd9babbd3b11a8cb79760e818060332c88cea8f14b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-464.json",
+      "sha256": "f42b7e0f49788ad46674a9dd80ed413e1d3421810332157c2e014b52fa43c5e9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-465.json",
+      "sha256": "99472ec1d4d5b63553fb0c50b54af8087b2df6d04d734bb78f7257517f791e0f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-466.json",
+      "sha256": "04ad0ae2e31f354595d5a3cfe97ba7fd39fef92040533633294c13d743e59013"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-467.json",
+      "sha256": "de9db8e6de8fab2eac0136f0938d68874da4b50ca2e83412192a9860f4e687a6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-468.json",
+      "sha256": "85fb474fa04531d487a96eec9f3760589872e81c216697885e3fed6f500fc65e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-469.json",
+      "sha256": "7ba6eeacd6d1b1ce40bc1f46978d4ce6ff4dfbaed2f41195ae05977c4d44426e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-470.json",
+      "sha256": "0929142feff48673729a7cb3e0f96935c4413a832ac1179169671ae6aec0e944"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-471.json",
+      "sha256": "bc77daae2ee97b2fe125cde1b14b5eef1441a5b4350def9292fb4ea5cc03496c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-472.json",
+      "sha256": "38a2821ee8b43772db41a91feac7605c0e47b6c9ed9b35fb0b7e1a74e700e85f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-473.json",
+      "sha256": "858ce15b458266032897660ff1260e31160c74f7010fb0c4f539f6ea046aa7d0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-474.json",
+      "sha256": "71cfadc6e7574b506273ebe44a9584f42c61dfed4ca282c92f66e867fddb2fba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-475.json",
+      "sha256": "4b9bffc626266687db5fcb6d28a62f37fb71330644d15f1c385e0842dcbb95f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-476.json",
+      "sha256": "17697805c09ec2e920b519272bf08fbbdf331509343bb2b2c844d2e7c6d331b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-477.json",
+      "sha256": "57cc41e0747b4261c66464818ff556ae7dd418714c053667a72ebc07be48ee91"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-478.json",
+      "sha256": "41f7dc0f92b6e37b878f75d3f0b290b9630e039027677dfcccb0cfc6abf0941d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-479.json",
+      "sha256": "6e96818460b3ee2d66889a72a017ed3222a85a2fa8bf42f7adf04d8ebb2b041b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-480.json",
+      "sha256": "e72b7535350d832c6c15ba4bd17ce06ff6096f8fa959b3d7cfc8916ff9f1b818"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-481.json",
+      "sha256": "a209f0c0dd4bbf9328a97aec01f3d025da50435bb64b5ec66b79739c5c71c9d9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-482.json",
+      "sha256": "950b281b739461cdbeae141a0cf73ea4eaf51b022f2d6464dc4627da9378c220"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-483.json",
+      "sha256": "5d8d262be39cce6d97997af994123afcd5b263e299c35bd20fa78d0ab1cb93dc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-484.json",
+      "sha256": "2b2d500d222c2d863edea2ce20709574b1259472ac66d0aa2407179e253ba11d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-485.json",
+      "sha256": "17494df39a36396a09f8418460a19b4bb800024ec4a8a1d8c20447eada65418c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-486.json",
+      "sha256": "7e5571dd8ab95ded2b99d55d225a182efc2759a2ba7e37f4dde29b1eb110e2fe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-487.json",
+      "sha256": "fb6de0722897cebe5f56d6f332a77db6985a191cd3d34db5874d1b8c109b727c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-488.json",
+      "sha256": "09d689263db3291c983bc5be14fe8e89a4ebb1c3a9b78288df88cd58829724cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-489.json",
+      "sha256": "92f5ba47c5791ec0f078321219380051dcb7248dd0134403de8f7d71852b61b8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-490.json",
+      "sha256": "d08991083f2814e2d776b585821973147b9db674fb1d04d75a29d85e29918b15"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-491.json",
+      "sha256": "8aac3b08868b646cb082edb57525012a696badb54f0175cd298a686b5ae0df74"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-492.json",
+      "sha256": "b86e3c8eb7a01183aa8752ab789c48c5f0d1e473bbe4d5559b9fb124524d9256"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-493.json",
+      "sha256": "4bb9b047318eba7ccd5c2db894f30eb3470e1bb7022e28119e9e864885910f46"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-494.json",
+      "sha256": "d752ab1c457e3644c226165a3029a962f26ba48e90b53e4f29f9f01d100f3bea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-495.json",
+      "sha256": "cbe05bbf7d53475f7415942732b6721e1833c9dc379741bd77c4a5baa90377b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-496.json",
+      "sha256": "1c55a205628efc9437f559b49bb700f206b660b81de15ff5646b5e2be3dfece0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-497.json",
+      "sha256": "e5a6fca2aa0ad19d57e681a1d7bd508dafa5ec9ab0f701c319e38f38181cdfbc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-498.json",
+      "sha256": "ce07c23047d896ad3722e64e6cbd4a83289701405470ec50c7eae90de5a29fab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-499.json",
+      "sha256": "1ed27dcee470bc39f9ca267af3d7e18bc7ff5fd8003d316530d0942582d3879b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-500.json",
+      "sha256": "8564283786332f625d003d3c1728a36dbf08707e2ea572cb44c12b5bc289ebe5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-501.json",
+      "sha256": "69c4a2496fa2664e1489e68b95cfeca4004c9e28ed07c8b3f956cf0cf4c8211a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-502.json",
+      "sha256": "35fed85fca7370976fc7155a8801b23302c2d3f6e47e57f3680ac7b1951cd156"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-503.json",
+      "sha256": "03d31f9ba7ad93ee5b1d3624ae9abba05a0426eca6ac7cc72c4b0b5fc6e9c70c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-504.json",
+      "sha256": "d88ca451df3e8b908e84cd95961b49f2d3bf5ed949105227005a8461f05ecb67"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-505.json",
+      "sha256": "cb3011803b92ffc092824b597b90981d397c4725f28d0cfb275ea0fbec291c64"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-506.json",
+      "sha256": "5ab44a0da4c6d37e299d6eae7ed9e15de3ffae82edb9770dcdf345f382b60a1a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-507.json",
+      "sha256": "226e4dffe12514b0e7d51362d38e2397cf59e56b31d86ab60338b81c569fe522"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-508.json",
+      "sha256": "615225c56cfec63cfa544627a22253e3191d876c6728700f88f94b2a953ba808"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-509.json",
+      "sha256": "865b0026afe466c06b583d7c19207987513af16e1af757d0f5b840c67213ffdb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-510.json",
+      "sha256": "0ee6cc3befcd1664bdc19625f4705a119ed192d268576beac4e3489dce2627d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-511.json",
+      "sha256": "ffacc419f04bed1bc593fb6ac52d2e3acf7b168b738bf990ec07de3259591031"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-512.json",
+      "sha256": "52dd69b73347926cf318079a4fdcf29dce6c216b080f4a430f415a245f7a938d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-513.json",
+      "sha256": "32706b72a917eaed6022cb6d45ca5ae487d925f663e35a845ed93043fae1ad3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-514.json",
+      "sha256": "956c5b5072b5878c9abc86b0d718eaa85ff51cfd61816435dfa47030f7bebc50"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-515.json",
+      "sha256": "6b4046184b15fa92338bb174134094dc45e25a823035d64be60467c3694228a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-516.json",
+      "sha256": "4cffcce4ffba1f5434d3767f2212f1527229728b27ad990a38d47996457a8e10"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-517.json",
+      "sha256": "4be1cf3183a4098ad464b9eafaa885cd8304a908f0e58d370cb24b71d425618e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-518.json",
+      "sha256": "9528db29225390415727d94f92f43c5d5b79960eca62e7c1c449f0273e29c9fa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-519.json",
+      "sha256": "9c0a7fab7edfd394c23173a43bc32c64d0b1b73e270d9b109f995a6c38c683bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-520.json",
+      "sha256": "063a6e6630e6e29e160acd23d6bc40bd0cbceb9f8230f444ea66f69dc65d6758"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-521.json",
+      "sha256": "431d368ddda41e425c2566390fba006680c7d1251954093dcee5211a8a539bc1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-522.json",
+      "sha256": "2f57eb993e2eb69e415e9178909348319c49fc2bb886dc0520ce2672836c098b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-523.json",
+      "sha256": "949cccf98e3e2ac719396bf0b06babcd7b89e5257413c70d54c0fb7733d53888"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-524.json",
+      "sha256": "c60fbbae489a94a3b20b90f874fd3935f6267a1c05adc7fb679d8b464dff7951"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-525.json",
+      "sha256": "4573055b2382bfa429d272d8ce16d2e140b0036b1c241a5f0ae912c62a292f94"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-526.json",
+      "sha256": "104143d68f8993b4ec17ff1c636df55c01cad77536af7790bceef5f039d0e91a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-527.json",
+      "sha256": "beb6bf6be1906a1d4f34e0de9acdae2afbaafd2acc52927f036fcebda74cea52"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-528.json",
+      "sha256": "f11cea853dff0e4e0e8d77844b1e7f65d2decb4cef98c86d5c67a409dcb9f682"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-529.json",
+      "sha256": "9621cb1bd89a1cece298aedd162289b946a299f37d0deba9aa83d45b1ea629f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-530.json",
+      "sha256": "b4d4df9906500c54ec6d8d9083bf05cfd49a943991545f7bc6ca63a84e324a1a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-531.json",
+      "sha256": "be91bcecb42214a5b93d5058d1862a4ed6ae83a27c2251f96ec383dbd40cc30f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-532.json",
+      "sha256": "e3bd62ec8867aba0fd44c5a6c4b2732bc1ae54c458b576eed247da448951e3e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-533.json",
+      "sha256": "26ec269f672e88d5782ca0a4a0c8d8a40432ad19add373fbde51fdc103cbbffd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-534.json",
+      "sha256": "d3a0ba745dd3a96703ceaa32ccc440f7b3bfaac50c1c7d37c19f902132759aee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-535.json",
+      "sha256": "4b276e298a1250afd0035f8dcfbb5de80bb5071389e9007155e54a9b45063297"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-536.json",
+      "sha256": "000ce8dedb08aee0d0e1aad717f3c0ecc3b9b8ebc25da63aab34d7fb6de49f2a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-537.json",
+      "sha256": "cc765cad3264408717c673c7217f933b96fc98566738c980b8246d95a644173f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-538.json",
+      "sha256": "af0549ce9d08d27eb373a78ed650d3190792d2d91ccc9ddf7bf0fa748999fd3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-539.json",
+      "sha256": "b6c71a171687e68f8068bdd0cc3b0fa1280f1737cc171d16fddafee5b19db3b7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-540.json",
+      "sha256": "a1721ed1fc3765f058f60526f90bd22d2b5d754a3cc63b4b9a5a7d36bce993d0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-541.json",
+      "sha256": "adfc97a5bd8dd31fa2af230cf757b23c8f89a6802be87a42d4481fe096a63a3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-542.json",
+      "sha256": "fa915ff8fd375bb7f00b966aadcb3f3e86b83f0ee0fd92ea43e877cb639aadfa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-543.json",
+      "sha256": "23f527ba5f0a16c9f3a8cc1220053e1387dcde988b8342b6a323ac5dd2547d8d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-544.json",
+      "sha256": "1da0d0c8b2db90fb5da3e018fba58b8d161e7667756bad919e1b473ddf9ffa38"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-545.json",
+      "sha256": "c3c103108049391dbe695bc7ff371e24e02b8d755a5334ca137faf480fbf2559"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-546.json",
+      "sha256": "50450981f81d37dc68303764a0ceb43ebf6871b1ce57f4b530de63067258c61d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-547.json",
+      "sha256": "03e50b3020ecc7e26ccfd81c447d0435acd922b83f883b7fa681ff249445105c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-548.json",
+      "sha256": "59153a3b882cd962f3260201629a7c139b467627450f6156112f81c4a3b36ec2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-549.json",
+      "sha256": "e0995df868e53434c72bffce3459e2e5d75f66d3b73a9faee752f04c336d0aed"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-550.json",
+      "sha256": "06b4f04713669c1bddae9bd1cf4ae2c9f2d1cb4054212efd32b1457d3ff2a927"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-551.json",
+      "sha256": "bff3c3879e5e0a92d3ad266cc82c6092d59baf572c0e5ee447d2fdefe3484683"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-552.json",
+      "sha256": "89229d5d434626a7e89b169844770c86db5b7389fc86e1338279050dee0e21a2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-553.json",
+      "sha256": "5ba4e2b89b35fa49cbb1fe0d4782cbcfd271bb5a3aecd53fc12454669878ac14"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-554.json",
+      "sha256": "5dff2ee08a38c05efeb44ebc4715f4b6aa355b33b8bd40183c60910ffdf95ac9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-555.json",
+      "sha256": "900928f5fb0c0c104c6cd4d3571c2b9e67782347b584a261d4cb8e99cbb1b25e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-556.json",
+      "sha256": "92494ee3efa56dde4fbb6a15f1b7f8685e1e92ba295719388ad0e8c2f08c2eb8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-557.json",
+      "sha256": "dec9708075f7ccc3c75662675641eb732f63caa95957948a2164e8640e7ae691"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-558.json",
+      "sha256": "e36b0967905764635d3265cb4ef2eaab6f0a0834721998fcfc921bc8ebdd4cfa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-559.json",
+      "sha256": "71853a4b5e9b0eb6e7077da9372234b53fa2d4211c7b2fc66128ee12a2b32498"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-560.json",
+      "sha256": "d7eca471fb9d85eade9bbbbfd13aad029fd9930797944e3c1dae3f915d984ec3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-561.json",
+      "sha256": "fbb73a57c00eb9694289d1aa842d5e85e958d7c334b19949d7c1ddcfedfe50f4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-562.json",
+      "sha256": "da46d48b76044afb2f13633d62f3da001eb8f51a31814e0013e2790a3004ff57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-563.json",
+      "sha256": "f26a3de6410051f6b23754434b5a178970e72869c54dad0e84352eff6198340f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-564.json",
+      "sha256": "81644ce3716d10c3c1a2b5922f355728038ff8745e44fcad865e61cd08abe2ca"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-565.json",
+      "sha256": "bd2c3c3c17025945688f535a073c679f151380d2e5004df2fb2804d9d8a28208"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-566.json",
+      "sha256": "251659c3a33a85d0800b113fb55733d481d1139a9ec9e43714967bfbd62ee0b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-567.json",
+      "sha256": "81e4fe0df54dfe95b30d14e4ee89f37be026b7dce1a6f869abd8eeac4b74c66b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-568.json",
+      "sha256": "0d45327b0d332eb1b3f3e39b2ef566167e45cba7f22ea7e57647f03cd9eb21dc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-569.json",
+      "sha256": "e2db0c2fc3d6388339a43f2094f87921f17f5584a4a1962c8a65dc4c718faa11"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-570.json",
+      "sha256": "7526aae9f11774e5eace1e0f9ef5a517c250b6d02aab43a7ef3a24f86b0b0b77"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-571.json",
+      "sha256": "82d5b1c028ec68d083516ebaba50db245facd3ae93dc50318c01fc226e2247af"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-572.json",
+      "sha256": "72486e453f043ee75136592ec7f3e04fa129b5a26f68b938f4edb4b4f801096a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-573.json",
+      "sha256": "a7da5a007f7cbafc671a9986bb195e7d45b3d44125fa5caf2ae2d05c5e31a81a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-574.json",
+      "sha256": "ba754efe6a0cbfe0b7e876670989f1b13026873109af2ec6435f069ee5756fb3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-575.json",
+      "sha256": "ee81150f466b45ca394174ad181cc0747c891b74c964308ef243f9db5ba3c8a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-576.json",
+      "sha256": "dec4d8dd402e634242376b25c0fa5efa0469b445e37c936f76ae13bd19e26a95"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-577.json",
+      "sha256": "c4d84288642696d8915a35120a11c3ad017330bf96ea3c7b6e7535597e132c89"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-578.json",
+      "sha256": "5d587fb9304e1d19a4bd5b8bfc3c6b42d5242d0aef396f3ffc78556ed0b6c770"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-579.json",
+      "sha256": "585e6ea764d14c9696cd90d008403b4a02a84b152ba5b94374a629e3c7a454a3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-580.json",
+      "sha256": "7d35347f9c6c14ad2991c599bc020550371c05d1fd0f8affe129c57f30b80ed5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-581.json",
+      "sha256": "d1c73613927682516e8e90a7a860a4a2619b6a80f46fd58d467a56207d9ef97c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-582.json",
+      "sha256": "43c1f737bb676e4b4b0c4ceefc3762443171aa027affa5a7d9d1bf540f77951c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-583.json",
+      "sha256": "a5d5d788bc070f222b914708389a50f7d54d175622c43275068a2bb9008ef773"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-584.json",
+      "sha256": "cebe9b6083be3b2f443a263553f1adf0aab0e1e3db5e41e01830b64cd4abbdbc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-585.json",
+      "sha256": "82844d303a1f92deb108ba29b788379ab9b7e914e5e79d9bed0aa759255241da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-586.json",
+      "sha256": "b51beb5b15c3cd1efac2319697388381adb880c33ff49b0d5c31bc704966c712"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-587.json",
+      "sha256": "89e5994156cbe0226c9445a8ff0f428aacf7f6f2af8f1cc756df22e8ebcc8d0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-588.json",
+      "sha256": "a164de5f2315faed35f57903ed09946cc4c28c63e6ee1ddc3d1355b1f146bc57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-589.json",
+      "sha256": "6eada6c3165d1fd3600c584656494f9d9912a1063cb846b11d8717dd1b94d269"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-590.json",
+      "sha256": "41be150605c0081b3d8c2645bfa88ad1c06e9230997ea03dde31328d8cba4784"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-591.json",
+      "sha256": "c4979b3607252759d4e0a92679cfa158f0ad0328798df249e9b7949297b9fe25"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-592.json",
+      "sha256": "64ec720435661db03c942fb7512cf36ddeef6f25660203e1004420d735dbc5be"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-593.json",
+      "sha256": "3778fae11e2fc24eb349648a15be0089999134366618237b0421062b8fdf2d14"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-594.json",
+      "sha256": "9c400d23866c1a8b127fa8d4da9bf3506ad67b27e490cabb79eb7721ea7c1766"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-595.json",
+      "sha256": "2b86d6ac56a38a1c83958a127f7c111d50f77c67ee3740401de31bf0a92770af"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-596.json",
+      "sha256": "1fd9004c649e7fe47869c6dc9ae04bcca6b058a43a1341e851e8e2d71ebb0bc1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-597.json",
+      "sha256": "43ad4754a9748502e3ff4af5c6b93145dc96b5331c85bd49849d08d36fd2b97f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-598.json",
+      "sha256": "8efaf2193a40b1209bff07905d85fb179f8c000d75a509c626a32cb11567b172"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-599.json",
+      "sha256": "d2e413acbf221b172f1666151eed1c951bc1fe23b2a3def75566dc3a9b2511a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-600.json",
+      "sha256": "37ca4022bdbd96876cbb422f73ced43ee4e82249e8c77037c10abb2dcd7033f0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-601.json",
+      "sha256": "1e68b3d97fd54941d0df0ba2bf7df0cf1f5245645970a561ff0af2cb77c89ccb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-602.json",
+      "sha256": "0523d1b96a26094a600ac464c5942ac93e60c41089281efd8b99e7a46160bb10"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-603.json",
+      "sha256": "588d6fb9f921dbbde16bc54f9043082761e0fb11da87edbf29f69fc7d5513eea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-604.json",
+      "sha256": "6fddf19809cc4c994d37113415bb982e13f68e7d08bc1261f26cf5cb96e0fc34"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-605.json",
+      "sha256": "bfd8fa118106d564896f2ed5ef317a608e79b7548238122619e89e00637801c9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-606.json",
+      "sha256": "6ec79d815fdb3c67ab0cbe1ebba8da7f6351389b39d49454585901511a4a73b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-607.json",
+      "sha256": "cadb35e5d0a738fdc49cf7a99dd29b9cb183cfbf3fff14a2e78c4663ce35e257"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-608.json",
+      "sha256": "aa2e22b65167b94a46faff5c7fde6f3bca30bcecaa95925e5cd485463509fb1e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-609.json",
+      "sha256": "38e85c2dcae0e677568e44264812bca668b9a55676b138e8a726224b302366fe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-610.json",
+      "sha256": "662cb4ca16e7e622ad8227e864d6483e176b2aa35e8c088b7ff77a2fb866a79d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-611.json",
+      "sha256": "ebc4e73590655f9d0fe430f8aeae55bd4a9fb2ea3a1912dd86ec89e2e1934158"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-612.json",
+      "sha256": "5d78cb50e69d7499d0eca46e5a1b9855dcd8236b30a635c0d3adb612aa62cd17"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-613.json",
+      "sha256": "1060b5e8ea4c8c791114b224cef5ad8d81e61890f94cf819022684275006236e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-614.json",
+      "sha256": "02ef9f91df24d6b1d406f094379da26a7b86aad29838ec34fa669df9b4e9c92f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-615.json",
+      "sha256": "388bb084308fd8fe7d62eac7d27648f4f53e3f0d17a9f8ccd53cebab9863ee9f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-616.json",
+      "sha256": "2b3b925bd3d5172aa47264053f3890ddcba3b0b8b59823e4973138480561e91f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-617.json",
+      "sha256": "e9417db007369a46445f5f3421646abcc40ca044af4c8666c794aed6ce2140d6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-618.json",
+      "sha256": "d015c762a49338cc81f36ab378644f3ba588d4c3fd95be9c9b02a187633fe2a9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-619.json",
+      "sha256": "5a8665a39cc27ee3af8b878bebb825e28df4f3401aee351fbb1de922de47b5d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-620.json",
+      "sha256": "3735d28a82c276a1a94cf056e3afeaf6941ba511e9c2e984cddc95674219b3a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-621.json",
+      "sha256": "eb53f2d62f1090191507b12dcd331b38ebf75f8bdfda370b3cd50d65b1c9be37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-622.json",
+      "sha256": "70934bfe0e9e5f39f216e041988aa4681cf3f3f524cc8580c9ab6dc0f05f5e9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-623.json",
+      "sha256": "e4af5180977a6f7ec05a99cd4e25327a1c346336cb7eb86d021e060e088f3914"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-624.json",
+      "sha256": "7d4bec364faa40c4e511f2298d34d1cbe8e675ba0154bed3326b20474c324bdb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-625.json",
+      "sha256": "3e7b2c6e125034578189d74112092a8f360bcfef749f987a5d0c1630014fbe50"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-626.json",
+      "sha256": "a6d8a817c778b68fb40cdf296b84605d22bd78380ee9a290964d8cdfc2704258"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-627.json",
+      "sha256": "c19dbdd733bc0a5b0b1c70f2099cb8d16c36d6d93f7a108461b79e22d227f7b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-628.json",
+      "sha256": "a331e3fef20d1c5f874653424bc5f03a1f6ab620fbe06bed6cd9224bbbc9f5bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-629.json",
+      "sha256": "b96f5d337543009870f0037a28d6e7d942c023f0bcdff7aa82596834c84a5127"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-630.json",
+      "sha256": "2f64f865675ba7a9962ecff79fdd9a9c16b5818ae4fb4f515e2b1bdabf98b717"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-631.json",
+      "sha256": "3df41e5839b80bf17674d00ca30a881aa0e5424c7c82af19050f4b6316b35b02"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-632.json",
+      "sha256": "69d920e1df56c93004d51cdff18da7c9cdddfd54f2fa34f739511e187601e687"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-633.json",
+      "sha256": "6e709f4d73e5513d25582c7d51bd8d52728d89ed038227c47a1336a397a8e670"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-634.json",
+      "sha256": "5342bd60cea5457d042236e3f433ab8d5581d093748a28561e808849c7776470"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-635.json",
+      "sha256": "397a35f47a356822eb297954a578bde4af6332783d8fd5b482adb838e9d57eb0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-636.json",
+      "sha256": "ebddd8dacd39228f2b55cfcec0db04e74ae9703e12959e2feaae2686ed725a4d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-637.json",
+      "sha256": "bb02cb7009526d018dcf398ff5470b7107d49cd24b4dc23a98bfc33f7a719f58"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-638.json",
+      "sha256": "e7955fbfbb50250991b8f2e72d838f43024af981b2d37f8c95a645e9b5d9b26f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-639.json",
+      "sha256": "4d86cede67f8c7326571ba20163711977703c21e9426f4ea6dcd98098de6c167"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-640.json",
+      "sha256": "12b581d44ff1cd15e8414bd7c9e397cb7da4eb335e21f583078e61b748238fba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-641.json",
+      "sha256": "5f068c5c7a5a00aada1df737735146e9ab33e5ad3f510eba9e3078e8d398344c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-642.json",
+      "sha256": "2a0aa3c2b79b0fd0bb262d9aa35ce7a3fd36a1c26dfe0f795d5473afad032ad8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-643.json",
+      "sha256": "40c86fe971342cd55495d8043ef72fd437b580c97fde69070afafae708277e42"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-644.json",
+      "sha256": "2d4d8f25c244ee0fab2344f6078db7637df321b7a70493987bc27af1ad66499b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-645.json",
+      "sha256": "66e810a5cb7dd2f2680a0cee735427b6ca23201f2e06fbc50066139258ed3227"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-646.json",
+      "sha256": "437ca81e8bf762ae82e1fc3a2315c6e4b4c2ee0a199cc8c34684119b3f122729"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-647.json",
+      "sha256": "76b5f3350cea40c606e876a12d5fd0fb67bff32f151fe5fcca37a9a4e5196d92"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-648.json",
+      "sha256": "b1b92f940b6f129f8302c797909223a0ce3a24977d5601b3b1f1fb1e6ac9b22c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-649.json",
+      "sha256": "14265c8b7f31e0348419c7e7d8a85eb5f45baac0956566ab24317a8c6e363276"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-650.json",
+      "sha256": "f3f1ab9dde2091a763514ee832f8c41c3267852e0a5eb10a2d1ae6121b03793a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-651.json",
+      "sha256": "4884d0313f259c88cfb29b2d5f03403ad4b01526f997cd08c8340c875d1a91ea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-652.json",
+      "sha256": "3922e733116268256a4a322fd61ae2798e2c2ad73e34eff922edfefd24ef0343"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-653.json",
+      "sha256": "5ce0fa3c60a17abbe43a79b93c37010b1f252cad54d3f2b446eddf31933d7ce4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-654.json",
+      "sha256": "44ab7d7be1a020d256330ebe017ffa85c8b26e6f21652abf6a1f4cfdab058651"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-655.json",
+      "sha256": "4b5d431d3233b62cb26932b44ad3dae79f39a2a7d531805d26f3be2fc1e7e896"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-656.json",
+      "sha256": "26715f85b91ea832d4688c3152f5169d9a198482af9562aad2cc2932cce99b36"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-657.json",
+      "sha256": "e75d74aab9e98c35fbd0b1cd52b9e40519b51cd83a817a433b221dc8e856c74d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-658.json",
+      "sha256": "5440c64be200b7d6b90ca42fcd461ac6fe759a16150291c140d7ff7b31059978"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-659.json",
+      "sha256": "48fad52207bd89f919ec4731530af5090bd0a17733c6c99d15c6a37e48082ec1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-660.json",
+      "sha256": "25f2f74b65cfc145209884407e8e3ff3ecae3a5ea601d9c8781ba2c933eb0bf4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-661.json",
+      "sha256": "515481a7f0296f8c8950b5d1332defc6ea811cd320c48fd04df0133ce7ac7a1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-662.json",
+      "sha256": "8545dd8da7b67a555d330ec7b7f2383a80baba3dd2de7c2de40564c20bce0185"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-663.json",
+      "sha256": "2196f118e6917d18462f0c2b0e3d66d26282024ee0ee6f6a59fa26c28cb29f1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-664.json",
+      "sha256": "079e2d988379e0a86ededce6d169f02a12806abcedf0668935815a87ed642bfa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-665.json",
+      "sha256": "52e7b85459c374ff2456bc2e76116ec6880558c6dd2206d93aeb4dc6ee14c328"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-666.json",
+      "sha256": "f5ab94b7405e759a67a662f24b4b0cac15763fc921f3ee5db0f4a140d87d469c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-667.json",
+      "sha256": "70496f84d27396826d8cb14bd3584fe8c02a05a22d8988fad2c9774d555fd3f2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-668.json",
+      "sha256": "98edf61e13d784854523a17d4b4ed2a39b64ae1f1bfea217c5ccfa6c8b9187c0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-669.json",
+      "sha256": "55dbb97dfae1249782eb64c3345351ed06042d85935f9dc34762f5bf0fc5de57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-670.json",
+      "sha256": "935a05e3b158e825d8e4e91b4c23048fa24a00f4f21dfac17385e170bf469e2e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-671.json",
+      "sha256": "f67979be3836d0cae592425f4f2a9376d2bbb158aa2820f50ae03dc84351a597"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-672.json",
+      "sha256": "93ccfa234313075ede69c1c2382d793752d02014b12edd9e76896deb5ea71f6e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-673.json",
+      "sha256": "e880b33bae9048cf17c29e7f00afd22aba84a8125c6c1bd77138d451d073cf17"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-674.json",
+      "sha256": "ce0d7e809a461b09de1abacdf78c1fc1eb369cdeb064d11be206bd17e123e3c5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-675.json",
+      "sha256": "40a120986c9dc1caf180a12c079b3d45934e220be4e0cdc9ee6be05a0f99ef62"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-676.json",
+      "sha256": "9f8f6b5839ff7273f347225eada765f0e7d902501f9b0b62db91c0bc0f513e4d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-677.json",
+      "sha256": "83c5f889a2c4fd491f4d2736116308b3fd73faa05022603be5dea7ffd4218e90"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-678.json",
+      "sha256": "b2091868a844910ef390aa4848fc95d162f3586f0ebc592ca866547aed501751"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-679.json",
+      "sha256": "166abe90dabde540effdf822d45b882ad36d3e500c334d4f991772c253c00520"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-680.json",
+      "sha256": "0123c2de8da5b0a4cb9f32b3f3cbbd7a9025464487a5ace0cea3c3cb49fdda60"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-681.json",
+      "sha256": "bec2680a11430bcc1a3d5b511860cfe0fafdc446758afb03341f66bb0d9ab13d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-682.json",
+      "sha256": "79434e20651cc00de3c540a08773c8765ab076d163d73a325fef22e150ec25b0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-683.json",
+      "sha256": "a411481f071fa6a192493609dace6f5adfd7c312f753aaf97775f8ce7ffb658f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-684.json",
+      "sha256": "2eb83ee8a35ef056fca00105d90aa686338daced4a6817ed7d6773fc9c220b46"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-685.json",
+      "sha256": "cdb0f110a9454917a147570afe9d41fa33e8b88d50f511ab164e4d03848bbaae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-686.json",
+      "sha256": "7f56533d13ddbf4bc70449f02803f7e98443ce52bd649c6457faeb3a4e47b196"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-687.json",
+      "sha256": "909a7e44252e58ca500cec5b6a67059532bea0d01d2f75e159c92f292cd4c0e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-688.json",
+      "sha256": "6014cfee21fb554f50e37058d2391a57941a4a2ae28cc635b1efcffb9f6e8c7c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-689.json",
+      "sha256": "198a88f1578217f94036e288cebdd3c230870382e02f42d9fa45957f8f3c7bde"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-690.json",
+      "sha256": "e2da45a6a8f58604dae59086df44e8e4ee8a95d31a9005d6db4370090ae063a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-691.json",
+      "sha256": "75e02f7c3b9d1a0237d7f0dc20e9432d5b62ab29cde0cfdb7ceaf5db5337fca6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-692.json",
+      "sha256": "ecd25c5673f4de3e759bab63c2bc19721da990bc3a3ccbdadc64a94eebd7b696"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-693.json",
+      "sha256": "0805609ebe5d1ee6bf4c79cf141a1415367ee5ca53e8e735317bffe5dc5731a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-694.json",
+      "sha256": "97b381afca087ca27f2e9787550f368655aefa3f03107c086f24ed8a6235c4c7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-695.json",
+      "sha256": "eb7b3d7a349d62a4a6fe79122f55efa8cc48f7a375fb781507f09da4000864ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-696.json",
+      "sha256": "f1d3cdbb5746b1db3502fe5aff6d4dca449a9b613b36f9b6e5c20cdf9e24f57c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-697.json",
+      "sha256": "dda7530151520012603221190328807be48d37cf203b4f733f7f58613e2036fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-698.json",
+      "sha256": "8cb32969a4850aca44ee554d3831e03c7a545a71a397f96b385e808bd90fa024"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-699.json",
+      "sha256": "0aec85045e2bccca2ee1f54955866b0c976ac302850093f87433458526cc45ad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-700.json",
+      "sha256": "6966e2228879ac37970b601102f2f782beb0e48ccfb606e4ffcfde6ca3313f1e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-701.json",
+      "sha256": "4df6e0787242b217010e2c7773213eadfec27e98ed48ed11b17c023f85877b43"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-702.json",
+      "sha256": "dad138ca19c5c198385d1d7f077c208ae24f53ac995628f448ea9455405acf19"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-703.json",
+      "sha256": "2a5a3fae630972e757b3e33551a7e80d52bf9104491649bc17aa2becf8e82d94"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-704.json",
+      "sha256": "1f965c2f75a4147f4a423e71a2e09d3d51a059500274008d7f222df09281227a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-705.json",
+      "sha256": "c33fd20e14a0fcdefd014d6694a12a72e3d61fbce31e369684adf94451778ed0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-706.json",
+      "sha256": "8b5b006b52042854f2210b002905acdaf7a16c8f1a0cc1ae37ac0ccae496b3f4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-707.json",
+      "sha256": "cb729a09596b58ffc7ad49e5178bb7269365b93b0d1e87866e07051555d49841"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-708.json",
+      "sha256": "8445e275f6ba10185ee9d45ef021fe0eadcc2a0300469125bb47d5e06900cf08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-709.json",
+      "sha256": "e9b802e56fce95bc102ff22c8c38227463b07fe72ccacdc389cb28e283139328"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-710.json",
+      "sha256": "9a7d21d5d6c19733c49920b7cc6b449d1bb102f2b8801ed16404ec2f8f9d6de5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-711.json",
+      "sha256": "048bf05996a4f8582cb859d47fdd4bc8ca7fbf25b9f350f615a52629ecdb89be"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-712.json",
+      "sha256": "7156a1b0526ffbc4ba12333dbb4ac735ed63f118c7535471bdcf90233b1063a2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-713.json",
+      "sha256": "f785c8327bcbb6b3427e8f8b87876a16bac3aed4cf6a23ec8285f80544cee4c1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-714.json",
+      "sha256": "22266f77ae58c5b1ab16d8f5aaeee4fa0c82b2b11a09ec29b60f219b60203030"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-715.json",
+      "sha256": "c2b440d8c830d1c2d687d183feac903172ee4bb87c18d0c889d2bd1d3997b030"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-716.json",
+      "sha256": "8225ac777bf5e04d0e764834ebef4d79d646076f7501bec1592cc196c2a9dcdd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-717.json",
+      "sha256": "f9197e6361baf1a47b44047f9903fa02e8f685188cfd572a3ab14d1bbe6f676e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-718.json",
+      "sha256": "3b5012fdf280017dc97725e5c1ae2aecd65754b11b77ab8bb97b2112be461857"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-719.json",
+      "sha256": "a8007144742ba8d491dc2976732b897d044d5ddbe080584ebdc7e430e3087ecd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/nodes/rige-node-720.json",
+      "sha256": "8ca4fbd349b16df2942ed1740a03ef8720060398acde0ad8c1d1d76c6746900e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/promoter-verdict.json",
+      "sha256": "6db3568fd64c640b0ff1e35fb214195bd6a0f74b59352e030b8b1452b18bbdda"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/public-reader-results.json",
+      "sha256": "d554aaae733fc7aae4783e131d7e4e878b7cc2caf199d4938173b9c5afbedd91"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/public-safety-scan.json",
+      "sha256": "3587339d8d763fe4b1ae1e4e75458bf188691757e30817af81c0468c700c0dec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/rollback-retraction-evidence.json",
+      "sha256": "5fd4892b174a22cb40feb1ab884f09a7132f5c3a03973aedb5802e25ed7e96b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/sentinel-public-risk-gate.json",
+      "sha256": "d8938d70955ac5ca4c454658ca654efaf9cf87253d1f858077f05fe7ce579284"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/stale-language-guard.json",
+      "sha256": "f55d13c96eeeeaf26230ab30370f702d9022cc474cb846f0610bf2904f6194f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-guided-evidence-application/wording-candidate-results.json",
+      "sha256": "50c8ba1bd108d5129fe217dbba1356e02b003591dab8b3680b332dbb419804dc"
+    }
+  ]
+}

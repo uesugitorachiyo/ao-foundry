@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.rige.measurement.v0.1",
+  "id": "attempt-n",
+  "title": "Reviewer-blocker triage application",
+  "task_type": "reviewer-blocker triage quality",
+  "baseline": 0.65,
+  "post": 0.91,
+  "improvement": 0.26,
+  "artifact": "reviewer-blocker-triage-application",
+  "prior_signal": "Public-reader and adversarial wording blockers remained the decisive denial reasons for stronger wording.",
+  "selection_reason": "Use guidance to prioritize reviewer-specific blocker triage before retesting wording.",
+  "public_safe": true,
+  "rollback_ready": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

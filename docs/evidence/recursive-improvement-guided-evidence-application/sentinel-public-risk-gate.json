@@ -1,0 +1,9 @@
+{
+  "schema": "ao.sentinel.public-risk-gate.v0.1",
+  "result": "clear_for_public_safe_guided_evidence_application_four_attempts_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "approved_wording": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "holds": [
+    "stronger recursive-improvement wording",
+    "broad_RSI wording"
+  ]
+}

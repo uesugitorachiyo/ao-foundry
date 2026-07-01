@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.rige.measurement.v0.1",
+  "id": "attempt-p",
+  "title": "Safe next-evidence prioritization",
+  "task_type": "safe-next-evidence prioritization quality",
+  "baseline": 0.62,
+  "post": 0.89,
+  "improvement": 0.27,
+  "artifact": "safe-next-evidence-prioritization",
+  "prior_signal": "Sentinel held stronger wording because safe next-evidence boundaries were not explicit enough.",
+  "selection_reason": "Use guidance to prioritize the safest next evidence target while preserving denied boundaries.",
+  "public_safe": true,
+  "rollback_ready": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

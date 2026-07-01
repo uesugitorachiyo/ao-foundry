@@ -1,0 +1,69 @@
+{
+  "schema": "ao.foundry.rige.wording-candidate-results.v0.1",
+  "project_id": "recursive-improvement-guided-evidence-application",
+  "candidates": [
+    {
+      "id": "current-guidance-control",
+      "text": "AO has public-safe causal-review evidence that prior bounded evidence can guide later evidence-selection and blocker prioritization under independent review gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "decision": "approved_control",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "confirmed_prior",
+      "command": "confirmed_prior"
+    },
+    {
+      "id": "guided-evidence-application",
+      "text": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "decision": "strongest_approved",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_public_safe_guided_evidence_application_four_attempts",
+      "command": "confirmed"
+    },
+    {
+      "id": "safe-next-evidence-prioritization",
+      "text": "AO has public-safe evidence that causal-review guidance can prioritize safe next evidence targets under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "decision": "approved_narrower_alternative",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_narrow_prioritization_evidence",
+      "command": "confirmed"
+    },
+    {
+      "id": "stronger-recursive-improvement-control",
+      "text": "AO has stronger recursive-improvement evidence across governed public-safe guidance and application attempts, with denied surfaces still excluded.",
+      "decision": "denied",
+      "public_reader": "denied_capability_overstatement",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied"
+    },
+    {
+      "id": "broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "decision": "denied_control",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied"
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied"
+}

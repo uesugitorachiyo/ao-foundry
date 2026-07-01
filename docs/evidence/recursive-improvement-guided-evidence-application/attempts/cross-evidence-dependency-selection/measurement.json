@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.rige.measurement.v0.1",
+  "id": "attempt-o",
+  "title": "Cross-evidence dependency selection",
+  "task_type": "cross-evidence dependency selection quality",
+  "baseline": 0.64,
+  "post": 0.9,
+  "improvement": 0.26,
+  "artifact": "cross-evidence-dependency-selection",
+  "prior_signal": "Guidance evidence linked prior and later claims but still needed dependency selection across evidence categories.",
+  "selection_reason": "Use guidance to select dependency records that make later evidence attempts independently reviewable.",
+  "public_safe": true,
+  "rollback_ready": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}
