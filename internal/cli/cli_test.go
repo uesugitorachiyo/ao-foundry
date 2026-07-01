@@ -7011,6 +7011,41 @@ func TestRSIReadinessGateAllowsDefinitionNode(t *testing.T) {
 	}
 }
 
+func TestRSIReadinessGateAllowsFirstBoundedEvidenceBaselineNode(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIFirstBoundedEvidenceArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rsi-evidence-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("rsi evidence gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["schema_version"] != "ao.foundry.complex-repo-mutation-node-gate.v0.1" ||
+		gate["status"] != "ready" ||
+		gate["node_id"] != "baseline-metric-selection" ||
+		gate["target_factory_repo"] != "ao-foundry" ||
+		gate["safe_to_execute"] != true ||
+		gate["highest_proven_live_class"] != "fully_unsupervised_complex_mutation" ||
+		gate["next_denied_class"] != "RSI" ||
+		gate["rsi"] != "denied" ||
+		gate["authority_boundary"] != "rsi_evidence_baseline_gathering_only" {
+		t.Fatalf("bounded evidence gate must unlock only baseline evidence: %#v", gate)
+	}
+}
+
 func TestRSIReadinessGateBlocksRSIClaim(t *testing.T) {
 	dir := t.TempDir()
 	artifacts := writeRSIReadinessArtifacts(t, dir, func(paths map[string]string) {
@@ -7041,6 +7076,50 @@ func TestRSIReadinessGateBlocksRSIClaim(t *testing.T) {
 		gate["safe_to_execute"] != false ||
 		!objectStringSliceContains(gate, "blockers", "RSI readiness candidate must keep RSI denied") {
 		t.Fatalf("RSI claim must block readiness gate: %#v", gate)
+	}
+}
+
+func TestRSIReadinessGateBlocksBoundedEvidenceForbiddenSurfaceDrift(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIFirstBoundedEvidenceArtifacts(t, dir, func(paths map[string]string) {
+		candidate := readObjectFixture(t, paths["candidate"])
+		candidate["denied_surfaces"] = []any{
+			"docs test readback evaluation improvement only",
+			"no broad RSI",
+			"no unrestricted self-modification",
+			"no hidden instruction mutation",
+			"no policy auth secret provider deploy release config dependency expansion",
+			"no credential use",
+			"no direct main mutation",
+			"no concurrent mutation",
+			"no broad production behavior change",
+			"no public RSI claim",
+		}
+		writeJSONFixtureForTest(t, paths["candidate"], candidate)
+	})
+	outPath := filepath.Join(dir, "rsi-evidence-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--continuation-handoff", artifacts["continuation_handoff"],
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked bounded evidence gate should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "blocked" ||
+		gate["safe_to_execute"] != false ||
+		!objectStringSliceContains(gate, "blockers", "RSI readiness candidate denied surfaces missing no prompt injection surface expansion") {
+		t.Fatalf("forbidden surface drift must block bounded evidence gate: %#v", gate)
 	}
 }
 
@@ -8495,6 +8574,214 @@ func writeRSIReadinessArtifacts(t *testing.T, dir string, mutate func(map[string
 		"rollback_scope":            []any{scope},
 		"rollback_plan":             []any{"remove generated readiness artifacts", "restore RSI denied readback", "record rollback evidence", "stop on boundary drift"},
 		"auto_stop_triggers":        []any{"Sentinel hold", "kill switch", "hidden instruction mutation", "authority broadening", "public RSI claim"},
+	})
+	if mutate != nil {
+		mutate(paths)
+	}
+	return paths
+}
+
+func writeRSIFirstBoundedEvidenceArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	scope := "factory/rsi-first-bounded-evidence/00-baseline-metric-selection"
+	paths := map[string]string{
+		"blueprint_import":     filepath.Join(dir, "blueprint-import.json"),
+		"workgraph":            filepath.Join(dir, "workgraph.json"),
+		"foundry_import":       filepath.Join(dir, "foundry-import.json"),
+		"continuation_handoff": filepath.Join(dir, "foundry-continuation-handoff.json"),
+		"atlas_summary":        filepath.Join(dir, "atlas-first-summary.json"),
+		"slice_manifest":       filepath.Join(dir, "sdd-slice-completion-manifest.json"),
+		"final_synthesis":      filepath.Join(dir, "final-evidence-synthesis.json"),
+		"candidate":            filepath.Join(dir, "baseline-metric-selection-candidate.json"),
+		"rollback":             filepath.Join(dir, "baseline-metric-selection-rollback.json"),
+	}
+	requiredEvidence := []any{
+		"highest_proven_live_class:fully_unsupervised_complex_mutation",
+		"next_denied_class:RSI",
+		"rsi:denied",
+		"baseline_required:true",
+		"hidden_instruction_mutation_denied:true",
+		"node_id:baseline-metric-selection",
+		"node_class:baseline metric node",
+	}
+	requiredGates := []any{
+		"atlas_blueprint_import",
+		"carry_forward_fully_unsupervised_proof",
+		"rsi_readiness_final_denial",
+		"baseline_metric_selection",
+		"baseline_measurement",
+		"candidate_proposal",
+		"risk_classification",
+		"covenant_exact_scope_ticket",
+		"foundry_gated_execution",
+		"forge_ao2_bounded_packet",
+		"sentinel_hold_clear",
+		"promoter_verdict",
+		"command_readback",
+		"regression_eval_suite",
+		"reversible_change_proof",
+		"rollback_rehearsal",
+		"post_change_measurement",
+		"improvement_threshold",
+		"public_claim_guard",
+		"hidden_instruction_denial",
+		"broad_rsi_denial",
+	}
+	safetyLimits := []any{
+		"docs test readback evaluation improvement only",
+		"no broad RSI",
+		"no unrestricted self-modification",
+		"no hidden instruction mutation",
+		"no prompt injection surface expansion",
+		"no policy auth secret provider deploy release config dependency expansion",
+		"no credential use",
+		"no direct main mutation",
+		"no concurrent mutation",
+		"no broad production behavior change",
+		"no public RSI claim",
+	}
+	task := map[string]any{
+		"contract_version":    "ao.atlas.factory-task.v0.1",
+		"id":                  "baseline-metric-selection-task",
+		"objective":           "Baseline metric selection for the first bounded RSI evidence rehearsal.",
+		"target_factory_repo": "ao-foundry",
+		"factory_folder":      scope,
+		"mutation_class":      "complex_repo_mutation",
+		"acceptance_criteria": []any{"baseline metric node evidence is complete", "RSI remains denied until final synthesis proves a bounded transition", "no hidden instruction mutation or authority broadening occurs"},
+		"non_goals":           []any{"do not execute RSI from Atlas", "do not claim RSI proven", "do not apply hidden self-modification"},
+		"write_scope":         []any{scope},
+		"required_gates":      requiredGates,
+		"rollback_scope":      []any{scope},
+		"required_evidence":   requiredEvidence,
+		"safety_limits":       safetyLimits,
+		"authority_boundary":  "rsi_evidence_baseline_gathering_only",
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "rsi-first-bounded-evidence-rehearsal-workgraph-test",
+		"nodes": []any{
+			map[string]any{"id": "baseline-metric-selection", "status": "ready", "factory_task": task, "dependencies": []any{}, "blockers": []any{}},
+			map[string]any{"id": "carry-forward-evidence", "status": "blocked", "factory_task": map[string]any{
+				"id":                 "carry-forward-evidence-task",
+				"mutation_class":     "complex_repo_mutation",
+				"write_scope":        []any{"factory/rsi-first-bounded-evidence/01-carry-forward-evidence"},
+				"authority_boundary": "blocked_until_predecessor_terminal_evidence_and_stop_gate_clear",
+			}, "dependencies": []any{"baseline-metric-selection"}, "blockers": []any{"waits for predecessor terminal evidence"}},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["blueprint_import"], map[string]any{
+		"contract_version":           "ao.atlas.blueprint-import.v0.1",
+		"id":                         "rsi-first-bounded-evidence-blueprint-import-test",
+		"status":                     "ready",
+		"workgraph_id":               "rsi-first-bounded-evidence-rehearsal-workgraph-test",
+		"mutation_class":             "complex_repo_mutation",
+		"ready_for_foundry":          true,
+		"safe_to_execute":            false,
+		"live_execution_proven":      false,
+		"schedules_work":             false,
+		"executes_work":              false,
+		"approves_work":              false,
+		"mutates_repositories":       false,
+		"calls_providers":            false,
+		"release_or_publish_allowed": false,
+	})
+	writeJSONFixtureForTest(t, paths["foundry_import"], map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "rsi-first-bounded-evidence-foundry-import-test",
+		"workgraph_id":     "rsi-first-bounded-evidence-rehearsal-workgraph-test",
+		"target_instance":  "demo-stack",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":            "baseline-metric-selection",
+				"task_id":            "baseline-metric-selection-task",
+				"mutation_class":     "complex_repo_mutation",
+				"write_scope":        []any{scope},
+				"rollback_scope":     []any{scope},
+				"required_gates":     requiredGates,
+				"required_evidence":  requiredEvidence,
+				"authority_boundary": "rsi_evidence_baseline_gathering_only",
+				"task":               task,
+			},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["continuation_handoff"], map[string]any{
+		"contract_version":     "ao.atlas.foundry-continuation-handoff.v0.1",
+		"first_safe_node":      "baseline-metric-selection",
+		"total_node_count":     2,
+		"completed_node_count": 0,
+		"ready_node_count":     1,
+		"blocked_node_count":   1,
+		"class_boundary":       "fully_unsupervised_complex_mutation is live-proven; RSI is the next denied class",
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+	})
+	writeJSONFixtureForTest(t, paths["atlas_summary"], map[string]any{
+		"schema":                       "ao.atlas.private-rsi-evidence-summary.v0.1",
+		"first_safe_node":              "baseline-metric-selection",
+		"planned_node_count":           2,
+		"ready_node_count":             1,
+		"blocked_node_count":           1,
+		"sdd_slice_count":              8,
+		"completed_sdd_slice_count":    8,
+		"atlas_executes_work":          false,
+		"atlas_approves_work":          false,
+		"rsi":                          "denied",
+		"highest_proven_live_class":    "fully_unsupervised_complex_mutation",
+		"next_denied_class":            "RSI",
+		"foundry_import_task_count":    1,
+		"foundry_import_selected_node": "baseline-metric-selection",
+	})
+	writeJSONFixtureForTest(t, paths["slice_manifest"], map[string]any{
+		"schema":           "ao.atlas.private-rsi-evidence-slice-manifest.v0.1",
+		"total_slices":     8,
+		"completed_slices": 8,
+		"rsi":              "denied",
+	})
+	writeJSONFixtureForTest(t, paths["final_synthesis"], map[string]any{
+		"schema":              "ao.atlas.private-rsi-evidence-final-evidence-synthesis.v0.1",
+		"first_safe_node":     "baseline-metric-selection",
+		"planned_node_count":  2,
+		"ready_node_count":    1,
+		"blocked_node_count":  1,
+		"atlas_executes_work": false,
+		"atlas_approves_work": false,
+		"rsi":                 "denied",
+		"rsi_live_proven":     false,
+		"live_self_modification_performed_by_atlas":      false,
+		"first_bounded_rsi_evidence_rehearsal_requested": true,
+		"highest_proven_live_class":                      "fully_unsupervised_complex_mutation",
+		"next_denied_class":                              "RSI",
+		"foundry_import_task_count":                      1,
+		"foundry_import_selected_node":                   "baseline-metric-selection",
+	})
+	writeJSONFixtureForTest(t, paths["candidate"], map[string]any{
+		"schema":                    "ao.atlas.private-rsi-evidence-candidate.v0.1",
+		"node_id":                   "baseline-metric-selection",
+		"task_id":                   "baseline-metric-selection-task",
+		"rsi":                       "denied",
+		"highest_proven_live_class": "fully_unsupervised_complex_mutation",
+		"status":                    "ready",
+		"candidate_class":           "baseline metric node",
+		"selected_first_safe_node":  true,
+		"safe_first_node_reason":    "baseline metric selection and evidence gathering only",
+		"allowed_surfaces":          []any{scope},
+		"denied_surfaces":           safetyLimits,
+		"required_evidence":         requiredEvidence,
+	})
+	writeJSONFixtureForTest(t, paths["rollback"], map[string]any{
+		"schema":                    "ao.atlas.private-rsi-evidence-rollback.v0.1",
+		"node_id":                   "baseline-metric-selection",
+		"task_id":                   "baseline-metric-selection-task",
+		"rsi":                       "denied",
+		"highest_proven_live_class": "fully_unsupervised_complex_mutation",
+		"rollback_scope":            []any{scope},
+		"rollback_plan":             []any{"remove generated node artifacts", "restore RSI denied readback", "record rollback evidence", "stop on boundary drift"},
+		"auto_stop_triggers":        []any{"Sentinel hold", "kill switch", "hidden instruction mutation", "authority broadening", "rollback failure", "public RSI claim"},
 	})
 	if mutate != nil {
 		mutate(paths)

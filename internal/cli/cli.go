@@ -6800,7 +6800,6 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	gate.CandidateStatus = classGateString(candidate, "status")
 	gate.RollbackStatus = classGateFirstNonEmpty(classGateString(rollback, "status"), "validated")
 	gate.CandidateExecutableReady = classGateBool(candidate, "selected_first_safe_node")
-	gate.CandidateSafeToExecute = classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), "self_modification_authorized:false")
 	gate.RollbackSafeToExecute = len(classGateStringSlice(rollback, "rollback_scope")) > 0 && len(classGateStringSlice(rollback, "auto_stop_triggers")) > 0
 
 	var task map[string]any
@@ -6826,6 +6825,66 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	nodeStatus := classGateString(node, "status")
 	taskMutationClass := classGateFirstNonEmpty(classGateString(task, "mutation_class"), classGateNestedString(task, "task", "mutation_class"))
 	serializedAfterStopGate := stopGateClearance != nil
+
+	summarySchema := classGateString(summary, "schema")
+	manifestSchema := classGateString(manifest, "schema")
+	finalSynthesisSchema := classGateString(finalSynthesis, "schema")
+	candidateSchema := classGateString(candidate, "schema")
+	rollbackSchema := classGateString(rollback, "schema")
+	rsiReadinessProfile := summarySchema == "ao.atlas.private-rsi-readiness-summary.v0.1"
+	rsiEvidenceProfile := summarySchema == "ao.atlas.private-rsi-evidence-summary.v0.1"
+	firstNodeAuthority := "rsi_readiness_definition_evidence_only"
+	firstNodeClass := "RSI definition node"
+	if rsiEvidenceProfile {
+		firstNodeAuthority = "rsi_evidence_baseline_gathering_only"
+		firstNodeClass = "baseline metric node"
+		gate.AuthorityBoundary = firstNodeAuthority
+	}
+	requiredProfileEvidence := []string{
+		"highest_proven_live_class:fully_unsupervised_complex_mutation",
+		"next_denied_class:RSI",
+		"rsi:denied",
+		"hidden_instruction_mutation_denied:true",
+		"node_id:" + gate.NodeID,
+	}
+	if rsiEvidenceProfile {
+		requiredProfileEvidence = append(requiredProfileEvidence, "baseline_required:true")
+	} else {
+		requiredProfileEvidence = append(requiredProfileEvidence, "self_modification_authorized:false")
+	}
+	deniedSurfaceEvidence := []string{
+		"no RSI execution from Atlas",
+		"no unrestricted self-modification",
+		"no policy auth secret provider deploy release expansion",
+		"no credential use",
+		"no dependency update",
+		"no direct main mutation",
+		"no hidden prompt or instruction mutation",
+		"no public claim RSI proven",
+		"no authority broadening",
+	}
+	if rsiEvidenceProfile {
+		deniedSurfaceEvidence = []string{
+			"docs test readback evaluation improvement only",
+			"no broad RSI",
+			"no unrestricted self-modification",
+			"no hidden instruction mutation",
+			"no prompt injection surface expansion",
+			"no policy auth secret provider deploy release config dependency expansion",
+			"no credential use",
+			"no direct main mutation",
+			"no concurrent mutation",
+			"no broad production behavior change",
+			"no public RSI claim",
+		}
+	}
+	gate.CandidateSafeToExecute = true
+	for _, want := range requiredProfileEvidence {
+		if !classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), want) {
+			gate.CandidateSafeToExecute = false
+			break
+		}
+	}
 
 	blockers := []string{}
 	if classGateString(blueprintImport, "contract_version") != atlasBlueprintImportSchema ||
@@ -6857,7 +6916,7 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		classGateBool(handoff, "approves_work") {
 		blockers = append(blockers, "Foundry continuation handoff must match workgraph counts and remain non-scheduling")
 	}
-	if classGateString(summary, "schema") != "ao.atlas.private-rsi-readiness-summary.v0.1" ||
+	if (!rsiReadinessProfile && !rsiEvidenceProfile) ||
 		(!serializedAfterStopGate && (classGateString(summary, "first_safe_node") != gate.NodeID ||
 			int(classGateNumber(summary, "planned_node_count")) != totalNodes ||
 			int(classGateNumber(summary, "ready_node_count")) != readyNodes ||
@@ -6869,13 +6928,15 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		classGateString(summary, "next_denied_class") != "RSI" {
 		blockers = append(blockers, "Atlas RSI readiness summary must match workgraph counts and preserve denial boundaries")
 	}
-	if classGateString(manifest, "schema") != "ao.atlas.private-rsi-readiness-slice-manifest.v0.1" ||
+	if (rsiReadinessProfile && manifestSchema != "ao.atlas.private-rsi-readiness-slice-manifest.v0.1") ||
+		(rsiEvidenceProfile && manifestSchema != "ao.atlas.private-rsi-evidence-slice-manifest.v0.1") ||
 		int(classGateNumber(manifest, "total_slices")) == 0 ||
 		int(classGateNumber(manifest, "total_slices")) != int(classGateNumber(manifest, "completed_slices")) ||
 		classGateString(manifest, "rsi") != "denied" {
 		blockers = append(blockers, "Atlas RSI readiness slice manifest must be complete and keep RSI denied")
 	}
-	if classGateString(finalSynthesis, "schema") != "ao.atlas.private-rsi-readiness-final-evidence-synthesis.v0.1" ||
+	if (rsiReadinessProfile && finalSynthesisSchema != "ao.atlas.private-rsi-readiness-final-evidence-synthesis.v0.1") ||
+		(rsiEvidenceProfile && finalSynthesisSchema != "ao.atlas.private-rsi-evidence-final-evidence-synthesis.v0.1") ||
 		(!serializedAfterStopGate && classGateString(finalSynthesis, "first_safe_node") != gate.NodeID) ||
 		classGateBool(finalSynthesis, "atlas_executes_work") ||
 		classGateBool(finalSynthesis, "atlas_approves_work") ||
@@ -6883,7 +6944,8 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		classGateBool(finalSynthesis, "live_self_modification_performed_by_atlas") ||
 		classGateString(finalSynthesis, "rsi") != "denied" ||
 		classGateString(finalSynthesis, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
-		classGateString(finalSynthesis, "next_denied_class") != "RSI" {
+		classGateString(finalSynthesis, "next_denied_class") != "RSI" ||
+		(rsiEvidenceProfile && !classGateBool(finalSynthesis, "first_bounded_rsi_evidence_rehearsal_requested")) {
 		blockers = append(blockers, "Atlas RSI readiness final synthesis must preserve no-execution RSI denial boundaries")
 	}
 	if gate.NodeID == "" || gate.TaskID == "" {
@@ -6902,7 +6964,8 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		blockers = append(blockers, "RSI readiness node must remain class complex_repo_mutation")
 	}
 	if serializedAfterStopGate {
-		if classGateString(task, "authority_boundary") != "blocked_until_predecessor_evidence_and_stop_gate_clear" ||
+		taskAuthority := classGateString(task, "authority_boundary")
+		if (taskAuthority != "blocked_until_predecessor_evidence_and_stop_gate_clear" && taskAuthority != "blocked_until_predecessor_terminal_evidence_and_stop_gate_clear") ||
 			classGateString(stopGateClearance, "schema_version") != rsiReadinessStopGateClearanceSchema ||
 			classGateString(stopGateClearance, "status") != "ready" ||
 			!classGateBool(stopGateClearance, "safe_to_continue") ||
@@ -6912,13 +6975,14 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 			classGateString(stopGateClearance, "rsi") != "denied" {
 			blockers = append(blockers, "serialized RSI readiness node requires ready predecessor stop-gate clearance")
 		}
-	} else if classGateString(task, "authority_boundary") != "rsi_readiness_definition_evidence_only" {
+	} else if classGateString(task, "authority_boundary") != firstNodeAuthority {
 		blockers = append(blockers, "Foundry import authority boundary must be RSI readiness definition evidence only")
 	}
-	if classGateString(candidate, "schema") != "ao.atlas.private-rsi-readiness-candidate.v0.1" ||
+	if (rsiReadinessProfile && candidateSchema != "ao.atlas.private-rsi-readiness-candidate.v0.1") ||
+		(rsiEvidenceProfile && candidateSchema != "ao.atlas.private-rsi-evidence-candidate.v0.1") ||
 		(!serializedAfterStopGate && (gate.CandidateStatus != "ready" ||
 			!gate.CandidateExecutableReady ||
-			classGateString(candidate, "candidate_class") != "RSI definition node")) ||
+			classGateString(candidate, "candidate_class") != firstNodeClass)) ||
 		(serializedAfterStopGate && (gate.CandidateStatus != "blocked" ||
 			gate.CandidateExecutableReady ||
 			classGateString(candidate, "candidate_class") == "" ||
@@ -6938,21 +7002,14 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	if !classGateStringSliceEqual(importWriteScope, importRollbackScope) || !classGateStringSliceEqual(importWriteScope, classGateStringSlice(rollback, "rollback_scope")) {
 		blockers = append(blockers, "RSI readiness rollback scope must match imported write scope")
 	}
-	for _, want := range []string{
-		"highest_proven_live_class:fully_unsupervised_complex_mutation",
-		"next_denied_class:RSI",
-		"rsi:denied",
-		"self_modification_authorized:false",
-		"hidden_instruction_mutation_denied:true",
-		"node_id:" + gate.NodeID,
-	} {
+	for _, want := range requiredProfileEvidence {
 		if !classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), want) ||
 			!classGateStringSliceContains(importRequiredEvidence, want) {
 			blockers = append(blockers, "RSI readiness required evidence missing "+want)
 			break
 		}
 	}
-	for _, want := range []string{"no RSI execution from Atlas", "no unrestricted self-modification", "no policy auth secret provider deploy release expansion", "no credential use", "no dependency update", "no direct main mutation", "no hidden prompt or instruction mutation", "no public claim RSI proven", "no authority broadening"} {
+	for _, want := range deniedSurfaceEvidence {
 		if !classGateStringSliceContains(classGateStringSlice(candidate, "denied_surfaces"), want) {
 			blockers = append(blockers, "RSI readiness candidate denied surfaces missing "+want)
 			break
@@ -6966,6 +7023,10 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	}
 	if classGateString(rollback, "rsi") != "denied" {
 		blockers = append(blockers, "RSI readiness rollback must keep RSI denied")
+	}
+	if (rsiReadinessProfile && rollbackSchema != "ao.atlas.private-rsi-readiness-rollback.v0.1") ||
+		(rsiEvidenceProfile && rollbackSchema != "ao.atlas.private-rsi-evidence-rollback.v0.1") {
+		blockers = append(blockers, "RSI readiness rollback schema must match rehearsal profile")
 	}
 
 	gate.SafeToRequest = gate.FoundryImportStatus != "" && ((gate.CandidateStatus == "ready" && !serializedAfterStopGate) || (gate.CandidateStatus == "blocked" && serializedAfterStopGate)) && nodeStatus == "ready" && len(tasks) == 1 && !gate.FoundryImportSchedulesWork && !gate.FoundryImportExecutesWork && !gate.FoundryImportApprovesWork
@@ -6982,7 +7043,11 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		gate.ExactNextAction = "execute_exact_serialized_rsi_readiness_node"
 		gate.AuthorityBoundary = "blocked_until_predecessor_evidence_and_stop_gate_clear"
 	} else {
-		gate.ExactNextAction = "execute_exact_rsi_readiness_definition_node"
+		if rsiEvidenceProfile {
+			gate.ExactNextAction = "execute_exact_rsi_bounded_evidence_baseline_node"
+		} else {
+			gate.ExactNextAction = "execute_exact_rsi_readiness_definition_node"
+		}
 	}
 	gate.Blockers = []string{}
 	return gate, nil
@@ -7052,7 +7117,8 @@ func buildRSIReadinessStopGateClearance(paths rsiReadinessStopGatePaths) (map[st
 	stopGateID := classGateString(gate, "id")
 	beforeNode := classGateString(gate, "before_node")
 	blockers := []string{}
-	if classGateString(stopGateGraph, "schema") != "ao.atlas.private-rsi-readiness-stop-gate-graph.v0.1" ||
+	stopGateGraphSchema := classGateString(stopGateGraph, "schema")
+	if (stopGateGraphSchema != "ao.atlas.private-rsi-readiness-stop-gate-graph.v0.1" && stopGateGraphSchema != "ao.atlas.private-rsi-evidence-stop-gate-graph.v0.1") ||
 		classGateString(stopGateGraph, "workgraph_id") != workgraphID {
 		blockers = append(blockers, "stop-gate graph must bind to the completed RSI readiness workgraph")
 	}
