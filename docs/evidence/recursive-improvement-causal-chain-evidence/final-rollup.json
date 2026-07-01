@@ -1,0 +1,101 @@
+{
+  "schema": "ao.foundry.ricc.final-rollup.v0.1",
+  "mission": "recursive-improvement-causal-chain-evidence",
+  "completed_nodes": 300,
+  "total_nodes": 300,
+  "first_safe_node": "ricc-node-001",
+  "cycles_completed": 2,
+  "causal_chain_result": "proven_for_two_public_safe_bounded_cycles",
+  "baseline_post_measurements": [
+    {
+      "id": "cycle-a",
+      "title": "Cycle A",
+      "candidate": "causal influence trace quality",
+      "prior_signal": "Eight-attempt evidence showed reviewers denied stronger wording because candidate-selection influence was not public-safe and explicit.",
+      "selection_reason": "Improve public-safe traceability from prior measurement to next bounded candidate choice.",
+      "baseline": 0.58,
+      "post": 0.89,
+      "improvement": 0.31,
+      "artifact": "cycle-a-causal-influence-trace-quality"
+    },
+    {
+      "id": "cycle-b",
+      "title": "Cycle B",
+      "candidate": "causal chain reproducibility runbook quality",
+      "prior_signal": "Cycle A improved trace quality but exposed that independent readers still need a reproducible step-by-step chain runbook.",
+      "selection_reason": "Use Cycle A post-measurement to select a runbook-quality improvement that makes the causal chain independently reviewable.",
+      "baseline": 0.62,
+      "post": 0.9,
+      "improvement": 0.28,
+      "artifact": "cycle-b-causal-chain-reproducibility-runbook-quality"
+    }
+  ],
+  "wording_candidate_results": [
+    {
+      "id": "current-approved-repeated-bounded-evidence",
+      "text": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_existing_repeated_bounded_evidence",
+      "command": "confirmed",
+      "decision": "approved_baseline"
+    },
+    {
+      "id": "bounded-causal-improvement-chain-evidence",
+      "text": "AO has public-safe bounded causal improvement chain evidence showing prior measured evidence guides later bounded improvement attempts; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_public_safe_bounded_causal_improvement_chain_evidence",
+      "command": "confirmed",
+      "decision": "strongest_approved"
+    },
+    {
+      "id": "governed-recursive-improvement-evidence",
+      "text": "AO has governed recursive-improvement evidence under explicit denial boundaries; broad_RSI remains denied.",
+      "public_reader": "denied_recursive_improvement_phrase_overstates_public_evidence",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied",
+      "decision": "denied"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied",
+      "decision": "denied_control"
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe bounded causal improvement chain evidence showing prior measured evidence guides later bounded improvement attempts; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "new_narrow_class": "public_safe_bounded_causal_improvement_chain_evidence",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "unrestricted_autonomy": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "covenant_result": "approved_public_safe_bounded_causal_improvement_chain_evidence_denied_stronger_recursive_improvement_and_broad_RSI",
+  "architecture_result": "approved_public_safe_bounded_causal_improvement_chain_evidence_denied_stronger_recursive_improvement_and_broad_RSI",
+  "sentinel_result": "clear_for_public_safe_bounded_causal_chain_wording_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "promoter_verdict": "promote_public_safe_bounded_causal_improvement_chain_evidence",
+  "command_readback": "public_safe_bounded_causal_improvement_chain_evidence_proven_broad_RSI_denied",
+  "exact_blockers": [
+    "public-reader still denies stronger recursive-improvement wording because the phrase implies broader capability than two bounded causal cycles prove",
+    "adversarial wording flags recursive-improvement phrasing as capability-adjacent overbreadth",
+    "Covenant and Architecture approve bounded causal-chain evidence wording only",
+    "Sentinel holds stronger recursive-improvement and broad_RSI public-risk wording"
+  ]
+}

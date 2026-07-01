@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.ricc.promoter.v0.1",
+  "verdict": "promote_public_safe_bounded_causal_improvement_chain_evidence",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied"
+}

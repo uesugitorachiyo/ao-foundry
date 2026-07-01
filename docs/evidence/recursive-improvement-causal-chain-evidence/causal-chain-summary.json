@@ -1,0 +1,30 @@
+{
+  "schema": "ao.foundry.ricc.causal-chain-summary.v0.1",
+  "cycles": [
+    {
+      "id": "cycle-a",
+      "title": "Cycle A",
+      "candidate": "causal influence trace quality",
+      "prior_signal": "Eight-attempt evidence showed reviewers denied stronger wording because candidate-selection influence was not public-safe and explicit.",
+      "selection_reason": "Improve public-safe traceability from prior measurement to next bounded candidate choice.",
+      "baseline": 0.58,
+      "post": 0.89,
+      "improvement": 0.31,
+      "artifact": "cycle-a-causal-influence-trace-quality"
+    },
+    {
+      "id": "cycle-b",
+      "title": "Cycle B",
+      "candidate": "causal chain reproducibility runbook quality",
+      "prior_signal": "Cycle A improved trace quality but exposed that independent readers still need a reproducible step-by-step chain runbook.",
+      "selection_reason": "Use Cycle A post-measurement to select a runbook-quality improvement that makes the causal chain independently reviewable.",
+      "baseline": 0.62,
+      "post": 0.9,
+      "improvement": 0.28,
+      "artifact": "cycle-b-causal-chain-reproducibility-runbook-quality"
+    }
+  ],
+  "chain_result": "proven_for_two_public_safe_bounded_cycles",
+  "causal_property": "prior measured evidence guided later bounded candidate selection, scope, measurement, and gate outcome",
+  "broad_RSI": "denied"
+}

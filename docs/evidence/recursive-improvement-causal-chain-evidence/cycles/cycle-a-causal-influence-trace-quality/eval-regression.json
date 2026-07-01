@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.ricc.eval-regression.v0.1",
+  "cycle_id": "cycle-a",
+  "eval_result": "passed",
+  "regression_result": "passed",
+  "observed_improvement": 0.31
+}

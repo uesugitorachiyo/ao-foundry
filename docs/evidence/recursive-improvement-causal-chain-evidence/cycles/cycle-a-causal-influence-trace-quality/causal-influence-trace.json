@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.ricc.causal-influence-trace.v0.1",
+  "cycle_id": "cycle-a",
+  "prior_signal": "Eight-attempt evidence showed reviewers denied stronger wording because candidate-selection influence was not public-safe and explicit.",
+  "candidate": "causal influence trace quality",
+  "selection_reason": "Improve public-safe traceability from prior measurement to next bounded candidate choice.",
+  "causal_chain": [
+    "prior measured evidence reviewed",
+    "blocker mapped to bounded candidate",
+    "candidate scoped as reversible public-safe evidence task",
+    "post-change measurement compared against baseline",
+    "promotion or denial routed through exact wording gates"
+  ],
+  "public_safe": true
+}
