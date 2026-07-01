@@ -1,0 +1,35 @@
+{
+  "accepted_evidence": [
+    "mutation_class:complex_repo_mutation",
+    "highest_proven_live_class:fully_unsupervised_complex_mutation",
+    "safe_to_execute:true",
+    "node_id:baseline-metric-selection"
+  ],
+  "authority_boundaries": {
+    "approves_work": false,
+    "credential_or_secret_access_allowed": false,
+    "direct_main_mutation_allowed": false,
+    "executes_providers": false,
+    "public_claim_broadening_allowed": false,
+    "release_or_publish_allowed": false,
+    "schedules_work": false
+  },
+  "class_state": {
+    "complex_repo_mutation_live_proven": "false",
+    "fully_unsupervised_complex_mutation": "live-proven",
+    "rsi": "denied"
+  },
+  "mutation_class": "complex_repo_mutation",
+  "node_class": "baseline metric selection node",
+  "node_id": "baseline-metric-selection",
+  "rollback": {
+    "method": "governed revert pull request if rollback is required after merge",
+    "scope": "factory/rsi-first-bounded-evidence/00-baseline-metric-selection"
+  },
+  "schema": "ao.atlas.complex-repo-mutation-node-record.v0.1",
+  "scope": "factory/rsi-first-bounded-evidence/00-baseline-metric-selection",
+  "status": "completed",
+  "summary": "Baseline metric selection evidence for the first bounded RSI evidence rehearsal; RSI remains denied and no broad RSI authority is granted.",
+  "target_factory_repo": "ao-foundry",
+  "task_id": "baseline-metric-selection-task"
+}
