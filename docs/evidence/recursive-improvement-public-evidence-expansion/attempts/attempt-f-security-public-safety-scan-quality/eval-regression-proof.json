@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.public-evidence.eval-regression.v0.1",
+  "attempt_id": "attempt-f",
+  "result": "passed",
+  "checks": [
+    "public-safe relative paths",
+    "no stronger claim publication",
+    "rollback path exists",
+    "runbook reproduces score calculation",
+    "stale-language guard clean"
+  ],
+  "regression_failures": []
+}

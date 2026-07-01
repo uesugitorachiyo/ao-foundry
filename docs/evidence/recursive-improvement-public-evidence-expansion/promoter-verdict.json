@@ -1,0 +1,7 @@
+{
+  "schema": "ao.promoter.verdict.v0.1",
+  "verdict": "promote_public_safe_bounded_improvement_evidence_expansion_four_attempts_broad_RSI_denied",
+  "highest_proven_live_class": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "next_denied_class": "broad_RSI",
+  "stronger_recursive_improvement_wording": "denied"
+}

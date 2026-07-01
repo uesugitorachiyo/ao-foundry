@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.public-evidence.post-change.v0.1",
+  "attempt_id": "attempt-f",
+  "task_type": "security_public_safety_scan_quality",
+  "metric": "bounded_public_evidence_quality_score",
+  "score": 0.9,
+  "baseline_score": 0.64,
+  "improvement": 0.26,
+  "threshold": 0.15,
+  "passed": true,
+  "claim_boundary": "This proves only the bounded attempt result, not broad_RSI."
+}

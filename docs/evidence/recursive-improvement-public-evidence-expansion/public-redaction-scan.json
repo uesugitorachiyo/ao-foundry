@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.public-redaction-scan.v0.1",
+  "result": "passed",
+  "checks": [
+    "relative paths only",
+    "no credential material",
+    "no environment values",
+    "no local-only absolute paths",
+    "no private-only claims"
+  ]
+}

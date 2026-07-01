@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.public-evidence.baseline.v0.1",
+  "attempt_id": "attempt-f",
+  "task_type": "security_public_safety_scan_quality",
+  "metric": "bounded_public_evidence_quality_score",
+  "score": 0.64,
+  "scale": "0.00-1.00",
+  "rubric": [
+    "traceability",
+    "reproducibility",
+    "public-safety",
+    "rollback-readiness",
+    "claim-boundary clarity"
+  ],
+  "claim_boundary": "No stronger recursive-improvement wording is approved by this baseline."
+}

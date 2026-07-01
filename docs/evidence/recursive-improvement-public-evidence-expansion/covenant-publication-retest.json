@@ -1,0 +1,10 @@
+{
+  "schema": "ao.covenant.claim-publication-retest.v0.1",
+  "result": "approve_narrow_evidence_expansion_deny_stronger_recursive_improvement",
+  "approved_claim": "AO has public-safe tracked evidence for four additional bounded improvement-evidence attempts; stronger recursive-improvement claims remain denied.",
+  "denied_claims": [
+    "broad_RSI",
+    "stronger recursive-improvement capability",
+    "unrestricted self-modification"
+  ]
+}

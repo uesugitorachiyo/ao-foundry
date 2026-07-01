@@ -1,0 +1,289 @@
+{
+  "schema": "ao.foundry.public-evidence.index.v0.1",
+  "mission": "recursive-improvement-public-evidence-expansion",
+  "created_at": "2026-07-01T00:00:00Z",
+  "current_approved_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "highest_prior_live_class": "exact_safe_public_claim_wording_conservative_readback_evidence",
+  "new_narrow_class": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "next_denied_class": "broad_RSI",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "attempts": [
+    {
+      "id": "attempt-e",
+      "slug": "attempt-e-release-readiness-evidence-quality",
+      "title": "Release/readiness evidence quality",
+      "task_type": "release_readiness_evidence_quality",
+      "baseline": 0.68,
+      "post": 0.91,
+      "improvement": 0.23,
+      "threshold": 0.15,
+      "change": "Add a reproducibility checklist and evidence-index rubric for readiness evidence quality.",
+      "rollback": "Remove attempt E public evidence folder and revert index references."
+    },
+    {
+      "id": "attempt-f",
+      "slug": "attempt-f-security-public-safety-scan-quality",
+      "title": "Security/public-safety scan quality",
+      "task_type": "security_public_safety_scan_quality",
+      "baseline": 0.64,
+      "post": 0.9,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "change": "Add a public-safety scan rubric that checks sensitive-path, credential-material, stale-language, and claim-boundary risks.",
+      "rollback": "Remove attempt F public evidence folder and revert scan rubric references."
+    },
+    {
+      "id": "attempt-g",
+      "slug": "attempt-g-operator-readback-ux",
+      "title": "Operator readback UX",
+      "task_type": "operator_readback_ux",
+      "baseline": 0.62,
+      "post": 0.88,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "change": "Add a readback clarity rubric that names target repo, next command, denied claims, and final blockers.",
+      "rollback": "Remove attempt G public evidence folder and revert readback rubric references."
+    },
+    {
+      "id": "attempt-h",
+      "slug": "attempt-h-cross-repo-evidence-linking",
+      "title": "Cross-repo evidence linking",
+      "task_type": "cross_repo_evidence_linking",
+      "baseline": 0.6,
+      "post": 0.87,
+      "improvement": 0.27,
+      "threshold": 0.15,
+      "change": "Add digest-bound relative evidence-linking records across Blueprint, Atlas, and Foundry outputs.",
+      "rollback": "Remove attempt H public evidence folder and revert link-index references."
+    }
+  ],
+  "measurements": [
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "baseline": 0.68,
+      "post_change": 0.91,
+      "improvement": 0.23,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "baseline": 0.64,
+      "post_change": 0.9,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "baseline": 0.62,
+      "post_change": 0.88,
+      "improvement": 0.26,
+      "threshold": 0.15,
+      "passed": true
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "baseline": 0.6,
+      "post_change": 0.87,
+      "improvement": 0.27,
+      "threshold": 0.15,
+      "passed": true
+    }
+  ],
+  "artifacts": [
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/baseline-measurement.json",
+      "digest": "sha256:c094e9ef920f50c3953d9ed804b72df3e0a9e208ec7290b417bb13605709a554"
+    },
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/bounded-application.json",
+      "digest": "sha256:6c8c370eb9eb8dd61cf1079c89fa2fc0c22f20e8c24b5eb6c8ff87f574dafe00"
+    },
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/post-change-measurement.json",
+      "digest": "sha256:421cb84d51f976f69afe8d523cffc0b713b46b12f3c12bafc3f8c2df5acc25d9"
+    },
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/eval-regression-proof.json",
+      "digest": "sha256:67db0f7818348bfd5423b6881ce02808eaa98740762972f14e98c4312b948d10"
+    },
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/rollback-retraction-proof.json",
+      "digest": "sha256:7396729a89874977917b1f5e5708384a8ab4d5ee3558b2a86964d6ea5c1f7a18"
+    },
+    {
+      "attempt_id": "attempt-e",
+      "task_type": "release_readiness_evidence_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-e-release-readiness-evidence-quality/reproducibility-runbook.md",
+      "digest": "sha256:deb0ed77c6b1f5ab53adf7dafe2dc450ffdb8b25bd2bfe4d487ba19cb18f71bb"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/baseline-measurement.json",
+      "digest": "sha256:98da4e713ae2f2234da7c1c25de3e0e742183a32b5d29d5629173aa8b5ccdaa2"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/bounded-application.json",
+      "digest": "sha256:eab5b00ead98833433cb12ad6b9a117548670a37fcf6443f300a960d5afc12db"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/post-change-measurement.json",
+      "digest": "sha256:49c6fcffedd26eadccb496e1e6645b11d3748350850e45bb8d482a4d2e6885f3"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/eval-regression-proof.json",
+      "digest": "sha256:f29d6005dcf8cca63c77f37997d479b21769b912014b8163e15ed817b0294269"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/rollback-retraction-proof.json",
+      "digest": "sha256:9bb39a52252905904499912af0471eaffed21311a4d40e17198e6a7c96d2992c"
+    },
+    {
+      "attempt_id": "attempt-f",
+      "task_type": "security_public_safety_scan_quality",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-f-security-public-safety-scan-quality/reproducibility-runbook.md",
+      "digest": "sha256:028867485df4b647f16cd79bbedf2c939dc16dfd6742081e327e11dee5f9b07d"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/baseline-measurement.json",
+      "digest": "sha256:41b883c1debb51b816e6831abeb48327451e0f2e46f32d676cfbf08fce20fcc4"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/bounded-application.json",
+      "digest": "sha256:1b9057c126d2dc68bc01ea4dd4f6968f1fb650d253d47bac31f27c40fa58c66b"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/post-change-measurement.json",
+      "digest": "sha256:ad57dffc35e6ca86f0d3f697f81500fe9fd13f389083fd2c0263181834b7c9ca"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/eval-regression-proof.json",
+      "digest": "sha256:6017f3b744a4a6d4025cf780c983aca0b9d7882a5152042f6a19c2822fb9d088"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/rollback-retraction-proof.json",
+      "digest": "sha256:372823e7586de01cd0ffc6154da7ebb4b3ee9ee55971134fc384215a8426b7bd"
+    },
+    {
+      "attempt_id": "attempt-g",
+      "task_type": "operator_readback_ux",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-g-operator-readback-ux/reproducibility-runbook.md",
+      "digest": "sha256:44db0f3f71aba3c729d5fc43c3c9426b73d00710690b6fd6722201aacfddc309"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/baseline-measurement.json",
+      "digest": "sha256:f6098120f3843248a7f362d831852c5193f201bfb1afadc5e5d0066960b804e0"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/bounded-application.json",
+      "digest": "sha256:afeb586814f2c6eefda8b9d6ab2f1947fcff94f358333463e5689ae1779d68a2"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/post-change-measurement.json",
+      "digest": "sha256:5395379c64dfe58b4f88f535372151229bf19272743b3fad247c466d557f2a4c"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/eval-regression-proof.json",
+      "digest": "sha256:997f1dceff620606b204eca3b4a7432ae43b39a033404162982d4b111fc9f090"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/rollback-retraction-proof.json",
+      "digest": "sha256:b1ce613f118b11248e4a05a6ff252e65ace2e41a1914742ebc7b835733f194aa"
+    },
+    {
+      "attempt_id": "attempt-h",
+      "task_type": "cross_repo_evidence_linking",
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/attempts/attempt-h-cross-repo-evidence-linking/reproducibility-runbook.md",
+      "digest": "sha256:bf23470195992932d733a848ec98453667b2014ed6080d9a71a424c6bac0a22d"
+    }
+  ],
+  "gate_artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/public-reader-retest.json",
+      "digest": "sha256:96b92bb254a4e3f37f710a800f1bd099ac8edf2a2b7243958493ef054158592c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/adversarial-wording-retest.json",
+      "digest": "sha256:667d2c9815b9c7b69e8d6fc8e388c05b682084cf7df1fe49e2c77293adea5a2d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/covenant-publication-retest.json",
+      "digest": "sha256:ff80729db469504d46532f2359c6c4255831d75ea2ea3b6ede00928e5bcba735"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/architecture-wording-retest.json",
+      "digest": "sha256:5c6d57228e23dfa434753e8449d90767adfeb26135a02b04822aa63b1a715dde"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/sentinel-public-risk-retest.json",
+      "digest": "sha256:16982e226a6c35af0964595597a7161a9a29ca417a57de4ea332140e1f65afbb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/promoter-verdict.json",
+      "digest": "sha256:33c7e0ea3d72c5731e4a39bc89a6ee6a23eccc15473c95b48db769a4ca79255b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/command-readback.json",
+      "digest": "sha256:633bb30a48867771673134d484750ebce8c6e1841306fbbec7e27b3c0edda14c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/cross-task-generality-update.json",
+      "digest": "sha256:2d0a66c7b2d819fcc56b16bb806a5da694302b2a2b9ae8efad901a854a9278e2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/stale-language-guard.json",
+      "digest": "sha256:d179b4c8f20d0f27b91cdde5255fa1e653f7d8d7a87956ae30ed39045b11f59d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-public-evidence-expansion/public-redaction-scan.json",
+      "digest": "sha256:7e25904cc512cb10617c86f3abb4c4d9eb44498bfff2c57d487744cd2c419dc7"
+    }
+  ],
+  "public_safety": "passed",
+  "claim_boundary": "These artifacts prove only bounded public-safe evidence expansion across four additional task types."
+}
