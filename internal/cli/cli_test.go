@@ -7055,6 +7055,237 @@ func TestRSIReadinessGateBlocksScopeDrift(t *testing.T) {
 	}
 }
 
+func TestRSIReadinessStopGateAllowsNextNodeAfterClosureEvidence(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIReadinessStopGateArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rsi-stop-gate-clearance.json")
+	workgraphOut := filepath.Join(dir, "workgraph-after-stop-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-stop-gate", "evaluate",
+		"--workgraph", artifacts["workgraph_after_complete"],
+		"--stop-gate-graph", artifacts["stop_gate_graph"],
+		"--node-gate", artifacts["node_gate"],
+		"--run-link", artifacts["run_link"],
+		"--rollback", artifacts["rollback"],
+		"--sentinel", artifacts["sentinel"],
+		"--promoter", artifacts["promoter"],
+		"--command-readback", artifacts["command_readback"],
+		"--out", outPath,
+		"--workgraph-out", workgraphOut,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("RSI stop-gate evaluate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	clearance := readObjectFixture(t, outPath)
+	if clearance["schema_version"] != rsiReadinessStopGateClearanceSchema ||
+		clearance["status"] != "ready" ||
+		clearance["safe_to_continue"] != true ||
+		clearance["after_node"] != "rsi-definition" ||
+		clearance["before_node"] != "carry-forward-fully-unsupervised-proof" ||
+		clearance["fully_unsupervised_complex_mutation"] != "live-proven" ||
+		clearance["rsi"] != "denied" {
+		t.Fatalf("RSI stop-gate clearance must unlock only the next serialized node: %#v", clearance)
+	}
+	workgraph := readObjectFixture(t, workgraphOut)
+	nodes := workgraph["nodes"].([]any)
+	next := nodes[1].(map[string]any)
+	if next["id"] != "carry-forward-fully-unsupervised-proof" || next["status"] != "ready" {
+		t.Fatalf("next RSI readiness node must be ready after stop-gate clearance: %#v", next)
+	}
+}
+
+func TestRSIReadinessStopGateBlocksMissingSentinel(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIReadinessStopGateArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rsi-stop-gate-clearance.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-stop-gate", "evaluate",
+		"--workgraph", artifacts["workgraph_after_complete"],
+		"--stop-gate-graph", artifacts["stop_gate_graph"],
+		"--node-gate", artifacts["node_gate"],
+		"--run-link", artifacts["run_link"],
+		"--rollback", artifacts["rollback"],
+		"--promoter", artifacts["promoter"],
+		"--command-readback", artifacts["command_readback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("missing Sentinel should emit blocked RSI clearance, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	clearance := readObjectFixture(t, outPath)
+	if clearance["status"] != "blocked" ||
+		clearance["safe_to_continue"] != false ||
+		!objectStringSliceContains(clearance, "blockers", "Sentinel clear evidence is required") {
+		t.Fatalf("missing Sentinel must block RSI stop gate: %#v", clearance)
+	}
+}
+
+func TestRSIReadinessStopGateBlocksPromotionClaim(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIReadinessStopGateArtifacts(t, dir, func(paths map[string]string) {
+		promoter := readObjectFixture(t, paths["promoter"])
+		promoter["verdict"] = "promotion"
+		writeJSONFixtureForTest(t, paths["promoter"], promoter)
+	})
+	outPath := filepath.Join(dir, "rsi-stop-gate-clearance.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-stop-gate", "evaluate",
+		"--workgraph", artifacts["workgraph_after_complete"],
+		"--stop-gate-graph", artifacts["stop_gate_graph"],
+		"--node-gate", artifacts["node_gate"],
+		"--run-link", artifacts["run_link"],
+		"--rollback", artifacts["rollback"],
+		"--sentinel", artifacts["sentinel"],
+		"--promoter", artifacts["promoter"],
+		"--command-readback", artifacts["command_readback"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("promotion claim should emit blocked RSI clearance, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	clearance := readObjectFixture(t, outPath)
+	if clearance["status"] != "blocked" ||
+		clearance["safe_to_continue"] != false ||
+		!objectStringSliceContains(clearance, "blockers", "Promoter evidence must be no_promotion") {
+		t.Fatalf("promotion claim must block RSI stop gate: %#v", clearance)
+	}
+}
+
+func TestRSIReadinessGateAllowsSerializedNodeAfterStopGateClearance(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIReadinessStopGateArtifacts(t, dir, nil)
+	workgraph := readObjectFixture(t, artifacts["workgraph_after_complete"])
+	nodes := workgraph["nodes"].([]any)
+	next := nodes[1].(map[string]any)
+	next["status"] = "ready"
+	next["blockers"] = []any{}
+	nodes[1] = next
+	workgraph["nodes"] = nodes
+	workgraphPath := filepath.Join(dir, "workgraph-after-stop-gate.json")
+	writeJSONFixtureForTest(t, workgraphPath, workgraph)
+	nextScope := "factory/rsi-readiness-authority-boundary/01-carry-forward-fully-unsupervised-proof"
+	requiredEvidence := []any{
+		"highest_proven_live_class:fully_unsupervised_complex_mutation",
+		"next_denied_class:RSI",
+		"rsi:denied",
+		"self_modification_authorized:false",
+		"hidden_instruction_mutation_denied:true",
+		"node_id:carry-forward-fully-unsupervised-proof",
+		"node_class:proof carry-forward node",
+	}
+	nextTask := next["factory_task"].(map[string]any)
+	nextTask["required_evidence"] = requiredEvidence
+	nextTask["required_gates"] = []any{"atlas_blueprint_import", "rsi_definition", "command_readback", "public_claim_guard", "hidden_instruction_mutation_denied"}
+	nextTask["rollback_scope"] = []any{nextScope}
+	nextTask["safety_limits"] = []any{"no RSI execution from Atlas", "no unrestricted self-modification", "no policy auth secret provider deploy release expansion", "no credential use", "no dependency update", "no direct main mutation", "no hidden prompt or instruction mutation", "no public claim RSI proven", "no authority broadening"}
+	nextImportPath := filepath.Join(dir, "foundry-import-after-stop-gate.json")
+	writeJSONFixtureForTest(t, nextImportPath, map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"id":               "rsi-readiness-authority-boundary-foundry-import-test",
+		"workgraph_id":     "rsi-readiness-authority-boundary-workgraph-test",
+		"status":           "ready_for_foundry_fixture_import",
+		"schedules_work":   false,
+		"executes_work":    false,
+		"approves_work":    false,
+		"tasks": []any{
+			map[string]any{
+				"node_id":            "carry-forward-fully-unsupervised-proof",
+				"task_id":            "carry-forward-fully-unsupervised-proof-task",
+				"mutation_class":     "complex_repo_mutation",
+				"write_scope":        []any{nextScope},
+				"rollback_scope":     []any{nextScope},
+				"required_evidence":  requiredEvidence,
+				"required_gates":     nextTask["required_gates"],
+				"authority_boundary": "blocked_until_predecessor_evidence_and_stop_gate_clear",
+				"task":               nextTask,
+			},
+		},
+	})
+	candidatePath := filepath.Join(dir, "carry-forward-candidate.json")
+	rollbackPath := filepath.Join(dir, "carry-forward-rollback.json")
+	writeJSONFixtureForTest(t, candidatePath, map[string]any{
+		"schema":                    "ao.atlas.private-rsi-readiness-candidate.v0.1",
+		"node_id":                   "carry-forward-fully-unsupervised-proof",
+		"task_id":                   "carry-forward-fully-unsupervised-proof-task",
+		"rsi":                       "denied",
+		"highest_proven_live_class": "fully_unsupervised_complex_mutation",
+		"status":                    "blocked",
+		"candidate_class":           "proof carry-forward node",
+		"selected_first_safe_node":  false,
+		"safe_first_node_reason":    "blocked by serialized dependencies",
+		"allowed_surfaces":          []any{nextScope},
+		"denied_surfaces":           nextTask["safety_limits"],
+		"required_evidence":         requiredEvidence,
+	})
+	writeJSONFixtureForTest(t, rollbackPath, map[string]any{
+		"schema":                    "ao.atlas.private-rsi-readiness-rollback.v0.1",
+		"node_id":                   "carry-forward-fully-unsupervised-proof",
+		"task_id":                   "carry-forward-fully-unsupervised-proof-task",
+		"rsi":                       "denied",
+		"highest_proven_live_class": "fully_unsupervised_complex_mutation",
+		"rollback_scope":            []any{nextScope},
+		"rollback_plan":             []any{"remove generated readiness artifacts", "restore RSI denied readback", "record rollback evidence", "stop on boundary drift"},
+		"auto_stop_triggers":        []any{"Sentinel hold", "kill switch", "hidden instruction mutation", "authority broadening", "public RSI claim"},
+	})
+	handoffPath := filepath.Join(dir, "handoff-after-stop-gate.json")
+	writeJSONFixtureForTest(t, handoffPath, map[string]any{
+		"contract_version":     "ao.atlas.foundry-continuation-handoff.v0.1",
+		"first_safe_node":      "carry-forward-fully-unsupervised-proof",
+		"total_node_count":     2,
+		"completed_node_count": 1,
+		"ready_node_count":     1,
+		"blocked_node_count":   0,
+		"class_boundary":       "fully_unsupervised_complex_mutation is live-proven; RSI is the next denied class",
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+	})
+	stopGateClearancePath := filepath.Join(dir, "stop-gate-clearance.json")
+	writeJSONFixtureForTest(t, stopGateClearancePath, map[string]any{
+		"schema_version":                      rsiReadinessStopGateClearanceSchema,
+		"status":                              "ready",
+		"safe_to_continue":                    true,
+		"workgraph_id":                        "rsi-readiness-authority-boundary-workgraph-test",
+		"stop_gate_id":                        "stop-gate-01-rsi-definition-to-carry-forward-fully-unsupervised-proof",
+		"after_node":                          "rsi-definition",
+		"before_node":                         "carry-forward-fully-unsupervised-proof",
+		"highest_proven_live_class":           "fully_unsupervised_complex_mutation",
+		"next_denied_class":                   "RSI",
+		"fully_unsupervised_complex_mutation": "live-proven",
+		"rsi":                                 "denied",
+	})
+	outPath := filepath.Join(dir, "serialized-rsi-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "readiness-gate", "evaluate",
+		"--blueprint-import", artifacts["blueprint_import"],
+		"--workgraph", workgraphPath,
+		"--foundry-import", nextImportPath,
+		"--continuation-handoff", handoffPath,
+		"--atlas-summary", artifacts["atlas_summary"],
+		"--slice-manifest", artifacts["slice_manifest"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--candidate", candidatePath,
+		"--rollback", rollbackPath,
+		"--stop-gate-clearance", stopGateClearancePath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("serialized RSI readiness gate returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, outPath)
+	if gate["status"] != "ready" ||
+		gate["node_id"] != "carry-forward-fully-unsupervised-proof" ||
+		gate["safe_to_execute"] != true ||
+		gate["authority_boundary"] != "blocked_until_predecessor_evidence_and_stop_gate_clear" ||
+		gate["rsi"] != "denied" {
+		t.Fatalf("serialized RSI node should be ready only after stop-gate clearance: %#v", gate)
+	}
+}
+
 func TestFullyUnsupervisedFirstNonPlanningGateBlocksUnsafeCandidateClaim(t *testing.T) {
 	dir := t.TempDir()
 	artifacts := writeFullyUnsupervisedFirstNonPlanningArtifacts(t, dir, func(paths map[string]string) {
@@ -8211,6 +8442,120 @@ func writeRSIReadinessArtifacts(t *testing.T, dir string, mutate func(map[string
 		"rollback_scope":            []any{scope},
 		"rollback_plan":             []any{"remove generated readiness artifacts", "restore RSI denied readback", "record rollback evidence", "stop on boundary drift"},
 		"auto_stop_triggers":        []any{"Sentinel hold", "kill switch", "hidden instruction mutation", "authority broadening", "public RSI claim"},
+	})
+	if mutate != nil {
+		mutate(paths)
+	}
+	return paths
+}
+
+func writeRSIReadinessStopGateArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	base := writeRSIReadinessArtifacts(t, dir, nil)
+	paths := map[string]string{}
+	for key, value := range base {
+		paths[key] = value
+	}
+	paths["workgraph_after_complete"] = filepath.Join(dir, "workgraph-after-complete.json")
+	paths["stop_gate_graph"] = filepath.Join(dir, "stop-gate-graph.json")
+	paths["node_gate"] = filepath.Join(dir, "node-gate.json")
+	paths["run_link"] = filepath.Join(dir, "run-link.json")
+	paths["sentinel"] = filepath.Join(dir, "sentinel.json")
+	paths["promoter"] = filepath.Join(dir, "promoter.json")
+	paths["command_readback"] = filepath.Join(dir, "command-readback.json")
+	workgraph := readObjectFixture(t, paths["workgraph"])
+	nodes := workgraph["nodes"].([]any)
+	first := nodes[0].(map[string]any)
+	first["status"] = "completed"
+	nodes[0] = first
+	workgraph["nodes"] = nodes
+	writeJSONFixtureForTest(t, paths["workgraph_after_complete"], workgraph)
+	writeJSONFixtureForTest(t, paths["stop_gate_graph"], map[string]any{
+		"schema":          "ao.atlas.private-rsi-readiness-stop-gate-graph.v0.1",
+		"workgraph_id":    "rsi-readiness-authority-boundary-workgraph-test",
+		"stop_gate_count": 1,
+		"stop_gates": []any{
+			map[string]any{
+				"id":          "stop-gate-01-rsi-definition-to-carry-forward-fully-unsupervised-proof",
+				"after_node":  "rsi-definition",
+				"before_node": "carry-forward-fully-unsupervised-proof",
+				"required_evidence": []any{
+					"predecessor terminal evidence",
+					"RSI denied readback",
+					"rollback record",
+					"Sentinel hold or clear",
+					"Promoter verdict",
+					"Command readback",
+					"public claim guard",
+				},
+				"release_condition": "next node may become ready only after all gate evidence is recorded",
+				"hard_stop_conditions": []any{
+					"hidden self-modification",
+					"authority broadening",
+					"public RSI claim",
+					"Sentinel hold",
+					"kill switch",
+				},
+			},
+		},
+	})
+	writeJSONFixtureForTest(t, paths["node_gate"], map[string]any{
+		"schema_version":                      "ao.foundry.complex-repo-mutation-node-gate.v0.1",
+		"status":                              "ready",
+		"mutation_class":                      "complex_repo_mutation",
+		"highest_proven_live_class":           "fully_unsupervised_complex_mutation",
+		"next_denied_class":                   "RSI",
+		"workgraph_id":                        "rsi-readiness-authority-boundary-workgraph-test",
+		"node_id":                             "rsi-definition",
+		"task_id":                             "rsi-definition-task",
+		"safe_to_request":                     true,
+		"safe_to_execute":                     true,
+		"live_execution_authority":            true,
+		"fully_unsupervised_complex_mutation": "live-proven",
+		"rsi":                                 "denied",
+	})
+	writeJSONFixtureForTest(t, paths["run_link"], map[string]any{
+		"contract_version": atlasRunLinkSchema,
+		"task_id":          "rsi-definition-task",
+		"status":           "completed",
+		"evidence": map[string]any{
+			"changed_file": "factory/rsi-readiness-authority-boundary/00-rsi-definition/node-record.json",
+			"ci":           "passed",
+			"merge_commit": "abc123",
+			"node_gate":    paths["node_gate"],
+			"pr":           "https://github.com/uesugitorachiyo/ao-foundry/pull/164",
+		},
+	})
+	writeJSONFixtureForTest(t, paths["sentinel"], map[string]any{
+		"schema_version":                       "ao.sentinel.rsi-readiness-stop-gate-verdict.v0.1",
+		"status":                               "clear",
+		"node_id":                              "rsi-definition",
+		"stop_gate_id":                         "stop-gate-01-rsi-definition-to-carry-forward-fully-unsupervised-proof",
+		"fully_unsupervised_complex_mutation":  "live-proven",
+		"rsi":                                  "denied",
+		"hidden_instruction_mutation_detected": false,
+		"authority_broadening_detected":        false,
+	})
+	writeJSONFixtureForTest(t, paths["promoter"], map[string]any{
+		"schema_version":                      "ao.promoter.rsi-readiness-stop-gate-verdict.v0.1",
+		"status":                              "accepted",
+		"verdict":                             "no_promotion",
+		"node_id":                             "rsi-definition",
+		"stop_gate_id":                        "stop-gate-01-rsi-definition-to-carry-forward-fully-unsupervised-proof",
+		"fully_unsupervised_complex_mutation": "live-proven",
+		"rsi":                                 "denied",
+	})
+	writeJSONFixtureForTest(t, paths["command_readback"], map[string]any{
+		"schema_version":                      "ao.command.rsi-readiness-stop-gate-readback.v0.1",
+		"status":                              "accepted",
+		"node_id":                             "rsi-definition",
+		"stop_gate_id":                        "stop-gate-01-rsi-definition-to-carry-forward-fully-unsupervised-proof",
+		"safe_to_continue":                    true,
+		"public_claim_guard":                  "passed",
+		"hidden_instruction_mutation_denied":  true,
+		"self_modification_authorized_false":  true,
+		"fully_unsupervised_complex_mutation": "live-proven",
+		"rsi":                                 "denied",
 	})
 	if mutate != nil {
 		mutate(paths)
