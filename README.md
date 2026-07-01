@@ -216,8 +216,8 @@ CI, merge, and forbidden-surface closure evidence. The 2026-07-01
 fully_unsupervised_complex_mutation first non-planning mission then completed
 all 26 serialized nodes with final rollup, Promoter verdict, Command readback,
 branch cleanup, no concurrent mutation, no forbidden surfaces, and RSI denial
-preserved. The highest proven live class is now
-`fully_unsupervised_complex_mutation`.
+preserved. That closure proved `fully_unsupervised_complex_mutation` for the
+governed 26-node first non-planning rehearsal boundary.
 
 AO Foundry PR #175, commit
 `b12ac9b62ab8d20b4092d2a5d13081607567e816`, records the final closure for
@@ -227,7 +227,16 @@ gate cleared, Foundry final rollup accepted, Promoter verdict
 `promote_bounded_rsi_evidence_rehearsal_keep_broad_rsi_denied` accepted. This is
 bounded evidence-rehearsal proof only. Broad RSI, hidden instruction mutation,
 unrestricted self-modification, and policy/auth/secret/provider/deploy/release/
-config/dependency expansion remain denied. The next denied class remains `RSI`.
+config/dependency expansion remain denied.
+
+The bounded RSI self-improvement application final rollup records
+`bounded_rsi_self_improvement_application` as proven only for the exact private
+readback/eval rubric rehearsal. It records baseline `0.60`, post-change `1.00`,
+improvement `0.40`, eval/regression `passed`, no denied-surface regressions,
+highest proven live class `bounded_rsi_self_improvement_application`, and next
+denied class `broad_RSI`. Broad RSI, unrestricted self-modification, hidden
+instruction mutation, policy/auth/secret/provider/deploy/release/config/
+dependency expansion, and policy-changing autonomy remain denied.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus
 promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
@@ -346,7 +355,9 @@ Public readiness wording for this phase is intentionally narrow:
 - `fully_unsupervised_complex_mutation` is proven only for the governed 26-node
   first non-planning rehearsal boundary;
 - `bounded_rsi_evidence_rehearsal` is live-proven only as a bounded evidence
-  rehearsal state.
+  rehearsal state;
+- `bounded_rsi_self_improvement_application` is proven only for the exact
+  private readback/eval rubric rehearsal.
 
 The first approval request contract is
 `ao.foundry.live-mutation-approval-request.v0.1`, with a public-safe example at
@@ -454,6 +465,12 @@ The later `bounded_rsi_evidence_rehearsal` closure is also bounded-only. It may
 be reported as live-proven for the governed 32-node evidence rehearsal, but it
 does not prove broad RSI, does not authorize unrestricted self-modification, and
 does not allow hidden or policy-changing self-modification.
+
+The later `bounded_rsi_self_improvement_application` closure is narrower than
+broad RSI. It may be reported as proven only for the exact private readback/eval
+rubric rehearsal; it does not authorize unrestricted self-modification, hidden
+instruction mutation, policy/auth/secret/provider/deploy/release/config/
+dependency expansion, or policy-changing autonomy.
 
 ## Portfolio Board
 
