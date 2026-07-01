@@ -58,6 +58,7 @@ const (
 	firstNonPlanningMissionCompletionSchema = "ao.atlas.fully-unsupervised-first-non-planning-mission-completion.v0.1"
 	firstNonPlanningPromoterFinalSchema     = "ao.promoter.fully-unsupervised-first-non-planning-final-verdict.v0.1"
 	firstNonPlanningCommandFinalSchema      = "ao.command.fully-unsupervised-first-non-planning-class-decision-readback.v0.1"
+	rsiReadinessStopGateClearanceSchema     = "ao.foundry.rsi-readiness-stop-gate-clearance.v0.1"
 )
 
 var classGateSHA256Pattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -1404,6 +1405,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry eval run --run <foundry-run.json> --scorecard <scorecard.json> --out <eval-result.json>")
 	fmt.Fprintln(w, "  foundry rsi improvement-gate --baseline <eval.json> --candidate <eval.json> --min-improvement <percent> --out <gate.json>")
 	fmt.Fprintln(w, "  foundry rsi readiness-gate evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --continuation-handoff <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --candidate <path> --rollback <path> --out <path>")
+	fmt.Fprintln(w, "  foundry rsi readiness-stop-gate evaluate --workgraph <path> --stop-gate-graph <path> --node-gate <path> --run-link <path> --rollback <path> --sentinel <path> --promoter <path> --command-readback <path> --out <path> [--workgraph-out <path>]")
 	fmt.Fprintln(w, "  foundry trace inspect --trace <path> [--json]")
 	fmt.Fprintln(w, "  foundry import ao2-sdd --plan <ao2.sdd-plan.json> --out <foundry-task.json>")
 	fmt.Fprintln(w, "  foundry export forge-brief --task <foundry-task.json> --registry <path> --out <forge-brief.json>")
@@ -6483,11 +6485,14 @@ func runEval(args []string, stdout, stderr io.Writer) int {
 
 func runRSI(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate or readiness-gate evaluate")
+		fmt.Fprintln(stderr, "rsi: expected subcommand improvement-gate, readiness-gate evaluate, or readiness-stop-gate evaluate")
 		return 2
 	}
 	if len(args) >= 2 && args[0] == "readiness-gate" && args[1] == "evaluate" {
 		return runRSIReadinessGateEvaluate(args[2:], stdout, stderr)
+	}
+	if len(args) >= 2 && args[0] == "readiness-stop-gate" && args[1] == "evaluate" {
+		return runRSIReadinessStopGateEvaluate(args[2:], stdout, stderr)
 	}
 	if args[0] != "improvement-gate" {
 		fmt.Fprintf(stderr, "rsi: unknown command %q\n", strings.Join(args, " "))
@@ -6531,6 +6536,18 @@ type rsiReadinessGatePaths struct {
 	Candidate           string
 	Rollback            string
 	StopGateClearance   string
+}
+
+type rsiReadinessStopGatePaths struct {
+	Workgraph       string
+	StopGateGraph   string
+	NodeGate        string
+	RunLink         string
+	Rollback        string
+	Sentinel        string
+	Promoter        string
+	CommandReadback string
+	WorkgraphOut    string
 }
 
 func runRSIReadinessGateEvaluate(args []string, stdout, stderr io.Writer) int {
@@ -6611,6 +6628,82 @@ func runRSIReadinessGateEvaluate(args []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
+func runRSIReadinessStopGateEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("rsi readiness-stop-gate evaluate", stderr)
+	workgraphPath := fs.String("workgraph", "", "Atlas RSI readiness workgraph after predecessor completion")
+	stopGateGraphPath := fs.String("stop-gate-graph", "", "Atlas RSI readiness stop-gate graph")
+	nodeGatePath := fs.String("node-gate", "", "predecessor Foundry RSI readiness node gate")
+	runLinkPath := fs.String("run-link", "", "predecessor Atlas run-link")
+	rollbackPath := fs.String("rollback", "", "predecessor rollback record")
+	sentinelPath := fs.String("sentinel", "", "Sentinel stop-gate verdict")
+	promoterPath := fs.String("promoter", "", "Promoter stop-gate verdict")
+	commandReadbackPath := fs.String("command-readback", "", "Command stop-gate readback")
+	outPath := fs.String("out", "", "RSI readiness stop-gate clearance output path")
+	workgraphOutPath := fs.String("workgraph-out", "", "optional derived workgraph output with next node ready")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	required := map[string]string{
+		"--workgraph":       *workgraphPath,
+		"--stop-gate-graph": *stopGateGraphPath,
+		"--node-gate":       *nodeGatePath,
+		"--run-link":        *runLinkPath,
+		"--rollback":        *rollbackPath,
+		"--out":             *outPath,
+	}
+	missing := []string{}
+	for flagName, value := range required {
+		if strings.TrimSpace(value) == "" {
+			missing = append(missing, flagName)
+		}
+	}
+	if len(missing) > 0 {
+		sort.Strings(missing)
+		fmt.Fprintf(stderr, "%s are required\n", strings.Join(missing, ", "))
+		return 2
+	}
+	clearance, workgraphOut, err := buildRSIReadinessStopGateClearance(rsiReadinessStopGatePaths{
+		Workgraph:       *workgraphPath,
+		StopGateGraph:   *stopGateGraphPath,
+		NodeGate:        *nodeGatePath,
+		RunLink:         *runLinkPath,
+		Rollback:        *rollbackPath,
+		Sentinel:        *sentinelPath,
+		Promoter:        *promoterPath,
+		CommandReadback: *commandReadbackPath,
+		WorkgraphOut:    *workgraphOutPath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "rsi readiness-stop-gate: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, clearance); err != nil {
+		fmt.Fprintf(stderr, "write rsi readiness stop-gate clearance: %v\n", err)
+		return 1
+	}
+	if classGateBool(clearance, "safe_to_continue") && strings.TrimSpace(*workgraphOutPath) != "" {
+		if err := writeJSONFile(*workgraphOutPath, workgraphOut); err != nil {
+			fmt.Fprintf(stderr, "write rsi readiness stop-gate workgraph: %v\n", err)
+			return 1
+		}
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, clearance); err != nil {
+			fmt.Fprintf(stderr, "write rsi readiness stop-gate json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "rsi_readiness_stop_gate_clearance=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", classGateString(clearance, "status"))
+	fmt.Fprintf(stdout, "safe_to_continue=%t\n", classGateBool(clearance, "safe_to_continue"))
+	if first := classGateString(clearance, "first_failing_check"); first != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", first)
+	}
+	return 0
+}
+
 func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNodeGate, error) {
 	gate := ComplexRepoMutationNodeGate{
 		SchemaVersion:                    complexNodeGateSchema,
@@ -6667,6 +6760,15 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		return gate, err
 	}
 	gate.SourceEvidence = append(gate.SourceEvidence, blueprintSource, workgraphSource, foundryImportSource, handoffSource, summarySource, manifestSource, finalSource, candidateSource, rollbackSource)
+	var stopGateClearance map[string]any
+	if strings.TrimSpace(paths.StopGateClearance) != "" {
+		stopGateSource, clearance, err := readComplexNodeGateObject("stop_gate_clearance", paths.StopGateClearance)
+		if err != nil {
+			return gate, err
+		}
+		gate.SourceEvidence = append(gate.SourceEvidence, stopGateSource)
+		stopGateClearance = clearance
+	}
 
 	nodes := classGateObjectSlice(workgraph["nodes"])
 	totalNodes := len(nodes)
@@ -6707,6 +6809,7 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	node, nodeFound := findWorkgraphNode(workgraph, gate.NodeID)
 	nodeStatus := classGateString(node, "status")
 	taskMutationClass := classGateFirstNonEmpty(classGateString(task, "mutation_class"), classGateNestedString(task, "task", "mutation_class"))
+	serializedAfterStopGate := stopGateClearance != nil
 
 	blockers := []string{}
 	if classGateString(blueprintImport, "contract_version") != atlasBlueprintImportSchema ||
@@ -6739,10 +6842,10 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		blockers = append(blockers, "Foundry continuation handoff must match workgraph counts and remain non-scheduling")
 	}
 	if classGateString(summary, "schema") != "ao.atlas.private-rsi-readiness-summary.v0.1" ||
-		classGateString(summary, "first_safe_node") != gate.NodeID ||
-		int(classGateNumber(summary, "planned_node_count")) != totalNodes ||
-		int(classGateNumber(summary, "ready_node_count")) != readyNodes ||
-		int(classGateNumber(summary, "blocked_node_count")) != blockedNodes ||
+		(!serializedAfterStopGate && (classGateString(summary, "first_safe_node") != gate.NodeID ||
+			int(classGateNumber(summary, "planned_node_count")) != totalNodes ||
+			int(classGateNumber(summary, "ready_node_count")) != readyNodes ||
+			int(classGateNumber(summary, "blocked_node_count")) != blockedNodes)) ||
 		classGateBool(summary, "atlas_executes_work") ||
 		classGateBool(summary, "atlas_approves_work") ||
 		classGateString(summary, "rsi") != "denied" ||
@@ -6757,7 +6860,7 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		blockers = append(blockers, "Atlas RSI readiness slice manifest must be complete and keep RSI denied")
 	}
 	if classGateString(finalSynthesis, "schema") != "ao.atlas.private-rsi-readiness-final-evidence-synthesis.v0.1" ||
-		classGateString(finalSynthesis, "first_safe_node") != gate.NodeID ||
+		(!serializedAfterStopGate && classGateString(finalSynthesis, "first_safe_node") != gate.NodeID) ||
 		classGateBool(finalSynthesis, "atlas_executes_work") ||
 		classGateBool(finalSynthesis, "atlas_approves_work") ||
 		classGateBool(finalSynthesis, "rsi_live_proven") ||
@@ -6782,14 +6885,29 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	if taskMutationClass != "complex_repo_mutation" {
 		blockers = append(blockers, "RSI readiness node must remain class complex_repo_mutation")
 	}
-	if classGateString(task, "authority_boundary") != "rsi_readiness_definition_evidence_only" {
+	if serializedAfterStopGate {
+		if classGateString(task, "authority_boundary") != "blocked_until_predecessor_evidence_and_stop_gate_clear" ||
+			classGateString(stopGateClearance, "schema_version") != rsiReadinessStopGateClearanceSchema ||
+			classGateString(stopGateClearance, "status") != "ready" ||
+			!classGateBool(stopGateClearance, "safe_to_continue") ||
+			classGateString(stopGateClearance, "before_node") != gate.NodeID ||
+			classGateString(stopGateClearance, "workgraph_id") != gate.WorkgraphID ||
+			classGateString(stopGateClearance, "fully_unsupervised_complex_mutation") != "live-proven" ||
+			classGateString(stopGateClearance, "rsi") != "denied" {
+			blockers = append(blockers, "serialized RSI readiness node requires ready predecessor stop-gate clearance")
+		}
+	} else if classGateString(task, "authority_boundary") != "rsi_readiness_definition_evidence_only" {
 		blockers = append(blockers, "Foundry import authority boundary must be RSI readiness definition evidence only")
 	}
 	if classGateString(candidate, "schema") != "ao.atlas.private-rsi-readiness-candidate.v0.1" ||
-		gate.CandidateStatus != "ready" ||
-		!gate.CandidateExecutableReady ||
-		classGateString(candidate, "candidate_class") != "RSI definition node" {
-		blockers = append(blockers, "RSI readiness candidate must be the ready selected definition node")
+		(!serializedAfterStopGate && (gate.CandidateStatus != "ready" ||
+			!gate.CandidateExecutableReady ||
+			classGateString(candidate, "candidate_class") != "RSI definition node")) ||
+		(serializedAfterStopGate && (gate.CandidateStatus != "blocked" ||
+			gate.CandidateExecutableReady ||
+			classGateString(candidate, "candidate_class") == "" ||
+			classGateString(candidate, "safe_first_node_reason") != "blocked by serialized dependencies")) {
+		blockers = append(blockers, "RSI readiness candidate must match the active serialized node state")
 	}
 	if classGateString(candidate, "rsi") != "denied" {
 		blockers = append(blockers, "RSI readiness candidate must keep RSI denied")
@@ -6834,7 +6952,7 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 		blockers = append(blockers, "RSI readiness rollback must keep RSI denied")
 	}
 
-	gate.SafeToRequest = gate.FoundryImportStatus != "" && gate.CandidateStatus == "ready" && nodeStatus == "ready" && len(tasks) == 1 && !gate.FoundryImportSchedulesWork && !gate.FoundryImportExecutesWork && !gate.FoundryImportApprovesWork
+	gate.SafeToRequest = gate.FoundryImportStatus != "" && ((gate.CandidateStatus == "ready" && !serializedAfterStopGate) || (gate.CandidateStatus == "blocked" && serializedAfterStopGate)) && nodeStatus == "ready" && len(tasks) == 1 && !gate.FoundryImportSchedulesWork && !gate.FoundryImportExecutesWork && !gate.FoundryImportApprovesWork
 	if len(blockers) > 0 {
 		gate.Blockers = blockers
 		gate.FirstFailingCheck = blockers[0]
@@ -6844,9 +6962,210 @@ func buildRSIReadinessGate(paths rsiReadinessGatePaths) (ComplexRepoMutationNode
 	gate.SafeToRequest = true
 	gate.SafeToExecute = true
 	gate.LiveExecutionAuthority = true
-	gate.ExactNextAction = "execute_exact_rsi_readiness_definition_node"
+	if serializedAfterStopGate {
+		gate.ExactNextAction = "execute_exact_serialized_rsi_readiness_node"
+		gate.AuthorityBoundary = "blocked_until_predecessor_evidence_and_stop_gate_clear"
+	} else {
+		gate.ExactNextAction = "execute_exact_rsi_readiness_definition_node"
+	}
 	gate.Blockers = []string{}
 	return gate, nil
+}
+
+func buildRSIReadinessStopGateClearance(paths rsiReadinessStopGatePaths) (map[string]any, map[string]any, error) {
+	sources := []MutationClassGateEvidence{}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_workgraph_after_complete", paths.Workgraph)
+	if err != nil {
+		return nil, nil, err
+	}
+	stopGateSource, stopGateGraph, err := readComplexNodeGateObject("atlas_stop_gate_graph", paths.StopGateGraph)
+	if err != nil {
+		return nil, nil, err
+	}
+	nodeGateSource, nodeGate, err := readComplexNodeGateObject("foundry_node_gate", paths.NodeGate)
+	if err != nil {
+		return nil, nil, err
+	}
+	runLinkSource, runLink, err := readComplexNodeGateObject("atlas_run_link", paths.RunLink)
+	if err != nil {
+		return nil, nil, err
+	}
+	rollbackSource, rollback, err := readComplexNodeGateObject("rollback_record", paths.Rollback)
+	if err != nil {
+		return nil, nil, err
+	}
+	sources = append(sources, workgraphSource, stopGateSource, nodeGateSource, runLinkSource, rollbackSource)
+	var sentinel map[string]any
+	if strings.TrimSpace(paths.Sentinel) != "" {
+		sentinelSource, sentinelDocument, err := readComplexNodeGateObject("sentinel_stop_gate_verdict", paths.Sentinel)
+		if err != nil {
+			return nil, nil, err
+		}
+		sources = append(sources, sentinelSource)
+		sentinel = sentinelDocument
+	}
+	var promoter map[string]any
+	if strings.TrimSpace(paths.Promoter) != "" {
+		promoterSource, promoterDocument, err := readComplexNodeGateObject("promoter_stop_gate_verdict", paths.Promoter)
+		if err != nil {
+			return nil, nil, err
+		}
+		sources = append(sources, promoterSource)
+		promoter = promoterDocument
+	}
+	var commandReadback map[string]any
+	if strings.TrimSpace(paths.CommandReadback) != "" {
+		commandSource, commandDocument, err := readComplexNodeGateObject("command_stop_gate_readback", paths.CommandReadback)
+		if err != nil {
+			return nil, nil, err
+		}
+		sources = append(sources, commandSource)
+		commandReadback = commandDocument
+	}
+
+	afterNode := classGateString(nodeGate, "node_id")
+	taskID := classGateString(nodeGate, "task_id")
+	workgraphID := classGateString(workgraph, "id")
+	var gate map[string]any
+	for _, candidate := range classGateObjectSlice(stopGateGraph["stop_gates"]) {
+		if classGateString(candidate, "after_node") == afterNode {
+			gate = candidate
+			break
+		}
+	}
+	stopGateID := classGateString(gate, "id")
+	beforeNode := classGateString(gate, "before_node")
+	blockers := []string{}
+	if classGateString(stopGateGraph, "schema") != "ao.atlas.private-rsi-readiness-stop-gate-graph.v0.1" ||
+		classGateString(stopGateGraph, "workgraph_id") != workgraphID {
+		blockers = append(blockers, "stop-gate graph must bind to the completed RSI readiness workgraph")
+	}
+	if stopGateID == "" || beforeNode == "" {
+		blockers = append(blockers, "stop-gate graph must contain a gate for predecessor node")
+	}
+	if classGateString(nodeGate, "status") != "ready" || !classGateBool(nodeGate, "safe_to_execute") || !classGateBool(nodeGate, "live_execution_authority") {
+		blockers = append(blockers, "predecessor node gate must have been safe_to_execute before execution")
+	}
+	if classGateString(nodeGate, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" ||
+		classGateString(nodeGate, "next_denied_class") != "RSI" ||
+		classGateString(nodeGate, "fully_unsupervised_complex_mutation") != "live-proven" ||
+		classGateString(nodeGate, "rsi") != "denied" {
+		blockers = append(blockers, "predecessor node gate must preserve RSI denial boundaries")
+	}
+	if classGateString(runLink, "contract_version") != atlasRunLinkSchema || classGateString(runLink, "status") != "completed" {
+		blockers = append(blockers, "run-link must be completed terminal evidence")
+	}
+	if taskID == "" || classGateString(runLink, "task_id") != taskID {
+		blockers = append(blockers, "run-link task_id must match predecessor node gate")
+	}
+	runLinkEvidence := classGateObject(runLink["evidence"])
+	if !statusPassed(classGateString(runLinkEvidence, "ci")) {
+		blockers = append(blockers, "run-link CI evidence must be passed")
+	}
+	if classGateString(runLinkEvidence, "pr") == "" || classGateString(runLinkEvidence, "merge_commit") == "" || classGateString(runLinkEvidence, "changed_file") == "" {
+		blockers = append(blockers, "run-link must include PR, merge commit, and changed file evidence")
+	}
+	if classGateString(rollback, "node_id") != afterNode || len(classGateStringSlice(rollback, "rollback_scope")) == 0 ||
+		len(classGateStringSlice(rollback, "rollback_plan")) == 0 {
+		blockers = append(blockers, "rollback record must bind to predecessor node")
+	}
+	if classGateString(rollback, "highest_proven_live_class") != "fully_unsupervised_complex_mutation" || classGateString(rollback, "rsi") != "denied" {
+		blockers = append(blockers, "rollback record must preserve RSI denial boundaries")
+	}
+	if sentinel == nil {
+		blockers = append(blockers, "Sentinel clear evidence is required")
+	} else if classGateString(sentinel, "node_id") != afterNode || classGateString(sentinel, "stop_gate_id") != stopGateID || classGateString(sentinel, "status") != "clear" {
+		blockers = append(blockers, "Sentinel evidence must be clear and bind to the stop gate")
+	} else if classGateString(sentinel, "fully_unsupervised_complex_mutation") != "live-proven" || classGateString(sentinel, "rsi") != "denied" ||
+		classGateBool(sentinel, "hidden_instruction_mutation_detected") || classGateBool(sentinel, "authority_broadening_detected") {
+		blockers = append(blockers, "Sentinel evidence must preserve RSI denial boundaries")
+	}
+	if promoter == nil {
+		blockers = append(blockers, "Promoter no-promotion evidence is required")
+	} else if classGateString(promoter, "node_id") != afterNode || classGateString(promoter, "stop_gate_id") != stopGateID ||
+		classGateString(promoter, "verdict") != "no_promotion" {
+		blockers = append(blockers, "Promoter evidence must be no_promotion")
+	} else if classGateString(promoter, "fully_unsupervised_complex_mutation") != "live-proven" || classGateString(promoter, "rsi") != "denied" {
+		blockers = append(blockers, "Promoter evidence must preserve RSI denial boundaries")
+	}
+	if commandReadback == nil {
+		blockers = append(blockers, "Command readback evidence is required")
+	} else if classGateString(commandReadback, "node_id") != afterNode || classGateString(commandReadback, "stop_gate_id") != stopGateID ||
+		classGateString(commandReadback, "status") != "accepted" || !classGateBool(commandReadback, "safe_to_continue") {
+		blockers = append(blockers, "Command readback must accept the RSI readiness stop-gate continuation")
+	} else if classGateString(commandReadback, "fully_unsupervised_complex_mutation") != "live-proven" || classGateString(commandReadback, "rsi") != "denied" {
+		blockers = append(blockers, "Command readback must preserve RSI denial boundaries")
+	} else if classGateString(commandReadback, "public_claim_guard") != "passed" ||
+		!classGateBool(commandReadback, "hidden_instruction_mutation_denied") ||
+		!classGateBool(commandReadback, "self_modification_authorized_false") {
+		blockers = append(blockers, "Command readback must include public claim guard and denied self-modification readback")
+	}
+
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	afterCompleted := false
+	beforeBlocked := false
+	for _, node := range nodes {
+		switch classGateString(node, "id") {
+		case afterNode:
+			afterCompleted = classGateString(node, "status") == "completed"
+		case beforeNode:
+			beforeBlocked = classGateString(node, "status") == "blocked"
+		}
+	}
+	if !afterCompleted || !beforeBlocked {
+		blockers = append(blockers, "workgraph must have predecessor completed and next node blocked before clearance")
+	}
+
+	clearance := map[string]any{
+		"schema_version":                       rsiReadinessStopGateClearanceSchema,
+		"status":                               "blocked",
+		"workgraph_id":                         workgraphID,
+		"stop_gate_id":                         stopGateID,
+		"after_node":                           afterNode,
+		"before_node":                          beforeNode,
+		"safe_to_continue":                     false,
+		"first_failing_check":                  "",
+		"blockers":                             blockers,
+		"exact_next_action":                    "repair_rsi_readiness_stop_gate_evidence_before_next_node",
+		"highest_proven_live_class":            "fully_unsupervised_complex_mutation",
+		"next_denied_class":                    "RSI",
+		"fully_unsupervised_complex_mutation":  "live-proven",
+		"rsi":                                  "denied",
+		"rollback_disposition":                 "available",
+		"sentinel_verdict":                     classGateString(sentinel, "status"),
+		"promoter_verdict":                     classGateString(promoter, "verdict"),
+		"command_readback":                     classGateString(commandReadback, "status"),
+		"public_claim_guard":                   classGateString(commandReadback, "public_claim_guard"),
+		"hidden_instruction_mutation_denied":   classGateBool(commandReadback, "hidden_instruction_mutation_denied"),
+		"self_modification_authorized_false":   classGateBool(commandReadback, "self_modification_authorized_false"),
+		"hidden_instruction_mutation_detected": classGateBool(sentinel, "hidden_instruction_mutation_detected"),
+		"authority_broadening_detected":        classGateBool(sentinel, "authority_broadening_detected"),
+		"source_evidence":                      sources,
+	}
+	workgraphOut := map[string]any{}
+	if len(blockers) > 0 {
+		clearance["first_failing_check"] = blockers[0]
+		return clearance, workgraphOut, nil
+	}
+	clearance["status"] = "ready"
+	clearance["safe_to_continue"] = true
+	clearance["blockers"] = []string{}
+	clearance["exact_next_action"] = "import_next_rsi_readiness_node_after_stop_gate_clearance"
+	workgraphOut, err = cloneJSONMap(workgraph)
+	if err != nil {
+		return nil, nil, err
+	}
+	updatedNodes := classGateObjectSlice(workgraphOut["nodes"])
+	rawNodes := make([]any, 0, len(updatedNodes))
+	for _, node := range updatedNodes {
+		if classGateString(node, "id") == beforeNode {
+			node["status"] = "ready"
+			node["blockers"] = []any{}
+		}
+		rawNodes = append(rawNodes, node)
+	}
+	workgraphOut["nodes"] = rawNodes
+	return clearance, workgraphOut, nil
 }
 
 func runTrace(args []string, stdout, stderr io.Writer) int {
