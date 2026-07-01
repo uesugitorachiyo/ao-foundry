@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.riw.public-safety.v0.1",
+  "result": "passed",
+  "checks": [
+    "no private absolute paths",
+    "no secrets",
+    "no credentials",
+    "no env values",
+    "no provider calls",
+    "no local-only claims",
+    "no broad_RSI approval"
+  ]
+}

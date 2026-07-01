@@ -1,0 +1,67 @@
+{
+  "schema": "ao.foundry.riw.wording-candidates.v0.1",
+  "candidates": [
+    {
+      "id": "current-approved-wording",
+      "text": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_existing_narrow_wording",
+      "command": "confirmed",
+      "decision": "approved_baseline"
+    },
+    {
+      "id": "eight-attempt-bounded-evidence-expansion",
+      "text": "AO has public-safe tracked evidence for bounded improvement evidence expansion across eight governed attempts; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_narrow_eight_attempt_evidence",
+      "command": "confirmed",
+      "decision": "approved_narrow"
+    },
+    {
+      "id": "repeated-public-safe-bounded-improvement-evidence",
+      "text": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+      "command": "confirmed",
+      "decision": "strongest_approved"
+    },
+    {
+      "id": "governed-recursive-improvement-evidence-under-denial-boundaries",
+      "text": "AO has governed recursive-improvement evidence under explicit denial boundaries; broad_RSI remains denied.",
+      "public_reader": "denied_recursive_improvement_phrase_overstates_public_evidence",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied",
+      "decision": "denied"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied",
+      "decision": "denied_control"
+    }
+  ],
+  "strongest_approved_wording": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "broad_RSI": "denied"
+}

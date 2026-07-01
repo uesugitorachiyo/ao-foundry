@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.riw.measurement.v0.1",
+  "id": "attempt-j",
+  "label": "Attempt J",
+  "task_type": "evidence freshness validation",
+  "baseline": 0.63,
+  "post": 0.9,
+  "improvement": 0.27,
+  "artifact": "evidence-freshness-validation",
+  "regression_result": "passed",
+  "rollback_result": "passed",
+  "public_safe": true
+}

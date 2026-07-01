@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.riw.measurement.v0.1",
+  "id": "attempt-l",
+  "label": "Attempt L",
+  "task_type": "contract/schema fixture completeness",
+  "baseline": 0.65,
+  "post": 0.91,
+  "improvement": 0.26,
+  "artifact": "contract-schema-fixture-completeness",
+  "regression_result": "passed",
+  "rollback_result": "passed",
+  "public_safe": true
+}

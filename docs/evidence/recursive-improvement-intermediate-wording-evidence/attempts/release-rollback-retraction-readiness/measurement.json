@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.riw.measurement.v0.1",
+  "id": "attempt-i",
+  "label": "Attempt I",
+  "task_type": "release rollback/retraction readiness",
+  "baseline": 0.66,
+  "post": 0.92,
+  "improvement": 0.26,
+  "artifact": "release-rollback-retraction-readiness",
+  "regression_result": "passed",
+  "rollback_result": "passed",
+  "public_safe": true
+}

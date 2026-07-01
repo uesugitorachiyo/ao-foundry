@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.riw.rollback-proof.v0.1",
+  "attempt_id": "attempt-l",
+  "rollback_rehearsal": "passed",
+  "retraction_needed": false,
+  "notes": "Attempt is reversible by removing or superseding this evidence artifact before merge if a gate fails."
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.riw.measurement.v0.1",
+  "id": "attempt-k",
+  "label": "Attempt K",
+  "task_type": "CI/readiness diagnostics",
+  "baseline": 0.61,
+  "post": 0.88,
+  "improvement": 0.27,
+  "artifact": "ci-readiness-diagnostics",
+  "regression_result": "passed",
+  "rollback_result": "passed",
+  "public_safe": true
+}

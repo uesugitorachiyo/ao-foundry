@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.riw.covenant.v0.1",
+  "result": "approved_repeated_public_safe_bounded_improvement_evidence_eight_attempts_denied_stronger_recursive_improvement_and_broad_RSI",
+  "approved_wording": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "denied": [
+    "governed recursive-improvement evidence wording",
+    "exact broad_RSI wording"
+  ]
+}

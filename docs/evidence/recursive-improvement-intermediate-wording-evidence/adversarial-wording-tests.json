@@ -1,0 +1,26 @@
+{
+  "schema": "ao.foundry.riw.adversarial-wording.v0.1",
+  "result": "approved_narrow_candidates_denied_recursive_and_broad_candidates",
+  "candidate_results": [
+    {
+      "id": "current-approved-wording",
+      "result": "approved"
+    },
+    {
+      "id": "eight-attempt-bounded-evidence-expansion",
+      "result": "approved"
+    },
+    {
+      "id": "repeated-public-safe-bounded-improvement-evidence",
+      "result": "approved"
+    },
+    {
+      "id": "governed-recursive-improvement-evidence-under-denial-boundaries",
+      "result": "denied_capability_adjacent_overbreadth"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "result": "denied_overbreadth"
+    }
+  ]
+}
