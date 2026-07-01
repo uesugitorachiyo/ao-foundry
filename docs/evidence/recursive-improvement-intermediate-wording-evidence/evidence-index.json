@@ -1,0 +1,144 @@
+{
+  "schema": "ao.foundry.riw.evidence-index.v0.1",
+  "mission": "recursive-improvement-intermediate-wording-evidence",
+  "highest_prior_class": "public_safe_bounded_improvement_evidence_expansion_four_attempts",
+  "new_class": "repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "total_bounded_attempts": 8,
+  "new_attempts_completed": 4,
+  "public_safe_artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/README.md",
+      "sha256": "sha256:c7a4aac4a1773e0eec95eb7f7a1bbe8c46584f7e817623ade70387c7e654b1f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/adversarial-wording-tests.json",
+      "sha256": "sha256:5f1b0db23e15e74c488b1f56febaf05eaf82eacfd6788acb524e8a83ec1628dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/architecture-wording-gate.json",
+      "sha256": "sha256:1ca2c43edd336b1414fa489f275f185d24400f8ac7ec7aeb64bda58cad305328"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/ci-readiness-diagnostics/README.md",
+      "sha256": "sha256:d95f2619a596c2b74f1af02cb337f17eb093c70a9f74ab37444036562367c83e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/ci-readiness-diagnostics/eval-regression.json",
+      "sha256": "sha256:8384da8c2bc7383301ce2c05a7de3967a30917fcce056e813571b8dc52e6d1ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/ci-readiness-diagnostics/measurement.json",
+      "sha256": "sha256:bd2c242445d4852ce6bb4f918abc48b411a9688d76b7bb7d3d85385e26490d71"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/ci-readiness-diagnostics/reproducibility-runbook.md",
+      "sha256": "sha256:fb7c8f35b364f807b7c62afcef96c1ec4bea892a8592b3f658e9c67684c402ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/ci-readiness-diagnostics/rollback-proof.json",
+      "sha256": "sha256:d2b3d3124124650ac3c192ee966b272d749301a0763208ad9e987e89d61179df"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/contract-schema-fixture-completeness/README.md",
+      "sha256": "sha256:adaa7e9a1c9d861990ff6132474db962f3cfa13c0fc0e7c61b37d4a12c1f5547"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/contract-schema-fixture-completeness/eval-regression.json",
+      "sha256": "sha256:60f870a9042e92fbe374869a4c0321ecb4b6cd6b07f29e48479542855b378331"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/contract-schema-fixture-completeness/measurement.json",
+      "sha256": "sha256:73fe3f54ec4c9528e0d8e71cc682b0e311c2ccdc4cd6dd76a50514f99025f4d5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/contract-schema-fixture-completeness/reproducibility-runbook.md",
+      "sha256": "sha256:cff8d78569408bdcb9af99ce1a9dd11b5d3b6494b5c59e4b64a86158fda9f27d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/contract-schema-fixture-completeness/rollback-proof.json",
+      "sha256": "sha256:e09ad6e9c57d883c54e5ce5cec3cb32214024cfe618095e08f19c987083109f4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/evidence-freshness-validation/README.md",
+      "sha256": "sha256:292345a285a705ea56124cad103efdfd84c08097d9be1307fd4c183fe6993622"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/evidence-freshness-validation/eval-regression.json",
+      "sha256": "sha256:027ee2454afd9991b73d5a2b9e22c23251c2c4e76cc210fcacf3b04306b6188e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/evidence-freshness-validation/measurement.json",
+      "sha256": "sha256:25f04c4ce2b711c719ab821184b6bd9c2ccf1c59c54a3fa95a3767731be4858b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/evidence-freshness-validation/reproducibility-runbook.md",
+      "sha256": "sha256:73a1fb08fffd4934926685b2773a82fd2f2a60901b1c7cce08483a71152cb5f7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/evidence-freshness-validation/rollback-proof.json",
+      "sha256": "sha256:4b61a0816f5fa6366fb5c76fc76015cb6cab4d15839c11d0d5221f93276125b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/release-rollback-retraction-readiness/README.md",
+      "sha256": "sha256:0e3aa4c861664de3030b2baa6980e390f5a91f95a85c985301c24ae8e731bad6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/release-rollback-retraction-readiness/eval-regression.json",
+      "sha256": "sha256:909227febe3e059f5f89b876ba916f5eb88d6075f1bf6abc3204c180b89983bd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/release-rollback-retraction-readiness/measurement.json",
+      "sha256": "sha256:f75de079588a84f4e3e41055cf7aeefbdf470b0072d8b682fe6f7035e9003b44"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/release-rollback-retraction-readiness/reproducibility-runbook.md",
+      "sha256": "sha256:4ed8e80341486b1ef73e938fa9f2502e34f7678346252975714dd25de4ea31d2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/attempts/release-rollback-retraction-readiness/rollback-proof.json",
+      "sha256": "sha256:14c5a93a128f962f7b608332319d1cff267d8bf77a736b1094f2e1653a6ddd03"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/command-readback.json",
+      "sha256": "sha256:ce57790521561fb97f35b969904ab8b187054fe3568d64e6437d4efabb73a06a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/covenant-publication-gate.json",
+      "sha256": "sha256:178448bb5231ca827a70bde5b2f1cfb4fcda6904f3cc854f4f0ef2a55ba523e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/cross-attempt-summary.json",
+      "sha256": "sha256:efcbb9705735861c726bf543c8841a37ac6e2107db8fa194c60c992a3feeef12"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/final-rollup.json",
+      "sha256": "sha256:a7e821ef5e90670c24eaa46659119bd8a8c1ddd0c422b2c83064a2c22482a374"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/promoter-verdict.json",
+      "sha256": "sha256:caf57bc2df41a01b1f882fe3a1f163a41f39c6ca5b501459cd3af8918980526e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/public-reader-tests.json",
+      "sha256": "sha256:54b1ba1ea032dc1fe506f7ab29f5b6807984716b24292b00474cb76221af6292"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/public-safety-scan.json",
+      "sha256": "sha256:dddca1ad709d60980d4ac9760598f2fb1491d6c7881c95e8f313edebc53c66a2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/sentinel-public-risk-gate.json",
+      "sha256": "sha256:1ac578b4de5c3441c40f6f69d9bb46cd156768eb740471542f4d56841586bf73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/stale-language-guard.json",
+      "sha256": "sha256:64873f003923d341663c5ad33cbcc44d188f8feba9c29487d5333b54d17c5084"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-intermediate-wording-evidence/wording-candidate-results.json",
+      "sha256": "sha256:0148fb202906c1c224da41b8fed97d74f654d08186531fb540895e5bd7752247"
+    }
+  ]
+}

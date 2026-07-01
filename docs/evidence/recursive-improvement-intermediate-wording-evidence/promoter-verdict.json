@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.riw.promoter.v0.1",
+  "verdict": "promote_repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied"
+}

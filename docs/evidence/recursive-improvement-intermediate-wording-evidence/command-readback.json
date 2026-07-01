@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.riw.command.v0.1",
+  "class_decision": "repeated_public_safe_bounded_improvement_evidence_eight_attempts_proven",
+  "highest_proven_live_class": "repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "next_denied_class": "broad_RSI",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied"
+}

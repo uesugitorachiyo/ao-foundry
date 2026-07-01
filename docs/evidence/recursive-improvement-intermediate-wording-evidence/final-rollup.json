@@ -1,0 +1,161 @@
+{
+  "schema": "ao.foundry.riw.final-rollup.v0.1",
+  "mission": "recursive-improvement-intermediate-wording-evidence",
+  "completed_nodes": 240,
+  "total_nodes": 240,
+  "first_safe_node": "riw-node-001",
+  "new_independent_attempts_completed": 4,
+  "total_bounded_attempts_completed": 8,
+  "new_task_types_covered": [
+    "release rollback/retraction readiness",
+    "evidence freshness validation",
+    "CI/readiness diagnostics",
+    "contract/schema fixture completeness"
+  ],
+  "baseline_post_measurements": [
+    {
+      "id": "attempt-e",
+      "task_type": "release/readiness evidence quality",
+      "baseline": 0.68,
+      "post": 0.91,
+      "improvement": 0.23
+    },
+    {
+      "id": "attempt-f",
+      "task_type": "security/public-safety scan quality",
+      "baseline": 0.64,
+      "post": 0.9,
+      "improvement": 0.26
+    },
+    {
+      "id": "attempt-g",
+      "task_type": "operator readback UX",
+      "baseline": 0.62,
+      "post": 0.88,
+      "improvement": 0.26
+    },
+    {
+      "id": "attempt-h",
+      "task_type": "cross-repo evidence linking",
+      "baseline": 0.6,
+      "post": 0.87,
+      "improvement": 0.27
+    },
+    {
+      "id": "attempt-i",
+      "label": "Attempt I",
+      "task_type": "release rollback/retraction readiness",
+      "baseline": 0.66,
+      "post": 0.92,
+      "improvement": 0.26,
+      "artifact": "release-rollback-retraction-readiness"
+    },
+    {
+      "id": "attempt-j",
+      "label": "Attempt J",
+      "task_type": "evidence freshness validation",
+      "baseline": 0.63,
+      "post": 0.9,
+      "improvement": 0.27,
+      "artifact": "evidence-freshness-validation"
+    },
+    {
+      "id": "attempt-k",
+      "label": "Attempt K",
+      "task_type": "CI/readiness diagnostics",
+      "baseline": 0.61,
+      "post": 0.88,
+      "improvement": 0.27,
+      "artifact": "ci-readiness-diagnostics"
+    },
+    {
+      "id": "attempt-l",
+      "label": "Attempt L",
+      "task_type": "contract/schema fixture completeness",
+      "baseline": 0.65,
+      "post": 0.91,
+      "improvement": 0.26,
+      "artifact": "contract-schema-fixture-completeness"
+    }
+  ],
+  "wording_candidate_results": [
+    {
+      "id": "current-approved-wording",
+      "text": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_existing_narrow_wording",
+      "command": "confirmed",
+      "decision": "approved_baseline"
+    },
+    {
+      "id": "eight-attempt-bounded-evidence-expansion",
+      "text": "AO has public-safe tracked evidence for bounded improvement evidence expansion across eight governed attempts; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_narrow_eight_attempt_evidence",
+      "command": "confirmed",
+      "decision": "approved_narrow"
+    },
+    {
+      "id": "repeated-public-safe-bounded-improvement-evidence",
+      "text": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+      "command": "confirmed",
+      "decision": "strongest_approved"
+    },
+    {
+      "id": "governed-recursive-improvement-evidence-under-denial-boundaries",
+      "text": "AO has governed recursive-improvement evidence under explicit denial boundaries; broad_RSI remains denied.",
+      "public_reader": "denied_recursive_improvement_phrase_overstates_public_evidence",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied",
+      "decision": "denied"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied",
+      "decision": "denied_control"
+    }
+  ],
+  "strongest_approved_wording": "AO has repeated public-safe bounded improvement evidence across eight governed attempts with reproducibility runbooks; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "new_narrow_class": "repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "covenant_result": "approved_repeated_public_safe_bounded_improvement_evidence_eight_attempts_denied_stronger_recursive_improvement_and_broad_RSI",
+  "architecture_result": "approved_repeated_public_safe_bounded_improvement_evidence_eight_attempts_denied_stronger_recursive_improvement_and_broad_RSI",
+  "sentinel_result": "clear_for_repeated_public_safe_bounded_improvement_evidence_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "promoter_verdict": "promote_repeated_public_safe_bounded_improvement_evidence_eight_attempts",
+  "command_readback": "repeated_public_safe_bounded_improvement_evidence_eight_attempts_proven_broad_RSI_denied",
+  "exact_blockers": [
+    "public-reader still denies stronger recursive-improvement wording because the phrase implies broader capability than bounded public artifacts prove",
+    "adversarial wording flags recursive-improvement phrasing as capability-adjacent overbreadth",
+    "Covenant and Architecture approve repeated bounded evidence wording only",
+    "Sentinel holds stronger recursive-improvement and broad_RSI public-risk wording"
+  ]
+}

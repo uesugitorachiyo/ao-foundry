@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.riw.eval-regression.v0.1",
+  "attempt_id": "attempt-k",
+  "eval_result": "passed",
+  "regression_result": "passed",
+  "threshold": 0.2,
+  "observed_improvement": 0.27
+}
