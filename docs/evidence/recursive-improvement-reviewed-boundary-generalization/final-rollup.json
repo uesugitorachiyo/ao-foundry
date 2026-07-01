@@ -1,0 +1,108 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "recursive-improvement-reviewed-boundary-generalization",
+  "completed_nodes": 480,
+  "total_nodes": 480,
+  "class_decision": "public_safe_reviewed_causal_chain_boundary_generalization_evidence_proven",
+  "highest_proven_live_class": "public_safe_reviewed_causal_chain_boundary_generalization_evidence",
+  "next_denied_class": "broad_RSI",
+  "strongest_approved_wording": "AO has public-safe reviewed causal-chain boundary generalization evidence across multiple independent claim-review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "candidate_results": [
+    {
+      "id": "current-approved-counterexample-boundary",
+      "text": "AO has public-safe bounded causal-chain evidence with counterexample-tested claim boundaries; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_control",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve",
+      "architecture": "approve",
+      "sentinel": "clear"
+    },
+    {
+      "id": "reviewed-boundary-generalization",
+      "text": "AO has public-safe reviewed causal-chain boundary generalization evidence across multiple independent claim-review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve_narrow",
+      "architecture": "approve_narrow",
+      "sentinel": "clear_narrow"
+    },
+    {
+      "id": "bounded-review-generalization-evidence",
+      "text": "AO has public-safe evidence that bounded causal-chain claim boundaries generalize across independent review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve_narrow",
+      "architecture": "approve_narrow",
+      "sentinel": "clear_narrow"
+    },
+    {
+      "id": "stronger-recursive-improvement-control",
+      "text": "AO has stronger recursive-improvement evidence across governed public-safe review roles.",
+      "result": "denied",
+      "public_reader": "fail_capability_adjacent",
+      "adversarial": "fail_overbreadth",
+      "covenant": "deny",
+      "architecture": "deny",
+      "sentinel": "hold"
+    },
+    {
+      "id": "exact-broad-rsi-control",
+      "text": "AO has proven broad RSI for public claim publication across the governed AO stack.",
+      "result": "denied",
+      "public_reader": "fail_overbroad",
+      "adversarial": "fail_overbreadth",
+      "covenant": "deny",
+      "architecture": "deny",
+      "sentinel": "hold"
+    }
+  ],
+  "role_totals": {
+    "public-reader": {
+      "pass": 36,
+      "deny": 24
+    },
+    "adversarial-wording": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Covenant-publication": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Architecture-wording": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Sentinel-public-risk": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Promoter-verdict": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Command-readback": {
+      "pass": 36,
+      "deny": 24
+    },
+    "retraction-review": {
+      "pass": 36,
+      "deny": 24
+    }
+  },
+  "Covenant": "approve_narrow_reviewed_boundary_generalization_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Architecture": "approve_narrow_reviewed_boundary_generalization_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Sentinel": "clear_narrow_reviewed_boundary_generalization_hold_stronger_recursive_improvement_and_broad_RSI",
+  "Promoter": "promote_public_safe_reviewed_causal_chain_boundary_generalization_evidence_keep_broad_RSI_denied",
+  "Command": "public_safe_reviewed_causal_chain_boundary_generalization_evidence_proven_stronger_recursive_improvement_denied_broad_RSI_denied",
+  "public_reader": "approved_narrow_reviewed_boundary_generalization_denied_stronger_controls",
+  "adversarial_wording": "approved_narrow_boundary_language_denied_capability_adjacent_controls",
+  "rollback_retraction": "accepted_for_narrow_public_evidence; no publication of stronger recursive-improvement or broad_RSI claim",
+  "public_safety": "passed_local_scan_before_pr",
+  "stale_language": "passed_local_scan_before_pr",
+  "merged_pr": null,
+  "generated_at": "2026-07-01T00:00:00Z"
+}

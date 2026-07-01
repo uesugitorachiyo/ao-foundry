@@ -1,0 +1,3863 @@
+{
+  "schema": "ao.public-evidence-index.v0.1",
+  "mission": "recursive-improvement-reviewed-boundary-generalization",
+  "class_tested": "public_safe_reviewed_causal_chain_boundary_generalization_evidence",
+  "prior_class": "public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+  "node_count": 480,
+  "public_artifacts": [
+    {
+      "node_id": "rirbg-node-001",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-001.json",
+      "sha256": "1f44357d715edc09825e5f86074a347d393c1634e91cbc7f1206be86973cc842",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-002",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-002.json",
+      "sha256": "4158f63cce2a70463146ac451dd97a37cc37357684ef89fec4852e09030f4563",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-003",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-003.json",
+      "sha256": "aa7e890639199619c2a1f5172c082dba28b7d36522d2b964661152fcd0952733",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-004",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-004.json",
+      "sha256": "1446003feacba4dadae5101c43188df2adddd77168bc13f37d63986c7779ffe7",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-005",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-005.json",
+      "sha256": "963f825cd97ef1f79e7b21afb6b9935a4d2e9b986868b2917720778a9b106e36",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-006",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-006.json",
+      "sha256": "edca9c2fd19172a79eddc3d0e58b870f1879443f2b2ccb276bcbd1a459bbea55",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-007",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-007.json",
+      "sha256": "4e46381ed646ecf8820e315257e31a71290478cd62da15bd111849bd65edee97",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-008",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-008.json",
+      "sha256": "8e89f0e5c36f8ff964999ce0ecd8432fe2b933d6376d2ad0ac931935d6c54bda",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-009",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-009.json",
+      "sha256": "31311dedeb3939197203607eb41c3c0bad14a163b33a44b5ca14ca7b6ee5aefd",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-010",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-010.json",
+      "sha256": "5c1caa9fc544fcb5b3a1138815375df9e1fb313d3572597baec37ebfca4d8a9a",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-011",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-011.json",
+      "sha256": "a272d9762349f798f459bd1130040468e8cd7dee0fc1eb4f740b8f5cca9d5321",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-012",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-012.json",
+      "sha256": "8ffa0c52813036d067a122f51100ef2fb2b94bb1bbda610fdce8aa5f9ee130f1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-013",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-013.json",
+      "sha256": "56bc999f6b5f0c44d0d58468f0d624aa69a0e7997b4bab419b7ee7800c8b970e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-014",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-014.json",
+      "sha256": "8c78364a46d268ecf303dbab74c7e9d5f9dd621c7a911c9c285ca2a1221e4c15",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-015",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-015.json",
+      "sha256": "1309f4144e259be1ded1d163377ae51b1789c90ba8d850d889e31eca24c12d35",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-016",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-016.json",
+      "sha256": "c0b7196797b8de589177f2bc24f93e915624acf19392ed101728c38f972748b3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-017",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-017.json",
+      "sha256": "af37131c2aa07f272d59173da44c4f5272a39dfbaf617c40c7e0f0a64916639e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-018",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-018.json",
+      "sha256": "309b043d363c02e84d6fb98119ad091b004c6f7b1e913446830903ff2f19dc53",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-019",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-019.json",
+      "sha256": "754c48c55ec21814eb9e3a49b94194f6e8ae6eba168b5c6844c318f5aae5020c",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-020",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-020.json",
+      "sha256": "a5c39b770de9ca15424fc1ecda1a950bd3c63f1dc098f4be890e122bc98beed0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-021",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-021.json",
+      "sha256": "6320e21b3a261f33a2b4e3735888efc49753c6246f3e0ae2394e4de8caaa037e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-022",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-022.json",
+      "sha256": "33e481ed7e6ee4b35369128ef8d30e41d56510efa4925f8fdd72c33ef0a0ce62",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-023",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-023.json",
+      "sha256": "e2c0148d082a49e5c79f0f8f36badab06d990c6d1e2253bae968776b973ee52a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-024",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-024.json",
+      "sha256": "56b4d2eb05c01358d82d6c9c83088a9af71fca0dfd4f250c4754ba28846319c8",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-025",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-025.json",
+      "sha256": "418556c4027676cf34a377a3b8af73422243d23d0d178694ae52abb344184b7b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-026",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-026.json",
+      "sha256": "a7d999a9ed62d230df65725ae347085980af4a68c3b14c29e3c62fc6d1939356",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-027",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-027.json",
+      "sha256": "424408795c63e525b76c249c1c4904c353c4c26c76c42af00a33f025868ec2ab",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-028",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-028.json",
+      "sha256": "82b9ab8212918dc011b18e96378bf2786e3e65abd9c6190b5ffe8ca12ba45dcf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-029",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-029.json",
+      "sha256": "791f04ab552890c2730896a1114de5a9810ab6f3bf66275c4bbb96fcd7a11b9b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-030",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-030.json",
+      "sha256": "b5455455e2c562681f37f7df8c958f769f3f3fc605e706cc6d52387e26109af3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-031",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-031.json",
+      "sha256": "c6f0c0ad8ca4c061e44848f23e1c54d4ac324c56dc74a34a4d1d0e5d4f9853f3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-032",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-032.json",
+      "sha256": "a0f85e92f889ace1d447a4f489f1165140fca4d5a545df5444aea2ddc14f0949",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-033",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-033.json",
+      "sha256": "2d3332b3f3cc31546fc1e685340374d82544f487d731c232e80ac770b2ea0f75",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-034",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-034.json",
+      "sha256": "9c5fc136ea7e15ac71f3d8dcd9e22914068ba6e520544d859c745d5bff7fdc81",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-035",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-035.json",
+      "sha256": "16c11e29b30ef8e99341aa31498b10d257eca9688ed3902270c480333596cb02",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-036",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-036.json",
+      "sha256": "abcffa8028b30d8d3ecb0c4329cd4dd948c5b554d7947e4f0b607787587db885",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-037",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-037.json",
+      "sha256": "7d01903a8001c9344097c7eb56ad1cd52b2f3efb3702ed61d46ced4b1ebb8347",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-038",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-038.json",
+      "sha256": "4b62b0f3804e84c859896e4a7cf2c2b1e7b9c516128a8976f4e61b7102d82a82",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-039",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-039.json",
+      "sha256": "e9f8fd4cc55456dce299b4fe3d29d1b48c7555a98c0d3f246099e9e075189c50",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-040",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-040.json",
+      "sha256": "888ea70de7d100225e3615dd3f8cc162e7eac83882239483432e7842767ca775",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-041",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-041.json",
+      "sha256": "4bbcd5e10682b608ea45b7d468007927f6e909f0ae91b6f041c18a1aaf39b7ee",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-042",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-042.json",
+      "sha256": "fa36b605296ec6630f31a73040d0e4f3b5204c16d35806917b56dd9e228a4797",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-043",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-043.json",
+      "sha256": "1381ccc8b0116517184dd3183b28264f3075a3fcf13f21ba53af8751bb53b3ea",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-044",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-044.json",
+      "sha256": "26f7304d108e7027a7447910e350e98e4536a75550e791e1b81d53c886d9c274",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-045",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-045.json",
+      "sha256": "76c5be20f4384e4784f46325492a61b17474bfb37c0ae66e47444d322d6a01d3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-046",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-046.json",
+      "sha256": "e90ab15418ee92e7224697b69db88a8b83a3bf3ae3311436fe12b920daec3da4",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-047",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-047.json",
+      "sha256": "27f997bdc6d17c6eeeb2a4aa052da0bfb61084b84ddd3df4f3a1e5621aa6d745",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-048",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-048.json",
+      "sha256": "46c3234e9f756d2418180578f7a91131221c8e5c8bc661762104d9f30d8b0d66",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-049",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-049.json",
+      "sha256": "34288bfc9c21eea66a604d1405ad17b130f7a949bfe651dd1483465807b73467",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-050",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-050.json",
+      "sha256": "92458792f6216edde01118294928c1cc6dc3d9cb5e3cb6425d26fc8cd7710eea",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-051",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-051.json",
+      "sha256": "b20676646d76e774340ebe5810f7aaa7c9f65355a5b2109c62f74200e3a3614a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-052",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-052.json",
+      "sha256": "4a63588c1522a5651e8a9c1d7a89cbf46d0b612aa508df5fd9a26109a1699689",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-053",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-053.json",
+      "sha256": "66bd104270a8d0bd9f66c59c8ca6bd5d0ca0fe768fd138f11fbfc01ae051f908",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-054",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-054.json",
+      "sha256": "64f0ccdd5c00ee7a832d190d4f8059b9574d96e0fa6dce7b7dc96a40d3e1e2a1",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-055",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-055.json",
+      "sha256": "590a8d1af99d82fe72f36965d82cab6c80b202ea7d4ec6a08d2b388bbf870b80",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-056",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-056.json",
+      "sha256": "0d15c251383219c28745198283a0d2811a815489a21a4cf82fbf747830027f60",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-057",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-057.json",
+      "sha256": "772fe8667892eac455aa10f6a285730cec7ff8a9724383f28547f913f7a041c1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-058",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-058.json",
+      "sha256": "0c765e890cfae7ca2015cd3826c6ea8b5a1cf0504b53a4116de5d2ca6f68d524",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-059",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-059.json",
+      "sha256": "3c93aaae18ba7fc3235659a4225e91de06677fd289a2c9b19fe040726739495e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-060",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-060.json",
+      "sha256": "405558c81057c0049a829c333edf4316e180f5052b973abb923f8292c337250b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-061",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-061.json",
+      "sha256": "4c79e25fe479225f82376bf7b88b78709c039fe05f082215528ec872d4c71795",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-062",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-062.json",
+      "sha256": "8fc3e39751d992604c2cb33a27e06e001d11661c398829e3d419d0c21eae620d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-063",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-063.json",
+      "sha256": "160d78e408940f03c9f06c588101bd422540ef9beba4dd3acd7325b56169bd07",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-064",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-064.json",
+      "sha256": "419b5bcc70215c23767a1ee5e9cec1f338a79daab2b98d33c480938363fd1810",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-065",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-065.json",
+      "sha256": "d844592381e3160b1e56f751bb029456897ede81b04eec2387c5a856cd7821d0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-066",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-066.json",
+      "sha256": "1ab3bdd6bfc2aa622928136e63a042f89d1b1f11b963898bd95253fd9c3ae99c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-067",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-067.json",
+      "sha256": "1ad414db40cc1fb7fd91a892b6cd9e170f8eb207b4a913ed9fee22be26a41505",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-068",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-068.json",
+      "sha256": "0b1836f6fa9e49ec69242b6e706ee6735b01673306273f0f3e671f4bca9b66e6",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-069",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-069.json",
+      "sha256": "58f1aeed4778cf99016fff29c7d57111e0ba1b88e4bb5649d791782d40ebcee4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-070",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-070.json",
+      "sha256": "d220c965674d12fd4388e399f0042a2e255190e6f242d7547b4a39919947b170",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-071",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-071.json",
+      "sha256": "31c894af58187b6891f1b3375a14a8cff219d8cbb22b6f5c0d11c60a1a4b3a9a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-072",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-072.json",
+      "sha256": "46575cdd31fb79cc9a075f1dfd600d3528cc446600ce2aa7ed3a3d69306112d0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-073",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-073.json",
+      "sha256": "47700b258a957c3bcea45aae9d291410b2026d772702ef6eee5987a24ac7fe67",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-074",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-074.json",
+      "sha256": "4874b2f12caf1775ba4cc968bfa6218892c0a137df5fff8388b8261bed4ea972",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-075",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-075.json",
+      "sha256": "a05ff8ba06f18d34878eac8c8caee757e1d630e049049b89a3c7afa180279dfb",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-076",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-076.json",
+      "sha256": "3c6c7fdaadc8a38b23cca273e28ca84e03035f5d6be4937019b51565a33ba5a9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-077",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-077.json",
+      "sha256": "0a039b575313673067f01e443dd234b434045edf94b122d1efa4874d702d0cfc",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-078",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-078.json",
+      "sha256": "94042ef6cfeff0fc45716d8ca21483986655bc1f08e5844a683efcc00d428c6a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-079",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-079.json",
+      "sha256": "257a84c663718149eef25b2ab7a4bb321b27afdbf4edf5eb255125e1103ba2bb",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-080",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-080.json",
+      "sha256": "04a59681da877e9e6a3cce247f170302537fbf28f571d821f23e8a9b13350140",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-081",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-081.json",
+      "sha256": "f24dacf0e48fad345c9e8886f067cc14b2c6218137ecc21ea57102fb9f1fd68c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-082",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-082.json",
+      "sha256": "73caba64ea4066698ba71d8d0f2065ecddf206740ebe4eda704dcf66a260b663",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-083",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-083.json",
+      "sha256": "e4b136a1b20c70ecd5370e2eed4db91981f72dff2df82a87b995db982b7c62a9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-084",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-084.json",
+      "sha256": "5c24ca8bd4c171cc9643763b09e88a51eedccc2bf9f52d895b1134e14be0d74a",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-085",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-085.json",
+      "sha256": "b4a1190224ce334886f89abc6bd8cc8a03de2fb7c250fcabadd5ae69e5c1e3bf",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-086",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-086.json",
+      "sha256": "c060af5b943eaddd546e531185f5c57dd5e36e3f9ccde10b4d2a5db420d25eb2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-087",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-087.json",
+      "sha256": "68d5c6cdaaa21b3c5e26d7c1943efc6397468dd1149ca561b559303bfe1067f7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-088",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-088.json",
+      "sha256": "0ae91a6a9e1a1f4cc533cbd72bdcd6aaa430088561e9c5016985d7ceb0d131b9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-089",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-089.json",
+      "sha256": "d6bcbeb4f23519154ae00af8d76c72ba74f20e4ed0ca64bedbd2f1716d24c55b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-090",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-090.json",
+      "sha256": "91d6d9bfbed059e88b87a489fffb2fbcd8af0da066f4b1bd098f9995dd51950e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-091",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-091.json",
+      "sha256": "c8e33ec62623857dbdcd45f634023fc2d4e4129dfd875dad582a91eb2142e8b0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-092",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-092.json",
+      "sha256": "289dede6443e2c223ffafff44b1b94da8f3f05492718c4037127459b4eff9c60",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-093",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-093.json",
+      "sha256": "f4e10d4e764a3fd5163b60f2af71e7a774ed787a94dc67c5b9a37aad41261514",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-094",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-094.json",
+      "sha256": "a1167396064470eacdd32a25aa6f927f12b387b3b2ba0757630b740545f63906",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-095",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-095.json",
+      "sha256": "12dd7c5b2ee550978d11c37ed5a69a2a6c51c25d4f8fd5596a9edf6cd94dd7a9",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-096",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-096.json",
+      "sha256": "68efc2ef44078435570602ddf735f5cc904337a944058570799a2605a2e4727e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-097",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-097.json",
+      "sha256": "a67826e2e5342930142ee71adbd5f1cb1cfc12e233abcc4359a9a14d556e6b62",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-098",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-098.json",
+      "sha256": "49c3b0a456bc6e369683e2cfa92317b0960f64dbf4bb88fb5c3298dcca9dcebf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-099",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-099.json",
+      "sha256": "af4ba18c98ebf01623831c314916a1a93631830f9508140ef9cb506023c6102f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-100",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-100.json",
+      "sha256": "432f2669ff1a3321865e0ce6838ef6cda0c4bbae6262b9aeeb87e48b2acca921",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-101",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-101.json",
+      "sha256": "86a00f3064d7088dc35e2efb34d282ea435fa553a5c6ce566750f57cd92c1a28",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-102",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-102.json",
+      "sha256": "6d9089f81eee684e73d36202ca4536aabcf0cbcc70309b5114eb98062fc87df9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-103",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-103.json",
+      "sha256": "c9bdb27618ffc08122de09864599dada66643863684e3ea0cca038cebae2ab2c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-104",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-104.json",
+      "sha256": "1b3e8de89790c4d05e43244db6caecde644ad2b064f46be387da68bc057c74d2",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-105",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-105.json",
+      "sha256": "d01a4ddad3ee253b7751a6d51f95d9ada285a87f6189bc90db256824f0e30cd7",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-106",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-106.json",
+      "sha256": "41061b9d72ed34576631017195b61ac9a0e722d88d94718bae40ccfad3e7fe79",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-107",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-107.json",
+      "sha256": "3f98eab299149efa55177e63fe451215de870d07eb6f3b7dbfc14b012fcd574d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-108",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-108.json",
+      "sha256": "ec4622eab72feaa58e392565cedd4ea54793713038d6bbfd2bee080df887dc0e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-109",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-109.json",
+      "sha256": "da71bf4799f2e042c90851faffd67322ec65b829887c42f21b5735739702aeb4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-110",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-110.json",
+      "sha256": "e4818e47f659b1602c41daf84786c9bf035bf9a23156b2d48f539e00066568ee",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-111",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-111.json",
+      "sha256": "34df689c99bc45f50635a657892923595581417a328fb17b744e42c4ca466ad3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-112",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-112.json",
+      "sha256": "ab6711ee0e3b123498bfd9321138aadc3a01186217d9c38433b6029e8ecb3dc0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-113",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-113.json",
+      "sha256": "e6053350bafe7b5d9a15dedcda248d271186030180ccae1a2208021379f17565",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-114",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-114.json",
+      "sha256": "897bc511d89265e4ac59011aef6fdeeb2011a609464c7915c4c2c9b0bd986496",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-115",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-115.json",
+      "sha256": "0c9d2424dd59d2ab289d0aa9d94b01d7256a1051c494193507ddbcc6ea031106",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-116",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-116.json",
+      "sha256": "4d6c7cfbade1fa585774ad06ed248d1775822eb9ba660324ecc2c58c374216cb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-117",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-117.json",
+      "sha256": "8b1d788a6c0ee0281ea316e9d4d76a0774a3ab31fe4dfeb8b9f38ee62846e8eb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-118",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-118.json",
+      "sha256": "07902aad7f7d31eee43c1dd74a13c8b597674f0bd5337c819e0057c2aaf81df8",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-119",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-119.json",
+      "sha256": "4618cef7306c04cfa70ac8b26002e491ce5f74008d1651f41d752c439682845b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-120",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-120.json",
+      "sha256": "81550c9fcd22eaa2ca0139e5cbbe7dc10ed9c9397db5ed82fd4077d238a373a2",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-121",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-121.json",
+      "sha256": "2b1b43b896acd646d93f6ce3e3e3a09ada36f1d7b8ef7a78342108e79df204f9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-122",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-122.json",
+      "sha256": "b7fb38b901bf7114c4826c30973db623f5a591b1c4b5e6e6d8500f474d9f307d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-123",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-123.json",
+      "sha256": "53fd1c2943a57a52795d666ac776850bdf920705d8425544087cd8afc2d64af3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-124",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-124.json",
+      "sha256": "4e61ea88ed3b3d31247b5603a9290f8d4483e366d6fe1763ceefee5af9ce3233",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-125",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-125.json",
+      "sha256": "9ae940fc5eed3f179f65e79b80593fe4b961689bc9d79465a55e0e5ec90fc411",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-126",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-126.json",
+      "sha256": "12fe2953c587ed41fd86d643f76a2d591da96e1c2cf55d703a23099f4a9906c1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-127",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-127.json",
+      "sha256": "cd7004cccded294915b8020e84cd624c69b9b47b3216e941564996042b2f7202",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-128",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-128.json",
+      "sha256": "a1da99537d3c6bb7c3b3cf0d3d167ca5083cb095353f70c5cd3f1e46c0c39f3d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-129",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-129.json",
+      "sha256": "924b51b3bb9f78a246e9c69559c306cfe48d588d65c3244dbc1d1092d83349a0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-130",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-130.json",
+      "sha256": "965b175ea8df54e70f0e9e442d139df4c1f9ec5b4c8d93b9b87587d33fb6da7d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-131",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-131.json",
+      "sha256": "68eb660e2c2656429df5efddb4eb200c376d6667b58af72951d00bc30445cf7e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-132",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-132.json",
+      "sha256": "d7d7e7c75adeb28171499f45225cf4e11ddad322eec2915ec33d11276d7a6c3a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-133",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-133.json",
+      "sha256": "fddb5d858c252765ccaa11c5d5475d0f7a4dd916efd1728842c52f776ec0cd98",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-134",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-134.json",
+      "sha256": "13eecc2cab6907903de27c45d09aa2ad834f2088b64def1591af92647057ebf0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-135",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-135.json",
+      "sha256": "9dcb3a32a8003e961e5a9c635abc67d05f4f17e3bd4fee4150a720c4c1a1014e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-136",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-136.json",
+      "sha256": "396179746b03f56b512067f243a6df14798483a8baabc5e178161a45ff9b741f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-137",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-137.json",
+      "sha256": "59a64f16b3e20e6f61d2947d61a206d4fcb75e446eed11e8dc8eef6cf7ceb9ad",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-138",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-138.json",
+      "sha256": "5d64a8279af42029016066e59a452c160645925f41d8f73f4083fc3d7d44cb3e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-139",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-139.json",
+      "sha256": "25c2febfd99ef9ce9c3bc4dc3e17f20dfc361731598510d6c77bd6d0e9f817fe",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-140",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-140.json",
+      "sha256": "b5751649901f93846f7f93163edb56f05762b5908096d9314b7c90a102e644cf",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-141",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-141.json",
+      "sha256": "0a33d1069092e43eaaf9b58a32f517f3e21ef48f810d31d7b76c57a5443ab689",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-142",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-142.json",
+      "sha256": "496950dd23a431c52b413cc334fc0dc22381c09292c4272f9a52009f95adbd61",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-143",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-143.json",
+      "sha256": "932ce597fa328a62c126042fe7b917ba3c7adb5e0549da8b90176ecf5446d196",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-144",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-144.json",
+      "sha256": "da7162b83ba5345d212e3a7bfea8baeb3c608cfc066a5c73a168867c9b61bad2",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-145",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-145.json",
+      "sha256": "f2c9a4c92a723b5c1c08bf6ba0eb1ee8ade294e104e83e672179f69caf6d0ece",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-146",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-146.json",
+      "sha256": "dba721e2360d12e5e013aaea7bae4a197a648972a1e7ee0247fcc31727bc960f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-147",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-147.json",
+      "sha256": "01183e6a329699b5a5851ac3f2cc93734e9f68523dffaa6f6a1b7c4301474ebf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-148",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-148.json",
+      "sha256": "52c0f15379923f40a3d6f598ab80caa3d1ed21276c3e3ab536c3d60c5077d9fb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-149",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-149.json",
+      "sha256": "34d120c7467de6ee54d530c9c065175a6e60e283846e926f9186fb3aafe3fcaf",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-150",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-150.json",
+      "sha256": "78cbe984ac9c9acf408dd8ba094738d7e26cb1fabd11d5290922b8d610fd2499",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-151",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-151.json",
+      "sha256": "7286c65191befe031ab7acdb959e61ff85da18591edf52175586b4b22f4aa8bd",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-152",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-152.json",
+      "sha256": "326a221135f40e5431e8e5c6e76720d433d748db7e577f197083e049c5e197de",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-153",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-153.json",
+      "sha256": "e1c3d7c1f93bd88c2622407163ed13b71ff9102b69313800a3b1ac06e2522f4a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-154",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-154.json",
+      "sha256": "61439bd40f6a497064b09526b86bd22ebe72580c0ab2d4cdf763953c03a17f92",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-155",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-155.json",
+      "sha256": "fda16c2e511308574990e18663a84e16dd0bfca7dfd911586c744601bded4b6e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-156",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-156.json",
+      "sha256": "f81c7a3525f1ff29f26a087cdc51dcf6df815f7abddecbcedada2d5b910de4bb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-157",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-157.json",
+      "sha256": "c1e668ab01f40c8e2ef447a5322f4646fb0b9fbb25fb432789f19e6ab5593921",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-158",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-158.json",
+      "sha256": "8dd6cc42cc61f469587c2653fbfc307f488ca79d70a94ad64ec61be1dee40dda",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-159",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-159.json",
+      "sha256": "56a7e9db4debe2907fbd5c965de6f51bce88fc789d0b0403a2cc784ef673e53f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-160",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-160.json",
+      "sha256": "0af7b269fb3d8aaaab6ec72ec40d41f3a3ebbec7347a613b94d8248d24a76566",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-161",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-161.json",
+      "sha256": "fd05ff9cc6a5953c1b6b77a40fe58699ca9339a6cbb08d9b9f43081fd5b100c2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-162",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-162.json",
+      "sha256": "39bb0c91cc7eee13010830033c265c05d202e87af2a9639143d47fbf4af7f0ea",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-163",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-163.json",
+      "sha256": "13375ed8c9fa7ab235a23e1ba277dc7bac83e2949855681b7ef7ab11c8ecb631",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-164",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-164.json",
+      "sha256": "08d068237b0a499960ab329bfe3dbf273b12928ae84aa2728c1ef83bb0604919",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-165",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-165.json",
+      "sha256": "8d2122187a81c211a6e838ae47de3393ee393a670f4e08f2b1503977067477f7",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-166",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-166.json",
+      "sha256": "bba0ca2d965fef9f16df4991f81d2de2e7e53ebaa2fb33f535c42e696b778dc0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-167",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-167.json",
+      "sha256": "b1077861a643b8d320a3806294f5018d668c0a9007b103a0decb294428fef1be",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-168",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-168.json",
+      "sha256": "e56196579513352c140d9e98b174b30576ace7676e3204340a1c246c055b415e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-169",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-169.json",
+      "sha256": "406246a06c5e78331ca5d5283838deea2e6344c432321cfdde89368a6c335894",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-170",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-170.json",
+      "sha256": "78dafebdff643026a8d57fbc3fc7e692b266758586c87dcdf676d7d75644d705",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-171",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-171.json",
+      "sha256": "fad89448a7db0ebeae3c454affd1a5b8ba8e0f5e27859fb9d01481e1a3e42ea8",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-172",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-172.json",
+      "sha256": "4d9e390c4b17e28be92bfa930982672aa34b18dfe278fbcdf92a615ef84e633d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-173",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-173.json",
+      "sha256": "a8baa826c233eb6ffffdeb8d435ffb2a829aaa1a9326865546aeeb264df31899",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-174",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-174.json",
+      "sha256": "5d481fcba5f839913325b5442089527b6e00e006c4cb404d576de50018c75f40",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-175",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-175.json",
+      "sha256": "98296f20348682267e2230ad0ca44e44981ea50c69c665f6e6afdfe60cf0e5df",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-176",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-176.json",
+      "sha256": "005b6876cdb39f240fda8b6b6344068f392fd67cf99668712872b13c3883e225",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-177",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-177.json",
+      "sha256": "0d2387d5d47efa8f58bb135f880bf83dca89babad175007624ebc10a9ade0b93",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-178",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-178.json",
+      "sha256": "653814c5149aa5bae633644ad69098b19ccce5e749c7c3949a476c10ff4b6c0a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-179",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-179.json",
+      "sha256": "db2e0da23905a09164317754c63bbdca696a0a87b6c4eafb38468a8f67922428",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-180",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-180.json",
+      "sha256": "442e31861aa05936240807125b61aaf31d9df39d4a601a28a44eadb55fb4c379",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-181",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-181.json",
+      "sha256": "804cd67a4994aee51c8bc3b93a7ff1999c89802959984beb69df48c4ad57272b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-182",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-182.json",
+      "sha256": "72014a2657399634fd52ed94bca34d795164c56627b69227064a93a23c4c6af2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-183",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-183.json",
+      "sha256": "2bf32cbfd8994a6e662b803633450a281f768605c798392157349722d03b189a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-184",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-184.json",
+      "sha256": "09e868578b37213b34fad6d804983ffb807e7e67218a470d13f51ab02bc85d19",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-185",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-185.json",
+      "sha256": "6fccbf9bf51506dbd35cf15e76c8f1a0638050342fe783f9171e85aa471106a3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-186",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-186.json",
+      "sha256": "6340e27c24edf7b3128a5ebbfaf6fcef38515c6f16d68d367cd566a81c6c3ca3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-187",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-187.json",
+      "sha256": "3b346f8349d867a2a40d23893d6d73fa4752fe5d67749f0504ef4f33b9b6d805",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-188",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-188.json",
+      "sha256": "ec28523179524b1637f4cf8d932688b8d59bea463433b64856fec6e870aa4e70",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-189",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-189.json",
+      "sha256": "41a655a3a73f10824a81b676ebe36c8cba396d94931f1a0ccc64ecb681b76a05",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-190",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-190.json",
+      "sha256": "28b63ea4084ba85df211d8a87fec2b2256cc80aff3bc1cda8cf8a054529b60db",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-191",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-191.json",
+      "sha256": "1b45dc1ddf94bed23eefc8c629c13553e8d5831e978216d5dbc0fbcb66247abf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-192",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-192.json",
+      "sha256": "a45affff5be6f99e89648c39012d6a2e73f885b55d90e2f5aeab4af194310cb7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-193",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-193.json",
+      "sha256": "b302de71596207813255a9b30122f4b3ffd4ab54c96f6c97880c6f58d9b639bb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-194",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-194.json",
+      "sha256": "e0145c60082bf69879d369e099de04132758b5a85d2dbddce74da34f9cb0ab7f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-195",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-195.json",
+      "sha256": "710912c366e2936d28368b662ddea3f661abedcae4bef3b2b06eadb65e92f5f0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-196",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-196.json",
+      "sha256": "20dd43dde74a34841c26e06c383949a5e66a47b9f1b803dcefcc8162c49371ee",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-197",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-197.json",
+      "sha256": "1829bb7c60e789c4b6c248a4aff664ee179444baf42b31ac54ab7a229ca4b117",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-198",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-198.json",
+      "sha256": "c04fd11dc7c0fe2b445f63a590adf970860fcced0d0ff3f883266afc987144c9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-199",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-199.json",
+      "sha256": "aee854b9af46c601389d798854173af16e8e70b68d3cc872b2f30500121337b6",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-200",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-200.json",
+      "sha256": "bb4d122587b27a18c167b482a71d27976d147e18fe78606f5b8f0b22f713283a",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-201",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-201.json",
+      "sha256": "ac2736e04af7cc584590278a2b1bb3928a872f5aa91cd7f3cba80a15f06c765d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-202",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-202.json",
+      "sha256": "4fb17c1a87df119e9366eff30ba877f3692442854cb7e8bc7b998198f3055846",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-203",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-203.json",
+      "sha256": "47fc5835998110e3d10cb086534fa6d60a908f07a90db251cb22f784e8cf3c96",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-204",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-204.json",
+      "sha256": "b619518f47597f5eb59ba397f12bc0f1bd6d0ecb6cd7ad9335419dd3ace2ece3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-205",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-205.json",
+      "sha256": "0e443dcba580ea8c57a983050571ab1f99b5886eca89c3b9bb2f52feb2a21556",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-206",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-206.json",
+      "sha256": "2d18414b045a1fcd28140936991feb13cc0fe930910253835f8d4210feb2ed67",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-207",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-207.json",
+      "sha256": "c20a7b76c806a8b71b36b00845f9d014923f7d319a2b35e5df989cf1a6b2f006",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-208",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-208.json",
+      "sha256": "2671a2a2377e54adab049f4f6ef72922b4829c3eb712ceb395d4ab7770d3d7e1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-209",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-209.json",
+      "sha256": "8bdb70ec8ac9b71a58c0b6747659a891c526d952180ec86ea786e94f94216a07",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-210",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-210.json",
+      "sha256": "15bb7991f7af6f0e3af69f4186fec28423a00becde9e11268a99da7f9c47b8ee",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-211",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-211.json",
+      "sha256": "ba4a396dd15dca06da5769c3d7206ae0732d66330324bfcd3295d287882ad627",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-212",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-212.json",
+      "sha256": "350b960cb6a61dae32a1a70a6e7d3284c70e446237062902a5b4c13051e68103",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-213",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-213.json",
+      "sha256": "d22c45f2262b0030f27b44760fcdbaed5ce4dccf5e245e7921c517e66c50f2f2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-214",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-214.json",
+      "sha256": "63187a346a87a23e62b8d39ff151a590edbacd71a281d0541dd1a702b7831981",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-215",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-215.json",
+      "sha256": "20a01675a8e7c2b95e37041b6a09a3c33a08c82100f9813d94059ff33528f43d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-216",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-216.json",
+      "sha256": "e00a22eaebd031e7efbb29ba0348a440f6ee2804dd5009241f6f63edbeed22a3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-217",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-217.json",
+      "sha256": "ca8a824f11d1689e181f36ef6d9ab9772536da504a42eba4966103ba3405f987",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-218",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-218.json",
+      "sha256": "14449a64ec726127420826a047f515f5c9a75cc26c4648c5c115e29cc59464c4",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-219",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-219.json",
+      "sha256": "c7b7e164755652aedce1819ce1dc430c741bc5aac64714d68f4a647ad8d55cd0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-220",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-220.json",
+      "sha256": "a2ce7b9de412500006383156d890d34c35ec5c2f3d587647eae2983e8a3b5f21",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-221",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-221.json",
+      "sha256": "d1e3919e17da345d3d75c39521b63f2bc0b5ac97510cb1f1fbbe6463f31be0f1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-222",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-222.json",
+      "sha256": "6ebbf0852794be4abf16bc94669b1de3d23982ef518a9a444d1d54246e1c1a45",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-223",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-223.json",
+      "sha256": "8e7bf2984bab4b292fb55a4199b06f96ea44c328834b56be332e6d13f942f717",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-224",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-224.json",
+      "sha256": "e3873eb3a30a771ddd4b3216424047c7f4762ae35457306dcc54f11d27f106bb",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-225",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-225.json",
+      "sha256": "50372a4c8ceb7ea423fc9d250bb81a2992b32f97a79caa06d40d205a0ae118e4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-226",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-226.json",
+      "sha256": "dbc1a82a28f25a250c3839633db733df183aa284fb84fe7a5aa01bd502eec9af",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-227",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-227.json",
+      "sha256": "68769fe0185008601fde4e3f924620f8a11eb743056c87cc084c311875a020eb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-228",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-228.json",
+      "sha256": "d997ded577d27b7c63e92ce7fb9ce9a9e057f257d02ac43082efa23dddb86c8b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-229",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-229.json",
+      "sha256": "da188ac6a234ccbc8d4421c45931d9ef1c58baa86719700344aa1df95e725924",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-230",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-230.json",
+      "sha256": "a5fc4bb303bd9a29d9893a8fb2abae9d5ad817078e436458f1d326c32513a777",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-231",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-231.json",
+      "sha256": "4ddf44352f72a5f1e3eed6f87b577f6fe5c933aca320df46df318fabc46446cf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-232",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-232.json",
+      "sha256": "7b33abc60cdb35831189dc99f032c3d8fb05f3db5e507793aa4af659a891b22c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-233",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-233.json",
+      "sha256": "f74c09cd963f65594d3c481da995aa3f550cf9e6d625321fdd4ff6837ee7f578",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-234",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-234.json",
+      "sha256": "49404426fc1d49afe212c6faaabc765c3a3c289bd6c49904f387ea6389b854c4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-235",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-235.json",
+      "sha256": "febbe7de9ec6641e8df7f08676d6ffcc0e2d0e77d7654520018eac184d04a1c3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-236",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-236.json",
+      "sha256": "ee36dc9ee3fb903781fe0a17145a72f73e21baee8b30bb2e262df8283014a4ac",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-237",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-237.json",
+      "sha256": "f04de57069e434a8d83ce80edbdb92504b75983c8932325b3ee0e37b3d154773",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-238",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-238.json",
+      "sha256": "841e293301adc14f799aef88f005ccaa64d01cdafe3c1f83b244dd905ad4463b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-239",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-239.json",
+      "sha256": "114abc0b6ff2f29c38475006c3547042ba3ce5bce0262ea9575672655ee25fdf",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-240",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-240.json",
+      "sha256": "b76f67cbf57d557ce2622909683c2ee1a0e8b7e8150f8bd94848eed29db5c507",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-241",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-241.json",
+      "sha256": "689d933a2a8a51a60c8c5d85eaad562cd86bb0476a56829e17b8dd7bc9dae64d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-242",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-242.json",
+      "sha256": "541d0c55598bf333a8cb01f1ed35c722bae411b1581bfb71a495537d8e70beb6",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-243",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-243.json",
+      "sha256": "1c6eff858ec9e990ade5bc1c437c33228323e0314e78d4bd82f55a06a9d8a147",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-244",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-244.json",
+      "sha256": "d9c9ab5b9feeea736c5077c8eed48eca0f53e9b3b886ab85eb041580a7d52a1e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-245",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-245.json",
+      "sha256": "dd996beb4660657ef723101b1d3b1f9389a75c97eaf163c048f1b8fcf67e1296",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-246",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-246.json",
+      "sha256": "6c7698877003287f1d049f8159bd4b045ef60b271461632cf59c2848d1786e1a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-247",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-247.json",
+      "sha256": "73de47b30fb3d47019ff2ca5516931b7341da16a3da0ba3228b279ca01c8a4d1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-248",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-248.json",
+      "sha256": "66e01d66eda4e5b545a76ffd57f567c7448313d9e36dfb181c0d027767a0adb0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-249",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-249.json",
+      "sha256": "ca3f182781963fe1db8027cf4c848a59c6e87dd9125f185c0352bcae548812ba",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-250",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-250.json",
+      "sha256": "d2b71b7c03ba19c4578b193f155661fd9239c804f5528523dd4b7362b61c5f74",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-251",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-251.json",
+      "sha256": "75df7d49f9ca4020beedcc0d2b1fd3e1b1c0b55182bd8f22482b261097808984",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-252",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-252.json",
+      "sha256": "1f91a232c98266da8d1807483eed90630f99fdb3a1acc482043b124822596f33",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-253",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-253.json",
+      "sha256": "0b1d3752123a3392a983cc9e6abb9178404ae086316f5d6e419804060836b996",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-254",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-254.json",
+      "sha256": "89be8672e0e85f82c53b284ff3e761e4d5923688c6e3ca0ea4411ecdc7807325",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-255",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-255.json",
+      "sha256": "bb72eb58f595fa47591e96bccd05e37dd67f7f6bee48e971a1d400ccd5d63090",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-256",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-256.json",
+      "sha256": "266c8e2f9aeeba8eb9a46b45d7f1d377a2af570ec324dac0e48f3bb2b8b56a2b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-257",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-257.json",
+      "sha256": "d988a988739aae5c83b6f66f4c87688e552be9843aa62941aad29b7dd229b2d4",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-258",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-258.json",
+      "sha256": "aa4fdd7f3843a27e6146d7dab562b5b4df641ea19eaeb9b43b24bf523aa8dc48",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-259",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-259.json",
+      "sha256": "4445278c37a337db489a7aaf43b0a3e3e4068ff6b8e283ec0a623cae6ea5cdf1",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-260",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-260.json",
+      "sha256": "7c223acd17789a7c973834c4a68e8ab5a18f0fadaac661de004195ac8adde918",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-261",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-261.json",
+      "sha256": "efebc42ad286939992bf1e5c02ea73d2c9f8a169f5aa7b85133f9e0307c392ed",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-262",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-262.json",
+      "sha256": "e813dadd97f6a0f32b40c20701f404cd205907f01410b237aa8ce91752fc5884",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-263",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-263.json",
+      "sha256": "b789cd9a21e6061b5147397abddf570cb8329874d5b842cee9862b59f200af15",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-264",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-264.json",
+      "sha256": "88f65106dbf7010a3e75acf256a0695250f903aa7a14d4234aa60474587c49d6",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-265",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-265.json",
+      "sha256": "ccf6ef96f8963c468c366aea5132e789f8c78a76c0155eaea057902f93218f1f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-266",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-266.json",
+      "sha256": "1ee2f83447f1fd5f81258baa4e9c2a86f991bceff105338acdb95d5cce7ab5a8",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-267",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-267.json",
+      "sha256": "cb0ce6bcdff1447b6be00554b578611d845ab17e9287c8aa085d7f8085e2f764",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-268",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-268.json",
+      "sha256": "b56877948e4bab44d2f09040858b46c89724229a1625363a10a8a3d1765e4e80",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-269",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-269.json",
+      "sha256": "3f233ec37caa8048d01255c74a7ae24cea698864a662145e957739816feaafb6",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-270",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-270.json",
+      "sha256": "4457c92a4d4bd90bc7b7689a1a6620c9643217edb4abd6fd2606713737e4c723",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-271",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-271.json",
+      "sha256": "af3e5fde6da8ae1008c559418d524282f95f260b4c47b9e1f57895c662ad10b3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-272",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-272.json",
+      "sha256": "2a357f8ba35dcae3e5fa6fc6d9cbfcab15cd3b595727abcdcda68b2a79afc976",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-273",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-273.json",
+      "sha256": "5d25a37acafd23025fb9c05494f127394cfde75f103e521a8365c573253a33cf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-274",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-274.json",
+      "sha256": "5f4430d0bb413cd2e4313374fc58cc5481b73b3f1e138b8a1a06dded9c250a1f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-275",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-275.json",
+      "sha256": "2a41191b2c26ff33e7e72b2803cc4c400788f73ae09945b7ee4c9ddad15ac67f",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-276",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-276.json",
+      "sha256": "d76ace6799c645e48ee8023d7c86b6a26a9c218da78259ae40e00b0769e00d85",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-277",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-277.json",
+      "sha256": "5a9a4e7e9c331691cc74c37667a2b1ad91b16aae9b1f8d7c5d28faccd5a60bbd",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-278",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-278.json",
+      "sha256": "e7a67c662a1ce36be105e804d0db149e85bef24561a380888c4f4897a8b81950",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-279",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-279.json",
+      "sha256": "b37bac4006678541283e59415ecfa438e528254d14109275d76d01d455171cd0",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-280",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-280.json",
+      "sha256": "0aab7c58cacdbcc222ca7d35707fe2f7126e175a72761fb93b502e5ab2155aef",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-281",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-281.json",
+      "sha256": "613ad588f45257ed2600e92c22a68e6b91657b0addbf2411a523673e99cdbcc4",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-282",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-282.json",
+      "sha256": "2a1e7b957f844262e180c17e9ad7a9ac6cd8eebc6a58f74bac2bcdf879b1bb18",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-283",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-283.json",
+      "sha256": "7f61ae0edea95d70d29f5afc9788f94cb55d74830944dcbe2811f7e1b5efc119",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-284",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-284.json",
+      "sha256": "732a38b8942b2ef399f9bbe47e57128f3d733abe4296064d135a1a86037ae109",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-285",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-285.json",
+      "sha256": "5b9a550a024d8455a0267b79a0748d4995bb68f2bf59132ea48bb1dc17efe102",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-286",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-286.json",
+      "sha256": "338a6784e005415fce7117dc29e5871e89b10dc75ea1ebda140b82116b875ff9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-287",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-287.json",
+      "sha256": "d83eba67d667a5c5268e4aa7d5f9c71774b5254ea1045db74286ec0700be4458",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-288",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-288.json",
+      "sha256": "0c4255926c181fbab8ca7761aa271ecad9563d40688ac0758a8ed389e1710172",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-289",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-289.json",
+      "sha256": "7aefc20b1a01182e6b7a5e56ebc04cc5ab94f960092f0ef4d9e0e73db3786d75",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-290",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-290.json",
+      "sha256": "c1866ac385301dbb74ddb1573b0da2a7483e96ff78444bcc330c8fd3ac178873",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-291",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-291.json",
+      "sha256": "c8c81d39ec744f3d32950ec1400c865b00161beb4ed8b8bc07adef868aef64c6",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-292",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-292.json",
+      "sha256": "aaf5f8da17e21a50c22664d0020480493a3ee5114c3f76cb008265a69cfedab0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-293",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-293.json",
+      "sha256": "0ad8c38cec603c6348cae221a423cb5c4cefcc28af0d0018cb5c764963af71c9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-294",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-294.json",
+      "sha256": "570f1f4b6fd014cb80f682430718c10157e138126283837f6380f5d8edc3995b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-295",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-295.json",
+      "sha256": "50d19a9d462971bde159b5097c697d60e5196e8cca632ea6aee6967923a59d25",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-296",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-296.json",
+      "sha256": "5f1539c003d48fa635a4422d90c99267c4e270a79aa1d0f99621e920fb52c609",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-297",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-297.json",
+      "sha256": "d3ecae938901caec7e0e8b715acc4e821b89fb88678a8b9b747400853b04d473",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-298",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-298.json",
+      "sha256": "d901d7063c8eb18ff6ce42f83cd57834d04bb1836dec2ea2def65290557c93be",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-299",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-299.json",
+      "sha256": "90f925400d1e0d31cf8ba93196ff757753fed73df76d77e77f7c6bcbb1d834e3",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-300",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-300.json",
+      "sha256": "6d5d8336e926abbcb5d894dd54e2b8b0e869f2d814314374a1821a5ca531cc25",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-301",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-301.json",
+      "sha256": "a8202e22352b65538fdcea63ef203b5fd0cfe7d466634464dc0323b58bdc9301",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-302",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-302.json",
+      "sha256": "a851a60a6ddaf5641c3103306e049d400ce554eddf9cd3b3f28fa1d7d42d863e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-303",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-303.json",
+      "sha256": "8fc69f4387469a277796c2316e8a78dcef887398a14acca55236f66f5e83329d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-304",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-304.json",
+      "sha256": "e65127b0efc48ede083b3192f1c7d3410cab550a04d9bea5dfdbef07c550c9aa",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-305",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-305.json",
+      "sha256": "c78166fda1378b398e2af93fef5dff6689eada35f8148a63c29d1a080c0fa88d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-306",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-306.json",
+      "sha256": "971c380e26ebe025b3158a668cc71bbfddf3171a1ee2ae674a6b9b104a937902",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-307",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-307.json",
+      "sha256": "08655f0f6d2143b5ce1e6202dd692abaca7dbe09c2c74bb550f58d732645f0de",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-308",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-308.json",
+      "sha256": "8a947f41fc38913763e420defcdbea424171a4ea6fa3edc318aeb8941beab8a3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-309",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-309.json",
+      "sha256": "0120881832f6fb89c3499d836f51f26669065e18dbd06d5704cd4b48f6804539",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-310",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-310.json",
+      "sha256": "a9e9ac611465e392a0bebd02742c700534f03c60b17551b80b54d26540022eb6",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-311",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-311.json",
+      "sha256": "79f2b47fe5a0945f12d7ca00ca38bcb31b7d0046c8559639c715b59855d85b18",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-312",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-312.json",
+      "sha256": "c5760c677a1e94d21b1ea6961e06491db3c757ecedd49007e2234880db0edfd0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-313",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-313.json",
+      "sha256": "31127dbe35a7806c0e5eb5c573397872ae09f7956bc36ec575a146ef579defdb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-314",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-314.json",
+      "sha256": "f2c9b745a5283aa77456c4c7f4f15aa8254060c12ae49468a8938edf00a75a07",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-315",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-315.json",
+      "sha256": "b726266095583ec42590eb998a6235d07b07367bb105b93f50e08b769fd9b765",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-316",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-316.json",
+      "sha256": "409b49c15d8ab884341a4278698c34da631e3ef824e41317196850bba81d0e10",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-317",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-317.json",
+      "sha256": "042d4b9b4d3301d13ce53d2256dc7a75c2743968b089200091980ca5d58c2885",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-318",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-318.json",
+      "sha256": "dc376bd08e55468eb7d8cf75df89fa8b382bb393c248999cf3c273fe84ddf1ed",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-319",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-319.json",
+      "sha256": "f31041a08e08ecefd19122bfee309081e4e45e497f17a6ee6ee00b211dbe5304",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-320",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-320.json",
+      "sha256": "6c4bdcaa176b98634183fbb90a34ba2c75ac71acc52a1e94726ebbe98e587908",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-321",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-321.json",
+      "sha256": "2264bef047c7efbc55ffc6c34fa486d38ba8b614399c9a843c1942f7f6a03b25",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-322",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-322.json",
+      "sha256": "03b3d7f9e2eaeff2b21accad7c1fc14a7242456e9e8f0ab7a7b9552bee77d021",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-323",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-323.json",
+      "sha256": "d4bc9c31e63ce4e9c01acc3cc70f463b7a917d1007340c946b2e794972562c9f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-324",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-324.json",
+      "sha256": "170ce97eae242f35cfd0db4018c5a8662a131264b9c138ca5ace4a475988d1d2",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-325",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-325.json",
+      "sha256": "d15a2d17b2034c0c3cdb39eee6765ce877fdb4a1885fbfe57b9aa2a72ac7a87e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-326",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-326.json",
+      "sha256": "c472070632d64afce1a97855721e5d56bb800ddf0f36b7dfde27104d67182854",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-327",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-327.json",
+      "sha256": "d8869ed080e7da7e13e8738a9b94505c2c2a856c8f256eb727315387fb0db754",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-328",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-328.json",
+      "sha256": "8d1ddb949deb6223892f919d179a242c11fc1797eabb3a498584c33a5b28a663",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-329",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-329.json",
+      "sha256": "4f4f2903f8adb01c402060730babc1ec9216d8afac17a41be797f369e46bfd10",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-330",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-330.json",
+      "sha256": "fe72b0d08eaf773c0ecefb4fc005638cbc84e9b71a2c1989ee96a6ec96f37194",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-331",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-331.json",
+      "sha256": "5d18d1074d9e91876dc4f7acd99a3ffbd056c436b597ba6d4ae13a92801342e1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-332",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-332.json",
+      "sha256": "3ffb94c0ec0cd0b41d48cc9ec206334b7d03d05b8ca3023fc082e78a1890a8a3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-333",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-333.json",
+      "sha256": "87fafb85f69b34ad6221e05787de3463b6b4bf2086db9e7c0acf41acbbc04158",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-334",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-334.json",
+      "sha256": "58effb16f90ba474680b3c288e384b4cb82de6d407ce3d3c652969cbd797844d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-335",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-335.json",
+      "sha256": "81a523a537574340be0e2a850c7731bbc282e5427b0b99c044dba5cb42e02ddd",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-336",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-336.json",
+      "sha256": "15292b7f8a7455188db00fbd791b6a0c3b0a8d9c0604cd99b67b74a3bb6af73e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-337",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-337.json",
+      "sha256": "4fcd18f2ff537c2c28d763f1c0270c6d4509f2bc85d5c8a57cf5e3ae68e58b03",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-338",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-338.json",
+      "sha256": "71668482bd01f12035ba44acd408effb0f74d5847e01ea92a50967da0501f9aa",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-339",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-339.json",
+      "sha256": "ae9b2ed14cfe63aa026a553001d1b2d7a49ba67cd55cf8ea70109e075f9dd2da",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-340",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-340.json",
+      "sha256": "a86afde0dc911e8250b3881d4dc487374545597ba81e4b0a250ce3f3ca95b7e7",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-341",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-341.json",
+      "sha256": "fc324a1c2328b175a991eb95334d5f7876cbc039ac5d9612ee298685671b613a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-342",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-342.json",
+      "sha256": "5892ad8594c375a02fd526d8966e4ec88bb07da4bc20a41d82d65e36e1bcbc2e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-343",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-343.json",
+      "sha256": "0a8100bfc4f78912ca79d845807c58e71f5a33f817ed452045b91a6b9bc2474c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-344",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-344.json",
+      "sha256": "ae90707917a12a871476896bb2317ff16e731fbc934e3cf4bf9fad048965dac9",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-345",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-345.json",
+      "sha256": "1e91118f594ac9c47e12843885d3756ade3f044cf815d184499f05e22e050d63",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-346",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-346.json",
+      "sha256": "39c30d70adb1ffe0e0129155d14a00b082e695e781a6829063c3e193daf3448e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-347",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-347.json",
+      "sha256": "e3d636fca543afff248354fb2001281450c2806a3a4e4d591416a8f630d4b1fa",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-348",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-348.json",
+      "sha256": "f7fcacb4cedb50cae7eac4bb59f51caf103d2a6bebaee21f2ef9ab733b9ba821",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-349",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-349.json",
+      "sha256": "3b05739ae6874ae8be5f55c5d7311d9601d78a7dbc0c50d3042d469b7f9f5496",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-350",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-350.json",
+      "sha256": "b8ffc2afab6fa49d02cd5873f00aebf91a8153317720d3d89683cd70d1af44f4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-351",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-351.json",
+      "sha256": "ca527f783ea5e7c6b51bc5f803dec21bb957a4a179d3921934d4876e6f8ed5f7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-352",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-352.json",
+      "sha256": "98d9b90b85892bf9d6143c06007bc6065fd1b05c6292b6d0284fb7445f54b3ad",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-353",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-353.json",
+      "sha256": "9e159184491bd4ee1efb509fa62e953d7f4865a6d4ed89450191623029ece57b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-354",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-354.json",
+      "sha256": "fe466f579b851c47a99dce988dc15c4bfabefecb567ff477f12db074b2f3e934",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-355",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-355.json",
+      "sha256": "228a3d17f48c351f394ede63cfa64e57878cddfd82ca1f6926642d0eb89cd54a",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-356",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-356.json",
+      "sha256": "b07b199c40dcdcdf27d9be4d256ac883b530f721a628a40b513ad5576f44d7b3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-357",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-357.json",
+      "sha256": "514bd42b112a44f1f6dd4f220788294e39cde1076f486c3615ba7f15d40669b7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-358",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-358.json",
+      "sha256": "18547f9231b67945b38162cdf751101a92c688533a9f90254cbccdab6214f5c2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-359",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-359.json",
+      "sha256": "9344c5cc3bca2a49ffa358b31865bac8239e05fd72f9a39bca71a304ea8f1c90",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-360",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-360.json",
+      "sha256": "86f958219f7362b1474faabbeaffff606d54603e7c5f4c513251705760acacc9",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-361",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-361.json",
+      "sha256": "e24c337c6ddfddbe417a3658937e7201b5b937ac24171bee1e5a7b7bc70ac682",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-362",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-362.json",
+      "sha256": "eb4f4f9eda102a9ce61f93eb5fc8f2dab5da49a59678ed0509f5ef4b63c06728",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-363",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-363.json",
+      "sha256": "7fa672f2d0be352cafb8d0ecaeb2a8893353d432e079b1e07d862da0efd299a8",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-364",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-364.json",
+      "sha256": "5574771232e68939f73f83f5a0d73628d7f45d85ff6cb2f579fce7638289036e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-365",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-365.json",
+      "sha256": "f3d86b5b10814925677781a0bc28a226c70c6424f2b670afe71cb897b1926984",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-366",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-366.json",
+      "sha256": "958c2bca284e1ee0b6c3f9fb0cd124099c07194db9b2b4189ca8b9acd5e7336f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-367",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-367.json",
+      "sha256": "e3683c8c5df7ac69bb827c83a36caf7abf45146f5148d9b2ad998b219e2fa42d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-368",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-368.json",
+      "sha256": "a3e642ee333323ddd542ea13903f8d21d901fe978409b73c2278ee4aa6171f23",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-369",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-369.json",
+      "sha256": "1c31a0ada75744cd00d97ab421040a75ceab9d93ef2e1b384e70dff37d514687",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-370",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-370.json",
+      "sha256": "e1cb6e6bbeb02f65f90bed0b5237d8bf85428c7fc4156b186a1d7134cc45b597",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-371",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-371.json",
+      "sha256": "89236664008e5d69d789313b0984965fee55663b149b08f74dd4eb8e3f0f56c3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-372",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-372.json",
+      "sha256": "bf980c45f5d48538851060284b1d7346898a813d1aa1050411cbe6cf030bedae",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-373",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-373.json",
+      "sha256": "bdf226a520f42b49d005f6cd316aff29882bd9e41ceaf785c2af39e208b083bf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-374",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-374.json",
+      "sha256": "f827621156290bb626cce3752e91c2721e46c9def9bda4d705f3b32305943713",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-375",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-375.json",
+      "sha256": "313011bd62b7fe28ea2fe85442af41252c2f60858b5b0d4927cf6386b543d8ff",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-376",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-376.json",
+      "sha256": "8ea42b84ef3129297653fd6cc7bd72f6a1429185cb4790154143d623bb05b0a1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-377",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-377.json",
+      "sha256": "96f8693e025b45517e0b1a178e53ae49c0a0c37314353e0569041365689cef20",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-378",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-378.json",
+      "sha256": "beb676be173663d6f8ec43d639c4042bc2ea59382b212cb35fda3b9a067d7389",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-379",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-379.json",
+      "sha256": "e0f60edff4a03821c47f88b0561eb5f6f14de0ac01802bd67037356142cd0e06",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-380",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-380.json",
+      "sha256": "92f4193a7c31f8410a4709b05160c64c11a558bf30423e54cf299c9916ccf989",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-381",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-381.json",
+      "sha256": "554c874795d9ec4ae07195a645d6f0485af4252340e8ac42c563a9cf1fe1f156",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-382",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-382.json",
+      "sha256": "98bce78e3c9d39c542015306a7ebcecdcbff6f940f6099b2c7a9879a0c6ada80",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-383",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-383.json",
+      "sha256": "07c4362669480bab86a108b0d0487acc03ccba9a54ee7542458ddb5a4d8b3c32",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-384",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-384.json",
+      "sha256": "03098d7a9c75bbe7feaa8a7433595d9d2684218c7a70493c9ccf26dc0f230b97",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-385",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-385.json",
+      "sha256": "89e940e5cc91c46056f6f9f64ebe694825ac2092c705b6913cbdec159fd2c3bd",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-386",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-386.json",
+      "sha256": "faf18af8b5f655d12efb5f4068d418cf2b51490fb8b404185b29fda6d8174d3e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-387",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-387.json",
+      "sha256": "5626083ba94ae9c32537b8b628b3016b455a9f2bc923e73131903b401b2bce24",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-388",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-388.json",
+      "sha256": "40953e106211ac0a1681cf5d92ea95fe1ad4a11774220348347b596e2055b9aa",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-389",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-389.json",
+      "sha256": "8b13632cae8291c946afa209a3d41462feeac7fcb8db497ba08ab09f9f42bd45",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-390",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-390.json",
+      "sha256": "12ec1a1cbb1348409b0b2a7d5fd599a81d84fcd97cbfd2a05e40d6ae26b0c17d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-391",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-391.json",
+      "sha256": "6ad1b16214fa5b8f6a10dc5218c31cf7c191c3b54b8d4fe3602c78e5a4265c1a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-392",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-392.json",
+      "sha256": "dbdae6ed205e3cf328c5e063f746d0f36333c4027bfd809f9c1757252a96353f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-393",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-393.json",
+      "sha256": "b595e134cd7848fe5cfea480d102e6235039ae8b9034b46a8d2f770783935b33",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-394",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-394.json",
+      "sha256": "7a9a13e5ae12a0ce9f82ac634a955622a9617742b774e2307f827f0c485a6dbc",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-395",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-395.json",
+      "sha256": "d99361f67223ebee155dacd8ec2b6a05f28eee6aa62040e0d96e549d36b69ce4",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-396",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-396.json",
+      "sha256": "35e84196405242b9b0e0625c70b2deb0e9d43cfbf8accfc7b28618c260d2b8a2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-397",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-397.json",
+      "sha256": "2dd64a12d8bd9b317e332cf4c2ccf1e67838370af9b4364c69b3bbd2acec34e3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-398",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-398.json",
+      "sha256": "7af17c4fc3972268c1b54fb186924a2a942114c6d517c1177269abaa56f9b045",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-399",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-399.json",
+      "sha256": "5d8cebbd2f785193e4509f31cd70caad5ed85912f35164e231a2f3e79b83729b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-400",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-400.json",
+      "sha256": "f8a648b70b43d958e0040588ec91a1f85213bf30f3581037ccfc890c90337e70",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-401",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-401.json",
+      "sha256": "172a5b0547274aadc89d0be002f036ca76ab6bcd9f633c7817f8c4fc164cde3b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-402",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-402.json",
+      "sha256": "aca91eed62d098460edc40f3bacf9400a18df5ffaa467a565099f2beabb6a152",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-403",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-403.json",
+      "sha256": "1e3f18040a8b4a5cb3d715c2931ec3b3dc0dcf5c9e75fc6ff20c08d6ee2137b9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-404",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-404.json",
+      "sha256": "a1df04f858c9b339ac3b302d72396cd3f2772f92bcfb2b1e6d9d620f8a457eed",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-405",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-405.json",
+      "sha256": "6f16be546f30670733913cd17115eba556b65855ddea6ffaae3669ff6ab3ddab",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-406",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-406.json",
+      "sha256": "27ed7638387ff930ed85df0fcc971b040a6be62091f0740f2dab0913d94c8b69",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-407",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-407.json",
+      "sha256": "20b1fab176b33e1120e1324a52bb30fed73617fe969fc0d47a5c86be88a23dd5",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-408",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-408.json",
+      "sha256": "0fb66492d7564b60785fe943469c5a089907ae363c10c5b01cc63986d57fbd13",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-409",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-409.json",
+      "sha256": "cb3987d82dc32870b49d0d976d5b057d1a79778ff938f6dad6a7c4821972d7db",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-410",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-410.json",
+      "sha256": "3b5cfce3c5b774b8f8a366850b60c55fd9dafee550434ddcc379aade16110383",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-411",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-411.json",
+      "sha256": "0281c82e79086693ec93ba0a48fcdbdd93038782888f8bdbb9fd43d9ca1c28fd",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-412",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-412.json",
+      "sha256": "947a114fe54d6ac74d0aac0003a01c6109e716c6596e5c0cb52c8738bef4f8a6",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-413",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-413.json",
+      "sha256": "9336744467b8348d1ca512359edee2422af5cd14e0e7faf04bfcd50ddaa6b900",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-414",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-414.json",
+      "sha256": "01579ddbcafc5c56509858202f07ef5c139bc2e30863783b9acdede0620d0d65",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-415",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-415.json",
+      "sha256": "71203b4fa8ec9f2f011f85b4d23188b1d9d4f2f4832637c63787e2d959c25efb",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-416",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-416.json",
+      "sha256": "7b76f3631a896ee5014826799e64c8be1ae6aba8bf0ebf046b1b0c3c263a0943",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-417",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-417.json",
+      "sha256": "547860d1a0851ef1c3629072216851d23c98a946a9c52dbc968d2e3f392796c8",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-418",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-418.json",
+      "sha256": "e146916d996e26d4c3e8332b5166569b948ef7f48b4cf445640c8d932ef9702d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-419",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-419.json",
+      "sha256": "d0375b003d14c4a549ea5e9e5c8c6ef646e2af59e166e74eef8a4215dfa88625",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-420",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-420.json",
+      "sha256": "1d8c6bc844a4406cc2a13f2d2e89d2583960f5f18a6d38236a5d6d967e900f0b",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-421",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-421.json",
+      "sha256": "afcec4cd2ada560bba8adaa963d0057c71d07cce21fb467312579f6a4b9bc10b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-422",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-422.json",
+      "sha256": "cf50e26b3a93b1720708e474248749664e37ef4df739b81883485dce8bb07b5e",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-423",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-423.json",
+      "sha256": "bc19d644f74775d0609a684642489258df43a581acd198f027fddf84fa55aaf2",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-424",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-424.json",
+      "sha256": "f34782ed48837f8c93caf1520b44b5b6d5e9c723443dde6ddf4c7008865b8958",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-425",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-425.json",
+      "sha256": "d0c87e670a2bafcb43819157f1aeeea4e4bf7795eec91925e8d60bc7e14a5004",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-426",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-426.json",
+      "sha256": "e4666743005156e1292fc0b0750bbfdf6188d5104a1a940032c1ba8c26cb8a63",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-427",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-427.json",
+      "sha256": "1e744927060ace803507f2e48579dda1b2bf56c568b5a043b4c4a5eaeefb5050",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-428",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-428.json",
+      "sha256": "475bd5de347e295cbcb3a86bf60b6ecfac76cc486f6ccb3e4e8eae52d4d47bfb",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-429",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-429.json",
+      "sha256": "d0143092510361ed26345247d966cd40dd711467bb8efa4a39e9bb3ab3e42eb8",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-430",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-430.json",
+      "sha256": "b1a8c924f16bcfdddc713ff28f0b7b3e5adc9625a53ac30eb3475dba0ede35dc",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-431",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-431.json",
+      "sha256": "8f116660bd9540e6254639b13c04c9f7a50d6bc1a0e5136a6e07929d850853aa",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-432",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-432.json",
+      "sha256": "ae76c5cd91266c55b85767b83e7bf06fcacd687aecadcabac9a84a0bac66f2f0",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-433",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-433.json",
+      "sha256": "245d9f55086f7905aa0a316221b4ca0b0a324f44470332ad6c2b6f5716868c5b",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-434",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-434.json",
+      "sha256": "aa949514bf5a145e04fefc85e804fe6c27fcbc0f89d9f3dfc408841b3fcbe274",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-435",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-435.json",
+      "sha256": "8a65812bbd9ce43d65474bfd1a5213cd2ec0b6c257560a7f5632a671c6911399",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-436",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-436.json",
+      "sha256": "e39fb71a3d274f04c31535c51da8f8af42e3dea64ff9d04a0d8c65b7b83ba53d",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-437",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-437.json",
+      "sha256": "430113e703ce93131d74a863c1f20ffe5d3df4a1288d12989a95278f75310bc3",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-438",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-438.json",
+      "sha256": "3ff0015f0f75e2b3c1097bc27c99f9b282fa01997934f82a47721c2bfea3a0a7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-439",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-439.json",
+      "sha256": "456558428bf33aeda23a8cd626b25723550881b715072db6acbd53e2f3a8280e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-440",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-440.json",
+      "sha256": "901094f3a04284b660d25fbd83185fbf2c08562d391f471e39e15a85e63aee9d",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-441",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-441.json",
+      "sha256": "b4f6b2eb79611a824a19ab6c70cf03bb14d195f05544cf03e240313168fb49cc",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-442",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-442.json",
+      "sha256": "ca19dff967dca6433fbc1e9624f63ee78f7b48bcbb26e99c1101c0a7f5d77eb1",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-443",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-443.json",
+      "sha256": "c6ca9fc3770dfabb69d33f7378f1f7b767b3a7b64ed5ebf7a829884e5bcd77e4",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-444",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-444.json",
+      "sha256": "526cc4d0d8d8fd68c7dd525fb7e69f8135195307bbe98b4fb418d56ae8271244",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-445",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-445.json",
+      "sha256": "2f05fedc2c6f17ad35d93a62014e20b24c20db1f37ea929c8615e2835d26f85a",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-446",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-446.json",
+      "sha256": "22c60bedcc1aa08b5f878a3453a94aa6bb662b835df212d51a4fe2e00fff0063",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-447",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-447.json",
+      "sha256": "4f9bfbbf99bf9140139461c6ca479b87436eb72536e82ec693f2432455214543",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-448",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-448.json",
+      "sha256": "f2e0c41f1bd1b2264e85246d10850f6deb0a41a86c3fdbfbd1af8e4256b89277",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-449",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-449.json",
+      "sha256": "acdeb1861982e0780c4d99c7ce78d59272702bd8be97a17fd163fcb188a483d5",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-450",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-450.json",
+      "sha256": "2d647e094a39534adf690d1cbe058f4d314b9f5b530df67ce21dfefe073e2859",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-451",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-451.json",
+      "sha256": "61449a5eed587196589587342f1280834377da649c3c21f43d878e4c2518f79f",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-452",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-452.json",
+      "sha256": "01553b4568e74f3424fa41f69e5b24aa731214fde676a7ec535c2f38bec315e7",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-453",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-453.json",
+      "sha256": "1f2a45f98264343684b3ab9ba1d05d9359ae54d79af22ec402a8312d533e6bdd",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-454",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-454.json",
+      "sha256": "d0247d2fbae06bf257d3e5c4eb883e20e3f57539830c5e31a50bff9cfb005852",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-455",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-455.json",
+      "sha256": "1af1bf5645fa95114cea25b7f2a11c735a3539c52ccf8f9b447457394724cb02",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-456",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-456.json",
+      "sha256": "4e2f40a4f6e30dda11141fb007f6b29c7a86dbb2f0b859f17a11921d653677fa",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-457",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-457.json",
+      "sha256": "e3e256fe6c4a7286e232d9d9c503dafbaf107528a275cccc35165f42adeff456",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-458",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-458.json",
+      "sha256": "fa86bd7fe784dd036d492ab057aed9372adb2c762aad975381c8cea41b95fe9c",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-459",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-459.json",
+      "sha256": "f83954508ef7ded5c4e9a39d6e9c77950ef0b4cea9c255235ea7bdcdc7fc48fe",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-460",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-460.json",
+      "sha256": "fbee634f25d2bab570dd54e5bcea3f3e1055f5f8e6e92e7a6f2b6d00d1642e01",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Architecture-wording",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-461",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-461.json",
+      "sha256": "bd8364fb2a25cb458031ee088619751fce329459c7ac8206fad44aca33ba63de",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-462",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-462.json",
+      "sha256": "d045df01bbacded2704d28e0183848d725e0b33623236e6cf10c1c2a3f376bef",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-463",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-463.json",
+      "sha256": "a97bcab3ed61a3c2118c425995f17fbd6007ca76ed842aa6d6c3837776b4a9c6",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-464",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-464.json",
+      "sha256": "c84cea82e8cdf27e45f1a609632ba677ac89764366d49e4a5f753ebe91a58648",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-465",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-465.json",
+      "sha256": "43d0b030402209712cbad23de898becb7801ee9a2c59d0530ec7da1d7969f5fc",
+      "outcome": "denied_control_confirmed",
+      "review_role": "public-reader",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-466",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-466.json",
+      "sha256": "5b5f4ffaf35326c7931d9becf833d38bbd85ff10bb727b2b7cb257d8b3b12fcf",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "adversarial-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-467",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-467.json",
+      "sha256": "113711341c0cb90a99af280facc2f53995398c5aa377d764425242f43d5248a9",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Covenant-publication",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-468",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-468.json",
+      "sha256": "eb33a254a5765c6d5a430b2a946840cbcd570914f6edd9a578f1850f77bd1452",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-469",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-469.json",
+      "sha256": "12dac9a7f66827a740892e34c18db0a18f25e13e47b1b65c1e4bd8a5d264e688",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-470",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-470.json",
+      "sha256": "62e504703224e58e71ef1550e1c5c7b2434a474886968daad21c4b8f2142fee2",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-471",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-471.json",
+      "sha256": "cc466db784d50996cae96e821a5cbd6233b1b059d6c38a23a6558e206b297634",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Command-readback",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-472",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-472.json",
+      "sha256": "c22aee13243d2790b2f8b39177b6357dfbcc9b497c2ce8dd87bd1325b7202f6a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "retraction-review",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-473",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-473.json",
+      "sha256": "dd788c9df343abdca8d1f586fa14f78b3e3cf72802e5aaa2c81b11fd6e02db50",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "public-reader",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-474",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-474.json",
+      "sha256": "086bebde1c9ca15100d2c1a9e3058eeb3f8df4fe3153d0530dd775ef069339b8",
+      "outcome": "denied_control_confirmed",
+      "review_role": "adversarial-wording",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-475",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-475.json",
+      "sha256": "db6b3d65ffe7d14de4310be7fda332508916d4c3aeb304f0a1d7a3c8a43f0d59",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Covenant-publication",
+      "candidate_id": "exact-broad-rsi-control"
+    },
+    {
+      "node_id": "rirbg-node-476",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-476.json",
+      "sha256": "8fddb06ce89089a5b0ade01c48286470ede259626c7a91282b2f89eb20ef6996",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Architecture-wording",
+      "candidate_id": "current-approved-counterexample-boundary"
+    },
+    {
+      "node_id": "rirbg-node-477",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-477.json",
+      "sha256": "1890e8b983e8db98a39ccf7a934d76fe851ad1ba9a1672c681ab159b715e2bd5",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Sentinel-public-risk",
+      "candidate_id": "reviewed-boundary-generalization"
+    },
+    {
+      "node_id": "rirbg-node-478",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-478.json",
+      "sha256": "2662f47d69ceef4154c0a195749d23dab4d19386fe8b968611abe08ca224aa2a",
+      "outcome": "review_passed_for_narrow_boundary_evidence",
+      "review_role": "Promoter-verdict",
+      "candidate_id": "bounded-review-generalization-evidence"
+    },
+    {
+      "node_id": "rirbg-node-479",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-479.json",
+      "sha256": "28ef57ce774c341c872c2ff8bf6c9f1f602a64e52e4eb1c769badfc00c54a176",
+      "outcome": "denied_control_confirmed",
+      "review_role": "Command-readback",
+      "candidate_id": "stronger-recursive-improvement-control"
+    },
+    {
+      "node_id": "rirbg-node-480",
+      "path": "docs/evidence/recursive-improvement-reviewed-boundary-generalization/nodes/rirbg-node-480.json",
+      "sha256": "f9e2ca177a65413a38d6098d5e009086ddfaa6b56abde4207e5a89592ffe629e",
+      "outcome": "denied_control_confirmed",
+      "review_role": "retraction-review",
+      "candidate_id": "exact-broad-rsi-control"
+    }
+  ],
+  "reproducibility": {
+    "runbook": "README.md",
+    "inputs": [
+      "prior public evidence index for recursive-improvement-claim-boundary-counterexample",
+      "Atlas workgraph summary",
+      "this evidence index"
+    ],
+    "verification": [
+      "json syntax",
+      "public safety scan",
+      "stale-language scan",
+      "GitHub CI"
+    ]
+  }
+}

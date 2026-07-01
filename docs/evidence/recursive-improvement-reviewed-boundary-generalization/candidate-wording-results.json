@@ -1,0 +1,56 @@
+{
+  "schema": "ao.claim-wording-results.v0.1",
+  "mission": "recursive-improvement-reviewed-boundary-generalization",
+  "candidates": [
+    {
+      "id": "current-approved-counterexample-boundary",
+      "text": "AO has public-safe bounded causal-chain evidence with counterexample-tested claim boundaries; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_control",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve",
+      "architecture": "approve",
+      "sentinel": "clear"
+    },
+    {
+      "id": "reviewed-boundary-generalization",
+      "text": "AO has public-safe reviewed causal-chain boundary generalization evidence across multiple independent claim-review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve_narrow",
+      "architecture": "approve_narrow",
+      "sentinel": "clear_narrow"
+    },
+    {
+      "id": "bounded-review-generalization-evidence",
+      "text": "AO has public-safe evidence that bounded causal-chain claim boundaries generalize across independent review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow",
+      "public_reader": "pass",
+      "adversarial": "pass",
+      "covenant": "approve_narrow",
+      "architecture": "approve_narrow",
+      "sentinel": "clear_narrow"
+    },
+    {
+      "id": "stronger-recursive-improvement-control",
+      "text": "AO has stronger recursive-improvement evidence across governed public-safe review roles.",
+      "result": "denied",
+      "public_reader": "fail_capability_adjacent",
+      "adversarial": "fail_overbreadth",
+      "covenant": "deny",
+      "architecture": "deny",
+      "sentinel": "hold"
+    },
+    {
+      "id": "exact-broad-rsi-control",
+      "text": "AO has proven broad RSI for public claim publication across the governed AO stack.",
+      "result": "denied",
+      "public_reader": "fail_overbroad",
+      "adversarial": "fail_overbreadth",
+      "covenant": "deny",
+      "architecture": "deny",
+      "sentinel": "hold"
+    }
+  ]
+}
