@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "node_id": "risc-node-191",
+  "task_id": "risc-node-191-task",
+  "status": "completed",
+  "phase": "Promoter verdict packet",
+  "review_role": "public-reader",
+  "candidate_wording_id": "current-reviewed-boundary-wording",
+  "candidate_result": "approved_control",
+  "safe_to_execute": true,
+  "public_safe": true,
+  "evidence_summary": "Promoter verdict packet completed for public-reader; wording result approved_control.",
+  "gate_results": {
+    "public_reader": "clear",
+    "adversarial_wording": "pass",
+    "Covenant": "approved_existing_narrow_wording",
+    "Architecture": "approved_existing_narrow_wording",
+    "Sentinel": "clear_existing_narrow_wording",
+    "rollback": "retraction_path_available",
+    "stale_language": "passed",
+    "public_safety": "passed"
+  },
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "stronger recursive-improvement wording remains denied unless exact gates approve",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied"
+  ],
+  "rollback_record": "retract candidate wording before publication if any gate fails"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "node_id": "risc-node-107",
+  "task_id": "risc-node-107-task",
+  "status": "completed",
+  "phase": "public-reader setup",
+  "review_role": "Command",
+  "candidate_wording_id": "safe-intermediate-causal-review-wording",
+  "candidate_result": "approved_narrow_intermediate",
+  "safe_to_execute": true,
+  "public_safe": true,
+  "evidence_summary": "public-reader setup completed for Command; wording result approved_narrow_intermediate.",
+  "gate_results": {
+    "public_reader": "approves_exact_boundary",
+    "adversarial_wording": "pass_no_overbreadth",
+    "Covenant": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+    "Architecture": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+    "Sentinel": "clear_narrow_intermediate_causal_review_claim_hold_stronger_recursive_improvement_and_broad_RSI",
+    "rollback": "retraction_path_available",
+    "stale_language": "passed",
+    "public_safety": "passed"
+  },
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "stronger recursive-improvement wording remains denied unless exact gates approve",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied"
+  ],
+  "rollback_record": "retract candidate wording before publication if any gate fails"
+}

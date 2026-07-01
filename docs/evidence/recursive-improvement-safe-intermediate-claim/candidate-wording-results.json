@@ -1,0 +1,59 @@
+{
+  "schema": "ao.foundry.wording-results.v0.1",
+  "mission": "recursive-improvement-safe-intermediate-claim",
+  "candidate_wordings": [
+    {
+      "id": "current-reviewed-boundary-wording",
+      "text": "AO has public-safe reviewed causal-chain boundary generalization evidence across multiple independent claim-review roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_control",
+      "public_reader": "clear",
+      "adversarial_wording": "pass",
+      "covenant": "approved_existing_narrow_wording",
+      "architecture": "approved_existing_narrow_wording",
+      "sentinel": "clear_existing_narrow_wording"
+    },
+    {
+      "id": "safe-intermediate-causal-review-wording",
+      "text": "AO has public-safe intermediate causal-review evidence that bounded improvement evidence can guide and constrain later claim review across independent roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow_intermediate",
+      "public_reader": "approves_exact_boundary",
+      "adversarial_wording": "pass_no_overbreadth",
+      "covenant": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+      "architecture": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+      "sentinel": "clear_narrow_intermediate_causal_review_claim_hold_stronger_recursive_improvement_and_broad_RSI"
+    },
+    {
+      "id": "prior-bounded-results-review-precision-wording",
+      "text": "AO has public-safe evidence that prior bounded improvement results improve later claim-review precision under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "result": "approved_narrow_fallback",
+      "public_reader": "approves_exact_boundary",
+      "adversarial_wording": "pass_no_overbreadth",
+      "covenant": "approve_narrow_review_precision_wording_deny_stronger_recursive_improvement_and_broad_RSI",
+      "architecture": "approve_narrow_review_precision_wording_deny_stronger_recursive_improvement_and_broad_RSI",
+      "sentinel": "clear_narrow_review_precision_wording_hold_stronger_recursive_improvement_and_broad_RSI"
+    },
+    {
+      "id": "stronger-recursive-improvement-control",
+      "text": "AO has stronger recursive-improvement evidence across governed claim-review roles, with denied surfaces still excluded.",
+      "result": "denied_control",
+      "public_reader": "denies_capability_adjacent_implication",
+      "adversarial_wording": "flags_capability_adjacency",
+      "covenant": "deny_stronger_recursive_improvement_publication",
+      "architecture": "deny_stronger_recursive_improvement_wording",
+      "sentinel": "hold_stronger_recursive_improvement_public_risk"
+    },
+    {
+      "id": "exact-broad-rsi-control",
+      "text": "AO has proven broad RSI for public claim publication across the governed AO stack.",
+      "result": "denied_control",
+      "public_reader": "denies_overbreadth",
+      "adversarial_wording": "flags_overbreadth",
+      "covenant": "deny_broad_RSI_claim_publication",
+      "architecture": "deny_broad_RSI_wording",
+      "sentinel": "hold_broad_RSI_public_risk"
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe intermediate causal-review evidence that bounded improvement evidence can guide and constrain later claim review across independent roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "ao.foundry.review-role-results.v0.1",
+  "mission": "recursive-improvement-safe-intermediate-claim",
+  "roles": {
+    "public-reader": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "adversarial-wording": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "Covenant-publication": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "Architecture-wording": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "Sentinel-public-risk": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "Promoter": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "Command": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "rollback-review": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "stale-language-review": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    },
+    "reproducibility-review": {
+      "status": "completed",
+      "result": "supports_narrow_intermediate_or_denies_controls"
+    }
+  },
+  "Covenant": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Architecture": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Sentinel": "clear_narrow_intermediate_causal_review_claim_hold_stronger_recursive_improvement_and_broad_RSI",
+  "Promoter": "promote_public_safe_intermediate_causal_review_claim_evidence_keep_broad_RSI_denied",
+  "Command": "public_safe_intermediate_causal_review_claim_evidence_proven_stronger_recursive_improvement_denied_broad_RSI_denied"
+}
