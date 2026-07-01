@@ -7418,6 +7418,126 @@ func TestRSIReadinessGateAllowsSerializedNodeAfterStopGateClearance(t *testing.T
 	}
 }
 
+func TestRSIFinalClosurePromotesBoundedEvidenceOnly(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeRSIFinalClosureArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "rsi-final-rollup.json")
+	promoterPath := filepath.Join(dir, "rsi-promoter-verdict.json")
+	commandPath := filepath.Join(dir, "rsi-command-readback.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"rsi", "final-closure", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--stop-gates-root", artifacts["stop_gates_root"],
+		"--terminal-run-link", artifacts["terminal_run_link"],
+		"--terminal-node-record", artifacts["terminal_node_record"],
+		"--promoter-out", promoterPath,
+		"--command-readback-out", commandPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("RSI final closure returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "promoted" ||
+		rollup["safe_to_promote"] != true ||
+		rollup["bounded_rsi_evidence_rehearsal_live_proven"] != true ||
+		rollup["broad_rsi"] != "denied" ||
+		rollup["unrestricted_self_modification"] != "denied" ||
+		rollup["rsi"] != "denied" ||
+		rollup["highest_proven_live_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["next_denied_class"] != "RSI" ||
+		classGateNumber(rollup, "rollback_evidence_count") != 32 ||
+		classGateNumber(rollup, "sentinel_evidence_count") != 31 ||
+		classGateNumber(rollup, "promoter_evidence_count") != 31 ||
+		classGateNumber(rollup, "command_readback_count") != 31 {
+		t.Fatalf("bounded RSI evidence rehearsal should promote only the bounded evidence class: %#v", rollup)
+	}
+	promoter := readObjectFixture(t, promoterPath)
+	if promoter["verdict"] != "promote_bounded_rsi_evidence_rehearsal" ||
+		promoter["bounded_rsi_evidence_rehearsal_live_proven"] != true ||
+		promoter["rsi"] != "denied" {
+		t.Fatalf("promoter must promote only bounded RSI evidence: %#v", promoter)
+	}
+	command := readObjectFixture(t, commandPath)
+	if command["decision"] != "promote_bounded_rsi_evidence_rehearsal_keep_broad_rsi_denied" ||
+		command["broad_rsi"] != "denied" ||
+		command["unrestricted_self_modification"] != "denied" {
+		t.Fatalf("command readback must preserve broad RSI denial: %#v", command)
+	}
+}
+
+func TestRSIFinalClosureBlocksMissingEvidence(t *testing.T) {
+	tests := []struct {
+		name    string
+		mutate  func(map[string]string)
+		blocker string
+	}{
+		{
+			name: "missing run link",
+			mutate: func(paths map[string]string) {
+				if err := os.Remove(filepath.Join(paths["run_links_root"], "post-change-measurement", "run-link.json")); err != nil {
+					t.Fatalf("remove run-link: %v", err)
+				}
+			},
+			blocker: "run-link missing for post-change-measurement",
+		},
+		{
+			name: "missing rollback binding",
+			mutate: func(paths map[string]string) {
+				gatePath := filepath.Join(paths["gates_root"], "rollback-rehearsal-gate.json")
+				gate := readObjectFixture(t, gatePath)
+				gate["source_evidence"] = []any{}
+				writeJSONFixtureForTest(t, gatePath, gate)
+			},
+			blocker: "node gate rollback-rehearsal requires rollback evidence binding",
+		},
+		{
+			name: "missing command readback",
+			mutate: func(paths map[string]string) {
+				if err := os.Remove(filepath.Join(paths["stop_gates_root"], "stop-gate-18-post-change-measurement-to-improvement-threshold", "command-readback.json")); err != nil {
+					t.Fatalf("remove command readback: %v", err)
+				}
+			},
+			blocker: "Command readback missing for stop-gate-18-post-change-measurement-to-improvement-threshold",
+		},
+		{
+			name: "broad RSI claim",
+			mutate: func(paths map[string]string) {
+				gatePath := filepath.Join(paths["gates_root"], "broad-rsi-denial-gate.json")
+				gate := readObjectFixture(t, gatePath)
+				gate["rsi"] = "live-proven"
+				writeJSONFixtureForTest(t, gatePath, gate)
+			},
+			blocker: "node gate broad-rsi-denial must keep RSI denied",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			dir := t.TempDir()
+			artifacts := writeRSIFinalClosureArtifacts(t, dir, tt.mutate)
+			outPath := filepath.Join(dir, "rsi-final-rollup.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"rsi", "final-closure", "evaluate",
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--stop-gates-root", artifacts["stop_gates_root"],
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked RSI final closure should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			rollup := readObjectFixture(t, outPath)
+			if rollup["status"] != "blocked" || rollup["safe_to_promote"] != false ||
+				!objectStringSliceContains(rollup, "blockers", tt.blocker) {
+				t.Fatalf("expected blocker %q, got %#v", tt.blocker, rollup)
+			}
+		})
+	}
+}
+
 func TestFullyUnsupervisedFirstNonPlanningGateBlocksUnsafeCandidateClaim(t *testing.T) {
 	dir := t.TempDir()
 	artifacts := writeFullyUnsupervisedFirstNonPlanningArtifacts(t, dir, func(paths map[string]string) {
@@ -11157,6 +11277,223 @@ func writeComplexPromotionRollupArtifactsForNodes(t *testing.T, dir string, node
 		writeJSONFixtureForTest(t, gatePath, gates[nodeID])
 		paths[strings.ReplaceAll(nodeID, "-", "_")+"_gate"] = gatePath
 		writeJSONFixtureForTest(t, filepath.Join(runLinksRoot, nodeID, "run-link.json"), runLinks[nodeID])
+	}
+	return paths
+}
+
+func writeRSIFinalClosureArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	paths := map[string]string{
+		"workgraph":            filepath.Join(dir, "workgraph-after-complete.json"),
+		"run_links_root":       filepath.Join(dir, "run-links"),
+		"gates_root":           filepath.Join(dir, "node-gates"),
+		"stop_gates_root":      filepath.Join(dir, "stop-gates"),
+		"terminal_node_record": filepath.Join(dir, "terminal-node-record.json"),
+		"terminal_run_link":    filepath.Join(dir, "run-links", "terminal-manifest", "run-link.json"),
+	}
+	for _, key := range []string{"run_links_root", "gates_root", "stop_gates_root"} {
+		if err := os.MkdirAll(paths[key], 0o755); err != nil {
+			t.Fatalf("mkdir %s: %v", paths[key], err)
+		}
+	}
+	nodeIDs := []string{
+		"baseline-metric-selection",
+		"carry-forward-evidence",
+		"rsi-readiness-final-denial",
+		"rsi-evidence-gap-audit",
+		"baseline-measurement",
+		"candidate-proposal",
+		"candidate-risk-classification",
+		"covenant-ticket",
+		"atlas-chain-plan",
+		"foundry-gated-execution-path",
+		"forge-ao2-bounded-packet",
+		"sentinel-verdict",
+		"promoter-verdict",
+		"command-readback",
+		"regression-eval-suite",
+		"reversible-change-proof",
+		"rollback-rehearsal",
+		"post-change-measurement",
+		"improvement-threshold",
+		"public-claim-guard",
+		"hidden-instruction-denial",
+		"broad-rsi-denial",
+		"final-evidence-synthesis",
+		"candidate-docs-test-readback-scope",
+		"prompt-injection-surface-denial",
+		"direct-main-denial",
+		"concurrency-denial",
+		"dependency-expansion-denial",
+		"config-policy-auth-denial",
+		"credential-provider-denial",
+		"production-behavior-denial",
+		"terminal-manifest",
+	}
+	nodes := []any{}
+	for i, nodeID := range nodeIDs {
+		taskID := nodeID + "-task"
+		scope := fmt.Sprintf("factory/rsi-first-bounded-evidence/%02d-%s", i, nodeID)
+		nodes = append(nodes, map[string]any{
+			"id":     nodeID,
+			"status": "completed",
+			"factory_task": map[string]any{
+				"id":                  taskID,
+				"target_factory_repo": "ao-atlas",
+				"mutation_class":      "complex_repo_mutation",
+				"write_scope":         []any{scope},
+				"rollback_scope":      []any{scope},
+				"authority_boundary":  "blocked_until_predecessor_evidence_and_stop_gate_clear",
+			},
+			"dependencies": func() []any {
+				if i == 0 {
+					return []any{}
+				}
+				return []any{nodeIDs[i-1]}
+			}(),
+			"blockers": []any{},
+		})
+		gatePath := filepath.Join(paths["gates_root"], nodeID+"-gate.json")
+		writeJSONFixtureForTest(t, gatePath, map[string]any{
+			"schema_version":                       complexNodeGateSchema,
+			"status":                               "ready",
+			"mutation_class":                       "complex_repo_mutation",
+			"highest_proven_live_class":            "fully_unsupervised_complex_mutation",
+			"next_denied_class":                    "RSI",
+			"workgraph_id":                         "rsi-first-bounded-evidence-rehearsal-workgraph-test",
+			"node_id":                              nodeID,
+			"task_id":                              taskID,
+			"safe_to_request":                      true,
+			"safe_to_execute":                      true,
+			"live_execution_authority":             true,
+			"schedules_work":                       false,
+			"executes_work":                        false,
+			"approves_work":                        false,
+			"mutates_repositories":                 false,
+			"fully_unsupervised_complex_mutation":  "live-proven",
+			"rsi":                                  "denied",
+			"hidden_instruction_mutation_detected": false,
+			"authority_broadening_detected":        false,
+			"public_rsi_claim_detected":            false,
+			"source_evidence": []any{
+				map[string]any{
+					"name":           "rollback_record",
+					"path":           filepath.Join(dir, "rollback-records", nodeID+"-rollback.json"),
+					"schema_version": "ao.atlas.private-rsi-evidence-rollback.v0.1",
+					"status":         "validated",
+					"sha256":         fmt.Sprintf("%064d", i+1),
+				},
+				map[string]any{
+					"name":           "candidate_record",
+					"path":           filepath.Join(dir, "candidate-records", nodeID+"-candidate.json"),
+					"schema_version": "ao.atlas.private-rsi-evidence-candidate.v0.1",
+					"status":         "blocked",
+					"sha256":         fmt.Sprintf("%064d", i+101),
+				},
+			},
+		})
+		runLinkDir := filepath.Join(paths["run_links_root"], nodeID)
+		if err := os.MkdirAll(runLinkDir, 0o755); err != nil {
+			t.Fatalf("mkdir run-link dir: %v", err)
+		}
+		writeJSONFixtureForTest(t, filepath.Join(runLinkDir, "run-link.json"), map[string]any{
+			"contract_version": atlasRunLinkSchema,
+			"task_id":          taskID,
+			"status":           "completed",
+			"evidence": map[string]any{
+				"changed_file": scope + "/node-record.json",
+				"ci":           "passed",
+				"merge_commit": fmt.Sprintf("%040d", i+1),
+				"node_gate":    gatePath,
+				"pr":           fmt.Sprintf("https://github.com/uesugitorachiyo/ao-atlas/pull/%d", 78+i),
+			},
+			"digest": "sha256:" + fmt.Sprintf("%064d", i+201),
+		})
+		if i > 0 {
+			prev := nodeIDs[i-1]
+			stopID := fmt.Sprintf("stop-gate-%02d-%s-to-%s", i, prev, nodeID)
+			stopDir := filepath.Join(paths["stop_gates_root"], stopID)
+			if err := os.MkdirAll(stopDir, 0o755); err != nil {
+				t.Fatalf("mkdir stop-gate dir: %v", err)
+			}
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "clearance.json"), map[string]any{
+				"schema_version":                       rsiReadinessStopGateClearanceSchema,
+				"status":                               "ready",
+				"safe_to_continue":                     true,
+				"stop_gate_id":                         stopID,
+				"after_node":                           prev,
+				"before_node":                          nodeID,
+				"fully_unsupervised_complex_mutation":  "live-proven",
+				"rsi":                                  "denied",
+				"public_claim_guard":                   "passed",
+				"hidden_instruction_mutation_denied":   true,
+				"self_modification_authorized_false":   true,
+				"hidden_instruction_mutation_detected": false,
+				"authority_broadening_detected":        false,
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "sentinel-verdict.json"), map[string]any{
+				"schema_version":                       "ao.sentinel.rsi-readiness-stop-gate-verdict.v0.1",
+				"status":                               "clear",
+				"node_id":                              prev,
+				"stop_gate_id":                         stopID,
+				"fully_unsupervised_complex_mutation":  "live-proven",
+				"rsi":                                  "denied",
+				"hidden_instruction_mutation_detected": false,
+				"authority_broadening_detected":        false,
+				"public_rsi_claim_detected":            false,
+				"rollback_disposition":                 "available",
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "promoter-verdict.json"), map[string]any{
+				"schema_version":                      "ao.promoter.rsi-readiness-stop-gate-verdict.v0.1",
+				"status":                              "accepted",
+				"verdict":                             "no_promotion",
+				"node_id":                             prev,
+				"stop_gate_id":                        stopID,
+				"fully_unsupervised_complex_mutation": "live-proven",
+				"rsi":                                 "denied",
+				"promotion_allowed":                   false,
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "command-readback.json"), map[string]any{
+				"schema_version":                      "ao.command.rsi-readiness-stop-gate-readback.v0.1",
+				"status":                              "accepted",
+				"safe_to_continue":                    true,
+				"node_id":                             prev,
+				"stop_gate_id":                        stopID,
+				"fully_unsupervised_complex_mutation": "live-proven",
+				"rsi":                                 "denied",
+				"public_claim_guard":                  "passed",
+				"hidden_instruction_mutation_denied":  true,
+				"self_modification_authorized_false":  true,
+			})
+		}
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "rsi-first-bounded-evidence-rehearsal-workgraph-test",
+		"nodes":            nodes,
+	})
+	writeJSONFixtureForTest(t, paths["terminal_node_record"], map[string]any{
+		"schema":         "ao.atlas.complex-repo-mutation-node-record.v0.1",
+		"node_id":        "terminal-manifest",
+		"task_id":        "terminal-manifest-task",
+		"status":         "completed",
+		"mutation_class": "complex_repo_mutation",
+		"class_state": map[string]any{
+			"fully_unsupervised_complex_mutation": "live-proven",
+			"rsi":                                 "denied",
+		},
+		"authority_boundaries": map[string]any{
+			"approves_work":                       false,
+			"credential_or_secret_access_allowed": false,
+			"direct_main_mutation_allowed":        false,
+			"executes_providers":                  false,
+			"public_claim_broadening_allowed":     false,
+			"release_or_publish_allowed":          false,
+			"schedules_work":                      false,
+		},
+	})
+	if mutate != nil {
+		mutate(paths)
 	}
 	return paths
 }
