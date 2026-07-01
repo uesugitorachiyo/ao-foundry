@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-covenant-result.v0.1",
+  "result": "approved_conservative_readback_evidence_only_wording_broad_RSI_denied",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "denied_candidate_ids": [
+    "candidate-1-strongest-broad-rsi",
+    "candidate-2-bounded-public-rsi-evidence",
+    "candidate-3-governed-recursive-improvement-evidence",
+    "candidate-4-autonomous-improvement-evidence"
+  ],
+  "gate_weakened": false
+}

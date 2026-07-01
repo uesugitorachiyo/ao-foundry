@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-promoter-verdict.v0.1",
+  "verdict": "promote_exact_safe_public_claim_wording_conservative_readback_evidence_broad_RSI_denied",
+  "promoted_class": "exact_safe_public_claim_wording_conservative_readback_evidence",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "broad_RSI": "denied"
+}

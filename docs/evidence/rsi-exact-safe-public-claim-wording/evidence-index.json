@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-public-claim-wording-index.v0.1",
+  "status": "approved_conservative_exact_wording_broad_RSI_denied",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "tracked_artifacts": [
+    "docs/evidence/rsi-exact-safe-public-claim-wording/README.md",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/candidate-wordings.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/public-reader-results.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/adversarial-wording-results.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/covenant-claim-publication.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/architecture-wording-agreement.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/sentinel-public-risk.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/promoter-verdict.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/command-readback.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/retraction-wording.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/stale-language-guard.json",
+    "docs/evidence/rsi-exact-safe-public-claim-wording/final-rollup.json"
+  ],
+  "sanitized_source_digests": {
+    "atlas_workgraph_sha256": "65c4c99ba60d33032f9162a2ca93b1bc70c0412e90e0ca446848a078d1972a0e",
+    "foundry_import_sha256": "1ae2e91f0613492adf6d655db5a63574056df76718eeeb1c2c729269d4b91045",
+    "prior_public_evidence_rollup_sha256": "feaebb6a8eb08a70694bc3d93f6ad91cd8c0ab1a1628e8c0e61e91c4a64fd6a0",
+    "node_count": 126,
+    "slice_count": 1230
+  },
+  "private_or_local_paths_in_tracked_evidence": false
+}

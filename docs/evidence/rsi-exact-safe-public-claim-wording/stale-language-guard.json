@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-stale-language.v0.1",
+  "result": "passed",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "blocked_terms_in_approved_wording": [
+    "broad_RSI",
+    "unrestricted",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "provider authority",
+    "release authority"
+  ],
+  "broad_RSI_public_claim_detected": false
+}
