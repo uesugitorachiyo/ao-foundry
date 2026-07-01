@@ -1,0 +1,26 @@
+{
+  "schema": "ao.foundry.run-link-evidence.v0.1",
+  "mission": "recursive-improvement-reviewer-approved-wording",
+  "node_id": "riraw-node-540",
+  "index": 540,
+  "phase": "carry-forward guided evidence application proof",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "docs/evidence/recursive-improvement-reviewer-approved-wording/nodes/riraw-node-540.json",
+  "evidence_recorded": true,
+  "rollback_recorded": true,
+  "sentinel_checked": true,
+  "public_safe": true,
+  "claim_boundary": "exact public-safe reviewer-approved bounded recursive-improvement wording evidence only",
+  "broad_RSI": "denied",
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion remains denied",
+    "release/deploy/publish/upload/tag/provider calls remain denied",
+    "credential use remains denied",
+    "dependency updates remain denied"
+  ]
+}

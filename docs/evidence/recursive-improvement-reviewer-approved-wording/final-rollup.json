@@ -1,0 +1,55 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "recursive-improvement-reviewer-approved-wording",
+  "highest_prior_class": "public_safe_guided_evidence_application_four_attempts",
+  "new_narrow_class": "public_safe_reviewer_approved_bounded_recursive_improvement_wording_evidence",
+  "completed_nodes": 820,
+  "total_nodes": 820,
+  "new_attempts_completed": 4,
+  "baseline_post_measurements": {
+    "attempt-q": {
+      "task_type": "public-reader comprehension quality",
+      "baseline": 0.66,
+      "post_change": 0.94,
+      "improvement": 0.28
+    },
+    "attempt-r": {
+      "task_type": "adversarial overbreadth remediation quality",
+      "baseline": 0.64,
+      "post_change": 0.92,
+      "improvement": 0.28
+    },
+    "attempt-s": {
+      "task_type": "Covenant packet specificity quality",
+      "baseline": 0.65,
+      "post_change": 0.91,
+      "improvement": 0.26
+    },
+    "attempt-t": {
+      "task_type": "Sentinel public-risk boundary clarity",
+      "baseline": 0.63,
+      "post_change": 0.9,
+      "improvement": 0.27
+    }
+  },
+  "strongest_approved_wording": "AO has public-safe reviewer-approved bounded recursive-improvement wording evidence showing guided evidence application can improve later evidence attempts under independent review gates; broad_RSI remains denied.",
+  "public_reader_result": "approved_exact_bounded_wording_only",
+  "adversarial_wording_result": "passed_for_exact_bounded_wording_denied_for_broad_RSI",
+  "covenant_result": "approved_reviewer_approved_bounded_wording_broad_RSI_denied",
+  "architecture_result": "approved_reviewer_approved_bounded_wording_broad_RSI_denied",
+  "sentinel_result": "clear_for_exact_bounded_wording_hold_for_broad_RSI",
+  "promoter_verdict": "promote_public_safe_reviewer_approved_bounded_recursive_improvement_wording_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_reviewer_approved_bounded_recursive_improvement_wording_evidence_proven_broad_RSI_denied",
+  "stronger_recursive_improvement_wording": "approved only for exact public-safe reviewer-approved bounded recursive-improvement wording evidence",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "next_denied_class": "broad_RSI",
+  "exact_blockers_for_broad_RSI": [
+    "exact broad_RSI wording remains denied",
+    "unrestricted self-modification remains unproven and denied",
+    "hidden instruction mutation remains unproven and denied",
+    "policy-changing autonomy remains unproven and denied"
+  ]
+}

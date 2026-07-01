@@ -1,0 +1,19 @@
+{
+  "mission": "recursive-improvement-reviewer-approved-wording",
+  "new_narrow_class": "public_safe_reviewer_approved_bounded_recursive_improvement_wording_evidence",
+  "approved_wording": "AO has public-safe reviewer-approved bounded recursive-improvement wording evidence showing guided evidence application can improve later evidence attempts under independent review gates; broad_RSI remains denied.",
+  "broad_RSI": "denied",
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion remains denied",
+    "release/deploy/publish/upload/tag/provider calls remain denied",
+    "credential use remains denied",
+    "dependency updates remain denied"
+  ],
+  "schema": "ao.foundry.adversarial-wording-results.v0.1",
+  "result": "passed_for_exact_bounded_wording_denied_for_broad_RSI",
+  "overbreadth": "none for approved wording; broad_RSI control remains overbroad"
+}
