@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.ricb.sentinel.v0.1",
+  "result": "clear_for_counterexample_tested_bounded_causal_chain_boundary_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "holds": [
+    "stronger recursive-improvement wording",
+    "broad_RSI wording"
+  ]
+}

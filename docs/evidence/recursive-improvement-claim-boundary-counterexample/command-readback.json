@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.ricb.command.v0.1",
+  "class_decision": "public_safe_bounded_causal_chain_counterexample_boundary_evidence_proven",
+  "highest_proven_live_class": "public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+  "next_denied_class": "broad_RSI",
+  "broad_RSI": "denied",
+  "unrestricted_autonomy": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied"
+}

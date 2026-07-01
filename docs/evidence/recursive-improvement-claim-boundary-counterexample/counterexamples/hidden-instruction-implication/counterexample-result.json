@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricb.counterexample-result.v0.1",
+  "track_id": "track-b",
+  "implication": "hidden-instruction mutation permission",
+  "counterexample": "A reader may infer hidden prompt or instruction mutation is allowed.",
+  "safe_boundary": "The evidence excludes hidden instruction mutation and records no authority for prompt, instruction, or policy changes.",
+  "result": "denied_overbroad_implication_approved_safe_boundary",
+  "public_safe": true
+}

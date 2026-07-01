@@ -1,0 +1,123 @@
+{
+  "schema": "ao.foundry.ricb.final-rollup.v0.1",
+  "mission": "recursive-improvement-claim-boundary-counterexample",
+  "completed_nodes": 420,
+  "total_nodes": 420,
+  "first_safe_node": "ricb-node-001",
+  "counterexample_tracks_completed": 4,
+  "boundary_result": "proven_for_four_public_safe_denied_implication_tracks",
+  "baseline_post_measurements": [
+    {
+      "id": "track-a",
+      "title": "Track A",
+      "implication": "recursive-improvement overbreadth",
+      "counterexample": "A reader may infer a general recursive-improvement capability from bounded causal-chain evidence.",
+      "safe_boundary": "Bounded causal-chain evidence supports only exact public-safe evidence chains, not general recursive-improvement capability.",
+      "baseline": 0.62,
+      "post": 0.91,
+      "improvement": 0.29,
+      "artifact": "recursive-improvement-overbreadth"
+    },
+    {
+      "id": "track-b",
+      "title": "Track B",
+      "implication": "hidden-instruction mutation permission",
+      "counterexample": "A reader may infer hidden prompt or instruction mutation is allowed.",
+      "safe_boundary": "The evidence excludes hidden instruction mutation and records no authority for prompt, instruction, or policy changes.",
+      "baseline": 0.65,
+      "post": 0.93,
+      "improvement": 0.28,
+      "artifact": "hidden-instruction-implication"
+    },
+    {
+      "id": "track-c",
+      "title": "Track C",
+      "implication": "policy-changing autonomy permission",
+      "counterexample": "A reader may infer AO can change policy or authority boundaries autonomously.",
+      "safe_boundary": "The evidence preserves policy-changing autonomy denial and requires separate gates for authority changes.",
+      "baseline": 0.61,
+      "post": 0.9,
+      "improvement": 0.29,
+      "artifact": "policy-changing-autonomy-implication"
+    },
+    {
+      "id": "track-d",
+      "title": "Track D",
+      "implication": "broad_RSI semantic approval",
+      "counterexample": "A reader may treat bounded causal-chain generality as broad_RSI approval.",
+      "safe_boundary": "The evidence keeps broad_RSI denied and approves only counterexample-tested bounded causal-chain wording.",
+      "baseline": 0.6,
+      "post": 0.9,
+      "improvement": 0.3,
+      "artifact": "broad-rsi-semantic-boundary"
+    }
+  ],
+  "wording_candidate_results": [
+    {
+      "id": "current-approved-causal-generality",
+      "text": "AO has public-safe bounded causal-chain generality evidence across four independent governed cycles; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_existing_causal_generality",
+      "command": "confirmed",
+      "decision": "approved_baseline"
+    },
+    {
+      "id": "counterexample-tested-claim-boundary",
+      "text": "AO has public-safe bounded causal-chain evidence with counterexample-tested claim boundaries; stronger recursive-improvement wording and broad_RSI remain denied.",
+      "public_reader": "approved",
+      "adversarial_wording": "approved",
+      "covenant": "approved",
+      "architecture": "approved",
+      "sentinel": "clear",
+      "promoter": "promote_public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+      "command": "confirmed",
+      "decision": "strongest_approved"
+    },
+    {
+      "id": "governed-bounded-recursive-improvement-evidence",
+      "text": "AO has governed bounded recursive-improvement evidence under explicit denial boundaries; broad_RSI remains denied.",
+      "public_reader": "denied_recursive_improvement_phrase_overstates_public_evidence",
+      "adversarial_wording": "denied_capability_adjacent_overbreadth",
+      "covenant": "denied_stronger_recursive_improvement_publication",
+      "architecture": "denied_stronger_recursive_improvement_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion",
+      "command": "denied",
+      "decision": "denied"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+      "public_reader": "denied_overbroad",
+      "adversarial_wording": "denied_overbreadth",
+      "covenant": "denied_broad_RSI_claim_publication",
+      "architecture": "denied_broad_RSI_wording",
+      "sentinel": "hold_public_risk",
+      "promoter": "no_promotion_broad_RSI",
+      "command": "broad_RSI_denied",
+      "decision": "denied_control"
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe bounded causal-chain evidence with counterexample-tested claim boundaries; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "new_narrow_class": "public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "unrestricted_autonomy": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "covenant_result": "approved_public_safe_bounded_causal_chain_counterexample_boundary_evidence_denied_stronger_recursive_improvement_and_broad_RSI",
+  "architecture_result": "approved_public_safe_bounded_causal_chain_counterexample_boundary_evidence_denied_stronger_recursive_improvement_and_broad_RSI",
+  "sentinel_result": "clear_for_counterexample_tested_bounded_causal_chain_boundary_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "promoter_verdict": "promote_public_safe_bounded_causal_chain_counterexample_boundary_evidence",
+  "command_readback": "public_safe_bounded_causal_chain_counterexample_boundary_evidence_proven_broad_RSI_denied",
+  "exact_blockers": [
+    "public-reader still denies recursive-improvement wording because the phrase implies general recursive-improvement capability beyond counterexample-tested bounded evidence",
+    "adversarial wording flags recursive-improvement phrasing as capability-adjacent overbreadth",
+    "Covenant and Architecture approve counterexample-tested bounded causal-chain wording only",
+    "Sentinel holds stronger recursive-improvement and broad_RSI public-risk wording"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.ricb.public-reader.v0.1",
+  "result": "approved_counterexample_tested_boundary_wording_denied_recursive_and_broad_candidates",
+  "candidate_results": [
+    {
+      "id": "current-approved-causal-generality",
+      "result": "approved"
+    },
+    {
+      "id": "counterexample-tested-claim-boundary",
+      "result": "approved"
+    },
+    {
+      "id": "governed-bounded-recursive-improvement-evidence",
+      "result": "denied_recursive_improvement_phrase_overstates_public_evidence"
+    },
+    {
+      "id": "exact-broad-rsi-denied-control",
+      "result": "denied_overbroad"
+    }
+  ]
+}

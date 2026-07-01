@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.ricb.boundary-measurement.v0.1",
+  "track_id": "track-d",
+  "baseline": 0.6,
+  "post": 0.9,
+  "improvement": 0.3,
+  "threshold": 0.2,
+  "result": "passed"
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.ricb.rollback-proof.v0.1",
+  "track_id": "track-c",
+  "rollback_rehearsal": "passed",
+  "retraction_needed": false,
+  "notes": "Track artifacts are reversible by removing or superseding this evidence before merge if a gate fails."
+}
