@@ -6138,6 +6138,17 @@ func TestComplexRepoNodeExecuteWritesNodeRecordAndRunLink(t *testing.T) {
 		record["scope"] != "factory/complex-repo-mutation-rehearsal/00-docs-intake" {
 		t.Fatalf("unexpected node record: %#v", record)
 	}
+	if objectStringSliceContains(record, "accepted_evidence", "live_rehearsal:multi_repo_low_risk") ||
+		!objectStringSliceContains(record, "accepted_evidence", "mutation_class:complex_repo_mutation") ||
+		!objectStringSliceContains(record, "accepted_evidence", "highest_proven_live_class:multi_repo_low_risk") {
+		t.Fatalf("node record accepted evidence must bind to gate class state: %#v", record)
+	}
+	classState, ok := record["class_state"].(map[string]any)
+	if !ok || classState["complex_repo_mutation_live_proven"] != "false" ||
+		classState["fully_unsupervised_complex_mutation"] != "denied" ||
+		classState["rsi"] != "denied" {
+		t.Fatalf("node record class state must come from gate boundaries: %#v", record)
+	}
 	link := readObjectFixture(t, runLinkPath)
 	if link["contract_version"] != "ao.atlas.run-link.v0.1" ||
 		link["task_id"] != "complex-docs-intake-task" ||
