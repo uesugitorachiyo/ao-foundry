@@ -212,10 +212,22 @@ readiness, Sentinel/Promoter/Command evidence, and public-safety review. That
 evidence made `multi_repo_low_risk` the highest proven live class. The
 2026-06-30 complex_repo_mutation mission then completed all 12 governed nodes
 with digest-bound run-link, node-gate, rollback, Sentinel, Promoter, Command,
-CI, merge, and forbidden-surface closure evidence. That evidence makes
-`complex_repo_mutation` the highest proven live class for this governed
-rehearsal boundary. The next denied class is fully unsupervised complex
-mutation; fully unsupervised complex mutation and RSI remain denied.
+CI, merge, and forbidden-surface closure evidence. The 2026-07-01
+fully_unsupervised_complex_mutation first non-planning mission then completed
+all 26 serialized nodes with final rollup, Promoter verdict, Command readback,
+branch cleanup, no concurrent mutation, no forbidden surfaces, and RSI denial
+preserved. The highest proven live class is now
+`fully_unsupervised_complex_mutation`.
+
+AO Foundry PR #175, commit
+`b12ac9b62ab8d20b4092d2a5d13081607567e816`, records the final closure for
+`bounded_rsi_evidence_rehearsal`: all 32 evidence nodes completed, every stop
+gate cleared, Foundry final rollup accepted, Promoter verdict
+`promote_bounded_rsi_evidence_rehearsal` accepted, and Command readback
+`promote_bounded_rsi_evidence_rehearsal_keep_broad_rsi_denied` accepted. This is
+bounded evidence-rehearsal proof only. Broad RSI, hidden instruction mutation,
+unrestricted self-modification, and policy/auth/secret/provider/deploy/release/
+config/dependency expansion remain denied. The next denied class remains `RSI`.
 
 `foundry pulse event-loop-policy` consumes the class-gate result plus
 promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
@@ -331,7 +343,10 @@ Public readiness wording for this phase is intentionally narrow:
 - first docs-only live request readiness is ready;
 - execution readiness is conditional on explicit exact-scope approval and every
   downstream gate passing;
-- fully unsupervised complex live repository mutation remains out of scope.
+- `fully_unsupervised_complex_mutation` is proven only for the governed 26-node
+  first non-planning rehearsal boundary;
+- `bounded_rsi_evidence_rehearsal` is live-proven only as a bounded evidence
+  rehearsal state.
 
 The first approval request contract is
 `ao.foundry.live-mutation-approval-request.v0.1`, with a public-safe example at
@@ -434,6 +449,11 @@ improved by the configured threshold, such as 5 percentage points, and preserves
 chain, while `claim_level=full_autonomous_self_mutating_rsi decision=denied`
 remains the correct boundary until mutation authority, rollback, live
 self-change evidence, and AO Covenant approval exist.
+
+The later `bounded_rsi_evidence_rehearsal` closure is also bounded-only. It may
+be reported as live-proven for the governed 32-node evidence rehearsal, but it
+does not prove broad RSI, does not authorize unrestricted self-modification, and
+does not allow hidden or policy-changing self-modification.
 
 ## Portfolio Board
 
