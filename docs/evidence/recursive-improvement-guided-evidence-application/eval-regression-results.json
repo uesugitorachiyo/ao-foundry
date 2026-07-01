@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.eval-regression.v0.1",
+  "result": "passed",
+  "attempts_evaluated": 4,
+  "regressions_found": 0,
+  "minimum_improvement": 0.25,
+  "all_attempts_met_threshold": true
+}

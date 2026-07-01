@@ -1,0 +1,74 @@
+{
+  "schema": "ao.foundry.rige.final-rollup.v0.1",
+  "mission": "recursive-improvement-guided-evidence-application",
+  "completed_nodes": 720,
+  "total_nodes": 720,
+  "first_safe_node": "rige-node-001",
+  "guided_attempts_completed": 4,
+  "baseline_post_measurements": [
+    {
+      "id": "attempt-m",
+      "title": "Guided candidate-fit application",
+      "task_type": "guided candidate-fit evaluation quality",
+      "baseline": 0.67,
+      "post": 0.92,
+      "improvement": 0.25,
+      "artifact": "guided-candidate-fit-application",
+      "prior_signal": "Prior guidance evidence showed causal-review artifacts can guide evidence selection, but not yet application to later bounded attempts.",
+      "selection_reason": "Use guidance to select a candidate-fit rubric that improves whether later evidence attempts match exact blockers."
+    },
+    {
+      "id": "attempt-n",
+      "title": "Reviewer-blocker triage application",
+      "task_type": "reviewer-blocker triage quality",
+      "baseline": 0.65,
+      "post": 0.91,
+      "improvement": 0.26,
+      "artifact": "reviewer-blocker-triage-application",
+      "prior_signal": "Public-reader and adversarial wording blockers remained the decisive denial reasons for stronger wording.",
+      "selection_reason": "Use guidance to prioritize reviewer-specific blocker triage before retesting wording."
+    },
+    {
+      "id": "attempt-o",
+      "title": "Cross-evidence dependency selection",
+      "task_type": "cross-evidence dependency selection quality",
+      "baseline": 0.64,
+      "post": 0.9,
+      "improvement": 0.26,
+      "artifact": "cross-evidence-dependency-selection",
+      "prior_signal": "Guidance evidence linked prior and later claims but still needed dependency selection across evidence categories.",
+      "selection_reason": "Use guidance to select dependency records that make later evidence attempts independently reviewable."
+    },
+    {
+      "id": "attempt-p",
+      "title": "Safe next-evidence prioritization",
+      "task_type": "safe-next-evidence prioritization quality",
+      "baseline": 0.62,
+      "post": 0.89,
+      "improvement": 0.27,
+      "artifact": "safe-next-evidence-prioritization",
+      "prior_signal": "Sentinel held stronger wording because safe next-evidence boundaries were not explicit enough.",
+      "selection_reason": "Use guidance to prioritize the safest next evidence target while preserving denied boundaries."
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe guided evidence-application evidence showing causal-review guidance can select and prioritize later bounded evidence attempts under independent gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "new_narrow_class": "public_safe_guided_evidence_application_four_attempts",
+  "highest_prior_class": "public_safe_causal_review_evidence_selection_guidance",
+  "next_denied_class": "broad_RSI",
+  "stronger_recursive_improvement_wording": "denied",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "covenant_result": "approved_public_safe_guided_evidence_application_four_attempts_denied_stronger_recursive_improvement_and_broad_RSI",
+  "architecture_result": "approved_public_safe_guided_evidence_application_four_attempts_denied_stronger_recursive_improvement_and_broad_RSI",
+  "sentinel_result": "clear_for_public_safe_guided_evidence_application_four_attempts_hold_for_stronger_recursive_improvement_and_broad_RSI",
+  "promoter_verdict": "promote_public_safe_guided_evidence_application_four_attempts_keep_broad_RSI_denied",
+  "command_readback": "public_safe_guided_evidence_application_four_attempts_proven_stronger_recursive_improvement_denied_broad_RSI_denied",
+  "exact_blockers": [
+    "public-reader still denies stronger recursive-improvement wording because the phrase implies capability beyond guided evidence application",
+    "adversarial wording flags stronger recursive-improvement phrasing as capability-adjacent overbreadth",
+    "Covenant and Architecture approve guided evidence-application wording only",
+    "Sentinel holds stronger recursive-improvement and broad_RSI public-risk wording"
+  ]
+}

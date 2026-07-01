@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.rige.measurement.v0.1",
+  "id": "attempt-m",
+  "title": "Guided candidate-fit application",
+  "task_type": "guided candidate-fit evaluation quality",
+  "baseline": 0.67,
+  "post": 0.92,
+  "improvement": 0.25,
+  "artifact": "guided-candidate-fit-application",
+  "prior_signal": "Prior guidance evidence showed causal-review artifacts can guide evidence selection, but not yet application to later bounded attempts.",
+  "selection_reason": "Use guidance to select a candidate-fit rubric that improves whether later evidence attempts match exact blockers.",
+  "public_safe": true,
+  "rollback_ready": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}
