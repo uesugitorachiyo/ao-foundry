@@ -238,6 +238,16 @@ denied class `broad_RSI`. Broad RSI, unrestricted self-modification, hidden
 instruction mutation, policy/auth/secret/provider/deploy/release/config/
 dependency expansion, and policy-changing autonomy remain denied.
 
+AO Foundry PR #179 records
+`exact_safe_public_claim_wording_conservative_readback_evidence` as proven from
+tracked public evidence under
+`docs/evidence/rsi-exact-safe-public-claim-wording/`. The approved public wording
+is exactly: "AO has public-safe tracked readback evidence for bounded
+improvement-claim review and retraction rehearsal; stronger recursive-improvement
+claims remain denied." This is conservative readback evidence only; `broad_RSI`,
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, and stronger recursive-improvement claims remain denied.
+
 `foundry pulse event-loop-policy` consumes the class-gate result plus
 promotion-state, CI, repo-cleanliness, evidence-freshness, Sentinel, Promoter,
 rollback, branch-cleanup, and scope-boundary evidence. It emits
@@ -358,6 +368,9 @@ Public readiness wording for this phase is intentionally narrow:
   rehearsal state;
 - `bounded_rsi_self_improvement_application` is proven only for the exact
   private readback/eval rubric rehearsal.
+- `exact_safe_public_claim_wording_conservative_readback_evidence` is proven
+  only for conservative public-safe tracked readback evidence for bounded
+  improvement-claim review and retraction rehearsal.
 
 The first approval request contract is
 `ao.foundry.live-mutation-approval-request.v0.1`, with a public-safe example at
@@ -471,6 +484,14 @@ broad RSI. It may be reported as proven only for the exact private readback/eval
 rubric rehearsal; it does not authorize unrestricted self-modification, hidden
 instruction mutation, policy/auth/secret/provider/deploy/release/config/
 dependency expansion, or policy-changing autonomy.
+
+The later `exact_safe_public_claim_wording_conservative_readback_evidence`
+closure is narrower than broad RSI. It may be reported as proven only for the
+approved conservative public wording: "AO has public-safe tracked readback
+evidence for bounded improvement-claim review and retraction rehearsal; stronger
+recursive-improvement claims remain denied." It does not prove `broad_RSI`,
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, or stronger recursive-improvement claims.
 
 ## Portfolio Board
 
