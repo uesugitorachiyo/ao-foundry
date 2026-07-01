@@ -1,0 +1,9 @@
+{
+  "schema": "ao.covenant.publication-gate.v0.1",
+  "result": "approved_public_safe_causal_review_evidence_selection_guidance_denied_stronger_recursive_improvement_and_broad_RSI",
+  "approved_wording": "AO has public-safe causal-review evidence that prior bounded evidence can guide later evidence-selection and blocker prioritization under independent review gates; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "denied": [
+    "stronger recursive-improvement wording",
+    "broad_RSI wording"
+  ]
+}

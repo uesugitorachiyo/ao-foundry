@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.stale-language-guard.v0.1",
+  "result": "passed",
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "stronger recursive-improvement wording",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation"
+  ],
+  "forbidden_positive_claim_ids": [
+    "broad_rsi_proof_claim",
+    "generic_rsi_proof_claim",
+    "stronger_recursive_wording_approval_claim",
+    "unrestricted_self_modification_allowance_claim",
+    "hidden_instruction_mutation_allowance_claim",
+    "policy_changing_autonomy_allowance_claim"
+  ]
+}
