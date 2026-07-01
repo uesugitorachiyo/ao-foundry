@@ -1,0 +1,39 @@
+{
+  "schema": "ao.review-role-results.v0.1",
+  "mission": "recursive-improvement-reviewed-boundary-generalization",
+  "roles": {
+    "public-reader": {
+      "pass": 36,
+      "deny": 24
+    },
+    "adversarial-wording": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Covenant-publication": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Architecture-wording": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Sentinel-public-risk": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Promoter-verdict": {
+      "pass": 36,
+      "deny": 24
+    },
+    "Command-readback": {
+      "pass": 36,
+      "deny": 24
+    },
+    "retraction-review": {
+      "pass": 36,
+      "deny": 24
+    }
+  },
+  "summary": "Independent claim-review roles approve narrow reviewed boundary generalization evidence and deny stronger controls."
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "mission": "recursive-improvement-reviewed-boundary-generalization",
+  "node_id": "rirbg-node-478",
+  "phase": "stale-language guard",
+  "review_role": "Promoter-verdict",
+  "candidate_id": "bounded-review-generalization-evidence",
+  "outcome": "review_passed_for_narrow_boundary_evidence",
+  "safe_to_execute": false,
+  "evidence_summary": "Public-safe reviewed boundary generalization evidence recorded for a serialized Atlas node.",
+  "denied_boundaries": [
+    "stronger recursive-improvement wording remains denied unless all gates approve exact wording",
+    "broad_RSI remains denied",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied"
+  ],
+  "rollback_retraction": "Node artifact can be removed or reverted by PR rollback; no release, deploy, provider call, credential, config, or dependency action occurred.",
+  "public_safety": "sanitized relative paths only; no secrets, credentials, env values, or local paths",
+  "gate_result": {
+    "public_reader": "pass",
+    "adversarial_wording": "pass",
+    "Covenant": "approve_narrow",
+    "Architecture": "approve_narrow",
+    "Sentinel": "clear_narrow"
+  }
+}
