@@ -1385,6 +1385,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry complex-repo node-gate evaluate --workgraph <path> --foundry-import <path> --candidate <path> --rollback <path> --out <path>")
 	fmt.Fprintln(w, "  foundry fully-unsupervised readiness evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --first-node-gate <path> --task-root <dir> --context-root <dir> --candidate-root <dir> --rollback-root <dir> --node-evidence-root <dir> --repair-root <dir> --context-repack-root <dir> --out <path>")
 	fmt.Fprintln(w, "  foundry fully-unsupervised authority-gates evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --continuation-handoff <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --first-node-gate <path> --task-root <dir> --context-root <dir> --candidate-root <dir> --rollback-root <dir> --node-evidence-root <dir> --repair-root <dir> --context-repack-root <dir> --out <path>")
+	fmt.Fprintln(w, "  foundry fully-unsupervised first-non-planning gate evaluate --blueprint-import <path> --workgraph <path> --foundry-import <path> --continuation-handoff <path> --atlas-summary <path> --slice-manifest <path> --final-synthesis <path> --candidate <path> --rollback <path> --out <path>")
 	fmt.Fprintln(w, "  foundry repo health --registry <path> [--repo <repo-id>] [--json]")
 	fmt.Fprintln(w, "  foundry repo board --registry <path> [--json]")
 	fmt.Fprintln(w, "  foundry loop preflight --goal-run <path> --registry <path> --task <path>")
@@ -2134,7 +2135,7 @@ func runComplexRepo(args []string, stdout, stderr io.Writer) int {
 
 func runFullyUnsupervised(args []string, stdout, stderr io.Writer) int {
 	if len(args) < 2 {
-		fmt.Fprintln(stderr, "usage: foundry fully-unsupervised <readiness evaluate|authority-gates evaluate> ...")
+		fmt.Fprintln(stderr, "usage: foundry fully-unsupervised <readiness evaluate|authority-gates evaluate|first-non-planning gate evaluate> ...")
 		return 2
 	}
 	switch {
@@ -2142,6 +2143,8 @@ func runFullyUnsupervised(args []string, stdout, stderr io.Writer) int {
 		return runFullyUnsupervisedReadinessEvaluate(args[2:], stdout, stderr)
 	case args[0] == "authority-gates" && args[1] == "evaluate":
 		return runFullyUnsupervisedAuthorityGatesEvaluate(args[2:], stdout, stderr)
+	case len(args) >= 3 && args[0] == "first-non-planning" && args[1] == "gate" && args[2] == "evaluate":
+		return runFullyUnsupervisedFirstNonPlanningGateEvaluate(args[3:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "foundry fully-unsupervised: unknown command %q\n", strings.Join(args, " "))
 		return 2
@@ -2183,6 +2186,18 @@ type fullyUnsupervisedReadinessPaths struct {
 type fullyUnsupervisedAuthorityGatePaths struct {
 	fullyUnsupervisedReadinessPaths
 	ContinuationHandoff string
+}
+
+type fullyUnsupervisedFirstNonPlanningGatePaths struct {
+	BlueprintImport     string
+	Workgraph           string
+	FoundryImport       string
+	ContinuationHandoff string
+	AtlasSummary        string
+	SliceManifest       string
+	FinalSynthesis      string
+	Candidate           string
+	Rollback            string
 }
 
 func runFullyUnsupervisedReadinessEvaluate(args []string, stdout, stderr io.Writer) int {
@@ -2366,6 +2381,328 @@ func runFullyUnsupervisedAuthorityGatesEvaluate(args []string, stdout, stderr io
 		fmt.Fprintf(stdout, "first_failing_check=%s\n", first)
 	}
 	return 0
+}
+
+func runFullyUnsupervisedFirstNonPlanningGateEvaluate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("fully-unsupervised first-non-planning gate evaluate", stderr)
+	blueprintImportPath := fs.String("blueprint-import", "", "Atlas Blueprint import")
+	workgraphPath := fs.String("workgraph", "", "Atlas fully unsupervised first non-planning workgraph")
+	foundryImportPath := fs.String("foundry-import", "", "Atlas Foundry import")
+	continuationHandoffPath := fs.String("continuation-handoff", "", "Atlas Foundry continuation handoff")
+	atlasSummaryPath := fs.String("atlas-summary", "", "Atlas first-phase summary")
+	sliceManifestPath := fs.String("slice-manifest", "", "Atlas SDD slice completion manifest")
+	finalSynthesisPath := fs.String("final-synthesis", "", "Atlas final evidence synthesis")
+	candidatePath := fs.String("candidate", "", "Atlas first non-planning candidate record")
+	rollbackPath := fs.String("rollback", "", "Atlas first non-planning rollback record")
+	outPath := fs.String("out", "", "first non-planning node gate output path")
+	jsonOut := fs.Bool("json", false, "also write JSON to stdout")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	required := map[string]string{
+		"--blueprint-import":     *blueprintImportPath,
+		"--workgraph":            *workgraphPath,
+		"--foundry-import":       *foundryImportPath,
+		"--continuation-handoff": *continuationHandoffPath,
+		"--atlas-summary":        *atlasSummaryPath,
+		"--slice-manifest":       *sliceManifestPath,
+		"--final-synthesis":      *finalSynthesisPath,
+		"--candidate":            *candidatePath,
+		"--rollback":             *rollbackPath,
+		"--out":                  *outPath,
+	}
+	missing := []string{}
+	for flagName, value := range required {
+		if strings.TrimSpace(value) == "" {
+			missing = append(missing, flagName)
+		}
+	}
+	if len(missing) > 0 {
+		sort.Strings(missing)
+		fmt.Fprintf(stderr, "%s are required\n", strings.Join(missing, ", "))
+		return 2
+	}
+	gate, err := buildFullyUnsupervisedFirstNonPlanningGate(fullyUnsupervisedFirstNonPlanningGatePaths{
+		BlueprintImport:     *blueprintImportPath,
+		Workgraph:           *workgraphPath,
+		FoundryImport:       *foundryImportPath,
+		ContinuationHandoff: *continuationHandoffPath,
+		AtlasSummary:        *atlasSummaryPath,
+		SliceManifest:       *sliceManifestPath,
+		FinalSynthesis:      *finalSynthesisPath,
+		Candidate:           *candidatePath,
+		Rollback:            *rollbackPath,
+	})
+	if err != nil {
+		fmt.Fprintf(stderr, "fully unsupervised first non-planning gate: %v\n", err)
+		return 1
+	}
+	if err := writeJSONFile(*outPath, gate); err != nil {
+		fmt.Fprintf(stderr, "write fully unsupervised first non-planning gate: %v\n", err)
+		return 1
+	}
+	if *jsonOut {
+		if err := writeJSON(stdout, gate); err != nil {
+			fmt.Fprintf(stderr, "write fully unsupervised first non-planning gate json: %v\n", err)
+			return 1
+		}
+		return 0
+	}
+	fmt.Fprintf(stdout, "first_non_planning_node_gate=%s\n", *outPath)
+	fmt.Fprintf(stdout, "status=%s\n", gate.Status)
+	fmt.Fprintf(stdout, "node_id=%s\n", gate.NodeID)
+	fmt.Fprintf(stdout, "safe_to_request=%t\n", gate.SafeToRequest)
+	fmt.Fprintf(stdout, "safe_to_execute=%t\n", gate.SafeToExecute)
+	if gate.FirstFailingCheck != "" {
+		fmt.Fprintf(stdout, "first_failing_check=%s\n", gate.FirstFailingCheck)
+	}
+	return 0
+}
+
+func buildFullyUnsupervisedFirstNonPlanningGate(paths fullyUnsupervisedFirstNonPlanningGatePaths) (ComplexRepoMutationNodeGate, error) {
+	gate := ComplexRepoMutationNodeGate{
+		SchemaVersion:                    complexNodeGateSchema,
+		Status:                           "blocked",
+		MutationClass:                    "complex_repo_mutation",
+		HighestProvenLiveClass:           "complex_repo_mutation",
+		NextDeniedClass:                  "fully_unsupervised_complex_mutation",
+		ExactNextAction:                  "repair_first_non_planning_gate_evidence_before_execution",
+		AuthorityBoundary:                "first_bounded_non_planning_executable_support_docs_node",
+		SourceEvidence:                   []MutationClassGateEvidence{},
+		Blockers:                         []string{},
+		FullyUnsupervisedComplexMutation: "denied",
+		RSI:                              "denied",
+		SchedulesWork:                    false,
+		ExecutesWork:                     false,
+		ApprovesWork:                     false,
+		MutatesRepositories:              false,
+		LiveExecutionAuthority:           false,
+	}
+	blueprintSource, blueprintImport, err := readComplexNodeGateObject("atlas_blueprint_import", paths.BlueprintImport)
+	if err != nil {
+		return gate, err
+	}
+	workgraphSource, workgraph, err := readComplexNodeGateObject("atlas_workgraph", paths.Workgraph)
+	if err != nil {
+		return gate, err
+	}
+	foundryImportSource, foundryImport, err := readComplexNodeGateObject("foundry_import", paths.FoundryImport)
+	if err != nil {
+		return gate, err
+	}
+	handoffSource, handoff, err := readComplexNodeGateObject("foundry_continuation_handoff", paths.ContinuationHandoff)
+	if err != nil {
+		return gate, err
+	}
+	summarySource, summary, err := readComplexNodeGateObject("atlas_first_summary", paths.AtlasSummary)
+	if err != nil {
+		return gate, err
+	}
+	manifestSource, manifest, err := readComplexNodeGateObject("sdd_slice_completion_manifest", paths.SliceManifest)
+	if err != nil {
+		return gate, err
+	}
+	finalSource, finalSynthesis, err := readComplexNodeGateObject("atlas_final_synthesis", paths.FinalSynthesis)
+	if err != nil {
+		return gate, err
+	}
+	candidateSource, candidate, err := readComplexNodeGateObject("candidate_record", paths.Candidate)
+	if err != nil {
+		return gate, err
+	}
+	rollbackSource, rollback, err := readComplexNodeGateObject("rollback_record", paths.Rollback)
+	if err != nil {
+		return gate, err
+	}
+	gate.SourceEvidence = append(gate.SourceEvidence, blueprintSource, workgraphSource, foundryImportSource, handoffSource, summarySource, manifestSource, finalSource, candidateSource, rollbackSource)
+
+	nodes := classGateObjectSlice(workgraph["nodes"])
+	totalNodes := len(nodes)
+	readyNodes := countWorkgraphNodesWithStatus(nodes, "ready")
+	blockedNodes := countWorkgraphNodesWithStatus(nodes, "blocked")
+	tasks := classGateObjectSlice(foundryImport["tasks"])
+	gate.FoundryImportID = classGateString(foundryImport, "id")
+	gate.FoundryImportStatus = classGateString(foundryImport, "status")
+	gate.FoundryImportTaskCount = len(tasks)
+	gate.FoundryImportSchedulesWork = classGateBool(foundryImport, "schedules_work")
+	gate.FoundryImportExecutesWork = classGateBool(foundryImport, "executes_work")
+	gate.FoundryImportApprovesWork = classGateBool(foundryImport, "approves_work")
+	gate.WorkgraphID = classGateString(workgraph, "id")
+	gate.CandidateStatus = classGateString(candidate, "status")
+	gate.RollbackStatus = classGateFirstNonEmpty(classGateString(rollback, "status"), "validated")
+	gate.CandidateExecutableReady = classGateBool(candidate, "selected_first_safe_executable_node")
+	gate.CandidateSafeToExecute = classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), "safe_to_execute_in_foundry_only_under_gates:true")
+	gate.RollbackSafeToExecute = len(classGateStringSlice(rollback, "rollback_scope")) > 0 && len(classGateStringSlice(rollback, "auto_stop_triggers")) > 0
+
+	var task map[string]any
+	if len(tasks) == 1 {
+		task = tasks[0]
+	}
+	taskNodeID := classGateString(task, "node_id")
+	taskID := classGateFirstNonEmpty(classGateString(task, "task_id"), classGateNestedString(task, "task", "id"))
+	candidateNodeID := classGateString(candidate, "node_id")
+	rollbackNodeID := classGateString(rollback, "node_id")
+	gate.NodeID = classGateFirstNonEmpty(candidateNodeID, taskNodeID, rollbackNodeID)
+	gate.TaskID = classGateFirstNonEmpty(classGateString(candidate, "task_id"), taskID, classGateString(rollback, "task_id"))
+	gate.RequiredGates = classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "required_gates"), classGateStringSlice(candidate, "required_gates"), classGateNestedStringSlice(task, "task", "required_gates"))
+	importWriteScope := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "write_scope"), classGateNestedStringSlice(task, "task", "write_scope"))
+	importRollbackScope := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "rollback_scope"), classGateNestedStringSlice(task, "task", "rollback_scope"))
+	importRequiredEvidence := classGateFirstNonEmptyStringSlice(classGateStringSlice(task, "required_evidence"), classGateNestedStringSlice(task, "task", "required_evidence"))
+	scope := ""
+	if len(importWriteScope) == 1 {
+		scope = importWriteScope[0]
+	}
+	node, nodeFound := findWorkgraphNode(workgraph, gate.NodeID)
+	nodeStatus := classGateString(node, "status")
+	taskMutationClass := classGateFirstNonEmpty(classGateString(task, "mutation_class"), classGateNestedString(task, "task", "mutation_class"))
+
+	blockers := []string{}
+	if classGateString(blueprintImport, "contract_version") != atlasBlueprintImportSchema ||
+		classGateString(blueprintImport, "status") != "ready" ||
+		classGateString(blueprintImport, "mutation_class") != "complex_repo_mutation" ||
+		classGateBool(blueprintImport, "safe_to_execute") ||
+		classGateBool(blueprintImport, "live_execution_proven") ||
+		classGateBool(blueprintImport, "schedules_work") ||
+		classGateBool(blueprintImport, "executes_work") ||
+		classGateBool(blueprintImport, "approves_work") ||
+		classGateBool(blueprintImport, "mutates_repositories") {
+		blockers = append(blockers, "Atlas Blueprint import must be ready, complex_repo_mutation, and non-executable")
+	}
+	if classGateString(foundryImport, "contract_version") != atlasImportSchema ||
+		gate.FoundryImportStatus != "ready_for_foundry_fixture_import" ||
+		len(tasks) != 1 ||
+		gate.FoundryImportSchedulesWork ||
+		gate.FoundryImportExecutesWork ||
+		gate.FoundryImportApprovesWork {
+		blockers = append(blockers, "Foundry import must contain exactly one non-scheduling first non-planning node")
+	}
+	if classGateString(handoff, "contract_version") != "ao.atlas.foundry-continuation-handoff.v0.1" ||
+		classGateString(handoff, "first_safe_node") != gate.NodeID ||
+		int(classGateNumber(handoff, "total_node_count")) != totalNodes ||
+		int(classGateNumber(handoff, "ready_node_count")) != readyNodes ||
+		int(classGateNumber(handoff, "blocked_node_count")) != blockedNodes ||
+		classGateBool(handoff, "schedules_work") ||
+		classGateBool(handoff, "executes_work") ||
+		classGateBool(handoff, "approves_work") {
+		blockers = append(blockers, "Foundry continuation handoff must match workgraph counts and remain non-scheduling")
+	}
+	if classGateString(summary, "schema") != "ao.atlas.private-first-non-planning-summary.v0.1" ||
+		classGateString(summary, "first_safe_executable_node") != gate.NodeID ||
+		int(classGateNumber(summary, "planned_node_count")) != totalNodes ||
+		int(classGateNumber(summary, "ready_node_count")) != readyNodes ||
+		int(classGateNumber(summary, "blocked_node_count")) != blockedNodes ||
+		classGateBool(summary, "atlas_executes_work") ||
+		classGateBool(summary, "atlas_approves_work") ||
+		classGateBool(summary, "fully_unsupervised_complex_mutation_live_proven") ||
+		classGateString(summary, "rsi") != "denied" ||
+		classGateString(summary, "highest_proven_live_class") != "complex_repo_mutation" ||
+		classGateString(summary, "next_denied_class") != "fully_unsupervised_complex_mutation" {
+		blockers = append(blockers, "Atlas first non-planning summary must match workgraph counts and preserve denial boundaries")
+	}
+	if classGateString(manifest, "schema") != "ao.atlas.private-first-non-planning-slice-manifest.v0.1" ||
+		int(classGateNumber(manifest, "total_slices")) == 0 ||
+		int(classGateNumber(manifest, "total_slices")) != int(classGateNumber(manifest, "completed_slices")) ||
+		classGateBool(manifest, "fully_unsupervised_complex_mutation_live_proven") ||
+		classGateString(manifest, "rsi") != "denied" {
+		blockers = append(blockers, "Atlas first non-planning slice manifest must be complete and keep RSI denied")
+	}
+	if classGateString(finalSynthesis, "schema") != "ao.atlas.private-first-non-planning-final-evidence-synthesis.v0.1" ||
+		classGateString(finalSynthesis, "first_safe_executable_node") != gate.NodeID ||
+		classGateBool(finalSynthesis, "atlas_executes_work") ||
+		classGateBool(finalSynthesis, "atlas_approves_work") ||
+		classGateBool(finalSynthesis, "live_execution_performed_by_atlas") ||
+		!classGateBool(finalSynthesis, "first_bounded_non_planning_rehearsal_requested") ||
+		classGateBool(finalSynthesis, "fully_unsupervised_complex_mutation_live_proven") ||
+		classGateString(finalSynthesis, "rsi") != "denied" ||
+		classGateString(finalSynthesis, "highest_proven_live_class") != "complex_repo_mutation" ||
+		classGateString(finalSynthesis, "next_denied_class") != "fully_unsupervised_complex_mutation" {
+		blockers = append(blockers, "Atlas final synthesis must request first non-planning rehearsal while preserving denial boundaries")
+	}
+	if gate.NodeID == "" || gate.TaskID == "" {
+		blockers = append(blockers, "first non-planning gate requires node_id and task_id")
+	}
+	if !nodeFound || nodeStatus != "ready" {
+		blockers = append(blockers, "workgraph selected first non-planning node must be ready")
+	}
+	if taskNodeID != "" && candidateNodeID != "" && taskNodeID != candidateNodeID {
+		blockers = append(blockers, "Foundry import node_id must match first non-planning candidate")
+	}
+	if rollbackNodeID != "" && gate.NodeID != "" && rollbackNodeID != gate.NodeID {
+		blockers = append(blockers, "rollback record node_id must match selected first non-planning node")
+	}
+	if taskMutationClass != "complex_repo_mutation" {
+		blockers = append(blockers, "selected first non-planning node must remain class complex_repo_mutation")
+	}
+	if classGateString(task, "authority_boundary") != "first_bounded_non_planning_executable_support_docs_node" {
+		blockers = append(blockers, "Foundry import authority boundary must be first bounded support/docs node")
+	}
+	if classGateString(candidate, "schema") != "ao.atlas.private-first-non-planning-candidate.v0.1" ||
+		gate.CandidateStatus != "ready" ||
+		!gate.CandidateExecutableReady ||
+		classGateString(candidate, "candidate_class") != "first executable support/docs ticket node" {
+		blockers = append(blockers, "first non-planning candidate must be the ready selected support/docs ticket node")
+	}
+	if classGateBool(candidate, "fully_unsupervised_complex_mutation_live_proven") {
+		blockers = append(blockers, "first non-planning candidate must not claim fully_unsupervised_complex_mutation live-proven")
+	}
+	if classGateString(candidate, "rsi") != "denied" {
+		blockers = append(blockers, "first non-planning candidate must keep RSI denied")
+	}
+	if scope == "" || !classGateStringSliceContains(classGateStringSlice(candidate, "allowed_surfaces"), scope) {
+		blockers = append(blockers, "first non-planning candidate allowed surface must match imported write scope")
+	}
+	if !classGateStringSliceEqual(importWriteScope, importRollbackScope) || !classGateStringSliceEqual(importWriteScope, classGateStringSlice(rollback, "rollback_scope")) {
+		blockers = append(blockers, "first non-planning rollback scope must match imported write scope")
+	}
+	requiredEvidence := []string{
+		"highest_proven_live_class:complex_repo_mutation",
+		"next_denied_class:fully_unsupervised_complex_mutation",
+		"rsi:denied",
+		"readiness_only:false",
+		"readback_only:false",
+		"non_planning_rehearsal:true",
+		"node_id:" + gate.NodeID,
+		"safe_to_execute_in_foundry_only_under_gates:true",
+	}
+	for _, want := range requiredEvidence {
+		if !classGateStringSliceContains(classGateStringSlice(candidate, "required_evidence"), want) ||
+			!classGateStringSliceContains(importRequiredEvidence, want) {
+			blockers = append(blockers, "first non-planning required evidence missing "+want)
+			break
+		}
+	}
+	for _, want := range []string{"no provider calls", "no credentials", "no dependency updates", "no auth policy config widening", "no secret env exposure", "no direct main mutation", "no concurrent mutation", "no RSI claim", "no release deploy publish upload tag"} {
+		if !classGateStringSliceContains(classGateStringSlice(candidate, "denied_surfaces"), want) {
+			blockers = append(blockers, "first non-planning candidate denied surfaces missing "+want)
+			break
+		}
+	}
+	for _, want := range []string{"CI failure", "Sentinel hold", "kill switch", "rollback failure", "unsafe scope drift", "RSI boundary crossing"} {
+		if !classGateStringSliceContains(classGateStringSlice(rollback, "auto_stop_triggers"), want) {
+			blockers = append(blockers, "first non-planning rollback auto-stop triggers missing "+want)
+			break
+		}
+	}
+	if classGateBool(rollback, "fully_unsupervised_complex_mutation_live_proven") {
+		blockers = append(blockers, "first non-planning rollback must not claim fully_unsupervised_complex_mutation live-proven")
+	}
+	if classGateString(rollback, "rsi") != "denied" {
+		blockers = append(blockers, "first non-planning rollback must keep RSI denied")
+	}
+
+	gate.SafeToRequest = gate.FoundryImportStatus != "" && gate.CandidateStatus == "ready" && nodeStatus == "ready" && len(tasks) == 1 && !gate.FoundryImportSchedulesWork && !gate.FoundryImportExecutesWork && !gate.FoundryImportApprovesWork
+	if len(blockers) > 0 {
+		gate.Blockers = blockers
+		gate.FirstFailingCheck = blockers[0]
+		return gate, nil
+	}
+	gate.Status = "ready"
+	gate.SafeToRequest = true
+	gate.SafeToExecute = true
+	gate.LiveExecutionAuthority = true
+	gate.ExactNextAction = "execute_exact_first_non_planning_support_docs_node"
+	gate.Blockers = []string{}
+	return gate, nil
 }
 
 func buildFullyUnsupervisedAuthorityGatesRollup(paths fullyUnsupervisedAuthorityGatePaths) (map[string]any, error) {
@@ -4102,6 +4439,27 @@ func classGateFirstNonEmpty(values ...string) string {
 		}
 	}
 	return ""
+}
+
+func classGateFirstNonEmptyStringSlice(values ...[]string) []string {
+	for _, value := range values {
+		if len(value) > 0 {
+			return value
+		}
+	}
+	return nil
+}
+
+func classGateStringSliceEqual(left, right []string) bool {
+	if len(left) != len(right) {
+		return false
+	}
+	for i := range left {
+		if left[i] != right[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func buildComplexRepoMutationNodeGate(paths complexNodeGatePaths) (ComplexRepoMutationNodeGate, error) {
