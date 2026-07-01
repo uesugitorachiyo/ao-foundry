@@ -1,0 +1,24 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "attempt": "attempt-r",
+  "task_type": "adversarial overbreadth remediation quality",
+  "baseline": 0.64,
+  "post_change": 0.92,
+  "improvement": 0.28,
+  "threshold": 0.2,
+  "result": "passed",
+  "description": "Improves claim wording so adversarial review no longer flags unrestricted self-modification or policy-changing implications.",
+  "public_safe": true,
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion remains denied",
+    "release/deploy/publish/upload/tag/provider calls remain denied",
+    "credential use remains denied",
+    "dependency updates remain denied"
+  ],
+  "rollback_proof": "revert this attempt directory and restore prior conservative wording evidence; no privileged surfaces touched",
+  "regression_result": "passed"
+}

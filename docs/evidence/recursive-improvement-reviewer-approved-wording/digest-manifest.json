@@ -1,0 +1,3386 @@
+{
+  "schema": "ao.foundry.digest-manifest.v0.1",
+  "mission": "recursive-improvement-reviewer-approved-wording",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "ad5a7c8cd742a4990c09f9ed6bd6b7252db62eaa105fce8d51af0cd6ec70b119"
+    },
+    {
+      "path": "adversarial-wording-results.json",
+      "sha256": "e9dc6e5068e6395059f56e865a0c40a74084390b216bd88840c4c163e7ca4d28"
+    },
+    {
+      "path": "architecture-wording-gate.json",
+      "sha256": "632a8e9af070dd95429f8540daf513e871c9d5630aefc626abe56738d2778849"
+    },
+    {
+      "path": "attempts/attempt-q/README.md",
+      "sha256": "7cf9663f0def8a51b0f6d273663e0e7458933b2d15c200b5f07f5fe6c9e36f1a"
+    },
+    {
+      "path": "attempts/attempt-q/measurement.json",
+      "sha256": "594e62c73e007da323588466e2a7f2bcc3e637001951a0b60d5372c049098b6e"
+    },
+    {
+      "path": "attempts/attempt-q/reproducibility-runbook.md",
+      "sha256": "5b25d306ca45ca5a17ce29d2bfbc15ce4c0d1e048b56dcbb285e4cc136fbf030"
+    },
+    {
+      "path": "attempts/attempt-r/README.md",
+      "sha256": "669f51bd6b1ee8f408a405045c15d5cbc86007bd3067a071e534d0418d30b04c"
+    },
+    {
+      "path": "attempts/attempt-r/measurement.json",
+      "sha256": "3513150898bda690b5b1a72ff06dee870bfb10234338cabfe3686637558e122a"
+    },
+    {
+      "path": "attempts/attempt-r/reproducibility-runbook.md",
+      "sha256": "6cf6793f25cad7ec05b90e32af6a9678058ac079e55df0a73c8c8cc6bb3d3536"
+    },
+    {
+      "path": "attempts/attempt-s/README.md",
+      "sha256": "2e7ed28557f2849b31ac674439364305f5e663b8e0d7994382b103bcd7e7a564"
+    },
+    {
+      "path": "attempts/attempt-s/measurement.json",
+      "sha256": "90848db04217d5120038f0cb5b1752cb3481d96c30e322f267793d0b3b321ffa"
+    },
+    {
+      "path": "attempts/attempt-s/reproducibility-runbook.md",
+      "sha256": "4cf1f4fdd7e48053eabd4fb978a0964e502af78dca9fcf8c9f929fee8974a8ee"
+    },
+    {
+      "path": "attempts/attempt-t/README.md",
+      "sha256": "4cb1a91f1e57fd23310565e60fd3a3f181d9e89e88790c0b61d6d1fa83c49f63"
+    },
+    {
+      "path": "attempts/attempt-t/measurement.json",
+      "sha256": "edb198419fcbdd38d347e765bd793b8cca8d81f6a727ed4ee2074c2f939824c6"
+    },
+    {
+      "path": "attempts/attempt-t/reproducibility-runbook.md",
+      "sha256": "0f58917f10038d804bbc467a34a01f98e17ef9309a3788d3e956e7c1097cc5bc"
+    },
+    {
+      "path": "command-readback.json",
+      "sha256": "23015f4a9a216df63fea7c337d37a8837a854db8ed4bbee0cdf653a3334ff473"
+    },
+    {
+      "path": "covenant-publication-gate.json",
+      "sha256": "66e7a91916baa869a679123bc3f89987626479d4b4a8ff4ebd40fc3c33dd22df"
+    },
+    {
+      "path": "eval-regression-results.json",
+      "sha256": "1ad2a6b789d1d2f3a2db55b0d5041387554096396e8316b6548daffbc89b086a"
+    },
+    {
+      "path": "evidence-index.json",
+      "sha256": "3e7514696518763a627ca6ea6333ed7e2176e1f7534fa6d9a8b96f084b7992f8"
+    },
+    {
+      "path": "final-rollup.json",
+      "sha256": "ee605c7da3bf84b5235b908650e6a156b6ad7275b48b8a76c9707ff3a77a4ee6"
+    },
+    {
+      "path": "nodes/riraw-node-001.json",
+      "sha256": "618e552e47d9d74cbfacf36fe8e9a4349fa76d2bea1dae3c2ba418f497f4f5f7"
+    },
+    {
+      "path": "nodes/riraw-node-002.json",
+      "sha256": "8edde9b2bb7b665bb2346a73331c3345274d5d9bb1c98dbf86eeda5d8e3528bb"
+    },
+    {
+      "path": "nodes/riraw-node-003.json",
+      "sha256": "4e690135e65d463e4bfc3e117098275a915c2b3fa1004416f238d4aa6aab17b0"
+    },
+    {
+      "path": "nodes/riraw-node-004.json",
+      "sha256": "c4a93b94916c807f25c0ce2ac4c030d771a414f96a902f42791de0e7ea9a467f"
+    },
+    {
+      "path": "nodes/riraw-node-005.json",
+      "sha256": "3fcad49c10ff215e85105635e14bcb0f6d3c140a7126a5d9fd6112e0adec698c"
+    },
+    {
+      "path": "nodes/riraw-node-006.json",
+      "sha256": "23294d23cd3b51b33323f9a8a4416e41c6c4bd97b9c66dc1a868194f5b4e8f91"
+    },
+    {
+      "path": "nodes/riraw-node-007.json",
+      "sha256": "9d7fe7509af958179fb219aad3258f9c53a86ce386eee5d215181186ba0c3e87"
+    },
+    {
+      "path": "nodes/riraw-node-008.json",
+      "sha256": "0dcf0327ab098f9225dca96536f429e3be814fb444e69fb1f95c101a1d665ebf"
+    },
+    {
+      "path": "nodes/riraw-node-009.json",
+      "sha256": "e2b5dc485427b1bbfd1e40ce91da4b3ee5aa25b947333b35e0bbd069619758dc"
+    },
+    {
+      "path": "nodes/riraw-node-010.json",
+      "sha256": "0a149c692bdf7e149fe1aab6dd13528b342cf0ec765b184eee2ad3c00dcf7456"
+    },
+    {
+      "path": "nodes/riraw-node-011.json",
+      "sha256": "e0cd552e87576416bca7ace19b2d7d633810da46c3ceec7b9c843a3d6eb370f8"
+    },
+    {
+      "path": "nodes/riraw-node-012.json",
+      "sha256": "9b38492e6a81b529f0aaed557ff2e75c9dcb631cd8ae4b5efc7f822239a7f3ab"
+    },
+    {
+      "path": "nodes/riraw-node-013.json",
+      "sha256": "480b93182ee5295a70eb288949a2266e7d2a64f02b3ade663de616453df7de9f"
+    },
+    {
+      "path": "nodes/riraw-node-014.json",
+      "sha256": "bcb71d36e9592a82020b824a1ec2b9075d34dbe20611311fada8999146f2362a"
+    },
+    {
+      "path": "nodes/riraw-node-015.json",
+      "sha256": "023574409065d77ee141bf6483b922a5a1ef2db2953392e2cc6b8b8fd22f8b87"
+    },
+    {
+      "path": "nodes/riraw-node-016.json",
+      "sha256": "fd1603affc71d0865819d62d6afeb0a7b9570f23a71e63eaae895ff75beae903"
+    },
+    {
+      "path": "nodes/riraw-node-017.json",
+      "sha256": "205d6b5c16cfa667fc3711ea9c6a49cac986daeeb040d6b05da9f81a0a57c160"
+    },
+    {
+      "path": "nodes/riraw-node-018.json",
+      "sha256": "7135187af4797e845ec57c2bb13569f35e71d2dda2c4a19b863718cf5eccc087"
+    },
+    {
+      "path": "nodes/riraw-node-019.json",
+      "sha256": "45c9bf12f86fdacef5ca2c454e64967df9d867feffbcfa3c33293e59b21aa9c3"
+    },
+    {
+      "path": "nodes/riraw-node-020.json",
+      "sha256": "359cf0561a9b0f6388fa6bb1adab4ba6d4447a56fb003e2bf83e8c943e29fddb"
+    },
+    {
+      "path": "nodes/riraw-node-021.json",
+      "sha256": "bfc6d1d2f0c7d5c43d8eb1c088c18dfc49e86e68ad2f86259369ca7ed9bbaa59"
+    },
+    {
+      "path": "nodes/riraw-node-022.json",
+      "sha256": "a3af44eff3b323b22b12679263fb5ce3161b1902e12fbe8eac1985773abdff06"
+    },
+    {
+      "path": "nodes/riraw-node-023.json",
+      "sha256": "d726526341b2867583d29a64d2378b53b29ea5e1875e1a27aa99367d74b9a2c3"
+    },
+    {
+      "path": "nodes/riraw-node-024.json",
+      "sha256": "0ce27ceae4e097ef170693ac3435c9c0df407cee341dc465815926e2a599c443"
+    },
+    {
+      "path": "nodes/riraw-node-025.json",
+      "sha256": "50dd41c6167cc5f787674a5c629761cef62ee1ea30f990e3a1e9f11e0665e51c"
+    },
+    {
+      "path": "nodes/riraw-node-026.json",
+      "sha256": "6cf7a9350d791febadfc43199269cd630ebf194ba90cffdf74e183730b7f0aa5"
+    },
+    {
+      "path": "nodes/riraw-node-027.json",
+      "sha256": "fef8b7b73882fcefe9614643aa944f0eb31dfd7901ec2d50f5862487cbbb08b4"
+    },
+    {
+      "path": "nodes/riraw-node-028.json",
+      "sha256": "3e63832ebca238ff2781108ff28047c3f73ea4228a04a4c62a3391c56dc73e14"
+    },
+    {
+      "path": "nodes/riraw-node-029.json",
+      "sha256": "156b852676c9412fe4f396b3f6c6679928897fc41a7c1611fbc344fe9d5a8ec7"
+    },
+    {
+      "path": "nodes/riraw-node-030.json",
+      "sha256": "4878f07c9cf1dd487f9f2f10e6ea7ac25541f81c484b1503031b1692143615b8"
+    },
+    {
+      "path": "nodes/riraw-node-031.json",
+      "sha256": "be385baeb8ae924f6fc9ff298042178bf797c860075dad99d3d8694e3d4f34be"
+    },
+    {
+      "path": "nodes/riraw-node-032.json",
+      "sha256": "8d43df3f4ef0f174c6b2d684d260fe69b0b76f59640a74bc744fd904d9d76c21"
+    },
+    {
+      "path": "nodes/riraw-node-033.json",
+      "sha256": "e2192ee86d19c32195566a43b2d46c9407da4a507c900e0facf9d51835f53b7f"
+    },
+    {
+      "path": "nodes/riraw-node-034.json",
+      "sha256": "8a4eda292a10063f9b82d01b09df7ae74ead9d8b1e64316ba1dcec6f39dad01e"
+    },
+    {
+      "path": "nodes/riraw-node-035.json",
+      "sha256": "c7724c572aa69e57b044c6ba776e19d6e182ce050b7d8df1fdbf8f903edacf3b"
+    },
+    {
+      "path": "nodes/riraw-node-036.json",
+      "sha256": "f68fd4689e8ce667b052035a743d8007939f05c7471bd5632f4a267d44b5d07d"
+    },
+    {
+      "path": "nodes/riraw-node-037.json",
+      "sha256": "03d99c7c93f3ff42f4cfca963ce12af82824b8146922a07bdaa9f79943f37e20"
+    },
+    {
+      "path": "nodes/riraw-node-038.json",
+      "sha256": "b856f1c03c15a4de27c10ec0ea6bb77efeb7eff869f19fdbcbfcdc2cabe012d6"
+    },
+    {
+      "path": "nodes/riraw-node-039.json",
+      "sha256": "d35b48c62016330babd062b0d27f1355bda21f0b4dbd45c8ba43c1f1231cf270"
+    },
+    {
+      "path": "nodes/riraw-node-040.json",
+      "sha256": "6022c3d09b85c2e22b394b31b8fa524f01f1f4e77f4137496e9f6a14a0aec355"
+    },
+    {
+      "path": "nodes/riraw-node-041.json",
+      "sha256": "148baa40b1924af174bc34790d81aaf7b03b28ec8c18d821eac2c3b76db1b7e1"
+    },
+    {
+      "path": "nodes/riraw-node-042.json",
+      "sha256": "211779e15e11e2c1c85506fbc874c5ecb2cf341276aa7042051f352ba8995587"
+    },
+    {
+      "path": "nodes/riraw-node-043.json",
+      "sha256": "7846972d2fc821d20a3effd3848ba2d691496ce36a6d4bc34ec4ac91715ea099"
+    },
+    {
+      "path": "nodes/riraw-node-044.json",
+      "sha256": "5c71d8dcacfc0e13dca7a8ee84134f50fac2963ced15ecc252972f039a975ba4"
+    },
+    {
+      "path": "nodes/riraw-node-045.json",
+      "sha256": "7d9adf1c9a38481b9c7d7a08dbe6a603e2b0bd8321e043a9d8c153d7efa81cec"
+    },
+    {
+      "path": "nodes/riraw-node-046.json",
+      "sha256": "bea2d09b2a22a0ce8f5046da4595d56bfec9a9ffc1bc8a5621bb95367052f96e"
+    },
+    {
+      "path": "nodes/riraw-node-047.json",
+      "sha256": "467727a1d37a00fe355687e9f47e899eee37e308d647d061ecd96cdad1f8ffe8"
+    },
+    {
+      "path": "nodes/riraw-node-048.json",
+      "sha256": "2b2070d571c15d50fbeb2ab14546038ecba1bd7fbaa9b46ad7429e6a5c2962dc"
+    },
+    {
+      "path": "nodes/riraw-node-049.json",
+      "sha256": "60a0e39d54018b37ec6b0f4ac5f6a8e6b933bd78899565d0ccce990027769ad7"
+    },
+    {
+      "path": "nodes/riraw-node-050.json",
+      "sha256": "7fbae24542250da83a07e81482999e78c6fcbb58ddd3df4748dbea662ea2996f"
+    },
+    {
+      "path": "nodes/riraw-node-051.json",
+      "sha256": "ca5674094b775916abe9809ee40a18b2083f4ee7591db51f476b0ad02204731b"
+    },
+    {
+      "path": "nodes/riraw-node-052.json",
+      "sha256": "5689dba960818dcd7b0152b86c75d847fb17f8795bde2d8a0e9c5cf068f517c6"
+    },
+    {
+      "path": "nodes/riraw-node-053.json",
+      "sha256": "2beff32384f0c84b9d1891125812600cef1423069a86cc7bb21ce3475f73b62a"
+    },
+    {
+      "path": "nodes/riraw-node-054.json",
+      "sha256": "c620f993fabcaeafb02fe3762ad06cde4594aead97db7134b4a3ac0273cf00ec"
+    },
+    {
+      "path": "nodes/riraw-node-055.json",
+      "sha256": "16f1a81f4abb4f3dc86a7145f50e9ddfa62cd02c1c481d79729b9c321a3306e8"
+    },
+    {
+      "path": "nodes/riraw-node-056.json",
+      "sha256": "26a4cf34c926a2d96a97e3f0a4ee813c00dd3d16c55262ebdf505b153aec9cdf"
+    },
+    {
+      "path": "nodes/riraw-node-057.json",
+      "sha256": "40ed4aae511453fbe5ba33b0b907f4514a1c7466215eacf32a090a88ebfe6cfd"
+    },
+    {
+      "path": "nodes/riraw-node-058.json",
+      "sha256": "fae52e009d05ff887762c46b4f91f47be5d07a042ed300157d7547134059e8dc"
+    },
+    {
+      "path": "nodes/riraw-node-059.json",
+      "sha256": "a71b7058b80b3a5e10f5ebcf2af3d7c218b0156836cbc7b6e45f4191bf0f7755"
+    },
+    {
+      "path": "nodes/riraw-node-060.json",
+      "sha256": "f6c218fb019d289e45d623ff8014db750146fd1031445174631d4cec8266bca9"
+    },
+    {
+      "path": "nodes/riraw-node-061.json",
+      "sha256": "e10028bd4065cc07b93d67264535d4abdd72d228e629425ba1981d86f97c314c"
+    },
+    {
+      "path": "nodes/riraw-node-062.json",
+      "sha256": "702653c7253fe3aa49bd9820f547778fa21b90429fd74bfa7298dad1c69132ae"
+    },
+    {
+      "path": "nodes/riraw-node-063.json",
+      "sha256": "5971f05c6fc3d78b803cb85c260e45dbdba0af1e12501016941ab7ea86df2b64"
+    },
+    {
+      "path": "nodes/riraw-node-064.json",
+      "sha256": "1dd43726137a697b6758e93b5d9d78f1a3f41952cd64e8b8a22de56f7a267388"
+    },
+    {
+      "path": "nodes/riraw-node-065.json",
+      "sha256": "efd3cd57fb5e8211f7828e97421368fdc6b108e75a0072c3eecb972f4f3d8db9"
+    },
+    {
+      "path": "nodes/riraw-node-066.json",
+      "sha256": "6c4b6b8cda93c0bdb5fd4721f7e988d6a2aef736711a5ebfd13beccf67caa8d8"
+    },
+    {
+      "path": "nodes/riraw-node-067.json",
+      "sha256": "ab71b9d04c01b50454bbfb9f6c2cc1708336ee92abbbdc0a4b0b1b50d97684bc"
+    },
+    {
+      "path": "nodes/riraw-node-068.json",
+      "sha256": "322e3e398d83001db7c42fbceba910594c59386d62c633d0275e94113ba90678"
+    },
+    {
+      "path": "nodes/riraw-node-069.json",
+      "sha256": "d8aaa895181f3780914a6c0295c880131f4233ff0fec57c85f0df81120aa1f69"
+    },
+    {
+      "path": "nodes/riraw-node-070.json",
+      "sha256": "edcac54d4d7129c381933dbda772d17a22d496907ead40aacfbcf6e6319e6dee"
+    },
+    {
+      "path": "nodes/riraw-node-071.json",
+      "sha256": "b09708ecc1522f13ccdf3e1d51ebd9d4b56d9ee6e4a7d7cff39d3ddce5cddfbb"
+    },
+    {
+      "path": "nodes/riraw-node-072.json",
+      "sha256": "bbff63ac956d594175214b650a3a11e3b9b0ab73bef9278a598b321ea87f8672"
+    },
+    {
+      "path": "nodes/riraw-node-073.json",
+      "sha256": "9192c324d95423ac9d8f501632e08e8b76a2022d79b22005a743c0bf1af1ce70"
+    },
+    {
+      "path": "nodes/riraw-node-074.json",
+      "sha256": "7a98a3327d0966b5bdcf8934f89232de2a452e02b0c1c113ca9d53eca88a504a"
+    },
+    {
+      "path": "nodes/riraw-node-075.json",
+      "sha256": "ee15350982b8f83910372780b0533466a106a14f8fa2b473b68c50859b23855f"
+    },
+    {
+      "path": "nodes/riraw-node-076.json",
+      "sha256": "639b3eba24327963b6165fe9a58b66138b952f9a9ab0d7a864de93d7801c16db"
+    },
+    {
+      "path": "nodes/riraw-node-077.json",
+      "sha256": "139498f164061c67ba02feab80a93dc12d14717de8858c294f20c0056ed1f84a"
+    },
+    {
+      "path": "nodes/riraw-node-078.json",
+      "sha256": "02bfe2da2a008b3d9a41a959b5fd37f0a4233bd85f5bc2741b2693577aecd0fa"
+    },
+    {
+      "path": "nodes/riraw-node-079.json",
+      "sha256": "11a0705d297e88010ca305f1ced1970efd96fb570cc747d08cf1a5236f9163b5"
+    },
+    {
+      "path": "nodes/riraw-node-080.json",
+      "sha256": "6cbb98ac2be2c78f7f95cee172ea5486922b5113e2df122b17b0ff2383a51b09"
+    },
+    {
+      "path": "nodes/riraw-node-081.json",
+      "sha256": "4526dd984e085d72fcc58052adb8e6df0770333250005f9f4a33bed64063a37e"
+    },
+    {
+      "path": "nodes/riraw-node-082.json",
+      "sha256": "92d515aa33d84f7dea9bb0302dee7579f8390d0baca30991c59ac15078a09a4b"
+    },
+    {
+      "path": "nodes/riraw-node-083.json",
+      "sha256": "b2163ca0f1826967efe2f991055e85cc5d3f944038cf1bc73e8198f697f9e491"
+    },
+    {
+      "path": "nodes/riraw-node-084.json",
+      "sha256": "c03c9731ab339e829f28f6689b391d0f16f7b00fcd5a35208b12c166dafffce1"
+    },
+    {
+      "path": "nodes/riraw-node-085.json",
+      "sha256": "215753112554939586c85b7dd7fe4089baa4da80aeb79a908a08126c389058a4"
+    },
+    {
+      "path": "nodes/riraw-node-086.json",
+      "sha256": "5b5320c71c33f1d705038772b889973c07a0ef2c5077ba93e7cca551e37c4f21"
+    },
+    {
+      "path": "nodes/riraw-node-087.json",
+      "sha256": "9db57daca1ca486b144a91e4ce0e7784f82431f7dbae40f8065614a4ee8a26ce"
+    },
+    {
+      "path": "nodes/riraw-node-088.json",
+      "sha256": "af70f0b1b3f8169c7972ca0e1dedadfc354431e633e187b6d739337c41edaea4"
+    },
+    {
+      "path": "nodes/riraw-node-089.json",
+      "sha256": "327b289bd842b0c794ec9b712885810bda7fd3abbd006fd70a211cbc91681aab"
+    },
+    {
+      "path": "nodes/riraw-node-090.json",
+      "sha256": "0c43965d9c2e130f56f89111c1229d870a85292fff5bc5e8838fb13a285d8ad3"
+    },
+    {
+      "path": "nodes/riraw-node-091.json",
+      "sha256": "e51306e1f26af451990e86a1c0e73a26fa289a46049789ae72716ba6d175fdb1"
+    },
+    {
+      "path": "nodes/riraw-node-092.json",
+      "sha256": "87b074940020fa30ac22c8eace1bdba9ee611a25d999616b31291f13ee69c47f"
+    },
+    {
+      "path": "nodes/riraw-node-093.json",
+      "sha256": "4328d0d61d2b22cf7f34035fd3a4bdc5a55fc3bfa6b18df791a00ed026b49936"
+    },
+    {
+      "path": "nodes/riraw-node-094.json",
+      "sha256": "3e5d899103a7a2b43e387785bc81db5a351b3437d0f5d0ef6d59a6312868f280"
+    },
+    {
+      "path": "nodes/riraw-node-095.json",
+      "sha256": "313f6af68ddd7b873db0dccc81c1cadb577d7ee78297f96f3f3b3256581399e7"
+    },
+    {
+      "path": "nodes/riraw-node-096.json",
+      "sha256": "ff834fe7e53c9705daaf8084be55e86875809c71630c113399128849ab1aa75e"
+    },
+    {
+      "path": "nodes/riraw-node-097.json",
+      "sha256": "9a02304adaca5a4302188a18afb0b255060ae0ca3190b0b3029dac9a9416d2f9"
+    },
+    {
+      "path": "nodes/riraw-node-098.json",
+      "sha256": "c948d009c9044746e903a65a2102f039be4ffd3efe6c74a2700a0a97b4e1f03c"
+    },
+    {
+      "path": "nodes/riraw-node-099.json",
+      "sha256": "e18278e336ebc35ca5bac8c0305bc0dba234180cd4ce36cf0a7a6a3916453870"
+    },
+    {
+      "path": "nodes/riraw-node-100.json",
+      "sha256": "f055e9726fe6538d1d6d64a6fa46df9be2ad916ba97d11d954c6669d5b6f842c"
+    },
+    {
+      "path": "nodes/riraw-node-101.json",
+      "sha256": "8d37360d3c1d9856caea62c266e2847752d1c7fcf3d6ac19b1a4364bff99a6ef"
+    },
+    {
+      "path": "nodes/riraw-node-102.json",
+      "sha256": "a37980947509e42cf0f88e4f245fc5d156d091a5ea846407963b5ffd27e2e63a"
+    },
+    {
+      "path": "nodes/riraw-node-103.json",
+      "sha256": "cf14c725633cb973ff7bd49486e5cadd8a083ae3a434d4ca0832a414f155eb01"
+    },
+    {
+      "path": "nodes/riraw-node-104.json",
+      "sha256": "f4ff023ce348bb5af2c455a3402cca0ffb6bac11f40391b2c0ea567bf93fca55"
+    },
+    {
+      "path": "nodes/riraw-node-105.json",
+      "sha256": "b6fddd86d7a5a9f8ca70dedcc56836377e97257daed13b91092ca4998f5a2c23"
+    },
+    {
+      "path": "nodes/riraw-node-106.json",
+      "sha256": "08444701a1c942836dd76eacdf578e50e553776d85b90fe86a8ca66fe67313ad"
+    },
+    {
+      "path": "nodes/riraw-node-107.json",
+      "sha256": "63a97d0b39aa0a7ec99863b2dd34839f97459366ed3733d06a8b89a1909ae7c0"
+    },
+    {
+      "path": "nodes/riraw-node-108.json",
+      "sha256": "531cec5feceee66930b78c1d4575a1a526a53744655f0432d95a54f0baee9e1e"
+    },
+    {
+      "path": "nodes/riraw-node-109.json",
+      "sha256": "0ac9459fd023dfdf420e362e54978cd1939dbbfef3cbfa4c4564882befea537e"
+    },
+    {
+      "path": "nodes/riraw-node-110.json",
+      "sha256": "a39f04982af8fef6328185e59658cc5af967d5ee0c8b60a59016fb048f42125c"
+    },
+    {
+      "path": "nodes/riraw-node-111.json",
+      "sha256": "048baf09d2d5f65ee21056fe1440e1cb427621e5dc2672bd9b3b0acae429a181"
+    },
+    {
+      "path": "nodes/riraw-node-112.json",
+      "sha256": "fb09439a39c82233ab76d07fc35c86e7bb576a5fc5a65f4633f39034757c3db5"
+    },
+    {
+      "path": "nodes/riraw-node-113.json",
+      "sha256": "83b2b6c8357810b30f451df45161644f960e93d1c622b03e026598df4233a3e3"
+    },
+    {
+      "path": "nodes/riraw-node-114.json",
+      "sha256": "f9e8d1a28f94e97202129fe4fe269f228eb3c45c33b3589bcec393735ab70e4a"
+    },
+    {
+      "path": "nodes/riraw-node-115.json",
+      "sha256": "672ff5184c15567018975d6186da2e2625eb69f7591bee16ed6946ee207f6ad1"
+    },
+    {
+      "path": "nodes/riraw-node-116.json",
+      "sha256": "0eebde3de506e791c4df69396320488ec2a66896c6fda6fcfdc8a4ef50a9bda2"
+    },
+    {
+      "path": "nodes/riraw-node-117.json",
+      "sha256": "8f11bf96731297a1c8cefbc7994f3a7afe77ab1815ac481ecb646684c103a7a6"
+    },
+    {
+      "path": "nodes/riraw-node-118.json",
+      "sha256": "d14850e59725bf1c481dee05cc8f1799bcd4af3deb01d6372094e5bdf210a200"
+    },
+    {
+      "path": "nodes/riraw-node-119.json",
+      "sha256": "c88d64d4d300f8ba4e7996f957b856df3c509c99205ad95a4d1f3148104e31a3"
+    },
+    {
+      "path": "nodes/riraw-node-120.json",
+      "sha256": "bf868761c2d2c1b3110057ae10f37e01dd9868e1423c20ee2f0fcbbaa80a0a92"
+    },
+    {
+      "path": "nodes/riraw-node-121.json",
+      "sha256": "d82d55e42cb3680d1e65958513359717f3ca76bfe9808c7f989189524ddbcb0e"
+    },
+    {
+      "path": "nodes/riraw-node-122.json",
+      "sha256": "126d319e31dfbad64ea0301f8b5905dec99ed4b61df24bcb9915e2b0850c177d"
+    },
+    {
+      "path": "nodes/riraw-node-123.json",
+      "sha256": "55f945106ab35e380f106dc5617278784ad723b330c1429acdf4baaf58c39847"
+    },
+    {
+      "path": "nodes/riraw-node-124.json",
+      "sha256": "1a87c99dd05ff33295aa843f7a65abac125ca0a2efdb1874be2fcefc7475056a"
+    },
+    {
+      "path": "nodes/riraw-node-125.json",
+      "sha256": "c6798fb3f0d262314dfad9cd76fa8fd799785dfe0bf1d7c755b9d38920c22907"
+    },
+    {
+      "path": "nodes/riraw-node-126.json",
+      "sha256": "8170905b9484c4075212ffe5a298f191002ab9f7e4b0474aeab25041803aeedb"
+    },
+    {
+      "path": "nodes/riraw-node-127.json",
+      "sha256": "86653600a502bbab89fd2a19ad8b073dca039050694a8392c75091c42bbf0839"
+    },
+    {
+      "path": "nodes/riraw-node-128.json",
+      "sha256": "30335629174ad5208e2f64f635bcb0a2ee7eccd839efac914fbd5befe439a5fe"
+    },
+    {
+      "path": "nodes/riraw-node-129.json",
+      "sha256": "95385cfed24c0313f9c122220efd56ff97150ccaf3599dd68a4a93b7d2301305"
+    },
+    {
+      "path": "nodes/riraw-node-130.json",
+      "sha256": "09247aa1af620891c93c32ac3331c13d335499fa6fdd141021be70b6261aa149"
+    },
+    {
+      "path": "nodes/riraw-node-131.json",
+      "sha256": "f73fa28523ca2b9fec273d9d654429ee5dcf9f38227a033b8558ecb4c2af598e"
+    },
+    {
+      "path": "nodes/riraw-node-132.json",
+      "sha256": "fe5193a76133eeb27d7e690afd5e08f6a391beb4871db4f1af78ef690a57df86"
+    },
+    {
+      "path": "nodes/riraw-node-133.json",
+      "sha256": "ed321371e5bd3d211e41f9f444222028a0d92e86f6ba513553390fb769b2a50c"
+    },
+    {
+      "path": "nodes/riraw-node-134.json",
+      "sha256": "d0cf1370d82982b0e0451ca934b13ae7f99ef98eee0ede34304cae63e0db25c2"
+    },
+    {
+      "path": "nodes/riraw-node-135.json",
+      "sha256": "6f0214b24dbdc02e2a1e4a6d5884db06e5411eabcd244b48676b5698ea21c226"
+    },
+    {
+      "path": "nodes/riraw-node-136.json",
+      "sha256": "f52418c4a71e1269252ec59f6382c436ce53eadbc1fe56995ef32ab501f76eee"
+    },
+    {
+      "path": "nodes/riraw-node-137.json",
+      "sha256": "ed4a3a325ab88103afd03c7164428dab1725dbcd06816c2c43f193fbc124fbe2"
+    },
+    {
+      "path": "nodes/riraw-node-138.json",
+      "sha256": "cecd77d0f98b581ecaa82e2502facda74f6d8336c7a8792ef9f56e64def1c824"
+    },
+    {
+      "path": "nodes/riraw-node-139.json",
+      "sha256": "ce7a291e374fa0968ec4a32954c09a05856131663699f3ed6f88463aeb3e792a"
+    },
+    {
+      "path": "nodes/riraw-node-140.json",
+      "sha256": "cf9709b6587a993ef189eead95ea23056edcb5da47baa87683c171b92d046d32"
+    },
+    {
+      "path": "nodes/riraw-node-141.json",
+      "sha256": "3a8a37aff5c3e2fcb136bac8deb3ba774213a11fd724e8e61f19e649853ba12c"
+    },
+    {
+      "path": "nodes/riraw-node-142.json",
+      "sha256": "c27484cee241a3dd01ff8d32d804003c13435bbff0e0cfe07896ea138c679d22"
+    },
+    {
+      "path": "nodes/riraw-node-143.json",
+      "sha256": "e3c23178e2d452f5144d2f7726f7fb695912c5cc3a44f2dc30ee7056531b6a2a"
+    },
+    {
+      "path": "nodes/riraw-node-144.json",
+      "sha256": "60eb1b06659d450582e49849fc83031af713704b1ee1f57ff0ef0eb1d6a86839"
+    },
+    {
+      "path": "nodes/riraw-node-145.json",
+      "sha256": "4ee3ad4638b92fb4bba03ad561571599b6eba75d2e948f3fdd2b46047118341d"
+    },
+    {
+      "path": "nodes/riraw-node-146.json",
+      "sha256": "f7db87245ae2726f84b64f0534e2a810ca098b716546fecb137fc85cbe9c600d"
+    },
+    {
+      "path": "nodes/riraw-node-147.json",
+      "sha256": "92e1662cd79580c92ea69907b6ccd56094432297199eb5aea91da02af9f45037"
+    },
+    {
+      "path": "nodes/riraw-node-148.json",
+      "sha256": "7f09ec2fafb37f50492d1bbbfd61bcf3c14b8005435c2170a2d6cd0fe4ba9052"
+    },
+    {
+      "path": "nodes/riraw-node-149.json",
+      "sha256": "37466f1f31e8a493c75acab948a496c4fb2f9a58dd717bf308084886ef7297d9"
+    },
+    {
+      "path": "nodes/riraw-node-150.json",
+      "sha256": "ff1c06170e78f6a294d4fff1b2935e5013d45be88701ca68b1c5cb4f7d2737e9"
+    },
+    {
+      "path": "nodes/riraw-node-151.json",
+      "sha256": "3040af023858d55a48c57ac8f1451e84a8eb0f84dd5d44d1fba64fc41ffbedcf"
+    },
+    {
+      "path": "nodes/riraw-node-152.json",
+      "sha256": "e4f8c88e6f0cb98528876776f439d8444031852a6fbc9bbcd2a5dbd75c57cf43"
+    },
+    {
+      "path": "nodes/riraw-node-153.json",
+      "sha256": "038aa90432afd5ca9f38b0a9da41909cb2b83d70298b4613bc4a534ab1236335"
+    },
+    {
+      "path": "nodes/riraw-node-154.json",
+      "sha256": "896b68a6fc20ae7efbf70543bf2e8706648ec48e3093421f8226890daa4b206e"
+    },
+    {
+      "path": "nodes/riraw-node-155.json",
+      "sha256": "99644498ccf0dd9786ddda188453460adf2a105c1273704da5c0b4a51e9be4c7"
+    },
+    {
+      "path": "nodes/riraw-node-156.json",
+      "sha256": "af5289bcb0e470738c78580b688bbcc41dfde47d6c0cca146cb70a7e6f40e23a"
+    },
+    {
+      "path": "nodes/riraw-node-157.json",
+      "sha256": "acbbba199f634542d343f9eb8752a4138b29df53bd2aa22778843c85b3e45f9c"
+    },
+    {
+      "path": "nodes/riraw-node-158.json",
+      "sha256": "6d81722b0609b0ae3541950df6cdb10eb3bc03dcfdda8067ed7f4f2049c03bb3"
+    },
+    {
+      "path": "nodes/riraw-node-159.json",
+      "sha256": "0e7744523f5d290ba51b47e504f672e84d96ad5adab563657c4d2b3fab275d87"
+    },
+    {
+      "path": "nodes/riraw-node-160.json",
+      "sha256": "479624e72f89cf33c41c20fc2c27066b8542706fd3c6dca2c1a79accff42b561"
+    },
+    {
+      "path": "nodes/riraw-node-161.json",
+      "sha256": "638f6a454716a99a00f5c9b1bad58a129ac16b352a6b672dd8a71b7c85b126d3"
+    },
+    {
+      "path": "nodes/riraw-node-162.json",
+      "sha256": "fea458bced9fec545fd444e7e76b68f1064536265b78d40722cb2a0d3f303a89"
+    },
+    {
+      "path": "nodes/riraw-node-163.json",
+      "sha256": "fd04a441261bd08a3ff4a36bb24bc9d8daaf7f9d28ccdeeafd22a9828e5bbc92"
+    },
+    {
+      "path": "nodes/riraw-node-164.json",
+      "sha256": "83408cab9ceb7df1c4cf1b72d551cbd99c7dbd2f4eca19552eff49697ed86182"
+    },
+    {
+      "path": "nodes/riraw-node-165.json",
+      "sha256": "05349b4d46cafcc9cf4035de35918ee2672a0c58c8c4df19572823535af9cf65"
+    },
+    {
+      "path": "nodes/riraw-node-166.json",
+      "sha256": "494a35e35a80562e3ae0397ea98e9e94d433d180004093e2847c0eb390c99d76"
+    },
+    {
+      "path": "nodes/riraw-node-167.json",
+      "sha256": "801daf3b4e85f5eb34ec2b64764c192bfa561fbb979dcca99c4f0f075e2d3ab3"
+    },
+    {
+      "path": "nodes/riraw-node-168.json",
+      "sha256": "9ee61b79d436b3ce4a2b54aae7f9d0f7880dad9a5770bbf2b4ab4d2e539bf8a9"
+    },
+    {
+      "path": "nodes/riraw-node-169.json",
+      "sha256": "9bbc3f241535b9cc71a0293e6266520a51bca3afd8cf1122e8d9d8d40e857309"
+    },
+    {
+      "path": "nodes/riraw-node-170.json",
+      "sha256": "4098c9780ffc525e41104643121c7f442b2acf5369503e09c6689fdd32c78b00"
+    },
+    {
+      "path": "nodes/riraw-node-171.json",
+      "sha256": "04547820efb75d57e3b561550a3612b231dec90a9f4693748084bb5b5c036695"
+    },
+    {
+      "path": "nodes/riraw-node-172.json",
+      "sha256": "cf0913fd6e4ec1b593d7d52740d3bf4cc29663d00f15a12e2a1b9117e76911f9"
+    },
+    {
+      "path": "nodes/riraw-node-173.json",
+      "sha256": "461ebf41b6888d750cc5eb9bca4939cf451a483dc85a20b6bd68f5e385bd2f1a"
+    },
+    {
+      "path": "nodes/riraw-node-174.json",
+      "sha256": "c87ab813230a712e9a4ed32faf2df25c9ad5042bfea75963cf9be1df2f1e2a22"
+    },
+    {
+      "path": "nodes/riraw-node-175.json",
+      "sha256": "da5f326d7d00f45985a985f01aa33e44b7901fc04ebb37dc0418c1670704429a"
+    },
+    {
+      "path": "nodes/riraw-node-176.json",
+      "sha256": "cdc9046c2d790b2bb7edd0739880e273f0bf2ab41e3cb9a6909821656eb13c48"
+    },
+    {
+      "path": "nodes/riraw-node-177.json",
+      "sha256": "377f0f9984c5527cdf8097bea0fa956c7f3210f9228877b15b60a51e99baa5bf"
+    },
+    {
+      "path": "nodes/riraw-node-178.json",
+      "sha256": "b1cd6431bfa7c54ff4386427d2518a123eac0078c707eeb6bb0e5aafd70c6b9c"
+    },
+    {
+      "path": "nodes/riraw-node-179.json",
+      "sha256": "d60a61d87497d26cdc4e09e088395f85e4d399646c1431bdd830503420ebc114"
+    },
+    {
+      "path": "nodes/riraw-node-180.json",
+      "sha256": "b63ccf02d4ee758e50c6da119852d6d6e09e8a663dd7b38f5d1f0df09e28e8ae"
+    },
+    {
+      "path": "nodes/riraw-node-181.json",
+      "sha256": "6d65c179f18f115fc31a2c2724671ceb80884c4dc1564c5970c3337afd0699d2"
+    },
+    {
+      "path": "nodes/riraw-node-182.json",
+      "sha256": "df33d1b9578638e027f185105daf4e20871b968de15c0acfbb6e95cccb8b9474"
+    },
+    {
+      "path": "nodes/riraw-node-183.json",
+      "sha256": "4333c61ae808e64055f23f749fd40eeb695c37a5f00543d4dc1a8bf194ea05be"
+    },
+    {
+      "path": "nodes/riraw-node-184.json",
+      "sha256": "787cf6bf2aa8367c2a13e56772499dcb176245b93be73ca57d22e1df5dee181e"
+    },
+    {
+      "path": "nodes/riraw-node-185.json",
+      "sha256": "48aa0b7746156b168cdbc09f975704563bfc0169458587d4691066556c55e1f3"
+    },
+    {
+      "path": "nodes/riraw-node-186.json",
+      "sha256": "b7d0c0ce0dd0fe9d1f638e42241d2ba4a54f7f97d175b4cb18af036048eaadd6"
+    },
+    {
+      "path": "nodes/riraw-node-187.json",
+      "sha256": "7df9be2c8157900475582bf219c67092dfce67b37e1e01ae315c08de4b47f203"
+    },
+    {
+      "path": "nodes/riraw-node-188.json",
+      "sha256": "98217e5f3c8c0d0a05282e74c0e1a3550348700c066ce5e74d60d4d435f7e81e"
+    },
+    {
+      "path": "nodes/riraw-node-189.json",
+      "sha256": "a742d9d487e5c622dccbd2e183b526ab582ef9164e23f306db9ca8a3f6da95b4"
+    },
+    {
+      "path": "nodes/riraw-node-190.json",
+      "sha256": "2b1e65092de460f115aa864fe200d148d941b285fb76998a89a7331b753b0688"
+    },
+    {
+      "path": "nodes/riraw-node-191.json",
+      "sha256": "33843f8d8f586d9fc4efae0524461ce273d8270c491e4b5893f0181f5bea9431"
+    },
+    {
+      "path": "nodes/riraw-node-192.json",
+      "sha256": "da92fc6a2a8fb07d865222d5b357d982a5982fe31b323bbf24ce9459b25294ff"
+    },
+    {
+      "path": "nodes/riraw-node-193.json",
+      "sha256": "bb375e8cec63c68f59cdc998e4861bd4f63877bc9307d664364511e861f90100"
+    },
+    {
+      "path": "nodes/riraw-node-194.json",
+      "sha256": "d1cfb2a298291c39a05d40d9deb2e2be8eaf3e885f4008695b231d4ffc1e9480"
+    },
+    {
+      "path": "nodes/riraw-node-195.json",
+      "sha256": "0d7d1d2a68936784c6f6e83c060e1adb14af4fe7edb975630264f7db807eaeec"
+    },
+    {
+      "path": "nodes/riraw-node-196.json",
+      "sha256": "26d1efc34ceef5fec7f93c3ee6e70af5e9d297e6af3623cdba908158ce02f4ed"
+    },
+    {
+      "path": "nodes/riraw-node-197.json",
+      "sha256": "790084f373712ac19fa5916a70f24a898c6585d999aaec2a719af28fc957f01e"
+    },
+    {
+      "path": "nodes/riraw-node-198.json",
+      "sha256": "60b71afbb1ea98dea7986903206076384accaa5218b4e13a7f27624dcb2c70c3"
+    },
+    {
+      "path": "nodes/riraw-node-199.json",
+      "sha256": "a522198d2c832e2f6aa2fea6d8d6fb27ff41efa10c963d5d9463b40aa632a804"
+    },
+    {
+      "path": "nodes/riraw-node-200.json",
+      "sha256": "97a091cb9a435d242e6a517d8862f0714e800239d321d2e98e9b694f1a568a70"
+    },
+    {
+      "path": "nodes/riraw-node-201.json",
+      "sha256": "faeef0d3e7f39d50dae86d202035ec0c75e0b162f3902c40ab4a2bef5e5966a4"
+    },
+    {
+      "path": "nodes/riraw-node-202.json",
+      "sha256": "6311681a554710daf4dfdec8780858cfd6a37e596bbe6e64b3741b32f69a4ca0"
+    },
+    {
+      "path": "nodes/riraw-node-203.json",
+      "sha256": "909e7a17644033cd1b298b85c5da94ff3665d2a586f1e8f757b838659e4587cb"
+    },
+    {
+      "path": "nodes/riraw-node-204.json",
+      "sha256": "f94ed626fbebc27b45b04f26cd1b6495b31176c824a3092b7b9302d0aa4518ff"
+    },
+    {
+      "path": "nodes/riraw-node-205.json",
+      "sha256": "3f4115983e467ff7c2e68b97889f0c49f9680c7baeaadeecd80cafdeefedf285"
+    },
+    {
+      "path": "nodes/riraw-node-206.json",
+      "sha256": "113bef9439cd3161c34a9d66267287add7729b91ba7b5c0b50b82a65a8a110a9"
+    },
+    {
+      "path": "nodes/riraw-node-207.json",
+      "sha256": "407f9db09242046cc72b0443d1a73df0fa7805602f98654358e571bd8e487511"
+    },
+    {
+      "path": "nodes/riraw-node-208.json",
+      "sha256": "add447955bd974a4d2642d1f93cb4d0a6fd54f4609a2ff04e25e775c9585f6c8"
+    },
+    {
+      "path": "nodes/riraw-node-209.json",
+      "sha256": "f3a6b5b62c380257a324ca5b0d2f22b190e842326887d3c82237dc84f01b4da1"
+    },
+    {
+      "path": "nodes/riraw-node-210.json",
+      "sha256": "f79521621b6886a49ac9a9bd095a05a3dcc1d4df44a3ef2182dbc00f702221d3"
+    },
+    {
+      "path": "nodes/riraw-node-211.json",
+      "sha256": "594395237fe52017b3f8b2f0c20397750daf3910617f5cbd0525a04d27615065"
+    },
+    {
+      "path": "nodes/riraw-node-212.json",
+      "sha256": "48bffa02d5654a66f070d555a17fc3b1c6b06071305c9804b3cc1b8bd4ab424c"
+    },
+    {
+      "path": "nodes/riraw-node-213.json",
+      "sha256": "b07ec9511553100d4486d2ac8b549ec6f35fa5849f270395ede2b4069c3b5cba"
+    },
+    {
+      "path": "nodes/riraw-node-214.json",
+      "sha256": "940d014c87189c2e2b20d6824d4f4bfba805302c277b2c2fb46d2d4a34727b26"
+    },
+    {
+      "path": "nodes/riraw-node-215.json",
+      "sha256": "5d5c1fa97395ebf3f1f250f0bd1347911318ba3df32f620099ea51d58c99073d"
+    },
+    {
+      "path": "nodes/riraw-node-216.json",
+      "sha256": "7e9ef863f2ed3bde0b38f98e305aafe733006e094431d495811091a56325d3bb"
+    },
+    {
+      "path": "nodes/riraw-node-217.json",
+      "sha256": "70cd8c029325eaa462ec7e89e5e52be84c59fa3957a8b7ff2a73d1238432d292"
+    },
+    {
+      "path": "nodes/riraw-node-218.json",
+      "sha256": "740a159962475a1fe077d3734bdacb8cf0f808ce4b154c2435a9c8d21b4141ee"
+    },
+    {
+      "path": "nodes/riraw-node-219.json",
+      "sha256": "2d02067b6ee2ef33889f26cfb4b2ef8d94ea4fcfb25127f13671cf88894a02fa"
+    },
+    {
+      "path": "nodes/riraw-node-220.json",
+      "sha256": "a61ba25326ca040020ce03c76fc2601c7f1f6fbd47e7caa609f7124c61d297b9"
+    },
+    {
+      "path": "nodes/riraw-node-221.json",
+      "sha256": "e12d50e1055c255977d58439e271939121b0d5ca41c58ea442cb7023cfb687cd"
+    },
+    {
+      "path": "nodes/riraw-node-222.json",
+      "sha256": "fef3ae5fc1a7e4c68b7fded138fc2d1f660309fb087949ce8d7b9370d80f095e"
+    },
+    {
+      "path": "nodes/riraw-node-223.json",
+      "sha256": "b61ce8d83a1032f3a8eca2bfd0948ba32c912a6d71b12222d01d45c2ffe67767"
+    },
+    {
+      "path": "nodes/riraw-node-224.json",
+      "sha256": "33fddd0779831ed2d0c1483dbc3628a95e8e8f35afb4977d87dbd7eb1bcadae3"
+    },
+    {
+      "path": "nodes/riraw-node-225.json",
+      "sha256": "1ad1f8d47eb5a5ef1e91e359d1497518ff53ff65a7cc16ab5ad79ce360d4f8bc"
+    },
+    {
+      "path": "nodes/riraw-node-226.json",
+      "sha256": "07f6dd01908491f82738089a9978220aa432772f1507e563b23fef0649ce3379"
+    },
+    {
+      "path": "nodes/riraw-node-227.json",
+      "sha256": "25093a376d7b9615c41c86905dec2b2e4aa0433e9c19ded3cf5c9d43194b7b48"
+    },
+    {
+      "path": "nodes/riraw-node-228.json",
+      "sha256": "cfc22b80def2c9b94e24f0e4681b6fa6da56d64cae87bdb59b3795106a5b38aa"
+    },
+    {
+      "path": "nodes/riraw-node-229.json",
+      "sha256": "a5d3383b64079b5f79b3e8d7a7a5c436803130f6c6bb4cff835268464e4337bf"
+    },
+    {
+      "path": "nodes/riraw-node-230.json",
+      "sha256": "fc7ec55552efdc6f9fb0d59af08705749f51f70e73e4b58c982ac356fae529e7"
+    },
+    {
+      "path": "nodes/riraw-node-231.json",
+      "sha256": "f7c8833c9947b74de6607f507447c4a32bec635e6af7f1e21d33f107311e1d0c"
+    },
+    {
+      "path": "nodes/riraw-node-232.json",
+      "sha256": "e22c443439be90d7353a19c7577cb6cddfe4bae39ddb6fef30dfbadce2c43664"
+    },
+    {
+      "path": "nodes/riraw-node-233.json",
+      "sha256": "6cb6aa3f4395c0386d123b99a8075df6e6bc3f80eabc134c8642f24eca15823c"
+    },
+    {
+      "path": "nodes/riraw-node-234.json",
+      "sha256": "30baa0763cabbd39f028444d652d06ecbc8ad869313251c13f9be9a1ad95514d"
+    },
+    {
+      "path": "nodes/riraw-node-235.json",
+      "sha256": "d4847b885e78e39a3dab1c7397bd9f3c9e06e84cdfd2d1549385f2b4519fbd73"
+    },
+    {
+      "path": "nodes/riraw-node-236.json",
+      "sha256": "6ab80ae053014e02c19691c9d38c8b9efb576b96c9353f791c108661f633b8bb"
+    },
+    {
+      "path": "nodes/riraw-node-237.json",
+      "sha256": "4ec08493e90a2827a749777e7a7873edd3fd8d3b28d8893a14f1803cf8cb2c7c"
+    },
+    {
+      "path": "nodes/riraw-node-238.json",
+      "sha256": "9d5e942452748ff5c670d25e9b69645f88a819977e5d1823f9c97103e3a8fd4c"
+    },
+    {
+      "path": "nodes/riraw-node-239.json",
+      "sha256": "c8ac005e3556868f11ee5c89dc0b8f95512049e9fb4aab8d8adf5a8ee89b9299"
+    },
+    {
+      "path": "nodes/riraw-node-240.json",
+      "sha256": "cf6ca10f5f5720595f528050b5ac855823e7b329f823bbc858b4a7d2a7072a1f"
+    },
+    {
+      "path": "nodes/riraw-node-241.json",
+      "sha256": "d18599d140963b8518fd325bfd0d1f89984799a0c147b46bc6cccf0dfe7795fb"
+    },
+    {
+      "path": "nodes/riraw-node-242.json",
+      "sha256": "9893876316d2c485c157f42fedb20bff34feb2cc5ca98c02d6ccf1401e36d858"
+    },
+    {
+      "path": "nodes/riraw-node-243.json",
+      "sha256": "64860781c6c15a475a8e2a4145c4bdde39490d09176dd3bd986a356423365b9a"
+    },
+    {
+      "path": "nodes/riraw-node-244.json",
+      "sha256": "cb206b5c6bdc22a513ef861ea2e2489f65a5f489ba17a7e743feb3bd050a51e1"
+    },
+    {
+      "path": "nodes/riraw-node-245.json",
+      "sha256": "e884cb33ef051746a2ec27c6e0060a6ee69ef750864fd20b2692c1af35f6e0d2"
+    },
+    {
+      "path": "nodes/riraw-node-246.json",
+      "sha256": "653b01b0caf02812d347a41d66ffb02be96754aef6a7b3f6ac61e34939372cdf"
+    },
+    {
+      "path": "nodes/riraw-node-247.json",
+      "sha256": "bd252d814fc385cadc4509cbff62bd1838bf66813e270c138cd6e4b7ca976bd0"
+    },
+    {
+      "path": "nodes/riraw-node-248.json",
+      "sha256": "a3f4ffa0f6ee3b0270c6d2212f2bcf5783ff7b249999ac94b00a39a4776da3c2"
+    },
+    {
+      "path": "nodes/riraw-node-249.json",
+      "sha256": "3681fb91a26484ed20a6e118ce12fad058f393de3cba152d65564a7488cd9937"
+    },
+    {
+      "path": "nodes/riraw-node-250.json",
+      "sha256": "0ad455e6647f142dbb96eb38c8aa4e0ef287c0f3b2fca25366d32a4b1a0448e9"
+    },
+    {
+      "path": "nodes/riraw-node-251.json",
+      "sha256": "50eb1a2845bb0aa1005317e758d333f6bc40aac5762330bd8cc8ca74467bbdcb"
+    },
+    {
+      "path": "nodes/riraw-node-252.json",
+      "sha256": "d765cd0d54d369a0da3ce0084caaf3986ccbf67eb13eb35c8f0c440563fd8ccb"
+    },
+    {
+      "path": "nodes/riraw-node-253.json",
+      "sha256": "50f3d94f78151d941f6076e9d9b61f79801eb4fd9abc62408c441faed5e59894"
+    },
+    {
+      "path": "nodes/riraw-node-254.json",
+      "sha256": "34081088ab99533320f2227b26c2a4c05e68ba85eddd28cf4b2c1a52e79eeb82"
+    },
+    {
+      "path": "nodes/riraw-node-255.json",
+      "sha256": "203b42ca4314a7b8a0d5678990f0f7489becb994c5066ca31d7d6deff30b35ce"
+    },
+    {
+      "path": "nodes/riraw-node-256.json",
+      "sha256": "ace42a2d65d50b7bfeaa58c1f383e010317b1900bf3545ee77a96a98b5851bbd"
+    },
+    {
+      "path": "nodes/riraw-node-257.json",
+      "sha256": "de4a87c38fddc35aa4b1bc1bee300a64b247a5277b85126668c31f72af4159b4"
+    },
+    {
+      "path": "nodes/riraw-node-258.json",
+      "sha256": "fbb075f6441545afdd4eedb89ee666e9b33e3d617c4f41c08a4047bd1536867c"
+    },
+    {
+      "path": "nodes/riraw-node-259.json",
+      "sha256": "08bae1140c7d06b1091f0430c483433e90bdf726cf410e7be60b731c7694c744"
+    },
+    {
+      "path": "nodes/riraw-node-260.json",
+      "sha256": "2acd46e01a07804332a02c679780b00d6f1c530aa71474788de32fe8f94067ee"
+    },
+    {
+      "path": "nodes/riraw-node-261.json",
+      "sha256": "f5123a67128944839e8029dc90a6ad4a9dab24a9aa197400555ffa5d1b6c938c"
+    },
+    {
+      "path": "nodes/riraw-node-262.json",
+      "sha256": "bc1efc6920c7759ad798368cfceb4584881140d2e68ab7287060b1c4ea5afb0c"
+    },
+    {
+      "path": "nodes/riraw-node-263.json",
+      "sha256": "f44de9c0160ab37ea5f7613f2f1f30dc08cf01a464ba5819237c54ddb35ea6d8"
+    },
+    {
+      "path": "nodes/riraw-node-264.json",
+      "sha256": "448d9fd5d82eb2831058a020c1df6d1cf340efb095fa2aecdc3c141346b126df"
+    },
+    {
+      "path": "nodes/riraw-node-265.json",
+      "sha256": "e084d85312822f64b61ac4712e2eca84d6fb90a3d9a715648b3315d1e4c5c079"
+    },
+    {
+      "path": "nodes/riraw-node-266.json",
+      "sha256": "dd3563c04c8b50a47fa8cb853fcd3df89ceb90dfd17984c069add4d4e6e03063"
+    },
+    {
+      "path": "nodes/riraw-node-267.json",
+      "sha256": "60c4cc512d63f4a5741d38cb5d7f6e5eb6c44a95ce51237512c0cef71cc25c07"
+    },
+    {
+      "path": "nodes/riraw-node-268.json",
+      "sha256": "c271c45794757036267db660c6c81a8b2b8a7239f6c21b68962777129f13ccc9"
+    },
+    {
+      "path": "nodes/riraw-node-269.json",
+      "sha256": "4b1598ad5c941a7a1aac9beea7fa5c3695e36f6961917bebdf857a36f353d13f"
+    },
+    {
+      "path": "nodes/riraw-node-270.json",
+      "sha256": "16c9bf68fe67f67892a2722cc9462e4092abe5f60430605cdbe45fae6a4462cd"
+    },
+    {
+      "path": "nodes/riraw-node-271.json",
+      "sha256": "f3dd53a44361492e996422044d8dbba7f55e8316aaa805df7f875d90da14bbcd"
+    },
+    {
+      "path": "nodes/riraw-node-272.json",
+      "sha256": "02edc7a8d894ee2188ead7ffd05e11df585098dd4b569aa6eb8a8b7f49205672"
+    },
+    {
+      "path": "nodes/riraw-node-273.json",
+      "sha256": "4237c87cb1fa47c2a5af9fe8d426e2a91d21856dab2f4352d8d138584a30494d"
+    },
+    {
+      "path": "nodes/riraw-node-274.json",
+      "sha256": "2ebf512bb926ddf54cd0415938be0be1bb6231ed33358a2e5ec1660098f35c94"
+    },
+    {
+      "path": "nodes/riraw-node-275.json",
+      "sha256": "9aff77d86c0d44591bb272f0547e428131be121782cb11c8a9b65e700868e890"
+    },
+    {
+      "path": "nodes/riraw-node-276.json",
+      "sha256": "3fa97aecaa14dc420be72f83052c762a53dcb2e65fbd94a69bb46eb91b596213"
+    },
+    {
+      "path": "nodes/riraw-node-277.json",
+      "sha256": "4ab2c62ca14b595199dac869ee7563d59d90e0873216ec070be697736f6be4a9"
+    },
+    {
+      "path": "nodes/riraw-node-278.json",
+      "sha256": "04acf8e10519fec4d7c2b8f3b81cf4ade53ff43c32f35a9d166419cae8669e2f"
+    },
+    {
+      "path": "nodes/riraw-node-279.json",
+      "sha256": "df5388047ae5f639582741c819e49dcb16acbd2bdf8689391048df04682bd6af"
+    },
+    {
+      "path": "nodes/riraw-node-280.json",
+      "sha256": "2709c1e5059ca626d9d3d0edd1ab382538ce2fdd389fa7e54cf93677290b724c"
+    },
+    {
+      "path": "nodes/riraw-node-281.json",
+      "sha256": "7108de127a27b1a98f1dba76ab1f0298335d640e91ff2f4ae69f5e98c27a664f"
+    },
+    {
+      "path": "nodes/riraw-node-282.json",
+      "sha256": "8e55e0db1bda4e1435a3ccc40fd94bea0c49425abb29c281837a39f21b560699"
+    },
+    {
+      "path": "nodes/riraw-node-283.json",
+      "sha256": "fac586354d7ce4243b998c460cbfc80b778afd4bd9f7ff9371b10a4d1ee6a794"
+    },
+    {
+      "path": "nodes/riraw-node-284.json",
+      "sha256": "47412ff9f2b7f7c7a45aff021a9d46390288238e211595bd84de44a055de2853"
+    },
+    {
+      "path": "nodes/riraw-node-285.json",
+      "sha256": "b4d7bf04b1de19d1b2c43f38131fb5c3fb8db5dc3c8197fd777d5c2821f26540"
+    },
+    {
+      "path": "nodes/riraw-node-286.json",
+      "sha256": "ad73a6d08bd2057f4fbbb3c036d096ffd06bd217722f45af391085b5b575f688"
+    },
+    {
+      "path": "nodes/riraw-node-287.json",
+      "sha256": "df9e7decfe3883201fca2925657150b49b00412079ef56893dbac9a9ad9ecfe5"
+    },
+    {
+      "path": "nodes/riraw-node-288.json",
+      "sha256": "17576030404f168407867c415ab7a36eec9d9c18bd1be86d4689e7094f1f4916"
+    },
+    {
+      "path": "nodes/riraw-node-289.json",
+      "sha256": "656dc7b257975e986729c4b46cf1c82c21e7bf75e121e6dd1b2dce671991ebcf"
+    },
+    {
+      "path": "nodes/riraw-node-290.json",
+      "sha256": "faf2f88b9c8dd55d2e5835712f84faf9ac8fe768a37ddde4884fa9df73502274"
+    },
+    {
+      "path": "nodes/riraw-node-291.json",
+      "sha256": "cb365a03a20970e0b7d766857f90358b408340750553a52363f091a9c3870e34"
+    },
+    {
+      "path": "nodes/riraw-node-292.json",
+      "sha256": "503afdeb3aaefd433c05a1c591e35526f72a2cdb242666c70fb8710f9e24e2dc"
+    },
+    {
+      "path": "nodes/riraw-node-293.json",
+      "sha256": "a674a869bcf676b93fcc0d1fdbc6aa1a5dcd1cd73be108056eb4296185d889ef"
+    },
+    {
+      "path": "nodes/riraw-node-294.json",
+      "sha256": "46d6a712720767345bede8acde78284f6ddd00229e6ed37f56dcd2bbb78c4617"
+    },
+    {
+      "path": "nodes/riraw-node-295.json",
+      "sha256": "0c6b6eb40517a79c6640c1ac2f6b67562f447fef93c0209d2a739361f06c0546"
+    },
+    {
+      "path": "nodes/riraw-node-296.json",
+      "sha256": "18acdc9783c567571430e7e32b8c82ac77b731f1f5e7dc3ae102bf091f1b9e94"
+    },
+    {
+      "path": "nodes/riraw-node-297.json",
+      "sha256": "42097cbd5529163a63552dcdc473c9c7d92f673555431bb643b034e436effac9"
+    },
+    {
+      "path": "nodes/riraw-node-298.json",
+      "sha256": "8075b677e58a0f608360e6a4d554ad028a5c78a9b0818194f74d572ee94967a8"
+    },
+    {
+      "path": "nodes/riraw-node-299.json",
+      "sha256": "dee5fbc7b366bfee8a60a06499846fffc8419d7c5eab263e8aa7972f79c8d798"
+    },
+    {
+      "path": "nodes/riraw-node-300.json",
+      "sha256": "72dfded25f44b9b80ad8451e4ca3d616882439c90e49a22630cb3dc7c2ea761c"
+    },
+    {
+      "path": "nodes/riraw-node-301.json",
+      "sha256": "fc12c2ab2bdc3362458012501799dd884d7c661ff26667a4926925ebf87164e8"
+    },
+    {
+      "path": "nodes/riraw-node-302.json",
+      "sha256": "cfbb328fb36dcc84a29acc52cceb9a974288190edfa0e73a8a3e734092d29e66"
+    },
+    {
+      "path": "nodes/riraw-node-303.json",
+      "sha256": "214bf28dcfee014a9372b71eed0ee7be353e3ce89c1b552d80b29cd9a976ba3e"
+    },
+    {
+      "path": "nodes/riraw-node-304.json",
+      "sha256": "0294b83a9c45ee463b1b807874bfe0c3043b242d64df14cd4acb484d0e3b9a96"
+    },
+    {
+      "path": "nodes/riraw-node-305.json",
+      "sha256": "f63d1c88b8cfc9dd73a38f7ad9207bb45e79adf89d305545cf2bd45cc0a309bb"
+    },
+    {
+      "path": "nodes/riraw-node-306.json",
+      "sha256": "ad029e97723e55c6e7f92f590843f740b0789f55eed3294eaf2cf29439fcede2"
+    },
+    {
+      "path": "nodes/riraw-node-307.json",
+      "sha256": "d05d4073cfb57205335bb789c207a975f8508464d95af9ba32a530ab04b1d7c2"
+    },
+    {
+      "path": "nodes/riraw-node-308.json",
+      "sha256": "1c005b88c0ed290358efc0d87fbb5f735fb5e341e2e03a8a4168057cf1681585"
+    },
+    {
+      "path": "nodes/riraw-node-309.json",
+      "sha256": "7b8b5b438b31a51aa0c4f30c51f4ec1041c0531bc999c94b0e90660227fe54a3"
+    },
+    {
+      "path": "nodes/riraw-node-310.json",
+      "sha256": "9c0189e6593f1a6465424c5f5e22ca4af4527fa442e16718b79576c131cefe9c"
+    },
+    {
+      "path": "nodes/riraw-node-311.json",
+      "sha256": "b6b04d25e8fdb74f185c6753e6d88ea625fa671e0f5b147eed8c6126c8b7bf6e"
+    },
+    {
+      "path": "nodes/riraw-node-312.json",
+      "sha256": "23972245cbe9c242666e472043c65608470d2493422269231d6c38618c844a25"
+    },
+    {
+      "path": "nodes/riraw-node-313.json",
+      "sha256": "1cc2b58fd576a4147a6caa570c9afea285a6e592e202596921410e1cd3561550"
+    },
+    {
+      "path": "nodes/riraw-node-314.json",
+      "sha256": "c868af98600162c71a6fe41ea6626bc3c72ebdfd7fad3a1e6484e9e70d5cd1e7"
+    },
+    {
+      "path": "nodes/riraw-node-315.json",
+      "sha256": "565918ed70fe671b2e0972183f77b582ddc3635d0c01e362e9513f4ba2a9aff7"
+    },
+    {
+      "path": "nodes/riraw-node-316.json",
+      "sha256": "251745e804d010a6b66c85b0f706076e25dd74bce2a755283456dcc6333e5802"
+    },
+    {
+      "path": "nodes/riraw-node-317.json",
+      "sha256": "7bf8453920cfbde0eddfdd552998920a59cec8396079a7082260a34d65ae5807"
+    },
+    {
+      "path": "nodes/riraw-node-318.json",
+      "sha256": "a7568f034a383597fa1efa1109ba8c912d002c1db22c56eacbf78644d3ffe3dc"
+    },
+    {
+      "path": "nodes/riraw-node-319.json",
+      "sha256": "65cafaf599227dec76c7c5e6bf5ca20de82b9d981cf4b22699aabc8d4cdd2fe0"
+    },
+    {
+      "path": "nodes/riraw-node-320.json",
+      "sha256": "c1a744445aef4e7f5325a53856101abab1ae530a11488e3bac2f9609ca82b42e"
+    },
+    {
+      "path": "nodes/riraw-node-321.json",
+      "sha256": "080a908ae3dbbdad51980ce36776a6b22832557f1e71bbb7fd78dd941e3b4bf7"
+    },
+    {
+      "path": "nodes/riraw-node-322.json",
+      "sha256": "40cbcc77e0aa506ae9456a1c888b144c228fc6a97492e777fc29b1809fa012f0"
+    },
+    {
+      "path": "nodes/riraw-node-323.json",
+      "sha256": "4c6849df44880ab28ca59117c4a48d7bdf67315c63d60b4709b4461a886d9c4a"
+    },
+    {
+      "path": "nodes/riraw-node-324.json",
+      "sha256": "737c7dc6bd6499e16569369e1e0197648d103f8fede5d1d0662fe6335c0bf60a"
+    },
+    {
+      "path": "nodes/riraw-node-325.json",
+      "sha256": "52cdf855088889ab0eb4c214bb8b2ea85a92103e3d90bb03e4d42d6985fa0390"
+    },
+    {
+      "path": "nodes/riraw-node-326.json",
+      "sha256": "6a5abe10bb354b4ff1bc9b6868ac68471400ee97582621342a82310c7e114d4c"
+    },
+    {
+      "path": "nodes/riraw-node-327.json",
+      "sha256": "8966c721f0cc9c5df3884cf16ff7f6747b7db8b76ffb88ac6f1d58f197ba1350"
+    },
+    {
+      "path": "nodes/riraw-node-328.json",
+      "sha256": "678070ed5fa3f037b84e660859eaf3498f4c7dfc94dd9e9ddaaee8537fe87a66"
+    },
+    {
+      "path": "nodes/riraw-node-329.json",
+      "sha256": "6dcab612f731d3f76e16b16529802cb1a428d9c82d02e7ca3fa6909fada4222f"
+    },
+    {
+      "path": "nodes/riraw-node-330.json",
+      "sha256": "000191f214214a56f45bfa18acd98a068b3f7328f08d8cf9146dda9569f8c178"
+    },
+    {
+      "path": "nodes/riraw-node-331.json",
+      "sha256": "f8f64908c6c4840d460e9e393c5f334cb9963d4ea072e93f248d3516dd0f67e6"
+    },
+    {
+      "path": "nodes/riraw-node-332.json",
+      "sha256": "0e01be9ce3d820cd902889a579b05a555ab63e8e00f18e4efd857dd71920d7fd"
+    },
+    {
+      "path": "nodes/riraw-node-333.json",
+      "sha256": "ae9ce5db9bd05586bd306e33f581972b5cc32a746183357ae75ebb72b2c0dc42"
+    },
+    {
+      "path": "nodes/riraw-node-334.json",
+      "sha256": "3ed4a2f5daa1251494e47c988db93a74a3dc7af6a874b664645db70924fa0bf3"
+    },
+    {
+      "path": "nodes/riraw-node-335.json",
+      "sha256": "40fe4675b168bb58777a5df244af5253856891a09043f6e2447929bd3e10048b"
+    },
+    {
+      "path": "nodes/riraw-node-336.json",
+      "sha256": "65e778c020acdca075794e0729f057f7e5e04633aad0ffd2f7bc3c9f41efda2a"
+    },
+    {
+      "path": "nodes/riraw-node-337.json",
+      "sha256": "4e5ddd470801982767d3607d5868fd7a3bddcab2d6865e8e0a02df03b12ed906"
+    },
+    {
+      "path": "nodes/riraw-node-338.json",
+      "sha256": "f4dc4e4204d6879ff11544d4a16ccbd3216c1e88b4b999cb0579f268a6183b36"
+    },
+    {
+      "path": "nodes/riraw-node-339.json",
+      "sha256": "34a2fcbceae68747946b6cc335146f32a600491aac6412e29cbe5ae1423d8a81"
+    },
+    {
+      "path": "nodes/riraw-node-340.json",
+      "sha256": "6d2194ab7bbd8b8908992b2383a5920a1d3322d497deed202f8e303996958e6e"
+    },
+    {
+      "path": "nodes/riraw-node-341.json",
+      "sha256": "554eacd32d8a168e62865303d50d765d0e77b7763f1fc7b7b27cdf0540bd063c"
+    },
+    {
+      "path": "nodes/riraw-node-342.json",
+      "sha256": "37c918a067807e1b07717d1c7afc3fb163a88fc5dca79400aaa4b34e4f409367"
+    },
+    {
+      "path": "nodes/riraw-node-343.json",
+      "sha256": "f0c7da667d85c14961a3f2daff7ef216285f9ebcd62f3791376ce9a3edeaaa2e"
+    },
+    {
+      "path": "nodes/riraw-node-344.json",
+      "sha256": "f60a69e65bbf073bd1ee902df4bcfec05709ea1f7efd7592bab3efe7d6d8640a"
+    },
+    {
+      "path": "nodes/riraw-node-345.json",
+      "sha256": "374cade2d74428e1f6f1e5c11aedcd2119c1ad45c879d97b977a54d4b999d523"
+    },
+    {
+      "path": "nodes/riraw-node-346.json",
+      "sha256": "e9115329e4240d92bedaca106c98dcdf9a83d727ccb87de95ca34ba2f0c36808"
+    },
+    {
+      "path": "nodes/riraw-node-347.json",
+      "sha256": "c29dc54fdffa8149a0003898f5d0cf595991f367fa845a910fbc578df001e591"
+    },
+    {
+      "path": "nodes/riraw-node-348.json",
+      "sha256": "27e2cadf091f83b7034d28fe8bb4cd78441cb01cca9d670131422b3e11dc9852"
+    },
+    {
+      "path": "nodes/riraw-node-349.json",
+      "sha256": "cff1e56831c905c9fbc5be8bb7c6087627cba6d6ed5bd44e181726177c9d07e7"
+    },
+    {
+      "path": "nodes/riraw-node-350.json",
+      "sha256": "a30e218d6079a6ef191e7fa515446fea9a0a072e712b69671540fe2a00a7e1d2"
+    },
+    {
+      "path": "nodes/riraw-node-351.json",
+      "sha256": "d7c7ec11543ad6b30f1db7b857128bc7f48b9e610cd5e348f4b25dc71658ea31"
+    },
+    {
+      "path": "nodes/riraw-node-352.json",
+      "sha256": "0699655e735ce3cc62a6a8f6cda48bf9266cb406402df860b50cc69646f32ef0"
+    },
+    {
+      "path": "nodes/riraw-node-353.json",
+      "sha256": "76da9a7404fc02563ae92ef5cfc52984bae3c67fea34790dc707e01fc70a4437"
+    },
+    {
+      "path": "nodes/riraw-node-354.json",
+      "sha256": "4253b62d33a650acab3c5ecc1129c54191451fb7f4f648421a1d752fa6f3c99d"
+    },
+    {
+      "path": "nodes/riraw-node-355.json",
+      "sha256": "6a7dff37eb0ce4b7696823801796d7c3b5ebe8e9dbe84ae332d2942b1d03b962"
+    },
+    {
+      "path": "nodes/riraw-node-356.json",
+      "sha256": "985dfaa3238b53e570efc8a5e6d7638c55673a9c59676d7b18e93a8622049741"
+    },
+    {
+      "path": "nodes/riraw-node-357.json",
+      "sha256": "6affdcd195e24dbb20457f4c4d5301f1d788d286b023dac086cf41b6ba328c64"
+    },
+    {
+      "path": "nodes/riraw-node-358.json",
+      "sha256": "cf25d83176a742bea07e4b0a974848d47b9439783f8213963e700759c698f95b"
+    },
+    {
+      "path": "nodes/riraw-node-359.json",
+      "sha256": "f93cf2f0477f47998be50fad7832ec41ef64a2c27a3c0e5e63308a13c1b2f8ac"
+    },
+    {
+      "path": "nodes/riraw-node-360.json",
+      "sha256": "9156912b03adfe009a107c454358c69eaf7578e84afa1493b03b83ec6c38d758"
+    },
+    {
+      "path": "nodes/riraw-node-361.json",
+      "sha256": "cf14a7cb65259b50d6f87e4ffb479e2218a4c3a3a512ee7a9e94ae8e964ac253"
+    },
+    {
+      "path": "nodes/riraw-node-362.json",
+      "sha256": "bf3b186abe44ec2d70aa7b2cb27609207705b0e62cd67243f2f7253d8b955da6"
+    },
+    {
+      "path": "nodes/riraw-node-363.json",
+      "sha256": "ae485219b67d0f4c31773c0f57dad1b1ec40db4b21f2425445d601e208df3020"
+    },
+    {
+      "path": "nodes/riraw-node-364.json",
+      "sha256": "effe848f5ffeda0ae0bb41467ab85daa9be658c0186926f9b1a6c98e318cb565"
+    },
+    {
+      "path": "nodes/riraw-node-365.json",
+      "sha256": "754ee1525ee7a831e7d59bc8e7e29e2da72cfbd838259635a4e2bd33925184b2"
+    },
+    {
+      "path": "nodes/riraw-node-366.json",
+      "sha256": "ccb65e5084e0ddc6cf42ee837bef81fae8567547d87d3faea183421573a4314e"
+    },
+    {
+      "path": "nodes/riraw-node-367.json",
+      "sha256": "d8c364e6b8dafc34065a36e27fee40d546f9b0fcd6525cf83a8581882e5f7af7"
+    },
+    {
+      "path": "nodes/riraw-node-368.json",
+      "sha256": "a76c5857c4d1f332e221ddf703ae3fc131da1ae5582e9c4815568b1ab3ea5277"
+    },
+    {
+      "path": "nodes/riraw-node-369.json",
+      "sha256": "2a85ec6ae95f93136f66f39df8d044669f6a5c8d665f676901d18c7488530b73"
+    },
+    {
+      "path": "nodes/riraw-node-370.json",
+      "sha256": "b50da5af2b3b4208ec15227ef91a914328d1c6d2d6f421f486874e508c25f783"
+    },
+    {
+      "path": "nodes/riraw-node-371.json",
+      "sha256": "97635bba87b97a0aceea0900e8aa316a60200021daf11cbd6caf42f491e78e55"
+    },
+    {
+      "path": "nodes/riraw-node-372.json",
+      "sha256": "6e6f18e45529f0a459fe9330e3feeb293152b5fd389d80eb8a0b41bb2d374c84"
+    },
+    {
+      "path": "nodes/riraw-node-373.json",
+      "sha256": "3716e653301764e91f1852a0125e8e5351cbfad0090407d14dae36dffa418960"
+    },
+    {
+      "path": "nodes/riraw-node-374.json",
+      "sha256": "31d83c460798920ece8dad7460851e5195930eea7fc1f9f6a015ccd0721d6ba8"
+    },
+    {
+      "path": "nodes/riraw-node-375.json",
+      "sha256": "b89922908e915c964fc25ce26edddb3aeb868b16bc9d0f0dfa42e10e810a7bc8"
+    },
+    {
+      "path": "nodes/riraw-node-376.json",
+      "sha256": "d598c16bd7079c34bbef7ae88c9dac4753c8daaf299a723ae8fb1628ac65127a"
+    },
+    {
+      "path": "nodes/riraw-node-377.json",
+      "sha256": "b225d73cec0faa67e8ff6e80d7fdfdc80c019cb3b10c66e18557e732493c5077"
+    },
+    {
+      "path": "nodes/riraw-node-378.json",
+      "sha256": "3e7b8d5f8bd7867e2378e518be5b827bc0f1ea27da1ee75bbb9f9b3c9bf43585"
+    },
+    {
+      "path": "nodes/riraw-node-379.json",
+      "sha256": "a122e54da27becfd22fd937a2db559d31d90d89a9a029a66dd8c477eba4c68b4"
+    },
+    {
+      "path": "nodes/riraw-node-380.json",
+      "sha256": "e33dede084765fb289a7bd4ef4fcc2a65dabd0f1d7d5664cd929487ade015a24"
+    },
+    {
+      "path": "nodes/riraw-node-381.json",
+      "sha256": "3fa02d0d49253eae7fa3a0920db392c02754d6cdee61378423b2bc70e4ce211b"
+    },
+    {
+      "path": "nodes/riraw-node-382.json",
+      "sha256": "70071eeef373895c283511032a444dae8caa15893ab4acec5368446ee1d1a471"
+    },
+    {
+      "path": "nodes/riraw-node-383.json",
+      "sha256": "2e21bbb148ff348775565d9c6f9fbccb1531fc16278f1d22a422950150b3bce3"
+    },
+    {
+      "path": "nodes/riraw-node-384.json",
+      "sha256": "1907891a03ef835227a160b1c8dfda7bffa0c77ff2f817acbf348cce9beaf6e1"
+    },
+    {
+      "path": "nodes/riraw-node-385.json",
+      "sha256": "bc7ea86892990ec302bddb1314fce8bc73e10df17770ec6f2a998bb334a38b42"
+    },
+    {
+      "path": "nodes/riraw-node-386.json",
+      "sha256": "8df9b355a0ca61d285664e844b0ec941fb610013912e22fc2d499691250ce923"
+    },
+    {
+      "path": "nodes/riraw-node-387.json",
+      "sha256": "802a31b62d7d1bdf531a04af007cc95aec1dc7c18d96c585c4ec9000aaa4f190"
+    },
+    {
+      "path": "nodes/riraw-node-388.json",
+      "sha256": "16ec0fbb48326ffe0ad0ad435873af42ef764c2296fb5affdf1719d7b49eaff8"
+    },
+    {
+      "path": "nodes/riraw-node-389.json",
+      "sha256": "db03a1fbd2a8f2767dace4492aa8a3a425e14e950a054ebb982737a28dee1095"
+    },
+    {
+      "path": "nodes/riraw-node-390.json",
+      "sha256": "b7eb48cbe3d0cf23a46714fd0444f4643d5a269c586333d2b5b42e1573a9f444"
+    },
+    {
+      "path": "nodes/riraw-node-391.json",
+      "sha256": "77e13ee6eb4ee9e7e3b81a038b77295133b36dc328109759c6470273df77d4dd"
+    },
+    {
+      "path": "nodes/riraw-node-392.json",
+      "sha256": "855d42a18d63b53108c815dbde4e8823f8ccc9c5856370865f8fb1875f1b101c"
+    },
+    {
+      "path": "nodes/riraw-node-393.json",
+      "sha256": "a3156f95893baa38242ed0df189087ff63817c24a6bc60fd68d0ddc2c6d8e772"
+    },
+    {
+      "path": "nodes/riraw-node-394.json",
+      "sha256": "9e097be2352071d28917444f88a237b4b8252894581e28fec9de65c5d82f2d33"
+    },
+    {
+      "path": "nodes/riraw-node-395.json",
+      "sha256": "f168d50b8e6fcefa2a8af48356163e459b1481bf2a3de1a25b5fdbaefa20ef70"
+    },
+    {
+      "path": "nodes/riraw-node-396.json",
+      "sha256": "7d9d6b812af37b3db1bfc3c3dde331655c5d837eef78f3ad10d2d3bae0be19fd"
+    },
+    {
+      "path": "nodes/riraw-node-397.json",
+      "sha256": "d1e67bcdd2c0e8379deab4bb568e6996c0f05fd22ddc4c88d458910e57013868"
+    },
+    {
+      "path": "nodes/riraw-node-398.json",
+      "sha256": "72dc8a1112b0285e983a0599ddedea3abc63b9652d1dfd3c5573fa3d64e0a5aa"
+    },
+    {
+      "path": "nodes/riraw-node-399.json",
+      "sha256": "5b2e238ec587dda93cef519a37419117acb235014c40761e969aada949dfd4ba"
+    },
+    {
+      "path": "nodes/riraw-node-400.json",
+      "sha256": "1ccbcc83da56418fc23b4734e7bc783eb1b1fea135d32cd2d403381e657da166"
+    },
+    {
+      "path": "nodes/riraw-node-401.json",
+      "sha256": "1700be6f7ff181712454e52913388a6dae3a92f7229e4a116c42ec8b33e9d9c8"
+    },
+    {
+      "path": "nodes/riraw-node-402.json",
+      "sha256": "fba9bdc9b46993edaca344b64929ac13c735ba44132617839913857a80c31c6f"
+    },
+    {
+      "path": "nodes/riraw-node-403.json",
+      "sha256": "79824882e6f2142c20a596b54f070e088d0c10a62c32b0ad148d9e00a7d85250"
+    },
+    {
+      "path": "nodes/riraw-node-404.json",
+      "sha256": "497934dfcfe3265a5946ccbcd7a88d5f56883d00fb0db307edc9b20496971228"
+    },
+    {
+      "path": "nodes/riraw-node-405.json",
+      "sha256": "0374433a8408309a841b7b6fef90fb26ee5e88276923e2f168da293c02773ce8"
+    },
+    {
+      "path": "nodes/riraw-node-406.json",
+      "sha256": "513d1f5162f68f2b736193ac05adbc61b31e97f1ddccc17614aed8ec58b2d8bb"
+    },
+    {
+      "path": "nodes/riraw-node-407.json",
+      "sha256": "c22dd9fdc42d2efbca5c063e8b67c662a2a636e1e82ba88ac6074693000453f9"
+    },
+    {
+      "path": "nodes/riraw-node-408.json",
+      "sha256": "e1c011d730ad3e77f61a4e94ac8cfff48631a3bf4db495dd23613b47177f4bc3"
+    },
+    {
+      "path": "nodes/riraw-node-409.json",
+      "sha256": "0314bf8ba2786606966e6df97f32e1bf3791cfdccb06a7f986922476739f5387"
+    },
+    {
+      "path": "nodes/riraw-node-410.json",
+      "sha256": "e95db54258f2ef246d4ede032e64471f96c67a204673984bc8c0fcb1802937ef"
+    },
+    {
+      "path": "nodes/riraw-node-411.json",
+      "sha256": "105d9926f2067ce97d4d7949202a9393f233bb11fc8071d96377a8021a642b54"
+    },
+    {
+      "path": "nodes/riraw-node-412.json",
+      "sha256": "8d6a913e22c5662c8f92e2ed120bfde43964829c2edf09edc143caa6a8787e83"
+    },
+    {
+      "path": "nodes/riraw-node-413.json",
+      "sha256": "118be46f6e9c39b101e205b1d31f2efb87af5eb98ae837df1e6a72ba095d85b7"
+    },
+    {
+      "path": "nodes/riraw-node-414.json",
+      "sha256": "2d2d4718105bb7f99cb1d7c581333c0c11c0ca7bdfedfc18559f6e27180849ba"
+    },
+    {
+      "path": "nodes/riraw-node-415.json",
+      "sha256": "1eda61c81dea66a6219b2a11276db6c6b2634bb548903534832abfeb4632e9ce"
+    },
+    {
+      "path": "nodes/riraw-node-416.json",
+      "sha256": "73c9154b1d27b8637abbdb4ffee6de1711bc434e7be6831be471d01ba69054cb"
+    },
+    {
+      "path": "nodes/riraw-node-417.json",
+      "sha256": "9a2fd27ec07d438434a4ceb9235cb6ccaaad1fc63b9100941de90c76d2838afe"
+    },
+    {
+      "path": "nodes/riraw-node-418.json",
+      "sha256": "0a3a7d417a4cfa9eba59f65cd2a7c949aca13730b59bfccb187344375a076efd"
+    },
+    {
+      "path": "nodes/riraw-node-419.json",
+      "sha256": "97475acdcede28e2ff53f45b321401166a8efe95a9ec9b580801254c250e005f"
+    },
+    {
+      "path": "nodes/riraw-node-420.json",
+      "sha256": "dcb7dd9c5f53080438aab9507ebd51f45af31466da7664ec6542fee632ab1394"
+    },
+    {
+      "path": "nodes/riraw-node-421.json",
+      "sha256": "50565783ed0f566725f203d9bf5200fcf8cbadf38ec2809f386961bbec224943"
+    },
+    {
+      "path": "nodes/riraw-node-422.json",
+      "sha256": "b2626ecd23f6e62f7521a2656fe89c85bbb033f363f1e74ced7e29f6a05a9a84"
+    },
+    {
+      "path": "nodes/riraw-node-423.json",
+      "sha256": "1da0c96f9e15ee142d1cc3a1abd85cee76decd4f88b12cc3a3eae04df953c363"
+    },
+    {
+      "path": "nodes/riraw-node-424.json",
+      "sha256": "37f459027eba7395e2dfd7e47184a1463d168452c0e6a39833fbb42bb5fd0275"
+    },
+    {
+      "path": "nodes/riraw-node-425.json",
+      "sha256": "a5a63bab3f7a594ef9964bae21bc07f90c2d492160168fa15f1c30ee6275cd97"
+    },
+    {
+      "path": "nodes/riraw-node-426.json",
+      "sha256": "269e058d8334760e0c38dbdb9f2a301bdfc7f60ae46ade539d37fa537aa8dff3"
+    },
+    {
+      "path": "nodes/riraw-node-427.json",
+      "sha256": "da0a640f907443625b3c30b50ab9566b0323fb23f96de843622207bcf95ddb37"
+    },
+    {
+      "path": "nodes/riraw-node-428.json",
+      "sha256": "ce0c41747745824abe32fd76e5fdb5e767fbe61a4c0ee4cf3a7d138a3fe932c9"
+    },
+    {
+      "path": "nodes/riraw-node-429.json",
+      "sha256": "be47b9157ead68d7760e7d3c2cae2257adfb26b294e0cec9022d61d2213db69c"
+    },
+    {
+      "path": "nodes/riraw-node-430.json",
+      "sha256": "331e9b0fec11ab3d1c16c0045c3dea75f411a3bda6aeb36612fc263ab3f4f3ff"
+    },
+    {
+      "path": "nodes/riraw-node-431.json",
+      "sha256": "4080d61eb08b067ceb6f43ceb70455b26143cb956bc71a43d35c1eac96f4f078"
+    },
+    {
+      "path": "nodes/riraw-node-432.json",
+      "sha256": "d8c9b56e18159175af4ff62770de7ffd6c11ed46b4a5f388f94baafa1c9e0aec"
+    },
+    {
+      "path": "nodes/riraw-node-433.json",
+      "sha256": "5ea4ddc17c05e93c7190051aba5d1e22e680d13d2721e88d4580f9f968cba031"
+    },
+    {
+      "path": "nodes/riraw-node-434.json",
+      "sha256": "50cfef317cc36414914ef76398e6c1a171caf02acf15fb7ac283c2b9c6a78409"
+    },
+    {
+      "path": "nodes/riraw-node-435.json",
+      "sha256": "2fcab1b9164e4f9088fd54faf3673f5784ccb0af3b58bc19a760cffaacd5423b"
+    },
+    {
+      "path": "nodes/riraw-node-436.json",
+      "sha256": "1905686f6b3e4e92ec2bd41a49159f47b1616c56245c1cb570ad619e2792426d"
+    },
+    {
+      "path": "nodes/riraw-node-437.json",
+      "sha256": "73894cdec44aade617fd35f0ad22c4155bb30918ddb99a2198e010f2ac99c6d4"
+    },
+    {
+      "path": "nodes/riraw-node-438.json",
+      "sha256": "d26ca84c72d95db4738159a61a825d5913d45293ac17b64e69bfb116c5be7e12"
+    },
+    {
+      "path": "nodes/riraw-node-439.json",
+      "sha256": "62f8310a10986127e015e44e30687d6eec8b9c481ec4ff70f8b9ca97bd59d5cc"
+    },
+    {
+      "path": "nodes/riraw-node-440.json",
+      "sha256": "014b844ddae6b4fbdc4aa0b5d0a45a50a290de42325f087160dae91ce5a70465"
+    },
+    {
+      "path": "nodes/riraw-node-441.json",
+      "sha256": "fdf32adb0dadabe1c7513800f6ff531bfc65f518382033f720992dd1a206623f"
+    },
+    {
+      "path": "nodes/riraw-node-442.json",
+      "sha256": "78a20c81fb48e9cc99ba8d9dbbcc665167f5723a2d4ce641eab53e79631d49ed"
+    },
+    {
+      "path": "nodes/riraw-node-443.json",
+      "sha256": "bb45a5aca98fa007489bc617be6a61b5d429c897fb1c700d6d2546900782d30b"
+    },
+    {
+      "path": "nodes/riraw-node-444.json",
+      "sha256": "24ad1d598cc2bc35e2eb941a0fb26608cf71a3c58b4c861d19136db7cd2b5d24"
+    },
+    {
+      "path": "nodes/riraw-node-445.json",
+      "sha256": "b1045b5cb586cb9b768c768c3ffe85de48d37b43b59a00b12800484ba44550e5"
+    },
+    {
+      "path": "nodes/riraw-node-446.json",
+      "sha256": "6bbd09d336bb27f8548309308698c1a1d8abae3fc90d10c2b57199dec862472e"
+    },
+    {
+      "path": "nodes/riraw-node-447.json",
+      "sha256": "23d521462cdbb0d18ae073110610e7727c014f2dbe8b9b90e92f689dfb5b1c76"
+    },
+    {
+      "path": "nodes/riraw-node-448.json",
+      "sha256": "85a77fefe044c0849000a38e330dc6ce2293e97c079ff23de894fe1dfdbb13e7"
+    },
+    {
+      "path": "nodes/riraw-node-449.json",
+      "sha256": "d284e3949cdbf8eb77cfe1660e1515e02cfcf394ef72236056da0ae886972e4e"
+    },
+    {
+      "path": "nodes/riraw-node-450.json",
+      "sha256": "19b7b2b2668fcfc2b6e8d365955b73ee0f262c42ed379c70477434094ef96c4f"
+    },
+    {
+      "path": "nodes/riraw-node-451.json",
+      "sha256": "fabe6976aeeadeabed19775c8ab27e4ceb40784ca32ed38ec361f9f27ac046c8"
+    },
+    {
+      "path": "nodes/riraw-node-452.json",
+      "sha256": "8ac675289c9cd586ce0ac69a2dfdccfd6c9b2eb08f7ea8d7dc9157c03f60c210"
+    },
+    {
+      "path": "nodes/riraw-node-453.json",
+      "sha256": "ad1a36b2fd0365681ebc7fd6ea21a06cfd3bbde802f6601bca064448208a3662"
+    },
+    {
+      "path": "nodes/riraw-node-454.json",
+      "sha256": "a045ee5397f457d57dd9487fcfc8b8067ef2f518035df27ae74603e0a1bf22f3"
+    },
+    {
+      "path": "nodes/riraw-node-455.json",
+      "sha256": "d697a214cbc06ca78836eb24e9263477943bf64b05a85e33ffa43f8b63d3d08e"
+    },
+    {
+      "path": "nodes/riraw-node-456.json",
+      "sha256": "0eca5ae531bb56776142461ce26359f2860d93d0369fa2174f87571870927398"
+    },
+    {
+      "path": "nodes/riraw-node-457.json",
+      "sha256": "95389f25f34cf504da371dc3cf129ea9514a72adbabe708ca74a2cdbc8d3770f"
+    },
+    {
+      "path": "nodes/riraw-node-458.json",
+      "sha256": "bc4da3fae1199f331c140c71626516b20a3ad89a26a83af41f7f9ddf9aa0fdf7"
+    },
+    {
+      "path": "nodes/riraw-node-459.json",
+      "sha256": "aedd14b36e44ff4d157128554c5f2d81562582ada942a5cacc406d3ca18c6a96"
+    },
+    {
+      "path": "nodes/riraw-node-460.json",
+      "sha256": "71067fbfb881e60ff51c5eaeced26375c6b5a904ed407c0150af9b59b5799a6b"
+    },
+    {
+      "path": "nodes/riraw-node-461.json",
+      "sha256": "16aa5de5dce23d0fe1e844dd94b852d78e08afed9b9314bc6145c1e072fce759"
+    },
+    {
+      "path": "nodes/riraw-node-462.json",
+      "sha256": "efbe084f19694001ff0514423f51fc1923a8cc178efe31e25fe45735399153ca"
+    },
+    {
+      "path": "nodes/riraw-node-463.json",
+      "sha256": "042a8b58089ce2e88244b943f9a8b557a2de9edf617e9e92bfb9b974d408ba86"
+    },
+    {
+      "path": "nodes/riraw-node-464.json",
+      "sha256": "0e6919e04381512d54eee749c1ab55f3cbb887439f3810ff1b0643b28e966844"
+    },
+    {
+      "path": "nodes/riraw-node-465.json",
+      "sha256": "7c1ae58966c4ea7c0f181f1ee546cb9ed9fad05de0b2d56b377ac17e35c0785d"
+    },
+    {
+      "path": "nodes/riraw-node-466.json",
+      "sha256": "15aabaf52275fcf48adef9e540d033229af78b0d32f298a4097c3c0e8755a7e9"
+    },
+    {
+      "path": "nodes/riraw-node-467.json",
+      "sha256": "08c3452994cca4ae03e3fdc33ff5d1760140cc2c8c75b89e428ef6e12fbfd648"
+    },
+    {
+      "path": "nodes/riraw-node-468.json",
+      "sha256": "a33c740ed22931b2ae82a61a9a76a6d938bdcfab5822cb4f850ef192f9c91452"
+    },
+    {
+      "path": "nodes/riraw-node-469.json",
+      "sha256": "efb3ffa567f2a3b2898a788f5a904ecdfce591889f5ac012e6102a8c6e4668c5"
+    },
+    {
+      "path": "nodes/riraw-node-470.json",
+      "sha256": "4e95d85e2860a65544102828ca0815dc1cbd9ffe39e4d9ecb9b79f535f18c80b"
+    },
+    {
+      "path": "nodes/riraw-node-471.json",
+      "sha256": "880c6d4a70513a01d973c2eca4f9185723218162660989bbc22e6f3db702b556"
+    },
+    {
+      "path": "nodes/riraw-node-472.json",
+      "sha256": "ea82c5b67a09b613b4f01d66740a10757f5988ce224cbe4d868eb674d4d5bce4"
+    },
+    {
+      "path": "nodes/riraw-node-473.json",
+      "sha256": "62dcab7b1ad4cde5766a13578a679655c64633bc318485027f36cb56ff2ebcb1"
+    },
+    {
+      "path": "nodes/riraw-node-474.json",
+      "sha256": "4f34a1d098094f0a9b664dfa4f747d50fa6fdc19070ef6bdfe909008e9f67cd1"
+    },
+    {
+      "path": "nodes/riraw-node-475.json",
+      "sha256": "cff6c16115916dc8fcb935107eec9389f944f7a305c35e63aeb7c003545db97d"
+    },
+    {
+      "path": "nodes/riraw-node-476.json",
+      "sha256": "5b4b975beb750239309de727b147f0371a716b9bb6f12e9058b68529297e6dfb"
+    },
+    {
+      "path": "nodes/riraw-node-477.json",
+      "sha256": "59bb363c4346c8d09810c77e581ee9c8edc02000f7176eacd91729471f7a398b"
+    },
+    {
+      "path": "nodes/riraw-node-478.json",
+      "sha256": "911e916afdacfd179e2dd701f7a4a1576f49ecf80c1e0f9584f0d8cde85c6225"
+    },
+    {
+      "path": "nodes/riraw-node-479.json",
+      "sha256": "e422135ce13385cbe009c6dd02544f50314030ae21e1b46378538bd5279de3d2"
+    },
+    {
+      "path": "nodes/riraw-node-480.json",
+      "sha256": "4d1bbef7e5abb12451a2b5cc24c6c84b48de8a739dff997f746a27aee9df552b"
+    },
+    {
+      "path": "nodes/riraw-node-481.json",
+      "sha256": "ef2753a750bf74610e665f2b9f6ecbcf2dc216f9d143054728b95a8363faa6a2"
+    },
+    {
+      "path": "nodes/riraw-node-482.json",
+      "sha256": "9a32c105343dc0d2bd9946e491a86bf7c33c6939b06732f0613bfa89b3cdeace"
+    },
+    {
+      "path": "nodes/riraw-node-483.json",
+      "sha256": "b13671202b062319c6a181c3960d9890f061744439286297ed4e9c7d970417e2"
+    },
+    {
+      "path": "nodes/riraw-node-484.json",
+      "sha256": "794301ba52a2b7e0dea457a514fe06a129e0e2c3d7d6d47cebac2b9cf3784d4e"
+    },
+    {
+      "path": "nodes/riraw-node-485.json",
+      "sha256": "d62b1b3ab6e7e09e511df8444591551bbaa0bc2346547ef6c65417df88b221b4"
+    },
+    {
+      "path": "nodes/riraw-node-486.json",
+      "sha256": "33bfbcd4204cd2c135ba1122f1d32615f63263d687a4021543f0678c96c96f72"
+    },
+    {
+      "path": "nodes/riraw-node-487.json",
+      "sha256": "5effc55520eabdebdeb6093b76886cf6708f2f79dcdc27b2cc4b2160f99afd2b"
+    },
+    {
+      "path": "nodes/riraw-node-488.json",
+      "sha256": "92d1dd864240fd24d546f722abba23d02609fa1730c8b90e747ec6fb16b56e90"
+    },
+    {
+      "path": "nodes/riraw-node-489.json",
+      "sha256": "4f192d4c44db133b501aaef16c5b71384b7c02bd77ced47ab5e8f6c10c0cc0ee"
+    },
+    {
+      "path": "nodes/riraw-node-490.json",
+      "sha256": "6c1cae40cab05519d2aa2c75b95d774ab1f98e87e81275e5ba29db0ca8265e97"
+    },
+    {
+      "path": "nodes/riraw-node-491.json",
+      "sha256": "45036cddffe9df8e3c996418a5a5ebc7a0c4fe7dc8fbb0de035635b9507ccde7"
+    },
+    {
+      "path": "nodes/riraw-node-492.json",
+      "sha256": "0a6837779ff12b21723c1584f31ab059e24c1dc388393b75941685fa16833897"
+    },
+    {
+      "path": "nodes/riraw-node-493.json",
+      "sha256": "c315fb757cfa1aa2041e7f25c9e3bf52b3bd1ac1368be3b6ba313f1be2a6cf1c"
+    },
+    {
+      "path": "nodes/riraw-node-494.json",
+      "sha256": "23a3a25898a2e85fef86bc640310ae20dd14ce7f4becc5979e74e92871c70f54"
+    },
+    {
+      "path": "nodes/riraw-node-495.json",
+      "sha256": "7c4f81e69d74b94105fcc193fdb0b7bce3d42247069b6c6b4b5da695bb0befbb"
+    },
+    {
+      "path": "nodes/riraw-node-496.json",
+      "sha256": "3cb7a9b98d8a57b602bf84e1d040bf3e5b88ca49a1afaa487cf220f0c06b8896"
+    },
+    {
+      "path": "nodes/riraw-node-497.json",
+      "sha256": "04d34f0fdefd0f6420018b4e91354851fd1eb2ef56e0da3000bb4a1da5675b61"
+    },
+    {
+      "path": "nodes/riraw-node-498.json",
+      "sha256": "dec2b3677736470627f751c6b9bc6521beada4b97cab1cb5f4356c9bf7b898b9"
+    },
+    {
+      "path": "nodes/riraw-node-499.json",
+      "sha256": "6294ffe3ec82885a7592002a63c333b885aca6c13e941e7f893996317e0fc048"
+    },
+    {
+      "path": "nodes/riraw-node-500.json",
+      "sha256": "81b5cbe4fbd2822418c6cfc51e5a7601accf22471b676bb47dedaa695ce75379"
+    },
+    {
+      "path": "nodes/riraw-node-501.json",
+      "sha256": "13c18a54858793fab0926626cd3f7ddfaecabf4b9f0070496782725e27db3686"
+    },
+    {
+      "path": "nodes/riraw-node-502.json",
+      "sha256": "76f90f50da3fc7a0c8ad6f134198f74469964a2f3e85ee5411deeaeaa35fbd99"
+    },
+    {
+      "path": "nodes/riraw-node-503.json",
+      "sha256": "a9e961e3079b300c8acd9e1277d9ebfa0e421306a346bfbd910d0bd528b0bdd8"
+    },
+    {
+      "path": "nodes/riraw-node-504.json",
+      "sha256": "be2dd4530494ee8c2c410625ea2891a1153dc5568f021d323d0dd37a11ab0a1d"
+    },
+    {
+      "path": "nodes/riraw-node-505.json",
+      "sha256": "f107ea7e2c10cb23d87f933ab03981f9940402eea8b541ced59ada97ab8a705a"
+    },
+    {
+      "path": "nodes/riraw-node-506.json",
+      "sha256": "29aa41f62729e7d0f78baa3e3f0f09d0f70d7612a8e9af80bcf2a80395c0b457"
+    },
+    {
+      "path": "nodes/riraw-node-507.json",
+      "sha256": "6f00664a8867be4cf701861dea12fc1f602253f9269e7cd0c6f14a0688571376"
+    },
+    {
+      "path": "nodes/riraw-node-508.json",
+      "sha256": "bac5a970a3a3d599ca23a2b695e7df3e8888e73febaf2be6ebabacd8709d1276"
+    },
+    {
+      "path": "nodes/riraw-node-509.json",
+      "sha256": "010b7a9625ba3aa7df67a5f061e0e9a766b0f1ebe9fe437c6fadea15c39b1283"
+    },
+    {
+      "path": "nodes/riraw-node-510.json",
+      "sha256": "728f5c4f0f50fcf2c6b6bf0f5a2ce8ca20b914ce618dbd111993ed8c586fabfe"
+    },
+    {
+      "path": "nodes/riraw-node-511.json",
+      "sha256": "bb02a721ec62d8586655f22e271fc8acd4141297f9e3c465a52e2b9e676b1ce9"
+    },
+    {
+      "path": "nodes/riraw-node-512.json",
+      "sha256": "08f328bf1b78efd32155ebc5cd09e0f8a6d33836d507028222ddcf3f9fbde043"
+    },
+    {
+      "path": "nodes/riraw-node-513.json",
+      "sha256": "0560831e627e3994d9b5f26c147b80eed07d1361616b62bd4ee5952777a510e4"
+    },
+    {
+      "path": "nodes/riraw-node-514.json",
+      "sha256": "f0ec6813900b442e452f5a6f07a37b9406736610c039edb294ae84bae73cbec6"
+    },
+    {
+      "path": "nodes/riraw-node-515.json",
+      "sha256": "0cd778951b05b29d60df53b5d31fe23d87ad37e0fb8b0bb38f4c0211ae2824e4"
+    },
+    {
+      "path": "nodes/riraw-node-516.json",
+      "sha256": "772a965d46ad42e180c95503e72f4adbd70c4ce9deb3323e7b5ab486aa570be9"
+    },
+    {
+      "path": "nodes/riraw-node-517.json",
+      "sha256": "dbe8660c7921358fa8ac3d6ff2d505ac45af01071a06d8c91692a4c67ad65cc4"
+    },
+    {
+      "path": "nodes/riraw-node-518.json",
+      "sha256": "f860ef762227865e817b19f75b7d44fd3919d03a51f4aa60498339ac444d8fdf"
+    },
+    {
+      "path": "nodes/riraw-node-519.json",
+      "sha256": "f76fc66fd08397359bafc51f54cde837ca178722f99aa78f7d991467926cf9dd"
+    },
+    {
+      "path": "nodes/riraw-node-520.json",
+      "sha256": "e2d77be2bf586bb55438b70da7801bfd0948a2a611e34ed9821469e762386677"
+    },
+    {
+      "path": "nodes/riraw-node-521.json",
+      "sha256": "643f524780a78ce1107809171c7235503683d32683bddf3e399a1d34d51cea67"
+    },
+    {
+      "path": "nodes/riraw-node-522.json",
+      "sha256": "df06df9bcc7161e73b2e195c0da5c32f965271e8ba537db0185eeb53636ed048"
+    },
+    {
+      "path": "nodes/riraw-node-523.json",
+      "sha256": "083a2c30c00c067c56ba998242e4b9114a617df817f935bd56f90809aca879aa"
+    },
+    {
+      "path": "nodes/riraw-node-524.json",
+      "sha256": "b97be73ef8700ae228113778d5c69bba3739b31c9595dd9729b468bf1840af2c"
+    },
+    {
+      "path": "nodes/riraw-node-525.json",
+      "sha256": "83a482b7a0eed6da7ae90ca50dbe446e6d209dbb65b53df5dcb29760bc378323"
+    },
+    {
+      "path": "nodes/riraw-node-526.json",
+      "sha256": "17d66f4833baa816789e04bab60e36a251915c12bb48f470414eb8d0254265b2"
+    },
+    {
+      "path": "nodes/riraw-node-527.json",
+      "sha256": "3c1a94d437bec2ab9db6c1c1187432e4b4842565c3c31880af64475e3bbd0817"
+    },
+    {
+      "path": "nodes/riraw-node-528.json",
+      "sha256": "6f2d21e663488227c9380e2dda04127afee3de35be0862559df739becffc1a01"
+    },
+    {
+      "path": "nodes/riraw-node-529.json",
+      "sha256": "59a490868236397459c0489ded41917b9357825e9b5277c1ee903cab1d13ee0c"
+    },
+    {
+      "path": "nodes/riraw-node-530.json",
+      "sha256": "2121dbf0713ecdc3de54aa144b30ab007e908ab57c02cc2cc523bbaa093d7ec1"
+    },
+    {
+      "path": "nodes/riraw-node-531.json",
+      "sha256": "de7710edae40a37bebf2bb63def9745cdaa01ded80a9eb7b56d197d0679e151b"
+    },
+    {
+      "path": "nodes/riraw-node-532.json",
+      "sha256": "4876d129f2e72e8d163405c31e801b78fe149bf978f852faaa27c1ecfed30d52"
+    },
+    {
+      "path": "nodes/riraw-node-533.json",
+      "sha256": "7a8ae0053b3f1e23daeabea7195004406c8019eb329b0b1c7320310bd7fb0452"
+    },
+    {
+      "path": "nodes/riraw-node-534.json",
+      "sha256": "602c9d8e741c1e83baeeebe47097b4f495800ba55c30290d2d6e0baa5c478519"
+    },
+    {
+      "path": "nodes/riraw-node-535.json",
+      "sha256": "7ffec686f982aa415244bb1ac07b77371ecd58599a51efdfdd274859b923cff6"
+    },
+    {
+      "path": "nodes/riraw-node-536.json",
+      "sha256": "5f44c8c86fed5178c4024e071d4e2af25fe84d734e2b8538d23989fd955056d1"
+    },
+    {
+      "path": "nodes/riraw-node-537.json",
+      "sha256": "8f6670f79890ed9d36e25844508cba84d93837d286c676eb9eee495434054bcd"
+    },
+    {
+      "path": "nodes/riraw-node-538.json",
+      "sha256": "41b4fa670d5c88958020a92758a1b510c2f8178fe0cb091bb66a46f56ccce9fc"
+    },
+    {
+      "path": "nodes/riraw-node-539.json",
+      "sha256": "ade492ebf276cb60ea19b4f668af36dc6f63b9bc4142acf6f0e19543c59a4a70"
+    },
+    {
+      "path": "nodes/riraw-node-540.json",
+      "sha256": "d1ac18a6846f7da93996e906be208b91abb24cef5840cf7d51af344be00f3e3b"
+    },
+    {
+      "path": "nodes/riraw-node-541.json",
+      "sha256": "e7979846df94e6af3c3b7b1d43120b6807dbca459fce7d79ac1fdeb22e213cf0"
+    },
+    {
+      "path": "nodes/riraw-node-542.json",
+      "sha256": "fcdff9c53779f5a0b7ee929840bd62790979b04fc58e57287a687cc8272c5d3a"
+    },
+    {
+      "path": "nodes/riraw-node-543.json",
+      "sha256": "8e6e7f38ecaa8b149d75f2bd8d730d824cbb12e5200d200d32d2c3da8d49da40"
+    },
+    {
+      "path": "nodes/riraw-node-544.json",
+      "sha256": "c1275d568a563c9b9b59a62f807628c606b8718aef2faabe1c5e07d7dcfa0f21"
+    },
+    {
+      "path": "nodes/riraw-node-545.json",
+      "sha256": "094e38083436bcaa4093461069c3d8ccdd0e58422404d9736a8231c4a625f540"
+    },
+    {
+      "path": "nodes/riraw-node-546.json",
+      "sha256": "8dad032b6d197cb11a7a49532427fbdd94f045b2f0b04e611bb1c282e908686b"
+    },
+    {
+      "path": "nodes/riraw-node-547.json",
+      "sha256": "821c40dd4a7d53fe066daaf6308e01b6ae3b04582c6b5e06c01cde6c3793ef98"
+    },
+    {
+      "path": "nodes/riraw-node-548.json",
+      "sha256": "2d6bb342efcddf8101fb5b595e30a306a1a54074bd44b1b4019dbf65a16cee5b"
+    },
+    {
+      "path": "nodes/riraw-node-549.json",
+      "sha256": "5013a878077f2aeababe27f457545227cb19d9f18eaddef73cd91377635356e9"
+    },
+    {
+      "path": "nodes/riraw-node-550.json",
+      "sha256": "131aa5403bdd6f03b23d6c65bc3b9aab255be2dd7e3d5ef47dba72aded1dfd65"
+    },
+    {
+      "path": "nodes/riraw-node-551.json",
+      "sha256": "a1b436fcc7370905c98e3d125cdb32700bc7db9d2bbcf2f70b6d4cf7d28ed9a2"
+    },
+    {
+      "path": "nodes/riraw-node-552.json",
+      "sha256": "4ab4b1e69c5b91997822baca4d222b2035eb81e84dd9b4cc576657c581abd9a4"
+    },
+    {
+      "path": "nodes/riraw-node-553.json",
+      "sha256": "1e67231689a4b1e5630cfd9211653dc1e28217c67640176cd9b8687c2c49d46f"
+    },
+    {
+      "path": "nodes/riraw-node-554.json",
+      "sha256": "463ba232ce5476c619856cb110d0140e31bf7e56876e5ff28895f43991cf2d5e"
+    },
+    {
+      "path": "nodes/riraw-node-555.json",
+      "sha256": "3e7770a3d8153830ac3a6ea05bd6c4671b640441e09b1a95b3212fefafc9ea99"
+    },
+    {
+      "path": "nodes/riraw-node-556.json",
+      "sha256": "a4a27d3d01da523b35c57f390ff27c9d8b23d9b4fa6216ab80b1aa88395c2d15"
+    },
+    {
+      "path": "nodes/riraw-node-557.json",
+      "sha256": "0cf2cf583354a8ff89bf05775f4964ece2dd3993fc1a1e6a2f48b41129cf8137"
+    },
+    {
+      "path": "nodes/riraw-node-558.json",
+      "sha256": "31c874d9148d3c798fa1423730ebcb48bef2641979b4c20c4a817d092b5b881c"
+    },
+    {
+      "path": "nodes/riraw-node-559.json",
+      "sha256": "38016b06ff3fbdf56748996f18008f009ceffa00747c3cbb88123a896b5aadaa"
+    },
+    {
+      "path": "nodes/riraw-node-560.json",
+      "sha256": "ee672a369153735f0acabfb7f4483db25f9badfd613c74e7d45ba4c449c61149"
+    },
+    {
+      "path": "nodes/riraw-node-561.json",
+      "sha256": "8cb6cc68eafdaa8e8971c3f8ef22ae95e2e5b40fca73dcc4e8520c0ef8440b00"
+    },
+    {
+      "path": "nodes/riraw-node-562.json",
+      "sha256": "805511d399c51de18353f3e574c954aa232baa98f7add65f86011675d895135a"
+    },
+    {
+      "path": "nodes/riraw-node-563.json",
+      "sha256": "c7af6d58760747398e2ebb28a365da3b054a2243105bf9e23de9f2067b69f2f8"
+    },
+    {
+      "path": "nodes/riraw-node-564.json",
+      "sha256": "dc68627debc7394a3ddb66a90a2929c3be4a72a4f218ec378bb9ed5f617908ec"
+    },
+    {
+      "path": "nodes/riraw-node-565.json",
+      "sha256": "0c614ea9ef2285eadd0b912e120ac06f8adf29658bcac0c4dc181fe21fe4427c"
+    },
+    {
+      "path": "nodes/riraw-node-566.json",
+      "sha256": "83fc59f450ee55ae820c43a8fe14898d1806357c31672917dc20ac5c693dc1d6"
+    },
+    {
+      "path": "nodes/riraw-node-567.json",
+      "sha256": "7d4ac9ea0f18d26469b86f2eaef423b9a59bdfc88e39b2db8316f9feaca97fe6"
+    },
+    {
+      "path": "nodes/riraw-node-568.json",
+      "sha256": "037f233919e3650fda1aa4968d9bf2a77f1bcc992d02b86ca2374379bde50d07"
+    },
+    {
+      "path": "nodes/riraw-node-569.json",
+      "sha256": "f74b1491484a660019f19cfc61d5f40b99b5a1e34a3c672544242e190561c6ee"
+    },
+    {
+      "path": "nodes/riraw-node-570.json",
+      "sha256": "f43417924ff36cad98219b0915352c47db00bbad16c203d5479c62907f7657b0"
+    },
+    {
+      "path": "nodes/riraw-node-571.json",
+      "sha256": "80fe025487d110f04e2e3e6a3485a10eb7de2f4e493c1ce56014d6d29b1d180c"
+    },
+    {
+      "path": "nodes/riraw-node-572.json",
+      "sha256": "d3a7d6503f4596ef7dd785a3490aaa4a74cbc0823af7f6893987308aa8c83c47"
+    },
+    {
+      "path": "nodes/riraw-node-573.json",
+      "sha256": "afca2b132994b83e1130eb2c870dc944b9b8abc0626c5e0bc289ef935db511ef"
+    },
+    {
+      "path": "nodes/riraw-node-574.json",
+      "sha256": "81021fe66ea41127b08539dd2c802d0bdfab84126ee05c4c875695a654d3ef35"
+    },
+    {
+      "path": "nodes/riraw-node-575.json",
+      "sha256": "dc023d6353a6db7250f6cc3e77c0afc43abe639fe2b0c45e0412edcc3c81c901"
+    },
+    {
+      "path": "nodes/riraw-node-576.json",
+      "sha256": "e2d8224613ed2134326037c05fb7eb59ca9a18a131ca3e4f95efc94d85c6d90c"
+    },
+    {
+      "path": "nodes/riraw-node-577.json",
+      "sha256": "99c03c3264b36016a821b3b0b4b04ca83f92089fea7e6c39476fdd34903efd56"
+    },
+    {
+      "path": "nodes/riraw-node-578.json",
+      "sha256": "a94d614ede97528eebcfede1857001fc7cba59bc6942f84140acf4fe086e8235"
+    },
+    {
+      "path": "nodes/riraw-node-579.json",
+      "sha256": "be124397a93e4bc1c5ce32e86fc599644c0549c30c283dac2d70473fd2b11a23"
+    },
+    {
+      "path": "nodes/riraw-node-580.json",
+      "sha256": "e7561c0108eeb5e618d93e1a02325cac18fe34ab6775e6d14c021515176b68fc"
+    },
+    {
+      "path": "nodes/riraw-node-581.json",
+      "sha256": "3ae4fea04c053797b78f7aeac24d231d27ea59203e0a3b23012616bf4fdf7ad5"
+    },
+    {
+      "path": "nodes/riraw-node-582.json",
+      "sha256": "7b5494895abd64abb8b26cb92345c964d9313f0b7fda85bffa00b5ba672c86d0"
+    },
+    {
+      "path": "nodes/riraw-node-583.json",
+      "sha256": "6e1b07ee6f360c3a30e349e557f562e4fd85f7662969bc4c41525637d532c12f"
+    },
+    {
+      "path": "nodes/riraw-node-584.json",
+      "sha256": "7469681ab23d13999f7c05909fa2ab1874eeb4948485790569b3e871ca614b13"
+    },
+    {
+      "path": "nodes/riraw-node-585.json",
+      "sha256": "84f618b17fa3dded2dce4714b633f8aa65269d83c471ac2ea03c79e31e5debdb"
+    },
+    {
+      "path": "nodes/riraw-node-586.json",
+      "sha256": "64dac4e30c67aef880ab93dc60871f0197e26afe6f1a93860cec548f081e85ed"
+    },
+    {
+      "path": "nodes/riraw-node-587.json",
+      "sha256": "0de747cda12c0b97e58d043c0103ea49ec18c29a804a3bf59b073dae49524053"
+    },
+    {
+      "path": "nodes/riraw-node-588.json",
+      "sha256": "8063f24434e93be05bf3d0d91f3c7efbefab5426bf4a7f17a724390cff75d0ec"
+    },
+    {
+      "path": "nodes/riraw-node-589.json",
+      "sha256": "2229af7b855452848c5607fc40262ba41420c3097b542ed72adab12171d9a7f0"
+    },
+    {
+      "path": "nodes/riraw-node-590.json",
+      "sha256": "d082e798f2cd20eb78e816464c860c7b4c636b494bbf6be0b6a35222cce393a8"
+    },
+    {
+      "path": "nodes/riraw-node-591.json",
+      "sha256": "2f33b732bd08bb591b91b71a61796fc4d163b99df493f331cff82888ae751b2f"
+    },
+    {
+      "path": "nodes/riraw-node-592.json",
+      "sha256": "ae746fa279163292e9554cb24e3578d4e425d25b49c3d589d9f8c5cb3cae95c9"
+    },
+    {
+      "path": "nodes/riraw-node-593.json",
+      "sha256": "351370dbd2c5f1112eb7401e7e74df922ee6f01fd7427dccb547b5e111b8b104"
+    },
+    {
+      "path": "nodes/riraw-node-594.json",
+      "sha256": "4a6d7cf23e977cbda7e0253ad5d7ba3fad81f062284fbb9f3ff9b434b189d2af"
+    },
+    {
+      "path": "nodes/riraw-node-595.json",
+      "sha256": "33fa6e4c732d1dea9a3d58859ea8506a320e84dc81ba94ab762fb586cc7c0b8a"
+    },
+    {
+      "path": "nodes/riraw-node-596.json",
+      "sha256": "bf0dcc8a61a0223157f52601fc9a950c0a24f8071cf483c3fec49ac9f24be09f"
+    },
+    {
+      "path": "nodes/riraw-node-597.json",
+      "sha256": "16044985048243d295e641c8f3bed6abed1e1cc6c24bf2a91c77e2557e1f7a4e"
+    },
+    {
+      "path": "nodes/riraw-node-598.json",
+      "sha256": "236bd5c287aed944a442b29f53a4154eae1bf78930e0684b11629aa07e36e7be"
+    },
+    {
+      "path": "nodes/riraw-node-599.json",
+      "sha256": "93814e998fc68c7c35e3d80ca816144cb36929811c84d5a6d03cfa9ec67c2ace"
+    },
+    {
+      "path": "nodes/riraw-node-600.json",
+      "sha256": "112212a07e03ad14b5629741de97bcfd0b73dbfc6644115540d99ecd83172789"
+    },
+    {
+      "path": "nodes/riraw-node-601.json",
+      "sha256": "5eb7b769d11b343697949880ab50f04e80159c5edb18aa0c6a0221a6f8ff26f8"
+    },
+    {
+      "path": "nodes/riraw-node-602.json",
+      "sha256": "f0b0c8f2721cfedd5346b23b7d51701ace35622bcdc753d855e552ac24c3badf"
+    },
+    {
+      "path": "nodes/riraw-node-603.json",
+      "sha256": "b2f101e958fef6ed5fb2d7d790228510ecdf7eabe7d58dbb8c93486b3253d58c"
+    },
+    {
+      "path": "nodes/riraw-node-604.json",
+      "sha256": "2c9253615c3e4205172a74bc4a943244486291a385b4f1d92620eb5b7ce05ae2"
+    },
+    {
+      "path": "nodes/riraw-node-605.json",
+      "sha256": "c832365200dacf5ff0fac02425432a5ac41da5e5d300f09d5070ee8413cae0ef"
+    },
+    {
+      "path": "nodes/riraw-node-606.json",
+      "sha256": "2d63926e325d82fac94dd8fadf5c4c0dd500ba9e744de2675e891cf1fb9ceb9d"
+    },
+    {
+      "path": "nodes/riraw-node-607.json",
+      "sha256": "a63c06a4086ce1f6698e18cfe6fc595f7e3c23e839b1e554f4576ad925272e71"
+    },
+    {
+      "path": "nodes/riraw-node-608.json",
+      "sha256": "9e8c340a55a013196a4b128da946ad7d7e86aa50beaeefd33bf3a3978c0d3d1e"
+    },
+    {
+      "path": "nodes/riraw-node-609.json",
+      "sha256": "f1c4ba15e67ead586439a987800fa35b6965acdeb63d0c565ab61063113c2484"
+    },
+    {
+      "path": "nodes/riraw-node-610.json",
+      "sha256": "aeffa55c9938ae750f7977adad2caf2c2550f0378721c332868d9ee5783c7d24"
+    },
+    {
+      "path": "nodes/riraw-node-611.json",
+      "sha256": "08d1886463e8d33571480ed615f55dd503ef8792935688639e6ff209708d3206"
+    },
+    {
+      "path": "nodes/riraw-node-612.json",
+      "sha256": "1b101ad6599332f80552a39feb65862bdf95556edd0fb535938da0ea0e3cef62"
+    },
+    {
+      "path": "nodes/riraw-node-613.json",
+      "sha256": "a12ff1f75492567fdd0de1be17d4b369cf88d184aa3f11a7711c47461692b9db"
+    },
+    {
+      "path": "nodes/riraw-node-614.json",
+      "sha256": "38e1cb71ced8e8ff80aedf105bd689d544d25e6cb6b2cb92c1a6992b2fd83883"
+    },
+    {
+      "path": "nodes/riraw-node-615.json",
+      "sha256": "52caf64d17fc161da1c1aa7eb715309cac24699e713ca5f250b907d532682857"
+    },
+    {
+      "path": "nodes/riraw-node-616.json",
+      "sha256": "be8115ae168f3488ca5045fb3fdd9f359ec1e1fedbd9a6bb95a8dba367b76023"
+    },
+    {
+      "path": "nodes/riraw-node-617.json",
+      "sha256": "226229808925484cabe8c5d4cfd2596edba1e3e5583dd17c2a702f24a2be9581"
+    },
+    {
+      "path": "nodes/riraw-node-618.json",
+      "sha256": "4ba18a8b811f4bab646a645c2f583f81d664b8431c1d30a15cee3f43cbe9bc29"
+    },
+    {
+      "path": "nodes/riraw-node-619.json",
+      "sha256": "94303b93e41cd25b6e0e41d4b17d230e8bea6632558ae06f891f677b0a3db601"
+    },
+    {
+      "path": "nodes/riraw-node-620.json",
+      "sha256": "375e0b28a26ee4db1ba62b3da480e9e8e451d58edddc5294f33c15b96f165a4e"
+    },
+    {
+      "path": "nodes/riraw-node-621.json",
+      "sha256": "f9dfe53b94e77ef3038a86d7323969f7b6e6e9e14dfbc0c57ca7498cfb5bd9a6"
+    },
+    {
+      "path": "nodes/riraw-node-622.json",
+      "sha256": "666cb4a7b2febca0e76e3e4f87ad8cc05ef14b82795210bf6961f7c3bf055d9d"
+    },
+    {
+      "path": "nodes/riraw-node-623.json",
+      "sha256": "38b0719703c951d0985c5ade66acfb05fcb2edcfce5e9e574c07021f553fb9ff"
+    },
+    {
+      "path": "nodes/riraw-node-624.json",
+      "sha256": "f5e5da4f820bd45e3aa07f3882b0be820db190dab56f129ec712245c365bd61f"
+    },
+    {
+      "path": "nodes/riraw-node-625.json",
+      "sha256": "5db776ccb460870796e6770fcb65a7f14404b96bcedd739dc67f64b6e35b35d0"
+    },
+    {
+      "path": "nodes/riraw-node-626.json",
+      "sha256": "420e39aaed11ea67b7a14078eb95dda5fe9fe6982720e664ea029aa2e23399b2"
+    },
+    {
+      "path": "nodes/riraw-node-627.json",
+      "sha256": "9505db11d369c422a1cd9e39f6006242f5b7f57793d12af9bf4df8d329594edf"
+    },
+    {
+      "path": "nodes/riraw-node-628.json",
+      "sha256": "1abf38d157d590cf51cf53d99fe80833b020f1cae31902074f8ef1b3af5d079f"
+    },
+    {
+      "path": "nodes/riraw-node-629.json",
+      "sha256": "af899e5e04399d5bfe761c11cb25de95890842a0ac248c0427cd714240444dbe"
+    },
+    {
+      "path": "nodes/riraw-node-630.json",
+      "sha256": "7d62bda50d6b41fabc4060b6dc818dde8d93c9113e631bf7c2bdf2a032cb66e6"
+    },
+    {
+      "path": "nodes/riraw-node-631.json",
+      "sha256": "ce14a235510eba87c23f6ccc9d524e28433b1314caeac298a7ba652f8eb9e224"
+    },
+    {
+      "path": "nodes/riraw-node-632.json",
+      "sha256": "f3fc5bd9f23b0a9821ec099c177a37494bd670a361955340c65b314b83f92e61"
+    },
+    {
+      "path": "nodes/riraw-node-633.json",
+      "sha256": "a6ca2bca2b329f02f3da25f4cc93ffe33260c0f4481dce83be6089d028fc6a48"
+    },
+    {
+      "path": "nodes/riraw-node-634.json",
+      "sha256": "e145994f43951b07fd8389425ba7c998f8d76ee1da830bb28127b2247f432a63"
+    },
+    {
+      "path": "nodes/riraw-node-635.json",
+      "sha256": "0ac63c336d29674360be277e08c4bf52176101a2b03e0d420f643471cffc7882"
+    },
+    {
+      "path": "nodes/riraw-node-636.json",
+      "sha256": "8006905605f33fac18be0ba368149a20e6859af77e57ae9df284ca9ac1300ca3"
+    },
+    {
+      "path": "nodes/riraw-node-637.json",
+      "sha256": "138495c3640fa4727ff465199cb180ab037926d8ce382cd3c6072fd72020a248"
+    },
+    {
+      "path": "nodes/riraw-node-638.json",
+      "sha256": "533cec35842bac64d78bc375dc74e3e3899bf799009d418c1499f52b67f75367"
+    },
+    {
+      "path": "nodes/riraw-node-639.json",
+      "sha256": "d93f51653938cb86780cc7ea2e2cdd17b7adc2ee0d848a4efa44e9b716f87c3a"
+    },
+    {
+      "path": "nodes/riraw-node-640.json",
+      "sha256": "f7de95ee59b7d21a9c36d1a0c3c10eac40334085186e734c90518b55e07752c5"
+    },
+    {
+      "path": "nodes/riraw-node-641.json",
+      "sha256": "9f90a0fdb92b9086c042aa34c2d14c5bb33143d4afa453170cdd12414139a4a8"
+    },
+    {
+      "path": "nodes/riraw-node-642.json",
+      "sha256": "27b4eff722198d938f2d58692c8b1bc81c16160d6c5ccfd1d602e74422ab1118"
+    },
+    {
+      "path": "nodes/riraw-node-643.json",
+      "sha256": "c512b88590e6a7c9dbae05c878c65cd30a5bee1dd910bb7c1698039c24737cab"
+    },
+    {
+      "path": "nodes/riraw-node-644.json",
+      "sha256": "19d58ec7a0cfb4b16d5957de124b0a3d62d37f09c37de118b28a1679097f6e7d"
+    },
+    {
+      "path": "nodes/riraw-node-645.json",
+      "sha256": "943ebb1d3fc86762bda67eb22a1fcd16c27ff13d718fe324e5e97e8b0609ac61"
+    },
+    {
+      "path": "nodes/riraw-node-646.json",
+      "sha256": "751c4ba41852c9e4b40b2bbf0165845e78b724e9243dba215433f5c69a7896cf"
+    },
+    {
+      "path": "nodes/riraw-node-647.json",
+      "sha256": "09669aa55a8ec4ea86f68fa54a1c512f5da792a97dd23d444cb7a1f587acc674"
+    },
+    {
+      "path": "nodes/riraw-node-648.json",
+      "sha256": "0f17004773eaae37d0d10913a6e7bbf3673de85cfdefc1056a4829346d7ccc9f"
+    },
+    {
+      "path": "nodes/riraw-node-649.json",
+      "sha256": "64064303298e8307941789f5f0d0a9494058d761d862c893bc222dd7a0d1b2d4"
+    },
+    {
+      "path": "nodes/riraw-node-650.json",
+      "sha256": "0979a16878a7022b05110e7b2a0af0f606d0b776ea9d6de76c1137d8ae45c4e8"
+    },
+    {
+      "path": "nodes/riraw-node-651.json",
+      "sha256": "813c2e36002165ca6c76837f94b488822cc16843697e6e35f827ef8cd7dc31f7"
+    },
+    {
+      "path": "nodes/riraw-node-652.json",
+      "sha256": "f78b69135f876be17044ab7ec6653b14291286760b46b2f457db2ff325c34c24"
+    },
+    {
+      "path": "nodes/riraw-node-653.json",
+      "sha256": "dd40cca4d268373a8716e19da6f3cfa7ffc2a43b3af8d3b1830c69dc52706e7b"
+    },
+    {
+      "path": "nodes/riraw-node-654.json",
+      "sha256": "cc9cd10edf60395508663804fc340b4cd536b7138908a0eef3d86d4b0ce62d70"
+    },
+    {
+      "path": "nodes/riraw-node-655.json",
+      "sha256": "26741ffb4cd66de1b8943a6d32513573150734e49d148457256bb29c344c1ede"
+    },
+    {
+      "path": "nodes/riraw-node-656.json",
+      "sha256": "6ccba6a953b4e00997a9e86b72456f498a01c0abbef9a3d492771cc6c38d3b6c"
+    },
+    {
+      "path": "nodes/riraw-node-657.json",
+      "sha256": "f6f0793a02ccf89c451f02ea794678a2d8ff1fcbea56ec30f425f1e9fad16045"
+    },
+    {
+      "path": "nodes/riraw-node-658.json",
+      "sha256": "2740a19a1539c61d4acd69aad667ced1908ed36a92c1ea6c49bf5fae999926de"
+    },
+    {
+      "path": "nodes/riraw-node-659.json",
+      "sha256": "97aae3d8d7cb0cb62a6fe3c7ab657ad155905b65354ab692ca3e48ef78588a93"
+    },
+    {
+      "path": "nodes/riraw-node-660.json",
+      "sha256": "7f55078e4e27b70222071da339667000dff91344b384846b47b8cc9af5295114"
+    },
+    {
+      "path": "nodes/riraw-node-661.json",
+      "sha256": "e505d168a31acfc466ec0a6e80873a0232f3f5a0b939c3fae2461d239e7f27af"
+    },
+    {
+      "path": "nodes/riraw-node-662.json",
+      "sha256": "5cb6064d46290e62b806054beaf66a9b7d9ad0046f862d5cf9479d913241ac96"
+    },
+    {
+      "path": "nodes/riraw-node-663.json",
+      "sha256": "50d3f9326f0b48b7e90a3b1415ff628ce21cd4d725cb97e3e41475705bd40c84"
+    },
+    {
+      "path": "nodes/riraw-node-664.json",
+      "sha256": "fc36760102912ba1ddd4a5fbd72f175e21dc28886170eeac0c26964ca471fb40"
+    },
+    {
+      "path": "nodes/riraw-node-665.json",
+      "sha256": "a3964f6f169c3195b712684a80553fb2cb5199b332655acf955a6e2c1825a265"
+    },
+    {
+      "path": "nodes/riraw-node-666.json",
+      "sha256": "0e75ac6b16b0d6563af3c44732e690a083ce447c4bce169521a1952a08c0d258"
+    },
+    {
+      "path": "nodes/riraw-node-667.json",
+      "sha256": "b3de8ee89ace3263bc23f263d5babe91268a8a74b6c815d16621b0d86431f7b6"
+    },
+    {
+      "path": "nodes/riraw-node-668.json",
+      "sha256": "4b3915fdfc9ff9383ba91c92068804dbd818f34008cc1a0b7c8bf2f85dd93e49"
+    },
+    {
+      "path": "nodes/riraw-node-669.json",
+      "sha256": "587ee3e0f8a9b3b5cb76b2ff0f3c4e650b180caec6b3391959a6305c2ff61c79"
+    },
+    {
+      "path": "nodes/riraw-node-670.json",
+      "sha256": "e18510100c0943cb5cd4dab3a263fa624503fe4bc056a4de40c1c897d9c23120"
+    },
+    {
+      "path": "nodes/riraw-node-671.json",
+      "sha256": "f5f4e6a3d65fa006883e01120d5995f90c5882b278bb0d6f2fa451d454493a6a"
+    },
+    {
+      "path": "nodes/riraw-node-672.json",
+      "sha256": "d95fb497aa498a70473b0480c3055dadff072bc49e3374600976f0f06fb427b7"
+    },
+    {
+      "path": "nodes/riraw-node-673.json",
+      "sha256": "58f5e6e3f1bf520961c7058a992444b9da7fe12de97b0168bf73b3544b195c1d"
+    },
+    {
+      "path": "nodes/riraw-node-674.json",
+      "sha256": "4be71aa611ac604a27415a7c3ea0c47f54d811f86b3e5ddf991170e217534f54"
+    },
+    {
+      "path": "nodes/riraw-node-675.json",
+      "sha256": "b26c8ad146339e8c74746ddc3cc344f8d478052fbefef2d8b90a130fe9bc6b57"
+    },
+    {
+      "path": "nodes/riraw-node-676.json",
+      "sha256": "58ef12f6be56fc209e7999222d4821bf226a07f44d0a166c6520ba9b89004683"
+    },
+    {
+      "path": "nodes/riraw-node-677.json",
+      "sha256": "1c04b824c5325db10f29c102bc58a344f15ac12458af4d2e2198187e5e80aeee"
+    },
+    {
+      "path": "nodes/riraw-node-678.json",
+      "sha256": "8f3cc348dc69e7f98c14ff339a6ea03c4489dc86cb687a5de9d3ef449bd1c020"
+    },
+    {
+      "path": "nodes/riraw-node-679.json",
+      "sha256": "57baa12e115ac0a54ec62b85ff6ab25c83ec905d98e858c5be3026342f3351af"
+    },
+    {
+      "path": "nodes/riraw-node-680.json",
+      "sha256": "5dee6bf517f86774a6827f098e34d1bd2647f8820f6383f96f6c3f25c62a71ff"
+    },
+    {
+      "path": "nodes/riraw-node-681.json",
+      "sha256": "893ff09af8057f2baf8f34bd8a969f780c6634c44df76cf4912eca736d3c4f4a"
+    },
+    {
+      "path": "nodes/riraw-node-682.json",
+      "sha256": "aa43527d3443de9cc89216703938daaad8c9fe24e6b61ce3367170793a7e48a2"
+    },
+    {
+      "path": "nodes/riraw-node-683.json",
+      "sha256": "3e2109ed0d176366fa94a820d13768be8b20fcf54cce9a22f3abd1a15234b97f"
+    },
+    {
+      "path": "nodes/riraw-node-684.json",
+      "sha256": "770c6f2a3c8489f9ce1ed476bfae76588161513e13ae41fc4254f9ea7a6d072d"
+    },
+    {
+      "path": "nodes/riraw-node-685.json",
+      "sha256": "20fd7672f5c6fce71b141f4d288c69e277a34c63d2b83c082983dbf6b516ef2f"
+    },
+    {
+      "path": "nodes/riraw-node-686.json",
+      "sha256": "138fadf301d66403b39fa64dab1bc152a8e81935ec1a579f6fc06f23aba11dee"
+    },
+    {
+      "path": "nodes/riraw-node-687.json",
+      "sha256": "f4964d301337144993986339f3375ed96f0f049991fe14f2e81fe0c81c48a1ed"
+    },
+    {
+      "path": "nodes/riraw-node-688.json",
+      "sha256": "40d4a744f81dd8f2e413722e4d8c19ae793677530776ff1a36e8a0b8c6b13f8e"
+    },
+    {
+      "path": "nodes/riraw-node-689.json",
+      "sha256": "dd53cd42bc4a8ad4ec59863f25a629296d11c36e5b3767ec2c2d4dab283df27b"
+    },
+    {
+      "path": "nodes/riraw-node-690.json",
+      "sha256": "5eaff38d95e53bd26cde7b8210c2bd0017dbd36f261af985de68bd74bfbee43d"
+    },
+    {
+      "path": "nodes/riraw-node-691.json",
+      "sha256": "9fb78079be41d57070f202db9b1b644cf9daaac25969721cc8f7fd6975c6d006"
+    },
+    {
+      "path": "nodes/riraw-node-692.json",
+      "sha256": "89029c301699c1307a3a7e409f214acca060b4f5557cafc434622300441e33db"
+    },
+    {
+      "path": "nodes/riraw-node-693.json",
+      "sha256": "263340aec03e075b5be069c1587834a812007350d46417892e059a59633ec584"
+    },
+    {
+      "path": "nodes/riraw-node-694.json",
+      "sha256": "a95768096a7ededa3dbd0a57cc1d792c79b3d5f9b99e6f75b4a2ba85e2884774"
+    },
+    {
+      "path": "nodes/riraw-node-695.json",
+      "sha256": "3bd9a588f8481ff81d80f2c1a1912f9f9f3424643ac49138fc3fe2814f5a00e1"
+    },
+    {
+      "path": "nodes/riraw-node-696.json",
+      "sha256": "9531fa0e65635f10cff4d154c3f9b640f8d55fd3baa074f404625518fbfc1713"
+    },
+    {
+      "path": "nodes/riraw-node-697.json",
+      "sha256": "02c3a3e3cb377c7d87f465516be02885ba67b2c7beb3ca673d86274c487721fc"
+    },
+    {
+      "path": "nodes/riraw-node-698.json",
+      "sha256": "a656a5beff2c6a6badb02c05ac9615f64eba6eb36615fb658deaab2d2dcad202"
+    },
+    {
+      "path": "nodes/riraw-node-699.json",
+      "sha256": "5126c495a98c73061eaa23e9c749cb610364eddb0f78d199e5f4069748247741"
+    },
+    {
+      "path": "nodes/riraw-node-700.json",
+      "sha256": "5d58d00db03a165189678ef60e2bc8359a35f1857c5be9c227a76b0b58357388"
+    },
+    {
+      "path": "nodes/riraw-node-701.json",
+      "sha256": "301046f7f8d731fedc1cb576ec614799c97d09b08acb02208b81aeec148b7310"
+    },
+    {
+      "path": "nodes/riraw-node-702.json",
+      "sha256": "6c3b29e7cfb699c4e9a7e78d5c7116dc2a1d921a043206104b41a7569ff24944"
+    },
+    {
+      "path": "nodes/riraw-node-703.json",
+      "sha256": "9f3a46f9cc6bf332656e3907d103927e0c34d65aa81eff586d328aec29637890"
+    },
+    {
+      "path": "nodes/riraw-node-704.json",
+      "sha256": "300f97556e03f3b8541df8e4f4e75c5ea3f70744b34a82ba0892b86832de95b8"
+    },
+    {
+      "path": "nodes/riraw-node-705.json",
+      "sha256": "dfd7f21af8fab346ae262bbf67515b65fb548b4fce673cafb34664a901318346"
+    },
+    {
+      "path": "nodes/riraw-node-706.json",
+      "sha256": "b4d92706c516aaf6485d66fd430eb0db1fdb3ce2591cdee16108a629fb1456d5"
+    },
+    {
+      "path": "nodes/riraw-node-707.json",
+      "sha256": "53520e2a526e30399de8fe9878f9a0b29e49bf39dea711c64c14a39fbe3bc1a2"
+    },
+    {
+      "path": "nodes/riraw-node-708.json",
+      "sha256": "93a6dfd408b9b4c8426babd9332603c52841636d1708d50e8c5eb68724bf6f59"
+    },
+    {
+      "path": "nodes/riraw-node-709.json",
+      "sha256": "3c8cc983cb7dc9255164cb383083c55d211538694ae26d6d2cbdf2c1460acf7f"
+    },
+    {
+      "path": "nodes/riraw-node-710.json",
+      "sha256": "6bb81bd57d90ddc2e074b26ed5563f80f9cd47f27071e39b878bb157a13aa974"
+    },
+    {
+      "path": "nodes/riraw-node-711.json",
+      "sha256": "67c82ad5427633a526622b6c4fb0861a71c08049173cf7273126e6fb733068f7"
+    },
+    {
+      "path": "nodes/riraw-node-712.json",
+      "sha256": "00af686d1eaf4fd466b7ff7c197c13e5b83f5c9ecfbda63d2ae1d5565fda2e33"
+    },
+    {
+      "path": "nodes/riraw-node-713.json",
+      "sha256": "3dd7ee6abb8da46e778c22b61b24b44e25f7f0b78949e6c172badb238f0a6abd"
+    },
+    {
+      "path": "nodes/riraw-node-714.json",
+      "sha256": "9417274d9aa66845add51bd33d3623295daeeae94bf50353a30dce4a5c3b944c"
+    },
+    {
+      "path": "nodes/riraw-node-715.json",
+      "sha256": "58f774eb4bdb5331c50bf5f1e30a31da0cca52750b7d7ce940e931a614a8e3a5"
+    },
+    {
+      "path": "nodes/riraw-node-716.json",
+      "sha256": "522eb304eb68ca8e9bd3fcc50b535971dba4ae67f382f94b2bb29fb8f742cf1a"
+    },
+    {
+      "path": "nodes/riraw-node-717.json",
+      "sha256": "49fce080214fcd037da232605ef5d545e95984a81f60fe0232a7ce971aaab544"
+    },
+    {
+      "path": "nodes/riraw-node-718.json",
+      "sha256": "3cbb20a41e4e38445bc0cfac44aa0d9f3f62f4adf6273e85ed5bc9b30020f408"
+    },
+    {
+      "path": "nodes/riraw-node-719.json",
+      "sha256": "7799394fd41905624842f985f94f02ccdf05af31d1de9bcbae553dd8b83a8d67"
+    },
+    {
+      "path": "nodes/riraw-node-720.json",
+      "sha256": "e4d1b9fbb726ddfc0bc69b6a9de050e3d681ba5bcbae6eeab6fdf3aab0a73d50"
+    },
+    {
+      "path": "nodes/riraw-node-721.json",
+      "sha256": "f3fd3f4662dc93b7a7e62e01f31a5ad819fc2e2d3d9caa3d6dd38c1b02c16616"
+    },
+    {
+      "path": "nodes/riraw-node-722.json",
+      "sha256": "9cce7670cff9deae96652094674c7d141c31249ba6ed2b1816429b4230f3ae19"
+    },
+    {
+      "path": "nodes/riraw-node-723.json",
+      "sha256": "29e6f454bcfe4a95860933f4637abfa7208c89236eeeda1f32aed1503c21e6df"
+    },
+    {
+      "path": "nodes/riraw-node-724.json",
+      "sha256": "cb03ca9e0329459710288eb3e68e834c9808d8ec43475a8145d205898372289e"
+    },
+    {
+      "path": "nodes/riraw-node-725.json",
+      "sha256": "8ad61e14b4f9d55719626b4bebd26bfc1bf73dfbdf8732dc46ff91862ec49d95"
+    },
+    {
+      "path": "nodes/riraw-node-726.json",
+      "sha256": "020b2b7c03d3d2622a2493961bdc75ca48ba92778322bb4f05653951887759ca"
+    },
+    {
+      "path": "nodes/riraw-node-727.json",
+      "sha256": "9d94034e5d82d39111ad4bfa94079310d5bef8ffd148dc8bfde14b191c7f85f1"
+    },
+    {
+      "path": "nodes/riraw-node-728.json",
+      "sha256": "26dd79f3065bdcda82ee8aa4fdf6958baaf45586b61a5cc535538a8e5bd36c83"
+    },
+    {
+      "path": "nodes/riraw-node-729.json",
+      "sha256": "128cfcdac3399a72f028d005a3b47e7abdb02c7694535c3f772ca51a09dadc16"
+    },
+    {
+      "path": "nodes/riraw-node-730.json",
+      "sha256": "8643219989f007795159de9b3b70d886ede2bcc3d6690624d928096dd500e831"
+    },
+    {
+      "path": "nodes/riraw-node-731.json",
+      "sha256": "f0ecab1c9333f90951470b6777a38086fff2152a89c395f0626f0ca8fa851b79"
+    },
+    {
+      "path": "nodes/riraw-node-732.json",
+      "sha256": "65e11cb542f3fdd7c553df4cbd584afb85a0fe70213759430c2720ff8d6cba0a"
+    },
+    {
+      "path": "nodes/riraw-node-733.json",
+      "sha256": "ec621a1798cb93d66cf2c96e806f15ca4c321077645c5377b6ee354b9e214f83"
+    },
+    {
+      "path": "nodes/riraw-node-734.json",
+      "sha256": "2dc3b38efed6d4128ecb465346cca883386577d531c193a06d182bd95fee44af"
+    },
+    {
+      "path": "nodes/riraw-node-735.json",
+      "sha256": "c48caf6dce2cd75ea87056039a0c0868b6b03447f3cbd88d5a109d18d4d158e2"
+    },
+    {
+      "path": "nodes/riraw-node-736.json",
+      "sha256": "8666896dcaf8ab67db8953f2f04cfcfef6273b28e903841d4eaf02f2edbe0d6a"
+    },
+    {
+      "path": "nodes/riraw-node-737.json",
+      "sha256": "027a6f6953c3d3e628c314a70d95804b883718f857e864724e575e42bb877d0f"
+    },
+    {
+      "path": "nodes/riraw-node-738.json",
+      "sha256": "8ad0f8dd3d4ac102913d182700cb7c4625489b018d4334ea93a9e4bd1408d591"
+    },
+    {
+      "path": "nodes/riraw-node-739.json",
+      "sha256": "491e2a9c9586c4859dec010e096c23f597355daf6c9c772c5da6ad0b5acfa7b4"
+    },
+    {
+      "path": "nodes/riraw-node-740.json",
+      "sha256": "b39464f1d027c9ed5cf2f1ed1fe3bc5cbe1ea749773fd9c9d1312e7656955709"
+    },
+    {
+      "path": "nodes/riraw-node-741.json",
+      "sha256": "d3c4e1551ccfe8c3eee9ebdcab301289bf038a881d08383457bb346dd3eb64f8"
+    },
+    {
+      "path": "nodes/riraw-node-742.json",
+      "sha256": "c2965bd95915c244aea400c6d15c340bc0158f539a6ecf01301b0fc473118cd5"
+    },
+    {
+      "path": "nodes/riraw-node-743.json",
+      "sha256": "39c156dae416553c89cf9791d9b297837b4dee706891af34e36a74d1783d04d5"
+    },
+    {
+      "path": "nodes/riraw-node-744.json",
+      "sha256": "a78bda24b3211e19d5cf85f534623c32dc8022547c244a9e5dd4eec07698b19c"
+    },
+    {
+      "path": "nodes/riraw-node-745.json",
+      "sha256": "80809093fa8c223bb4ffabdd3e38fc55cf01630132a162ac29908bd01537510f"
+    },
+    {
+      "path": "nodes/riraw-node-746.json",
+      "sha256": "19e202808bef1e60626f31cac7b68f3d33edd0898a5575ba14c6b14419b00396"
+    },
+    {
+      "path": "nodes/riraw-node-747.json",
+      "sha256": "63e02fb41696d3b6f8bf77f30a1eb0b126f3977433be2343c4fa2514ce691ed5"
+    },
+    {
+      "path": "nodes/riraw-node-748.json",
+      "sha256": "5c285ea5f025d4644858fa1e75700a01ce9d1a3986991931cdf1d968d59fc654"
+    },
+    {
+      "path": "nodes/riraw-node-749.json",
+      "sha256": "7504c7035e341ef618f7d816a60e2bfaf64dc558346e96f9538945c2d4381445"
+    },
+    {
+      "path": "nodes/riraw-node-750.json",
+      "sha256": "af1806896d2788ea2acb3ccc3d8c7cf0bb38f0c6f508f56a92bf8d3a971ce7ca"
+    },
+    {
+      "path": "nodes/riraw-node-751.json",
+      "sha256": "2d181c4c09b19af21e5d52055525f92faf645bcd87b1f2a727ee184899ad04ed"
+    },
+    {
+      "path": "nodes/riraw-node-752.json",
+      "sha256": "e6a6c9e5b9d7f6d68f11f002667cf041e9cb478ba2b5c0873b809aeba97ae515"
+    },
+    {
+      "path": "nodes/riraw-node-753.json",
+      "sha256": "9d098c8c1c7f1fe3e03dec7ac1ab7e42e9ae6717036893d8b11ab1235b6898bf"
+    },
+    {
+      "path": "nodes/riraw-node-754.json",
+      "sha256": "3fbec3151a4972ffd976081ebce1bdf577f4fa37531a09e3dd26ce254c4fb908"
+    },
+    {
+      "path": "nodes/riraw-node-755.json",
+      "sha256": "68c77f1ba829464fef5ba83334e6920a06f7baa9bd61e96534b8ff3a3d5e310c"
+    },
+    {
+      "path": "nodes/riraw-node-756.json",
+      "sha256": "e89daa02eb98a707684422b6b6841304979fc23099254cbd05719b6a8b8b7175"
+    },
+    {
+      "path": "nodes/riraw-node-757.json",
+      "sha256": "205c7a3f1064cd52e000648f7ea1ac1c7e044dfa8cf1c1614bcdfe5fd417f5a3"
+    },
+    {
+      "path": "nodes/riraw-node-758.json",
+      "sha256": "20ee7a5d3a9496fbe8c29383dc0b12ff3c86c77e84bc4f80ceb1d8aa1f9b2df1"
+    },
+    {
+      "path": "nodes/riraw-node-759.json",
+      "sha256": "7ec68953c3bca75934b1c2896d2eb4c5a2786cf970598aaf5b47d646e04c4003"
+    },
+    {
+      "path": "nodes/riraw-node-760.json",
+      "sha256": "d881b71f89228c255e4845ae08d22b7cdb6d6683501789bf371f6f0ac1666055"
+    },
+    {
+      "path": "nodes/riraw-node-761.json",
+      "sha256": "feab1e909d9e75585aa18205e039bf9c08dc70d8fc117ffdd53e197264010881"
+    },
+    {
+      "path": "nodes/riraw-node-762.json",
+      "sha256": "29c952ef87b96d9ab1ed1f08df8d259da7f5dc1be6182a54040a9fd1ec28f3ef"
+    },
+    {
+      "path": "nodes/riraw-node-763.json",
+      "sha256": "8ae0f54f851a5c2205441ebfcf0d2b574146ece8b6b57d7582c876ee8967f44f"
+    },
+    {
+      "path": "nodes/riraw-node-764.json",
+      "sha256": "8bbef995ccacd1efb70f6b2136e8714243f61ea374cfe6ae026eaa97b32a8395"
+    },
+    {
+      "path": "nodes/riraw-node-765.json",
+      "sha256": "2648d8f0888bf4b3922efdc59293e628ba03fd64da7cc1f864080fb6c0d3e1d4"
+    },
+    {
+      "path": "nodes/riraw-node-766.json",
+      "sha256": "70f3ac73303eb62eb65b969266f83a2c64d437b86360d41323e2f23e5a32ec92"
+    },
+    {
+      "path": "nodes/riraw-node-767.json",
+      "sha256": "1472944cfce1f963aca5849baea96b355a7369ff0fb47cd12ab1fb1f025c8475"
+    },
+    {
+      "path": "nodes/riraw-node-768.json",
+      "sha256": "aaee43c07ae47e036f4a4bbd6defef26f6a60105017da5d40e750e12b9220dc7"
+    },
+    {
+      "path": "nodes/riraw-node-769.json",
+      "sha256": "364a1fe3fe5c03cbe770506368ecf3d2bad42a233233df17880c28b0048edb6c"
+    },
+    {
+      "path": "nodes/riraw-node-770.json",
+      "sha256": "fee2b078856015114dfe27ef2eaf66f2d9067010bb5e22c8a4f85dbef0335f96"
+    },
+    {
+      "path": "nodes/riraw-node-771.json",
+      "sha256": "db75e19cc45b6ef6386801f6399949e3011c9fbc05b0560472d6bd3754f64761"
+    },
+    {
+      "path": "nodes/riraw-node-772.json",
+      "sha256": "e3dce5211a6fb6e06f727bd41a9905f4c245f65087ba2e88308c2d533e4dd3d5"
+    },
+    {
+      "path": "nodes/riraw-node-773.json",
+      "sha256": "63cca56002dbb702b1176e44102f991c445aeef9be9dcc412c5d4a1a2fb256fd"
+    },
+    {
+      "path": "nodes/riraw-node-774.json",
+      "sha256": "929a5129ced169cbda1f24af4b388db47e512a9d086d2c4a79b80089ad7b2347"
+    },
+    {
+      "path": "nodes/riraw-node-775.json",
+      "sha256": "1ab7ab9aedefebe9f75ce0793772ed5181deb10e6aef5575c3957e2b26781629"
+    },
+    {
+      "path": "nodes/riraw-node-776.json",
+      "sha256": "c2ef95ed8a02b43e209b2d07102ace247be6b7dfd8f9e43ab9cba30d0780e158"
+    },
+    {
+      "path": "nodes/riraw-node-777.json",
+      "sha256": "4d23519961ac4b3a015c32eef99f9e4c32dde5da98a4e6f4884a8bf49b8b9ca0"
+    },
+    {
+      "path": "nodes/riraw-node-778.json",
+      "sha256": "ffb509953f92304efc7f9e9103d47610f36b0a030702184610c977f2a9464cb1"
+    },
+    {
+      "path": "nodes/riraw-node-779.json",
+      "sha256": "3bba63763d2efb66d0fd27a915c221bf191f426958695cf28071b929ea4dcac5"
+    },
+    {
+      "path": "nodes/riraw-node-780.json",
+      "sha256": "52d0543d2c51a742a7ae85ad38eb14494eeb7f37ffc564ac84771dba0819127b"
+    },
+    {
+      "path": "nodes/riraw-node-781.json",
+      "sha256": "d1e1a93d27828749013d8f83ff06c810366f936fdd00db32acdb0da2e9a6e425"
+    },
+    {
+      "path": "nodes/riraw-node-782.json",
+      "sha256": "49b70be5f522ff7a7d3cb6afb59bf114aaa1662e778c62adeffc19c233eb8363"
+    },
+    {
+      "path": "nodes/riraw-node-783.json",
+      "sha256": "74500be6000821c7e55c95c98305c3f5ffd1e97085809a78844da6999f70be3a"
+    },
+    {
+      "path": "nodes/riraw-node-784.json",
+      "sha256": "214b2ef817ef1aa3eaa8b7c57a84abd80bdd6e7b6f25290c3f5501e8e0254dc0"
+    },
+    {
+      "path": "nodes/riraw-node-785.json",
+      "sha256": "316a29a48ea7534fb1526de698a0e01b5149753389a0654c5cf04bbcad7b2223"
+    },
+    {
+      "path": "nodes/riraw-node-786.json",
+      "sha256": "896d5c08b72df924323d4a09f9351eb0978cab8982eac162aefdef4d74ca4424"
+    },
+    {
+      "path": "nodes/riraw-node-787.json",
+      "sha256": "f899e888c5af18bf182c3aeddcd3b6db6b37346faca87b523e1b49ba7346da9e"
+    },
+    {
+      "path": "nodes/riraw-node-788.json",
+      "sha256": "8120e0543012655901acb6b39b44bbcaa1405a34af437ab816f297c6fcb0c5c7"
+    },
+    {
+      "path": "nodes/riraw-node-789.json",
+      "sha256": "7fd5695f3475e47063c9a885e3f3ad0d63259cc204004e38f6b7813dd2fcdd0c"
+    },
+    {
+      "path": "nodes/riraw-node-790.json",
+      "sha256": "a291f3093f68dedc31e328a2f261bcfa3d8f4b5a5bf06e0bdae15119cf76c624"
+    },
+    {
+      "path": "nodes/riraw-node-791.json",
+      "sha256": "7a79954e460ac92bdec787a67b75858e010e403c2f4bd203ce4903322771ae55"
+    },
+    {
+      "path": "nodes/riraw-node-792.json",
+      "sha256": "a82fb3ffd75011b4d0b213d14479ab7cb4c730b7f9b40d8dea379aedbe60b21b"
+    },
+    {
+      "path": "nodes/riraw-node-793.json",
+      "sha256": "196bee8e0e66bd418b12e5a954304cafbaa74795c6218fc9623e69dab2bbb3e4"
+    },
+    {
+      "path": "nodes/riraw-node-794.json",
+      "sha256": "6b018eef0f4008ca5fbf9186c76ddb84ac70fe97360131ae3856c03e305be91b"
+    },
+    {
+      "path": "nodes/riraw-node-795.json",
+      "sha256": "13ea22e7e3e9e8eb10fd1ae91971696c94c1ba3b00f6e90c0da23cbbd4d4b989"
+    },
+    {
+      "path": "nodes/riraw-node-796.json",
+      "sha256": "359b3072effe226c060c43da67523a11c8ca35db4f051679a740113affa20f4d"
+    },
+    {
+      "path": "nodes/riraw-node-797.json",
+      "sha256": "971cbcf0a94f13ff241e7103a5277a50431f9319065ed93ba99f62bf4848f80d"
+    },
+    {
+      "path": "nodes/riraw-node-798.json",
+      "sha256": "03f3240e7453efc2f2157fa97826422caa21abdaf7da860d0546ed930083ed6d"
+    },
+    {
+      "path": "nodes/riraw-node-799.json",
+      "sha256": "5ce74839b64fb456e368d2265d28426a90e40cd9df6cb507f3d1142aca3cfc58"
+    },
+    {
+      "path": "nodes/riraw-node-800.json",
+      "sha256": "72f4dd3e066328b51208e9576ea4f8c766561cb2f6e97d172ee667fe0e74c49f"
+    },
+    {
+      "path": "nodes/riraw-node-801.json",
+      "sha256": "9eb427f41c967a74f5a4dfc46652556e89f817b172da68b11eb085ebab817b72"
+    },
+    {
+      "path": "nodes/riraw-node-802.json",
+      "sha256": "fa3b6555d694c78b8e21dffee74f5563b1104771835b4b444540647aa047acb8"
+    },
+    {
+      "path": "nodes/riraw-node-803.json",
+      "sha256": "956dacd0afe61babbb8ed10aad2ce8577c0d699bf10461bc9a1a70cef834d1c6"
+    },
+    {
+      "path": "nodes/riraw-node-804.json",
+      "sha256": "6f95429627ceefda4ce5a35d3b0431a3234d3d8b0b2c9811878f79a05d47e1ad"
+    },
+    {
+      "path": "nodes/riraw-node-805.json",
+      "sha256": "640981e438bfff78d0fe1ee8f1a9d31663c114b8eaecf8bac62c1831a8ed923b"
+    },
+    {
+      "path": "nodes/riraw-node-806.json",
+      "sha256": "4f335e01d22263d934eb86e134ca50543a187a71361791b12955acf17b9d0cba"
+    },
+    {
+      "path": "nodes/riraw-node-807.json",
+      "sha256": "708e5550b17031a2a7d45387fe6be65737832c823fd24c4044bb1adf2a2341f7"
+    },
+    {
+      "path": "nodes/riraw-node-808.json",
+      "sha256": "c4fc01bca96333f1a732ac0abf4b4a11ad88c33d166a9af1dd1d1b00f03d3c6a"
+    },
+    {
+      "path": "nodes/riraw-node-809.json",
+      "sha256": "ecdfbed57d03fcfb5b2261bb35060484e161a83bef9ef4d6cad0c882e699cd22"
+    },
+    {
+      "path": "nodes/riraw-node-810.json",
+      "sha256": "202fe134916f30b8bf659a31d63af0fc2a31654391e010881b973416d5116caf"
+    },
+    {
+      "path": "nodes/riraw-node-811.json",
+      "sha256": "5ba133534526c13cd86b57205cd44c4b7c0430a0bcefae18ca6d4933a2de4ca5"
+    },
+    {
+      "path": "nodes/riraw-node-812.json",
+      "sha256": "6fb48efd1c4b90b56dd796a2b0b4ce5a23eac173d46909f8a943980467009f54"
+    },
+    {
+      "path": "nodes/riraw-node-813.json",
+      "sha256": "d724fd3cf93d75d5799fbb7869ef86d5f36fa2abd75e56961a0125d7ac30349a"
+    },
+    {
+      "path": "nodes/riraw-node-814.json",
+      "sha256": "4568900aebc63955b10ab8a00d7afa4860b05672a2d025fa4111bb126539b9df"
+    },
+    {
+      "path": "nodes/riraw-node-815.json",
+      "sha256": "1b6e3b07ae36ed823f6f34418eee1e2106e99134c2e811d9cb61b567da642faa"
+    },
+    {
+      "path": "nodes/riraw-node-816.json",
+      "sha256": "84133ca7408f08782fb36a4d6e6efc959e986ef92d10fedadd1f49f492f57e0f"
+    },
+    {
+      "path": "nodes/riraw-node-817.json",
+      "sha256": "95db159cb791db0118f0565c2fb548aec3eb6830f58bbb3da20a2a80b44c75f6"
+    },
+    {
+      "path": "nodes/riraw-node-818.json",
+      "sha256": "b17967d465869df0bd18c21134e8376257e5c4cb220dcd38be87234058bd4f0b"
+    },
+    {
+      "path": "nodes/riraw-node-819.json",
+      "sha256": "1108ccc0a973ae36e680685869a3e4b783ae6e5e0fcc79cf839bac89971d9c7a"
+    },
+    {
+      "path": "nodes/riraw-node-820.json",
+      "sha256": "da5fad51abd24f69fe7142e492eda6f676af47fb1a835ccfa05f9950b2e467ea"
+    },
+    {
+      "path": "promoter-verdict.json",
+      "sha256": "8f9a88f0a8a8e43f97f83dea2a083a8485aa4be0a14fed0c338b4401375be685"
+    },
+    {
+      "path": "public-reader-results.json",
+      "sha256": "27195578808ea6bcfe59ca1d288f92953b7b230fca439cd68170f59d4f46986c"
+    },
+    {
+      "path": "rollback-retraction-results.json",
+      "sha256": "f7d897061816bef5fea4569361697d3cb78297c0a047c850bd9da255e6221ca4"
+    },
+    {
+      "path": "sentinel-public-risk.json",
+      "sha256": "d091d2983f6c834fee6cccec3c0bd421ea12a732e26ce3e87f4f2e77dec31505"
+    },
+    {
+      "path": "stale-language-sweep.json",
+      "sha256": "7e066f649914bc0a2b01cf10c49c642822678cb6ec92fb168a75c8911ca75314"
+    }
+  ]
+}
