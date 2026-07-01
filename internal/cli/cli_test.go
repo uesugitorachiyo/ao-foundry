@@ -6163,6 +6163,59 @@ func TestComplexRepoNodeExecuteWritesNodeRecordAndRunLink(t *testing.T) {
 	}
 }
 
+func TestComplexRepoNodeExecuteRequiresMatchingTargetRepo(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "gate"), true, true, "safe_to_execute:true", nil)
+	nodeGatePath := filepath.Join(dir, "complex-node-gate.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"complex-repo", "node-gate", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--foundry-import", artifacts["foundry_import"],
+		"--candidate", artifacts["candidate"],
+		"--rollback", artifacts["rollback"],
+		"--out", nodeGatePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("node gate failed: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	gate := readObjectFixture(t, nodeGatePath)
+	gate["target_factory_repo"] = "ao-foundry"
+	writeJSONFixtureForTest(t, nodeGatePath, gate)
+
+	executeArgs := []string{
+		"complex-repo", "node", "execute",
+		"--node-gate", nodeGatePath,
+		"--node-record-out", filepath.Join(dir, "node-record.json"),
+		"--run-link-out", filepath.Join(dir, "run-link.json"),
+		"--node-class", "docs-only node",
+		"--scope", "factory/complex-repo-mutation-rehearsal/00-docs-intake",
+		"--summary", "First bounded docs-only intake node.",
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run(executeArgs, &stdout, &stderr)
+	if code == 0 || !strings.Contains(stderr.String(), "--repo-id matching target_factory_repo") {
+		t.Fatalf("missing repo-id must block: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run(append(append([]string{}, executeArgs...), "--repo-id", "ao-atlas"), &stdout, &stderr)
+	if code == 0 || !strings.Contains(stderr.String(), "repo mismatch") {
+		t.Fatalf("wrong repo-id must block: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run(append(append([]string{}, executeArgs...), "--repo-id", "ao-foundry"), &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("matching repo-id should execute: code=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	record := readObjectFixture(t, filepath.Join(dir, "node-record.json"))
+	if record["target_factory_repo"] != "ao-foundry" {
+		t.Fatalf("node record must preserve target repo: %#v", record)
+	}
+}
+
 func TestComplexRepoNodeExecuteBlocksUnsafeNodeGate(t *testing.T) {
 	dir := t.TempDir()
 	artifacts := writeComplexRepoNodeGateArtifacts(t, filepath.Join(dir, "gate"), false, false, "safe_to_execute:false", nil)
