@@ -7231,6 +7231,435 @@ func TestFullyUnsupervisedFirstNonPlanningStopGateBlocksPromotionClaim(t *testin
 	}
 }
 
+func TestFullyUnsupervisedFirstNonPlanningFinalClosurePromotesCompletedMission(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, nil)
+	outPath := filepath.Join(dir, "final-rollup.json")
+	missionPath := filepath.Join(dir, "mission-completion.json")
+	promoterPath := filepath.Join(dir, "promoter-verdict.json")
+	commandPath := filepath.Join(dir, "command-readback.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--stop-gates-root", artifacts["stop_gates_root"],
+		"--mission-completion-out", missionPath,
+		"--promoter-out", promoterPath,
+		"--command-readback-out", commandPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("final closure returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "promoted" ||
+		rollup["safe_to_promote"] != true ||
+		rollup["fully_unsupervised_complex_mutation_live_proven"] != true ||
+		rollup["highest_proven_live_class"] != "fully_unsupervised_complex_mutation" ||
+		rollup["next_denied_class"] != "RSI" ||
+		rollup["rsi"] != "denied" {
+		t.Fatalf("completed 26-node mission should promote fully_unsupervised only: %#v", rollup)
+	}
+	mission := readObjectFixture(t, missionPath)
+	if classGateNumber(mission, "total_nodes") != 26 ||
+		classGateNumber(mission, "completed_nodes") != 26 ||
+		classGateNumber(mission, "blocked_nodes") != 0 ||
+		classGateNumber(mission, "ready_nodes") != 0 ||
+		mission["all_node_prs_merged"] != true ||
+		mission["all_ci_passed"] != true ||
+		mission["every_stop_gate_cleared"] != true {
+		t.Fatalf("mission completion evidence must summarize completed closure: %#v", mission)
+	}
+	promoter := readObjectFixture(t, promoterPath)
+	if promoter["verdict"] != "promote" ||
+		promoter["fully_unsupervised_complex_mutation_live_proven"] != true ||
+		promoter["rsi"] != "denied" {
+		t.Fatalf("promoter verdict should promote only fully_unsupervised: %#v", promoter)
+	}
+	command := readObjectFixture(t, commandPath)
+	if command["decision"] != "promote_fully_unsupervised_complex_mutation" ||
+		command["next_denied_class"] != "RSI" ||
+		command["rsi"] != "denied" {
+		t.Fatalf("command readback should agree with promotion and RSI denial: %#v", command)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningFinalClosureReevaluatesDeniedFinalSynthesis(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, func(paths map[string]string) {
+		final := readObjectFixture(t, paths["final_synthesis"])
+		final["fully_unsupervised_complex_mutation_live_proven"] = false
+		final["next_denied_class"] = "fully_unsupervised_complex_mutation"
+		writeJSONFixtureForTest(t, paths["final_synthesis"], final)
+	})
+	outPath := filepath.Join(dir, "final-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--stop-gates-root", artifacts["stop_gates_root"],
+		"--final-synthesis", artifacts["final_synthesis"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("final closure returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "promoted" || rollup["safe_to_promote"] != true {
+		t.Fatalf("completed mission must be re-evaluated instead of blindly preserving final synthesis denial: %#v", rollup)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningFinalClosureBlocksMissingNodeEvidence(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, func(paths map[string]string) {
+		os.Remove(filepath.Join(paths["run_links_root"], "node-07", "run-link.json"))
+	})
+	outPath := filepath.Join(dir, "final-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--stop-gates-root", artifacts["stop_gates_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked final closure should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		rollup["safe_to_promote"] != false ||
+		!objectStringSliceContains(rollup, "blockers", "run-link missing for node-07") {
+		t.Fatalf("missing run-link must block with exact reason: %#v", rollup)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningFinalClosureBlocksMissingStopGateEvidence(t *testing.T) {
+	dir := t.TempDir()
+	artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, func(paths map[string]string) {
+		os.Remove(filepath.Join(paths["stop_gates_root"], "stop-gate-03-node-02-to-node-03", "stop-gate-clearance.json"))
+	})
+	outPath := filepath.Join(dir, "final-rollup.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+		"--workgraph", artifacts["workgraph"],
+		"--run-links-root", artifacts["run_links_root"],
+		"--stop-gates-root", artifacts["stop_gates_root"],
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("blocked final closure should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	rollup := readObjectFixture(t, outPath)
+	if rollup["status"] != "blocked" ||
+		!objectStringSliceContains(rollup, "blockers", "stop-gate clearance missing for stop-gate-03-node-02-to-node-03") {
+		t.Fatalf("missing stop-gate must block with exact reason: %#v", rollup)
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningFinalClosureBlocksMissingCIPRAndForbiddenSurfaces(t *testing.T) {
+	tests := []struct {
+		name    string
+		mutate  func(map[string]string)
+		blocker string
+	}{
+		{
+			name: "missing CI",
+			mutate: func(paths map[string]string) {
+				path := filepath.Join(paths["run_links_root"], "node-04", "run-link.json")
+				runLink := readObjectFixture(t, path)
+				evidence := runLink["evidence"].(map[string]any)
+				evidence["ci"] = "failed"
+				writeJSONFixtureForTest(t, path, runLink)
+			},
+			blocker: "run-link node-04 requires passed CI evidence",
+		},
+		{
+			name: "missing PR",
+			mutate: func(paths map[string]string) {
+				path := filepath.Join(paths["run_links_root"], "node-05", "run-link.json")
+				runLink := readObjectFixture(t, path)
+				evidence := runLink["evidence"].(map[string]any)
+				delete(evidence, "pr")
+				writeJSONFixtureForTest(t, path, runLink)
+			},
+			blocker: "run-link node-05 requires PR and merge evidence",
+		},
+		{
+			name: "forbidden surface",
+			mutate: func(paths map[string]string) {
+				path := filepath.Join(paths["gates_root"], "node-06-gate.json")
+				gate := readObjectFixture(t, path)
+				gate["executes_work"] = true
+				writeJSONFixtureForTest(t, path, gate)
+			},
+			blocker: "node gate node-06 expands forbidden authority",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			dir := t.TempDir()
+			artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, tt.mutate)
+			outPath := filepath.Join(dir, "final-rollup.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--stop-gates-root", artifacts["stop_gates_root"],
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked final closure should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			rollup := readObjectFixture(t, outPath)
+			if rollup["status"] != "blocked" || !objectStringSliceContains(rollup, "blockers", tt.blocker) {
+				t.Fatalf("expected blocker %q, got %#v", tt.blocker, rollup)
+			}
+		})
+	}
+}
+
+func TestFullyUnsupervisedFirstNonPlanningFinalClosureBlocksRSIClaimAndCommandDisagreement(t *testing.T) {
+	tests := []struct {
+		name    string
+		mutate  func(map[string]string)
+		blocker string
+	}{
+		{
+			name: "RSI claim",
+			mutate: func(paths map[string]string) {
+				path := filepath.Join(paths["gates_root"], "node-08-gate.json")
+				gate := readObjectFixture(t, path)
+				gate["rsi"] = "proven"
+				writeJSONFixtureForTest(t, path, gate)
+			},
+			blocker: "node gate node-08 must keep RSI denied",
+		},
+		{
+			name: "command disagreement",
+			mutate: func(paths map[string]string) {
+				path := filepath.Join(paths["stop_gates_root"], "stop-gate-09-node-08-to-node-09", "command-readback.json")
+				readback := readObjectFixture(t, path)
+				readback["safe_to_continue"] = false
+				writeJSONFixtureForTest(t, path, readback)
+			},
+			blocker: "Command readback must agree for stop-gate-09-node-08-to-node-09",
+		},
+		{
+			name: "missing promoter",
+			mutate: func(paths map[string]string) {
+				os.Remove(filepath.Join(paths["stop_gates_root"], "stop-gate-10-node-09-to-node-10", "promoter-verdict.json"))
+			},
+			blocker: "Promoter verdict missing for stop-gate-10-node-09-to-node-10",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			dir := t.TempDir()
+			artifacts := writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t, dir, tt.mutate)
+			outPath := filepath.Join(dir, "final-rollup.json")
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{
+				"fully-unsupervised", "first-non-planning", "final-closure", "evaluate",
+				"--workgraph", artifacts["workgraph"],
+				"--run-links-root", artifacts["run_links_root"],
+				"--stop-gates-root", artifacts["stop_gates_root"],
+				"--out", outPath,
+			}, &stdout, &stderr)
+			if code != 0 {
+				t.Fatalf("blocked final closure should still emit output, got %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+			}
+			rollup := readObjectFixture(t, outPath)
+			if rollup["status"] != "blocked" || !objectStringSliceContains(rollup, "blockers", tt.blocker) {
+				t.Fatalf("expected blocker %q, got %#v", tt.blocker, rollup)
+			}
+		})
+	}
+}
+
+func writeFullyUnsupervisedFirstNonPlanningFinalClosureArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
+	t.Helper()
+	paths := map[string]string{
+		"workgraph":         filepath.Join(dir, "workgraph-after-complete.json"),
+		"run_links_root":    filepath.Join(dir, "run-links"),
+		"gates_root":        filepath.Join(dir, "node-gates"),
+		"stop_gates_root":   filepath.Join(dir, "stop-gates"),
+		"final_synthesis":   filepath.Join(dir, "final-synthesis.json"),
+		"node_records_root": filepath.Join(dir, "node-records"),
+	}
+	for _, key := range []string{"run_links_root", "gates_root", "stop_gates_root", "node_records_root"} {
+		if err := os.MkdirAll(paths[key], 0o755); err != nil {
+			t.Fatalf("mkdir %s: %v", paths[key], err)
+		}
+	}
+	nodes := []any{}
+	for i := 0; i < 26; i++ {
+		nodeID := fmt.Sprintf("node-%02d", i)
+		taskID := nodeID + "-task"
+		scope := fmt.Sprintf("factory/fully-unsupervised-first-non-planning/%02d-%s", i, nodeID)
+		nodes = append(nodes, map[string]any{
+			"id":     nodeID,
+			"status": "completed",
+			"factory_task": map[string]any{
+				"id":                  taskID,
+				"target_factory_repo": "ao-foundry",
+				"mutation_class":      "complex_repo_mutation",
+				"write_scope":         []any{scope},
+				"rollback_scope":      []any{scope},
+				"authority_boundary":  "blocked_until_predecessor_terminal_evidence_and_stop_gate_clear",
+			},
+			"dependencies": func() []any {
+				if i == 0 {
+					return []any{}
+				}
+				return []any{fmt.Sprintf("node-%02d", i-1)}
+			}(),
+			"blockers": []any{},
+		})
+		gatePath := filepath.Join(paths["gates_root"], nodeID+"-gate.json")
+		writeJSONFixtureForTest(t, gatePath, map[string]any{
+			"schema_version":                      "ao.foundry.complex-repo-mutation-node-gate.v0.1",
+			"status":                              "ready",
+			"mutation_class":                      "complex_repo_mutation",
+			"highest_proven_live_class":           "complex_repo_mutation",
+			"next_denied_class":                   "fully_unsupervised_complex_mutation",
+			"workgraph_id":                        "fully-unsupervised-complex-first-non-planning-workgraph-test",
+			"node_id":                             nodeID,
+			"task_id":                             taskID,
+			"safe_to_request":                     true,
+			"safe_to_execute":                     true,
+			"live_execution_authority":            true,
+			"schedules_work":                      false,
+			"executes_work":                       false,
+			"approves_work":                       false,
+			"mutates_repositories":                false,
+			"fully_unsupervised_complex_mutation": "denied",
+			"rsi":                                 "denied",
+			"required_gates": []any{
+				"atlas_blueprint_import",
+				"sentinel_monitoring",
+				"kill_switch",
+				"promoter_no_promotion",
+				"command_readback",
+				"ci_failure_stop",
+				"rollback_escalation",
+				"evidence_closure",
+				"public_claim_guard",
+				"rsi_denial_boundary",
+			},
+		})
+		runLinkDir := filepath.Join(paths["run_links_root"], nodeID)
+		if err := os.MkdirAll(runLinkDir, 0o755); err != nil {
+			t.Fatalf("mkdir run-link dir: %v", err)
+		}
+		writeJSONFixtureForTest(t, filepath.Join(runLinkDir, "run-link.json"), map[string]any{
+			"contract_version": atlasRunLinkSchema,
+			"task_id":          taskID,
+			"status":           "completed",
+			"evidence": map[string]any{
+				"changed_file": scope + "/node-record.json",
+				"ci":           "passed",
+				"merge_commit": fmt.Sprintf("%040d", i+1),
+				"node_gate":    gatePath,
+				"pr":           fmt.Sprintf("https://github.com/uesugitorachiyo/ao-foundry/pull/%d", 134+i),
+			},
+		})
+		writeJSONFixtureForTest(t, filepath.Join(paths["node_records_root"], nodeID+".json"), map[string]any{
+			"schema":         "ao.atlas.complex-repo-mutation-node-record.v0.1",
+			"node_id":        nodeID,
+			"task_id":        taskID,
+			"status":         "completed",
+			"mutation_class": "complex_repo_mutation",
+			"node_class":     "test node",
+			"scope":          scope,
+			"class_state": map[string]any{
+				"complex_repo_mutation_live_proven":   "true",
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+			},
+			"authority_boundaries": map[string]any{
+				"schedules_work":                      false,
+				"approves_work":                       false,
+				"executes_providers":                  false,
+				"direct_main_mutation_allowed":        false,
+				"release_or_publish_allowed":          false,
+				"credential_or_secret_access_allowed": false,
+			},
+		})
+		if i > 0 {
+			prev := fmt.Sprintf("node-%02d", i-1)
+			stopID := fmt.Sprintf("stop-gate-%02d-%s-to-%s", i, prev, nodeID)
+			stopDir := filepath.Join(paths["stop_gates_root"], stopID)
+			if err := os.MkdirAll(stopDir, 0o755); err != nil {
+				t.Fatalf("mkdir stop-gate dir: %v", err)
+			}
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "sentinel-verdict.json"), map[string]any{
+				"schema_version":                      "ao.sentinel.fully-unsupervised-first-non-planning-stop-gate-verdict.v0.1",
+				"status":                              "clear",
+				"node_id":                             prev,
+				"stop_gate_id":                        stopID,
+				"forbidden_surface_result":            "clear",
+				"hold":                                false,
+				"kill_switch":                         false,
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "promoter-verdict.json"), map[string]any{
+				"schema_version":                      "ao.promoter.fully-unsupervised-first-non-planning-stop-gate-verdict.v0.1",
+				"status":                              "accepted",
+				"verdict":                             "no_promotion",
+				"node_id":                             prev,
+				"stop_gate_id":                        stopID,
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "command-readback.json"), map[string]any{
+				"schema_version":                      "ao.command.fully-unsupervised-first-non-planning-stop-gate-readback.v0.1",
+				"status":                              "accepted",
+				"node_id":                             prev,
+				"stop_gate_id":                        stopID,
+				"safe_to_continue":                    true,
+				"no_reprompt_proof":                   true,
+				"public_claim_guard":                  "passed",
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+			})
+			writeJSONFixtureForTest(t, filepath.Join(stopDir, "stop-gate-clearance.json"), map[string]any{
+				"schema_version":                      firstNonPlanningStopGateClearanceSchema,
+				"status":                              "ready",
+				"safe_to_continue":                    true,
+				"stop_gate_id":                        stopID,
+				"after_node":                          prev,
+				"before_node":                         nodeID,
+				"fully_unsupervised_complex_mutation": "denied",
+				"rsi":                                 "denied",
+			})
+		}
+	}
+	writeJSONFixtureForTest(t, paths["workgraph"], map[string]any{
+		"contract_version": "ao.atlas.workgraph.v0.1",
+		"id":               "fully-unsupervised-complex-first-non-planning-workgraph-test",
+		"nodes":            nodes,
+	})
+	writeJSONFixtureForTest(t, paths["final_synthesis"], map[string]any{
+		"schema":             "ao.atlas.private-first-non-planning-final-evidence-synthesis.v0.1",
+		"planned_node_count": 26,
+		"fully_unsupervised_complex_mutation_live_proven": false,
+		"highest_proven_live_class":                       "complex_repo_mutation",
+		"next_denied_class":                               "fully_unsupervised_complex_mutation",
+		"rsi":                                             "denied",
+	})
+	if mutate != nil {
+		mutate(paths)
+	}
+	return paths
+}
+
 func writeFullyUnsupervisedFirstNonPlanningArtifacts(t *testing.T, dir string, mutate func(map[string]string)) map[string]string {
 	t.Helper()
 	scope := "factory/fully-unsupervised-first-non-planning/00-unsupervised-mission-ticket"
