@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.public.sentinel-public-risk.v0.1",
+  "result": "clear_for_tracked_narrow_evidence_hold_for_exact_broad_RSI_claim",
+  "public_risk_hold_for_exact_candidate": true,
+  "reason": "Exact candidate remains overbroad and can be misread as unrestricted self-modification or policy-changing autonomy."
+}

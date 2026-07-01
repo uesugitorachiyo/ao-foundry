@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.public.retraction-rehearsal.v0.1",
+  "result": "accepted_for_hypothetical_retraction_dry_run",
+  "publication_event_happened": false,
+  "retraction_steps": [
+    "identify exact claim artifact",
+    "revert tracked wording by PR",
+    "publish correction only after Covenant and Architecture approval",
+    "record Sentinel Promoter Command readback"
+  ],
+  "rollback_verified_for_tracked_artifacts": true,
+  "broad_RSI_publication_ready": false
+}

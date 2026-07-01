@@ -1,0 +1,40 @@
+{
+  "schema": "ao.foundry.public.broad-rsi-reproducibility-retraction-final-rollup.v0.1",
+  "status": "narrow_public_safe_reproducibility_and_retraction_evidence_proven_broad_denied",
+  "completed_nodes": 186,
+  "total_nodes": 186,
+  "all_generated_nodes_consumed": true,
+  "tracked_public_evidence_path": "docs/evidence/broad-rsi-public-reproducibility-and-retraction/",
+  "public_safe_evidence_index": "docs/evidence/broad-rsi-public-reproducibility-and-retraction/evidence-index.json",
+  "reproducibility_runbook": "docs/evidence/broad-rsi-public-reproducibility-and-retraction/README.md",
+  "public_reader_result": "denied_exact_broad_RSI_candidate_approved_narrow_denial_wording",
+  "adversarial_wording_result": "failed_for_exact_candidate_overbreadth",
+  "overbreadth_result": "overbroad_exact_candidate",
+  "retraction_rehearsal_result": "accepted_for_hypothetical_retraction_dry_run",
+  "covenant_claim_publication_result": "denied_exact_broad_RSI_claim_publication_approved_narrow_public_reproducibility_evidence",
+  "architecture_wording_result": "denied_exact_broad_RSI_wording_approved_narrow_reproducibility_denial_wording",
+  "sentinel_public_risk_result": "clear_for_tracked_narrow_evidence_hold_for_exact_broad_RSI_claim",
+  "promoter_verdict": "promote_narrow_public_safe_reproducibility_and_retraction_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_broad_RSI_reproducibility_and_retraction_evidence_proven_broad_RSI_denied",
+  "broad_RSI": "denied",
+  "narrow_result": "public_safe_broad_RSI_reproducibility_and_retraction_evidence",
+  "highest_proven_live_class": "public_safe_broad_RSI_reproducibility_and_retraction_evidence",
+  "next_denied_class": "broad_RSI",
+  "exact_remaining_blockers": [
+    "independent public-reader does not approve the exact broad_RSI candidate wording",
+    "adversarial wording review flags exact candidate overbreadth",
+    "Covenant denies exact broad_RSI claim publication while accepting narrow tracked evidence",
+    "Architecture denies exact broad_RSI wording while accepting narrow tracked evidence",
+    "Sentinel keeps a public-risk hold for the exact broad_RSI claim"
+  ],
+  "boundaries": {
+    "broad_RSI_publication": "denied",
+    "unrestricted_self_modification": "denied",
+    "hidden_instruction_mutation": "denied",
+    "policy_changing_autonomy": "denied",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+    "credentials_providers_releases_deployments_tags_uploads_dependency_updates": "denied",
+    "direct_main_mutation": "denied",
+    "concurrent_mutation": "denied"
+  }
+}

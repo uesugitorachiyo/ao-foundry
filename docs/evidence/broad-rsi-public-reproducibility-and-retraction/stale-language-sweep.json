@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.public.stale-language-sweep.v0.1",
+  "result": "passed_for_tracked_denial_wording",
+  "broad_RSI_public_claim_detected": false,
+  "blocked_unqualified_claims": [
+    "broad_RSI is proven",
+    "AO has unrestricted self-modification",
+    "AO can change hidden instructions",
+    "AO can change policy autonomously"
+  ],
+  "reviewed_artifacts": [
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/README.md",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/evidence-index.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/review-rubrics.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/review-results.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/covenant-claim-publication.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/architecture-wording-agreement.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/retraction-rehearsal.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/sentinel-public-risk.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/promoter-verdict.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/command-readback.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/stale-language-sweep.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/final-rollup.json"
+  ]
+}

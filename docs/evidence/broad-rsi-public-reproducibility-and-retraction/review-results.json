@@ -1,0 +1,23 @@
+{
+  "schema": "ao.foundry.public.broad-rsi-review-results.v0.1",
+  "public_reader_result": "denied_exact_broad_RSI_candidate_approved_narrow_denial_wording",
+  "adversarial_wording_result": "failed_for_exact_candidate_overbreadth",
+  "overbreadth_result": "overbroad_exact_candidate",
+  "overbreadth_findings": [
+    "exact candidate says has proven broad_RSI, which can be read as public proof rather than a gated claim request",
+    "exact candidate does not explicitly exclude unrestricted self-modification",
+    "exact candidate does not explicitly exclude hidden instruction mutation or policy-changing autonomy",
+    "tracked evidence proves reproducible denial/readback, not broad_RSI itself"
+  ],
+  "remediation_result": "narrow wording allowed: public-safe broad_RSI reproducibility and retraction evidence completed; broad_RSI remains denied",
+  "boundaries": {
+    "broad_RSI_publication": "denied",
+    "unrestricted_self_modification": "denied",
+    "hidden_instruction_mutation": "denied",
+    "policy_changing_autonomy": "denied",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+    "credentials_providers_releases_deployments_tags_uploads_dependency_updates": "denied",
+    "direct_main_mutation": "denied",
+    "concurrent_mutation": "denied"
+  }
+}

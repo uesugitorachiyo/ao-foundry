@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.public.command-readback.v0.1",
+  "readback": "public_safe_broad_RSI_reproducibility_and_retraction_evidence_proven_broad_RSI_denied",
+  "highest_proven_live_class": "public_safe_broad_RSI_reproducibility_and_retraction_evidence",
+  "next_denied_class": "broad_RSI",
+  "broad_RSI": "denied",
+  "boundaries": {
+    "broad_RSI_publication": "denied",
+    "unrestricted_self_modification": "denied",
+    "hidden_instruction_mutation": "denied",
+    "policy_changing_autonomy": "denied",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+    "credentials_providers_releases_deployments_tags_uploads_dependency_updates": "denied",
+    "direct_main_mutation": "denied",
+    "concurrent_mutation": "denied"
+  }
+}

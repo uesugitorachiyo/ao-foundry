@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.public.architecture-wording-agreement.v0.1",
+  "exact_claim_candidate": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+  "result": "denied_exact_broad_RSI_wording_approved_narrow_reproducibility_denial_wording",
+  "approval_for_exact_wording": false,
+  "allowed_narrow_wording": "Public-safe broad_RSI reproducibility and retraction evidence is tracked; broad_RSI remains denied.",
+  "reason": "Exact wording says broad_RSI is proven and remains overbroad against tracked evidence."
+}
