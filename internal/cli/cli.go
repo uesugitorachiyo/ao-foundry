@@ -4976,6 +4976,9 @@ func loadComplexRepoMutationNodeGate(path string) (ComplexRepoMutationNodeGate, 
 
 func buildComplexNodeRecord(gate ComplexRepoMutationNodeGate, nodeClass, scope, summary string) map[string]any {
 	cleanScope := filepath.ToSlash(strings.TrimSpace(scope))
+	highestProven := classGateFirstNonEmpty(gate.HighestProvenLiveClass, "unknown")
+	fullyUnsupervised := classGateFirstNonEmpty(gate.FullyUnsupervisedComplexMutation, "denied")
+	rsi := classGateFirstNonEmpty(gate.RSI, "denied")
 	return map[string]any{
 		"schema":         "ao.atlas.complex-repo-mutation-node-record.v0.1",
 		"node_id":        gate.NodeID,
@@ -4986,7 +4989,8 @@ func buildComplexNodeRecord(gate ComplexRepoMutationNodeGate, nodeClass, scope, 
 		"scope":          cleanScope,
 		"summary":        strings.TrimSpace(summary),
 		"accepted_evidence": []string{
-			"live_rehearsal:multi_repo_low_risk",
+			"mutation_class:" + gate.MutationClass,
+			"highest_proven_live_class:" + highestProven,
 			"safe_to_execute:true",
 			"node_id:" + gate.NodeID,
 		},
@@ -5000,9 +5004,9 @@ func buildComplexNodeRecord(gate ComplexRepoMutationNodeGate, nodeClass, scope, 
 			"public_claim_broadening_allowed":     false,
 		},
 		"class_state": map[string]string{
-			"complex_repo_mutation_live_proven":   "false",
-			"fully_unsupervised_complex_mutation": "denied",
-			"rsi":                                 "denied",
+			"complex_repo_mutation_live_proven":   fmt.Sprint(highestProven == "complex_repo_mutation"),
+			"fully_unsupervised_complex_mutation": fullyUnsupervised,
+			"rsi":                                 rsi,
 		},
 		"rollback": map[string]string{
 			"scope":  cleanScope,
