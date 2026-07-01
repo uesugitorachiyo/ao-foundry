@@ -1,0 +1,33 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-candidate-wordings.v0.1",
+  "candidates": [
+    {
+      "id": "candidate-1-strongest-broad-rsi",
+      "label": "strongest broad_RSI wording",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack."
+    },
+    {
+      "id": "candidate-2-bounded-public-rsi-evidence",
+      "label": "bounded public RSI evidence wording",
+      "text": "AO has public-safe tracked evidence for bounded recursive-improvement claim review, reproducibility, and retraction readiness."
+    },
+    {
+      "id": "candidate-3-governed-recursive-improvement-evidence",
+      "label": "governed recursive improvement evidence wording",
+      "text": "AO has governed evidence that bounded recursive-improvement claims can be reviewed, challenged, retracted, and read back without broad authority expansion."
+    },
+    {
+      "id": "candidate-4-autonomous-improvement-evidence",
+      "label": "autonomous improvement evidence wording",
+      "text": "AO has evidence for bounded autonomous improvement review across tracked artifacts, with unrestricted self-modification and policy-changing autonomy denied."
+    },
+    {
+      "id": "candidate-5-conservative-readback-evidence-only",
+      "label": "conservative readback/evidence-only wording",
+      "text": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied."
+    }
+  ],
+  "approved_candidate_id": "candidate-5-conservative-readback-evidence-only",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "stronger_candidates_denied": true
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-architecture-result.v0.1",
+  "result": "approved_conservative_readback_evidence_only_wording_broad_RSI_denied",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "wording_constraints": [
+    "evidence-only",
+    "bounded",
+    "no broad_RSI phrase",
+    "no authority expansion",
+    "stronger claims remain denied"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-sentinel-result.v0.1",
+  "result": "clear_for_conservative_readback_wording_hold_for_broad_RSI",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "public_risk_hold_for_stronger_candidates": true
+}

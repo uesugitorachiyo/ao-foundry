@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-retraction-wording.v0.1",
+  "result": "accepted_for_approved_conservative_wording",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "retraction_steps": [
+    "open PR reverting approved wording evidence",
+    "restore prior evidence-only denial wording",
+    "record Sentinel Promoter Command readback after retraction"
+  ],
+  "publication_event_happened": false
+}

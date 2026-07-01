@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-public-reader-results.v0.1",
+  "results": {
+    "candidate-1-strongest-broad-rsi": "denied: exact phrase implies unrestricted broad claim and overstates tracked evidence",
+    "candidate-2-bounded-public-rsi-evidence": "denied: recursive-improvement phrase remains too close to stronger RSI interpretation without explicit denial wording",
+    "candidate-3-governed-recursive-improvement-evidence": "denied: recursive-improvement wording is clear about gates but still stronger than evidence-only public claim",
+    "candidate-4-autonomous-improvement-evidence": "denied: autonomous improvement wording risks implying operational autonomy beyond claim review evidence",
+    "candidate-5-conservative-readback-evidence-only": "approved: exact wording is evidence-only, bounded, and preserves stronger-claim denial"
+  },
+  "approved_candidate_id": "candidate-5-conservative-readback-evidence-only",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied."
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "ao.foundry.public.rsi-exact-safe-final-rollup.v0.1",
+  "status": "approved_conservative_exact_public_claim_wording_broad_RSI_denied",
+  "completed_nodes": 126,
+  "total_nodes": 126,
+  "all_generated_nodes_consumed": true,
+  "all_candidate_wordings": [
+    {
+      "id": "candidate-1-strongest-broad-rsi",
+      "label": "strongest broad_RSI wording",
+      "text": "AO has proven broad_RSI for public claim publication across the governed AO stack."
+    },
+    {
+      "id": "candidate-2-bounded-public-rsi-evidence",
+      "label": "bounded public RSI evidence wording",
+      "text": "AO has public-safe tracked evidence for bounded recursive-improvement claim review, reproducibility, and retraction readiness."
+    },
+    {
+      "id": "candidate-3-governed-recursive-improvement-evidence",
+      "label": "governed recursive improvement evidence wording",
+      "text": "AO has governed evidence that bounded recursive-improvement claims can be reviewed, challenged, retracted, and read back without broad authority expansion."
+    },
+    {
+      "id": "candidate-4-autonomous-improvement-evidence",
+      "label": "autonomous improvement evidence wording",
+      "text": "AO has evidence for bounded autonomous improvement review across tracked artifacts, with unrestricted self-modification and policy-changing autonomy denied."
+    },
+    {
+      "id": "candidate-5-conservative-readback-evidence-only",
+      "label": "conservative readback/evidence-only wording",
+      "text": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied."
+    }
+  ],
+  "public_reader_results": {
+    "candidate-1-strongest-broad-rsi": "denied: exact phrase implies unrestricted broad claim and overstates tracked evidence",
+    "candidate-2-bounded-public-rsi-evidence": "denied: recursive-improvement phrase remains too close to stronger RSI interpretation without explicit denial wording",
+    "candidate-3-governed-recursive-improvement-evidence": "denied: recursive-improvement wording is clear about gates but still stronger than evidence-only public claim",
+    "candidate-4-autonomous-improvement-evidence": "denied: autonomous improvement wording risks implying operational autonomy beyond claim review evidence",
+    "candidate-5-conservative-readback-evidence-only": "approved: exact wording is evidence-only, bounded, and preserves stronger-claim denial"
+  },
+  "adversarial_wording_results": {
+    "candidate-1-strongest-broad-rsi": "failed: overbroad and implies proven unrestricted class",
+    "candidate-2-bounded-public-rsi-evidence": "failed: recursive-improvement phrase can be read as capability rather than claim-review evidence",
+    "candidate-3-governed-recursive-improvement-evidence": "failed: governed recursive-improvement phrase still risks capability overclaim",
+    "candidate-4-autonomous-improvement-evidence": "failed: autonomous improvement phrase risks authority overclaim",
+    "candidate-5-conservative-readback-evidence-only": "passed: no unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, or provider/release authority implication"
+  },
+  "covenant_result": "approved_conservative_readback_evidence_only_wording_broad_RSI_denied",
+  "architecture_wording_result": "approved_conservative_readback_evidence_only_wording_broad_RSI_denied",
+  "sentinel_public_risk_result": "clear_for_conservative_readback_wording_hold_for_broad_RSI",
+  "promoter_verdict": "promote_exact_safe_public_claim_wording_conservative_readback_evidence_broad_RSI_denied",
+  "command_readback": "exact_safe_public_claim_wording_conservative_readback_evidence_proven_broad_RSI_denied",
+  "retraction_wording_result": "accepted_for_approved_conservative_wording",
+  "stale_language_result": "passed",
+  "approved_exact_wording": "AO has public-safe tracked readback evidence for bounded improvement-claim review and retraction rehearsal; stronger recursive-improvement claims remain denied.",
+  "broad_RSI": "denied",
+  "highest_proven_live_class": "exact_safe_public_claim_wording_conservative_readback_evidence",
+  "next_denied_class": "broad_RSI",
+  "exact_blockers_if_broad_RSI_denied": [
+    "candidate 1 exact broad_RSI wording remains overbroad",
+    "public-reader denies stronger candidates",
+    "adversarial wording denies stronger candidates",
+    "Covenant and Architecture approve only conservative evidence wording",
+    "Sentinel holds stronger public-risk wording"
+  ],
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied"
+}
