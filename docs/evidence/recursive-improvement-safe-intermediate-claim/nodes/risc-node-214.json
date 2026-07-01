@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "node_id": "risc-node-214",
+  "task_id": "risc-node-214-task",
+  "status": "completed",
+  "phase": "Covenant claim-publication packet",
+  "review_role": "Architecture-wording",
+  "candidate_wording_id": "stronger-recursive-improvement-control",
+  "candidate_result": "denied_control",
+  "safe_to_execute": true,
+  "public_safe": true,
+  "evidence_summary": "Covenant claim-publication packet completed for Architecture-wording; wording result denied_control.",
+  "gate_results": {
+    "public_reader": "denies_capability_adjacent_implication",
+    "adversarial_wording": "flags_capability_adjacency",
+    "Covenant": "deny_stronger_recursive_improvement_publication",
+    "Architecture": "deny_stronger_recursive_improvement_wording",
+    "Sentinel": "hold_stronger_recursive_improvement_public_risk",
+    "rollback": "retraction_path_available",
+    "stale_language": "passed",
+    "public_safety": "passed"
+  },
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "stronger recursive-improvement wording remains denied unless exact gates approve",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied"
+  ],
+  "rollback_record": "retract candidate wording before publication if any gate fails"
+}

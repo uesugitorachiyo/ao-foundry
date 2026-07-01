@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "recursive-improvement-safe-intermediate-claim",
+  "completed_nodes": 560,
+  "total_nodes": 560,
+  "class_decision": "public_safe_intermediate_causal_review_claim_evidence_proven",
+  "highest_proven_live_class": "public_safe_intermediate_causal_review_claim_evidence",
+  "previous_highest_proven_live_class": "public_safe_reviewed_causal_chain_boundary_generalization_evidence",
+  "next_denied_class": "broad_RSI",
+  "strongest_approved_wording": "AO has public-safe intermediate causal-review evidence that bounded improvement evidence can guide and constrain later claim review across independent roles; stronger recursive-improvement wording and broad_RSI remain denied.",
+  "candidate_wording_results": "candidate-wording-results.json",
+  "review_role_results": "review-role-results.json",
+  "Covenant": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Architecture": "approve_narrow_intermediate_causal_review_claim_deny_stronger_recursive_improvement_and_broad_RSI",
+  "Sentinel": "clear_narrow_intermediate_causal_review_claim_hold_stronger_recursive_improvement_and_broad_RSI",
+  "Promoter": "promote_public_safe_intermediate_causal_review_claim_evidence_keep_broad_RSI_denied",
+  "Command": "public_safe_intermediate_causal_review_claim_evidence_proven_stronger_recursive_improvement_denied_broad_RSI_denied",
+  "public_reader": "approves safe intermediate causal-review wording and denies stronger controls",
+  "adversarial_wording": "passes safe intermediate wording and denies stronger controls",
+  "rollback_retraction": "available and accepted for narrow wording",
+  "stale_language": "passed",
+  "public_safety": "passed",
+  "broad_RSI": "denied",
+  "stronger_recursive_improvement_wording": "denied",
+  "denied_boundaries": [
+    "unrestricted self-modification denied",
+    "hidden instruction mutation denied",
+    "policy-changing autonomy denied",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion denied"
+  ]
+}

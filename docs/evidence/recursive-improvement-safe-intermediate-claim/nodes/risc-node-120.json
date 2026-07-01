@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "node_id": "risc-node-120",
+  "task_id": "risc-node-120-task",
+  "status": "completed",
+  "phase": "public-reader setup",
+  "review_role": "reproducibility-review",
+  "candidate_wording_id": "exact-broad-rsi-control",
+  "candidate_result": "denied_control",
+  "safe_to_execute": true,
+  "public_safe": true,
+  "evidence_summary": "public-reader setup completed for reproducibility-review; wording result denied_control.",
+  "gate_results": {
+    "public_reader": "denies_overbreadth",
+    "adversarial_wording": "flags_overbreadth",
+    "Covenant": "deny_broad_RSI_claim_publication",
+    "Architecture": "deny_broad_RSI_wording",
+    "Sentinel": "hold_broad_RSI_public_risk",
+    "rollback": "retraction_path_available",
+    "stale_language": "passed",
+    "public_safety": "passed"
+  },
+  "denied_boundaries": [
+    "broad_RSI remains denied",
+    "stronger recursive-improvement wording remains denied unless exact gates approve",
+    "unrestricted self-modification remains denied",
+    "hidden instruction mutation remains denied",
+    "policy-changing autonomy remains denied"
+  ],
+  "rollback_record": "retract candidate wording before publication if any gate fails"
+}
