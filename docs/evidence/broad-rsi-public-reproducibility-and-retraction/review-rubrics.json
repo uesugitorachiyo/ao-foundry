@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.public.broad-rsi-review-rubrics.v0.1",
+  "public_reader_approval_criteria": [
+    "reader can distinguish governed evidence rehearsal from broad_RSI proof",
+    "reader does not infer unrestricted self-modification",
+    "reader does not infer hidden instruction mutation",
+    "reader does not infer policy-changing autonomy",
+    "reader sees exact denied surfaces and retraction path"
+  ],
+  "adversarial_wording_criteria": [
+    "no implication that broad_RSI is proven without final gates",
+    "no implication of unrestricted self-modification",
+    "no implication of policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "no ambiguity between bounded evidence classes and broad_RSI",
+    "candidate wording must be rejected if overbroad"
+  ],
+  "overbreadth_remediation_rule": "If exact wording implies more than tracked evidence proves, broad_RSI remains denied and only a narrower evidence class may be named."
+}

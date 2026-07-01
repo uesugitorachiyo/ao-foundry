@@ -1,0 +1,19 @@
+{
+  "schema": "ao.foundry.public.covenant-claim-publication.v0.1",
+  "packet_summary": "Digest-bound public-safe claim-publication packet for exact broad_RSI wording.",
+  "exact_claim_candidate": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+  "result": "denied_exact_broad_RSI_claim_publication_approved_narrow_public_reproducibility_evidence",
+  "approval_for_exact_wording": false,
+  "accepted_evidence": [
+    "public-safe tracked evidence index",
+    "reproducibility runbook",
+    "retraction rehearsal",
+    "stale-language sweep"
+  ],
+  "remaining_blockers": [
+    "public-reader denies exact candidate",
+    "adversarial wording flags overbreadth",
+    "Architecture denies exact wording"
+  ],
+  "gate_weakened": false
+}

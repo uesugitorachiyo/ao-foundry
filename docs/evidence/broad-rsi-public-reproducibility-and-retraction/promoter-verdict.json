@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.public.promoter-verdict.v0.1",
+  "verdict": "promote_narrow_public_safe_reproducibility_and_retraction_evidence_broad_RSI_denied",
+  "promoted_class": "public_safe_broad_RSI_reproducibility_and_retraction_evidence",
+  "broad_RSI": "denied",
+  "reason": "Tracked evidence and retraction proof exist, but exact broad_RSI wording is denied by public-reader, adversarial, Covenant, Architecture, and Sentinel gates."
+}

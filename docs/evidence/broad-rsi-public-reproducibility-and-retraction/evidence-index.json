@@ -1,0 +1,38 @@
+{
+  "schema": "ao.foundry.public.broad-rsi-reproducibility-evidence-index.v0.1",
+  "status": "public_safe_tracked_evidence_available",
+  "exact_claim_candidate_under_review": "AO has proven broad_RSI for public claim publication across the governed AO stack.",
+  "claim_publication_status": "not_published_denied_by_final_gates",
+  "sanitized_source_digests": {
+    "atlas_workgraph_sha256": "1982f7043a05d55938ef956eb051162c2816f6b80e2802d658e216708a9ea0a4",
+    "foundry_import_sha256": "40c933218bc873a0111ae3d702ef2cad46ab8030460fb2f6945f686c473e4718",
+    "prior_missing_evidence_rollup_sha256": "38cff98103663619a82a60e8b568744edcc5fff1328c72e08a5c056aec514b2c",
+    "slice_count": 1610,
+    "node_count": 186
+  },
+  "tracked_artifacts": [
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/README.md",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/evidence-index.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/review-rubrics.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/review-results.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/covenant-claim-publication.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/architecture-wording-agreement.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/retraction-rehearsal.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/sentinel-public-risk.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/promoter-verdict.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/command-readback.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/stale-language-sweep.json",
+    "docs/evidence/broad-rsi-public-reproducibility-and-retraction/final-rollup.json"
+  ],
+  "private_or_local_paths_in_tracked_evidence": false,
+  "boundaries": {
+    "broad_RSI_publication": "denied",
+    "unrestricted_self_modification": "denied",
+    "hidden_instruction_mutation": "denied",
+    "policy_changing_autonomy": "denied",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+    "credentials_providers_releases_deployments_tags_uploads_dependency_updates": "denied",
+    "direct_main_mutation": "denied",
+    "concurrent_mutation": "denied"
+  }
+}
