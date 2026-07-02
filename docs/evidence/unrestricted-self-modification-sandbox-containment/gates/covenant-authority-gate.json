@@ -1,0 +1,20 @@
+{
+  "schema": "ao.covenant.authority-gate.v0.1",
+  "result": "deny_unrestricted_self_modification_allow_sandbox_containment_rehearsal",
+  "allowed_class": "public_safe_unrestricted_self_modification_sandbox_containment_rehearsal",
+  "denied_class": "unrestricted_self_modification",
+  "mission": "unrestricted-self-modification-sandbox-containment",
+  "denied_boundaries_preserved": [
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "credential use",
+    "provider calls",
+    "release/deploy/publish/upload/tag authority",
+    "dependency update authority",
+    "direct main mutation",
+    "concurrent mutation",
+    "hidden instruction changes"
+  ]
+}

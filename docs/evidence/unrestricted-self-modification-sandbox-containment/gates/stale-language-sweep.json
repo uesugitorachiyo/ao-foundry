@@ -1,0 +1,21 @@
+{
+  "schema": "ao.foundry.stale-language-sweep.v0.1",
+  "status": "passed",
+  "unrestricted_self_modification_overclaims": 0,
+  "hidden_instruction_mutation_overclaims": 0,
+  "policy_changing_autonomy_overclaims": 0,
+  "mission": "unrestricted-self-modification-sandbox-containment",
+  "denied_boundaries_preserved": [
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "credential use",
+    "provider calls",
+    "release/deploy/publish/upload/tag authority",
+    "dependency update authority",
+    "direct main mutation",
+    "concurrent mutation",
+    "hidden instruction changes"
+  ]
+}
