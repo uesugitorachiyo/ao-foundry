@@ -1,0 +1,20 @@
+{
+  "schema": "ao.covenant.authority-gate.v0.1",
+  "result": "deny_unrestricted_self_modification_allow_delegated_dry_run_authority_gap",
+  "target_class": "public_safe_bounded_sandboxed_self_change_delegated_dry_run_authority_gap_four_attempts",
+  "denied_class": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "sandbox_containment_bypass",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates"
+  ]
+}

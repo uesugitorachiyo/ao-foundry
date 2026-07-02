@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.gate-summary.v0.1",
+  "result": "passed",
+  "packets": [
+    "forge-ao2-packets/attempt-a-delegated-dry-run-ticket-readback-consistency.json",
+    "forge-ao2-packets/attempt-b-forge-ao2-bounded-packet-containment.json",
+    "forge-ao2-packets/attempt-c-foundry-atlas-no-authority-broadening.json",
+    "forge-ao2-packets/attempt-d-delegated-rollback-kill-switch-traceability.json"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.cross-attempt-reproducibility.v0.1",
+  "result": "passed",
+  "attempts": 4,
+  "public_safe_runbooks": 4
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "mission": "unrestricted-self-modification-delegated-dry-run-authority-gap",
+  "node_id": "usmddag-node-0134",
+  "status": "completed",
+  "safe_to_execute": true,
+  "attempt_id": "attempt-b-forge-ao2-bounded-packet-containment",
+  "task_type": "Forge/AO2 bounded packet containment evidence",
+  "run_link": "nodes/usmddag-node-0134.json",
+  "evidence": [
+    "baseline",
+    "post_change",
+    "delegated_dry_run_ticket",
+    "forge_ao2_packet",
+    "rollback",
+    "gate_readback"
+  ],
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "sandbox_containment_bypass",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates"
+  ]
+}

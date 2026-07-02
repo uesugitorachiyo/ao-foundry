@@ -1,0 +1,11 @@
+{
+  "schema": "ao.sentinel.public-risk.v0.1",
+  "result": "clear_delegated_dry_run_authority_gap_hold_unrestricted_self_modification",
+  "holds": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "sandbox_containment_bypass"
+  ]
+}
