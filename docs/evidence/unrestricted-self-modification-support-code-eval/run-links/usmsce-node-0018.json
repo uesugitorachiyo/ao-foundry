@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-support-code-eval",
+  "node_id": "usmsce-node-0018",
+  "node_evidence": "docs/evidence/unrestricted-self-modification-support-code-eval/nodes/usmsce-node-0018.json",
+  "rollback_evidence": "docs/evidence/unrestricted-self-modification-support-code-eval/rollback/usmsce-node-0018.json"
+}

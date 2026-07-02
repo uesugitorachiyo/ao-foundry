@@ -907,3 +907,30 @@ update authority, hidden instruction changes, forbidden surface expansion, or
 any unrestricted RSI claim. The highest proven live class is
 `public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Support-Code/Eval Evidence
+
+`public_safe_bounded_sandboxed_self_change_support_code_eval_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-support-code-eval/`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed self-change support-code/eval evidence across four exact-scope reversible support-code and evaluation attempts under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied." Completed nodes:
+`240 / 240`. Attempts completed: `4 / 4`.
+
+Attempt A covers support-code fixture validation quality (`0.72` to `0.95`),
+Attempt B covers eval harness diagnostics quality (`0.70` to `0.94`), Attempt C
+covers rollback automation evidence quality (`0.69` to `0.93`), and Attempt D
+covers sandbox containment trace quality (`0.68` to `0.92`). Eval/regression,
+rollback, retraction, kill-switch, cross-attempt reproducibility, Covenant,
+Sentinel, Promoter, Command, Architecture wording, public-safety, and
+stale-language gates passed.
+
+This proves only four serialized, exact-scope, reversible support-code/eval
+evidence applications under sandbox containment gates. It does not prove
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, policy/auth/secret/provider/deploy/release/config/dependency
+expansion, credential use, provider calls, direct-main mutation, concurrent
+mutation, release/deploy/publish/upload/tag authority, dependency update
+authority, hidden instruction changes, forbidden surface expansion, or any
+unrestricted RSI claim. The highest proven live class is
+`public_safe_bounded_sandboxed_self_change_support_code_eval_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

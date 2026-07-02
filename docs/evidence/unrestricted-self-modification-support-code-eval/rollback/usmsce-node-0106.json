@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.rollback-record.v0.1",
+  "mission": "unrestricted-self-modification-support-code-eval",
+  "node_id": "usmsce-node-0106",
+  "rollbackable": true,
+  "rollback_rehearsed": true,
+  "retraction_rehearsed": true,
+  "rollback_scope": "Remove generated support-code/eval evidence artifacts and revert exact-scope bounded changes."
+}
