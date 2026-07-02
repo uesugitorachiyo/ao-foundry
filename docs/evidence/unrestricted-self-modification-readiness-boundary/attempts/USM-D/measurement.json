@@ -1,0 +1,10 @@
+{
+  "attempt": "USM-D",
+  "task_type": "public wording denial clarity",
+  "baseline": 0.68,
+  "post_change": 0.95,
+  "improvement": 0.27,
+  "schema": "ao.foundry.usm-boundary.measurement.v0.1",
+  "public_safe": true,
+  "denied_class": "unrestricted_self_modification"
+}

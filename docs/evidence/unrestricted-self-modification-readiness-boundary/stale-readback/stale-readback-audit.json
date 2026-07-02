@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.stale-readback-audit.v0.1",
+  "mission": "unrestricted-self-modification-readiness-boundary",
+  "status": "completed",
+  "findings": [
+    {
+      "repo": "ao-atlas",
+      "finding": "historical segment-07 current-state prose exists near top-level README while final handoff also records broad_RSI current state",
+      "classification": "stale_historical_context_not_authority"
+    },
+    {
+      "repo": "ao-architecture",
+      "finding": "historical ladder rows still mention segment-07 as highest within prior sections while final section records broad_RSI",
+      "classification": "stale_historical_context_not_authority"
+    }
+  ],
+  "required_next_action": "future docs alignment should move current-state summary above historical evidence blocks"
+}
