@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-04",
+  "gate": "covenant-publication-gate",
+  "result": "approved_segment_04_wording_broad_RSI_denied",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

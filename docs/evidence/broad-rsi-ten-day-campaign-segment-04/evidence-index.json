@@ -1,0 +1,62 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-04",
+  "new_narrow_class": "public_safe_broad_RSI_governed_campaign_segment_04_evidence",
+  "prior_highest_proven_live_class": "public_safe_broad_RSI_governed_campaign_segment_03_evidence",
+  "highest_proven_live_class": "public_safe_broad_RSI_governed_campaign_segment_04_evidence",
+  "next_denied_class": "broad_RSI",
+  "segment": "04",
+  "completed_nodes": 360,
+  "total_completed_nodes": 1080,
+  "total_campaign_nodes": 2800,
+  "attempts": [
+    {
+      "attempt": "attempt-at",
+      "task_type": "cross-repo generality bridge evidence",
+      "measurement": "attempts/attempt-at/measurement.json",
+      "runbook": "attempts/attempt-at/reproducibility-runbook.md"
+    },
+    {
+      "attempt": "attempt-au",
+      "task_type": "public-safe reproducibility stress evidence",
+      "measurement": "attempts/attempt-au/measurement.json",
+      "runbook": "attempts/attempt-au/reproducibility-runbook.md"
+    },
+    {
+      "attempt": "attempt-av",
+      "task_type": "negative-control and counterexample evidence",
+      "measurement": "attempts/attempt-av/measurement.json",
+      "runbook": "attempts/attempt-av/reproducibility-runbook.md"
+    },
+    {
+      "attempt": "attempt-aw",
+      "task_type": "refactoring pulse continuation evidence",
+      "measurement": "attempts/attempt-aw/measurement.json",
+      "runbook": "attempts/attempt-aw/reproducibility-runbook.md"
+    }
+  ],
+  "gates": {
+    "public-reader-results": "gates/public-reader-results.json",
+    "adversarial-wording-results": "gates/adversarial-wording-results.json",
+    "covenant-publication-gate": "gates/covenant-publication-gate.json",
+    "architecture-wording-gate": "gates/architecture-wording-gate.json",
+    "sentinel-public-risk": "gates/sentinel-public-risk.json",
+    "promoter-verdict": "gates/promoter-verdict.json",
+    "command-readback": "gates/command-readback.json",
+    "eval-regression-results": "gates/eval-regression-results.json",
+    "rollback-retraction-results": "gates/rollback-retraction-results.json",
+    "stale-language-sweep": "gates/stale-language-sweep.json",
+    "no-repeat-gate": "gates/no-repeat-gate.json",
+    "no-abandonment-gate": "gates/no-abandonment-gate.json",
+    "pulse-reliability": "gates/pulse-reliability.json",
+    "refactoring-pulse": "gates/refactoring-pulse.json",
+    "context-repack-continuity": "gates/context-repack-continuity.json",
+    "cross-repo-bridge": "gates/cross-repo-bridge.json",
+    "reproducibility-stress": "gates/reproducibility-stress.json",
+    "negative-control-counterexample": "gates/negative-control-counterexample.json",
+    "evidence-sufficiency-matrix": "gates/evidence-sufficiency-matrix.json"
+  },
+  "final_rollup": "final-rollup.json",
+  "approved_public_wording": "AO has public-safe broad_RSI governed campaign segment-04 evidence extending the 10-day campaign through cross-repo bridge evidence, reproducibility stress, negative controls, refactoring pulse continuation, context-repack, rollback, and claim-gate readbacks while broad_RSI remains denied.",
+  "broad_RSI": "denied"
+}

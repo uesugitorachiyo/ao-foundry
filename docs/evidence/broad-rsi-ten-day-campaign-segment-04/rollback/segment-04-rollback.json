@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.rollback.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-04",
+  "segment": "04",
+  "nodes": "br10-node-0721..br10-node-1080",
+  "rollback_rehearsal": "passed",
+  "retraction_plan": "If segment wording is later found unsafe, revert the README entry and evidence index in a follow-up PR while preserving audit history.",
+  "broad_RSI": "denied"
+}

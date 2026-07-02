@@ -1,0 +1,19 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-04",
+  "node": "br10-node-0958",
+  "segment": "04",
+  "phase": "command",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "tracked-public-evidence",
+  "evidence_path": "docs/evidence/broad-rsi-ten-day-campaign-segment-04/nodes/br10-node-0958.json",
+  "rollback_record": "docs/evidence/broad-rsi-ten-day-campaign-segment-04/rollback/segment-04-rollback.json",
+  "broad_RSI": "denied",
+  "denied_surfaces": [
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "release/deploy/provider/credential/dependency/config/auth expansion"
+  ]
+}
