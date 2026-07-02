@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.rollback-rehearsal.v0.1",
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "attempt_id": "attempt-w",
+  "rollback_type": "public-safe evidence artifact retraction rehearsal",
+  "rollback_possible": true,
+  "rollback_completed": true,
+  "retraction_wording": "Retract the bounded wording generality claim and restore the previous conservative wording if any gate fails.",
+  "direct_main_mutation": false,
+  "public_claim_broadening": false
+}

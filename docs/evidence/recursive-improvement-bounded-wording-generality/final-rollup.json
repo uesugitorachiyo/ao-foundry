@@ -1,0 +1,61 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "prior_highest_proven_live_class": "public_safe_reviewer_approved_bounded_recursive_improvement_wording_evidence",
+  "new_narrow_class": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "highest_proven_live_class": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 900,
+  "total_nodes": 900,
+  "new_attempts_completed": 4,
+  "task_types_covered": [
+    "claim-boundary transfer quality",
+    "multi-reviewer wording consistency",
+    "retraction-readback applicability",
+    "evidence-to-wording traceability"
+  ],
+  "measurements": [
+    {
+      "attempt_id": "attempt-u",
+      "baseline": 0.68,
+      "post_change": 0.95,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-v",
+      "baseline": 0.66,
+      "post_change": 0.93,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-w",
+      "baseline": 0.65,
+      "post_change": 0.92,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-x",
+      "baseline": 0.64,
+      "post_change": 0.91,
+      "improvement": 0.27
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe bounded recursive-improvement wording generality evidence showing reviewer-approved bounded wording can transfer across additional public-safe review tasks under independent gates; broad_RSI remains denied.",
+  "public_reader_result": "approved_exact_bounded_wording_generality_only",
+  "adversarial_wording_result": "pass_for_exact_bounded_wording_generality_hold_for_broad_RSI",
+  "covenant_result": "approved_bounded_wording_generality_broad_RSI_denied",
+  "architecture_result": "approved_bounded_wording_generality_broad_RSI_denied",
+  "sentinel_result": "clear_for_bounded_wording_generality_hold_for_broad_RSI",
+  "promoter_verdict": "promote_public_safe_bounded_recursive_improvement_wording_generality_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_bounded_recursive_improvement_wording_generality_evidence_proven_broad_RSI_denied",
+  "eval_regression_result": "passed",
+  "rollback_retraction_result": "passed",
+  "stale_language_sweep": "passed",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+  "final_decision": "public_safe_bounded_recursive_improvement_wording_generality_evidence_proven_broad_RSI_denied",
+  "docs_alignment_recommended": true
+}

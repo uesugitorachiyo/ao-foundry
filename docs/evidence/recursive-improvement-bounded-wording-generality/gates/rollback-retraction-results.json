@@ -1,0 +1,24 @@
+{
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "schema": "ao.gate.rollback-retraction.v0.1",
+  "result": "passed",
+  "rollback_records": [
+    "rollback/attempt-u-rollback.json",
+    "rollback/attempt-v-rollback.json",
+    "rollback/attempt-w-rollback.json",
+    "rollback/attempt-x-rollback.json"
+  ],
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ]
+}

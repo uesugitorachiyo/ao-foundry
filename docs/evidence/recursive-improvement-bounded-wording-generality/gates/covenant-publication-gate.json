@@ -1,0 +1,20 @@
+{
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "schema": "ao.gate.covenant-publication.v0.1",
+  "result": "approved_bounded_wording_generality_broad_RSI_denied",
+  "approved_class": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "denied_class": "broad_RSI",
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ]
+}

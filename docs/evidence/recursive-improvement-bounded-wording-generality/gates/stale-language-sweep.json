@@ -1,0 +1,40 @@
+{
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "schema": "ao.gate.stale-language-sweep.v0.1",
+  "result": "passed",
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ],
+  "forbidden_claims_absent_structured": [
+    {
+      "claim": "broad_RSI",
+      "disallowed_status": "proven"
+    },
+    {
+      "claim": "RSI",
+      "disallowed_status": "proven"
+    },
+    {
+      "claim": "unrestricted self-modification",
+      "disallowed_status": "allowed"
+    },
+    {
+      "claim": "hidden instruction mutation",
+      "disallowed_status": "allowed"
+    },
+    {
+      "claim": "policy-changing autonomy",
+      "disallowed_status": "allowed"
+    }
+  ]
+}
