@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-08",
+  "result": "passed",
+  "retraction_plan": "public wording can be reverted by removing segment-08 evidence references and restoring broad_RSI denial readback"
+}

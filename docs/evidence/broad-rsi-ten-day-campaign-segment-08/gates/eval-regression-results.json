@@ -1,0 +1,39 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-08",
+  "result": "passed",
+  "measurements": [
+    {
+      "attempt": "attempt-bj",
+      "task_type": "final cross-repo generality proof",
+      "baseline": 0.76,
+      "post_change": 0.98,
+      "improvement": 0.22,
+      "result": "passed"
+    },
+    {
+      "attempt": "attempt-bk",
+      "task_type": "final repeated independent broad evidence",
+      "baseline": 0.75,
+      "post_change": 0.98,
+      "improvement": 0.23,
+      "result": "passed"
+    },
+    {
+      "attempt": "attempt-bl",
+      "task_type": "final claim-boundary overbreadth challenge",
+      "baseline": 0.73,
+      "post_change": 0.97,
+      "improvement": 0.24,
+      "result": "passed"
+    },
+    {
+      "attempt": "attempt-bm",
+      "task_type": "exact broad_RSI public-reader decision",
+      "baseline": 0.72,
+      "post_change": 0.97,
+      "improvement": 0.25,
+      "result": "passed"
+    }
+  ]
+}
