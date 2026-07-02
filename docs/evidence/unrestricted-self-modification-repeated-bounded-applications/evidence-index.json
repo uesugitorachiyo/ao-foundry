@@ -1,0 +1,38 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "public_safe": true,
+  "target_narrow_class": "public_safe_repeated_bounded_reversible_self_change_applications_four_attempts",
+  "highest_prior": "public_safe_bounded_reversible_self_change_application_rehearsal",
+  "next_denied_class": "unrestricted_self_modification",
+  "completed_nodes": 960,
+  "total_nodes": 960,
+  "attempts_completed": 4,
+  "evidence_categories": [
+    "baseline",
+    "bounded application",
+    "post-change measurement",
+    "rollback",
+    "retraction",
+    "kill switch",
+    "Covenant",
+    "Sentinel",
+    "Promoter",
+    "Command",
+    "public safety",
+    "stale language",
+    "cross-attempt reproducibility",
+    "final synthesis"
+  ],
+  "approved_public_wording": "AO has public-safe repeated bounded reversible self-change application evidence across four exact-scope support/readback attempts under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied.",
+  "paths": [
+    "final-rollup.json",
+    "digest-manifest.json",
+    "gates/",
+    "nodes/",
+    "run-links/",
+    "scenarios/",
+    "rollback/",
+    "attempts/*/reproducibility-runbook.md"
+  ]
+}

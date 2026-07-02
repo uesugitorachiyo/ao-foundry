@@ -1,0 +1,29 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "node_id": "usrba-node-0474",
+  "phase": "attempt D rollback retraction",
+  "attempt": "attempt-b-public-safety-scan-readback-quality",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "run-links/usrba-node-0474.json",
+  "public_safe": true,
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "secret_env_exposure",
+    "sandbox_escape",
+    "unsafe_public_claim"
+  ],
+  "rollback_recorded": true,
+  "evidence_recorded": true
+}

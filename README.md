@@ -815,3 +815,33 @@ hidden instruction changes, forbidden surface expansion, or any unrestricted
 RSI claim. The highest proven live class is
 `public_safe_bounded_reversible_self_change_application_rehearsal`; the next
 denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Repeated Bounded Applications
+
+`public_safe_repeated_bounded_reversible_self_change_applications_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-repeated-bounded-applications/`.
+The approved public wording is exactly: "AO has public-safe repeated bounded
+reversible self-change application evidence across four exact-scope
+support/readback attempts under sandbox containment gates; unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy, and
+forbidden surface expansion remain denied." Completed application nodes:
+`960 / 960`. Attempts completed: `4 / 4`.
+
+Attempt A covers support/readback evidence quality (`0.71` to `0.93`), Attempt B
+covers public-safety scan readback quality (`0.69` to `0.92`), Attempt C covers
+rollback/retraction runbook quality (`0.67` to `0.91`), and Attempt D covers
+cross-evidence linking readback quality (`0.66` to `0.90`). Eval/regression,
+rollback, retraction, kill-switch, cross-attempt reproducibility, Covenant,
+Sentinel, Promoter, Command, public-safety, and stale-language gates passed.
+
+This proves only four serialized, exact-scope, reversible support/readback
+evidence applications under sandbox containment gates. It does not prove
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, policy/auth/secret/provider/deploy/release/config/dependency
+expansion, credential use, provider calls, direct-main mutation, concurrent
+mutation, release/deploy/publish/upload/tag authority, dependency update
+authority, hidden instruction changes, forbidden surface expansion, or any
+unrestricted RSI claim. The highest proven live class is
+`public_safe_repeated_bounded_reversible_self_change_applications_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

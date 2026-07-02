@@ -1,0 +1,28 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "attempt": "attempt-c-rollback-retraction-runbook-quality",
+  "task_type": "rollback/retraction runbook quality",
+  "baseline": 0.67,
+  "post_change": 0.91,
+  "improvement": 0.24,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "secret_env_exposure",
+    "sandbox_escape",
+    "unsafe_public_claim"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "node_id": "usrba-node-0386",
+  "attempt": "attempt-b-public-safety-scan-readback-quality",
+  "status": "completed",
+  "evidence_path": "nodes/usrba-node-0386.json",
+  "serial_index": 386,
+  "total_nodes": 960,
+  "concurrent_mutation": false,
+  "direct_main_mutation": false
+}

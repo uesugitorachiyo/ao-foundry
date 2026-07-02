@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.rollback-retraction.v0.1",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "attempt": "attempt-d-cross-evidence-linking-readback-quality",
+  "rollback": "passed",
+  "retraction": "passed",
+  "reversible": true,
+  "exact_scope": true,
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "secret_env_exposure",
+    "sandbox_escape",
+    "unsafe_public_claim"
+  ]
+}
