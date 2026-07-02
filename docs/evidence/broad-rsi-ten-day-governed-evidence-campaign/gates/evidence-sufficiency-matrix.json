@@ -1,0 +1,80 @@
+{
+  "schema": "ao.foundry.evidence-sufficiency-matrix.v0.1",
+  "mission": "broad-rsi-ten-day-governed-evidence-campaign",
+  "rows": [
+    {
+      "requirement": "repeated independent improvement",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "cross-repo generality",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "public-reader exact broad claim approval",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "adversarial wording no-overbreadth",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Covenant publication approval",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Architecture wording approval",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Sentinel public-risk clearance",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "rollback/retraction sufficiency",
+      "status": "partial",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Command readback",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Promoter verdict",
+      "status": "missing_for_broad_RSI",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "Pulse long-run reliability",
+      "status": "partial",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    },
+    {
+      "requirement": "context repack continuity",
+      "status": "partial",
+      "evidence_path": "gates/evidence-sufficiency-matrix.json",
+      "broad_RSI_approval": false
+    }
+  ],
+  "broad_RSI": "denied",
+  "narrow_class": "public_safe_broad_RSI_governed_campaign_first_segment_state_evidence"
+}

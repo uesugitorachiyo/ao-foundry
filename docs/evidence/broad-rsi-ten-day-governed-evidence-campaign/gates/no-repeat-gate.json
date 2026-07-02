@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.no-repeat-gate.v0.1",
+  "result": "passed",
+  "new_signal": [
+    "mission-state ledger",
+    "no-repeat continuation quality",
+    "Pulse no-return-early readback",
+    "context repack continuity",
+    "public claim minimization matrix"
+  ],
+  "repeated_prior_prompt": false,
+  "broad_RSI": "denied"
+}

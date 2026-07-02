@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "broad-rsi-ten-day-governed-evidence-campaign",
+  "narrow_class": "public_safe_broad_RSI_governed_campaign_first_segment_state_evidence",
+  "broad_RSI": "denied",
+  "paths": [
+    "final-rollup.json",
+    "mission-state/mission-state.json",
+    "gates/evidence-sufficiency-matrix.json",
+    "gates/no-repeat-gate.json",
+    "gates/pulse-reliability.json",
+    "gates/context-repack-continuity.json",
+    "daily/day-01-synthesis.json",
+    "daily/day-02-synthesis.json"
+  ]
+}

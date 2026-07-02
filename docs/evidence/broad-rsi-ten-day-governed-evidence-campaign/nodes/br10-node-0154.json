@@ -1,0 +1,26 @@
+{
+  "schema": "ao.foundry.run-link-evidence.v0.1",
+  "node_id": "br10-node-0154",
+  "mission": "broad-rsi-ten-day-governed-evidence-campaign",
+  "phase": "public_claim_minimization",
+  "status": "completed",
+  "safe_to_execute": true,
+  "dependency_satisfied": true,
+  "run_link": "nodes/br10-node-0154.json",
+  "evidence": [
+    "mission-state/mission-state.json",
+    "gates/evidence-sufficiency-matrix.json"
+  ],
+  "denied_surfaces": [
+    "broad_RSI",
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "release_deploy_publish_upload_tag_provider_calls",
+    "credential_use",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ],
+  "broad_RSI": "denied"
+}

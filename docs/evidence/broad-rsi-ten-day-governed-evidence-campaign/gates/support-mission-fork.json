@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.broad-rsi-campaign-gate.v0.1",
+  "mission": "broad-rsi-ten-day-governed-evidence-campaign",
+  "approved_wording": "AO has public-safe broad_RSI governed campaign first-segment state evidence showing a 10-day evidence campaign can start from mission-state, no-repeat, sufficiency, Pulse reliability, context-repack, rollback, and claim-gate readbacks while broad_RSI remains denied.",
+  "broad_RSI": "denied",
+  "result": "no_support_fork_required",
+  "pulse_refactor": "not_required_for_first_segment"
+}
