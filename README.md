@@ -752,3 +752,23 @@ This does not prove `broad_RSI`, unrestricted self-modification, hidden instruct
 `public_safe_unrestricted_self_modification_readiness_boundary_map` is proven from tracked public evidence under `docs/evidence/unrestricted-self-modification-readiness-boundary/`. The approved public wording is exactly: "AO has public-safe readiness-boundary evidence for evaluating unrestricted self-modification; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied." Completed readiness nodes: `320 / 320`.
 
 This does not prove unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/dependency expansion, credential use, provider calls, direct-main mutation, concurrent mutation, release/deploy/publish/upload/tag authority, or dependency update authority. The highest proven live class is `public_safe_unrestricted_self_modification_readiness_boundary_map`; the next denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Sandbox Containment Evidence
+
+`public_safe_unrestricted_self_modification_sandbox_containment_rehearsal` is
+proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-sandbox-containment/`. The
+approved public wording is exactly: "AO has public-safe sandbox containment
+evidence for dry-run self-change proposal evaluation; unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy, and
+forbidden surface expansion remain denied." Completed containment nodes:
+`420 / 420`.
+
+This proves only sandbox containment evidence for dry-run self-change proposal
+evaluation. It does not prove unrestricted self-modification, hidden instruction
+mutation, policy-changing autonomy, policy/auth/secret/provider/deploy/release/
+config/dependency expansion, credential use, provider calls, direct-main
+mutation, concurrent mutation, release/deploy/publish/upload/tag authority, or
+dependency update authority. The highest proven live class is
+`public_safe_unrestricted_self_modification_sandbox_containment_rehearsal`; the
+next denied class is `unrestricted_self_modification`.

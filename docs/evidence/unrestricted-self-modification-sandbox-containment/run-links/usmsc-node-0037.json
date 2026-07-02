@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-containment",
+  "node_id": "usmsc-node-0037",
+  "status": "completed",
+  "source": "atlas-workgraph",
+  "artifact": "docs/evidence/unrestricted-self-modification-sandbox-containment/nodes/usmsc-node-0037.json",
+  "public_safe": true
+}
