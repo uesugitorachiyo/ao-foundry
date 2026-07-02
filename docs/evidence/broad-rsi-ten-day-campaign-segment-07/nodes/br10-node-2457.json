@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-07",
+  "node_id": "br10-node-2457",
+  "segment": "07",
+  "phase": "promoter-no-promotion",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "docs/evidence/broad-rsi-ten-day-campaign-segment-07/nodes/br10-node-2457.json",
+  "evidence": [
+    "public_safe",
+    "rollback_recorded",
+    "gate_readback_recorded",
+    "no_broad_RSI_claim"
+  ],
+  "broad_RSI": "denied"
+}
