@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "promote_public_safe_bounded_recursive_improvement_review_durability_evidence_broad_RSI_denied",
+  "promoted_class": "public_safe_bounded_recursive_improvement_review_durability_evidence",
+  "broad_RSI": "denied"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "approved_exact_review_durability_wording_only",
+  "approved_wording": "AO has public-safe bounded recursive-improvement review durability evidence showing bounded recursive-improvement wording remains stable across delayed re-review, adversarial drift checks, stale-language sweeps, and reproducibility retests under independent gates; broad_RSI remains denied.",
+  "broad_RSI": "denied",
+  "notes": "Public-reader accepts the narrow durability wording and rejects any broader RSI implication."
+}

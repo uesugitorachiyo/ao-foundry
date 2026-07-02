@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.review-durability-measurement.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "attempt_id": "attempt-ab",
+  "task_type": "evidence-index reproducibility retest",
+  "baseline": 0.65,
+  "post_change": 0.92,
+  "improvement": 0.27,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "denied_surface_regressions": false
+}
