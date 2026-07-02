@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.mission-state.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-07",
+  "prior_completed_nodes": 1980,
+  "segment_start": 1981,
+  "segment_end": 2520,
+  "segment_nodes": 540,
+  "completed_nodes": 540,
+  "total_completed_nodes": 2520,
+  "total_campaign_nodes": 2800,
+  "no_return_early": true,
+  "broad_RSI": "denied"
+}
