@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.broad-rsi-campaign-measurement.v0.1",
+  "attempt_id": "attempt-ah",
+  "task_type": "no-repeat continuation quality",
+  "baseline": 0.68,
+  "post_change": 0.94,
+  "improvement": 0.26,
+  "broad_RSI": "denied",
+  "public_safe": true
+}

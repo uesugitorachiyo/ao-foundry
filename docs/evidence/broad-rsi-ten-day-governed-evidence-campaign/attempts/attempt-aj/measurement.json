@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.broad-rsi-campaign-measurement.v0.1",
+  "attempt_id": "attempt-aj",
+  "task_type": "context repack continuity",
+  "baseline": 0.65,
+  "post_change": 0.92,
+  "improvement": 0.27,
+  "broad_RSI": "denied",
+  "public_safe": true
+}

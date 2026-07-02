@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.broad-rsi-campaign-measurement.v0.1",
+  "attempt_id": "attempt-ai",
+  "task_type": "Pulse no-return-early readback",
+  "baseline": 0.66,
+  "post_change": 0.93,
+  "improvement": 0.27,
+  "broad_RSI": "denied",
+  "public_safe": true
+}

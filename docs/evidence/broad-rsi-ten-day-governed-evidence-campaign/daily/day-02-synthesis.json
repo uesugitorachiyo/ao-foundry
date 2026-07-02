@@ -1,0 +1,21 @@
+{
+  "schema": "ao.foundry.daily-synthesis.v0.1",
+  "mission": "broad-rsi-ten-day-governed-evidence-campaign",
+  "day": 2,
+  "completed_nodes": 180,
+  "open_blockers": [
+    "broad_RSI exact claim still lacks final public-reader, Covenant, Architecture, Sentinel, Promoter, Command unanimity"
+  ],
+  "next_node_family": "counterexample and cross-repo generality",
+  "denied_surfaces": [
+    "broad_RSI",
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "release_deploy_publish_upload_tag_provider_calls",
+    "credential_use",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ]
+}

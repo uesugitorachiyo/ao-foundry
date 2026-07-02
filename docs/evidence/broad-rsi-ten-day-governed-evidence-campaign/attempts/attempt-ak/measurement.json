@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.broad-rsi-campaign-measurement.v0.1",
+  "attempt_id": "attempt-ak",
+  "task_type": "public claim minimization matrix",
+  "baseline": 0.67,
+  "post_change": 0.94,
+  "improvement": 0.27,
+  "broad_RSI": "denied",
+  "public_safe": true
+}
