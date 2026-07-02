@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-04",
+  "gate": "command-readback",
+  "result": "public_safe_broad_RSI_governed_campaign_segment_04_evidence_proven_broad_RSI_denied",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}
