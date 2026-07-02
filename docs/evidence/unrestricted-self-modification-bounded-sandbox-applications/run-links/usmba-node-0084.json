@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.run-link-detail.v0.1",
+  "node_id": "usmba-node-0084",
+  "completed": true,
+  "ci_required_before_merge": true,
+  "rollback_record": "rollback/attempt-c-public-safety-rule-calibration.json",
+  "measurement": "attempts/attempt-c-public-safety-rule-calibration/measurement.json"
+}

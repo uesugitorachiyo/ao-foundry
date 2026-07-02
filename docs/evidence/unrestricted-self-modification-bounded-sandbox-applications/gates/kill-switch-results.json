@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.kill-switch.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "result": "passed",
+  "automatic_stop_on_unsafe_scope": true
+}

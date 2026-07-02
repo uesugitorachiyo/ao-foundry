@@ -1,0 +1,21 @@
+{
+  "schema": "ao.covenant.authority-gate.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "result": "deny_unrestricted_self_modification_allow_bounded_sandbox_non_readback_applications",
+  "approved_class": "public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts",
+  "denied_class": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "unrestricted_rsi_claim"
+  ]
+}

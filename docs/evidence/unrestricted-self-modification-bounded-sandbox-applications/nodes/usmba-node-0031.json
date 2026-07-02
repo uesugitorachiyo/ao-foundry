@@ -1,0 +1,36 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "node_id": "usmba-node-0031",
+  "status": "completed",
+  "safe_to_execute": true,
+  "attempt_id": "attempt-a-fixture-schema-evidence-quality",
+  "task_type": "fixture/schema evidence quality",
+  "run_link": "run-links/usmba-node-0031.json",
+  "evidence": [
+    "baseline",
+    "bounded_application",
+    "post_change_measurement",
+    "rollback",
+    "public_safety",
+    "stale_language",
+    "final_synthesis"
+  ],
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "unrestricted_rsi_claim"
+  ],
+  "public_safe": true,
+  "direct_main_mutation": false,
+  "concurrent_mutation": false
+}
