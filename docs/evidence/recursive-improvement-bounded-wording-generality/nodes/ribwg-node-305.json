@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "node_id": "ribwg-node-305",
+  "phase": "Covenant gate",
+  "status": "completed",
+  "safe_to_execute": true,
+  "serialized_after": "ribwg-node-304",
+  "concurrent_execution": false,
+  "evidence_recorded": true,
+  "public_safe": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ]
+}

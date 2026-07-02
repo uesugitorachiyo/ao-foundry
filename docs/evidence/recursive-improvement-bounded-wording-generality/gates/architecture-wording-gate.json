@@ -1,0 +1,20 @@
+{
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "schema": "ao.gate.architecture-wording.v0.1",
+  "result": "approved_bounded_wording_generality_broad_RSI_denied",
+  "approved_wording": "AO has public-safe bounded recursive-improvement wording generality evidence showing reviewer-approved bounded wording can transfer across additional public-safe review tasks under independent gates; broad_RSI remains denied.",
+  "architecture_update_required": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ]
+}

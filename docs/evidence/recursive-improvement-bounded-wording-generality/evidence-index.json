@@ -1,0 +1,3707 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "recursive-improvement-bounded-wording-generality",
+  "class_proven": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "highest_proven_live_class": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "next_denied_class": "broad_RSI",
+  "public_safe": true,
+  "artifact_count": 924,
+  "artifacts": [
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/README.md",
+      "sha256": "9802a1cd5c89c34b7f3293824e2ae52bdef67fb5741553d392fdbd84fad67054"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-u/measurement.json",
+      "sha256": "48794110b2dca8a80504a997beb64ba8f98236a1056ee63ece565669989ff596"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-u/reproducibility-runbook.md",
+      "sha256": "dc07ef6c57d4af9b759296f09931426570bbd5c02d8b28a8b7cdc76af8ef5278"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-v/measurement.json",
+      "sha256": "b2d32cea286e381a4b67cc7196c71da825112c18f7595a6601d91e1b1115a2db"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-v/reproducibility-runbook.md",
+      "sha256": "234a1d8d47f5f31e5e766a076bf99a13f7ea92050132bbd747bf322e35bfe4a7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-w/measurement.json",
+      "sha256": "1619b252cf93a6eb05448249696841a5254b7dbe97285c7ce0c3df298173ed55"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-w/reproducibility-runbook.md",
+      "sha256": "100e429b464ea0d96b0a08399c501f3fe8e4e901dbbeff00c1d0723828aa5e72"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-x/measurement.json",
+      "sha256": "d036099cf8d9e9668040d0cfacd69f3afddaff7f290e5519abe5ecea3920fe62"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/attempts/attempt-x/reproducibility-runbook.md",
+      "sha256": "e2d42ceed0906cde22dddb8c6ed93f97e368420126f9a746f95b7d8b1bb3b319"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/final-rollup.json",
+      "sha256": "ff7da2db5dd426ea1db7d78e42d7a4ec4b34e0338d02d910e5f70b5859c1abc0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/adversarial-wording-results.json",
+      "sha256": "692f29a7f41214ecfb78454c570fc0ef440afd35cc5d06df10b47e7bc5adbcf3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/architecture-wording-gate.json",
+      "sha256": "4b7a0773e9d7e54d7f93efdf8a9530adb8fa625180d84be7e31860c3621c6868"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/command-readback.json",
+      "sha256": "8e64feb74fa16a46c4ed212923ac3717b0526024cc278800e392da52bd32f152"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/covenant-publication-gate.json",
+      "sha256": "15ba8296130bb7de3edd5f0d0947d6f27421b68f3d86845b75390933fb2c0c0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/eval-regression-results.json",
+      "sha256": "27e0c774441d1504385472049810ad82e2af9eaadaca9e7212e7906c3e228539"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/promoter-verdict.json",
+      "sha256": "4c4779b3ae6f2bf74fd63fa9c7b6973d223ae862ae13d4a2f1544c906e9c4db2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/public-reader-results.json",
+      "sha256": "16acf1a634a605ffe272fba62add447fa6b77723e916cc764c98c86065d14dc3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/rollback-retraction-results.json",
+      "sha256": "089429cac44fe814667fcae0b5f32782d451bfc5b5ababf47ca3982c9c4ba36d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/sentinel-public-risk.json",
+      "sha256": "21713d80127117e453190dac9ea1d2fab8f6229805c1acf88545579e4440459e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/gates/stale-language-sweep.json",
+      "sha256": "cb0cf3e806e93d290a6bf2a0cf67379f538a1f629d72a4f33565365d8df63a64"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-001.json",
+      "sha256": "87593503cb54af90a9a56e8be9a85e7887482bbb80c5424d29315114610ada0a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-002.json",
+      "sha256": "ed60bd6b56b031a1a25f7c6426baccbc18a34531a272bf44b37c7f6bd644856f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-003.json",
+      "sha256": "390ca0526b83fa5d496cf00c33bd00b5dc84451927da3a032f44f66e990f6c31"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-004.json",
+      "sha256": "e1f53cc882bc47a89326e705616721d912343dba3c4224864343bd329f6c872d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-005.json",
+      "sha256": "c9edd2a57b99e57c698827d74501f20e316717d1e7dc4964c094c79f765c4059"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-006.json",
+      "sha256": "5656d0172eef94d48c19f7681d994c75b4504953a628db0f1ff8376e02a52ab2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-007.json",
+      "sha256": "b834bfcd50bbb413d9cd6ada66527d11bfe88ad2045fe18f1475893e51e2880c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-008.json",
+      "sha256": "bc7cfd21e17970feffb569bd5d3e12bd634b136493b837c4446442d7f6cc6090"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-009.json",
+      "sha256": "954bcd62e85eece2e05f96807acbf06a1f805c344d2702995488f37af0e56621"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-010.json",
+      "sha256": "fc22f8b4fd592ca4fd19468d3f7f9137a09cab8fc8d22e8e039ca271e1097a3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-011.json",
+      "sha256": "9dd15155d800598fa5c7aaa385a2b9df7f7bbd0dc2d659f6d1aa390968d611b0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-012.json",
+      "sha256": "c52488e8d9478a9b498275c12034bc08d5e3da973bf83343aafc55b4295a7933"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-013.json",
+      "sha256": "3d9cee808524fac43f692b84142afd2723c71be1cfff9edc72a0f4f02588518b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-014.json",
+      "sha256": "90f1952d145e622db0ee901e6f95afacc5e5b6a631c315e8f71d0e61f0906474"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-015.json",
+      "sha256": "660d249576e45463993657a0b23b607fa9b432859c04bb5bd2c176341d2bda12"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-016.json",
+      "sha256": "a967ef25d992ebfe204d40a3b951323ad3dda831a83712462d5bede3c247c325"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-017.json",
+      "sha256": "c2733feec23112e9b51cd41de791801dd76e6a28772e0e8dc1452ff9075a174b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-018.json",
+      "sha256": "23bf38a772274ee09708e43f7ef8b19882424b369a5b6aa78575eb485230ac3b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-019.json",
+      "sha256": "981aef069be4899589739197b126e012f0f95a54daa5c1fe78ab76a76347f0a3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-020.json",
+      "sha256": "10588cd64aba19592f3c02fa2af2048d70404a821497416fffb38008269dc5b8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-021.json",
+      "sha256": "fcfdbbe6cf49947b6b3460ec9a90e746eac26771eaa5e6e50717eafa2eb1b463"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-022.json",
+      "sha256": "53afcd39c9a2a0d59a0cf9f8f69959024aecebb0d0154cdef777b34d81e45b4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-023.json",
+      "sha256": "c59eed057c1c9ec405a430e5efa0962ebe2b962e492d8df1d3c6dbfd8804193e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-024.json",
+      "sha256": "583008c1e2ddc810c1b29c5fbeaa61528b2c15e4bc572223fd977711b6ff8bcb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-025.json",
+      "sha256": "ff9d5b6ecd8c0c29109c13ac760f44df50583036a3553bcdea8a47adec43f3b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-026.json",
+      "sha256": "ea31c29309fc407b183ebd133ce5415268811019a32b8b2d0a38fd5044f40e02"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-027.json",
+      "sha256": "0ce5b3b7fc9cd9605b0e3a766140d5d78d37871c50d160be23840687cffab211"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-028.json",
+      "sha256": "65b1b58bbfc312f0998d49db4e4ea30bee2e32fa82ab6f398cf54fcc08c56ae6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-029.json",
+      "sha256": "329a48235fc6d74794a8cb34e96cd23f2eeb625ba6e0bf31f8042c44701880dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-030.json",
+      "sha256": "750509147f7bba73053e2c8c5963cdfd00c5542fd8951444b9fcdd606feb6d7d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-031.json",
+      "sha256": "0c400bf8aa308896d240124e0e3a1e387a7dc4ddd5df3cfe5771acc67d61ed54"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-032.json",
+      "sha256": "573a81773fb73576b7590cac5769e90eafac5c696bf9aeac288d93eba50dde16"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-033.json",
+      "sha256": "48f02fabb0d7eb1d00b5266b9d8cfcf219b9a7806c7763eda95a68173f7f4a6a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-034.json",
+      "sha256": "043bb2fd0561365f34169c46d5f37ed5f368b67efa8bf6696282989da772caa4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-035.json",
+      "sha256": "ffa6a9506c85faa91be8bd00352d458a2fd6d49327bbda6e7f7641da7bb67cff"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-036.json",
+      "sha256": "1184628576016d3dc2d34d392af79854c5aea9f939e391829b722a62ad332bd5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-037.json",
+      "sha256": "dd82f2c89dac891e5d4df90293a896c6ab526dce4e495398e9128081e464c7c6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-038.json",
+      "sha256": "52ace969bee25d41b0cdd0d91a4b482ae471c8575ddc70220f129a23313165e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-039.json",
+      "sha256": "c0ce0fbc14815f18be11b454b7051b7212991c3ea09604c41d8d3c161602377a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-040.json",
+      "sha256": "2378671b6fcce61261b32c2bd1a3ba2c58c4cd333307a6963e3dfb7682b4be8f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-041.json",
+      "sha256": "3946d082e5b8ff6d6bf8bec42e6b5044a93b26d6fd157b256e957c8423cd59b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-042.json",
+      "sha256": "04a1b802d3141c2c941b141a57492aca730027c42d01b703aba7c418dfce3e52"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-043.json",
+      "sha256": "c45f73ee6fdc49c79e8cc3d30c048261f37ca6afac00715473d93b3efb798a76"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-044.json",
+      "sha256": "ff058d2aba2cb7d757176471f9b06378e49b5fc9193abaa228f5d7083daed2c5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-045.json",
+      "sha256": "7859c34b3715d8c1ff94677cca2c595dd4f52b3c635a315c9f741c3a28b48f86"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-046.json",
+      "sha256": "f41cf70e6b6f810a8c25a7be9de46f301da01c901d45aeb703219af8edcaf141"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-047.json",
+      "sha256": "480fb2e3c87b6d6f9beb942216dc0337ac0b0a48a22828399474f6703a2bc9a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-048.json",
+      "sha256": "cb9e92e37bfaed56b6d3a4a68ce258ab33f0a559219923f73a6b4c5c1696e5b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-049.json",
+      "sha256": "de9dbcca1865ec1aac9a4fea02d498044e59616f2860e13d7d0f7fdd78f1c851"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-050.json",
+      "sha256": "0612030bb6715fa9f16828c3d1bc692508176846beb12a71f46b86325fdf11bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-051.json",
+      "sha256": "8d8e9338dd06b6202c5b1a01f74162ee21da4e29c8839d9e8b08075dcdb610f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-052.json",
+      "sha256": "b05d411c90a9d1068f4f50d571dcdda84241a740db82085ccb0c1933c887a26d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-053.json",
+      "sha256": "0795b9c7a5f0878380b5d56add613fa9b87bcae41b7ae8f22c39d18356e6aa50"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-054.json",
+      "sha256": "d692d4786f80158503a4025c88fc2c5d9126202a2116177e1a69da038de373f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-055.json",
+      "sha256": "372c7426da048d2c71641dbe363c918dd5a0dfc3dc1695c14f177b7be10dcdbe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-056.json",
+      "sha256": "0e4438b637d77979cdcc9266d35a9d9af2d41d592ab5c84afa976ccd80d59e4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-057.json",
+      "sha256": "28af1110ccf23c05399cf96eab2c46899dc1ed1e1a6fc30a43d8deeaba2d2728"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-058.json",
+      "sha256": "06986bccae7c282b17a9a53cd0ac9a8391a2c5f36ad21c81fc45e24bdca8bd2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-059.json",
+      "sha256": "f0923f5fbcaefd76e9102602fdda3ef15a7cadb7ea6c4d684e356ce7c8b6fe65"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-060.json",
+      "sha256": "024f1dd23665acc20ef676f4db89f24548ad706e440afa1d6b93758bc6bb46df"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-061.json",
+      "sha256": "441fe606cb9d9aa3587db47cb6628cf3dd004bcc0748e969d7f9f042ef11238f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-062.json",
+      "sha256": "d4682e59be408eda108dbf2809e580bbc3f4f7140d7f621c75cdd8aba5c4bec4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-063.json",
+      "sha256": "a2a4267374db7437c31e49c484b2bcb3cbd4287cf6a3132e556e3fcd21fddda5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-064.json",
+      "sha256": "92821cd63edf5e390a271169263058beaf8c8e975526c166e12e6e553d53d0fa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-065.json",
+      "sha256": "c42c4d5b1b43c14f328760177a93f68c3a46bda4a90ee9385b78cc71478ecedb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-066.json",
+      "sha256": "ec238c12c94e27a20957ee09c6933f2bf4b8a9b1bb0cc88262ec0a9ff0de029a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-067.json",
+      "sha256": "85712ce681aeaf6194d8a94051b1905e21fd17e5eec05d4c6cb9487171275de5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-068.json",
+      "sha256": "10b0fc5820c4cc80a73760efe18d93aaa1e7148c2c27f0273afd17a63aa14cf3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-069.json",
+      "sha256": "78156299a407b552769b4a01bcca41a09dda05a56193078c4dad56d76c086b6c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-070.json",
+      "sha256": "2835145b2a27cc779369759626da0c5c693b808212b826e4bd4d6c5861f0c095"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-071.json",
+      "sha256": "435b7f4f90504003495e1f6b6a32a6a07da128cc3f2c547a45ad4fe2df062611"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-072.json",
+      "sha256": "dc0cc679e7827f1d929fa4cbe4baccc98834d20d1c35c5bf8d6b09ead91d731c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-073.json",
+      "sha256": "f0e98609d0497cd744005b9bc098007ce6c718539ef3c732445e83ee38b9f26b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-074.json",
+      "sha256": "327c3346bf9e32c6cc443575dcbaad5ae549cc4d16cbd88a773d06b731e9ff7d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-075.json",
+      "sha256": "2e6123a42d7e31d66f7ac553c55064258296c75d42224131e13a0f799269bd6d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-076.json",
+      "sha256": "2ffc9938e7d7ccc5d90fc7bff6bfd586020e2f6e15d8887a1c4b8f614f409b17"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-077.json",
+      "sha256": "f4f7e0c4b1efdef991fbfddfbf7cd9d94cb3684033ed3dabae2d0f3afa413779"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-078.json",
+      "sha256": "f061b6fd73915c778ea046ed3b56b9478987baaba79599661873c2de09cfe54f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-079.json",
+      "sha256": "3f4dde16e024defb41f250c6fe2b9a1a1659da834b9b8b6ee80002cbdbab36df"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-080.json",
+      "sha256": "5859ed0210b04be0d811b84bd1cffcc8d8803bb64cf4047c9a11f1c27c630572"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-081.json",
+      "sha256": "8cb1c717cfaeba5f709e2cef99c1ad26e3d6d252a4a0d8592a5e6af326e04e84"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-082.json",
+      "sha256": "94d600917f86d42dfdacfb651f595c04214bd14a2a82ba86ba06deb7dcb532e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-083.json",
+      "sha256": "545562aa0024fc1ccb0fc31b9c6435c0809f336df7c920fc39533fee643e527c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-084.json",
+      "sha256": "c48432b6b7b1d7de4d275e8bc9c6b6df033ebc97980cf88f41aa9d97053e684f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-085.json",
+      "sha256": "70be6950cbefbfc00a88d10453d79196fcc2af5df4a920beb280e42dfd100ae7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-086.json",
+      "sha256": "f51d60442d5ace575e520092033bb705e78079c780319155f59eb6e14d69f362"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-087.json",
+      "sha256": "980204c0ea578644afdaea7e0700c0746fbd593490d2480eac7d796fd46173fe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-088.json",
+      "sha256": "2a9bdf928c67de73bfda90d107d14e1c256582dbc2baaf97c88f10a0114a6930"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-089.json",
+      "sha256": "b32e19d66a09a281194031efe67658161da9eee5e167f1097cd4cad49720d13e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-090.json",
+      "sha256": "d185a74fc59cdde5d7ebf6eaf1d37b69109f3d0ea8d09c3359e28e315a2aaf63"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-091.json",
+      "sha256": "6440b3d17b36dbb72c70337f713ced76a078ff59ba6bf3c8ebfdcdaad2c570ed"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-092.json",
+      "sha256": "68c7afa0d4062a93cf70a8ae6c465f64a597bd986316e077791a1a763666f9b7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-093.json",
+      "sha256": "b7567c120769d20bfbc240e120fdca65eb6073924f221a6bb8e84fa500b8321d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-094.json",
+      "sha256": "3de239073d61dc78710593e9d16166c4618efc445ea756fc5ded832dc8e95e42"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-095.json",
+      "sha256": "25b70597609d9374347d9dec3df3288bde7d8b50aee07927768b2d2ed16e9df5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-096.json",
+      "sha256": "e9d390972f5d6ceaac69b9c2aebee19f50adefdbf56e4be31967b5f806579493"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-097.json",
+      "sha256": "f82bb31c9707153784776ea362963b84f0ead82bfbafbf696c4fcb52c1526ae1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-098.json",
+      "sha256": "97fb7ff34234f7a7c254446c9e357ab36aa5ab05b3dfc186afc2e4501f5c63c7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-099.json",
+      "sha256": "88e4845fc725fab02d2ab04b60860da4a22dcb9bcc9bd919aa04df38343d6ae8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-100.json",
+      "sha256": "708b78c74a9a330cbbeb70a8826edbb914e68a6dae29a1c393b6439f1863a6ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-101.json",
+      "sha256": "eab8f3bf2b044f3ed7663acefb54e176ff980876146df72b30c1096d274917f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-102.json",
+      "sha256": "311f75e9c3a5fd5830884d91b5afaa215ca62e7d4a5476ca6e611fc71fcce73e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-103.json",
+      "sha256": "0f87706dacba53dff2ef4865497a7ccbee37267d04ce9aefd21d257afe0b4918"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-104.json",
+      "sha256": "f46b70a656f7d8520c85445e643b8d77fa281148ad6ae9d03368c628c313897d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-105.json",
+      "sha256": "c25367ed56d80bc2c49826b8f1a997a417c7c283109de9b52ec3a99d20ebd289"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-106.json",
+      "sha256": "cdcbbae949629183850cb80efcde544c5098fd43077697755d85058b185cc379"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-107.json",
+      "sha256": "8bfabdd6a1163b9a030150e7d7f3fb218757eaa8220261420b59e3f39fdc38bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-108.json",
+      "sha256": "9d4867359e2b92174a3f045b9f793838b85311ae495fd9ed8c5815a6b624d815"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-109.json",
+      "sha256": "82538358fba215b3de496913496fb0880c7ab1a87a20351e7c15485654a0aaf5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-110.json",
+      "sha256": "6c1a9931e689045b7c164060ecd2215cd6578ce2378aa4623ea95e582d7f98c9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-111.json",
+      "sha256": "0a1b6ff8f00f72035271c1282e6bd56368a1db71941353bbbb783345c4c09b37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-112.json",
+      "sha256": "ba7de42d0c4dd7511288fa5c47d3b2d467e6bed2401cbd6c2255a9bfea727754"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-113.json",
+      "sha256": "24f40e777ad05b33186c07cf9ce586636c43473fa11d60afb3b04299ea18d0d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-114.json",
+      "sha256": "e21d417eff0bf8357a3f0f935c4d8fb66d386029967417f02bafae3690a7da0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-115.json",
+      "sha256": "df55fc7d9b4fc602fc23512780dc4a0425cd3a6f8236e5173a89d0326ce46387"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-116.json",
+      "sha256": "3212530e472d69478197e9ca8d61ffbb73bea8e1380921fd8cddf10790203e84"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-117.json",
+      "sha256": "61b4a10134fe94c9b78ef5f1ec61eebb1222341f85618078bf7e82a54b5157e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-118.json",
+      "sha256": "29a41b3a4ad7a0c65f3b93c27b44b58c541ca28fa642966100784275ea0d8cdf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-119.json",
+      "sha256": "647a0a8e49bf3e59f9cb00f9a375f3fa67956d24aafa9afa804c58d22862f689"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-120.json",
+      "sha256": "df053c87966be5dd32cd55cbf03debf0e76fe56d68859c3ac2c3d9fa9f0caa11"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-121.json",
+      "sha256": "20a57fd7d524abb039dd586a26fc122ef5872f3c0b49d646474630de4279968b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-122.json",
+      "sha256": "c0c42be1e3a5860f4cccc5e92e390fd5515fd877f1ec6632cf1ebe77905354ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-123.json",
+      "sha256": "dbe91d4d2a5cf386e1f7d2a5bc8d0d48ace4e978b2be5956b4340fb4e295fb5f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-124.json",
+      "sha256": "a231f573ace376682518686dc6dfec8fda8da924e64deebde8013522016dce7c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-125.json",
+      "sha256": "fa7b0fb4cd01c2c224717d6e150142655c5f9f5210a569f76a06c7478f34064d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-126.json",
+      "sha256": "35f5ed5d3faab8d4979eb859ee5b6b190ed31fb00ff3ff29c35d662296a086a7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-127.json",
+      "sha256": "4a4ac7026151e5a40ee78838d96369a0751b1f9ab109fa611006d38348e62419"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-128.json",
+      "sha256": "5054f09c1765b52e1f96dc7c4b296805c9b72f4f5f7cc33242ce5bceda0fc24b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-129.json",
+      "sha256": "6f7d92148474813c928c94c37480ff37e0921801bd9c871bda022fe55b7c2a11"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-130.json",
+      "sha256": "684703d4faa2c0c2cde6e999aafff573c1b67a2e5992d2b4b86ed184a1c73dbe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-131.json",
+      "sha256": "c9d454df4e2bbdce168a38df819c32d52805fa316d1c1842e4a248260205c7cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-132.json",
+      "sha256": "4d3365e51f56232262f6c3642de7b983adf4df72dd98a07f058db2fd0a12920e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-133.json",
+      "sha256": "40221c32cea79eb89eb3df217d70f4291ac76709cbbab86e6f1f16c26e790223"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-134.json",
+      "sha256": "951643c78041967cd58c5256af1b7b7a96b31137b33f77e6f36ac9b9ebd6eadd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-135.json",
+      "sha256": "83630dbaa03e04bf97349d1adc9b292006b3515b03ded26bb51f68305293c0cc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-136.json",
+      "sha256": "a7d583decbe5f44a3b5d19b38da2386fb65d100914cfb885f1d2bfb4f136049c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-137.json",
+      "sha256": "8e19854b36769f17c8186a657fa15401723fa074f27215bc1e4c4f32f535e620"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-138.json",
+      "sha256": "81cf2062cc80083df79ed8a1765b2923bdaa40fced399eeaa19500c0a0aa57ba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-139.json",
+      "sha256": "006405c80c0ee878e7595acf0275060ba38ebacbc4344231b72f0e3add4b5616"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-140.json",
+      "sha256": "8a863c31d3a4cfc1d253f7f4f37d84185f4e6d4c9e88324320ed17e07fe92341"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-141.json",
+      "sha256": "7a6ce66d9a5a8e1d414098515a8162d4ea8934e78ce2c7d3a92910e39cbf262a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-142.json",
+      "sha256": "08a5e977441fc6bb4b0dfc0692465de53cc2e2e02fcf3badf1f3db3c5e8574d5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-143.json",
+      "sha256": "9d93821b5e78eeeab150142ed0240ad926b184bda5cbdc560f5f83e81e399add"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-144.json",
+      "sha256": "44342c3d927b498c189e8bff0d7d8e306283ad32bb3c4e3ca84abc5d9e9921d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-145.json",
+      "sha256": "4f97d9c1dc7e66de63b17399cab4dc30edd4bfdea92e5d169d70cd35b2fab84e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-146.json",
+      "sha256": "ab22f4527766ed775bc6c45eaf2f7d390d4281ebd0f8180c2a25beb5330556a0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-147.json",
+      "sha256": "2985e6ab6b64a874b96a536e461c4e542da8b215149af9871067cc07de78ec68"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-148.json",
+      "sha256": "917dd33504cdc2c0f619b00de14a71ba6cae8f8772d5dac96fcc6fb147de72bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-149.json",
+      "sha256": "6f68dab7c854230ec5ed19a7782cf0ae394aad96c16566a20b2e3e895429883c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-150.json",
+      "sha256": "171864e0bbd49a86d5af2fb56bef5e6efc19b1295d96e15b8af91d7a688de556"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-151.json",
+      "sha256": "f00c66ddd2548ee0f9be0138a6a1604b63c6c6ffc186cf0e82cc622ff12b3225"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-152.json",
+      "sha256": "714376c45e92ebdf4ef4e60dedb47a4afad42a2cf7efeb521e09040c55b23196"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-153.json",
+      "sha256": "a7058f8479889fd219f36724cd8908a7382f3943984dda012394a3ecb96971a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-154.json",
+      "sha256": "60c0d10eac3fcd0c19d9c1047f5951f251385b6fa7f1de8bf5e154541e91b0b2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-155.json",
+      "sha256": "4722a707c09a5a72fa8a355317abb19a04f1a1ce732e792d76e96dd77133cf82"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-156.json",
+      "sha256": "ec22e680ef61e6c0fe71c0a75ce922474d59e87fec665e4d108509121f2c751c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-157.json",
+      "sha256": "cb9918af9bb65b7e7c5383b6b76c87fcfb69bab089ff9b4e2e57e83f759d2fbd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-158.json",
+      "sha256": "00767b5472f394a41783b239993a9f7d9dccff56cd822fc502fec633dc3dcfe0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-159.json",
+      "sha256": "bb299ad65d795e547cea6f051a1463be489d6bb67a1b27c28003d09d69114d91"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-160.json",
+      "sha256": "5ca76e2d7907ac8b562803fd1449d5af57fd181fc4aa6cdcefee78524d14c8b7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-161.json",
+      "sha256": "546fa15ed278cb27d0eb729acfcc51649ff8313eb5810546f5518dc44b11ddd0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-162.json",
+      "sha256": "631950f6353e57d53bb05f9f97c714490843178f81484cf7e8e9c972e20c03db"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-163.json",
+      "sha256": "f7770efa5af51f9d5fdec3ded5c11f96af5469b9727641051c4217a06cc2a2da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-164.json",
+      "sha256": "2df08eea1f929cfab2d8bb1b8d89b9882e43143a639b46cf0acd17c585aeceea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-165.json",
+      "sha256": "788948c46dc1d367c8aecc25a10f7f2c0cead98d79da35ac2f9f090d5d47612c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-166.json",
+      "sha256": "0cdcab59e55bba429eab6f807aa2a10b25103f0735809fda738a5723dbf87095"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-167.json",
+      "sha256": "723402f6b50e9518217d9c70e69e7bcc0509760bdd672021e33f55551fcdc368"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-168.json",
+      "sha256": "f5aadab25590dc96da3ca8a369fb727eb640515f23478062e31d92949a358dd6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-169.json",
+      "sha256": "b728ef7141b0b40cbb83ba02344c656eebdc220c9e06f5d4c31fc779f65c8242"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-170.json",
+      "sha256": "631798a2b7006c432ae112db9fdbc8a7cdc0d7b187602ba6849d836d6dd5ac11"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-171.json",
+      "sha256": "a4bca4fc2ccbc3f17c9c25c52e870f71ec9a1bb0aa0dea8477de06c90ff76082"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-172.json",
+      "sha256": "fb022ba35d7849c3598d09c6cc771eefa40a2514e13c14521db89fdf820bc620"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-173.json",
+      "sha256": "673e5e48bde8a9c4103b8f0f37002b30c906eefc0932bc6adc0e1ccca7c608d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-174.json",
+      "sha256": "9c27e1110a8cb4736fe38206f791c45dfb4bbad27b74d9314114224ef7d876ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-175.json",
+      "sha256": "2aae5fd71d3c9ce4f80ddd5558177cf0558f6f5e94aa401176e344e018bf6c85"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-176.json",
+      "sha256": "fabaedaef8168b76c54e38fdcba5975dd7e1d97fc05c9419757352db61e3a20c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-177.json",
+      "sha256": "ceae7d8f3f1f531808fcf547f53adcd4930826e41a3a5567976f38f98d2629ba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-178.json",
+      "sha256": "967cbbb75ee5bcffa466886fca0e754434ae966a3a6f1bc4e184e7f7fac43283"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-179.json",
+      "sha256": "81725f79ae468deae657eb18a447ef587fbde034797f05605586f27d8fd95419"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-180.json",
+      "sha256": "b5ac67718e2523fb659842291c9f8f5810f370c23e91256a3481caa1714acf46"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-181.json",
+      "sha256": "eb95090b421fa82759071a3417e6351b86a7e35a62c53bcfdf7cfbb1ef60524c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-182.json",
+      "sha256": "eb55f797c44adb62002df7465c221d0e913c623491f6b3c9ccc977ffef87775f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-183.json",
+      "sha256": "08e7ea1d76f31b0516d0c4ff1f63527e71c27613d532c16e61ab90e01cbdb6cc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-184.json",
+      "sha256": "75768616b9f75ec4905e9842cf0474ca534c8eae801861470189727bcc725a10"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-185.json",
+      "sha256": "c57ac317233d354da4e79c4557d86051808423feac3a685381db9077bc4c3d79"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-186.json",
+      "sha256": "25bd4b059e52d4321db9e5f22b0da327fffb537da9596cd53eb45489f4c973b0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-187.json",
+      "sha256": "02bda47f6e05ae9ae3dfd6b2ed423b6a8f11213db64ac09cfd755b90bac2eb07"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-188.json",
+      "sha256": "a10c842f1f7675016fa47f8f25ac95654abea19c643543fd30b5a2aa549fae69"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-189.json",
+      "sha256": "846792bb0a88c56e0304d94e7efe3a1992f9d9d942a96886425883c9485d1729"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-190.json",
+      "sha256": "25a221fc2279c16dfc57395c235ee9eaf6a68b1be925c002593ba8636e9d77ff"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-191.json",
+      "sha256": "93baca57fee8cbcbd186e436c0e4c282ecae6559685956e8447f7dbfd218a1e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-192.json",
+      "sha256": "ac813c1bc8fa37e995aab8d18e116d65821d867a4ed7376604fcfbd22aebb676"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-193.json",
+      "sha256": "7447f728eaf17e16248497cd9e609436c0aaca68c7873e771116ac19969f7817"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-194.json",
+      "sha256": "cb1ef5b77c8e5cce779ffe8b29efd1b3df76e7887b89f1ec13200f0b210b02ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-195.json",
+      "sha256": "041e6c06ae56fe0c618fbb698d899ed5f663df75848f1bc588419d7981c8bcfe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-196.json",
+      "sha256": "d99cd7f5d1c52b15fdd760c462bf8db4fd95106f36613c202d71a8884a5ec152"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-197.json",
+      "sha256": "beb85fd08b0f34bc84ef49fdf21ee01b21287caa94deafc11199bd9d5811d886"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-198.json",
+      "sha256": "1dbf50447ad7712fcee425a5286fe6713533c794121bec78ba2c9ddd189e9f95"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-199.json",
+      "sha256": "efc60b5919687a363362198b6c192de9a1a2fa2f85029686afcb63464de71f2b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-200.json",
+      "sha256": "dba6e8f9482ee834161bb703c0f6289548be631403dcf78ef081de7a917b44dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-201.json",
+      "sha256": "4b06e46b6107981276b9ce67893dafe545ad4aa1df8c262f15b550b7be576af1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-202.json",
+      "sha256": "267f8a6a833f420f088edacbf36f9dd0963526275d021c2e4dd196f748392c37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-203.json",
+      "sha256": "85007e6f4eed1fc78ad13cf2ec74f9a0a874f1b358453ca2a79aaaa762a43a41"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-204.json",
+      "sha256": "8af42ba8045613f6c58c1a7ec7acc9052b10fb2363783c98a071c817add8b3cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-205.json",
+      "sha256": "90641c04d37343755263c898992d4076fa91705cfacc703fc024d3a1d1b58295"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-206.json",
+      "sha256": "3c654c0826e837dd1b283b50afebc6b74376f8cd1157dbceb88426cd8168b2b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-207.json",
+      "sha256": "d84c9d46cda39df6633cfcf45e2153e23849e8d31a0da2d9d2ab11a20dcac2a0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-208.json",
+      "sha256": "35b47bd9f332de9c11608b7b10311abf423a66da7e1fc2db8e72406747ffe8ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-209.json",
+      "sha256": "c71af2102e9d8e1f81ba080dc8d7d6e76a8cbfb81b6cb77fa2c66dc893e3caa0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-210.json",
+      "sha256": "aa3c9ae572090ab95b0e45ba041ebbfa3abeec061bf7fbd91657e7bb18f25500"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-211.json",
+      "sha256": "2ed0bf75cc5449adb4fd5bd50a9089bbeca76eac883d96df6d49864145bd359d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-212.json",
+      "sha256": "d96ec2d7668b47fbd2169dd8313728752f6dacf5b06f08bd7928d48f8f99f8e5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-213.json",
+      "sha256": "6babce8ef564b02318005ec36e74f873d39daa5db826060531328ee6963e9e53"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-214.json",
+      "sha256": "0d4cc9c6d0e6157b50cc767d7697868e2e1b70fe5637a90dbb028fda8bd13201"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-215.json",
+      "sha256": "8d79b33de127f1afbefd2c684fdce229c552d7e89e47daebcf4ab8a84c0662fa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-216.json",
+      "sha256": "b424d9c1bdab9cec5967e05306108290664278d9c5c35ee72f14c90f2dd01a98"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-217.json",
+      "sha256": "d849fb3145ba2fe41c18d82b1126e96b489497a6413dc9ee05c35b09aa195e39"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-218.json",
+      "sha256": "646c5413574f3924df14bfa3d16a7751fe99838d82833528a27736e65233b253"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-219.json",
+      "sha256": "0ef3d3f63450f92b1d74133f68fa09c5c3b85599942914ce1a00b8de6c496175"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-220.json",
+      "sha256": "a308bed9365320d089226e548a114cef1fead4801495bcb68aeba4b8b8eff568"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-221.json",
+      "sha256": "f76bab49e892f017a17b65b83c7b603aef9b379e9a0f95ce3c0860fad2af2ce8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-222.json",
+      "sha256": "13847329f5abb5c98ccb6eb19a4e16442181e8e29923f6946e2d689a281c774b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-223.json",
+      "sha256": "2dcb0bb5030e62762f2ef2adc9b240da7d0247bf06f603cf01c641f0019674f8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-224.json",
+      "sha256": "702ebb5bb09a93eee5b3bb40ceef6ab7d57a8eba6bb1f8899965ffdf875a2a21"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-225.json",
+      "sha256": "3fcf2dd55481f7f86391588be179568b57add1d449fd8c046433e71018741d14"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-226.json",
+      "sha256": "d34278754ea8017f7e4b3240dcf7336169e1dec5e5846031fd6be46a4a8273c4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-227.json",
+      "sha256": "bbad9050f3babc7c2944d3769c29df7e2ab4173fde4a10606d89ab103a8c2709"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-228.json",
+      "sha256": "b71886fc56e25b8cf620b6c297d7f10fc146f0568c8c5c273a598153d59267d1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-229.json",
+      "sha256": "a6fe0007d283d5766a6d5856d28f36697b3c30c475ca9e2cb76be8df4d853444"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-230.json",
+      "sha256": "f7a423f174c37a63bc91e0106f592059b69d99d45b6c3e15e46439f6b6d54b79"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-231.json",
+      "sha256": "ebd90512ba4cddb390476f69ae7626c17888b7755c55a61c6a89bfe9181aeafd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-232.json",
+      "sha256": "a38e58331640808586a14daa56f1e308d3bca10f242ad1443995bb5c91a4cb24"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-233.json",
+      "sha256": "e41736aa039ee552cc0b69ac6e5976500fed4254aa4327c56b3f6bfaa75f4ba3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-234.json",
+      "sha256": "b4145fc654f16030f7d3224d9d751283eb13396a0c6d2ae7b659a7c9fad2a3da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-235.json",
+      "sha256": "c37ee35f1dd97d1641b3b8d1bc62056b5cf744dfc4c0ad59735d7c8f466a49a5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-236.json",
+      "sha256": "d08fd876b58fdce416073105d85a3a7f8b500ac15fbb87f047b34b69f08fad9e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-237.json",
+      "sha256": "1ca946c996f42b600ac84d74d424624068a74d96805630ad272dded79ec9603b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-238.json",
+      "sha256": "0c559ef416d0c4020aa09ff1713a702e47cfa8d1657ad655a9462e6e1a755564"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-239.json",
+      "sha256": "05d0ca6886d5f744838fedf35d9a521214015371c75b5c277bd05be06b75a92e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-240.json",
+      "sha256": "9e11ac6052bf193c23430beb554b1d2b597e126ad0750c71594806aa50ba1662"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-241.json",
+      "sha256": "ca1e14b26cf15cfb88aae320c89967e5ebb680b2129015720e1cc98ab003d131"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-242.json",
+      "sha256": "85b21f53f0b950040478fde388fbf6da1452a5cbeea27e69918ec1b3b5230a7d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-243.json",
+      "sha256": "ef423c595572f6c6a37dd39b8f9a6c0753f2e962db42613aac3bfeea1c96eb7a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-244.json",
+      "sha256": "e17c669c9008a2f0a6ba0d2d3ba115dcb6cc77843a874e2dfad73498ca074c22"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-245.json",
+      "sha256": "b9e53445a35e98f5f0776a03c0c125e62b39dc6e15c66f52ad42c9f53ad8f22c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-246.json",
+      "sha256": "ffd8283de1ee038b2d87803c9ae6984870bb8ce0a1ae2f8e04c8303cf896033a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-247.json",
+      "sha256": "356d243af6451d1b3d352bbdc298073122be0e4a4f318bd82def4946b16575ca"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-248.json",
+      "sha256": "2117569848719f7759615477839e8ad2ec26995a33a85157252208aeb6e73a6b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-249.json",
+      "sha256": "3bdd757c26a8a70f43a20cb249551d9d1050c1e265582034fec3c78d6ba0b0c8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-250.json",
+      "sha256": "81cd43ec4bfc60827dd893e982aee2fd5dd6da901c6c60027ff9c31b5a61b67f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-251.json",
+      "sha256": "784383fb27982cd1226f5a32618c335b3b43128c6f9f9c6617607ce6e309377c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-252.json",
+      "sha256": "43c5699834058dbac1f880b8a3e7490fec28e56efa1c14a63dba7be6d474c7b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-253.json",
+      "sha256": "92ad266a8d38be06da2a42d1e852889aa6e4e64338a535c4eb3b0b85e881667f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-254.json",
+      "sha256": "7bafb24291dc49a3d96ffcc7c79753454f15a7171a8ab316599c18c8dda580d0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-255.json",
+      "sha256": "674021024df4d98391813329e78dac89af91637de810bafa5db95085f4b1c25e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-256.json",
+      "sha256": "629f0fca7983a873c55e89de7ad7070bf3474ffe13cd99d031b36039e7a27505"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-257.json",
+      "sha256": "7b71799be964cc2e251c2d0b17c737dd8d8624703ced586f688ec3263f5a1ca8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-258.json",
+      "sha256": "22be4bbd4d23107e548756a00137cc9bf3df37330acb57b1effb407fbf0cd1c4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-259.json",
+      "sha256": "b2d132a4f673189dbe0377826bc4405c5ef4917d918965bff8ff8af9f12fa3a8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-260.json",
+      "sha256": "d9bcbab70114dcbb33d20fdf8f5f3dc9f996b8ff5d807a14fe85f5b5a427c528"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-261.json",
+      "sha256": "8bea9f051d520e09e4689bf1b21afab440f34c32fbebeadd89b75380510e45a6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-262.json",
+      "sha256": "a1f23246b69060bcf5be96b70ea30201efcf36bb45ea4d6ba56b3dd6e61f9bad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-263.json",
+      "sha256": "d6667fc5d5cd3c565555dde3645d4a000433e367d83389aa2277ea4842ecafd7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-264.json",
+      "sha256": "6dd52a61eca3ab4aca8cd3f17b48b970a371a0ca9249918acb1e3cfa9690c721"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-265.json",
+      "sha256": "1d5c43d50bba7ca6e6b8ba7108314e046e14066b200f2b26c4f0799451778b6f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-266.json",
+      "sha256": "149771ff08e91706e7e669728d3e808f34333b657f4557d2f6e1f54466eed13d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-267.json",
+      "sha256": "e4bac1b380752c6a91e9080da0b515bf1a7d84c5292235bae88fd125610afdad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-268.json",
+      "sha256": "63bc5b4786495bdce96131b3784aa8248cf3aa8a7f353a8b899f338001313ba0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-269.json",
+      "sha256": "2696f05bfc9bb8692e33d30026902ab367ff5f7de95646a6a28246fd00c6073a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-270.json",
+      "sha256": "26b72e4e3cbd86610759046e2eda3580a0ecf11b574021233a979fa531e24aca"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-271.json",
+      "sha256": "7e2386ed0841913efed83d4f5cdeeb82178aacfb20fe4c000aedabe14443e262"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-272.json",
+      "sha256": "220409f62c57c2b7ced3ac1066988ee7e0fc8d0f6e2992fbee630af6303b3b5a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-273.json",
+      "sha256": "99306450270fdb482c39bfb8c9a8174252f45c1197dcf1a65df5c74175f726da"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-274.json",
+      "sha256": "1bed8456d560de66dc47ca54387af8c73197e4d8ddd6b684780b94f384614265"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-275.json",
+      "sha256": "f22e8d0574194291ebe515a2871534fee48c55ac8fb41097b54deb38e21d5ac7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-276.json",
+      "sha256": "48359299fbab6793f7a6e8d23e20a4a1128e0f83329226ac7a4d330da746b7c1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-277.json",
+      "sha256": "1a6f15b274aa24d53d2baba10bdacd19006aeec61ab00eb940ea5d50d862c284"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-278.json",
+      "sha256": "f84ab2410eea871d377882a79cbf122a21c5bd920501cdadaaf3b36438d6a9ae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-279.json",
+      "sha256": "fa6dd8fd3af56cef107a2e19c90d6e094b8703e5eb0649954b36412a09599f66"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-280.json",
+      "sha256": "99a6d43b12847c3ba437aa7d239e379bcd11e9010bb04fbe6ba56c7648de8c73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-281.json",
+      "sha256": "d2ff47f7046c144f137b15d25352eff03e8659b30ba2f5e46cff56b7930bd4b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-282.json",
+      "sha256": "8468ebaef1d1b2bb3fcda96d4ce340a46fe1ca9c3a5e39d59eb95cebe1145c2e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-283.json",
+      "sha256": "02361271aaec8de3caa9567ced451977ccb1e984075e037e54935ab5ee4c6d4f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-284.json",
+      "sha256": "782852e2041e245fdc9dbed45e60874e61c223e402b4e987031192037df96482"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-285.json",
+      "sha256": "88194801660a2ce40a9c49171a800c3e4af65f36663488bbb3e28f0de207ea7f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-286.json",
+      "sha256": "d565b795b01bcb72c988148cdb50eb201b2e00fddf31b0c47a7d7818033718ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-287.json",
+      "sha256": "b545fd28bb0e909f87c2eb0e3e231840238ee7722ad67d925730cae53b1dabc1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-288.json",
+      "sha256": "67b3fa583ae6a274f19cba7ded4d25352c4733a495ccdc459bc0ad29c9b95815"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-289.json",
+      "sha256": "de29eff3ddaef43bc5adfdedfc30b6b49ddd9eb182f438c018757de37ca9e0f8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-290.json",
+      "sha256": "608e5ef1287e65805cd5800339aef2d1cfdedff70158b082c0e323dc2fb7969c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-291.json",
+      "sha256": "c92bf4d6961ee40d15b55c51dde473c79440266689b56aa2efed443f5cf9cd04"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-292.json",
+      "sha256": "849e7c7908efeb3cbc9a2e1402a496feb1a393466f23a38575217c0a5173d64f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-293.json",
+      "sha256": "ea9b508e873c317a1656228581d952805d7cb04111ab384d42c16d1633671fc0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-294.json",
+      "sha256": "b0b31c1b52b6e8032613eb73e12091221474684e71263c994a36a2faea39dfd2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-295.json",
+      "sha256": "33d3db2036535023a49b6b63a62cad6d961148abc7896aed256295c27434848d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-296.json",
+      "sha256": "80f52ef877c999d9c8bc43d1970253a39199558f2e2f52bdbe54088d452a844d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-297.json",
+      "sha256": "ae71114b2de57bb61a59f29846c4806994a9b1ca76ef0babc55de82c6909a67a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-298.json",
+      "sha256": "30733820f37c7fcca78a5c833c243a1d4b3909056c4ab2587623c073edf8be5a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-299.json",
+      "sha256": "f8defc0f2b2ec9806394a64d139b96d49989aa994ea76fb9a7da2ca1180f200f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-300.json",
+      "sha256": "bc1b2e8b300e6a9894e064e026942f45279384c902a79fbc5174fe2eb6a61de9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-301.json",
+      "sha256": "20bd436404da88609362c61b2bf049dcdbf6c094a673bea74935147e3c533df0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-302.json",
+      "sha256": "54ecbbddcb7d43f7b1257cbdf05fc3e2f8bfd995bc40b91f7a6eb3ef1a30abd2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-303.json",
+      "sha256": "55cc0c941ee374872eb3cb77c994b4fba49780805c34bbed08499f315d525a1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-304.json",
+      "sha256": "c549b663471c6cd574f57991221424922b34a314319c991d388c3417a732df30"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-305.json",
+      "sha256": "e3fbcb06653b48e1015c5b107879fed68ce156931f7563f018c2664e1f0f724d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-306.json",
+      "sha256": "07ae2e238ac07b1945314ba0daf85a5f49a021029f68c53b51535549efc5b1c9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-307.json",
+      "sha256": "d6765f136a8c3e5e8663f35d645a1dd6ca08bb578aa5da5724ccae82d3bdfe98"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-308.json",
+      "sha256": "82ba5071b0565a21e84b73eaa6d5211620929b80a720d8007f4ab23fd5123f7a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-309.json",
+      "sha256": "0dbafbd01c6d8523bf3b12c58bd65b1b62ee185a53304266714ebd3dfee1a381"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-310.json",
+      "sha256": "6ada15d671c791e9223736e908b2a3b8e41b639b4149d74235d54e7780b8c427"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-311.json",
+      "sha256": "827b7fac393f4ff6a2775dc3594dc309da371def67379e1fa95a620ae422099b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-312.json",
+      "sha256": "cbaf45341448febd68c74c9cc1b6fd1b79ec09aa4c9b143ea134c736fc71f963"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-313.json",
+      "sha256": "f7b27eefd5a6d524d1304e5e3654dc1185f13242c09f29d7e3bfdd7f04c60f35"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-314.json",
+      "sha256": "6ec5067ffc2904542a8f36fecb6fd105390ffb699b28a579cdf4061109e22661"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-315.json",
+      "sha256": "5c24af7e1895104f215c661f36250429341dbf71605b4f3a7c16522bec664dc7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-316.json",
+      "sha256": "d204f2e709b9e58489eb119514c91b0823fe03e7af244959aa92327ddef34498"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-317.json",
+      "sha256": "d93fee4d47f74f0b76963a8e9ebb8c328bb6a79e01915482b9d09dc9668c9db9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-318.json",
+      "sha256": "0648eb7686f44eb5e8ad16829a890dcf675424aa98a8d9ca47c98694bdf66f80"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-319.json",
+      "sha256": "6ca94ebf9f354d4a0db828d9c186c46e7cbe8a0c502d7f218ca447e048e6ed1c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-320.json",
+      "sha256": "4a37d945cb1960f27fe65bbaa91184ed84a17ea8e8d10657a10e2b49fa16f635"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-321.json",
+      "sha256": "b917a223d46f37711046dfee16362f9797b8c0f74b7c677358b7cd51d9199656"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-322.json",
+      "sha256": "5958c0757be9992acad69f3697d3cf9bcc57804f41af517bb4371ae5931ffe40"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-323.json",
+      "sha256": "3c7182f31ce7679993ae39099cddfb69532334abd5cc3cc6af827e2c35f1ac7b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-324.json",
+      "sha256": "c1fd0791275f709e95162e72ff35a63a715cef354f88db2465d7ca8771a71632"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-325.json",
+      "sha256": "fa2e356b5752f4ddb66356787d10b2ffd7617016d3362b2cc7522be914b105f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-326.json",
+      "sha256": "19cb9e45bc89c0734db9527f665597ad2af1840353ffa532e7093783f03fa130"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-327.json",
+      "sha256": "2fabea5998a19c18c8bb0c494613554ed148d343a7a85321e948adb0e58b5c4f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-328.json",
+      "sha256": "826408d4cb95ee4c0ef9c42f8d39c25fb323394eb0247784c6ff45d62987d6f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-329.json",
+      "sha256": "a2995e36349e977b0c96e117ac6506b45db7cc1b94a94c6b3dc33b33fc73d5ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-330.json",
+      "sha256": "a039d68b0faa35a68cbaacac7d5421b0c7938b48aa0ee3ff4515f7d313c1e68d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-331.json",
+      "sha256": "7adb95822954ca4524c25bb0aabd9448a76c7accfefaefde752c1bb3b5e0023e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-332.json",
+      "sha256": "9a19e8a53f6c0a68fc1838df9dcf953c3c50d1a0f89bf352607bdc7a06f2e15e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-333.json",
+      "sha256": "dcd73b8e1f5111746d0a5d5bfa21a2e523d10ac2830f6d1cf7fa5cb59b3877bf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-334.json",
+      "sha256": "faac2e81e8866ebf7bb2ee64d626eb12ef581487a8d99d8dcc99cd8d5d9bc113"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-335.json",
+      "sha256": "58a1e56f36d2ec95712f359583b3e52d42aa7f216717052e6d1b5025a5046389"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-336.json",
+      "sha256": "6148f238c0337adbc466906452bde52862fc27511ccb54cee3cb5f0d5989c010"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-337.json",
+      "sha256": "2901d5197e3e8abef12fed520df58ea9f78b68232bc724638d04b32079436596"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-338.json",
+      "sha256": "e262a5c5d5a61cb4bc3ed3cd7c4a4560bd124eab41ffc46c3c7a8479aafd8e47"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-339.json",
+      "sha256": "ed842790823f5030ee473cf6b4dcc6e0dababab2a4c89298e5b3f65f68245eea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-340.json",
+      "sha256": "671521c6d1be8f480017f1cec4284946cb330199e630c12c584c3d2d2718989b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-341.json",
+      "sha256": "3546dea0a32dae55bc7df00af47f91477a4bce91b9d3b0e360e17a2810fe3626"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-342.json",
+      "sha256": "2d28432b81ce5d56fc95e6bb33e393b4d4fbf2ee3cc478dea22044c2c449901c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-343.json",
+      "sha256": "cffdf2f8ceb9e7f032aec7a7b57eed2dac2db94b81fcf83620473d2e19d219a5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-344.json",
+      "sha256": "e5fce1c711cd586ca44c3f0a22fea363fd50e57143e8e4f35b1399d05d6e2f86"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-345.json",
+      "sha256": "950e3ecd0ae9b220d80286617cbc28646e55cce7b43254fe3012308750a1042c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-346.json",
+      "sha256": "4a28097b45b7b347eeb8ed248c13775cd4be7bc6216bda4563697c8c2b80160c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-347.json",
+      "sha256": "87d8b055d95d25a4d731cfa21997acf29152d15258320c0b8a706c4886caca75"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-348.json",
+      "sha256": "87dfe37b3330f6ede9ea4f047ab953d19f158b2dc2dc86a2dad36f9aff99bea7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-349.json",
+      "sha256": "50bc945789f95ef20bdda5991d7208005295f344fecb6cf3e351ff3b94bf18f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-350.json",
+      "sha256": "2b6e3d57b0548819dd72a8d3006e4a3d1d192e4f362e2b049d66a82f1ec4d145"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-351.json",
+      "sha256": "eceff51375757621db0072e767da3a49a17731528a7ee0e04187a58cd9faf169"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-352.json",
+      "sha256": "2ee19b4ffc5e4ca05386aacd47ea0de3c2ae9879be45be943e33ff72c91b778a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-353.json",
+      "sha256": "0775d77cc9f74ddc06885159fdd28bfb97d0d0e8ea5c55c819d20be2d6917824"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-354.json",
+      "sha256": "558daa8d0d5ebcddb79c57e98ce62bb11f3c00127ae18062d5ae2570c5ed2594"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-355.json",
+      "sha256": "d9ada39ee27dab8fdb6fa56b311d3845a29d8acb2a9431e3c99026ab5d4ea536"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-356.json",
+      "sha256": "464cdd31ce4beda931aa83b6a065f04ade0b069545c49b268cfc9a4a3b958e51"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-357.json",
+      "sha256": "6ed2788f8ac359f15509ac4421fb606f3e029489106426948f79337cf8a189d4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-358.json",
+      "sha256": "537efe5626f2af8fce1d05a577e3fd191e4db269c4a9f9c569b76dc25416b861"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-359.json",
+      "sha256": "bece8f4bb7d682badc07de2d1830e5600a6b6b45de1a96e803f2cf7e489bec25"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-360.json",
+      "sha256": "8147973df663447835ab581671ec57ca4be9c56d204e00af331189bfd1eecabe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-361.json",
+      "sha256": "49045d77512939a436ea94005367d1bd4d747db67d628a4b231812b9a80a5807"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-362.json",
+      "sha256": "07cd916245fd89f6ca267b3da4a7bca9cb5dc81c9a24a6f2328e2442a8ff1d4c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-363.json",
+      "sha256": "f6241f830c0300548c84f8aec884fcfcba1a45d381def4a2ab90324cd6529770"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-364.json",
+      "sha256": "ba36d3256675948fd136c0de20cccca1452b30e6b4fb981c3a15168b2ef5a5ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-365.json",
+      "sha256": "1bdffec01053b72ee4093647327ae19fda6fa658af3bbc7c2ce6308ab53aa9b8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-366.json",
+      "sha256": "8a475ebb67db3ec9bdbfc9ce202c881afdf497ed3fdd543acf125010390ab9f0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-367.json",
+      "sha256": "2a8f2cd28eaa48607c70dcc6a4b6eae395edaa0ecf65c45e52e9c2c69bdbc83c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-368.json",
+      "sha256": "f3aee8b399a0147e4a73ce7ebaec0539fcd76e9c78706677165c66f9ca0d115f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-369.json",
+      "sha256": "64495ce2230da31502544819add1dbb859ce0faa895272a1c7b72bf1497a742d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-370.json",
+      "sha256": "ed32ef74b53f85236239ae4a24ab2510937a8afb327d19cbcb78cec543180bae"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-371.json",
+      "sha256": "cc1c3c39a59fa4ef53aa2db62d0e1e12a8caa6c36ccc8ce49e70868e2eb3554b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-372.json",
+      "sha256": "1375bc2d0fa8cd505aaeb28288d9fe53b2fecb79bdfaa1e0d98166242b1e5cfd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-373.json",
+      "sha256": "ddbe7aed6fba2c589448811c27cc16bdc2fcb0fdc3174a6c7a4a27918a19e387"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-374.json",
+      "sha256": "22281d93e6b135e8ba8fafb46751fe91087cfacdde06930b6f7184504c0dbfb0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-375.json",
+      "sha256": "197a569b3248cb35894e86709f41d4c4b29d770824f514808fde73fd8b7f8d9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-376.json",
+      "sha256": "1421b0227b7584ca9907a5b189e0cd69973765de75c9d9ba76bd82acd3f716e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-377.json",
+      "sha256": "6d9c3d2f34f7a836bfecb31fb31662efc829122c9f359b5fae73e528fd86f81c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-378.json",
+      "sha256": "f2b3a0be34d51f8f67905752ea629c121b9c0a32bdb7f2312ee8dd6860320cc8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-379.json",
+      "sha256": "3e1a9ac81f212ffbe433db3da9a58e0200d53001fd65719a4927055af22e97b7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-380.json",
+      "sha256": "376b543c8efc9b34be547ad726a972db8429a313bdc604b4cd06825a18789fb5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-381.json",
+      "sha256": "50f43e27d78a5850c93756a3cf4cf5c296f7c463e63c886530ee16ffe382f827"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-382.json",
+      "sha256": "afb41140c0d38a63adce69f7d40d40520be47dab0f9b1c9c7cd3ad229b26974b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-383.json",
+      "sha256": "f4491db409530a8d6fcc2cfa777f86a56f0a56beaf8fa21e2aa5fa67443e8b29"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-384.json",
+      "sha256": "c22ca4065d81a8ae107e100d2b7a0abb351e2af04006c7dadb95137c9b99e982"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-385.json",
+      "sha256": "a0ae9db50d58fa7ee8504d3d86adca2a9044dca67ec7f79a8ffea8e5cea4524e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-386.json",
+      "sha256": "71af0120c7a1e300fa4a639e121f7969ba60d9e4c7f0c858de027657c038b855"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-387.json",
+      "sha256": "ba159f2f06f8242e598e16d4d85da5fbabcf0a82939cd0d0139881e583e894c6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-388.json",
+      "sha256": "6036fcf88a4b8e70caa8cba3681a25317074f25028f79926260f13c803f82e82"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-389.json",
+      "sha256": "cde28acfe38a25067eed8113379aea83686e2693ba3ff0c2eb099fc22af5f174"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-390.json",
+      "sha256": "8964f7f93f4cf91a8a350a1ad098af5aa30f83161d8570165124a77777e7ec74"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-391.json",
+      "sha256": "89897da1e1251d4c8d0b9a47b7a3054de10eb9b6c3d36036e605a8f4d389fa57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-392.json",
+      "sha256": "33ced27da323aa5ab85929948a0d94977f51739111b086f409fe5a08693665ed"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-393.json",
+      "sha256": "6ca67d172c8f588ea6c41ded9064767613a5d147695edb1846be8b7f9a2f170a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-394.json",
+      "sha256": "671284274fda02ee940a955d5ff3bda60f25f2cf3b21a1330ca9174f68b0a7e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-395.json",
+      "sha256": "2af1adfe66ec8a6b94efd89c5b59991c04aa35c8d8400414d998c70e2d96ead8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-396.json",
+      "sha256": "14afb1f9a0cba5c6f6106e092862ac0b29be48fdae36dd2d070dfe42bde8a3dc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-397.json",
+      "sha256": "48c58270234d8739802623a99669ad8149df159d0bc46d23baf4d3c37a988c66"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-398.json",
+      "sha256": "0c9acfa3b979e55c5591538f9c003a33a3840f3f8b10a0fc8919012876e4f481"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-399.json",
+      "sha256": "b0737758b7cae2ca4333b71a981a51bbeec92e15134a007b9baf5ad3b3cd061e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-400.json",
+      "sha256": "f01f698bd449e9baec353b359414a3a7fcb138f2e5bf9d517d6de1382fad3c16"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-401.json",
+      "sha256": "75b03e69aeb41a248a6f9a22045720e8ce141e2f0d0088d8e8db7d90cb74f474"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-402.json",
+      "sha256": "1fe3c41dd1aeb853f1792b896d0249499a3f8a0daa083d348bba4369c4da2da3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-403.json",
+      "sha256": "e669b9d0c77e50612332bd6dd2d7f618c596e230f46bdee4f71eff09b275ad37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-404.json",
+      "sha256": "a746eb20b4691c52fe26e8fa42ed4b89d93c3ab6212e85f50e64515b56bc6d9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-405.json",
+      "sha256": "4e0864a80797f06687d500081fbca76b42cb5d0899594a989e7ed7f332736dea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-406.json",
+      "sha256": "0bba51125351cdd36e469f54d7097c0084286c7a275279ff9a529d0aed898af0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-407.json",
+      "sha256": "a2ca893fc6927daf703219c0fec74220a04785cce7e9b72b80834b0bb2f8e2eb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-408.json",
+      "sha256": "6fad48bb16890d91e8f54cdf91c4248aea450d28d143949132c8833411ada5de"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-409.json",
+      "sha256": "443f7cbd862eb2646df17a9b6850dfc9d43a86d35ed3ae41f56b1762c319b5f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-410.json",
+      "sha256": "5b051279edc967f6beb7bef3518fc3e9511298bcad4b5b871ef9e5b7feebd770"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-411.json",
+      "sha256": "555b714b37cfae4e2c53d1613434dff1e6b3b5d76f2647b9ba3e8470532fdadf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-412.json",
+      "sha256": "4084226587392afac1f3e7eee3f227e13a5fe66ad236213f555530b0c5def573"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-413.json",
+      "sha256": "09a8c0b9ff321987cba4f59705f1d68ff1e41a01386154e9639106b3e7d952f0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-414.json",
+      "sha256": "3985ee22cf3eee4e7e30b29b57896515c68cc6cdd038c893f3d1b2f191a82820"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-415.json",
+      "sha256": "35520bf7dba7d5446daf3febcfc526ab71299be215d27006cd2386f011260fc9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-416.json",
+      "sha256": "41863ff692bf75fda90bf50f0ba5d70b230acacf56bf92a48509c8532b538224"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-417.json",
+      "sha256": "b7faac8f0dfcb22b193a297bb2b0412a53f6b7dedbd742571aad6c53f48566cf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-418.json",
+      "sha256": "6472af1b12fec1b778ee94fc75b2498cd2b0bf9f91a9ad9336a3df399a973b3d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-419.json",
+      "sha256": "978c5fa8609f1e743ba0d955aba027490abb9a08db315c6993eb213cc7a24dfc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-420.json",
+      "sha256": "d6e147acb418099f6f291a0c5309f37e6cbb40004e8008407188c53ea5d48334"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-421.json",
+      "sha256": "68ba667bcd3ab3167bb2bd7c48adde0c810638bd05ede5e4e0d8dff211b4f875"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-422.json",
+      "sha256": "d0377e69dbee9e246c11881f83f3b11c7374b858d8d6a37ea4ffb294948adc3d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-423.json",
+      "sha256": "e750e9cbaa4043e7dda644f1a91ad682405d63ac7cd6f63086f03caada75f828"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-424.json",
+      "sha256": "ab8e8a9b42a63ef5ace9fb7f0b9a3bfa32cadbb11eca3a1231a6fd58caf64fe3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-425.json",
+      "sha256": "6d8ccd5782899cff7044a78d8b02aef01fda1b870d6b93c906882d29e275e22d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-426.json",
+      "sha256": "5bd9beeb1ba7ec2de6419b919cc5e8b5d0752917e40c70ec4a3363716ba83775"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-427.json",
+      "sha256": "2b26f44a21e7153a810735f159882c865a3ae49e92c8dc1c5662c29f59cc5386"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-428.json",
+      "sha256": "916ab09148790c19270874202d485231c5d44001e404177e99709085f305518c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-429.json",
+      "sha256": "e9bec054ce73b3e088593bba15c91d20f4f0b6d2eb97a0422af26f4ccfc32ac4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-430.json",
+      "sha256": "6d0e281710affbf021c6d892c96d069b657219fd3ab8e6fe0b87bb8d61c9b6ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-431.json",
+      "sha256": "11273111d3ab08d4ce610cc74dbcdc08b2a7e773bfe7775b90e01f56410eafb2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-432.json",
+      "sha256": "a76d3d6b79e21f1f9da0faab2e2627ac22383e9f1f388699e075b08046ab2f26"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-433.json",
+      "sha256": "abdcdb20731aa0cb7ae5f347697a52d9aa3bffaff008d9d58f2bbc82cfa877ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-434.json",
+      "sha256": "c2e0a27eca79ca47a3074af2193ad63bb7bfecfeb9ea984a9edceb3c8eee809b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-435.json",
+      "sha256": "b870800d1d01ba093dfd79b212d50739fdfd5c02049a5655a67337aa961313b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-436.json",
+      "sha256": "57006dc8b287aebccf935d0b261b74bb50d8621f42120726d5836b98e33dbe71"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-437.json",
+      "sha256": "7bb2515adc336bb431780633729c6ef4a91b0692b11e1cd5e2436d6d19b9dd57"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-438.json",
+      "sha256": "e72ae896922991c91f059f5d921970140277ef737a6b3641af924e7649510584"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-439.json",
+      "sha256": "7500d39bb63f05ec799744e7e11ccbfa895ec39968ba4a8e555be6ed49e41904"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-440.json",
+      "sha256": "a2d3823c7fdbba2818a5aca5f9be33ddf376367c162427652b8af5e7472bfacf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-441.json",
+      "sha256": "9122e20fd1f960a7578c86fb352f4123c7a11e50fe834195c9554cd672d68749"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-442.json",
+      "sha256": "63f23fc0021e6b444d77ad05c46d0dc59f6350950a0cab1483635b58b5cade28"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-443.json",
+      "sha256": "d65bc4a13ea724250b0497492f608e2900f81da9981bafbc3df7d55e060cbf42"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-444.json",
+      "sha256": "aa58da37f2d7572e2d970f3227e092e0ef636709d218b8b5bea70b80414f8e1c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-445.json",
+      "sha256": "f9166ba534d6058fd8a5b2b60926def0feff16d02d700e40bfcc4f9a01f9813d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-446.json",
+      "sha256": "71700295a625f9cca46ac0ba23db373de15ecd4ad4762d30f752f2a57d3110bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-447.json",
+      "sha256": "42b6c6cbd88cd8010fb857fe6ce3d59eb44ad827628bd0ea9b57804da6a00a12"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-448.json",
+      "sha256": "270afa606d8630b143eee7f8ad9b1ff312b93f327528a240c7727869afb7f1de"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-449.json",
+      "sha256": "5d652a94ad4b1d2169137c6c15ca33f4ae137c9fac84866c94627b89fe75d21a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-450.json",
+      "sha256": "17a9f1ae00af24464f800665d41540a6aa7b900081d5cab625cb7487d9cb6889"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-451.json",
+      "sha256": "9d2cab958fc391876289a4dd862465131daf3ae47f6458417f20625cd4480108"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-452.json",
+      "sha256": "2222a0d5eead2cd57f0b41a37a2e0fc8daf1e5f45af97c15fb87393ef651cef4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-453.json",
+      "sha256": "407b07192dc867b25e0b00e802889d1ff4c4f1594d7554231fdd4d3e8857364a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-454.json",
+      "sha256": "e5cfc36b8a69312818349e4cf0b4ab7774756020c84d5953919aae50b1dc0d8c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-455.json",
+      "sha256": "490b44fff8af7a496a839333e4829da1fd610a34149c8a2772ef4abf47a83ce3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-456.json",
+      "sha256": "6ebb50b23b04250e38b318845be58a8cbe56fb0872c77658b0d2cfcad946cbc3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-457.json",
+      "sha256": "e86d9a5392cac0f874fef8ca59b81384e1a6a75595c9e2dc3292044df5736bea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-458.json",
+      "sha256": "1ade3bcdaa428b38a4117fe6d56e771b68d738df55755fd2ac52c61cf605c520"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-459.json",
+      "sha256": "38729fd2c272862bb7dcafd639be683d664acc13b07dc9297465a1a9fc9befca"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-460.json",
+      "sha256": "8d8d03db7b32403f3f4b35eea9858719b31cf286998c35d25f12aa1b8d50fa3f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-461.json",
+      "sha256": "9d0d1f3a4e0d5b00ddded55f540b948fecdbefb22197b44476b8d2066783a505"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-462.json",
+      "sha256": "16ea4137c0319b6af63de1da334ef4902bde0561993dac96597440e6a377f831"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-463.json",
+      "sha256": "5b4d49d3511b96ff4c1b180c22f73c780bd98912d9b58514a7a12ada81a54ca7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-464.json",
+      "sha256": "120c7ae25c07790dbcca22552906365391ac7a51e6d77fbd5a636d7309be0c74"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-465.json",
+      "sha256": "e3c8afea34c1abd9da0a4b35ed22e51f094640d89c0fd0535c491d1d8e57b164"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-466.json",
+      "sha256": "eed265f9617105c0352fabfe74d15c3eb78bfb8057f63fa9a1d0e4abcab6e530"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-467.json",
+      "sha256": "7c351f595f7befbc6f3cd43383ff921bd8ee907be3be97c791a6d1ad793af695"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-468.json",
+      "sha256": "27751165e830ff7d29f3c45c99a8b413b08d81f9000786905985e93428427b56"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-469.json",
+      "sha256": "c9639747c4af40dfb44691c3bf3403419733a35c9420fd89c5613a56ada86885"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-470.json",
+      "sha256": "1579269b95c3e4fa17a7db42cbf42620710411916a086292b037ca6d85e74871"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-471.json",
+      "sha256": "03023a9fe4e82b84e44964fd922f778184ece3874f1ec65b1a3669c9d8544659"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-472.json",
+      "sha256": "fbc8fb8ec47e586064069955835bdf768eeda312fb988cbd5d6c9f73bfc1086a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-473.json",
+      "sha256": "cd0e317ddee7130830dc54983f7580a22f504773f14c7563b5c6d535cec46b52"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-474.json",
+      "sha256": "627f4731c7ca3090bcd511c25ecd8f5c6b7119f82dc91a5ec317b744a65daac5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-475.json",
+      "sha256": "36a20762db8b9fdcf8539e51c247da459fd28138d0a8e4a409f8329e5e067b84"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-476.json",
+      "sha256": "6cb8119b24509ad3e0cceed9c135f9b47b2ac3d30cbf2e759a90312ab0746911"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-477.json",
+      "sha256": "8e46cb5f9dbbef2c26131e09448e46729fb63457f7dc26150edfd15f9079ac34"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-478.json",
+      "sha256": "72cc0c34173f3c95c523cb67de73810ef1f73dbd34b9a4c6550bf7dd2971484e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-479.json",
+      "sha256": "4dada2d5c13729db10962a1d22a12ee5b91ffe98ad2eee2a87be049086c44b19"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-480.json",
+      "sha256": "692e1f93f016779748eb314ba965e63f82f5d0777b29adf375921aa2af542a24"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-481.json",
+      "sha256": "379213d8ede6be56f1579dd7a8eb3a15ae13457fefd03b15c8e08d04b0afd501"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-482.json",
+      "sha256": "bbcdeebdcbe734bb306a4e1439e5da3c5270da3605161a396ddfb09cc418b7ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-483.json",
+      "sha256": "7668fa074fe855bc824ad325d1ceb53eb1cce9622d079b5df911b4f01817207e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-484.json",
+      "sha256": "096ee75fbe1f65758e85526dbf16addbf179b159136d5106d8b2502121f4ffb4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-485.json",
+      "sha256": "82b4fab537cce509672848a2813fe6a1a45843c56a957396ce85694650c5e43e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-486.json",
+      "sha256": "95206f8d45ac36bb2557583368fb10038934c477ccf32a57d9fe00ac102587bb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-487.json",
+      "sha256": "7f9fc98063bad4b6c404ddc70624d6fc1701145af660657c6ebfa0796b816d70"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-488.json",
+      "sha256": "474d9cafb41bf3c6019701dfc5769f1c3f91a051f970a31c954619621766f653"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-489.json",
+      "sha256": "8789b196b4143c31d87573533d6adee0c6aa6160924719ee28543b9609ab50ac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-490.json",
+      "sha256": "2aead146be0dd936adb0161de2f0b922a03d255c6d17f5592c17df2f020ac80c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-491.json",
+      "sha256": "d038aba2d4714b9f02a831b717372c3f24e53276fb383d8753497ab4f6e1dfd1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-492.json",
+      "sha256": "56e7164c003b7aa67e538a23a6c6cf0ed42db6ff013c2c4bacdc565c594422e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-493.json",
+      "sha256": "48655f1a79824c6dccace06c409c2a54145839099e4b26887c12ffa812721ffa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-494.json",
+      "sha256": "4b68425fd06b394579934bd6a4e1fb1710d06b4da91ae0cf3b598e16e4405786"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-495.json",
+      "sha256": "412d341ddefe6d49d5897b7cd5ea350d96da2d890a79422f1a0d57986d27c344"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-496.json",
+      "sha256": "1bc7b38351304088d38a2532e3cca52533b306d1ede623a3a650091c537a9ee9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-497.json",
+      "sha256": "bee65a5ef78029cfe6107517529f602d4e0264b5d9e81172b49b7914a756f0f1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-498.json",
+      "sha256": "f6de42bd0bef585f03d3afce09b9c12f8970fbe6303c88d3deb145210680c59a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-499.json",
+      "sha256": "1dac3b34895f35d09ff6cb48374413f99687dcae91d9b7401c56794425aabcad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-500.json",
+      "sha256": "4dd5da5cb7cb17028fda0884cefe7afbc306905db96d5c6a8c47a6bd07bcf659"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-501.json",
+      "sha256": "8138aec6d5172268daabfa01331c075dd55efbb16279aa6fa67e7f59f9c175f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-502.json",
+      "sha256": "db3c76aa1a99c9d3ace8aa9cb6857d30bc7f818227e75105ae6fcf3cf1649170"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-503.json",
+      "sha256": "989ed9b669865a9f3bf03790150ad249d22713774e3693654e9dcc0cbb0d79d1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-504.json",
+      "sha256": "2bdb98f9942ee8d8d1935d497d8047247c7efcda2034152a0272fd1f0f4f4778"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-505.json",
+      "sha256": "70763aa9f152451d7dc80519dfb29834fe1cd9a7c5e8ce43a6cb47729febf8b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-506.json",
+      "sha256": "ffced53f50d60bc585daef75caa55151751aeca67884f5ef5f78e4c955fe94d9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-507.json",
+      "sha256": "9f72e06b6e52b1558d42f6a40046910bc8df04ac5ddd4f3fb961f92e66468c9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-508.json",
+      "sha256": "b1338fb97a7a264560983ab70575c6923f5efda4330e469a34c16953ac288c32"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-509.json",
+      "sha256": "7c733a57034ffe9d6b39abb0bff95cdfee8b1855a25ba0c5093cadff492c3581"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-510.json",
+      "sha256": "1f3e872d31fae0efa97ef1fa1847dc993af19bac977aa6cb0e0aa0cb9549019f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-511.json",
+      "sha256": "e4cd9b67c248f5a0b3a4a00a5807cb76b5e550d65dc46eac202bd699f280a7f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-512.json",
+      "sha256": "d22dcfce6ebc2de0821c21c446b84b0a3c710f834ca602351afb18e5e9a4c0ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-513.json",
+      "sha256": "a5998084d174e87c1392572c0476b48fe80efe9e577ecf28a8105b98928498e3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-514.json",
+      "sha256": "accac65796780c4222b3f74b1eca1ff15b81be67092e4f59aeeee82bd3cebbfc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-515.json",
+      "sha256": "3a0b3edc69654c8b4d909491d617a2791c1bbe7b9219c918f6536a4909243490"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-516.json",
+      "sha256": "9ce83b15337ea6103ce0041668dd076a86ad506b793fc51f23d96a93cded5eb9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-517.json",
+      "sha256": "a5dc409e5e98a8f14130b8355334f92e5ac2b4d8bf6360a8359773247a506dd0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-518.json",
+      "sha256": "ffd82f86eb07ddf9354aa4763643bc15dc3f3b676ae72564e8840b059c12d9b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-519.json",
+      "sha256": "ad2e6522c5d7c6168ca1767a1415a2478c9b3720604bb9e4df104812a71bf650"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-520.json",
+      "sha256": "67954f54ad78449de19c68ec8df4533a8ea8f4ec6c4836c4dc807b04a638cc73"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-521.json",
+      "sha256": "c4d017475c26ae30e41cd6098f35964cf648826dc37ff6a54c3b361bb1f7f04c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-522.json",
+      "sha256": "326dd7341a809a49097a8be0a83d7035abbd88b619437023e13ec8fe916c7ce8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-523.json",
+      "sha256": "8d542b6d0a2b457f8d48f85b52ed50a7c66720158f637742a780611a677fd4a3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-524.json",
+      "sha256": "932b6976c0cc3f7d031decaa442b686a1d890c28d91195554b8cd4927370c6ee"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-525.json",
+      "sha256": "8d69b5acce939ed42c65c39916c6ec08dabc096424b0a60711eb6562910cf662"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-526.json",
+      "sha256": "0a00a1a7354a409ad3cffa51a54a738888e39e74aa825ee10e9e2b0e49b0dbd8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-527.json",
+      "sha256": "1f32092424fed6a124ba3e3547f7f5b06a69c2c9dfea172aca81c308212923de"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-528.json",
+      "sha256": "c460962b2a844afc505f42955354a5461587262e6a5c559ed5543fddcb97c2ed"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-529.json",
+      "sha256": "90520192f838d4f15f6733cb99086676952230145bfe813665dde0ee8a144031"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-530.json",
+      "sha256": "d9b522f497ef1c29f72ac6795fbb93458597736135732e106898de9f98dfab1c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-531.json",
+      "sha256": "bf1108fa66888abca3a14b909e647a1c81fd51fd73e0b19f2ae936fe475a847d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-532.json",
+      "sha256": "5a219a45bc8f5a85c8e0b8c45d29e535e1ce467348421fb6ac9d794f0b0a0770"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-533.json",
+      "sha256": "f2c7754e7de33f71a67ad27e00a44462b20c5575a5cfc75caee1bbde6de1d0bd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-534.json",
+      "sha256": "d3fb6c8846aaa8101bda26ff7f5af0735a1d733bb3d4f2489c44e846e3b6c52b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-535.json",
+      "sha256": "668b36c38479c4332f872865d801ece99ea624b03ab3d6e090ba8f57da62efaf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-536.json",
+      "sha256": "8b351322156a70d4448a9fa9f8140b2d8d7dca0e229d1533689d9ff5cb16ee59"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-537.json",
+      "sha256": "36a3942668548fec1475dab398f99de64908677d49329c8aa6de7101974ba6ac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-538.json",
+      "sha256": "2eca1acc84c144cc7b382608a359926691dd3e550e941079865be7fe27475377"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-539.json",
+      "sha256": "8c4d5dcf2b96e403d980d7deee06cf23837c20e1576ff916cda6905cc193b81b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-540.json",
+      "sha256": "0a114491ea90d094a65cb8ffa01128ffa9330ddcbf99bd69e3409ebb4278f57e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-541.json",
+      "sha256": "cee6214d441ebcf7cf08259de1c8382e4eef8bea7b35835adbeb7c0210022a3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-542.json",
+      "sha256": "47c110b86ab2d2aba8b7115f3a50bc592a67cf685f74be1c5ebcfc234d3a853a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-543.json",
+      "sha256": "884c4eacbaac0e878ae10b4d6b983be478ed5c4acedfffd57fdbd7795f65103f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-544.json",
+      "sha256": "581fb67efeb6230b836028023542b54149abe65cec78a9b29dd43963dc59fb3c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-545.json",
+      "sha256": "1e8538626b1858e5ac339d986b185f10ba6a85d0710b4eb7bbecd9d8562bab3c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-546.json",
+      "sha256": "9ba9ee6295cf569eb96e97cffe306c13f6dfd558d3f01c3afb4ad0cf0b101a1f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-547.json",
+      "sha256": "16902581e5046212f360f11042597f533ebfeaa2f896f6ade71f504647ac44a6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-548.json",
+      "sha256": "ae2ea5c056af6d17cc548a5fd69a77d18fcf7d2e99ed379de04057bd245914fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-549.json",
+      "sha256": "7a880080a5fa5262f86280298e562020649e57116a409ed7820f7135235d864c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-550.json",
+      "sha256": "a0fefca5d4bed5e480514ecf72bb522f94f56bac1e92b41fd2236e1f32784037"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-551.json",
+      "sha256": "76a22b190646c4a1a1b1996b8623c0ddb833636ad39869b0776bcaf88249b058"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-552.json",
+      "sha256": "c779cac3080240cb1d448b538fb3b2d350014f5eab23358c9c846ccabdb7cd5c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-553.json",
+      "sha256": "f281e9a0d97418853170919bf0039490e0fed0d9cbfb197ef8e7da9169691de1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-554.json",
+      "sha256": "e73c7fc209ec62f30e76929a38befc8ababee108891a9de4395ccefc93a8e806"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-555.json",
+      "sha256": "7dae3fc03b96d07c7c25be47903eb2e6b5e33dcb39735108ebcebe241ae093e9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-556.json",
+      "sha256": "96fbe92e90e753bad0cdc27aeff826035380230569edcca8f3be555195592988"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-557.json",
+      "sha256": "5127a830c3e432c811bd8ffa409c05b26727d78a1f96e194acefda533576122f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-558.json",
+      "sha256": "de08c0f30f992f22ad491252e009234c6a4d0fcf701b04745af3cc2259cca34b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-559.json",
+      "sha256": "07b4357b529e9e463e3b3c25ad04eb855475fd21b386c9823e8279c98985a215"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-560.json",
+      "sha256": "d575ccc702ae3eebe1949ca6dd8d81e769f4616ec453fda62d52f6fc70d3f8ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-561.json",
+      "sha256": "0fd1991d91d4fae69f52272b1951e1c95d9aea8613fbcab4f414c84bb179b46f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-562.json",
+      "sha256": "815092d0b609b063265c411e63e63330c9384cb9591f906b8c8d99dc992de06b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-563.json",
+      "sha256": "1122d7635674b6a8e206f582d8e64e3f3babc8c82cc5be3ea3eb64216efb5d5e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-564.json",
+      "sha256": "9a4f59ea73592acdc9e038aa0f6e1db181b896e54612d2588772c849beee193f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-565.json",
+      "sha256": "2cb69925bd3ab7a2e70364d8c63d2c33e64423779d21a955c085c09b2137fb1c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-566.json",
+      "sha256": "4471f5117b9d06e997bb3caa306d65b27008629a1f830e459a81afc7aca1c9ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-567.json",
+      "sha256": "85fd3d7d5e1f6a48638ece90c6d847f61b3203344463ddbf4bfb3fd0c43795b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-568.json",
+      "sha256": "fb7c72bd95bc2fa8c8f4d381a5c3ed75c80fe4be002a2a17ad2bc0651df2f187"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-569.json",
+      "sha256": "a23d4fe21b0a5fc47169428880dd4e9b0000421047181689d3044e6c4ccf0d31"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-570.json",
+      "sha256": "4e52435ab806518dc4f75f94cfeb6bf8a0603f13ffe057088b989cb5b83add3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-571.json",
+      "sha256": "6bbf23ec9cefe10f64ebc62b02e1b1f7903ea0e79fab246d8b31cbfad6352248"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-572.json",
+      "sha256": "ebe4c4d59bca50995de42b28a33d55cf65caab0b46e2fc5e4708593ef602d8ac"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-573.json",
+      "sha256": "a8db60ace89cbe29b9eb1cb6c1f3037f39d243c1e614daece904e9cd254df5b5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-574.json",
+      "sha256": "2ab63831bde725f085a2737346acf51c9768f47dd771808cc9859672e1f2482b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-575.json",
+      "sha256": "e5dcc7b5d00e519060fd4e5ddfb8f96541aedd8e719b693614d703b6c2307ea0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-576.json",
+      "sha256": "0320f6c74ddd709b243b05a8ad9057afaa5541ddffa812a74c5e50836b460f3f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-577.json",
+      "sha256": "1e4f774d2316851a3d3fea20019f038fd90da6f5304afffa33621f4e821d5d3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-578.json",
+      "sha256": "5bfb8afb943036ee99213a05d549ec66bdded4e2fb86bf1d0b423b7770cc8db6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-579.json",
+      "sha256": "d81e428cd79ed425a594630af2f8d8a9057a44e5686d1c0c58d31b492364205b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-580.json",
+      "sha256": "06ed3958b96c7429048c34061e1bd31582f2ce08376a4e9bd04c8802744ecd0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-581.json",
+      "sha256": "5502980d0de1f8fa08fc3cba069c347c15e74a454d14d5ed4de8f80620a937fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-582.json",
+      "sha256": "ecac042e5a490282a103d21ed7001242d11f7384901c0dcfe5d7ee73071ce020"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-583.json",
+      "sha256": "4f2a64fcc92c889ba424364d1f1f1f8f7ab357722819dd32423571d4b0b28378"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-584.json",
+      "sha256": "66ffb9c1a0faf8c1cb54eb6d9633b0b56bc61823b2905e00e0094dfdd7c7ea3f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-585.json",
+      "sha256": "ca8af1294a47b7a61568ae3a53096f536e97f4ceee6c0620e51240e160282277"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-586.json",
+      "sha256": "ede619fb87fea0f1dd9f9061228dcd03e91dbc4d2a260d20ba57e9209d1f1cb5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-587.json",
+      "sha256": "b104b46f756de5db507eb419dace4a523403e349b30073d711a7823e8383215d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-588.json",
+      "sha256": "e47d1b8d80e2c2947968dcf1a157a84cc7ac59cb8373c95ad6e64cb40c55687b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-589.json",
+      "sha256": "9a59bf5b3a75779f57bdc4564d9ec1ae2299044bc598ef205a04fdd040f4db78"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-590.json",
+      "sha256": "8c312781308cb94db1a3ae53ad180a1b2717f4a24894fa08f9f0b638e7158ef6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-591.json",
+      "sha256": "290f4db9b31b84c58e0b7e46f9b2578a9e993adc6f0e8002c20eefd74104acfc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-592.json",
+      "sha256": "8469f4828d2de9fd9e77dc405abdda5dce9e7acb3f013b785b8df5db9a5d660d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-593.json",
+      "sha256": "19a5b1c7a022228e718c67df8c39a01562034ef6b039b468fede123957cf99a7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-594.json",
+      "sha256": "a9e71421598e0842e19b98f0c1dba6c32d15167d39a9f211591799ef3a27e5aa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-595.json",
+      "sha256": "048bfe1a2b2a07cf091e1d87b4b7a600cd4f38b61b93173a08bcc55672ada46f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-596.json",
+      "sha256": "682043e7c135db2f2cb93a057653a872d8013871278e89c50ae29a7ff8222a63"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-597.json",
+      "sha256": "8554950ee57ff30cc9494f3e175884ca19c681dbfc392eb27bfd4127896e58d0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-598.json",
+      "sha256": "8b805ab75da722618f199cb1a0d54a0ac73d5d833c08e2f0ea4960d120293b89"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-599.json",
+      "sha256": "1e5bca47cedf76a772c827b5c393207f2afc06d3c158b8b9cc0dc536b2935a7a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-600.json",
+      "sha256": "d8b0b6ae7e57b2c3a86b2ade1a8ac9ee6f41482e294db5209670dd4d7e27db52"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-601.json",
+      "sha256": "68145ca176f08b9bdc7f97638f84363964039edfe6e2375629ceaf4fe685e9d9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-602.json",
+      "sha256": "7fffd26accfc94ec35e843355fb43d15c43b72752820a00c27901e9997edaef8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-603.json",
+      "sha256": "24a0bffdb7560caaabbcc4d18aa4aa32023fdb7d864812daf09548a56db6fce0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-604.json",
+      "sha256": "05baafe32a60dcdd70d14068f3dcf9a8ebefb1fb12deb173a718f92f8b484a5e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-605.json",
+      "sha256": "e8c9e1d72701ff77fc9c2e383c45aca0dd046f02fb4d3f08c608ef8cb0d1671c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-606.json",
+      "sha256": "d1e9c2f81c5677803630053effd76428107aa86b5df5bdad930f17b9e9e750b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-607.json",
+      "sha256": "e6ae3d1c6303ccd3a7494791d34a4e0544475e72961f77a35d2a1a5080944796"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-608.json",
+      "sha256": "e08b1d00ca100db96be2e8343bbb91f5f904ba8af91c94172c7142633da6e852"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-609.json",
+      "sha256": "4c3939d98e1356add7c75be85d1d222ccd4fa0493570302b19001fb57f62b155"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-610.json",
+      "sha256": "a414897a1085b061a49fc9036a00c378d11835fda6a4a6de5dd894cf335442e4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-611.json",
+      "sha256": "5596aafa1f4f702e296101a814737246e7df5b0181487ff316f611d0f638dd2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-612.json",
+      "sha256": "53090b8ecc5f932a418104327ffe5d59da98c791a6416154fbb338aef1f42a17"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-613.json",
+      "sha256": "c25ddecef6ebdcd4f98a7de2dd2cecee1afa4b0f2185cdc82fddf3c0ae55b33c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-614.json",
+      "sha256": "a02ca4f90b91580e88c62b81c1f9c1dd3dea468262fd628da5ebc8f98a1fab1d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-615.json",
+      "sha256": "1e770ecefd17513335291030051a1add692205ce29915d3c10d4f4835b85d510"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-616.json",
+      "sha256": "1cdfebf0202f2c3d30af3be288dbc20ff81cb86516540da9cf6f225cadd4f898"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-617.json",
+      "sha256": "8688011693c66e37f90e800516738fbc38186d61f2610ef8f1b8281ee6b5af75"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-618.json",
+      "sha256": "6d864f86fa752acb94792e124b7b2737480472c32b684116815a1dbe83d52932"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-619.json",
+      "sha256": "7090b134d3b210cf7456b99de28a664de088b3ee556dfa0ce0cf60e78446fd71"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-620.json",
+      "sha256": "8ebfb61c9618b69c05d5def9a18585ca10c7edbef6c42a17f738a39005efe9c4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-621.json",
+      "sha256": "7c214e402b71aa9e299a7a29a379bdd5b661186b757aa8ea6ea8c748996a027d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-622.json",
+      "sha256": "af6705dfafd84e0835e4cf32cbd0f78cf3e4c895fed16e58b617340720e3df9f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-623.json",
+      "sha256": "fab3374a01b90ed77419ce3b9fa2a560f5f33833a5fe08799bd990b581b53467"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-624.json",
+      "sha256": "ec705dd97c51efecda1fae41a275e95f9924136183dd363fb315376994f9c4a3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-625.json",
+      "sha256": "f33cdc14b92e0075e935c918953147706ac9fb16001a0221060d0576f5c71ec9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-626.json",
+      "sha256": "a9b74ff6c68eedf7a479f55c470b2b9108c7d1339a1d369c422b3964e507d6b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-627.json",
+      "sha256": "22b76c4c25eec41fd30385c4cdd58e2280716733d5b921d981866e4413bfb3ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-628.json",
+      "sha256": "0ab63a4fb70de13a1a197ba7391069a4f85851cc924fdec6d5cb06b2e4390db9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-629.json",
+      "sha256": "c8e2c3b075f50a78a090e5ae14ea4e7270950cd52af3d0dcc5a91f76e62c6eda"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-630.json",
+      "sha256": "d4f16ced62d0a1274ea228fffa46f980367cabdf4c3e2e24b18e4551847019c9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-631.json",
+      "sha256": "33e6ddc0121032382f4ed982ec4f92923461b3993499b15a6b7cdf7ae524dff3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-632.json",
+      "sha256": "52624d910cf25241b46fb50f76055cbc514f973f233be7d7d43d21e9c9fcf584"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-633.json",
+      "sha256": "a7b0c67f9430c55eaefff0da59fc1a18fcd5bbc025d2a3d64db146280a4591a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-634.json",
+      "sha256": "b5c4b69a68734a68ccc5ace5f3333b3e368761fec99c0a3276c4d1a31edbf555"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-635.json",
+      "sha256": "6134bb6b28a73c121eabc98ba1ccb3030c8a3bac929a3c9268c94496e3618697"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-636.json",
+      "sha256": "687bf00852cfe7d9109c72c53474fb0bc955a7dc87aac115976b52b4415c2957"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-637.json",
+      "sha256": "f9b0a5e3d762054829c6977f077467a01ed65fbf97ff830e2ea14e348a053d28"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-638.json",
+      "sha256": "280f41b54a21b7c5670a508984254bdb39449e91418bd3bc958d97f2e4f24851"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-639.json",
+      "sha256": "e1548963e39d425f29ac160f96a7802f35f4b5594df7befa20f5d18e255fbfa2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-640.json",
+      "sha256": "6931838bce8ddf01274e93424c9406f3257c950ef8ad7b879a0b4a60c09c7194"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-641.json",
+      "sha256": "780fec102f0c1e64379ddb890943c4fefaa88877fba8526de3760fb9ab8a6b12"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-642.json",
+      "sha256": "9c788da21423d0e29edf9c9d0fafd9d9e1381284395d417d20863f2d06513a2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-643.json",
+      "sha256": "d474c73eaf0a6de3557665b32bd41f481dd6207a46e5e60dd8c83d703133bd99"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-644.json",
+      "sha256": "bec1e13f7a648c58b4b835be6ac897436142459836fd869936cca1ab4601fb9c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-645.json",
+      "sha256": "d4996999fae359bd180ef84fd1ffc44938e84dbdca56ce909462dde8442bd781"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-646.json",
+      "sha256": "0572c6e33b0bf5982af497a95097da3b38848f0ba901f623e3f24c777551dabc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-647.json",
+      "sha256": "b9e9804a4cee5a7ba69a867a265aac84b4c5df2c35bf78b9c58e0971ec16be3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-648.json",
+      "sha256": "cae99aaf628adb77319489736e11cdaeb334a2e71a4163a843888ee96b468f09"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-649.json",
+      "sha256": "f2af41cd01100eb1eddb1ad5ef87be7373446f1006cd1278ea0cd753b322931b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-650.json",
+      "sha256": "a0eb1d285b2cb755a45d41ce5e67c6f6c0b3a9d8f70f466b9e4d56e5838dc19c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-651.json",
+      "sha256": "b2d7c45517c0eb84e6342792896df48fd227183f817c68e43d6b7bbafa545c8c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-652.json",
+      "sha256": "922e395915d794231a673413c3e780874007e97b8824498c96d3a0ae452bc44a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-653.json",
+      "sha256": "91a04380b2f0a3043ff48934c58650b76d04114bfa2989f0501f0d81df7b76a7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-654.json",
+      "sha256": "6a9bac68ad2fe5e5af9a5dcc2f0e771248f5b9b7811a1d555a9926aeb39c0ca1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-655.json",
+      "sha256": "4f8c579dc39477b062b07d415c5db6bfedad6f7df025fec15667524f41ab10b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-656.json",
+      "sha256": "e4d067b5c72b95722aea87a41efcacf6d502c86967a67c5da7dc50835d04c408"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-657.json",
+      "sha256": "97bb865031c66c866fcaeadaadc2279389ce1ea63e7fa25132ed753e86fd6d53"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-658.json",
+      "sha256": "6010287e492aef590c92cbf20f19dcb27bd44c00229ec9059395fa194e63febc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-659.json",
+      "sha256": "ff000c9a151df45ca35f4624a96ad9cf22645a247c30ca523047cec52b820a1a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-660.json",
+      "sha256": "06e5b4312e342816dc43f460760698e5d8b8ccbb7d05ed393e707dac410f3bf3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-661.json",
+      "sha256": "97d67c851e3c44d6849cbb1acace56140c71c614ad11a12f60b78a06ba985d65"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-662.json",
+      "sha256": "98296ec894eb83b5163ad18c3f84dfb1cd1f87ddc76088110e34b52412a6cc05"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-663.json",
+      "sha256": "6a7876591ef2b66e8cb2f3d5ce631a832cfdb641129b7ac7381b487f5cd26159"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-664.json",
+      "sha256": "5ec51eb45865ac3d066eb1f2768a186502dd7737f5ee3a6ba9749f02430c59f6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-665.json",
+      "sha256": "c0ad331f2b517aaf5c6df301714de5136d6df9795c609d4b58770de195d18570"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-666.json",
+      "sha256": "75efe87155c272561ca95b5eb1c7060b81a6d0483b07fd156c4dccb96174bd36"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-667.json",
+      "sha256": "7223a5639e1031c58166c864fea496085851d56d5e062ee228ef86a4f3e5b80f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-668.json",
+      "sha256": "f448e1b8521c6187599676e3fe9b8d5e7cc719197973bb139eaddf9d8a87b5c1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-669.json",
+      "sha256": "b272163c16e299e138b7f38b335c3a639331d0102379d9f03782d77ff6446353"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-670.json",
+      "sha256": "25e6a0973a1349298bc4ce45052b415e114ddb973485cb3bf0e234e0584105b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-671.json",
+      "sha256": "cfaf86e67f5dc605c92b93c500e921e4cd4f9b95dfba840f9a8c59d888c640fb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-672.json",
+      "sha256": "ea74c8a0056149acd4e0ec4aec622555ce0ba1586e72963fc2b8664748d46d91"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-673.json",
+      "sha256": "81ffa427ba2ed1e52f81cbf581dbc44809e605e5772b923e962bd90193a14c92"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-674.json",
+      "sha256": "09b4c8127012a11bbbb7d750185f271ab8b736c6fc44a8bfedcb6ee41ade11aa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-675.json",
+      "sha256": "fef93919126daa8021c6e9863ee9b0da74a6ed5571f252cf1acf4d11268f3cdc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-676.json",
+      "sha256": "0a04976b0decceebc7857a9730e13f1f5cd12b86907975368ed5b70d774767e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-677.json",
+      "sha256": "a60d49b636d73e47854ad6917fe3db260f430a20dd131b1d71dd505d17f8c7ed"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-678.json",
+      "sha256": "11d1eae8221fea66e930abf4b8cf85c230da688d244c143ed2c21d03c328ac7f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-679.json",
+      "sha256": "7accb852aadf09eeeaf1e83166f88a776ababa5467f6b6fba60780315b3aab18"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-680.json",
+      "sha256": "216de07c93df07231982f16beae616f0c6b9768c7c40c532c5387d5f6db95619"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-681.json",
+      "sha256": "d56d61ace82ddbf33d686ad4a5bd5d7ed7805c2321761009358121b888170529"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-682.json",
+      "sha256": "82b97dafad6a685451bd4cc25f3f2c6d3ddd0c88625a46c12d33bfc40dd836a1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-683.json",
+      "sha256": "e48438962cb3cff260696332c8af05383954f54b5caaffe73daac59f7498bc88"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-684.json",
+      "sha256": "4c5f5ad9cb9f04af333a351069c3b9d2f48c24fe94f817248b4c211b36c9f9ec"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-685.json",
+      "sha256": "4bf8f791e8a20c9573982a5258f0e7ad061b9409758d204a24a5cce0c8b46349"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-686.json",
+      "sha256": "b31e30cc3e10e0ed9f30e3233cafcc628d0cf031be59a1aad42e16ef6dd27515"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-687.json",
+      "sha256": "a9f7a10c92e53ee4cc6909de2728fb59c59223a7aa4f1be1ad48c4086d83dfd9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-688.json",
+      "sha256": "396ea8bdfd6ec0eb03685af9749a8393a1e60a6bad026924fdd4064d3c31967e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-689.json",
+      "sha256": "13420c0100da38fd67e63fe0b3b39c82640183de80839a3143ef360b13062b91"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-690.json",
+      "sha256": "da550f84179f7f25af9300e6afc75f7528eeac24eb9a8a0bd80a3b498a1e3a37"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-691.json",
+      "sha256": "b47233b92eff263d45db4967a5d1ffa0d50c0233c8ef9c3a88dbafdd3cb8f439"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-692.json",
+      "sha256": "5798dfa1cfb1f41c7eb8d76e5f32fcd25d225c36b16833cb701279fc1aa3c9e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-693.json",
+      "sha256": "98c71e1abb50191b167bda707931438c7aa0e9bf2f2eff758a837aa16dde0c20"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-694.json",
+      "sha256": "46741f241361d75f395cb0e532e0f0c23431a1bd509c8bd1aa47f0e57c174457"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-695.json",
+      "sha256": "7ca143aa77a4a9d749bbdf7192e6b5996d000dcd579bae793722fb133b6b462c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-696.json",
+      "sha256": "d799d342518e38be799bcf916e7041fe39377e207a8a9e56f835c86fe0550c3a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-697.json",
+      "sha256": "0195a185b078cc19c456c2a0a748a5ab56fcdfc203314d22c677d5db45bb9024"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-698.json",
+      "sha256": "d4a96015874812ba0de06e2399bded930c97897b70b725eefcfd6feb41b52726"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-699.json",
+      "sha256": "3e2d63173850e5c7156dccdf826a02f22582efa23f5c983151ffc930a6bffe1e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-700.json",
+      "sha256": "0cf158a659f72f6938dfdc1a56041d03de018d8ab2bf938b639a328b7ed2e297"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-701.json",
+      "sha256": "0e21845671dd7ad62aa0860b84f1e498c5339eb0dc47ce6db9a4e0be4e346ecb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-702.json",
+      "sha256": "143a0d889b021eb4779eaa652bc42b8fe9f8a460e7ceb465a23a137b108d6c3b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-703.json",
+      "sha256": "91759f11d274abc180de8f72660950b78cb93b560fbb0bb2f1f2133b914eb398"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-704.json",
+      "sha256": "4075345405ba375346d7dc8b13516e6426ab86f80d16cde816989596077cbd9c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-705.json",
+      "sha256": "7c9bc3e670f04fa7a92c365a8222b22914ba0b1935507da8d2970a00b8ad20d6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-706.json",
+      "sha256": "d3476921da50b19548953ab3c76c0414100c6bde84ca17a333479459046c6a08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-707.json",
+      "sha256": "590d03a5aaaa327f3cc5e5cb919e33861f630b068a2be00e0184f17391c2933f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-708.json",
+      "sha256": "15d42ba0cf6675c039852c78151717e175f26031438a35988785c6edc3e58aef"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-709.json",
+      "sha256": "dc2a9b99a25c4ba8ac5c531424cd90d8db9e6988f33bbe4ab480bfcdc5d70a9a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-710.json",
+      "sha256": "d6b7c7e780fbcdb71fb7dbb556b0e66b265905e79611f6e9e00f3f1596fd114b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-711.json",
+      "sha256": "b0b844d72c4d37d34b27be4a0c6a0e3254418eb87cc9405d7beaf6e29e5c3fdf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-712.json",
+      "sha256": "95256f7764fc7ead99e666b062541e993cff234ce5d3cfa9e7caf5982e1a7e04"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-713.json",
+      "sha256": "3327a3a76a4d352f84ad8439a6bfa832b6afbe8bff55656a9b263082ca1807c6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-714.json",
+      "sha256": "2a5107d4f2d98cc96cedc1711de0cc6ca3f01e1c543ddb2bd400105fe610e77b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-715.json",
+      "sha256": "8de93a63a700ed7d00a5d7199be433ab55e03fc8c02631d799a6d48e061d83a6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-716.json",
+      "sha256": "689c2e77e4ea32753c6d77a67f6d90eafe87045feffd805d100135fd78308f93"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-717.json",
+      "sha256": "0fdbc78c909776280550df88378b1f5b5972fa7684411cd1831523985f863ac5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-718.json",
+      "sha256": "f93e08479e7d54100aa6cbc314b428f62b70d08d2ed2dcef19fc9036de87dd49"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-719.json",
+      "sha256": "dcc6afc424062fc8c3f8e9f99fcaa3168f153443980adfd8bab9d46256725a08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-720.json",
+      "sha256": "bba51cb3813ea5a5b48436212f14422877577e580bd5d4d95cb64511abe500d6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-721.json",
+      "sha256": "8775feceeebb385804e2dd93dde45e9e43fa59c6791fd05844a1e5d7bc65576d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-722.json",
+      "sha256": "4fe750ca2192ca386638efd264de80c816a22823a5d812ce08132a4ac9eaefe7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-723.json",
+      "sha256": "fd124b4d60443b4e1dc0060ec2f14b7ae63bb031c8d8604ad2337f4f37b65678"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-724.json",
+      "sha256": "5c47c289e2a3d74b91a9a7041810b75338cc91e6ee1f2e8f19e4fd0d9153a0d3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-725.json",
+      "sha256": "aa6b8e37aa9154599dd8a0bf22ad0f41230d187905d5716b6c24037498000d0f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-726.json",
+      "sha256": "ad1f918ebf09c6c1598078964d0ea29a78517d2bdaf72b2cd400891273e31fd9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-727.json",
+      "sha256": "2fb000c5762580121270cd8386df50e3edcc2c32a721e8873c48647a557c01f5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-728.json",
+      "sha256": "38eea5e426dd79753e7c5f2bffb3c3eb284da5ebafb76d0430841a537609f3cd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-729.json",
+      "sha256": "24da0965486e2a3eb60b7a8fb29b093e85224f2abef16194c92e6e73597504f3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-730.json",
+      "sha256": "93cc332aaa3a10d6a28fe816a665853bc393e242015c663e1658c4a753dbd22b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-731.json",
+      "sha256": "4101a8596a91fdf89b8cad5dd8f947b9cb467701ee51cdb0c8dd71676681451a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-732.json",
+      "sha256": "5fc4184bd7827ad098400bafc189e249dfbfce89b6c8a22fc639f7ea07e042e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-733.json",
+      "sha256": "c57aa8c07ff4dc8f8a66139ac9de8888e6ed60fc9a26d9c3b329257681cd7bab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-734.json",
+      "sha256": "c0ac46a7e1c0558b7b60aebcae618730e17c1f50ae184a014aac73b2e00253be"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-735.json",
+      "sha256": "bfcface8800fc395bc4c4bc6de1004146e93be553b8a6604ba4acc50ff43b5a6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-736.json",
+      "sha256": "c24702df66b038f737557ab2e8d50ed5359e823c15d2c7a6ad619456def5e7b1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-737.json",
+      "sha256": "926e67f45946919b4aceca55492275c34746eabbb3835c768e5a199a78388543"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-738.json",
+      "sha256": "72ecb4e6ba814727d8ba997c2577806bad59d4a5778a87951269fc3ac297e7d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-739.json",
+      "sha256": "1f3819c39d923d3fd65b747d0f1694f4601cd64cf8295f8b51c56e12e0bdc188"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-740.json",
+      "sha256": "07bfe173720da83c2754062b7bff8dcd73afabd8f7ae4872d8579198cd99da6c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-741.json",
+      "sha256": "c478385bd106ca469919a0d3726f30c1012b6ab7babed2baae1b410939ed048d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-742.json",
+      "sha256": "f03238113e734f199933c62bc1c86b9ed42f9458f987fff2a76b14ebb5e446b6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-743.json",
+      "sha256": "9f583fbab469c7c8dc3140d5bdce40e48240342d6870249a66cfeb0ad8168074"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-744.json",
+      "sha256": "2b8fe88575751dbe27767825ad44da7f7abec9a671baa8dbeca9ea7c4d1618aa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-745.json",
+      "sha256": "e1eab9f95500ae7317722452a01ce7bfff1170a4dd5178c65735757f2538920d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-746.json",
+      "sha256": "ab2c30e56a49517019bc9ed6b5b52ba78d38b10e021874a4ebd1b460acc03a00"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-747.json",
+      "sha256": "727fc4ee5bca18c6ffe356a7822cf9f24e75fd27c3cfda09799424f97ba20086"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-748.json",
+      "sha256": "99593bf53d46fd0e078963e3e1fde82cdd504c08d4b428e45f74d14f3efd49e8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-749.json",
+      "sha256": "cf769deb9fa8e48c99625124a0a1f627525ab7e58aa1f1dd830b84c97ae6d108"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-750.json",
+      "sha256": "431dcb23b726fd924d20efad62f732dd05ad4656b8ab6a27bb8311ace990829c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-751.json",
+      "sha256": "b4652a28a61fdba3951ba960b04d02401e3f9fe2b6bf40122dbba58529916b19"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-752.json",
+      "sha256": "c37728c08bc822b0e3dbdfb589c37a75b4b2c8c5c5f331f14a91d19781c48698"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-753.json",
+      "sha256": "2730dda27e890bcce5ad984f18b0c54a5b9a86a334a43d4af53a1e8ae39a9d93"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-754.json",
+      "sha256": "ff2ce13846bf9ad8a84533e60477ca9d1e528f1816f56570bce3009568d3094d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-755.json",
+      "sha256": "4042de99d9dcd4dca1ee5506da9893de7e742a3c0ddb745c25a2fe2b371e25e6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-756.json",
+      "sha256": "c27c0af19980849a0203e18b5a9a0eccf09d2fbc9eb92b218c6a6ab2bb2effd3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-757.json",
+      "sha256": "95cea8812d521160fe1717999635a9da057af3dbfdc3bd12b0b7a07d705fd384"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-758.json",
+      "sha256": "f1ad5bf26205499de8e94f7af3f033e37a6b53be637e2ae10ed09c85f4162702"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-759.json",
+      "sha256": "ce235f6381598ec026acf7752348b2814015bcd51ba4c45413cb57c935622f0f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-760.json",
+      "sha256": "f7b687fe79c51929ec630de7601cacce14fedfbae87bf6e7b749ae797aaeb32b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-761.json",
+      "sha256": "6c3422c0dbfda9f7c9913d5cb40badae2cf2f743b6bc3476d98a5cf12d6a3659"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-762.json",
+      "sha256": "8db8cc2e3de1f959e5f299e17a843251fe93812129f3421e23f9b47bebfd0229"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-763.json",
+      "sha256": "87feb4f8ab02755001b05f9277848fa79b91404f829a1951faeb7f2f3e33ede5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-764.json",
+      "sha256": "dc6b89c0428b3a10231434d58aeb1ebbe11f5a70acc2b3e8f6ab571e6c27c9f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-765.json",
+      "sha256": "6ed291428a6b61de2a4d94c01a82a04fff1792acd41a084bd8a948be5fc64a03"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-766.json",
+      "sha256": "b8462bf2c772e9eed5eb75c690bb61f41b77b74b984bbc1f4261b3953b3c8aef"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-767.json",
+      "sha256": "79f5653be82d2a063a5b5c2c7d487c8d3bd95e4be2994e668c01a4171e57ae9e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-768.json",
+      "sha256": "a32bf62875c4d227b2ff806859c17f81362a2abf07e5d5ead09be759575b2565"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-769.json",
+      "sha256": "17e60d48aaa4b41b9684ef7725e0ff7963e1af63e2caeb07bd43142280917a4b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-770.json",
+      "sha256": "56ed74e38dc0dd40ead1190dc9f9c33ca32503949d375d8d3fb756c272949984"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-771.json",
+      "sha256": "3fe72df3461db7cbfec19349ab2d83c560217927a2d3724411ed4694907e5aa2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-772.json",
+      "sha256": "47bb518762794823fac29fe5f4b54402d80190906272bbe25cbd10a1b6aeb680"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-773.json",
+      "sha256": "8b6b68d339704a66108c818558b41a20a7f054f4e9e5fc11b21081879b406e19"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-774.json",
+      "sha256": "7d708323e9d86c838abaec8dc8dfe7fbba387130b8abdc4a24f79cb205d3efad"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-775.json",
+      "sha256": "9d88ab4eefd2d7df433c366863137158c7702cac5a52a525f56d0ca5d382951f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-776.json",
+      "sha256": "55ac67a71140b4570dbb9a28457a3d63a11f33a821743d5c7dac998462be1e88"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-777.json",
+      "sha256": "51e2c03856df1b2adbcb285a43e0f30fe785af2bb216702804038bacef870b9c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-778.json",
+      "sha256": "f73007dd29544556f6f43c247af0dd17366cbfe1c28f589d0d0a2c35dfa0135e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-779.json",
+      "sha256": "9673c589d396e890daa37df046a9d24a6cacd97ebb45a8945778fdebd8c5ca00"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-780.json",
+      "sha256": "c3bc29f1d2f7238517c38bbc2f5d465b99aa47d7617926380513fdb52f440daf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-781.json",
+      "sha256": "135e0cc08eb999ddf59f11689ec056bb0c0d6bf75d41bee33798b3e71ccb9984"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-782.json",
+      "sha256": "89feaabb908ad6b024d7ac286f5209348a96bc69d9ab1e6efd592efa986a641c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-783.json",
+      "sha256": "5bf5a5dce9e7e45cfd313b1f1d54bb798f41d70a64cb76292c9107dcba47a0b4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-784.json",
+      "sha256": "6232bba2113b0e23a5351313941ce3c29f5f018994bb5974f8a1e13af9d05389"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-785.json",
+      "sha256": "583c8d30612abea50b8114059707fa85856357951492f3120e42121cf4845f31"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-786.json",
+      "sha256": "9f1a0a0896ad195fd43c8e29a1046da8e132dcc94ce88db5ca1d78d7789ac534"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-787.json",
+      "sha256": "dbefcde129dc2e31fe360553fce2653390316f93a67a3e3cf0ede2ace0e52bf9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-788.json",
+      "sha256": "537f171ce70531c6185ce9c0e8817fab5e84f3c474107bab7229ab6a8958257e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-789.json",
+      "sha256": "7ec2b6b30e081a81ae2967f1038da4fcb38ac25b847cff4f1945455670739741"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-790.json",
+      "sha256": "d84735b3300f82492580a3920330a5ab413a903e924ac6ff5d69346a980097df"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-791.json",
+      "sha256": "14bf089cb4ed491210ec9079380c1a1cee613c5ba1defe0c162751a2f25cbf5c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-792.json",
+      "sha256": "a1fefeab1b6d5fc9f585851f5e4626eec6208315e2642c626332ca65b56b39ab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-793.json",
+      "sha256": "4125c11fa366865c5fae108c673d282e7f2119863639b190f8f1538751dbb67e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-794.json",
+      "sha256": "7787671df2aef5c79ee7654b6606e44134d7656dbafafdb68223b2fd07432ab5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-795.json",
+      "sha256": "2bede744de8c9a6edf0da7bb94cbc9114f8069340964e8380ea1b2b0c2a55a02"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-796.json",
+      "sha256": "5c5349c6e3ff13057b68839003e64f04c4d723a2c9657b09494bba18b869c9a5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-797.json",
+      "sha256": "5869a517a998b0a3c59e9a9a3bf27c540b1156f935c54ee161199e3304701a2f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-798.json",
+      "sha256": "1e2a6067e5502b1e844d249524d28c26996b4e83726e10bf8025b9bfd5f080cf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-799.json",
+      "sha256": "acbd035e85c110f4c9f3ddb0522ba55a6a434f71679ff8960611f591581138c7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-800.json",
+      "sha256": "29eca2dbddb6d5d09d946c962f1f4a8fa75c03158a748c8788c0f98aca4cddf4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-801.json",
+      "sha256": "c4194045393a2977248d294117021e69715b9f1d14a0e8792be6a08069e29566"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-802.json",
+      "sha256": "e6dca4e34d4d774abbf4c8944da4d0cdee65fd46dfdc38e346a1e7e8783e2b0b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-803.json",
+      "sha256": "9899fd8055c0b0dcb792d7a14bccb286e97c5fa526546a4c0a1a919441d20dc4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-804.json",
+      "sha256": "01377a50dc539828557d5f572703d897090d53b41f980e5134931a03a8269b0e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-805.json",
+      "sha256": "64ff63e5816d3d12cf57130cda16a67af3d9af0442c442449707b926a887fbf8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-806.json",
+      "sha256": "e047c9f46db3cf3a1a3103bae5bd87760d605b8d9ad576094332be09ea8f4f5b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-807.json",
+      "sha256": "26264e0b8d79ae8e15c8b7a94c651d7de03670b931a68b88bd51044b90276906"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-808.json",
+      "sha256": "32968198136952d08da44ce5d77856cdf74a464c32b6889123ba83a345766a9d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-809.json",
+      "sha256": "9c0e1cf25aee3298fb978b05f8a4bab752346cfdc3e04e629ef4c878494af8af"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-810.json",
+      "sha256": "4f87a8590ef87c7ba5c9c7aa13a0be7b4f7043e94707dc31200d23fb0bd257c4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-811.json",
+      "sha256": "e90d30f9c917bf0ab41f9b602df132e615790598fad7861ca6b62a69e6170e16"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-812.json",
+      "sha256": "5754ca068becb853206bb57baed4ba7064fa78500f7b0efe981c23d657029c84"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-813.json",
+      "sha256": "b5a9a21f7a5c8fd90e920313b909391f5b291498da43fb04a63e6c88a621eaab"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-814.json",
+      "sha256": "e99d38856ff3ad2c651712554c05111f3687eddb12c9e9a5bcbd44b1f7e921fd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-815.json",
+      "sha256": "4ee8219a4ed1fc22c08ff8388a724a2c9d6eb659318ae850623b42684fd76f41"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-816.json",
+      "sha256": "06f07657f086782665f8208311a62e00a28a134a9f727304acfd9abe75bc5787"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-817.json",
+      "sha256": "3ba90b06643165042d551c26104471e40879bcddd5ff00f8240f4fba692231ba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-818.json",
+      "sha256": "2e516cda87f35be685c5ff2bd0d4444e4b664bce10c160a10418605cb9cea2ba"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-819.json",
+      "sha256": "1af7e02915f939523a9190e1f506d3ab25e641825a55d1d880ae2c6488094a13"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-820.json",
+      "sha256": "4bf0e192f39088d07582d34bdc4fb19468cddf10967f039596a08107398b8ec2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-821.json",
+      "sha256": "6b692883444abe6ffc34f4cab1163827994f1ad0f8ef628aa4f8f8d8641e404e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-822.json",
+      "sha256": "d855a8b369b17a19bcc0c93f2f147f2907cd21e250082cc8549810311c694b1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-823.json",
+      "sha256": "a155ddbe5a80d791d894708d4c5a50cb7e59e4bb6d1d762196c84cc32bccddbf"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-824.json",
+      "sha256": "3e95a3cd224f035635c4990b1a7b41d228e79c0cb17defd0206127246072b542"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-825.json",
+      "sha256": "df4e8897aecd5e3b53392467cb135393468d53832ba3798d8dbf88e1e4f014bc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-826.json",
+      "sha256": "57db69e136e26da5e62a60b90120a6b23fb93e4afbc31892eadbca4164731cc5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-827.json",
+      "sha256": "cb296219fe0494250441902672833d7166ffc7ffa84697b1c33ce8aab8d343d6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-828.json",
+      "sha256": "a783dae93d21fda1a3214dcc9b150a300a3d0074cac25dc85f26c233f09dfad4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-829.json",
+      "sha256": "a4239026cfd8e0d433af5269ea30fad14419ed6b484306d60a45a97bfb3cf962"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-830.json",
+      "sha256": "167a2b8b3c22890914ae5a3667d06c128854efb06b811a2768097d6a2d271531"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-831.json",
+      "sha256": "25fdb19878835ca78f7cb65a2dd5cc7fc1ef0561b6ac4800a1adc9b0de611e76"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-832.json",
+      "sha256": "41dfb94a50257ef2b8af9c68a424064895e266ca97bd3b1e08813025f0decee6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-833.json",
+      "sha256": "55fd653b4049d548b9fb40a3af7c96d8374a4cf2d708730abc80944bf6418710"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-834.json",
+      "sha256": "b5cd4617123b47bbd591fc8034b6f9c7baab321ae5c93ac1d9373a5f39ef4940"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-835.json",
+      "sha256": "2e82af89317f76c8be80043ab51582631ab462081adb86ce12f02eac6b8e1011"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-836.json",
+      "sha256": "69a40e11126ccd85a8641e47faebfe38e73502d4722fde6089dcd80f01fb551d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-837.json",
+      "sha256": "603dd06f2a8997c71c60d927199c77dfc2f5f6fdede33cf8c19b9e97a6680fc6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-838.json",
+      "sha256": "a5e1dcf0b1d28aa40499e2c4016c785fc38af9c77c262bf834582b4cce17be5c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-839.json",
+      "sha256": "980e27e31828dcbb6568d3eec26e4d719ba24adde874bdda5c28edf9dc3e064b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-840.json",
+      "sha256": "c860564a0ccdac722e7096e8e596f42af31469d1eeb86f6ed545532c6f36dc81"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-841.json",
+      "sha256": "2ed166e7b2c1ecb3eb6c492cd1023c2ed85a581a835a6117657e154ac7e15140"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-842.json",
+      "sha256": "c93bad65ca5ea03fdfdb83db2a662e3c177b6af1c5c5cd03154c8e03ea58b9e2"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-843.json",
+      "sha256": "e571418254d46623d56e7fdffe4c3c261a46f992ef873a5b2210ede9e053db54"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-844.json",
+      "sha256": "828404ce5f07ce2c63be595a4edc3614cbedd1891cedb91deb6efdddeb8e408d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-845.json",
+      "sha256": "520e982a6986c740f936b9fda2e2c61377683adf7065a7c34430d81c10791b0d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-846.json",
+      "sha256": "d5e9a4b6aac57a9f8785b3094f2128e78c2260a0c5312487a41d2f8f9525beb6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-847.json",
+      "sha256": "e4475c97a713fc1b934eb7b906a96db8952df24d6c9ec4e41325397f43156d80"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-848.json",
+      "sha256": "9395cb066481b871613cc7e78e258afacf56fb77f2093bbfb96683add8690dfa"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-849.json",
+      "sha256": "66f1c00094332af39dba92dec5c2043f70e513f783a07f06ad38a28e25e98477"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-850.json",
+      "sha256": "dc6b2eb5cbf0b5f3f4f45bdc7b693b3218c0ec547e9dc14f7c77e21803de63dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-851.json",
+      "sha256": "6bab5f10358d95d726092863f5fbbff4e34a481b933efc3f604c3b5b505689cb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-852.json",
+      "sha256": "001967910ebbd777ccd303359ba52c4f37e37f4c385025690a748cd4ee15ce35"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-853.json",
+      "sha256": "fe4af1995dfd8c75450dae74cade7a7d3a0084bb425bec7c350c1a8ab5137c82"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-854.json",
+      "sha256": "684df1f2fbfa183a67d99cca36032d8ae4ce2c082fde88627cc2ca2655e2e161"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-855.json",
+      "sha256": "e18ea0de0b94aec69beed106e669c9616a9f6961153a2f8b0319820585a00ecc"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-856.json",
+      "sha256": "e37de9f828f6610fca92329f39ab93320dcdf7b06f1a9c24c623825d5d9ee999"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-857.json",
+      "sha256": "2e8a5cfcd086fa1c11e55a622de74cea897dc86d94b12a6abba3cda147b1874e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-858.json",
+      "sha256": "5f464b317b45cd9556e97bea2e6dbc7ad553d22b4ab6f2fb0c777a69332faf5e"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-859.json",
+      "sha256": "593939bbf0bc498b49e80ed8a286573b99181ae35e18c499cd080163452fac1b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-860.json",
+      "sha256": "bc7b59cda366e29969139363c9322f6b1e2741e92d1067359a7550f7f07a5874"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-861.json",
+      "sha256": "72721cb5e5c975902e37a97e1738ba22a857a623578e84a950ba0e2e42136c7c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-862.json",
+      "sha256": "2e5d314699c52984ae11fa94bc02ad9946619b27d1d3024ec971c9d28d27c9ca"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-863.json",
+      "sha256": "28192d06c0e781e8216c1cd44f975611e10362047d707d3b53462062b31c45f5"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-864.json",
+      "sha256": "2515afef87030f6e03302e14ad18d0cd41a656f3b71e96fcfa04bcac995b65e0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-865.json",
+      "sha256": "f24892ffa75cc3c191d34356390567b831f0c721eda1b1eb7def296c6c19781a"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-866.json",
+      "sha256": "5f8a9751cfed5aa86b244e284b28c52b4f84c0b5081379bededb24376648a6cd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-867.json",
+      "sha256": "0ccf0c0b5bf3477ef719b647048434e3d9525c0884efdb280720ca46f64aadc4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-868.json",
+      "sha256": "f65643e4ca2f3a4526ceb0fa15649b0d95093ff8c28943b794b802ac6accdfcd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-869.json",
+      "sha256": "e6df49dffb20b450c2af6caf0a37cdbc04bfd4401a7d32c5aa46fc9a88c8802c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-870.json",
+      "sha256": "bf969829f7cab2ce8ce7949eae5b4fb3f60136ab2f5d91ef15c29b0e7bb79e0f"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-871.json",
+      "sha256": "68c234b6eda9e9c25ca29a7daf0f5505a3d38906d0a3358fad34278a6a03d5b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-872.json",
+      "sha256": "90abd1771303ae26d1ac0be58a22d7c12653b99c3a1e5c6f987b186ddd30d489"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-873.json",
+      "sha256": "fab17fcd77d48a328c0a03a8be9143e8ea6a5f8c9aee841e604fe5bd37dfeba4"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-874.json",
+      "sha256": "557ba141ea5bfc78a6e96b31e0c2ead3c70bca9413ee03f6c0535430ec8fed11"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-875.json",
+      "sha256": "c182442ae429cc3d98278e3eac9b620924378b5586407c73e04c0dfec3afeb94"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-876.json",
+      "sha256": "ffe302b30176501f83e16947b2b825a3ca644a22d0c541fa0a942793a7856b08"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-877.json",
+      "sha256": "907b60e5113073fe4e66a4d8c2cb0907c10fcb4b2ddde58a92ac3276f1ec0db7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-878.json",
+      "sha256": "371bb36f5eb265b33c3b69f419e771230acb73584fbbd1c154732153cb336bcb"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-879.json",
+      "sha256": "704be04b5ab81927f34b8df24d75d8ae1ea5b46ab6515f5efd613c1d74d8db05"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-880.json",
+      "sha256": "ea98acdae3125dc43069cb81f19e187b92d75016a363461356999481f919e1c6"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-881.json",
+      "sha256": "3d99852e88adfa1ef2c6a69274ca5a4a6767a4188006c675ba1a9b202201f18d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-882.json",
+      "sha256": "c2914ec2720f1b100a973cae295bc66add083b8e2967beba46a2412a954ce6e7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-883.json",
+      "sha256": "9d57460183087312fe2e2f31c4eac676472b41223c167c6b875d2bab6e0fd1b3"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-884.json",
+      "sha256": "28a989c93a6a097eb12599bf8f9190273210ded7afc1afc8154872f0b731b0ea"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-885.json",
+      "sha256": "c5cee0d742c640977005596e97408a8cbb729ffc4965d3188991b76a293cb6dd"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-886.json",
+      "sha256": "02d87440cc53cc3246f67c85a69d33221c20c2bc3d4cabecd5d03606749194d7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-887.json",
+      "sha256": "0f4806ffa46bae5bcf17df42a5e1955b8c59c5818e4e1285251e7315df06f304"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-888.json",
+      "sha256": "805b9aa11b2e68b8249745bfe4391133e277333c857e07ad63d681eb6a0efdb1"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-889.json",
+      "sha256": "67eea51f94129c746767b35afebb362404db718c75612c697055766704ab24ce"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-890.json",
+      "sha256": "ba3cf1233c085a00b1c8e6ecf16595535d134573565d498e56563eb35a786eb0"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-891.json",
+      "sha256": "5b96af91835a173be471cfdab749c66f12b59b3aedd21760bbcc8e246c6b7f8d"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-892.json",
+      "sha256": "a5950a62a0d8cdd5013fb1b5c71093251830c4e7c823b3b8fbadbb06ea983b83"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-893.json",
+      "sha256": "094bf0faa09bcacdc47224d773cadcf94343c2cbd76d5e547b5b729a79a327f9"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-894.json",
+      "sha256": "d48e8af803ea139d00cb8182f137fd74a79a8caf5f3d7e78054c7fb76f75f354"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-895.json",
+      "sha256": "3c1b6a47570ee947801ca6cd73f3bc0fc2e92642aeae57bc51911d0bffb21449"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-896.json",
+      "sha256": "3b092887b044bb9cc1fb211d56c0a679ac0e104acc84eb95aa278d9a402665d8"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-897.json",
+      "sha256": "e731e579c75e5d13819104124b535b5284bea44e3c01fa8a8f851c11e94056fe"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-898.json",
+      "sha256": "f4c224ba40194f2872fb37a8267e0245cf0ce1a3f53ca49c268adc9343bb5e29"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-899.json",
+      "sha256": "b87590a7e5eb04cbfacee4eb93e67cf7020aa8f05558686b653720a7eca3a625"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/nodes/ribwg-node-900.json",
+      "sha256": "b4c2d0e81cdbaf1157d04a48f56062330118266d1a403c8fac8c75d61ddc798c"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/rollback/attempt-u-rollback.json",
+      "sha256": "a5a702e1cc222fbce2396852c51902fc1ee95464dd7e014c3d295965642dcbb7"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/rollback/attempt-v-rollback.json",
+      "sha256": "9974ac089c587fdfe55d41d73d1424538b5ca51c468ed2a81b8813eaba86ba0b"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/rollback/attempt-w-rollback.json",
+      "sha256": "942f4ded33ca3b2e60c32fcf209cb6fd7874ff4ddc7a95211c27e327d3e9a009"
+    },
+    {
+      "path": "docs/evidence/recursive-improvement-bounded-wording-generality/rollback/attempt-x-rollback.json",
+      "sha256": "2009dc7cb381b72e27f84b503e88849a6c0eeedf308b077d03ff6db93dd099df"
+    }
+  ]
+}
