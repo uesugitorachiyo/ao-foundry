@@ -1,0 +1,17 @@
+complex_refactor_workgraph_rehearsal=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/summary.json
+status=ready
+total_tasks=5
+ready_tasks=2
+blocked_tasks=2
+completed_tasks=1
+failed_tasks=0
+next_recommended_factory_task=complex-refactor-pulse-runner-split-task
+safe_node_foundry_import=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/safe-node-foundry-import/foundry-import.json
+atlas_scheduler_input=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-atlas-scheduler-input.json
+pulse_event_loop_policy=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-event-loop-policy.json
+pulse_refactor_closure_packet=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-refactor-closure-packet.json
+safe_node_imported_tasks=1
+repair_task=repair-complex-refactor-command-readback-task
+context_repack_reason=run-link evidence needs_context=evidence/foundry/complex-refactor/command-readback-needs-context.json
+command_readback=docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/ao-command-complex-refactor-status.json
+loop_may_start_next_ready_task=true

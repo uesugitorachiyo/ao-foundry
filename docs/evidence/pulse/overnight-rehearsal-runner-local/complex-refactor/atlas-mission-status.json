@@ -1,0 +1,26 @@
+{
+  "contract_version": "ao.atlas.mission-status.v0.1",
+  "intake_id": "complex-refactor-intake",
+  "workgraph_id": "complex-refactor-workgraph",
+  "target_instance": "ao-stack-shared-toolchain",
+  "completion_status": "blocked",
+  "node_counts": {
+    "blocked": 2,
+    "completed": 1,
+    "failed": 0,
+    "ready": 2
+  },
+  "run_links": {
+    "complex-refactor-pulse-runner-split-task": "completed"
+  },
+  "missing_context_packs": [],
+  "missing_handoffs": [
+    "complex-refactor-atlas-foundry-path-task"
+  ],
+  "next_recommended_action": "emit repair plan for blocked task",
+  "next_actions": [
+    "emit repair plan or context repack for blocked task"
+  ],
+  "schedules_work": false,
+  "executes_work": false
+}

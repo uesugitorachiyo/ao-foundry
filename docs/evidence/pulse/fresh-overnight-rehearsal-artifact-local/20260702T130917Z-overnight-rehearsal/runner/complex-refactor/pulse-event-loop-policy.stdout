@@ -1,0 +1,4 @@
+pulse_event_loop_policy=ready
+allowed_next_action=continue_next_slice
+safe_to_continue=true
+policy_result=docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-event-loop-policy.json

@@ -1,0 +1,4 @@
+pulse_refactor_closure_packet=ready
+allowed_next_action=continue_next_slice
+selected_node_id=pulse-runner-module-split
+closure_packet=docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json

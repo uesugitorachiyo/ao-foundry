@@ -1,0 +1,38 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "complex-refactor-command-readback-task",
+  "objective": "Update AO Command readback after the upstream refactor slices complete.",
+  "target_factory_repo": "ao-command",
+  "factory_folder": "factory/complex-refactor/command-readback",
+  "acceptance_criteria": [
+    "AO Command explains ready, blocked, and failed Pulse decisions read-only"
+  ],
+  "non_goals": [
+    "do not start loops",
+    "do not mutate repositories"
+  ],
+  "write_scope": [
+    "cmd",
+    "internal",
+    "README.md"
+  ],
+  "verification_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/ao-command"
+  ],
+  "required_evidence": [
+    "target/complex-refactor/ao-command-readback.json"
+  ],
+  "safety_limits": [
+    "read-only operator mode",
+    "no provider calls"
+  ],
+  "dependency_refs": [
+    "pulse-runner-module-split",
+    "atlas-foundry-fixture-path"
+  ],
+  "context_pack_refs": [
+    "examples/complex-refactor-workgraph/context-packs/command-readback.context-pack.json"
+  ]
+}

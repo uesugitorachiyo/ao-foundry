@@ -83,7 +83,7 @@
     {
       "name": "atlas_scheduler_input",
       "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-atlas-scheduler-input.json",
-      "sha256": "ab0c946fb6bc2a7e15eb4c205bcd830e854c24a76fa28c70aa6cdb334a0a0ad2"
+      "sha256": "61e3371b7d2f19ed2de219b0dd60135e77e9e12ce6503782ad97e2647857e00a"
     },
     {
       "name": "pulse_event_loop_policy",

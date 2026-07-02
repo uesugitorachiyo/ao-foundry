@@ -102,7 +102,7 @@
     {
       "name": "release_manifest",
       "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/release-manifest.json",
-      "sha256": "cba6da911b453414bfa1dc9b197955e664664b7078a9f24aa6745b5adb81bbdf",
+      "sha256": "c1325422ff393a5f736835fe5e5d6d6ccd2a03f5dab1d25f2b200faf94c18d20",
       "schema_version": "ao.foundry.release-manifest.v0.1",
       "status": "ready"
     },
@@ -116,14 +116,14 @@
     {
       "name": "pulse_trace",
       "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse.trace.jsonl",
-      "sha256": "b72700e62b63b0f602e8416c8208ea4378ed95d760e6b2cfaccd82a7c567cf56",
+      "sha256": "61f02d982294d74fa9af3079bce89dcaf4266ecfa6054c5362eb89ea165d013a",
       "schema_version": "ao.foundry.trace.v0.1",
       "status": "passed"
     },
     {
       "name": "trace_inspect",
       "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/trace-inspect.json",
-      "sha256": "117ee069ecdbb2b3d700611ce94173c7ced67fd38a669748b7ff604774758706",
+      "sha256": "0c486e6625df7b10d0eca2107efb9cd682ad08d2c0ba5c2d49f84d8685337a8a",
       "schema_version": "ao.foundry.trace-inspect.v0.1",
       "status": "ready"
     }

@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.foundry.forge-live-attempt.v0.1",
+  "status": "blocked",
+  "source": "not-provided",
+  "explanation": "AO Forge live execution was not attempted by the local public pulse; provide --forge-live-packet with an operator-produced packet to bundle live evidence."
+}

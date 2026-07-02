@@ -1,0 +1,48 @@
+{
+  "schema_version": "ao.command.pulse-gate-status.v0.1",
+  "command_schema_version": "ao.command.v0.1",
+  "status": "blocked",
+  "preflight": "../ao-foundry/docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-intake-preflight.json",
+  "lifecycle": "../ao-foundry/examples/pulse-lifecycle/ready-to-start-next-slice.json",
+  "start_gate": "../ao-foundry/docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-overnight-start-gate.json",
+  "preflight_status": "blocked",
+  "blueprint_status": "blocked",
+  "atlas_status": "not_required",
+  "lifecycle_status": "start_next_slice",
+  "start_gate_status": "blocked",
+  "allowed_next_action": "request_blueprint_clarification",
+  "first_failing_check": "intake_preflight",
+  "blocking_next_actions": [
+    "Answer the Blueprint clarification request before scheduling implementation."
+  ],
+  "maintenance_suggestions": [
+    "run this gate before autonomous overnight/event-loop advancement",
+    "the gate only decides readiness; it must not schedule, execute, approve, upload, publish, or mutate repositories",
+    "keep pulse intake preflight fixture/local; do not schedule, execute, approve, upload, or mutate sibling repositories"
+  ],
+  "source_artifacts": [
+    {
+      "name": "blueprint_request",
+      "path": "examples/pulse-intake/blueprint-request.blocked.json",
+      "schema_version": "ao.blueprint.request.v0.1",
+      "status": "blocked",
+      "sha256": "71fcbef3bd9530e495aeae744cce3bd9a720cd889ffedf8369c6014d4c2dec42"
+    }
+  ],
+  "source_hashes": [
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "97f7437b7818074f393c55bf35489f80a1de043bbc2344bf0d01413aa3784056"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ],
+  "operator_mode": "read_only",
+  "mutates_repositories": false
+}

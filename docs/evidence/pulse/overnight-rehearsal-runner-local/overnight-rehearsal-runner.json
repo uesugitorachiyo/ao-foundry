@@ -1,0 +1,21 @@
+{
+  "schema_version": "ao.foundry.overnight-rehearsal-runner.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_dry_run",
+  "pulse_gate_status": "ready",
+  "lifecycle_status": "start_next_slice",
+  "atlas_import_status": "ready",
+  "repair_plan_status": "repair_required",
+  "context_repack_status": "ready",
+  "command_status": "ready",
+  "closure_status": "ready",
+  "allowed_next_action": "start_next_ready_task",
+  "complex_refactor_summary": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/summary.json",
+  "command_readback": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/ao-command-complex-refactor-status.json",
+  "closure_packet": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-refactor-closure-packet.json",
+  "mutates_repositories": false,
+  "executes_work": false,
+  "schedules_work": false,
+  "approves_work": false,
+  "uploads_artifacts": false
+}

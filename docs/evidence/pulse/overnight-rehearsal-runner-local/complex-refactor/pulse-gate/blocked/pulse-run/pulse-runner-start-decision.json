@@ -1,0 +1,30 @@
+{
+  "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+  "status": "blocked",
+  "start_gate_path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-overnight-start-gate.json",
+  "allowed_next_action": "request_blueprint_clarification",
+  "first_failing_check": "intake_preflight",
+  "blocking_next_actions": [
+    "Answer the Blueprint clarification request before scheduling implementation."
+  ],
+  "source_digests": [
+    {
+      "name": "pulse_overnight_start_gate",
+      "path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-overnight-start-gate.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "sha256": "43b830b71da05496177236920b4d761ed91075a0cb24a075f7811e807f230723"
+    },
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/blocked/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "97f7437b7818074f393c55bf35489f80a1de043bbc2344bf0d01413aa3784056"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}
