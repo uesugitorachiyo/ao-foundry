@@ -87,14 +87,16 @@ scripts/overnight-rehearsal-runner.sh \
 RUNNER_SUMMARY="$FRESH_OUTPUT_ROOT/runner/overnight-rehearsal-runner.json"
 COMMAND_READBACK="$(jq -r '.command_readback' "$RUNNER_SUMMARY")"
 COMPLEX_SUMMARY="$(jq -r '.complex_refactor_summary' "$RUNNER_SUMMARY")"
+CLOSURE_PACKET="$(jq -r '.closure_packet' "$RUNNER_SUMMARY")"
 
-jq empty "$RUNNER_SUMMARY" "$COMMAND_READBACK" "$COMPLEX_SUMMARY"
+jq empty "$RUNNER_SUMMARY" "$COMMAND_READBACK" "$COMPLEX_SUMMARY" "$CLOSURE_PACKET"
 
 runner_status="$(jq -r '.status' "$RUNNER_SUMMARY")"
 command_status="$(jq -r '.command_status' "$RUNNER_SUMMARY")"
+closure_status="$(jq -r '.closure_status' "$RUNNER_SUMMARY")"
 allowed_next_action="$(jq -r '.allowed_next_action' "$RUNNER_SUMMARY")"
 
-if [[ "$runner_status" != "ready" || "$command_status" != "ready" ]]; then
+if [[ "$runner_status" != "ready" || "$command_status" != "ready" || "$closure_status" != "ready" ]]; then
   artifact_status="blocked"
 else
   artifact_status="ready"
@@ -107,10 +109,12 @@ jq -n \
   --arg runner_summary "$RUNNER_SUMMARY" \
   --arg command_readback "$COMMAND_READBACK" \
   --arg complex_refactor_summary "$COMPLEX_SUMMARY" \
+  --arg closure_packet "$CLOSURE_PACKET" \
   --arg allowed_next_action "$allowed_next_action" \
   --arg runner_sha "$(sha256_file "$RUNNER_SUMMARY")" \
   --arg command_sha "$(sha256_file "$COMMAND_READBACK")" \
   --arg complex_sha "$(sha256_file "$COMPLEX_SUMMARY")" \
+  --arg closure_sha "$(sha256_file "$CLOSURE_PACKET")" \
   '{
     schema_version:$schema_version,
     status:$status,
@@ -119,11 +123,13 @@ jq -n \
     runner_summary:$runner_summary,
     command_readback:$command_readback,
     complex_refactor_summary:$complex_refactor_summary,
+    closure_packet:$closure_packet,
     allowed_next_action:$allowed_next_action,
     source_digests:[
       {name:"runner_summary", path:$runner_summary, schema_version:"ao.foundry.overnight-rehearsal-runner.v0.1", sha256:$runner_sha},
       {name:"command_readback", path:$command_readback, schema_version:"ao.command.complex-refactor-status.v0.1", sha256:$command_sha},
-      {name:"complex_refactor_summary", path:$complex_refactor_summary, schema_version:"ao.foundry.complex-refactor-workgraph-rehearsal.v0.1", sha256:$complex_sha}
+      {name:"complex_refactor_summary", path:$complex_refactor_summary, schema_version:"ao.foundry.complex-refactor-workgraph-rehearsal.v0.1", sha256:$complex_sha},
+      {name:"closure_packet", path:$closure_packet, schema_version:"ao.foundry.pulse-refactor-closure-packet.v0.1", sha256:$closure_sha}
     ],
     mutates_repositories:false,
     executes_work:false,
@@ -142,3 +148,4 @@ fi
 echo "overnight_rehearsal_artifact=ready"
 echo "artifact=$FRESH_OUTPUT_ROOT/overnight-rehearsal-artifact.json"
 echo "command_readback=$COMMAND_READBACK"
+echo "closure_packet=$CLOSURE_PACKET"

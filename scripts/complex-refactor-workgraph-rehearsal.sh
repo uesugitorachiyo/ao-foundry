@@ -161,6 +161,11 @@ atlas_run context-pack repack \
 
 go run ./cmd/foundry atlas import validate --import "$FOUNDRY_IMPORT" > "$OUT/foundry-import-validate.txt"
 go run ./cmd/foundry atlas import validate --import "$SAFE_NODE_IMPORT" > "$OUT/safe-node-foundry-import-validate.txt"
+ATLAS_SCHEDULER_INPUT="$OUT/pulse-atlas-scheduler-input.json"
+go run ./cmd/foundry pulse atlas-scheduler-input \
+  --workgraph "$WORKGRAPH" \
+  --foundry-import "$FOUNDRY_IMPORT" \
+  --out "$ATLAS_SCHEDULER_INPUT" > "$OUT/pulse-atlas-scheduler-input.stdout"
 go run ./cmd/foundry atlas readback \
   --import "$FOUNDRY_IMPORT" \
   --run-link "$RUN_LINK" \
@@ -170,8 +175,24 @@ scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
   --out "$OUT/pulse-gate" \
   --ao-command-root "$AO_COMMAND_ROOT" > "$OUT/pulse-gate.stdout"
 
+PULSE_EVENT_LOOP_POLICY="$OUT/pulse-event-loop-policy.json"
+go run ./cmd/foundry pulse event-loop-policy \
+  --class-gate examples/class-gate/gate.ready.test-only.json \
+  --promotion-state examples/pulse-event-loop-policy/promotion-state.proven-test-only.json \
+  --ci examples/pulse-event-loop-policy/ci.passed.json \
+  --repo-state examples/pulse-event-loop-policy/repo.clean.json \
+  --evidence-freshness examples/pulse-event-loop-policy/evidence.fresh.json \
+  --sentinel examples/pulse-event-loop-policy/sentinel.no-hold.json \
+  --promoter examples/pulse-event-loop-policy/promoter.ready.json \
+  --rollback examples/pulse-event-loop-policy/rollback.passed.json \
+  --branch-cleanup examples/pulse-event-loop-policy/branch-cleanup.passed.json \
+  --scope examples/pulse-event-loop-policy/scope.passed.json \
+  --out "$PULSE_EVENT_LOOP_POLICY" > "$OUT/pulse-event-loop-policy.stdout"
+
 require_status "$OUT/foundry-atlas-readback.json" "ready"
 require_status "$OUT/pulse-gate/summary.json" "ready"
+require_status "$ATLAS_SCHEDULER_INPUT" "ready"
+require_status "$PULSE_EVENT_LOOP_POLICY" "ready"
 require_status "$OUT/atlas-repair-plan.json" "repair_required"
 
 TOTAL_TASKS="$(jq '.nodes | length' "$WORKGRAPH")"
@@ -223,6 +244,8 @@ jq -n \
   --arg repair_plan_sha "$(sha256_file "$OUT/atlas-repair-plan.json")" \
   --arg context_repack_sha "$(sha256_file "$OUT/atlas-context-repack.json")" \
   --arg pulse_summary_sha "$(sha256_file "$OUT/pulse-gate/summary.json")" \
+  --arg atlas_scheduler_input_sha "$(sha256_file "$ATLAS_SCHEDULER_INPUT")" \
+  --arg pulse_event_loop_policy_sha "$(sha256_file "$PULSE_EVENT_LOOP_POLICY")" \
   --arg repair_task_id "$REPAIR_TASK_ID" \
   --arg repack_reason "$REPACK_REASON" \
   '{
@@ -293,16 +316,20 @@ jq -n \
       {name:"needs_context_run_link",path:"'$NEEDS_CONTEXT_RUN_LINK'",sha256:$needs_context_run_link_sha},
       {name:"repair_plan",path:"'$OUT'/atlas-repair-plan.json",sha256:$repair_plan_sha},
       {name:"context_repack",path:"'$OUT'/atlas-context-repack.json",sha256:$context_repack_sha},
-      {name:"pulse_gate_summary",path:"'$OUT'/pulse-gate/summary.json",sha256:$pulse_summary_sha}
+      {name:"pulse_gate_summary",path:"'$OUT'/pulse-gate/summary.json",sha256:$pulse_summary_sha},
+      {name:"atlas_scheduler_input",path:"'$ATLAS_SCHEDULER_INPUT'",sha256:$atlas_scheduler_input_sha},
+      {name:"pulse_event_loop_policy",path:"'$PULSE_EVENT_LOOP_POLICY'",sha256:$pulse_event_loop_policy_sha}
     ],
     artifacts:{
       atlas_next_ready:"'$OUT'/atlas-next-ready.json",
       atlas_mission_status:"'$OUT'/atlas-mission-status.json",
+      atlas_scheduler_input:"'$ATLAS_SCHEDULER_INPUT'",
       safe_node_foundry_import:$safe_node_import,
       repair_plan:"'$OUT'/atlas-repair-plan.json",
       context_repack:"'$OUT'/atlas-context-repack.json",
       foundry_atlas_readback:"'$OUT'/foundry-atlas-readback.json",
       pulse_gate_summary:"'$OUT'/pulse-gate/summary.json",
+      pulse_event_loop_policy:"'$PULSE_EVENT_LOOP_POLICY'",
       command_readback:"'$OUT'/ao-command-complex-refactor-status.json"
     }
   }' > "$OUT/summary.json"
@@ -311,7 +338,34 @@ jq -n \
   --summary "$FOUNDRY_FROM_COMMAND/$OUT/summary.json" \
   --json > "$FOUNDRY_FROM_COMMAND/$OUT/ao-command-complex-refactor-status.json")
 
-jq empty "$OUT/atlas-next-ready.json" "$OUT/atlas-mission-status.json" "$SAFE_NODE_IMPORT" "$OUT/atlas-repair-plan.json" "$OUT/atlas-context-repack.json" "$OUT/foundry-atlas-readback.json" "$OUT/pulse-gate/summary.json" "$OUT/summary.json" "$OUT/ao-command-complex-refactor-status.json"
+PULSE_CLOSURE_PACKET="$OUT/pulse-refactor-closure-packet.json"
+go run ./cmd/foundry pulse closure-packet \
+  --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
+  --atlas-scheduler-input "$ATLAS_SCHEDULER_INPUT" \
+  --intake-preflight "$OUT/pulse-gate/ready/pulse-intake-preflight.json" \
+  --start-gate "$OUT/pulse-gate/ready/pulse-overnight-start-gate.json" \
+  --runner-decision "$OUT/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json" \
+  --event-loop-policy "$PULSE_EVENT_LOOP_POLICY" \
+  --command-readback "$OUT/ao-command-complex-refactor-status.json" \
+  --out "$PULSE_CLOSURE_PACKET" > "$OUT/pulse-refactor-closure-packet.stdout"
+require_status "$PULSE_CLOSURE_PACKET" "ready"
+
+jq \
+  --arg closure_packet "$PULSE_CLOSURE_PACKET" \
+  --arg closure_packet_sha "$(sha256_file "$PULSE_CLOSURE_PACKET")" \
+  '.source_digests += [{name:"pulse_refactor_closure_packet",path:$closure_packet,sha256:$closure_packet_sha}] |
+   .artifacts.pulse_refactor_closure_packet = $closure_packet |
+   .closure_packet = {
+     status:"ready",
+     path:$closure_packet,
+     closes_refactor_slices:["D","E"],
+     schedules_work:false,
+     executes_work:false,
+     approves_work:false
+   }' "$OUT/summary.json" > "$OUT/summary.with-closure.json"
+mv "$OUT/summary.with-closure.json" "$OUT/summary.json"
+
+jq empty "$OUT/atlas-next-ready.json" "$OUT/atlas-mission-status.json" "$ATLAS_SCHEDULER_INPUT" "$SAFE_NODE_IMPORT" "$OUT/atlas-repair-plan.json" "$OUT/atlas-context-repack.json" "$OUT/foundry-atlas-readback.json" "$OUT/pulse-gate/summary.json" "$PULSE_EVENT_LOOP_POLICY" "$PULSE_CLOSURE_PACKET" "$OUT/summary.json" "$OUT/ao-command-complex-refactor-status.json"
 
 echo "complex_refactor_workgraph_rehearsal=$OUT/summary.json"
 echo "status=ready"
@@ -322,6 +376,9 @@ echo "completed_tasks=$COMPLETED_TASKS"
 echo "failed_tasks=$FAILED_TASKS"
 echo "next_recommended_factory_task=$NEXT_TASK_ID"
 echo "safe_node_foundry_import=$SAFE_NODE_IMPORT"
+echo "atlas_scheduler_input=$ATLAS_SCHEDULER_INPUT"
+echo "pulse_event_loop_policy=$PULSE_EVENT_LOOP_POLICY"
+echo "pulse_refactor_closure_packet=$PULSE_CLOSURE_PACKET"
 echo "safe_node_imported_tasks=$SAFE_NODE_IMPORT_TASKS"
 echo "repair_task=$REPAIR_TASK_ID"
 echo "context_repack_reason=$REPACK_REASON"
