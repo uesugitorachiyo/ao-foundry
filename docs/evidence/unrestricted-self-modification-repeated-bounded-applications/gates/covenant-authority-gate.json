@@ -1,0 +1,24 @@
+{
+  "schema": "ao.covenant.gate-result.v0.1",
+  "result": "deny_unrestricted_self_modification_allow_repeated_bounded_applications",
+  "target_narrow_class": "public_safe_repeated_bounded_reversible_self_change_applications_four_attempts",
+  "denied_class": "unrestricted_self_modification",
+  "mission": "unrestricted-self-modification-repeated-bounded-applications",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "secret_env_exposure",
+    "sandbox_escape",
+    "unsafe_public_claim"
+  ],
+  "public_safe": true
+}
