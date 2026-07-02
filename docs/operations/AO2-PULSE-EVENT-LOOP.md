@@ -99,14 +99,15 @@ scripts/overnight-rehearsal-runner.sh \
 The rehearsal validates `examples/complex-refactor-workgraph/workgraph.json`,
 its context packs, the Foundry import/readback fixture, and the Pulse gate e2e
 proof. Its summary reports total, ready, blocked, completed, and failed task
-counts, blocked-node repair-plan output, needs-context repack output, AO
-Command read-only status output, the next recommended factory task, and why the
-loop may start the next ready task while blocked tasks remain denied.
+counts, blocked-node repair-plan output, needs-context repack output, Atlas
+scheduler input, the Pulse refactor closure packet, AO Command read-only status
+output, the next recommended factory task, and why the loop may start the next
+ready task while blocked tasks remain denied.
 
 The overnight rehearsal runner wraps the complex-refactor rehearsal and emits
 `ao.foundry.overnight-rehearsal-runner.v0.1`. It is dry-run only: it validates
 the start gate, lifecycle state, Atlas import/readback, repair/repack artifacts,
-and AO Command status before reporting `allowed_next_action`.
+closure evidence, and AO Command status before reporting `allowed_next_action`.
 
 The intake preflight writes `tmp/pulse-intake-preflight.json` with
 `schema_version=ao.foundry.pulse-intake-preflight.v0.1`. It returns success only
@@ -164,6 +165,38 @@ and scope boundary are all ready for that class. It stops on failing CI, dirty
 repos, stale evidence, Sentinel holds, Promoter denial, rollback failure,
 branch cleanup failure, broadened scope, or class-jump attempts. It does not
 schedule work, open PRs, merge PRs, call providers, or mutate repositories.
+
+Foundry consumes Atlas workgraph readiness through a read-only scheduler input:
+
+```sh
+go run ./cmd/foundry pulse atlas-scheduler-input \
+  --workgraph examples/complex-refactor-workgraph/workgraph.json \
+  --foundry-import examples/complex-refactor-workgraph/foundry-import.json \
+  --out tmp/pulse-atlas-scheduler-input.json
+```
+
+It emits `ao.foundry.pulse-atlas-scheduler-input.v0.1`, selects only the first
+Atlas ready node in workgraph order, requires exactly one matching Foundry import
+task for that node, and keeps Atlas compile-only authority intact. The closure
+packet then binds Blueprint authorization, scheduler input, intake preflight,
+start gate, runner decision, event-loop policy, and observer readback:
+
+```sh
+go run ./cmd/foundry pulse closure-packet \
+  --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
+  --atlas-scheduler-input tmp/pulse-atlas-scheduler-input.json \
+  --intake-preflight path/to/pulse-intake-preflight.json \
+  --start-gate path/to/pulse-overnight-start-gate.json \
+  --runner-decision path/to/pulse-runner-start-decision.json \
+  --event-loop-policy tmp/pulse-event-loop-policy.json \
+  --command-readback path/to/ao-command-readback.json \
+  --out tmp/pulse-refactor-closure-packet.json
+```
+
+The packet emits `ao.foundry.pulse-refactor-closure-packet.v0.1` and blocks on
+missing evidence, blocked scheduler input, blocked policy, authority expansion,
+or selected node/task mismatch. It does not schedule, execute, approve, upload,
+open PRs, merge PRs, call providers, or mutate repositories.
 
 The RSI sequence is a read-only evidence loop. AO Foundry produces the
 candidate, improvement gate, and next-task artifacts that support the

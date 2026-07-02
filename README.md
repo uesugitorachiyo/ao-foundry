@@ -313,24 +313,29 @@ does not produce `pulse-event.json` or start implementation.
 `scripts/complex-refactor-workgraph-rehearsal.sh` is the reference oversized
 task demo. It validates an Atlas workgraph with completed, ready, blocked, and
 stitch nodes; validates Foundry import/readback; runs the Pulse gate e2e proof;
-emits blocked-node repair and needs-context repack artifacts; writes AO Command
+emits blocked-node repair and needs-context repack artifacts; writes
+`ao.foundry.pulse-atlas-scheduler-input.v0.1`,
+`ao.foundry.pulse-refactor-closure-packet.v0.1`, and AO Command
 complex-refactor status readback; and reports the next ready factory task
 without starting blocked work. It also asks Atlas to emit a Foundry import for
 only the `workgraph next` node and fails if the selected import contains more
-than that one dependency-safe task.
+than that one dependency-safe task. The scheduler and closure artifacts preserve
+Atlas compile-only authority and do not schedule, execute, approve, open PRs,
+merge PRs, call providers, or mutate repositories.
 
 `scripts/overnight-rehearsal-runner.sh` wraps that rehearsal as a dry-run
 overnight control-chain check. It validates Pulse gate/lifecycle state, Atlas
-import/readback, repair/repack artifacts, and AO Command readback, then emits
-`ao.foundry.overnight-rehearsal-runner.v0.1` without scheduling or executing
-work.
+import/readback, repair/repack artifacts, closure evidence, and AO Command
+readback, then emits `ao.foundry.overnight-rehearsal-runner.v0.1` without
+scheduling or executing work.
 
 `scripts/fresh-overnight-rehearsal-artifact.sh` runs the same dry-run chain into
 a fresh timestamped output directory and emits
 `ao.foundry.overnight-rehearsal-artifact.v0.1`. The artifact links the runner
 summary, complex-refactor summary, and AO Command readback with SHA-256 digests
-so operators can preserve the exact rehearsal evidence without treating it as
-live mutation authority. The stable operator sequence is documented in
+plus the closure packet with SHA-256 digests so operators can preserve the exact
+rehearsal evidence without treating it as live mutation authority. The stable
+operator sequence is documented in
 `docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md`.
 
 `scripts/atlas-stress-readiness.sh` consumes AO Atlas's large workgraph stress

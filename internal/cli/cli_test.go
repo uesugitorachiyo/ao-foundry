@@ -5155,6 +5155,160 @@ func TestPulseEventLoopPolicyContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestPulseAtlasSchedulerInputSelectsOnlyAtlasNextReadyNode(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-atlas-scheduler-input.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "atlas-scheduler-input",
+		"--workgraph", "examples/complex-refactor-workgraph/workgraph.json",
+		"--foundry-import", "examples/complex-refactor-workgraph/foundry-import.json",
+		"--out", outPath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["schema_version"] != "ao.foundry.pulse-atlas-scheduler-input.v0.1" ||
+		result["status"] != "ready" ||
+		result["selected_node_id"] != "pulse-runner-module-split" ||
+		result["selected_task_id"] != "complex-refactor-pulse-runner-split-task" ||
+		result["allowed_next_action"] != "start_next_slice" ||
+		result["atlas_compile_only"] != true {
+		t.Fatalf("unexpected scheduler input result: %#v", result)
+	}
+	importSummary, ok := result["safe_node_foundry_import"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing safe_node_foundry_import: %#v", result)
+	}
+	if importSummary["selected_node_id"] != result["selected_node_id"] ||
+		importSummary["selected_task_id"] != result["selected_task_id"] ||
+		classGateInt(importSummary, "imported_task_count") != 1 ||
+		importSummary["rejects_unselected_ready_nodes"] != true {
+		t.Fatalf("scheduler must bind exactly one Atlas-selected node: %#v", importSummary)
+	}
+	for _, field := range []string{"schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
+		if result[field] != false {
+			t.Fatalf("scheduler input must not grant side-effect authority, %s=%#v in %#v", field, result[field], result)
+		}
+	}
+	if !strings.Contains(stdout.String(), `"status": "ready"`) {
+		t.Fatalf("expected JSON stdout for ready scheduler input, got %s", stdout.String())
+	}
+}
+
+func TestPulseAtlasSchedulerInputBlocksImportMissingSelectedNode(t *testing.T) {
+	tempDir := t.TempDir()
+	importPath := filepath.Join(tempDir, "foundry-import.json")
+	writeJSONFixtureForTest(t, importPath, map[string]any{
+		"contract_version": "ao.atlas.foundry-import.v0.1",
+		"status":           "ready_for_foundry_fixture_import",
+		"id":               "missing-selected-node-import",
+		"workgraph_id":     "complex-refactor-workgraph",
+		"tasks":            []any{},
+	})
+	outPath := filepath.Join(tempDir, "pulse-atlas-scheduler-input.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "atlas-scheduler-input",
+		"--workgraph", "examples/complex-refactor-workgraph/workgraph.json",
+		"--foundry-import", importPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for missing selected node import; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "blocked" ||
+		result["allowed_next_action"] != "stop_blocked" ||
+		result["first_failing_check"] != "foundry_import_selected_node" {
+		t.Fatalf("unexpected blocked scheduler input result: %#v", result)
+	}
+}
+
+func TestPulseClosurePacketBindsLoopEvidenceWithoutAuthorityExpansion(t *testing.T) {
+	tempDir := t.TempDir()
+	schedulerPath := filepath.Join(tempDir, "pulse-atlas-scheduler-input.json")
+	runReadyPulseAtlasSchedulerInputForTest(t, schedulerPath)
+	closurePath := filepath.Join(tempDir, "pulse-refactor-closure-packet.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "closure-packet",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-scheduler-input", schedulerPath,
+		"--intake-preflight", "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+		"--start-gate", "examples/pulse-overnight-start-gate/ready.json",
+		"--runner-decision", "examples/contract-fixtures/valid/foundry-pulse-runner-start-decision-v0.1.json",
+		"--event-loop-policy", "examples/contract-fixtures/valid/foundry-pulse-event-loop-policy-v0.1.json",
+		"--out", closurePath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, closurePath)
+	if result["schema_version"] != "ao.foundry.pulse-refactor-closure-packet.v0.1" ||
+		result["status"] != "ready" ||
+		result["allowed_next_action"] != "continue_next_slice" ||
+		result["atlas_scheduler_status"] != "ready" ||
+		result["event_loop_policy_status"] != "ready" ||
+		result["selected_node_id"] != "pulse-runner-module-split" {
+		t.Fatalf("unexpected closure packet: %#v", result)
+	}
+	sourceDigests, ok := result["source_digests"].([]any)
+	if !ok || len(sourceDigests) < 6 {
+		t.Fatalf("closure packet should include source digests for all loop evidence: %#v", result)
+	}
+	for _, field := range []string{"schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "uploads_artifacts", "opens_pr", "merges_pr"} {
+		if result[field] != false {
+			t.Fatalf("closure packet must not grant side-effect authority, %s=%#v in %#v", field, result[field], result)
+		}
+	}
+}
+
+func TestPulseClosurePacketBlocksWhenSchedulerInputIsNotReady(t *testing.T) {
+	tempDir := t.TempDir()
+	schedulerPath := filepath.Join(tempDir, "pulse-atlas-scheduler-input.json")
+	writeJSONFixtureForTest(t, schedulerPath, map[string]any{
+		"schema_version":       "ao.foundry.pulse-atlas-scheduler-input.v0.1",
+		"status":               "blocked",
+		"allowed_next_action":  "stop_blocked",
+		"first_failing_check":  "foundry_import_selected_node",
+		"atlas_compile_only":   true,
+		"selected_node_id":     "",
+		"selected_task_id":     "",
+		"source_digests":       []any{},
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+		"calls_providers":      false,
+		"opens_pr":             false,
+		"merges_pr":            false,
+	})
+	closurePath := filepath.Join(tempDir, "pulse-refactor-closure-packet.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "closure-packet",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-scheduler-input", schedulerPath,
+		"--intake-preflight", "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+		"--start-gate", "examples/pulse-overnight-start-gate/ready.json",
+		"--runner-decision", "examples/contract-fixtures/valid/foundry-pulse-runner-start-decision-v0.1.json",
+		"--event-loop-policy", "examples/contract-fixtures/valid/foundry-pulse-event-loop-policy-v0.1.json",
+		"--out", closurePath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for blocked scheduler input; stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, closurePath)
+	if result["status"] != "blocked" ||
+		result["allowed_next_action"] != "stop_event_loop" ||
+		result["first_failing_check"] != "atlas_scheduler_input" {
+		t.Fatalf("unexpected blocked closure packet: %#v", result)
+	}
+}
+
 func TestPulseRunWritesFailedEventForBlockedReadiness(t *testing.T) {
 	outDir := t.TempDir()
 	var stdout, stderr bytes.Buffer
@@ -11504,6 +11658,20 @@ func writeJSONFixtureForTest(t *testing.T, path string, value any) {
 		t.Fatalf("create fixture directory: %v", err)
 	}
 	mustWriteJSONForTest(t, path, value)
+}
+
+func runReadyPulseAtlasSchedulerInputForTest(t *testing.T, outPath string) {
+	t.Helper()
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "atlas-scheduler-input",
+		"--workgraph", "examples/complex-refactor-workgraph/workgraph.json",
+		"--foundry-import", "examples/complex-refactor-workgraph/foundry-import.json",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("generate scheduler input returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
 }
 
 func fileSHA256HexForTest(t *testing.T, path string) string {

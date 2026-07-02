@@ -223,9 +223,10 @@ The rehearsal uses `examples/complex-refactor-workgraph/` to model a complex AO
 stack refactor as Atlas factory tasks with completed, ready, blocked, and stitch
 nodes. It validates Atlas workgraph/context-pack/mission status, Foundry
 import/readback, Pulse start-gate evidence, blocked-node repair plans,
-needs-context context repacks, and AO Command readback. The summary identifies
-the next ready factory task and explains that blocked tasks must wait for
-completed run-link evidence.
+needs-context context repacks, the Atlas scheduler input, event-loop policy,
+closure packet, and AO Command readback. The summary identifies the next ready
+factory task and explains that blocked tasks must wait for completed run-link
+evidence.
 
 ### Slice D: Atlas Workgraph Scheduler Input
 
@@ -233,12 +234,52 @@ Teach Foundry to read Atlas ready nodes as scheduler input while preserving
 Atlas compile-only authority. Foundry may select a ready node; Atlas must not
 schedule it.
 
+The executable slice is:
+
+```sh
+go run ./cmd/foundry pulse atlas-scheduler-input \
+  --workgraph examples/complex-refactor-workgraph/workgraph.json \
+  --foundry-import examples/complex-refactor-workgraph/foundry-import.json \
+  --out tmp/pulse-atlas-scheduler-input.json
+```
+
+It emits `ao.foundry.pulse-atlas-scheduler-input.v0.1`. The command selects
+only the first Atlas ready node in workgraph order, requires exactly one
+matching task in the Foundry import for that selected node, rejects missing or
+mismatched selected-node imports, and records task counts. It preserves
+`atlas_compile_only=true` and keeps `schedules_work=false`,
+`executes_work=false`, `approves_work=false`, `mutates_repositories=false`,
+`calls_providers=false`, `opens_pr=false`, and `merges_pr=false`.
+
 ### Slice E: Closure Packet
 
 Emit one closure packet that links Blueprint authorization, Atlas handoff,
 Foundry scheduling, Forge run evidence, Covenant gate, AO2 evidence, observer
 readback, verification commands, PR merge, branch cleanup, and stop/continue
 decision.
+
+The executable slice is:
+
+```sh
+go run ./cmd/foundry pulse closure-packet \
+  --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
+  --atlas-scheduler-input tmp/pulse-atlas-scheduler-input.json \
+  --intake-preflight docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-intake-preflight.json \
+  --start-gate docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json \
+  --runner-decision docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json \
+  --event-loop-policy docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-event-loop-policy.json \
+  --command-readback docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/ao-command-complex-refactor-status.json \
+  --out tmp/pulse-refactor-closure-packet.json
+```
+
+It emits `ao.foundry.pulse-refactor-closure-packet.v0.1`. The packet is ready
+only when Blueprint authorization, Atlas scheduler input, intake preflight,
+overnight start gate, runner start decision, event-loop policy, and optional AO
+Command readback are ready or accepted. It blocks on a blocked scheduler input,
+blocked policy, missing source artifact, authority expansion, or missing
+selected node/task. It closes refactor slices D and E without granting
+scheduling, execution, approval, repository mutation, provider, upload, PR, or
+merge authority.
 
 ## Verification Direction
 
@@ -254,9 +295,10 @@ go run ./cmd/foundry contract fixtures validate
 scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json
 ```
 
-Future executable slices should add fixtures for missing Blueprint
+The current executable slices include fixtures for missing Blueprint
 authorization, blocked Atlas handoff, existing open PR, failed check repair,
-successful merge cleanup, and stop-at-readiness behavior.
+successful merge cleanup, stop-at-readiness behavior, selected-node import
+mismatch, blocked scheduler input, and closure packet authority boundaries.
 
 ## Authority Boundary
 

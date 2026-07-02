@@ -67,8 +67,9 @@ SUMMARY="$REHEARSAL_OUT/summary.json"
 COMMAND_READBACK="$REHEARSAL_OUT/ao-command-complex-refactor-status.json"
 PULSE_SUMMARY="$REHEARSAL_OUT/pulse-gate/summary.json"
 ATLAS_READBACK="$REHEARSAL_OUT/foundry-atlas-readback.json"
+CLOSURE_PACKET="$REHEARSAL_OUT/pulse-refactor-closure-packet.json"
 
-jq empty "$SUMMARY" "$COMMAND_READBACK" "$PULSE_SUMMARY" "$ATLAS_READBACK"
+jq empty "$SUMMARY" "$COMMAND_READBACK" "$PULSE_SUMMARY" "$ATLAS_READBACK" "$CLOSURE_PACKET"
 
 pulse_gate_status="$(jq -r '.status' "$PULSE_SUMMARY")"
 lifecycle_status="$(jq -r '.ready_path.allowed_next_action // "unknown"' "$PULSE_SUMMARY")"
@@ -76,9 +77,10 @@ atlas_import_status="$(jq -r '.status' "$ATLAS_READBACK")"
 repair_plan_status="$(jq -r '.repair_plan.status' "$SUMMARY")"
 context_repack_status="$(jq -r '.context_repack.status' "$SUMMARY")"
 command_status="$(jq -r '.status' "$COMMAND_READBACK")"
+closure_status="$(jq -r '.status' "$CLOSURE_PACKET")"
 allowed_next_action="$(jq -r '.next_action' "$COMMAND_READBACK")"
 
-if [[ "$pulse_gate_status" != "ready" || "$lifecycle_status" != "start_next_slice" || "$atlas_import_status" != "ready" || "$repair_plan_status" != "repair_required" || "$context_repack_status" != "ready" || "$command_status" != "ready" ]]; then
+if [[ "$pulse_gate_status" != "ready" || "$lifecycle_status" != "start_next_slice" || "$atlas_import_status" != "ready" || "$repair_plan_status" != "repair_required" || "$context_repack_status" != "ready" || "$command_status" != "ready" || "$closure_status" != "ready" ]]; then
   status="blocked"
 else
   status="ready"
@@ -93,9 +95,11 @@ jq -n \
   --arg repair_plan_status "$repair_plan_status" \
   --arg context_repack_status "$context_repack_status" \
   --arg command_status "$command_status" \
+  --arg closure_status "$closure_status" \
   --arg allowed_next_action "$allowed_next_action" \
   --arg summary "$SUMMARY" \
   --arg command_readback "$COMMAND_READBACK" \
+  --arg closure_packet "$CLOSURE_PACKET" \
   '{
     schema_version:$schema_version,
     status:$status,
@@ -106,9 +110,11 @@ jq -n \
     repair_plan_status:$repair_plan_status,
     context_repack_status:$context_repack_status,
     command_status:$command_status,
+    closure_status:$closure_status,
     allowed_next_action:$allowed_next_action,
     complex_refactor_summary:$summary,
     command_readback:$command_readback,
+    closure_packet:$closure_packet,
     mutates_repositories:false,
     executes_work:false,
     schedules_work:false,
