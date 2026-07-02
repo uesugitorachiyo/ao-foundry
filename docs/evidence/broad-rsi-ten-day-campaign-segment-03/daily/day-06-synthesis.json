@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.daily-synthesis.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-03",
+  "day": "06",
+  "completed_nodes": "br10-node-0571..br10-node-0720",
+  "result": "segment_03_second_half_completed",
+  "broad_RSI": "denied"
+}
