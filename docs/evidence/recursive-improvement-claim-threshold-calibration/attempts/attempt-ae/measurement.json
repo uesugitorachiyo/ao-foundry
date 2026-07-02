@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.threshold-calibration-measurement.v0.1",
+  "attempt_id": "attempt-ae",
+  "task_type": "adversarial threshold reproducibility",
+  "description": "reproduces overbreadth and denied-surface threshold checks",
+  "baseline": 0.67,
+  "post_change": 0.93,
+  "improvement": 0.26,
+  "eval_regression": "passed",
+  "rollback_retraction": "passed",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "class_under_test": "public_safe_recursive_improvement_claim_threshold_calibration_evidence",
+  "status": "complete",
+  "public_safe": true,
+  "root": "docs/evidence/recursive-improvement-claim-threshold-calibration/",
+  "final_rollup": "docs/evidence/recursive-improvement-claim-threshold-calibration/final-rollup.json",
+  "digest_manifest": "docs/evidence/recursive-improvement-claim-threshold-calibration/digest-manifest.json",
+  "attempts": [
+    {
+      "id": "attempt-ac",
+      "measurement": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ac/measurement.json",
+      "runbook": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ac/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-ad",
+      "measurement": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ad/measurement.json",
+      "runbook": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ad/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-ae",
+      "measurement": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ae/measurement.json",
+      "runbook": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-ae/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-af",
+      "measurement": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-af/measurement.json",
+      "runbook": "docs/evidence/recursive-improvement-claim-threshold-calibration/attempts/attempt-af/reproducibility-runbook.md"
+    }
+  ],
+  "gates": {
+    "public-reader-results.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/public-reader-results.json",
+    "adversarial-wording-results.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/adversarial-wording-results.json",
+    "covenant-publication-gate.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/covenant-publication-gate.json",
+    "sentinel-public-risk.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/sentinel-public-risk.json",
+    "promoter-verdict.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/promoter-verdict.json",
+    "command-readback.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/command-readback.json",
+    "architecture-wording-gate.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/architecture-wording-gate.json",
+    "eval-regression-results.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/eval-regression-results.json",
+    "rollback-retraction-results.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/rollback-retraction-results.json",
+    "stale-language-sweep.json": "docs/evidence/recursive-improvement-claim-threshold-calibration/gates/stale-language-sweep.json"
+  },
+  "node_count": 1200,
+  "broad_RSI": "denied"
+}

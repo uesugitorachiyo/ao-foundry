@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.threshold-calibration-gate.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "readback": "public_safe_recursive_improvement_claim_threshold_calibration_evidence_proven_broad_RSI_denied",
+  "highest_proven_live_class": "public_safe_recursive_improvement_claim_threshold_calibration_evidence",
+  "next_denied_class": "broad_RSI"
+}

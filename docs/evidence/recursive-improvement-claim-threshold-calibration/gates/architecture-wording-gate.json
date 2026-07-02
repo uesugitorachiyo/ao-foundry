@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.threshold-calibration-gate.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "result": "approved_threshold_calibration_wording_broad_RSI_denied",
+  "approved_wording": "AO has public-safe recursive-improvement claim threshold calibration evidence showing stronger bounded recursive-improvement claims can be evaluated against reproducible threshold, public-reader, adversarial wording, Covenant, Sentinel, rollback, and retraction gates; broad_RSI remains denied."
+}

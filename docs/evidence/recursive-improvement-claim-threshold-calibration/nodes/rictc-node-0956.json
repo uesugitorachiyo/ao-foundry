@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "node_id": "rictc-node-0956",
+  "sequence": 956,
+  "status": "completed",
+  "safe_to_execute": true,
+  "executed_scope": "public_safe_evidence_readback",
+  "run_link": "docs/evidence/recursive-improvement-claim-threshold-calibration/nodes/rictc-node-0956.json",
+  "rollback_record": "docs/evidence/recursive-improvement-claim-threshold-calibration/rollback/attempt-af-rollback.json",
+  "broad_RSI": "denied",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion"
+  ]
+}

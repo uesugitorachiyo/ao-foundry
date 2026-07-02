@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.threshold-calibration-gate.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "result": "passed",
+  "rollback_records": 4,
+  "retraction_plan": "accepted"
+}
