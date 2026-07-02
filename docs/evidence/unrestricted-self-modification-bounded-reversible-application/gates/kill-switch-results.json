@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.gate-evidence.v0.1",
+  "mission": "unrestricted-self-modification-bounded-reversible-application",
+  "kill_switch": "armed_and_rehearsed",
+  "stop_on_hold": true,
+  "stop_on_scope_drift": true
+}

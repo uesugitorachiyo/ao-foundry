@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.measurement-scenario.v0.1",
+  "scenario_id": "SG-1",
+  "name": "Sentinel public-risk boundary clarity",
+  "baseline": 0.71,
+  "post_change": 0.94,
+  "improvement": 0.23,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "reversible": true,
+  "denied_surfaces_clear": true
+}

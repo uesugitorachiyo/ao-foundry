@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.eval-regression.v0.1",
+  "mission": "unrestricted-self-modification-bounded-reversible-application",
+  "baseline": 0.7,
+  "post_change": 0.94,
+  "improvement": 0.24,
+  "threshold": 0.2,
+  "result": "passed",
+  "regression": "passed",
+  "denied_surface_regression": "none"
+}

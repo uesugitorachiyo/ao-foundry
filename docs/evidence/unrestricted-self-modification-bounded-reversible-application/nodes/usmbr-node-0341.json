@@ -1,0 +1,24 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "mission": "unrestricted-self-modification-bounded-reversible-application",
+  "node_id": "usmbr-node-0341",
+  "status": "complete",
+  "safe_to_execute": true,
+  "serialized_order": 341,
+  "target_narrow_class": "public_safe_bounded_reversible_self_change_application_rehearsal",
+  "public_safe": true,
+  "run_link": "run-links/usmbr-node-0341.json",
+  "denied_class": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion"
+  ],
+  "evidence": [
+    "serialized_node_completion",
+    "rollback_bound",
+    "public_safety_clear",
+    "no_forbidden_surface_expansion"
+  ]
+}
