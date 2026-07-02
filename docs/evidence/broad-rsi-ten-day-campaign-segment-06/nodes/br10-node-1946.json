@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-06",
+  "node_id": "br10-node-1946",
+  "segment": "06",
+  "phase": "context-repack",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "docs/evidence/broad-rsi-ten-day-campaign-segment-06/nodes/br10-node-1946.json",
+  "evidence": [
+    "public_safe",
+    "rollback_recorded",
+    "gate_readback_recorded",
+    "no_broad_RSI_claim"
+  ],
+  "broad_RSI": "denied"
+}
