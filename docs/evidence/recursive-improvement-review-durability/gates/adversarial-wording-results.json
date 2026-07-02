@@ -1,0 +1,20 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "pass_for_exact_review_durability_hold_for_broad_RSI",
+  "overbreadth": "not_detected_for_exact_wording",
+  "broad_RSI": "denied",
+  "denied_implications": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ]
+}

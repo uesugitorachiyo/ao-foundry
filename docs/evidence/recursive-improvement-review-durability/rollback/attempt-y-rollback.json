@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.rollback-retraction.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "attempt_id": "attempt-y",
+  "rollback_scope": [
+    "remove or revert this evidence folder before merge if gates fail"
+  ],
+  "retraction_ready": true,
+  "rollback_rehearsal_result": "passed",
+  "public_safe": true
+}

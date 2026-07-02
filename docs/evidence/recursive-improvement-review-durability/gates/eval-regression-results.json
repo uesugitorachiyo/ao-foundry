@@ -1,0 +1,28 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "passed",
+  "attempts": [
+    {
+      "attempt_id": "attempt-y",
+      "improvement": 0.27,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-z",
+      "improvement": 0.27,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-aa",
+      "improvement": 0.27,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-ab",
+      "improvement": 0.27,
+      "result": "passed"
+    }
+  ],
+  "denied_surface_regressions": false
+}

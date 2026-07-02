@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.review-durability-measurement.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "attempt_id": "attempt-aa",
+  "task_type": "stale-language regression durability",
+  "baseline": 0.66,
+  "post_change": 0.93,
+  "improvement": 0.27,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "denied_surface_regressions": false
+}

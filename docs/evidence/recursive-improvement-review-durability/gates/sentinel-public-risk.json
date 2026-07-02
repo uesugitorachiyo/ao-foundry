@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "clear_for_review_durability_hold_for_broad_RSI",
+  "public_risk": "acceptable for exact wording",
+  "broad_RSI": "hold"
+}

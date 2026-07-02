@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "approved_review_durability_broad_RSI_denied",
+  "architecture_scope": "authority ladder may record narrow class only",
+  "broad_RSI": "denied"
+}

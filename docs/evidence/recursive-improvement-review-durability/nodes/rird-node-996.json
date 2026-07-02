@@ -1,0 +1,29 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "node_id": "rird-node-996",
+  "node_index": 996,
+  "phase": "Architecture wording gate",
+  "review_role": "sentinel",
+  "attempt_id": "attempt-ab",
+  "status": "completed",
+  "safe_to_execute": true,
+  "executed_concurrently": false,
+  "direct_main_mutation": false,
+  "run_link_evidence": "docs/evidence/recursive-improvement-review-durability/nodes/rird-node-996.json",
+  "public_safe": true,
+  "denied_boundaries_preserved": [
+    "broad_RSI",
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider call",
+    "credential use",
+    "dependency update",
+    "direct main mutation",
+    "concurrent mutation",
+    "unapproved stronger public claim"
+  ],
+  "rollback_record": "docs/evidence/recursive-improvement-review-durability/rollback/attempt-ab-rollback.json"
+}

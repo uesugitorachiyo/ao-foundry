@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "passed",
+  "attempts": [
+    "attempt-y",
+    "attempt-z",
+    "attempt-aa",
+    "attempt-ab"
+  ],
+  "retraction_ready": true
+}

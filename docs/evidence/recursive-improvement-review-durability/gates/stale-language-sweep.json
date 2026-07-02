@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.review-durability-gate.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "result": "passed",
+  "forbidden_positive_claims_found": 0,
+  "forbidden_patterns": [
+    "positive claim for the broad recursive-improvement class",
+    "positive claim for unrestricted recursive self-improvement",
+    "positive claim allowing unrestricted self-modification",
+    "positive claim allowing hidden instruction mutation",
+    "positive claim allowing policy-changing autonomy",
+    "positive claim for unbounded stronger recursive-improvement capability"
+  ]
+}

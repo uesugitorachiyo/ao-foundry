@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.review-durability-measurement.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "attempt_id": "attempt-y",
+  "task_type": "delayed public-reader re-review stability",
+  "baseline": 0.69,
+  "post_change": 0.96,
+  "improvement": 0.27,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "denied_surface_regressions": false
+}

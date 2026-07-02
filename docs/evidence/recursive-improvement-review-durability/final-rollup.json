@@ -1,0 +1,61 @@
+{
+  "schema": "ao.foundry.review-durability-final-rollup.v0.1",
+  "mission": "recursive-improvement-review-durability",
+  "prior_highest_proven_live_class": "public_safe_bounded_recursive_improvement_wording_generality_evidence",
+  "new_narrow_class": "public_safe_bounded_recursive_improvement_review_durability_evidence",
+  "highest_proven_live_class": "public_safe_bounded_recursive_improvement_review_durability_evidence",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 1000,
+  "total_nodes": 1000,
+  "new_attempts_completed": 4,
+  "task_types_covered": [
+    "delayed public-reader re-review stability",
+    "adversarial wording drift resistance",
+    "stale-language regression durability",
+    "evidence-index reproducibility retest"
+  ],
+  "measurements": [
+    {
+      "attempt_id": "attempt-y",
+      "baseline": 0.69,
+      "post_change": 0.96,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-z",
+      "baseline": 0.67,
+      "post_change": 0.94,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-aa",
+      "baseline": 0.66,
+      "post_change": 0.93,
+      "improvement": 0.27
+    },
+    {
+      "attempt_id": "attempt-ab",
+      "baseline": 0.65,
+      "post_change": 0.92,
+      "improvement": 0.27
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe bounded recursive-improvement review durability evidence showing bounded recursive-improvement wording remains stable across delayed re-review, adversarial drift checks, stale-language sweeps, and reproducibility retests under independent gates; broad_RSI remains denied.",
+  "public_reader_result": "approved_exact_review_durability_wording_only",
+  "adversarial_wording_result": "pass_for_exact_review_durability_hold_for_broad_RSI",
+  "covenant_result": "approved_review_durability_broad_RSI_denied",
+  "architecture_result": "approved_review_durability_broad_RSI_denied",
+  "sentinel_result": "clear_for_review_durability_hold_for_broad_RSI",
+  "promoter_verdict": "promote_public_safe_bounded_recursive_improvement_review_durability_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_bounded_recursive_improvement_review_durability_evidence_proven_broad_RSI_denied",
+  "eval_regression_result": "passed",
+  "rollback_retraction_result": "passed",
+  "stale_language_sweep": "passed",
+  "final_decision": "public_safe_bounded_recursive_improvement_review_durability_evidence_proven_broad_RSI_denied",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+  "docs_alignment_recommended": true
+}
