@@ -1,0 +1,39 @@
+{
+  "schema": "ao.foundry.gate-evidence.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "result": "passed",
+  "attempts": [
+    {
+      "id": "attempt-a-architecture-source-of-truth-consistency",
+      "baseline": 0.7,
+      "post_change": 0.94,
+      "improvement": 0.24,
+      "threshold": 0.2,
+      "passed": true
+    },
+    {
+      "id": "attempt-b-component-readme-readback-parity",
+      "baseline": 0.68,
+      "post_change": 0.93,
+      "improvement": 0.25,
+      "threshold": 0.2,
+      "passed": true
+    },
+    {
+      "id": "attempt-c-ci-pr-merge-evidence-linkage",
+      "baseline": 0.67,
+      "post_change": 0.92,
+      "improvement": 0.25,
+      "threshold": 0.2,
+      "passed": true
+    },
+    {
+      "id": "attempt-d-stale-language-denial-sweep",
+      "baseline": 0.66,
+      "post_change": 0.91,
+      "improvement": 0.25,
+      "threshold": 0.2,
+      "passed": true
+    }
+  ]
+}

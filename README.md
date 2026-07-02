@@ -876,3 +876,34 @@ hidden instruction changes, forbidden surface expansion, or any unrestricted
 RSI claim. The highest proven live class is
 `public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Cross-Repo Doc Readback
+
+`public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed
+self-change cross-repo documentation/readback evidence across four exact-scope
+documentation consistency attempts under sandbox containment gates; unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy, and
+forbidden surface expansion remain denied." Completed nodes: `180 / 180`.
+Attempts completed: `4 / 4`.
+
+Attempt A covers Architecture source-of-truth consistency evidence quality
+(`0.70` to `0.94`), Attempt B covers component README readback parity quality
+(`0.68` to `0.93`), Attempt C covers CI/PR merge evidence linkage quality
+(`0.67` to `0.92`), and Attempt D covers stale-language denial sweep quality
+(`0.66` to `0.91`). Eval/regression, rollback, retraction, kill-switch,
+cross-attempt reproducibility, Covenant, Sentinel, Promoter, Command,
+Architecture wording, public-safety, and stale-language gates passed.
+
+This proves only four serialized, exact-scope, reversible cross-repo
+documentation/readback evidence applications under sandbox containment gates. It
+does not prove unrestricted self-modification, hidden instruction mutation,
+policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/
+dependency expansion, credential use, provider calls, direct-main mutation,
+concurrent mutation, release/deploy/publish/upload/tag authority, dependency
+update authority, hidden instruction changes, forbidden surface expansion, or
+any unrestricted RSI claim. The highest proven live class is
+`public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

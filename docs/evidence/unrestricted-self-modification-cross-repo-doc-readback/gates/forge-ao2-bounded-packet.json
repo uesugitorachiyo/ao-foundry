@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.gate-evidence.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "result": "passed",
+  "exact_scope": true,
+  "reversible": true,
+  "serialized": true,
+  "provider_calls": false,
+  "credential_use": false
+}
