@@ -1,0 +1,2258 @@
+{
+  "schema": "ao.foundry.digest-manifest.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "artifacts": [
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/README.md",
+      "digest": "sha256:12ad3c6ddaf1b2515ccc73eb0820bd87548dc72c30b8b5e44757abead5781a7b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-a-architecture-source-of-truth-consistency/measurement.json",
+      "digest": "sha256:7159bdff6727cf0878b353f20950fcfe0e6887dcd19b94d34d23947d05228eb5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-a-architecture-source-of-truth-consistency/reproducibility-runbook.md",
+      "digest": "sha256:9aa9c19bce198d7c6f7ff0bcc4356a508dfb146f9cbf421882fe319ee9de24f7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-b-component-readme-readback-parity/measurement.json",
+      "digest": "sha256:e7a37a010f7aee0182a1e192e84b64da2d82690782fd84c9f2710075c3364005"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-b-component-readme-readback-parity/reproducibility-runbook.md",
+      "digest": "sha256:bccaf59581c1c251f5b88bd384e33626a31c5c0c396569b7017f73077638bcda"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-c-ci-pr-merge-evidence-linkage/measurement.json",
+      "digest": "sha256:6c21adc371673c6be09ec63146524692301317e44e53a254e51467b9413868e7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-c-ci-pr-merge-evidence-linkage/reproducibility-runbook.md",
+      "digest": "sha256:097ecd8f381cb3278724a42782b7c657e1132e7142ec7555a1df847b0b42304f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-d-stale-language-denial-sweep/measurement.json",
+      "digest": "sha256:515c06ddd54ef38b26a52a7915dd29eb29fede53f19e9ca529ff3da705984d12"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/attempts/attempt-d-stale-language-denial-sweep/reproducibility-runbook.md",
+      "digest": "sha256:3d3ac17e1974678a4c6402b853d86c261c99c64e2b9b6011d16d7481aa808d53"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/final-rollup.json",
+      "digest": "sha256:dd8ab39a1f1397956e8cba62b53540ab5601030dbcb70392f0c6ca6fff297c03"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/architecture-wording.json",
+      "digest": "sha256:ba1ae9f2d8d80f7d8c0aec383b0e5a1c22b49b9d11878da327f3a038bc621540"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/command-readback.json",
+      "digest": "sha256:caf99186712d2ee1b58cf08c8dfd9d8adfe90fba322ed178cd2a55e0765e1713"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/covenant-authority-gate.json",
+      "digest": "sha256:5945d05c4431e3bbcf957bccfbc72f4d169dde7452a8c24f8ed13898f16f4afc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/cross-attempt-reproducibility.json",
+      "digest": "sha256:ca539e3be4ac6a577263835545dd5874902bdf80dbc9a9314c991d5fcaa713e9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/eval-regression-results.json",
+      "digest": "sha256:1cc0d5248848bf69607943b571ec7b6f4850fe378fc30c05c61fae80d69e5d61"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/final-synthesis.json",
+      "digest": "sha256:c9519f5030a712e21fd9e9cb7f6d65c6ac2d59ac724436f856883ce8093ca195"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/forge-ao2-bounded-packet.json",
+      "digest": "sha256:1df47457252040a9da236320f5bdb2473c9d283b03dbee2586a7db6cb0e9a9da"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/kill-switch-results.json",
+      "digest": "sha256:57e5b67d68548c7973af123667f16ab2de3871232a5f2d3e0dea554c2fb2b68e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/promoter-verdict.json",
+      "digest": "sha256:12c8bfafb5f9d2addd5c6753bb490caaef715ce3a67088908ec8b76caf58ec5a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/public-safety-scan.json",
+      "digest": "sha256:05da34fdfe9845cdc5b59c7253a97559d0beda0f0e06ffe0e33e167a4fa3817a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/rollback-retraction-results.json",
+      "digest": "sha256:49a2320088eb25056caa9a541d8efce65d3c5a5a03e8bfc814e0f9ff60f1587b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/sentinel-public-risk.json",
+      "digest": "sha256:8e0c29c15dd2f8907e3dd919cc6bf44bf29367b58c8c34442e0b251f6973b401"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/gates/stale-language-sweep.json",
+      "digest": "sha256:349d1715af53b29a38cadbf63ec48c4832e8dfa31ba030e1adb91eec745e0c43"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0001.json",
+      "digest": "sha256:af313f83e20ec6d13b6b76c13021ff093078f523859f2555ca5dce15acd93664"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0002.json",
+      "digest": "sha256:d3d0642f76cd880cb1d612be601caaebf1afbc8aa062d535425f516985953d96"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0003.json",
+      "digest": "sha256:45de19fd010605845b0dcd45713c8f31f40cb63541109972438ed83b829d87d1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0004.json",
+      "digest": "sha256:8d4d59eda7a077c1f67926e73ae5cd37ec018c252ea794f7ea8bba82c42adad9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0005.json",
+      "digest": "sha256:4c0fc7de8cdf1a087b7165df5ad8484e0b3729f58d89dc3413e638a51cad5ea1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0006.json",
+      "digest": "sha256:480a7b5b3eb5249abfc4343ca364bdbbe9ce1baa1c503515f71b70459f1f44c3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0007.json",
+      "digest": "sha256:ad1e4ba7f209fd65765fba4389f18d0e6f48e2f6aee5ed12345f14260e067fc0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0008.json",
+      "digest": "sha256:6495b8dadc7eb1708bf1d14fb6888285fd34a405cf0d79cf7818306f09f93acd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0009.json",
+      "digest": "sha256:cbc57ab59215a2bc4add8cc61260d2b70e6fb56c287d4852583a8496b0d3bc38"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0010.json",
+      "digest": "sha256:f011d5cb386ef1e3590d46d1d0fdd60fcca91549f25dfcd97c44eeaadc7ff352"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0011.json",
+      "digest": "sha256:15ec28406204fd7c07b074a944ce43aee67da7a604a573b1ab9702efdd233441"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0012.json",
+      "digest": "sha256:f089b6d5a0f2650f5663bc9f7c1a537847b5370cc28752df6442f6f916824bd0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0013.json",
+      "digest": "sha256:f7d2421fb342bbdb3e9f4f72d05d943540a161ba5b236b51ce7cfc0e2c8ed139"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0014.json",
+      "digest": "sha256:6c48997bbe6d0e14019e4ac778342e6d6fb49f6d7da1eebe66be9cfb78196ae4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0015.json",
+      "digest": "sha256:606a79820753dae98f3bca716883cf0651ba2be8142a3a64b2511e98a9695b29"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0016.json",
+      "digest": "sha256:3d98404fcb4a6998fa3ec1efa136f26e7e34d7ce4b801c5eba3a05dc1356017a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0017.json",
+      "digest": "sha256:0824c50de8248996b5e8460ffc5421f9488b36d9418715d93dc3b0e3bc178f86"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0018.json",
+      "digest": "sha256:772f1355124f14f93af065b57ecddc52e7adef9f76ea8fa18ae50b402e0bdb6b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0019.json",
+      "digest": "sha256:cc6f7a1ffec9196ba2d75a9386f5f19a2a98a4e9ac6f04f74da8bcf640198466"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0020.json",
+      "digest": "sha256:34f6b0935274a60a361f6e4c31679de2d79787f7bf63ab80e238893f5d1f90c3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0021.json",
+      "digest": "sha256:6d7e7a27cafccaa321f56f6e201aa6452b42a3c44ce34f87f5eb0c1631d1b6b7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0022.json",
+      "digest": "sha256:0a36df3fe56a080f25866d493a9a290a684d8a1d38fd0078302f2bd90954f4f6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0023.json",
+      "digest": "sha256:59d5028f5b1adc8e02fa4b65aac882f5b58bc70bb097474a66f7b279647f92ca"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0024.json",
+      "digest": "sha256:578cd5b9c72e76e698b45719b3f1cd914c045317dcef0888fb0ec2797c02f6e5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0025.json",
+      "digest": "sha256:1be851880aada4036014b2fc432b4ad7bfa34160519dec0745cc93a00d3304d2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0026.json",
+      "digest": "sha256:c7daf42cd471a5140bfd7ecf17732e1af478dc9b3db42236d2398c44166d92ec"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0027.json",
+      "digest": "sha256:a0cd9e36b15cac37fca0f098847a023c34c089e4129173488e5ae03904c92317"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0028.json",
+      "digest": "sha256:7b640992e390f62f15a425f653658f31fd773cfe2b71b93d919f5eac836f0265"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0029.json",
+      "digest": "sha256:8ad8dd93ed310931408b46279fc5511b782a6e4619e07bee774f3b606e635934"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0030.json",
+      "digest": "sha256:99c335e78ce2aa83b0a2da1d596f0f593c54941cf74166f981705b497127aa45"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0031.json",
+      "digest": "sha256:03090b7fb366de960911f5476494077fedb4351302633e7e0d681134b1d081c4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0032.json",
+      "digest": "sha256:2f48205b9e1c098fefb6649310d280d1340b8ea95cd99a3beb5670a6d4b96f26"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0033.json",
+      "digest": "sha256:995647c84212dee67f6737a8102685d75b5a8dddb57c4342ca1b26e90c4705c1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0034.json",
+      "digest": "sha256:0fba93aa3b1a46e380fe8643737907de8c1406241ec756c4401879e690f03353"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0035.json",
+      "digest": "sha256:35264495f9ec759e48661ac8b514faafd37ba5bc8846e0b95dcfa1c9d3e30d72"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0036.json",
+      "digest": "sha256:ad55d3f460fe4ef9b09e9f6d8418911b82195fe173c6df809d37cbadba913254"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0037.json",
+      "digest": "sha256:3285908d0ce31105a47edc9c8ef283e0e82557a313243dba0e0dc2c78f7e2c24"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0038.json",
+      "digest": "sha256:a5e6c1ff5fa4ce477da6cb4867c70f62603d879f8ee3a25c3d92f2cea6535fb7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0039.json",
+      "digest": "sha256:76c6f13555793d72a1601ffde3b4bf402f5344ad70613e938b90aa4b890d7b49"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0040.json",
+      "digest": "sha256:cd61dcba36ee183348da3d84f51be31da3ec93520791735260605b78d3359656"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0041.json",
+      "digest": "sha256:907375c08b32d7e871f30975aecd634d6ecf2b1da316592e3cc20482127ea1e7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0042.json",
+      "digest": "sha256:4853486457f01dabc624d7acf016ef7cb8c6b3b7a91c85918dc3a772efc81f59"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0043.json",
+      "digest": "sha256:95d7335b983037802a88569a0b2d5f3a91f6a6b23bb773b107e4c42595c1ebce"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0044.json",
+      "digest": "sha256:7086967fd7e146c94dce79ca87933e1daaaf73bacfa2d874897aeb86a93b01b9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0045.json",
+      "digest": "sha256:4e85759e21872799b7b4f7c5441c9a4a7a1ae0f10a65ec9cd394ab7c5b1bf2ee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0046.json",
+      "digest": "sha256:87c7d054c8ceb3eb50e9d0e5e74451d3c43961572160901c31f20fc181f60bb0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0047.json",
+      "digest": "sha256:0a7a5cb8fa840e8e92929e7951e629063ceb100fad9c77eb6fc159bf2ab8ecc8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0048.json",
+      "digest": "sha256:9982f156620dd185176448875f4deb92d5ddf4fbe6eab3fd895f651ee2d03770"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0049.json",
+      "digest": "sha256:80907ce0bc2d092d50eb8adfe96b76a270df4a5d54fb157f17463da544be9390"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0050.json",
+      "digest": "sha256:85c8377fbbabe8fd60e73fca679823c541f38610d9acae9108b66d9530130965"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0051.json",
+      "digest": "sha256:901d3e03eecd8e18fc4bb7352e6c1d874b675969dab9c58d82f8203a440dc289"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0052.json",
+      "digest": "sha256:6e4a6ad43529376d09e3f5661db3f697e40243aae37efcd38472ad8d1e961e6a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0053.json",
+      "digest": "sha256:a4d71b0637ff9c3f554e14ac5516117130919d56ea0c622fc8c2ef9b526161ed"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0054.json",
+      "digest": "sha256:47e29a440f28b811c62e9d9300988fb0d6f3d039c09738126ef407c21f24023f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0055.json",
+      "digest": "sha256:15d393fb3b3893e122655c9fa7dfe6644f6df6c275236b00e9924c2179891684"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0056.json",
+      "digest": "sha256:8a537f1a6fc2386bc4981ad008d07a17e6cb3a724f1972bd7ff4e699f781a668"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0057.json",
+      "digest": "sha256:e56c3a0dcbc1b2072a3491206b12c2bbb2ba317b2dc856810fcf9791339434df"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0058.json",
+      "digest": "sha256:91250acfad61d100b1eede95d0e5ae77098b3bebde4abef7911d6af33ebdae6f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0059.json",
+      "digest": "sha256:e8e4c1411a4d3bc56c7535621b144de03f4f0b0f08c68c4caf12a6f50779ea7d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0060.json",
+      "digest": "sha256:0e6f6d6d1988d126d85c9dbfd5b6fa0df58bb2cc47c1455bff74c23971486ed7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0061.json",
+      "digest": "sha256:633a1507a1a8739b225a1132c28c89477e0b17cba4118d7fdd219a16fd0a5434"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0062.json",
+      "digest": "sha256:ae16bd64c43421db9738063a3c740ca25cad1e85aaaf63cb76879db17eda63da"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0063.json",
+      "digest": "sha256:87c28eb08db63bcc3839867dd051a0da76ab94ac5245f4e9d88cd7baacdae229"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0064.json",
+      "digest": "sha256:10fc8313eb884b2b9425d764574d4b4e4cf5809d3a817d522a81aa9424deefee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0065.json",
+      "digest": "sha256:152de94c0375d576d1894aafc5728cff4035d9a80081fe74df14c397b4cf15d6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0066.json",
+      "digest": "sha256:aaabbd318e50dda141bf32ffbd1d3ed3b00859a7641350aa508bbe2da027174b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0067.json",
+      "digest": "sha256:e6e65bcfad0aa1e1d005e1765f6d8e719fac3329c09dda04d7a4112a7fe55a75"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0068.json",
+      "digest": "sha256:1ea01333f6aa320d123e1723e0d60352a134a8fd1876041bed5fdf94321baacd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0069.json",
+      "digest": "sha256:8234088e901b7834b0e141767aac51b052757bdd7d0f6f814e851e8586ce56a8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0070.json",
+      "digest": "sha256:79754edde31c9435e10e0e413fd9d90230abd5d039a76b1cc2827cad28b9e40d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0071.json",
+      "digest": "sha256:9c5df88f3c60e2161e35a5663bd2161339f4293fc793a48f7804bb7380666df1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0072.json",
+      "digest": "sha256:fc5bb1cd487f1c0945d274cc6be22f5d97fd59713f09b1dba0191cab73d4a256"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0073.json",
+      "digest": "sha256:926487dcc133fee88723339ccc2d80fcca0300938fd106844c9d9dc282d96907"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0074.json",
+      "digest": "sha256:5343cd6866e4115f6201bd37b2becf743de6953046243a43ced2dc4a89c511d0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0075.json",
+      "digest": "sha256:7bcff35b82b914fa059c92302f50ace8df1a6434486f417814a4506b01a460d8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0076.json",
+      "digest": "sha256:352882f5da743d3a5ef946eccc1e379667a1ccc39e928e70e628a44bbfd78903"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0077.json",
+      "digest": "sha256:32b03fef72f61d8f5ee098efe34d551c9cf621060060044c3dd96076967b3d0d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0078.json",
+      "digest": "sha256:690c3b99e899200a15bfc7de21e807808343e16ca1951626f6e2221b5b91856b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0079.json",
+      "digest": "sha256:d78d5ba779f28075160cc96a71379fc81494cbeaf98a144bc911ac2b15771a07"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0080.json",
+      "digest": "sha256:cfcc50fd7240807936b430703bd98c10575d2438cb80412e3927788a5ab21c41"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0081.json",
+      "digest": "sha256:0b266562278910b8dbc084c77710dbe1fe44102c6dd7ca8610392641b3265e9b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0082.json",
+      "digest": "sha256:107fd0a7afe8f0dba9edba1cc4f7371253f2e2f6843c650e02a184a40be797cd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0083.json",
+      "digest": "sha256:7792a5f3f9bf67c5b8f945cca32b12fa4095f81c6943e114012862477d14b3de"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0084.json",
+      "digest": "sha256:027e3a0ba566e69ac293c03fd7f8f5bbdcb1cc10ba74e3bb2fdd921ba07ff45e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0085.json",
+      "digest": "sha256:4112669ec96c0c4927a1a11e7791f4948ad1d2cf07244021581476f4d66f38b0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0086.json",
+      "digest": "sha256:4f2a42bf0c5d53f6b2feb089106dc071d36c5d5baa9fb74a287e42db4a59c6d2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0087.json",
+      "digest": "sha256:5f47dca2ee063c977950f80bdecf125f6881b3261b11c8714aa88b30b992f6cf"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0088.json",
+      "digest": "sha256:f75be5142109255db27c44a969f3ec2725543478b4f34e6fe47ab120c26f0883"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0089.json",
+      "digest": "sha256:cb45753b14ea01e78ad539d1dc6e60cce50a7e52aecb03743be9c5b1cd24bec7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0090.json",
+      "digest": "sha256:44418ab6449c3ef851852c8329e67d603c69380e0c02965103501726fba662b5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0091.json",
+      "digest": "sha256:311c7d6a2d5f97d03a79e7b66dd3b846f30038f31b7b616ff2a5146d3d35f6cf"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0092.json",
+      "digest": "sha256:42748e4ac15a023f8b2725d418e884b32586a0ef0608820c76cd7373a9e44f70"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0093.json",
+      "digest": "sha256:4c55be5bd5494818f760aa36a701be74886477ad79f64182a7b523673de266a5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0094.json",
+      "digest": "sha256:f45aee3c7456727e78e75fdd3d9aaf1e8e6439454257765b7d4892a1f893a4f2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0095.json",
+      "digest": "sha256:19b018331c245d76f23e269991169290429f87190b2ec7d9e20b729190d5adab"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0096.json",
+      "digest": "sha256:b86caee2d449fc40dd617397e8a14af50b61bf44ccefd51b56660b0cab6f1c20"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0097.json",
+      "digest": "sha256:0a95852eb24d7523980f24c5f81aeb500b1059dad1f009006edacc460c52f3fe"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0098.json",
+      "digest": "sha256:6e6a4a12f3719d7da3b2212f43d0cebd7302780353dcd8a0521989a07d2731ff"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0099.json",
+      "digest": "sha256:4f1b027697775437fc773e8e474116539c08f32196f2dbe3cd20b4bfc1868fcd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0100.json",
+      "digest": "sha256:8e0d30393c643fe5c04d1caf7ab92ae8a61a8ead212f55cb9b2e66d9c54c2d76"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0101.json",
+      "digest": "sha256:3ed027f42181ac3381e8d5f3cd8a822a0bc106bb89bded0f65b276f59fdd50f8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0102.json",
+      "digest": "sha256:c0848191198b88570fdab06eec6de1b1e67f721437af81afd7c08936658a9c1a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0103.json",
+      "digest": "sha256:4fa672d5e2793e338532654d2d5f40c3b026bdbb036de5c153225d0db6e365e2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0104.json",
+      "digest": "sha256:db1fc9207cb39dbba687a14d72a6cf7256eb53a9d7889c9fdc64de39c7ff36e8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0105.json",
+      "digest": "sha256:1bbd90ac56b7ce4f95ca586c0794b5bec17163edd9adbaf819313be763c6c489"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0106.json",
+      "digest": "sha256:0f9986ed92d21e1f982ace90b31f17633e66de1d1aeac3a878ba876c79d064be"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0107.json",
+      "digest": "sha256:9fb2292583306e630a824ce38ed4b9935fbfebd491e3d5e9dc103b9782815680"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0108.json",
+      "digest": "sha256:0fac37841c4cb5d05778188f6b44bd8d0f3b0fc2640d005ab6dea49633b9c227"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0109.json",
+      "digest": "sha256:ba3dcff17bf1fb1592f3d43f06abedc9f4421a5bcc75eff0396ddc36b0683f0d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0110.json",
+      "digest": "sha256:dab75146ccb213ba0aead8e23e62115a2f34e75782c48be0c635f748711a4a58"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0111.json",
+      "digest": "sha256:c1cdedd34c2e0f868ebb6e750781a526bdbc4aef6ff58302b986bd65fca0acf6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0112.json",
+      "digest": "sha256:6ec097306a53e83403bd5f6ff4532f56bdc693dc49aa3c651e4915e4bb8b1a34"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0113.json",
+      "digest": "sha256:7a1da730f841b6df3368fda6645d44b75ee7bad937e91d99797d4d9ae7dec512"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0114.json",
+      "digest": "sha256:b97a4576c937ea8274f971e557ae87acbefc9fea6fb99dae6283cc25cc12bdb6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0115.json",
+      "digest": "sha256:7f5b4583d15ed5f2b80fb71d804d0521a53510be60a1e5831521fc2de580b720"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0116.json",
+      "digest": "sha256:6f0bc271b24f9b57a0d580dc2516fe4c6e87efdb66e8d89e5edf2239e7333ddf"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0117.json",
+      "digest": "sha256:71e5a58454541e96d381167e735fdb30de8812bf687ddfa717168b83f241e788"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0118.json",
+      "digest": "sha256:9e2abb7cbe7f3c7712d7504e10d0629c3456a9ff454d50391e355b87210a4547"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0119.json",
+      "digest": "sha256:be329b1976f22d64f0c1cd7e5c2b7145953b2f3ae1278da5e20b8e56b9a2a8c7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0120.json",
+      "digest": "sha256:13fa44045b05627791feb976c7e5bdc412b54993e3d50177cadee42f308bbc47"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0121.json",
+      "digest": "sha256:b321d94a6fa881e096e8f78e8d7e869847a5fff29bb3ac6389e3042f32dbc12f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0122.json",
+      "digest": "sha256:e014ed5211c9560ebc00a2944e00550d11ca9d49d3f15e6a5930d55ade4af2fe"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0123.json",
+      "digest": "sha256:6704e8f5fd0ab30d875425e9ea56b1dd94a0d61b04a932036fff119b5875eb97"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0124.json",
+      "digest": "sha256:8d4b03e12cf38ba3ac5b160cbebab56106b004c15632813671dd786ead0687f1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0125.json",
+      "digest": "sha256:01940f65040ad0f37cdc7c961d647462b97df63d556f8f5c93b012e86317db0c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0126.json",
+      "digest": "sha256:325d10bdd65b467ca93bd04de2068bf2a2e9b3d3355d6deb984ffe11d1bf8c1b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0127.json",
+      "digest": "sha256:a234a1f6c065ae86da591601e77beedaa7e1bb50fd052c85d350ca8b04a690cf"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0128.json",
+      "digest": "sha256:6bb05266d26dfe7ecdc238d08d948672ed2b0ca623688b07d8c306d9ca7cd99d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0129.json",
+      "digest": "sha256:afd79c005c55ef3435936d51b10be4b6e892c90412841304a6173703878a10b2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0130.json",
+      "digest": "sha256:d1b8983e8730e78def330d5b2eec3911ba9074b5f21b6390e92a68aaf2da66cc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0131.json",
+      "digest": "sha256:fd32ed0b136a2bda2127a6e5edff708f07fa583d6130732c076d0d319e0a89a9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0132.json",
+      "digest": "sha256:c4584cc40ebba14c5d4789a5e77d555575cbae33af8efbf6aae509cfe674edab"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0133.json",
+      "digest": "sha256:70fb9eca3337ae55318ff45c58f30b2722b90a156d87cd987825196a2e0eb432"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0134.json",
+      "digest": "sha256:c6837a46440a0afd9e9e83be7b0dc091eb19ab5888fe6575ddd5dc7d1ae17df0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0135.json",
+      "digest": "sha256:347dda4ab9a782e40a9c356ed4ce7fe35bd938b5f719fba1017bd1951ec07130"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0136.json",
+      "digest": "sha256:f384822eaff9c89595c88446a5fa407755bbb2a2773da452c3d3bf06b5264c06"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0137.json",
+      "digest": "sha256:ff638beac16bff9c5d4b749483ea376f8129c3ff10d2363d12bbaeb5bcf22d98"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0138.json",
+      "digest": "sha256:cbb7d5baa7f60b0a74d76811653885ce133bd714fcde56c02e5c8ae54e785dc6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0139.json",
+      "digest": "sha256:77180a674e604fddb129db4d23c31fbd21d1c4b38f74f2d6b9189ce433f6ef93"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0140.json",
+      "digest": "sha256:33369525dc8c42781583a618f749835eee0ad089300a55096add6a908d72a388"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0141.json",
+      "digest": "sha256:100d8148a870f4b8b79a2feb9a20261f331fc2beafb7a05d6d3607662f4368ee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0142.json",
+      "digest": "sha256:69a2d4b14f8ae2e0507cc7689d541ee07cd192137dc72744d567615df58a4109"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0143.json",
+      "digest": "sha256:e31747d5902bc7ed6aa70a218e8ba6763eb556135658bb27f52565bc9d97cdee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0144.json",
+      "digest": "sha256:0d01b9e878462e8f895bea167601f111644d2dd1efec2119d0f97135163f8db7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0145.json",
+      "digest": "sha256:2a426f71bec6eea790f58cfb2682b0fcfe3c446990185270a8811fafb63a8cfa"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0146.json",
+      "digest": "sha256:7b27bef483d1be954936f3433c30e190eee41775476760fde8139499cf93d701"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0147.json",
+      "digest": "sha256:74871d3397cf116ffb7c85062f6bf0f590a792e613e9a0bdaabd8c5cdd883913"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0148.json",
+      "digest": "sha256:0ccb5c36c080aed8a1b67fa25786daa19dbcf868239a26c0283d4ea1ceebe531"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0149.json",
+      "digest": "sha256:5dc55e381b050a345ee2d897e43f16640fbbbb8db42086b34f77520816c7a6f3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0150.json",
+      "digest": "sha256:63810cebb8cde081d1b592b3bfe0ea2530bcf342a78876b9d696c39a1fb3d6de"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0151.json",
+      "digest": "sha256:ed6e7125d7a6248e9af072a0d3f1bdf1d111a55927b07a1eef069ce21e3d0a71"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0152.json",
+      "digest": "sha256:2378d9b10ae73542bd5cb80b02ebf8d78c160228518385c59c4b7200b79ca473"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0153.json",
+      "digest": "sha256:03c30faf9cc5746a6794230f6d86c8b608b410b853078927ce038112249b8484"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0154.json",
+      "digest": "sha256:d86895fe58d08eecd55ba935543661f3872a726583f89306a2ff550b07e5dadf"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0155.json",
+      "digest": "sha256:84e29e39a2eb133dcc0fe017254e23c55ebd71b011bf1578611ba026a097ad4a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0156.json",
+      "digest": "sha256:66a184eeb78ae5129d013634a63a5a26bbd3ef4aedf56bda6f8177a473cd54d2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0157.json",
+      "digest": "sha256:a1f887946c563d1947257ab2016987e984f8212d8c8876cca561df127d783dc8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0158.json",
+      "digest": "sha256:e07c8b64425391c52cd0f05c7a5cc94cff8a81d29bf438b4982e5105147d4151"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0159.json",
+      "digest": "sha256:4478de669c538e634d7e1c9b7fc251faabe3fb7cd8e84352345dab25a68b62ac"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0160.json",
+      "digest": "sha256:8b800c38350cb9eb4a72c97f8881bbd9bd21672b2d7199715f7eda303a00f15f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0161.json",
+      "digest": "sha256:0885947ce5c11453547f59cb92ff52aa13548fe0b7cd7c88d29a4490a4bd53b1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0162.json",
+      "digest": "sha256:f65d6e43b79e1852b8057d61983b61caeaf759429662be73f85f7a8c02098a96"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0163.json",
+      "digest": "sha256:d596c22a078f92028177b45213ff01cf9ae4a0cdae8b25f32e9c3e6a83d78da8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0164.json",
+      "digest": "sha256:626612ec585d20995ccea619919e820b27a8e6267107fea3a52b5492e934998c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0165.json",
+      "digest": "sha256:a49737cfb722ab1adec6c65c1fda79d1bfed4cc5aff7d947d3f99375ffda7229"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0166.json",
+      "digest": "sha256:0354df68e5d8bbecb84c670bbf261321b49b4ebded9b713dab0a7c8336edd32e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0167.json",
+      "digest": "sha256:6027e48b81253a44845f1d50d72e1cebf01df53c079a92e1f8979b118065e5ec"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0168.json",
+      "digest": "sha256:97d97fdc1a740a68332a1d944bad2bec979b72e6b655bbd8360b5a94de5df09c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0169.json",
+      "digest": "sha256:7d20ac484cbb7bc2a5003f60b46cece5c0468a5e98a660551ab7ec6983527e87"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0170.json",
+      "digest": "sha256:ad8d7d630b5aad06c57ca2f4678995cc9065b8a6bc523a009dd30722a886daff"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0171.json",
+      "digest": "sha256:de7ded03b2bde88545786e60cc97a69a2375e0181fb1dc5317aed8701620b52f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0172.json",
+      "digest": "sha256:e2c9da212d7c48204cffd249b9054b9b478f56ea283cb3786ceb7912a7b854ce"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0173.json",
+      "digest": "sha256:cc617b40293ba00d197b8a5b5275c472260228f14c65fe7b1920fdab2d9989a1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0174.json",
+      "digest": "sha256:c1b97b9d735b132a60b4d6046a8530487d9f589638e706effacb031ff722725c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0175.json",
+      "digest": "sha256:c7146f7a841c9acbd8bf6cd971e88f885bef4dcd743d4dab49430a099f4ef2e2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0176.json",
+      "digest": "sha256:bf3b841eee711f2aa4d9ff3649339bb0e0a60ad86986fbcb5903c6598e612542"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0177.json",
+      "digest": "sha256:75b9b072b6d6372088f6c5179b02df4e4359d2335e3b8b6478dddb0ec382c04b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0178.json",
+      "digest": "sha256:662ada08f6058cf8bffaf6e44c8c93490214177dee091c7e90868f6cd4c64bee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0179.json",
+      "digest": "sha256:837e31b3b7491bfb5aed940871277852e2c400f03a5e62af3ab39eb4d2893a2e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/nodes/usmcrdr-node-0180.json",
+      "digest": "sha256:de590f19394df5e41e030c7334cad0f5052cc076b7afa00727e3071aec63bf93"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0001.json",
+      "digest": "sha256:441f939bf325997c5606effa7b1c6f3afd33f329aa034e05fa24df145701f771"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0002.json",
+      "digest": "sha256:213c44f0d8fa6efd0cbad62dc198d7e5fe3abe0cb52ee3a1f0ec37ab95f92f6b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0003.json",
+      "digest": "sha256:d11c8a6f42439f0a8eb9e9c7b8119509f7db8e848b8302fdd84f772a93d09f9f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0004.json",
+      "digest": "sha256:4b99155144b1ac6af464ab4aadd1745196688ae0154011947958490b3a39e73c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0005.json",
+      "digest": "sha256:6184569d7188fdacd33e8fe816e4d71a22d148f995bcb596515bb6f9714d48d7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0006.json",
+      "digest": "sha256:6567f6d272b1bf78a92bde46fb5e9f852544537b7e879ac81676cbb4664e45a3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0007.json",
+      "digest": "sha256:4c1e5bc1c622cb655b7588945675ff360923343905b9b99628ad658e456b30e5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0008.json",
+      "digest": "sha256:13b3de4efc26bebb03d4da591d0e321f247505f1c92fbc50628b12b965d74c98"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0009.json",
+      "digest": "sha256:e7220ae15072577c86330f2d4abad42e6fce875c10e86c1e76dffaa3b9700a44"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0010.json",
+      "digest": "sha256:54bf300d8e9ec93a06d2f740c8886854d0d0f9f650219cb47d252773ad718072"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0011.json",
+      "digest": "sha256:f9191d4489b04987262eb23b8636b26aa62bdd7630c57aebb86280a8e07dc3dc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0012.json",
+      "digest": "sha256:5b2a4b756c7ea30d697538316e71719da4f29a964e1f85f7f53c2b7d15c71756"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0013.json",
+      "digest": "sha256:5b292d8a506b2f93b2b9cf288f11fcf163f807a992a5d4e73d133d3aff4c4d23"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0014.json",
+      "digest": "sha256:e88e555e8f6747d7c49a6a0697bdef43cd9c17163631123a69fa5b028cda9738"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0015.json",
+      "digest": "sha256:34118c0d5b5eadbdeca0d87b8bae47b9d4654e0de71c3888fb9e98bab949cfae"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0016.json",
+      "digest": "sha256:42682380e8bbcb5276d0a71cc322b368c79a0a6caca4afb05017d35862aaaef8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0017.json",
+      "digest": "sha256:1691692ce40ff069f1f2b56acbeba6fd5a324ff2af21c6b977169f1f764d4ec4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0018.json",
+      "digest": "sha256:2a2857eca1162b3214a4336bd879f9c1672bc36a3517ff3592066e42fb8a0215"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0019.json",
+      "digest": "sha256:442671c4eb9048909ee4d5303a9330150ce4f030ca66f5228841ab034891b07a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0020.json",
+      "digest": "sha256:c3941a55fc8d5ff83bb444adf28e8b2e1a217b9b49f85dfcc018367a1946921f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0021.json",
+      "digest": "sha256:23e1279e448df9ed17e976ae5dee8ccc4c2d46726e6e8f52dd619edb7e749b39"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0022.json",
+      "digest": "sha256:952bd80bc569c47db9a1b5a6119de1d46a6e3ec98cd84884aaefdd7dc320e2cc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0023.json",
+      "digest": "sha256:339b7979aeb5d777cdd8b790f424f13ca153eebcedcddf5a60f27e2cca55b5ff"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0024.json",
+      "digest": "sha256:8adb837d018f32fca72cdf76777bec33122db4b1acf943eb861f2c8a49e57d96"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0025.json",
+      "digest": "sha256:5e6f8066bdcb4c841d205a11449e417d397ccac23ffa9acee9e338b6406d3827"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0026.json",
+      "digest": "sha256:6e5ee141fb458054dffd22e50167622282009f3bf7a7727f178cb16d7df6960c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0027.json",
+      "digest": "sha256:b4f8b95e2f1657571d2f15ba59d13d4e9cbe95fb6690347efeb6b36ae3fc4e55"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0028.json",
+      "digest": "sha256:19f254d4120cdbee61402a3ab8ce8add531a3a58836f8bc2f4ec9a614d2072c3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0029.json",
+      "digest": "sha256:69736d50350701a065c30f9e647ae73b1639eb51c560e8c7cb1b532faa98716a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0030.json",
+      "digest": "sha256:c73e2c5e935377c79c4bd112ed736ea5f65f420fc57cef48d743c8674a0e7554"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0031.json",
+      "digest": "sha256:f0187c02e59dca9a840cb846cbd7c97d6f3b5d5701c803e259a3acea9e323c11"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0032.json",
+      "digest": "sha256:bd3453556eab30ab147801b84fc0026b0da6bf6b683dc555025a51264e86b047"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0033.json",
+      "digest": "sha256:93ce946bf9e11caa3e7c3b30360923e462c5d8cb04137230e0ddcac09478be09"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0034.json",
+      "digest": "sha256:e038004bbb502e2c089826d0d8120ca23047245edf82d430d5c4517c01ffbc9a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0035.json",
+      "digest": "sha256:76e83cac9e26dfa84c9b964c14208a7e65cbde3e794f0468fce53c7fbaf65f0b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0036.json",
+      "digest": "sha256:febe251bfa73ced656bd2ca68ed3375512d2cbb32a1f8159ddcbcfbab84ce363"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0037.json",
+      "digest": "sha256:07a0a4e9a54467a83a3cb66c55339a40712a34d5fb8a057dd58b890dd018beb9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0038.json",
+      "digest": "sha256:17ad7aeb20bbe1345f0288857abfccd8d517209dfb09a937e99cf5b0a9d50083"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0039.json",
+      "digest": "sha256:b80cb0017a84b64b6635bb6548b376f8e1b5e43aee263ccc8b43801c0d0f774d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0040.json",
+      "digest": "sha256:db44836755d2108bd167c74e8c0128514a4e26c4ceb7e8fdd6fc68faa545da65"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0041.json",
+      "digest": "sha256:d49c8fe987b7cfeac108ac656f49a8bb4521f11ec0a3f4b6a0fa5fd4aa467cf7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0042.json",
+      "digest": "sha256:21c32cf2c83b5285b1895a063f2e1b11d8f15833ed1c81df2aabf44514299f1f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0043.json",
+      "digest": "sha256:640edf06b0d5f189c005dc467bb8c0de9fb2535b98547ca765adfbe6c9dece34"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0044.json",
+      "digest": "sha256:612666a6d89cc75c88f49846aab4cba150212c3a242baa970845a170b319a09d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0045.json",
+      "digest": "sha256:86d6468aa7eebf41ecad9e59abd46301cf79442b080ca24f371cb9afaa5a62ae"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0046.json",
+      "digest": "sha256:103c771f8bd258616d5e4f7530bad9431beb6d0f6c7fe2d63a8d64d320ecef45"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0047.json",
+      "digest": "sha256:477d9f5d22e12fecaf7c12163b344ad311dc40b2e0ebb76ee463259e7abe3fd2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0048.json",
+      "digest": "sha256:2107ec174fd606070a21e230defe8831db4d9fab2305f48fefd4527f4e097ea9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0049.json",
+      "digest": "sha256:b6c71c7ec824c85399da7049035d39a72cffa01a318e8695eea746aef0d21e7d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0050.json",
+      "digest": "sha256:8aa46c2b486598bb80383405b0fb5c6ff1b0a1ef42e2a59706ca635b5e1db214"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0051.json",
+      "digest": "sha256:c3af780df1f23cae9092fecdc1f72ddb2607e2c876c668d3f726dbfa8f540985"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0052.json",
+      "digest": "sha256:36dd9c3e0169d1a95240204243912e3b5cc0ce07f19dc86fb96d25c684c7f2cc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0053.json",
+      "digest": "sha256:518767d4599dae5cc63a99d5ef09e0697f440a2578b29a6b04195d4ed6a6e824"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0054.json",
+      "digest": "sha256:3c92bc99182355cfe2fa4b9ec8f52c5cfd58d2f30cea5740348c7e133690679c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0055.json",
+      "digest": "sha256:869e2cc761bcdb805160953150d83b46bbf63c3ada453778834b2cb0647627ec"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0056.json",
+      "digest": "sha256:ae0152bde0fedc886b857526acccfacab99088e855bdc72694e9ecdc2776fe93"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0057.json",
+      "digest": "sha256:281de8a8d2eafd49184e122306701382449c3a48dbc6efa647fcb827d7f82673"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0058.json",
+      "digest": "sha256:8f92d4d03cb285362b5b55b64a3fe3f98677f8d3a24bb193b7de05f0742cec4d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0059.json",
+      "digest": "sha256:d219e3f65e7c3699d69aa752de7a5cd67bb46d1d472e2c9dad73a7b2545caf2d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0060.json",
+      "digest": "sha256:45b4b7cf9cb4f469fa766f5b812992395affd8769ddbd047674dede3bc81067c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0061.json",
+      "digest": "sha256:e6ed03c2088561530b4660df6de6dedb2e220754edcbfc25a731e7c128efe777"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0062.json",
+      "digest": "sha256:b27ac7b196cd1883e471a32154603e757c49c00be57171b31e0a8d40ed1c89a3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0063.json",
+      "digest": "sha256:12747aaa3d391e78482e18fbf36d3f893aadd73697d9a3fe298ffae02387c07f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0064.json",
+      "digest": "sha256:bb04a438a4d99788c18e0ebd5d01147b06a202659bdc0bb5a623a7b56dd5cd71"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0065.json",
+      "digest": "sha256:d085b593b159d473fa40425f7db6897f402f7dd8e5fc7ee884f50f670e1a414f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0066.json",
+      "digest": "sha256:e9f9a083cdc8ca90e9888445a8111cb8332e99c1a2991f08f75a59b069fe3c54"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0067.json",
+      "digest": "sha256:df8d50d2ef348c2339eb01c9a846e922a01484738d8cb033c56d3378db9a486f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0068.json",
+      "digest": "sha256:ef407ff5f5fdb5b032a7a2714110bb0305e25bc6814075ff7dd12a948c16d699"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0069.json",
+      "digest": "sha256:3591c8237786caee631fe0c21d71d21a7e521973eff346f1089923019c263626"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0070.json",
+      "digest": "sha256:22e2f3bb2f15550c84347a6b98507fbce5f81754bf9f670549c8955e3d3d7097"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0071.json",
+      "digest": "sha256:e25fe492f423866e78911a16d212da843590acc79e0f75cdd5131a09283fcad4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0072.json",
+      "digest": "sha256:9943be6bf566f8f30ef8952d2c86e7627c46980f812d1dd5f27fa3f595681a0e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0073.json",
+      "digest": "sha256:4328c830aa785c735f3cf0bf0fc1ffbc87450be15731dba14cc35065c9c34ded"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0074.json",
+      "digest": "sha256:562cec98424f604651126649030dd636ff1d4fcddb3bedfdfbfffe0baff23944"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0075.json",
+      "digest": "sha256:1c3a80c6deaaffb4309813930424cb1ef16ae6793e7c4c1628439dd87c4730f9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0076.json",
+      "digest": "sha256:e4da097fd283bd6b3b36f5c23bf0bcc7bc0b7e288d3aa093e08ef973b6a367c7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0077.json",
+      "digest": "sha256:34922c3acbcd43121135e9cb679b3ec95a932e86eaf569f95ca61e272a3c679f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0078.json",
+      "digest": "sha256:38b9416a3dbf3520c9b4dcd7989bc9865b6eed46450a9b9fb8e7586aaa1f5d61"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0079.json",
+      "digest": "sha256:a5a53105458c73fb8ea5fb8ddbcc6bd7fef10a16039c476e90b2b81f0b464e70"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0080.json",
+      "digest": "sha256:b386a3001650fa42fc41f40bff21d4e67366b8f1b657ff4b2c76d5bf6a01595e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0081.json",
+      "digest": "sha256:a9739845d2d9ae90a948ffcaf035dacf28c231ffa8c683f14abb16f98a4cc207"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0082.json",
+      "digest": "sha256:b5d1f2f3f5bc0878d9d89eb36c8ad6bd3ae367d0e14a856196b2d1b0122d2da0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0083.json",
+      "digest": "sha256:9909d9bdf667278c050c4394b73983a36b49960b11f2a77e37279e53bd6e408d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0084.json",
+      "digest": "sha256:3249ad614f2fa6c22a83cb7187d6e6289f005f58e410856917156e7e17740f0e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0085.json",
+      "digest": "sha256:1413fb3a1adc2ba0dc632131ebead99c1603cee8bef7252d8d0611f0e8b60f40"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0086.json",
+      "digest": "sha256:531eb21d65ccb0dde187abe95a27cab05750749841884d5c5f2bb738c6d47ecb"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0087.json",
+      "digest": "sha256:69b547b96f905f6c125addd3381ff85d955c9526bcad9e8b5aad7330c08a8695"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0088.json",
+      "digest": "sha256:0a56249aa3f8821e24d1058425c414b1d4824f4f5eba68ba47bd183231b464c3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0089.json",
+      "digest": "sha256:1e42d48bf744e5ed329b76cc2debd76b2cb314b3f43be89a0ef5d59fcbda8661"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0090.json",
+      "digest": "sha256:4c44682ad8eefdf4b73f6fbf41dbcd1339d87c5f3a5d70a6e8fe78c7f0ccb75c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0091.json",
+      "digest": "sha256:893499725bbb53a3651b4228e4e86e9fafc1ba9c1753194811b601733cae1dc2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0092.json",
+      "digest": "sha256:658dded7927c61f19f404b9bfcd618bf8ed7de13d2f7570fa4ceda04f7d0d73c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0093.json",
+      "digest": "sha256:96c1c41f0c1b37e335352d47e93fa1a6d9c0c5722d315cd016ae8884d1463cfc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0094.json",
+      "digest": "sha256:6864a4d565d3ee40a203f3fd0a4cad8f15dc4a99504589a999ea1e28307ff04c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0095.json",
+      "digest": "sha256:01675078993462a2206b6006a2d06bbc79e47416a2a329ec8efca40f43f0d94f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0096.json",
+      "digest": "sha256:d32e2b68ec9245b8c8b8c8d7b3a3d4dce26ab8451cce51e411e59bce9ae08fe9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0097.json",
+      "digest": "sha256:389d2fcf07010abe85be06bd8adafddedbec9f4e74e6af5b56c4ace4278698c9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0098.json",
+      "digest": "sha256:918565b3f0df40afedb215fdc3375e67626fcf94476d3c98411e8ef199c24d37"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0099.json",
+      "digest": "sha256:d8047f7407e7ae7428eaefdb0832ff1c62ac3c8e6db7e969fee2caf73cc4cd2b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0100.json",
+      "digest": "sha256:eb8b0d6d68a4844e81a8f212a1fdc05f1dc3c23c2be6c7af11d5634ca5358406"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0101.json",
+      "digest": "sha256:eeeebc827e1d6a4d3b9b86ded4703f8c111c803ff268f5c5975d287ff6bf3765"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0102.json",
+      "digest": "sha256:fe69c11eb59de768f3e124a6cf8f09637522541e60b60bc04005b98b7c2bb35d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0103.json",
+      "digest": "sha256:0affb8ea0c895a9c472defb71616b3e29ada2e5fa3194703a994971a3aa05f3e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0104.json",
+      "digest": "sha256:06a19f930cfbe3a6c72406b3dc54eabd4c42df126dd16d58c37d9479dfe5633c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0105.json",
+      "digest": "sha256:5887ccd256ba6087df7c7f2233b3e942239568e27c4041c7fa7b084a63ba4b62"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0106.json",
+      "digest": "sha256:998721d41739bae5ed91046822bd2b2193853cd5d8dfc1cac0b4ddf7851d9115"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0107.json",
+      "digest": "sha256:55acf16b1d6209e5432684ab715c58fb965125b2cae388525072c94c53223826"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0108.json",
+      "digest": "sha256:643dad9170ee83c095e4f95b60a63fb54fc613ae71de0621323faf3e5b1b4d53"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0109.json",
+      "digest": "sha256:8f6cbfa710c52a99fefba1abf99b211665bd703b4cf5f14e3ff90ef461d20d3c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0110.json",
+      "digest": "sha256:c800aa73783477954df5f7bd858bba7d8bc8ed898b309878cd3748c47c3f6be4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0111.json",
+      "digest": "sha256:da40352cfe93f605612f659f01a778fcb1a53b90d67e38487f0456d6ed83ad72"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0112.json",
+      "digest": "sha256:7acc427da9da40d747072a9b385967efc0a4c37043f14a41602e38f478f6188c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0113.json",
+      "digest": "sha256:dac045e92c71d10adc7b52eb6e00f37d9660b883549d8280f3881027e28fa859"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0114.json",
+      "digest": "sha256:f328bd5663840a1c323632c4df2474dff65365c39802806d03f1c2a5cd8459a3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0115.json",
+      "digest": "sha256:718acec1efbca40f8a6cb9864e0387b3cc7e6dd84575373c7f8a4769c8e3315c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0116.json",
+      "digest": "sha256:38a480805d0a181faefee30114b5fdc35929020f1b907444691c0bf0b8d4a3b2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0117.json",
+      "digest": "sha256:4e15e13deeca4beeda06c2c335916c12825ed4bc8567d382269e21f3dc17ac28"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0118.json",
+      "digest": "sha256:8b55b3ceedad80c769b6faeb984e12e95130447f2428bcbdf71642ad7fa539bd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0119.json",
+      "digest": "sha256:5c1e0913babf81061bc540d39bee4891f6e92ec98845cce43903a5d08f3c2368"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0120.json",
+      "digest": "sha256:9ca821946583a162a29aed7399f9e8e08e76f808700a446e34ef23853f83f9cd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0121.json",
+      "digest": "sha256:78fd4f4c5bd92727f394bb170f7f363b23cf107bfae8fd923b5b09bf6e423e53"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0122.json",
+      "digest": "sha256:43e305b957b6fe74f9b71a11c1178d826371e92ee8152738b9a3290e9bc52a56"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0123.json",
+      "digest": "sha256:968c250fad3a582c5a8d8bfe1dd97e062e8c7be833be998f1ff913f39796baef"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0124.json",
+      "digest": "sha256:58a3031a52406c698fd0856efd36246940eb353bc863023ce5314137222136f8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0125.json",
+      "digest": "sha256:51ff5afe9acb0aaf9ef71d0c095c610898efdd9c8209337abc8d0e7588f2659c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0126.json",
+      "digest": "sha256:af02d36bf1c190087039e89bf10a28e4c18e5ce87bc8d3fadd96b3ef9798cd7b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0127.json",
+      "digest": "sha256:f71c62fcdf5073eb637be7b8bd4a621982e2e052727fa5c27b6c4f20fa958d7e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0128.json",
+      "digest": "sha256:bab69f74417d78cbbacdd50e07967c7c6a443338c9e00f8bf5b22d2663f417fd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0129.json",
+      "digest": "sha256:b94b081a2bbb93a8c636cb1d722dc2eed1cfb3e58db134a64fefc0ad631072d4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0130.json",
+      "digest": "sha256:5a3a3e992a09c32e16e1af9b4fb60587be21ede39ad4e244ade74330b5a7127b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0131.json",
+      "digest": "sha256:61a3b7eb8c2e911d55ecd0615b1f43c39e3d7d2b2ec7dbb1ab2a26f20bfc3bce"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0132.json",
+      "digest": "sha256:3e5245f5b702d36dff7daef99935ef5bb7b463308a2735ad714ec4b33802702c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0133.json",
+      "digest": "sha256:7c746e06a44b60d44c12c1c06ed98b908fef7910be2fe63661d024b6bc15e0d9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0134.json",
+      "digest": "sha256:5f7ed3391ffa68788859880d323b23b831c4a284b2661c690a9bf482e2556e3e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0135.json",
+      "digest": "sha256:167e29db81c9f7b58a2572c8ea03ecaec4e91a7ded7913207a7d189124425ef6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0136.json",
+      "digest": "sha256:e8e41e1d92cbdde3e30d7960b950260c2e64eca1ec29e9e3b92938d0cf825b5a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0137.json",
+      "digest": "sha256:46c3b80d7952a3f666eef1272c61a60aa748f521fc3fe8cb476bb2c8fffc4408"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0138.json",
+      "digest": "sha256:1ef1d117fa619d970e74c12a4601621b1b75aa553173ce0b0a3cc7f2a3859573"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0139.json",
+      "digest": "sha256:53ce48a2c3a1171a7a47f82bcf8f0b1baa63b786cdc4f2429beb2b01afa82fa5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0140.json",
+      "digest": "sha256:58c8422d7e5efda9603d4de9f993533e8325c323dbcbbeb88b2aa946d5f0b627"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0141.json",
+      "digest": "sha256:26c709cb8f9e681ed12f1b7e9c04d93d434e67fec9e9d8b28785a9afa24a8141"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0142.json",
+      "digest": "sha256:0203a5c146ccdd1ca926b062962098674e8445e8d05076a6912ec8ceeea8cc44"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0143.json",
+      "digest": "sha256:6e72054c413ab71301eeea6d24808c8ab87dd479ad8899a9861fff6d0523a8d2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0144.json",
+      "digest": "sha256:6d0326052531673efc8f6040cd0d5ca86570518911d6b649b065e4163b67b381"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0145.json",
+      "digest": "sha256:180afac8a492201c4762be78929267f42823b6673ee5a24435717b077d3201fa"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0146.json",
+      "digest": "sha256:bdcb3c89b050da3d7d92211a274d215ac667dfee64691d2f2fc9af4d819cdc7b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0147.json",
+      "digest": "sha256:40f67fc53e0b24d29aec453a3a01ef68266da12d72745f2d0b7028adbf0fcd47"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0148.json",
+      "digest": "sha256:9d896bb665bdd63b34a5d0840405b0352b1c84abd7d5f471c65198735663fe72"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0149.json",
+      "digest": "sha256:5f84c8c6729a950b92e23d131e173d6d0348aa3c207e91d6bd03dd415acf717f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0150.json",
+      "digest": "sha256:c533cde13fcc23739fd5b38b329f0750264e983d58b028beaba6a131e0848ac1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0151.json",
+      "digest": "sha256:b2bde1083969b54de791dc6ce0955f23e45eca824fe6b66099e16c0670d5b4c5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0152.json",
+      "digest": "sha256:dfa69b0ba6d6d1fedc2cb2f0b81c12a5142dabe7e0686687527b3af3c68c4736"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0153.json",
+      "digest": "sha256:eaeb2afbb764e9a6f9ba8cf00b1114f560fd7974a9301c067539b240f467f0b6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0154.json",
+      "digest": "sha256:a3fb82dedcbd8b74c22f89ebcf65cc7a4b0edc4b4a01d69380a6aedfd844133b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0155.json",
+      "digest": "sha256:342f349791aa30313daef27b8428961c4ff54342287b0106ddc82a1155c06d42"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0156.json",
+      "digest": "sha256:d5746a4f2b98562a9655e2a94f7e849ae3a1932faab409f77ae1c99a37b4aa18"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0157.json",
+      "digest": "sha256:6971f0fbe3f04ce914bc5c49d449ff2c4677eb4a3108194ba19c9e05354af780"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0158.json",
+      "digest": "sha256:d8179dfbfd1aa97cba8e98023ee712c2bf46bf009c3d3f57cd8f54ee68f5709f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0159.json",
+      "digest": "sha256:12525440219f34e2079cecdd966eebd3e9748b34d06178f715ff2597d90f0cee"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0160.json",
+      "digest": "sha256:dd49a502dd2a79da5c1f4f51377b66085068b7320c34c3a0ea592a732318fcb4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0161.json",
+      "digest": "sha256:d6047d1c87cd4ac5979a2d8b7b296d09ba6f6cdb9f33e31b0572a6ffd25ae86a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0162.json",
+      "digest": "sha256:cbb8b8b24982e3123e5449202370c0145f0719e0b7c1df7759630a937a01b0cc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0163.json",
+      "digest": "sha256:c8adf19d2c77d7dc5dca437b34e59c39163d692e7d30d3432c142e9bcf23e61d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0164.json",
+      "digest": "sha256:e6cc505ad201f8e67703b62ece1495ad2499ab0fe2c86a9196b32f1e43ded597"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0165.json",
+      "digest": "sha256:96b711e69a6d63bcb4eefb58cf3e2d5b32db9a920eb5a03d058259abfaa8dd21"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0166.json",
+      "digest": "sha256:d2fc5f5f1b38c192502e5be2c7bc39319f3a002c25c87f149cabddf356af056b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0167.json",
+      "digest": "sha256:51c31c1d2a2d121897a3766d36ddaf3a23b6e8ce61f2315531d1a27ec9d12201"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0168.json",
+      "digest": "sha256:fc1e6a50702fd9aafbce3ba5fb10bbfe6d4aaf781e6e9bc7f1f7c7c0b2923854"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0169.json",
+      "digest": "sha256:6f936579c2e2626ce758a17bddd9a608fe3a5ecf09bdd76b49aa5cb8580a8ce1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0170.json",
+      "digest": "sha256:06432a4ea59e15835eeec01c0b73f9b8da537fccb46c0c7c9d2c3b2d104a8dc2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0171.json",
+      "digest": "sha256:a7d8e32525d333d7da98cb444bd6999e97d4d07539ba34ee1449be6f88921cc6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0172.json",
+      "digest": "sha256:98858da6f77e62d5ee2120e4f9f34c8ecae4a8eb48817c5dbcccfb60cb0a5e58"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0173.json",
+      "digest": "sha256:b7d12db2c7d014a2b81898f0f7af46a6db7e9eb78a93699f887ccab88475098f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0174.json",
+      "digest": "sha256:5745aab63bf9c3a69adc62a751e6287935e62ce410eabe01dcc96a700ad91563"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0175.json",
+      "digest": "sha256:66c5750cb9235d9d73598638e89274035789a13ef483052623644363e342e65c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0176.json",
+      "digest": "sha256:93f8c22a1f5c039f3e2f520195a79ea38bd4ea9ae312fdb201ba1abafdee6dde"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0177.json",
+      "digest": "sha256:0a864eb51a264a1bc383ed6fe100ef099b148184ad7e76a0d8cb793031c0bbb9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0178.json",
+      "digest": "sha256:8dff31f24b34caa1f5a4464b0188091177c00aeb27b4faca05599ef866eb5872"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0179.json",
+      "digest": "sha256:31ff51648a6ea8a193c0723cc67aa83fb34fe1691c95da5c0df6829f94ec2b94"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/rollback/usmcrdr-node-0180.json",
+      "digest": "sha256:9295f75c9dd85b6dd75829a35d5b10e64910eedcbcee418f5f2beceb9c2604b6"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0001.json",
+      "digest": "sha256:cd9cea4e4754245cc1ba9b1d97549a8e6df4c27ad8cf62171b80a05cc5a32805"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0002.json",
+      "digest": "sha256:26c4a1b627d222c91e055c9a2ec8a8c8e000af57ab0b242cf85c9b80824d03be"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0003.json",
+      "digest": "sha256:5feb4f293980e8317ed185405f6a3e79eb016c31a63eac8967f5e6d26a392fc8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0004.json",
+      "digest": "sha256:f4033f8c7b4be4867adbbe25285eb74bf7c8a560c1ebd38f37dfad200082458f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0005.json",
+      "digest": "sha256:654191eff5c5d6f1e4559db18e74a0c39f03809fd7799206dc2f9fe2f97c57a3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0006.json",
+      "digest": "sha256:c5aaf7e922d4a5f5a0bea00079896f0bffdbf2b6c02a822ff16ba896a5516c92"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0007.json",
+      "digest": "sha256:6232d267a746ef60ad9bc8067a36b58ed94e753b53430ffac973972400fda414"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0008.json",
+      "digest": "sha256:7dd0dd6552705f40ce68cc47086a11b77781259bbc741ab1c3e35cc25cfb28af"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0009.json",
+      "digest": "sha256:a22a316cad5559b2ac8962273cd09f992754d3ffbe4a2f2fdffb66fbde716c3c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0010.json",
+      "digest": "sha256:08ee07d385823b9765114421353cd4c271ee9f9db4b4a60ffac235ebf0cec898"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0011.json",
+      "digest": "sha256:c9621802c05ed2aab6066b344aa5031d081be9fe6ca7a8b276b874f07470b0a2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0012.json",
+      "digest": "sha256:4e619838d45970fdae064956e2448174c1cd187e5feb16c97a1e416e9d5e6916"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0013.json",
+      "digest": "sha256:42e5bee74d73c18363899678faa9621d45437d03338587ad31a52afa7aa10d74"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0014.json",
+      "digest": "sha256:e87baffe72bebe15bce9e29f0219f29026cbb629e48c71333d4ee211c0b90e83"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0015.json",
+      "digest": "sha256:185c55c3a24213de0671d829935ed95f465b76b797f2d24f5fedf3f4833f64da"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0016.json",
+      "digest": "sha256:3ea1d3d930197db89e10d6d2ac7cdf979ca1b077a27f669930689bf5e494c102"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0017.json",
+      "digest": "sha256:d61ee8cd486375e05953d073f16b72618b78a0bf335dba6e6e3a4fc1f4046f65"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0018.json",
+      "digest": "sha256:c1e483e4c66800b9bd8cf698db4592f4bfba1cce5cfddf997955b4ffe4a90ea1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0019.json",
+      "digest": "sha256:588bbef7cca609d49c786f197b953b3f5af4e01989dc00a3db1f1c3ec59902af"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0020.json",
+      "digest": "sha256:543f5a7d35f730d760aa6bb7ae3f22404f478e6e1b10bf146990a723589699d8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0021.json",
+      "digest": "sha256:386f4e59433240e79fd49aeccbe4f4b982254ed987fb9b74704d48a1e0fc5c2f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0022.json",
+      "digest": "sha256:dd968726ff4683d19025622525fa3c22e6a0f53fde73949a7f285200b209deb5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0023.json",
+      "digest": "sha256:a46554c15b29bf64b1e9973ab6e814cc5a7765350176db8c5b8a8cb9b104d5ba"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0024.json",
+      "digest": "sha256:13b2a955e25822b8be5b6610b75a63a7768224b546ae80198ea31663b846b90a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0025.json",
+      "digest": "sha256:dc005d26eac4f96fae02ac239a9c3932954aaded1efc1f01f565bc2bb8603111"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0026.json",
+      "digest": "sha256:84ffad66627c8a9b0ebb571d03c66666fec81de8655f0802d69f8c52a8810b62"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0027.json",
+      "digest": "sha256:8af8f64dba08d77efc408dc16f16413a908056ce12593e8b996264a3694f8ea5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0028.json",
+      "digest": "sha256:184b97d0a2ff9624a01a5da367d5a2511d05b011e96970eca090010ded298800"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0029.json",
+      "digest": "sha256:57a8055dec29348f8186ad9917866b49928d213033219606b6538dcd64e15ee5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0030.json",
+      "digest": "sha256:705a2176a7ebf3402b7a3275a2b9954b6d146f0064ee8290e366fe5d147ca1b7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0031.json",
+      "digest": "sha256:31cb0eb7bff0a0486626adb80d0ce1624f58d95e6e197434f5520c6ec2b4b689"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0032.json",
+      "digest": "sha256:d5ab55731cd146811a11df96c8c500446cfbbc031e700f686ded565a45c0db0f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0033.json",
+      "digest": "sha256:45f849217961e4100fa34474bb9296ea5e56a3a9d66fa995f08fb9d28846a9cc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0034.json",
+      "digest": "sha256:27e84a91e7855e67a499d858f8617a006e831adf8021cfb20b862d75f46537a5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0035.json",
+      "digest": "sha256:0003047a18b72e68b529dec27498907afa8c4311ada7d911ff360f612a29d630"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0036.json",
+      "digest": "sha256:c075d5d533447d458fb2bf3c9b042695c59aeb86fb88967e15c9677946ccce00"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0037.json",
+      "digest": "sha256:58bef814c5679cb0f71a19536c4827a725b1c0d2d96e165c6a19abf0d63d481f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0038.json",
+      "digest": "sha256:3d6e966246151f204396155ae2b86b0f9c7b2e6d51a767bf07dad8318d89b8a9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0039.json",
+      "digest": "sha256:a55163e74227c584f29df88569903e52009a061af140bb436abc18580cc91462"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0040.json",
+      "digest": "sha256:dd6fa4566737351db11694b827d6f464d400c21ebdb97439f5254bde3ecb998d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0041.json",
+      "digest": "sha256:8546541a865c8405f110f975a45d83baafd0a108da327a8403aef7e89b47022e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0042.json",
+      "digest": "sha256:0babeb846b2b02aa23cb463ac3d41d49e9fe210c7519fbc8e855f76c62f6c59f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0043.json",
+      "digest": "sha256:b45c32befbc8a341cbcce5bae218e1131507a4f92e541f3d71402c3f63ce27a4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0044.json",
+      "digest": "sha256:5ddb2cfd6ffa2de9ca5b88c725c341e6cbcf5c6e4caba65cec94381b727e039c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0045.json",
+      "digest": "sha256:a259a448563d855440f65a6d0b6df0094535c2fa420d48b14277fb95f6c40232"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0046.json",
+      "digest": "sha256:7fb3c3d3607e1a3e8f771a11b2c0ec17565903416ec4dc163308821604d33db4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0047.json",
+      "digest": "sha256:c2d8524e5309b7f4987e0299dcf61544fa8d1189b3cbd889b5c540348500ea65"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0048.json",
+      "digest": "sha256:dad53d2447a7d1a66a3f2702a4ffec1a8064cffc2b6dc54cc8fa7cc410b972b0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0049.json",
+      "digest": "sha256:5e5e14cfd000f6e3580e2857b5055629168729bac7299f858a42a04d4a9a256c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0050.json",
+      "digest": "sha256:f70ee6d1990ffc1ebb2ca4e00b37e88af16afc432680b44699e0513a72309e88"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0051.json",
+      "digest": "sha256:a4dec4cf16c136f8f26fb623a93d265eeed34168b420538bac5606ae380ff069"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0052.json",
+      "digest": "sha256:d71b31c13d16db8ced2f2f5cd1b781d491ada11c339ef1edb0c5bd78fca3655d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0053.json",
+      "digest": "sha256:f5fd35578a5b7bdf9288f684edb49b5e899c4f69edb3712f16ce4b841d5cf1d0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0054.json",
+      "digest": "sha256:4e8081ffacd0011b5cde7c35c91546db5126945dd12a2bc08fcae29c2097900d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0055.json",
+      "digest": "sha256:d73ce64f972abb8898780923ddbb74003b59000da7ee3d086f93c099cfbc21b1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0056.json",
+      "digest": "sha256:e87facbdd171f6f8290a2283798dfd0f70a495d1d89e405cf1d873d0335d4c64"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0057.json",
+      "digest": "sha256:ba240213b74679e77837a15d4ac3f6e4f1160aea9d8aa66570d247e6786fea6c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0058.json",
+      "digest": "sha256:1121cb074e80f20de3dbecad27dc02bc50e2cb06b25206cbe3ba0f722c21c6bd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0059.json",
+      "digest": "sha256:15687a67557756c7d631cee429dd658a7094c4e975c57bc06de63b1166aaf70a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0060.json",
+      "digest": "sha256:4b3c544252ae56008af50f517d4b0f4843cd4c574fdb29f806e069310037a935"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0061.json",
+      "digest": "sha256:76f037ad4c05db2b231149bb7f54e10502ae7297fb1672b2f93d83f97793f6d2"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0062.json",
+      "digest": "sha256:0b00b7ccfa39a349e11d5b77f4442e7cf404c2f9a0e2eca459009916ae051043"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0063.json",
+      "digest": "sha256:81f5b8efb7693e1eeedf8dbe4e168622f41a0c7d311022377a9ecd22a19bfc39"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0064.json",
+      "digest": "sha256:3b854679dd015caa1476a996174d2daf74ae41775e701f140500d7efb76d8f11"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0065.json",
+      "digest": "sha256:df0252cda0a6065fd23178aa2336c2bf8e3cbcdee7a00a03fec3127675b266cd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0066.json",
+      "digest": "sha256:0de854a7611a6cde689078a1f63d7cbea52363aecd436f95f9ac8ccd2c9e9203"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0067.json",
+      "digest": "sha256:c97e593ccbb6424cc5b34c199503532e529570390a3d1b0ee2f06c3a63bb5a7a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0068.json",
+      "digest": "sha256:719dc16d6dcc5b665edcd9c59fbd8f3ae8183d4e0397bf8f1b9e061d492e2ee5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0069.json",
+      "digest": "sha256:b82db31adc68b2b895c782bc2996c74d1bd60da1d14c16da59d521a5d0319f5e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0070.json",
+      "digest": "sha256:6e13e2a152bfbb843cc4e20aa78a0590f62da1594116ed960cba6e638c101a5f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0071.json",
+      "digest": "sha256:55f05485a13119a388be45f4cd34521995a86ad0c5a34fcbc65948fa520dcae5"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0072.json",
+      "digest": "sha256:b4a20119f8545beaedb989e4b28a48fccee956cfcf621a1a6d42663c8bd65d70"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0073.json",
+      "digest": "sha256:a6e558d816ce8e5ba01eb6f5bd788a374d5f4401e599cbf91f2ced38d547c9c0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0074.json",
+      "digest": "sha256:d5ea896274958af62ab407158eb8cfd37bfbd0cfa9a37e41ec9f2c31be71f48f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0075.json",
+      "digest": "sha256:9741976a648a539519305773bf855b4ceb9b55f0ec1fa4e9edd012f913c15395"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0076.json",
+      "digest": "sha256:554d5222c6cd9154a59ff378da00214ba19b369974a5b9ba815fc12a457e0786"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0077.json",
+      "digest": "sha256:0fa036b672b60b9d90cb4a4d2523c843213a0023add5bf9d668241ae4ca24379"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0078.json",
+      "digest": "sha256:2726ee5c02cfcb23cd43d98b9390d8b19c1c3c215f84db4627a79f5bc183fee3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0079.json",
+      "digest": "sha256:581869371bc759c9742b76d5950943effac907561e52093fcc8a200ea1331a33"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0080.json",
+      "digest": "sha256:2fd117235d57aef01fc1ceca8d36915b50395d97b62631fcd6e03f428a542307"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0081.json",
+      "digest": "sha256:877bc847a9334ff87884cf6778f588c9650c7a841c416edaf054052e4b187018"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0082.json",
+      "digest": "sha256:036a966104092ba36bf86e77080273fa12bd3c4aba9ea3d55bcd32b603da5895"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0083.json",
+      "digest": "sha256:85d43e3d43f0c58df98d724a1a16c7802f4dd14e99614cc0c92d71ba3300918b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0084.json",
+      "digest": "sha256:45991e61851dbd6078e06cab756d847cc3e1096ca37fcc5991a5d0bdc619f7f0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0085.json",
+      "digest": "sha256:a29e5bea7aaad9876c1edbde1031fd04eaa0421cb3bde815dfccbf07a642f908"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0086.json",
+      "digest": "sha256:7d26af3ee4123d6a1ae0da984609036085fc18ec8e658450f084b12cf6232663"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0087.json",
+      "digest": "sha256:28531039308be0bc8aeeb26a2c1cab2c50f5363fb10ed95d32ce8de38d68e463"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0088.json",
+      "digest": "sha256:38037bf1b91c27da7ff1db38c51d68b68099a86b5804692844cc0d91a396992a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0089.json",
+      "digest": "sha256:b1e71ec8c4107e79c34f994b0341e03acdece940274d44d165d97ed5cf2c166c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0090.json",
+      "digest": "sha256:dcc7218fa5c824d0eb3344936c9201566cd2ebac0d4271b94a8cd57da25e5b38"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0091.json",
+      "digest": "sha256:ddb2be3c3cfea64f6ee6d61e4dea111ddb6debd167a84ca56e3c94948ec08d51"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0092.json",
+      "digest": "sha256:be1242568a8d5ed760c31d3331bfd7215f7e7c8203202d55af9719393f447d46"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0093.json",
+      "digest": "sha256:39af8112a2e75bcccbd0345942291fc1244e549705064eb75a64e92993781dcc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0094.json",
+      "digest": "sha256:f3657d822bde90384dfa176c37d7a60a415f79d08dde9f10c4b41b8407beeeea"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0095.json",
+      "digest": "sha256:26c8ec0ef127d487762908897d50c037e91afdacdf53220699f3e6e0bad47ebe"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0096.json",
+      "digest": "sha256:87ee59b0f2080ddbd371304458fa0e177a6a6faf0caea4e80751fbcc7017340a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0097.json",
+      "digest": "sha256:5b130b00714ac0abab35f076a873b6bae3f745ae7b0a858cd98b65914614941c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0098.json",
+      "digest": "sha256:aba4d6f8c2c12f51ca1bf39832eb6a455584fe03223e2818b9987f1fe14c5c91"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0099.json",
+      "digest": "sha256:48812bf58e29a25118673eb28973908423407ce9874e419be7ab011952d70f8d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0100.json",
+      "digest": "sha256:f335dff445487f70c5848a7d848b1923c4fb8989dd21b20f4b98d574ab333e83"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0101.json",
+      "digest": "sha256:33b304d18f406669252b452cca6f69584e8ab8f5205672258ebc78bf84c6937d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0102.json",
+      "digest": "sha256:cd3cd6036ac5f8d087652f892f9fd743391c8486f0f504de846c7c91eced7405"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0103.json",
+      "digest": "sha256:27bf4c3683599aa26bf77838c9fd2eb951fffa271cefa1f1ee174ff18b6cc72b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0104.json",
+      "digest": "sha256:8ed9e2ac960e01c18f1d7ae52cc28129a6f20bfcdb59ef7da45f8712e249f8a1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0105.json",
+      "digest": "sha256:e4d403d4e60a3a8574cdb466bf54666114e19792617ca9ea921110526836ac59"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0106.json",
+      "digest": "sha256:7aa29924c04a712bf404f9079d9043d6d3555a2bbfec13f7c18b2c75466bb1fe"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0107.json",
+      "digest": "sha256:50932d32a97e3438f3a56220f8fb492523a04621ca13b14f27d85b383639c53e"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0108.json",
+      "digest": "sha256:77bedf1dd9247eae93275c91370d6cdb68469cbf437163ca62b1123dd331c4da"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0109.json",
+      "digest": "sha256:f97267dab52e95286ea829bcf582c0e5a57430e984815ecd57b749ec54b2d95d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0110.json",
+      "digest": "sha256:fd5fc236877f2dabf21a12a5eb39b9d9f251d5d4d5e48c0b1ef5cfdb781d9e62"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0111.json",
+      "digest": "sha256:68eab6209049a02d5e45522c610e52e757615aeefb4243fac579b48f0fa04bfd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0112.json",
+      "digest": "sha256:0bb4b105ef040ee3ec2a6452106f1acf445e68d73580ff866a263f36804cf072"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0113.json",
+      "digest": "sha256:e17ff6bc4bdcd5ba2555ae177854317208294f966806d6501cc7e57071db90c3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0114.json",
+      "digest": "sha256:22b242daa6fd64a2dcd22734b73eadee2c06c6c4f9fe3f2d2aeaac7c94dd618c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0115.json",
+      "digest": "sha256:58b97be1dee2999e83559e56f337b4332835ed40bdf52cf0b92cd63dd44bf452"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0116.json",
+      "digest": "sha256:b285e4245ebc99b7467ef1f6c5098e0e4790b39f5ca0d41c39b00654ec10745f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0117.json",
+      "digest": "sha256:6f632c73e548bb5eeece579f4c0f21c643342e77bfa7f4c386d9b5b6adfee925"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0118.json",
+      "digest": "sha256:c3cfc8e843854fd6b18b5ac07a1844eba91809b74dc71cba87361ff90c4899a0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0119.json",
+      "digest": "sha256:a3a4830401ae66736bd2fe46fb24da4f244599eb0be34d3a976752b04c5486b4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0120.json",
+      "digest": "sha256:5f2ee871e9f27a48e2d26303973a5a4c8cb408e969e72b0214b13312e5522344"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0121.json",
+      "digest": "sha256:651623e525a6c16e0260b43c1f1c5076b89a25d135d855c31a244a1e92289833"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0122.json",
+      "digest": "sha256:da9934be70ab4f3431ec4a6ce0f09c3554fabff4c35b60ba210e5fff42d58b07"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0123.json",
+      "digest": "sha256:4f234f5bcfbf120a370260304580c985ef2139e0ca4fece16a6ca58ff69e16ce"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0124.json",
+      "digest": "sha256:c2c852ec9d27612e3dacf3acafc3e690df61fa8e39841c53d69b01f0bd4aca2f"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0125.json",
+      "digest": "sha256:bdb913b717874e65ef6473817ac184e081f1f9cce9e15bae8b90b01374eecb62"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0126.json",
+      "digest": "sha256:af10f7f29ca57b3561a44457f3ac39764d941e6a195af4a68b588db3aaf43c55"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0127.json",
+      "digest": "sha256:f29e4642aab4ce359c1777260f7aa487e68c1e14ca93d0a74cd45b4219c77ae0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0128.json",
+      "digest": "sha256:b3c8bf17bf61592092a04d7c90eee1da9684319b6ea37acdac86e5f9a4af13c1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0129.json",
+      "digest": "sha256:182dba29e0e39348248222b745597caed4553d78a133a85ff9dc97dc9eeb4459"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0130.json",
+      "digest": "sha256:b63ffe222cc0ab5bff2a7c705a839dbf52e70da1090d699e0d9696b0a334cd82"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0131.json",
+      "digest": "sha256:f54cab3e99f8728199031e9e8e694349e9ad3520ec385916e5e38c15ec5ffe35"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0132.json",
+      "digest": "sha256:c545a8b1fb39ea576c1db1cf54cfdba9b5b99300391e0c11b3c3760fbecbd6de"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0133.json",
+      "digest": "sha256:fe8f48d0dfbb8cfa6679c7fec7502cdf8872f39412737a5b4cf06eff93085c45"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0134.json",
+      "digest": "sha256:74b3ee0eb3d95a2bb5488e23171e6a17fe880e104631cf2e0f4a5a3029c72188"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0135.json",
+      "digest": "sha256:1e97026f99066a7eda481c529b6847bca447b75cfa404400e8a538779b75275b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0136.json",
+      "digest": "sha256:08cce798aa19b6c456b9813a232a3cf6fca47c6ae024c6ac56808b23f1d3805a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0137.json",
+      "digest": "sha256:b5f3f351d76a3e873755411827bea17119962124d92d8147f08aff08213bef31"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0138.json",
+      "digest": "sha256:200514549f78c4e728d3e94de0137120e9acc47c73216d999b8942684c535448"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0139.json",
+      "digest": "sha256:0f50895c4039a3754de61cb9f194e90b1e48eff56de38da1a8ae6a213e7f42f4"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0140.json",
+      "digest": "sha256:a6d28278dcaeb5d452944d63b00de412ce0f273a9d686a5e7f37e77e29727c92"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0141.json",
+      "digest": "sha256:f587298ca6811d1cf6b48ed740858661dd93af22bccd42b2783e23a7f34fd36a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0142.json",
+      "digest": "sha256:76e1e0a76595d547258cdfd5629ab97e8de508925f6a5abb3e9b33eafa1d0784"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0143.json",
+      "digest": "sha256:aafd3f02554954d56991f2a55317bf228dae1590e8f7c6dafc6d0b4bba452b10"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0144.json",
+      "digest": "sha256:23bd49c6ec1a6ff7cec03745640e2074ee6f047a7a64ba0f7299fd2f93864593"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0145.json",
+      "digest": "sha256:ece081b4b3f2910add5567a4e1e8d5073e60dec3f8a8e646045fa0b298f68fa7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0146.json",
+      "digest": "sha256:9683d66cf209b8732cc287310950c3091e52993d352c017251456ad6ff54df06"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0147.json",
+      "digest": "sha256:22de9a27bf766908a08e68106064909cb49721d3f9d79eb59d2c2db8a60e01f0"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0148.json",
+      "digest": "sha256:f7b5dec77efbcba5d895dcd99462eea7b55dad36ea74dc27aab19b87974b4e97"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0149.json",
+      "digest": "sha256:ce3559b260c4ae29a100ee161cc5a42b29cf19fa41cb243cc5f5bc32765f5899"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0150.json",
+      "digest": "sha256:e3b6fa82b1dab002191acfdefa3fbe44d75d44dac9e68ea5a97b562a836945ac"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0151.json",
+      "digest": "sha256:c1cef6d4c2980de105b074b6d3829e2ea0878b7378782dd347fccc1f9d4f819c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0152.json",
+      "digest": "sha256:d22b6140de79809570a64b7437b6af29cdb084c08172a22c203157bbefffc777"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0153.json",
+      "digest": "sha256:5d46208862365079d85d554f5270ff8db5c93f2a994d6f0bdb28a8533878fb8a"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0154.json",
+      "digest": "sha256:4ae74b4a56b459d9243a97d0790062bcfc0967a84d3cec36881c8cb51fe9dcbb"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0155.json",
+      "digest": "sha256:b748862221df8a644545c4fc1be3ec74daf3cce0a222fd2b7585363c25d4460c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0156.json",
+      "digest": "sha256:fce678f63ba577055481ba9108944524bb16a07c01d356fff0be3bf0cad32c96"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0157.json",
+      "digest": "sha256:6d13906720db6eee5cd395b027bda211a3eefa75a9f4643e638d762016438a14"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0158.json",
+      "digest": "sha256:e9989f97f65737b3ad251451508caac8ff2ba0d998d55a12db94dd80cd9e79dd"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0159.json",
+      "digest": "sha256:59ff73861ffbfeab7a09c0f5279a45bdc4492038a4d90c2e776ef615d14cdd23"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0160.json",
+      "digest": "sha256:f6994644c105063bb8c834bc3e7eebb2c858f05368e10d1ea9288f079cf2f6b9"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0161.json",
+      "digest": "sha256:087f18ab564a830a7e243164d28d5165754c4f69c5c09d54ce73687b759e8acc"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0162.json",
+      "digest": "sha256:1de85524f4f282405d64364d5604e859b1264f59b1d4da1eaaf162b2ccd2f897"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0163.json",
+      "digest": "sha256:b41aaf438c287989c57e8ebefb4e620b5e5baba996507fbfcd87639f10bce8db"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0164.json",
+      "digest": "sha256:9924318d15782714ff9d0ac997d81148a6f12ee81c9ab009ad252695631261e7"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0165.json",
+      "digest": "sha256:edb3bf379cfa631dc998cd4e1a885eb15f2cbe20127b2e74b60724f3d00c7ae1"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0166.json",
+      "digest": "sha256:65b5b1856660925b9e3361055b2f9965239135fa3adfbca6e048f493adb95767"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0167.json",
+      "digest": "sha256:8fdc7023d4ab2f1089ec430be58eabc6b160e80d6b6a38f1062a41677f0fd2f8"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0168.json",
+      "digest": "sha256:305896bfe0677ad74e6478280d2a08991a8fbe649026ab43706da9940e4e01ae"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0169.json",
+      "digest": "sha256:cead404b046bfe163f48b92a7d9d4633fefa468baed82465b400764ff0152915"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0170.json",
+      "digest": "sha256:70e9970de5efe51339c7fea14a5a8a98dba9424b997cad4dd151f86a8fb3ab75"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0171.json",
+      "digest": "sha256:7129014a95ec10cc399f16aae1fe55ae47f3e0f934e07a4f5132f6d5a18c35ab"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0172.json",
+      "digest": "sha256:0c8dbdd24320652dd7a84e299fbd800feb0ef3724de33ba55ff372512f67d164"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0173.json",
+      "digest": "sha256:d9370218275be0789e57c0e99e79278bd12f0dbef734766fa5ef5259c07c2d67"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0174.json",
+      "digest": "sha256:16fb504ba66291344db3a06fc0b23d6d0ddbaae0473126994ec5f129641cf11b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0175.json",
+      "digest": "sha256:fbb9669c4addef0636c7cbc1bdab53b10027ec865cecad259989b87bbddb839c"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0176.json",
+      "digest": "sha256:1aa90c23c08384c137df85bf241836c071b8b32892800a0b1d6d44c175a3c372"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0177.json",
+      "digest": "sha256:4eca0b8b3f006f73b18aacb19d3b737bbc7a99f8c8d9b0e8fea25b80db43a33d"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0178.json",
+      "digest": "sha256:7c8bf260162cc295ef28df4a0b99e69b426b764aae1f7956250ca696435bffd3"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0179.json",
+      "digest": "sha256:e3d6669f4f2cc329d0b8e3c2cb1a9697507f2d534ee8df506b9b9c865fbb177b"
+    },
+    {
+      "path": "docs/evidence/unrestricted-self-modification-cross-repo-doc-readback/run-links/usmcrdr-node-0180.json",
+      "digest": "sha256:9be06722daeed02a14762ff1b9327783f95d8e51df0358fae53dc461d19dbcb8"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.gate-evidence.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "result": "passed",
+  "kill_switch_semantics": "hard_stop_on_scope_drift_or_gate_failure"
+}

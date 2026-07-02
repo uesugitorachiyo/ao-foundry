@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "id": "attempt-d-stale-language-denial-sweep",
+  "label": "Attempt D",
+  "task_type": "Stale-language denial sweep quality",
+  "baseline": 0.66,
+  "post_change": 0.91,
+  "improvement": 0.25,
+  "target_class": "public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts",
+  "passed": true,
+  "eval_regression": "passed",
+  "rollback": "passed"
+}

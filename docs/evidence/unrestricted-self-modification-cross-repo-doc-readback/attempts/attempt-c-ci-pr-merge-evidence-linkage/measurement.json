@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "id": "attempt-c-ci-pr-merge-evidence-linkage",
+  "label": "Attempt C",
+  "task_type": "CI/PR merge evidence linkage quality",
+  "baseline": 0.67,
+  "post_change": 0.92,
+  "improvement": 0.25,
+  "target_class": "public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts",
+  "passed": true,
+  "eval_regression": "passed",
+  "rollback": "passed"
+}

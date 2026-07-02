@@ -1,0 +1,37 @@
+{
+  "schema": "ao.foundry.node-run-record.v0.1",
+  "mission": "unrestricted-self-modification-cross-repo-doc-readback",
+  "node_id": "usmcrdr-node-0077",
+  "completed": true,
+  "safe_to_execute": true,
+  "executed_under_gates": true,
+  "atlas_ready_initially": false,
+  "foundry_advanced_after_prior_node": true,
+  "task_type": "Architecture source-of-truth consistency evidence quality",
+  "attempt_id": "attempt-a-architecture-source-of-truth-consistency",
+  "target_class": "public_safe_bounded_sandboxed_self_change_cross_repo_doc_readback_four_attempts",
+  "denied_class": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates"
+  ],
+  "rollback_record": "rollback/usmcrdr-node-0077.json",
+  "run_link": "run-links/usmcrdr-node-0077.json",
+  "evidence": [
+    "baseline",
+    "post_change",
+    "eval_regression",
+    "rollback",
+    "public_safety",
+    "stale_language"
+  ]
+}
