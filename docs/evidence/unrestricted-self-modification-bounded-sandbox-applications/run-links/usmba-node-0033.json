@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.run-link-detail.v0.1",
+  "node_id": "usmba-node-0033",
+  "completed": true,
+  "ci_required_before_merge": true,
+  "rollback_record": "rollback/attempt-a-fixture-schema-evidence-quality.json",
+  "measurement": "attempts/attempt-a-fixture-schema-evidence-quality/measurement.json"
+}

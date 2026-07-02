@@ -845,3 +845,34 @@ authority, hidden instruction changes, forbidden surface expansion, or any
 unrestricted RSI claim. The highest proven live class is
 `public_safe_repeated_bounded_reversible_self_change_applications_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Bounded Sandbox Applications
+
+`public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-bounded-sandbox-applications/`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed
+self-change application evidence across four non-readback exact-scope evidence
+tasks under sandbox containment gates; unrestricted self-modification, hidden
+instruction mutation, policy-changing autonomy, and forbidden surface expansion
+remain denied." Completed application nodes: `140 / 140`. Attempts completed:
+`4 / 4`.
+
+Attempt A covers fixture/schema evidence quality (`0.68` to `0.91`), Attempt B
+covers CI/readiness diagnostics evidence quality (`0.66` to `0.90`), Attempt C
+covers public-safety rule calibration evidence quality (`0.65` to `0.89`), and
+Attempt D covers rollback/evidence-link integrity quality (`0.64` to `0.88`).
+Eval/regression, rollback, retraction, kill-switch, cross-attempt
+reproducibility, Covenant, Sentinel, Promoter, Command, Architecture wording,
+public-safety, and stale-language gates passed.
+
+This proves only four serialized, exact-scope, reversible non-readback evidence
+applications under sandbox containment gates. It does not prove unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy,
+policy/auth/secret/provider/deploy/release/config/dependency expansion,
+credential use, provider calls, direct-main mutation, concurrent mutation,
+release/deploy/publish/upload/tag authority, dependency update authority,
+hidden instruction changes, forbidden surface expansion, or any unrestricted
+RSI claim. The highest proven live class is
+`public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

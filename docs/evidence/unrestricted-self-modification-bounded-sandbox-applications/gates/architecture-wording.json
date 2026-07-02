@@ -1,0 +1,7 @@
+{
+  "schema": "ao.architecture.wording.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "result": "approve_bounded_sandbox_non_readback_wording_deny_unrestricted_self_modification_claim",
+  "approved_public_wording": "AO has public-safe bounded sandboxed self-change application evidence across four non-readback exact-scope evidence tasks under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied.",
+  "denied_class": "unrestricted_self_modification"
+}

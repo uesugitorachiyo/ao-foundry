@@ -1,0 +1,1234 @@
+{
+  "schema": "ao.foundry.digest-manifest.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "0ea8189752e4f1361cbdcf38e6afbe54a4a87eacf6663337d923e8a640357829"
+    },
+    {
+      "path": "attempts/attempt-a-fixture-schema-evidence-quality/measurement.json",
+      "sha256": "bf9246e3b7958f6d2b016247176a0f09f7bfdd6fbe4e8ea986d5610855cc7b67"
+    },
+    {
+      "path": "attempts/attempt-a-fixture-schema-evidence-quality/reproducibility-runbook.md",
+      "sha256": "5b7328cc812739a41b0815bc6562fe87425441ffb1812caa562bf9cf52037014"
+    },
+    {
+      "path": "attempts/attempt-b-ci-readiness-diagnostics-quality/measurement.json",
+      "sha256": "a9a9947a7ba0dcf71cf51b853d42d5e26d23830afcccb67563314c5afa4cd678"
+    },
+    {
+      "path": "attempts/attempt-b-ci-readiness-diagnostics-quality/reproducibility-runbook.md",
+      "sha256": "55fbba1159ed4e7805067efde94b03a6da0dec4a7a8fbe1fca09204ee406e37b"
+    },
+    {
+      "path": "attempts/attempt-c-public-safety-rule-calibration/measurement.json",
+      "sha256": "5be1eb7d201ac2bdefb306351b5e656d49d8c38ff907f9e71f3366f43a30f8c6"
+    },
+    {
+      "path": "attempts/attempt-c-public-safety-rule-calibration/reproducibility-runbook.md",
+      "sha256": "b68a3a2fff95ffa839f4a3c6107fa98993a7924569f430b6551af5a23a6dc98a"
+    },
+    {
+      "path": "attempts/attempt-d-rollback-evidence-link-integrity/measurement.json",
+      "sha256": "73834be73b4113a9a1602f11ff47b758960e9c88f699c4bd81f58338d9fd1907"
+    },
+    {
+      "path": "attempts/attempt-d-rollback-evidence-link-integrity/reproducibility-runbook.md",
+      "sha256": "37c1e3c94fd67fb56715e970fde8b3923837430a84ae9c6dbb74f038a303410e"
+    },
+    {
+      "path": "evidence-index.json",
+      "sha256": "103826f91d4d420c636cda68ecbafe9a7b0257aa149518649da8cbf8d06d2dcc"
+    },
+    {
+      "path": "final-rollup.json",
+      "sha256": "59540c882d82848143389ff893aa9f85e7b4cf037b20a39b8bcda67764f982b6"
+    },
+    {
+      "path": "gates/architecture-wording.json",
+      "sha256": "4ef32603f76126304e6f631d18149454c28d5598b43c123a7064e492611d21b9"
+    },
+    {
+      "path": "gates/command-readback.json",
+      "sha256": "19fc817b5eef1488f13c39cd0ee8cf1d3e198bdfcbe53d4f66083546a8bf264a"
+    },
+    {
+      "path": "gates/covenant-authority-gate.json",
+      "sha256": "e32df041603486561bf38f5bfae2d0ea1cad00ed67d54fb45af85c6711d33f38"
+    },
+    {
+      "path": "gates/cross-attempt-reproducibility.json",
+      "sha256": "d0595b2cc6d70bc776386a67042e4c1498bb952ebbd46477ebc00abd89103581"
+    },
+    {
+      "path": "gates/eval-regression-results.json",
+      "sha256": "7cef7b5d78b419f21ab7b7ec610ba31937bc4036f42acb2741238366cf5b4279"
+    },
+    {
+      "path": "gates/final-synthesis.json",
+      "sha256": "960ebe507673db05f941840c00d59dc0ae1ff416deab94f349350f8522b56661"
+    },
+    {
+      "path": "gates/kill-switch-results.json",
+      "sha256": "420205db83e13ab107b156a2f15716eef462e5bceeedb4bd2c834aba96be6eab"
+    },
+    {
+      "path": "gates/promoter-verdict.json",
+      "sha256": "d7784d7c6c6ddb7fadf410fca922c42e29215380bb6727c40d6ca9a83b2758a2"
+    },
+    {
+      "path": "gates/public-safety-scan.json",
+      "sha256": "7073e03bb9f99ee4af3e7d83697ddfc92555ad039145e80923716601dc1cbc2c"
+    },
+    {
+      "path": "gates/rollback-retraction-results.json",
+      "sha256": "b0dd1a3a303daaa5eb7ed64db70c7713d62be120e47bcd068de243ff923027c6"
+    },
+    {
+      "path": "gates/sentinel-public-risk.json",
+      "sha256": "adfa5bc3a625679ccbf62cbffd663a2cc406a5fd3d699240c0fc84a52dd446bb"
+    },
+    {
+      "path": "gates/stale-language-sweep.json",
+      "sha256": "65a31f5c849110ec9ea37888d0d8d4636a39b23d1082bf21bc6124824fd80367"
+    },
+    {
+      "path": "nodes/usmba-node-0001.json",
+      "sha256": "925e5ed1778ebcf5704d17ff27cf3d1be353ee63a8916843db39b988521644bb"
+    },
+    {
+      "path": "nodes/usmba-node-0002.json",
+      "sha256": "2771ca08ff6aa3ca3028aa78d8ab1af846ef4822c9941bf68523a8b339390ca5"
+    },
+    {
+      "path": "nodes/usmba-node-0003.json",
+      "sha256": "4e4ede924d30e13b88e17d80dab698ec8395eea151348e6fbeed5de4ed7c0d73"
+    },
+    {
+      "path": "nodes/usmba-node-0004.json",
+      "sha256": "98fc8dfd516ef00e793c8e90cd2bd0b364357640d015c86d6a5ce184b4e0de9c"
+    },
+    {
+      "path": "nodes/usmba-node-0005.json",
+      "sha256": "32f4acdc5b1897f043aee2198c2c292ffeee55e250530dd24e21675ae6bee60c"
+    },
+    {
+      "path": "nodes/usmba-node-0006.json",
+      "sha256": "4125bb643b8564dbf2362369e03393b7fbc1db6df4ea12f45c0a9d495084c266"
+    },
+    {
+      "path": "nodes/usmba-node-0007.json",
+      "sha256": "9e28e9bebb7a6ae65d478098686d33b71595cdb716e3633ae29c18d42cf0defc"
+    },
+    {
+      "path": "nodes/usmba-node-0008.json",
+      "sha256": "4a888433325d98b3e16d6226977d05124ca27dafe113ff0bea69e0e81c8eb95e"
+    },
+    {
+      "path": "nodes/usmba-node-0009.json",
+      "sha256": "ecb6b39e6794d7cacc24819549b39a00385daf95f31cdc627b82af35fec82db4"
+    },
+    {
+      "path": "nodes/usmba-node-0010.json",
+      "sha256": "f97ece53901a4c301af50e0d99a8ec9f73371898bb4043912244152c50a4b841"
+    },
+    {
+      "path": "nodes/usmba-node-0011.json",
+      "sha256": "586b6dcb65c850c2d6bc26d3b1e20e4ce19727e96f1bfe19b11b3610ef786ce8"
+    },
+    {
+      "path": "nodes/usmba-node-0012.json",
+      "sha256": "9a09e4fae2ea17a97101b9b5f13da9ba015ea9b4d1379d9f69489fe37f9aa924"
+    },
+    {
+      "path": "nodes/usmba-node-0013.json",
+      "sha256": "a7c9968a4f01bca1fca83f3ec23cb933d4bcb34079a3e71787d1ac6cb61c213f"
+    },
+    {
+      "path": "nodes/usmba-node-0014.json",
+      "sha256": "ad6bd2ab005c0c632f1d7de7f32394b0beb3c173c7a43bfb505d25df89128af5"
+    },
+    {
+      "path": "nodes/usmba-node-0015.json",
+      "sha256": "3c13b761c3d5beca7dbeff7879bb9aa8e053ba578c784ca41ee16d45742efe5e"
+    },
+    {
+      "path": "nodes/usmba-node-0016.json",
+      "sha256": "25808f26cedc8d18121b7ccdc505d1ea641603dd04ffdfa0f6e3fcf4d537238b"
+    },
+    {
+      "path": "nodes/usmba-node-0017.json",
+      "sha256": "65bce380f7f50b1f56b7f5bfd931a916f7d99ae17faf3178d77f4428d1a66a83"
+    },
+    {
+      "path": "nodes/usmba-node-0018.json",
+      "sha256": "0f68d1f83a88a14be832228a9298a75f7a4b962933f3463371d4cc2036e4e888"
+    },
+    {
+      "path": "nodes/usmba-node-0019.json",
+      "sha256": "24ab4be2577bab2f466345ad0e1aa2b6c70ddfca4a199afeffb43f224983513f"
+    },
+    {
+      "path": "nodes/usmba-node-0020.json",
+      "sha256": "151f80777fa14d665bb664312858f872d651523a25f663609d800da514cd7039"
+    },
+    {
+      "path": "nodes/usmba-node-0021.json",
+      "sha256": "2ee931f948a5787e5337fdeb7e9ba90316597f6c7c851d85f17008f7202f80f1"
+    },
+    {
+      "path": "nodes/usmba-node-0022.json",
+      "sha256": "83cb05cfa6e6f482a4158c8f23473b44cbc8ff2f244a0f0d5b51e0f4f8597344"
+    },
+    {
+      "path": "nodes/usmba-node-0023.json",
+      "sha256": "bfb40b4f10500655d2e8d96332d851e2570baee00807eb3f70852a83a25e2f94"
+    },
+    {
+      "path": "nodes/usmba-node-0024.json",
+      "sha256": "af2cf8663e79300150c3c7086f6f40d8af9209b5893bb3e0ce4b5b901e859f78"
+    },
+    {
+      "path": "nodes/usmba-node-0025.json",
+      "sha256": "51a089a720bed87de67d964b4977d66fd274c9e2413068c6aa6f09b4984cc7e2"
+    },
+    {
+      "path": "nodes/usmba-node-0026.json",
+      "sha256": "e3d3f7efa777a3d83ea9398b9d79e00044a27f639416611aa87adf0dff2f2f00"
+    },
+    {
+      "path": "nodes/usmba-node-0027.json",
+      "sha256": "57c3f1d1cd6952ffe4df58272fe3349aab7dc7dc15f572ba8823d45560bf6dcd"
+    },
+    {
+      "path": "nodes/usmba-node-0028.json",
+      "sha256": "b6722d53c3f254629bdff0618b8b5eac5b08cf8eaa129fc711865f31f2e8866e"
+    },
+    {
+      "path": "nodes/usmba-node-0029.json",
+      "sha256": "738bcf0c4a3964cf478958a2d072a21e47d3a932bad1e70b1bd99b4b7ed04eab"
+    },
+    {
+      "path": "nodes/usmba-node-0030.json",
+      "sha256": "f10b583c119fff53d2b0f34e4904df3fd163e1f3188dde8d6a4da2fff5e27cab"
+    },
+    {
+      "path": "nodes/usmba-node-0031.json",
+      "sha256": "89dfdd2dd5b9a21286f49e868cff04e2714402490f44d2044c18fc7b3070e470"
+    },
+    {
+      "path": "nodes/usmba-node-0032.json",
+      "sha256": "3e2fa255cdb7f2e1266eaf05cf06e7674f6243192658e87322c944135e564c5e"
+    },
+    {
+      "path": "nodes/usmba-node-0033.json",
+      "sha256": "32f96c31219c7657e18b27891cc84fbc7dc705ac6318935a8170ee13bca312f2"
+    },
+    {
+      "path": "nodes/usmba-node-0034.json",
+      "sha256": "7b8e47c1be7e594479c01e31f44641bee2adaaf4de848c4a899beb3f448f6ff3"
+    },
+    {
+      "path": "nodes/usmba-node-0035.json",
+      "sha256": "b58ae15cc4f6f6b100924db475482f47e2c2d2ae0d9968dcf0f393f6d999ca7b"
+    },
+    {
+      "path": "nodes/usmba-node-0036.json",
+      "sha256": "18702ebd7035ccece84c80914116b261533db7b27f260b92512a98d0bfea7c3c"
+    },
+    {
+      "path": "nodes/usmba-node-0037.json",
+      "sha256": "998fe28d8df2464294b26e0ef34ec658fa12bd02eb713e7c71d68b7f6fa0f6a0"
+    },
+    {
+      "path": "nodes/usmba-node-0038.json",
+      "sha256": "279fb989e9b8d19aeb2d60041ecad122cef5506f743bd0b25f1b55243e30a328"
+    },
+    {
+      "path": "nodes/usmba-node-0039.json",
+      "sha256": "8a0bb39b3ab91bc48a1d5d25179fb1b8485398b4829e9b4dbc831c46f08a5b77"
+    },
+    {
+      "path": "nodes/usmba-node-0040.json",
+      "sha256": "7cdf774fccc0770393ef629ba6241568276f2a7208d5740dbdc4f21f73c93c2a"
+    },
+    {
+      "path": "nodes/usmba-node-0041.json",
+      "sha256": "da925ebf86d720fb38da5335e0d783c6c7c56894df5527e106a6afc1ce3a589c"
+    },
+    {
+      "path": "nodes/usmba-node-0042.json",
+      "sha256": "678ef182b6b3d534514f0f65b4d0c8b2b47712e3d0b3e0a9a3aca4f2f8dff8e2"
+    },
+    {
+      "path": "nodes/usmba-node-0043.json",
+      "sha256": "8caee8e3d6474a94e9a5b60a0e4565e06d50801deda106c0dbf87a52c10cd83b"
+    },
+    {
+      "path": "nodes/usmba-node-0044.json",
+      "sha256": "b22c4f8b80d3b0c3113387cbc71db3bc2d5ea012c3dff09a7f61c8b059f68ad4"
+    },
+    {
+      "path": "nodes/usmba-node-0045.json",
+      "sha256": "ad53fc5495fb64d1bab36773c7852993418410e809afc3100fb0a54727758bf7"
+    },
+    {
+      "path": "nodes/usmba-node-0046.json",
+      "sha256": "065131ef6f1ef1b22df881b1fe642c8d21f6bee0c2e515f83aef9141be63dcfb"
+    },
+    {
+      "path": "nodes/usmba-node-0047.json",
+      "sha256": "8239ab1a5b74429f0dd9e987e0e2641c287b91134a2ba6f53fe6af688e81e643"
+    },
+    {
+      "path": "nodes/usmba-node-0048.json",
+      "sha256": "7954f61e8fdf7b5158cc96180eb5ebaa588f58df1a35ef77cbdc6d8e86f2fb5e"
+    },
+    {
+      "path": "nodes/usmba-node-0049.json",
+      "sha256": "a6704b04b3765fd463f502c25dbb3e5cb7e87405c85a4056303791b4d154921b"
+    },
+    {
+      "path": "nodes/usmba-node-0050.json",
+      "sha256": "2a5d80d55eb2943ce05b95e38f370c2c2b4c0cbca231b2f05b2d91401051cd1b"
+    },
+    {
+      "path": "nodes/usmba-node-0051.json",
+      "sha256": "eb9f13e2bb4755750cd0b04323f6d6bb42183385f8d2a20f7726807477b7f80b"
+    },
+    {
+      "path": "nodes/usmba-node-0052.json",
+      "sha256": "0d858333e9372f70836561a91b175597d4fa98a37f53aeb59f599409404615a8"
+    },
+    {
+      "path": "nodes/usmba-node-0053.json",
+      "sha256": "653c4ff64b6001b60e79f15d9f6c4528f73c89dc4a3a59b9169007a97c7e2d57"
+    },
+    {
+      "path": "nodes/usmba-node-0054.json",
+      "sha256": "9f1eee77985beb1316b5d22d1f08021c9f50308bdadf87c87b6b434a28002cf9"
+    },
+    {
+      "path": "nodes/usmba-node-0055.json",
+      "sha256": "84eb3196d9e7fc64211c18ae7a0dfc1685211a908cdd9fc2769bf533b2824179"
+    },
+    {
+      "path": "nodes/usmba-node-0056.json",
+      "sha256": "d5923b205af4101de241a6f0fe0ecaaff17a222d84f55a67ff7e7a8dacdd407b"
+    },
+    {
+      "path": "nodes/usmba-node-0057.json",
+      "sha256": "49ad7a9eb178246f176518caf4df48925e2ab233894f2e0db41c8adf7d16ec5b"
+    },
+    {
+      "path": "nodes/usmba-node-0058.json",
+      "sha256": "9d17e79f1b1e26b809c388aa108ce33d51c9f434f300dfd6f66e92471a30432e"
+    },
+    {
+      "path": "nodes/usmba-node-0059.json",
+      "sha256": "fd9ac649e37909b4f8fdf415d35ba56e8b22227a7173151829312c1bbe9ab34d"
+    },
+    {
+      "path": "nodes/usmba-node-0060.json",
+      "sha256": "5c2e2c0ac03c2ed65829c1b14012e0da8ed6a875263a36d475b0100bff5f5e3c"
+    },
+    {
+      "path": "nodes/usmba-node-0061.json",
+      "sha256": "aa643caba3c1ca275aaa14e50b41115245b6cda5090bc67a376485be14c6bc66"
+    },
+    {
+      "path": "nodes/usmba-node-0062.json",
+      "sha256": "9d5508ddc520fd128c61680c4e29fb25b4afdd7db5bbe605704c49f728067d43"
+    },
+    {
+      "path": "nodes/usmba-node-0063.json",
+      "sha256": "bfe6ca8bf07f3e2f19db227bba82224eeb21fd46964316a2c55cfcafe71eb8dc"
+    },
+    {
+      "path": "nodes/usmba-node-0064.json",
+      "sha256": "f82b6535015c27be1b5b22855214590c68b9621b766465fd50ef2f8ee1372340"
+    },
+    {
+      "path": "nodes/usmba-node-0065.json",
+      "sha256": "5a257d147989948c5d9e68e0daf0833aa36e67a09c28827c80a122f46778584b"
+    },
+    {
+      "path": "nodes/usmba-node-0066.json",
+      "sha256": "db9d1cadef40a2001f918ea64ee1192f5f561ee70f2821304438e25cc1f10fac"
+    },
+    {
+      "path": "nodes/usmba-node-0067.json",
+      "sha256": "cad1f6fe5a186b2b2caa4f3f67b53fc98823543962971e7883cacf71fe38fb60"
+    },
+    {
+      "path": "nodes/usmba-node-0068.json",
+      "sha256": "fb7ad707872774e32e71bddc806f0302e7d3d074af7531051dd6d1d4cf05b3d9"
+    },
+    {
+      "path": "nodes/usmba-node-0069.json",
+      "sha256": "77fdf34677e87f2bc8f25f6edb1b5355f8dac01c9c17ef6f05b2dc4804942fec"
+    },
+    {
+      "path": "nodes/usmba-node-0070.json",
+      "sha256": "b78e7421a8d22d572d6292585e023919229a95456a5be5956fa8f82dd8026a03"
+    },
+    {
+      "path": "nodes/usmba-node-0071.json",
+      "sha256": "634593dc494f0dbd09b65c8e8e9a21a61fc5a649e1587b0fc86ffa0df3119e25"
+    },
+    {
+      "path": "nodes/usmba-node-0072.json",
+      "sha256": "0274514ca45cdea6073cb0ccee9313716108307fe9b72331c51936798998bb62"
+    },
+    {
+      "path": "nodes/usmba-node-0073.json",
+      "sha256": "6c3c1f2acd5ad2044831cf812b56749d3de344bbb746922e9bf580edaa2af2f5"
+    },
+    {
+      "path": "nodes/usmba-node-0074.json",
+      "sha256": "15af4781ecaae8d4226f24d72f5e3b30c31125a93f113d9fb0d4e174fcc58b39"
+    },
+    {
+      "path": "nodes/usmba-node-0075.json",
+      "sha256": "de4d06f54a16acc8fb1eab6c0629a40567aed43bb37aaaffba38daef776da913"
+    },
+    {
+      "path": "nodes/usmba-node-0076.json",
+      "sha256": "8100b99cc93102b7c8d820e293780d103a4e45845478b2df4075da92694d6f83"
+    },
+    {
+      "path": "nodes/usmba-node-0077.json",
+      "sha256": "c13c09fe43b178f66adebe0e21e5428c501de6325e100e583a4ecd752fb53067"
+    },
+    {
+      "path": "nodes/usmba-node-0078.json",
+      "sha256": "448d56154c1d93b176576b1b563f071269d1e9135319915085e0e006529e0917"
+    },
+    {
+      "path": "nodes/usmba-node-0079.json",
+      "sha256": "9cdef1e1cfc9a708087f9da4b353455bf75bdc1cf2a68c363e5099fb9d4f0235"
+    },
+    {
+      "path": "nodes/usmba-node-0080.json",
+      "sha256": "bf587836f89c2234160fd66dc180c0390f4e0698bb017c697a24b57c91f395ee"
+    },
+    {
+      "path": "nodes/usmba-node-0081.json",
+      "sha256": "dab7b5bfe089c331687b94c1d83c43fd105b23ff17219c1bbce63f1f8fdb9313"
+    },
+    {
+      "path": "nodes/usmba-node-0082.json",
+      "sha256": "5d70078844d9c9c20903e1c3c70a2a906dae4e9e0667c1057c88d9927637f09e"
+    },
+    {
+      "path": "nodes/usmba-node-0083.json",
+      "sha256": "7f8d4c2db095806b0794a533eba888ff9b61816655b3e94a500691c92df9845f"
+    },
+    {
+      "path": "nodes/usmba-node-0084.json",
+      "sha256": "b937ed52a14fe0f2c749c0d40b024807257777b75161f2518d8be4412c68dff1"
+    },
+    {
+      "path": "nodes/usmba-node-0085.json",
+      "sha256": "da670ded44d4c412f877faa245740177838e503b3cf957422d01968549be9ab7"
+    },
+    {
+      "path": "nodes/usmba-node-0086.json",
+      "sha256": "3e4ad4134c66e5c4825cc8de2737ba596c443bf1f0f36e86180eac3e89387d99"
+    },
+    {
+      "path": "nodes/usmba-node-0087.json",
+      "sha256": "565bea6ffd78f48ce9a04d0040e9d8c75284d4494c61667b79f31b0457ae639b"
+    },
+    {
+      "path": "nodes/usmba-node-0088.json",
+      "sha256": "2ace24334a9b747788faa61567dcf2ece41a356f40f86e17ce530a7d1665d180"
+    },
+    {
+      "path": "nodes/usmba-node-0089.json",
+      "sha256": "c051634a3f0968c00764a49f6c155aab7de948d41c20bca232dfdf6b1606395c"
+    },
+    {
+      "path": "nodes/usmba-node-0090.json",
+      "sha256": "6d739555a87809de305e09b0dcc8f5116dbc98615c1380bf57a8a1ea674a2940"
+    },
+    {
+      "path": "nodes/usmba-node-0091.json",
+      "sha256": "350ec2b348d5a4752a4863fc16f92719d6c2bedb422ef2558c8e7329ae4f55a9"
+    },
+    {
+      "path": "nodes/usmba-node-0092.json",
+      "sha256": "da727ddf572c967536de15bfbff2651407f852c2884c406a699d2141097c1d2f"
+    },
+    {
+      "path": "nodes/usmba-node-0093.json",
+      "sha256": "744ad49778b5c423e5b2ad1570973e9265dce239127b4c08a20eba15383e9831"
+    },
+    {
+      "path": "nodes/usmba-node-0094.json",
+      "sha256": "7baca71923fb2145d1af079a90e42adc6c42a9dbd3e4e03a8f80820bd579b0c3"
+    },
+    {
+      "path": "nodes/usmba-node-0095.json",
+      "sha256": "b2d58ecdfee6f44a4632c8a4f8981f60651398557847401a2f44fcaab976ab2f"
+    },
+    {
+      "path": "nodes/usmba-node-0096.json",
+      "sha256": "b13ab30577fe285616174351bee461fe20e00a362a847557afa9dc2830334fef"
+    },
+    {
+      "path": "nodes/usmba-node-0097.json",
+      "sha256": "468e452aea656acda83ed2c91d52caa68d222dcc5ad975bcd44460ea01e9679b"
+    },
+    {
+      "path": "nodes/usmba-node-0098.json",
+      "sha256": "18c53e35985ab43b9dad248b01ee523fb953448f491a4673e4c62fa9e7f6ef12"
+    },
+    {
+      "path": "nodes/usmba-node-0099.json",
+      "sha256": "969c11b795a63770c3f157f0df0c858779bbd763774bc7285e6031cc37eaeac8"
+    },
+    {
+      "path": "nodes/usmba-node-0100.json",
+      "sha256": "ce28eec44f24be192e44f601dbd4344ac2e51eb798caa43531447499479f7a48"
+    },
+    {
+      "path": "nodes/usmba-node-0101.json",
+      "sha256": "5d64fe2766d1f08941f2068928c8040c3c7773b693c2651715a9aae749d5b319"
+    },
+    {
+      "path": "nodes/usmba-node-0102.json",
+      "sha256": "7e0a4ceb65192e9a16012bf6689b7799e2a6086e8fe58b057c0bf99d0885852a"
+    },
+    {
+      "path": "nodes/usmba-node-0103.json",
+      "sha256": "59fc96f11fd8b7e7874f6f15efab1df02c67c483c948313d302dd9db9d1772bc"
+    },
+    {
+      "path": "nodes/usmba-node-0104.json",
+      "sha256": "f046fe7021eb4e295be08e4058faa16d9cbe363498ef10630d7960c1fe61f065"
+    },
+    {
+      "path": "nodes/usmba-node-0105.json",
+      "sha256": "3b295342a2ae812cdfba02aa048bfe4b85bf767b67a496fc3e932532da8929a5"
+    },
+    {
+      "path": "nodes/usmba-node-0106.json",
+      "sha256": "457d8ee58b8a914c6c4e8ae99374067642043d50b7e35c543fe9eca087b71e55"
+    },
+    {
+      "path": "nodes/usmba-node-0107.json",
+      "sha256": "7b993ae1b08b9334a6862c73b2d7afba63290c4b5d57c38e38084acd55741136"
+    },
+    {
+      "path": "nodes/usmba-node-0108.json",
+      "sha256": "3694d77c5facd7bc76cae692e8a57d5540cbc2875ddd51bfc0a033ec2b174a2d"
+    },
+    {
+      "path": "nodes/usmba-node-0109.json",
+      "sha256": "a72fd1a3a73cd2566489e674aecac0a92a0d680694de7ebfbebbf4140c76e021"
+    },
+    {
+      "path": "nodes/usmba-node-0110.json",
+      "sha256": "ced7bf22f9193843a2699ed19254b474f75e904480c267196f63a5a69ab7c152"
+    },
+    {
+      "path": "nodes/usmba-node-0111.json",
+      "sha256": "a6055d9fec32901e4562a60d47bc46a1ce9b1360eb5bd9da9bd9a0f789474649"
+    },
+    {
+      "path": "nodes/usmba-node-0112.json",
+      "sha256": "69700809ed11b11664de4b5339be8066de86183bc63efbbe9af811dd706cf585"
+    },
+    {
+      "path": "nodes/usmba-node-0113.json",
+      "sha256": "8aca133a4e0c9382b876c2e28908314d56444f0ac8ad85317b74d821b4ffd3a3"
+    },
+    {
+      "path": "nodes/usmba-node-0114.json",
+      "sha256": "ef1218a7e2306ce34272d51629c89d633f4c7cf3c30d6bdc562e541ada89923c"
+    },
+    {
+      "path": "nodes/usmba-node-0115.json",
+      "sha256": "1c76c0d5a5c98d89fcd34fbe5450fbf2e92ef1bcefa46682bd60907a0bb0785e"
+    },
+    {
+      "path": "nodes/usmba-node-0116.json",
+      "sha256": "704c6318f8204b3c7db129403ddc49f7367a4dd21a8e8fa2293c392a18cd3a27"
+    },
+    {
+      "path": "nodes/usmba-node-0117.json",
+      "sha256": "a26bbed430db74a581181f6c775918635734b0c459853792fdf6de928bf0ae07"
+    },
+    {
+      "path": "nodes/usmba-node-0118.json",
+      "sha256": "13bd690daade17446be2c67711a8499ddaf98a64008a8c54b03c298d6b5d4570"
+    },
+    {
+      "path": "nodes/usmba-node-0119.json",
+      "sha256": "41465d27d7747ec28a2fde4919f4bad5ef4fb19dce56a5db56477eb676bdb902"
+    },
+    {
+      "path": "nodes/usmba-node-0120.json",
+      "sha256": "ad7c614bbfc3ade3a9eadc3bd1442e7e596f605d7b188abe54831b577b90b25c"
+    },
+    {
+      "path": "nodes/usmba-node-0121.json",
+      "sha256": "e0759eabb1d93343477c487de1a085b5ad5f9213cb541d565b32f583a277554d"
+    },
+    {
+      "path": "nodes/usmba-node-0122.json",
+      "sha256": "568f3b070ebf9050b2a67c57d1f0c67cd306a879fbc4217bd4c49ba94e770204"
+    },
+    {
+      "path": "nodes/usmba-node-0123.json",
+      "sha256": "bb3e8f4ac05dafd0caf78c8ca1bb4a794e1d82141ad6cc523290bac4f668aa1e"
+    },
+    {
+      "path": "nodes/usmba-node-0124.json",
+      "sha256": "7eb65680cd7cec83d05857fe4f8820c2dc220f29c8fbfca3eca1cb2239fc4a7b"
+    },
+    {
+      "path": "nodes/usmba-node-0125.json",
+      "sha256": "e1619d012838c2ec3deb056c3e533862647501416156e84ab06ac60a4931d200"
+    },
+    {
+      "path": "nodes/usmba-node-0126.json",
+      "sha256": "348ddf456f6967b0c42d05d829a6ecc202937665973f2e73e4164016908a29ed"
+    },
+    {
+      "path": "nodes/usmba-node-0127.json",
+      "sha256": "44449c52708cbea0896862c22fc5d3659ab564a2e5d6292a5ed4ab7b809c4ced"
+    },
+    {
+      "path": "nodes/usmba-node-0128.json",
+      "sha256": "7e8f857041363db6e605dc3df2834a7fc292532e5841e36c6e13fc73325d9325"
+    },
+    {
+      "path": "nodes/usmba-node-0129.json",
+      "sha256": "f3e88998ed68da32197d6090aa06b2312f43f5a85b553e96d696d39495dc3bc7"
+    },
+    {
+      "path": "nodes/usmba-node-0130.json",
+      "sha256": "130f99e12a6abcd2e5c6ee0ae2350c0f743ef42a20e2ce0372f595816ce507c7"
+    },
+    {
+      "path": "nodes/usmba-node-0131.json",
+      "sha256": "6601c6a9f167df740f5921c17c8cbba232a704a65d85b3578e2a5af7e6302527"
+    },
+    {
+      "path": "nodes/usmba-node-0132.json",
+      "sha256": "94bee2581754b098f76e76ae3f607d873d8f955c7a2b88dcbc0aa80f9df6356f"
+    },
+    {
+      "path": "nodes/usmba-node-0133.json",
+      "sha256": "72fbe9927201694d225a8b7c9eba85397d4d6d978bbf47427b8d5c859b1efa62"
+    },
+    {
+      "path": "nodes/usmba-node-0134.json",
+      "sha256": "b6517ebed4d87a8e763d088eb4c8e8a0dff6f947222c1655c17e891e32d31015"
+    },
+    {
+      "path": "nodes/usmba-node-0135.json",
+      "sha256": "9aa666e7075b4d2e47b6f9baa3cf50d4b28ee8bd91904e9fb44f5dedd3601052"
+    },
+    {
+      "path": "nodes/usmba-node-0136.json",
+      "sha256": "ad4293c311089c356b794cac9f45afc5d9c987c8e7f59336ffe6a9d7b4c4ed00"
+    },
+    {
+      "path": "nodes/usmba-node-0137.json",
+      "sha256": "7b2b990d1d25c85cc8fd415fd1d9794800eb66a803046b17dddecabe35617d3c"
+    },
+    {
+      "path": "nodes/usmba-node-0138.json",
+      "sha256": "9fa56780e494c3e55181d9181e8d73b62ab1c9f0a2460aef6c32db0a5f0f82ce"
+    },
+    {
+      "path": "nodes/usmba-node-0139.json",
+      "sha256": "eb0ff43d47e85222965947a33f90be02857612586dd1f0a9e34ff47908d86b23"
+    },
+    {
+      "path": "nodes/usmba-node-0140.json",
+      "sha256": "b7ff8d1a684c4fadad9c473376fd3548d06e3c8c50c5d4ee57c9a999defc216e"
+    },
+    {
+      "path": "rollback/attempt-a-fixture-schema-evidence-quality.json",
+      "sha256": "c476ddf8a61d850e5ae2eab6853644483aa58911ab8621add461f12908f1a283"
+    },
+    {
+      "path": "rollback/attempt-b-ci-readiness-diagnostics-quality.json",
+      "sha256": "ad8ac74631c113a8c8b0225a9c05dd6f1d394991a8681e7f80d28009fc8ad43f"
+    },
+    {
+      "path": "rollback/attempt-c-public-safety-rule-calibration.json",
+      "sha256": "006d0183922d959ccde9be929d9b3f19cf89fd3b0d7b75f4bbaa2506ba8db94f"
+    },
+    {
+      "path": "rollback/attempt-d-rollback-evidence-link-integrity.json",
+      "sha256": "735517751f44a6e63c2fa491319647bad065f7158ebbbbf77b935de8f62cbe8e"
+    },
+    {
+      "path": "run-links/usmba-node-0001.json",
+      "sha256": "a1e4754e850d3a5a0db36f12b56591ee23df5af0cff4aac35a50ee01448efb27"
+    },
+    {
+      "path": "run-links/usmba-node-0002.json",
+      "sha256": "988905b642d297a698358069acc8271eb20112994d72128fd84607d4a3d7b173"
+    },
+    {
+      "path": "run-links/usmba-node-0003.json",
+      "sha256": "def51ee1c368d787ada38ba9e2505c2861be3aadc07bb3125c3e541d0a3e9efc"
+    },
+    {
+      "path": "run-links/usmba-node-0004.json",
+      "sha256": "e52c9c05fa3604b28094abd10993ba420e56f40d44430af5e46638b8e035191e"
+    },
+    {
+      "path": "run-links/usmba-node-0005.json",
+      "sha256": "5f3b20622fd63216a42b72d4e12237fcf7a9214a5ee71de10e249630ed61a796"
+    },
+    {
+      "path": "run-links/usmba-node-0006.json",
+      "sha256": "ef87470523883541a77b5625645ee231462e0918610fc5a1196aeaf9a34f06ec"
+    },
+    {
+      "path": "run-links/usmba-node-0007.json",
+      "sha256": "ac555e441ed48a942068be8e30232efa3bea0abbbf378ede12b37756e173f07e"
+    },
+    {
+      "path": "run-links/usmba-node-0008.json",
+      "sha256": "a5a8d9246742862ee7b0c37bef690ed46935caa056a49a9381fcd0326429bedc"
+    },
+    {
+      "path": "run-links/usmba-node-0009.json",
+      "sha256": "267e071b817ae75fbf972b37f09f2759f0ad257e3b439eff5035b2cfd755c1ae"
+    },
+    {
+      "path": "run-links/usmba-node-0010.json",
+      "sha256": "f7d65fc41b237fcea69d7291901b406a43f496f77d3196ec9e0aff5abb0c481b"
+    },
+    {
+      "path": "run-links/usmba-node-0011.json",
+      "sha256": "6c7ff65748bf941d26589dbaed2e144a40c5392b18ac38f83ca198ea863c7d49"
+    },
+    {
+      "path": "run-links/usmba-node-0012.json",
+      "sha256": "8fff2e2d82ed517ed6a04b07ae6a052baf9bd2bd2706eafdd35a6e649528a9dc"
+    },
+    {
+      "path": "run-links/usmba-node-0013.json",
+      "sha256": "e16e2fea9f7167d8dc7528a8b03663374db8d1004c980b205330a746f6d0fff3"
+    },
+    {
+      "path": "run-links/usmba-node-0014.json",
+      "sha256": "abfe28c8c57fbb893b4e48434ca48f6573c93b66c7542d60387becd45f9110b8"
+    },
+    {
+      "path": "run-links/usmba-node-0015.json",
+      "sha256": "7ffbf8852e28425ccd841ab5147bec95b4a886a8e033f4fe9a49333580a29186"
+    },
+    {
+      "path": "run-links/usmba-node-0016.json",
+      "sha256": "17cf72297eafffbc1729d8fedaf38e67b0af7602559febf3a3f88d86a0cff579"
+    },
+    {
+      "path": "run-links/usmba-node-0017.json",
+      "sha256": "cbdac457396d6d6ab87d5f040f7f9cacb4dff98b5cd660c404bc0e7b6a71f70f"
+    },
+    {
+      "path": "run-links/usmba-node-0018.json",
+      "sha256": "aad1efa669b6a1d2890ec585e81f9499afa05943f316934ee5deea6063277002"
+    },
+    {
+      "path": "run-links/usmba-node-0019.json",
+      "sha256": "c22a85a9ec4f137f8ee6f71a1fe86a8f0084eca63db8f93414f0443a552301bc"
+    },
+    {
+      "path": "run-links/usmba-node-0020.json",
+      "sha256": "ba75500b6a1acaa1cb1bddf297decd8b298f8f006701a6c28eeb7e5213d206c4"
+    },
+    {
+      "path": "run-links/usmba-node-0021.json",
+      "sha256": "0073f78c52593928c38d9e4cdcbd55db2d8ed53822a041df6a9eefe5c0d8abd6"
+    },
+    {
+      "path": "run-links/usmba-node-0022.json",
+      "sha256": "a133f8988b93e0044041e415c74cf2b893a78e98e30157db493e83ed5b3fa825"
+    },
+    {
+      "path": "run-links/usmba-node-0023.json",
+      "sha256": "bc7fe5ff2df2ca2284c98e60872b8eff544c4ce8f8048c84466c7d8ff7fee6e1"
+    },
+    {
+      "path": "run-links/usmba-node-0024.json",
+      "sha256": "a5d6433fee77d4336e1f372e6a71cb285709f8b80a49788e1bb47c4ed6523227"
+    },
+    {
+      "path": "run-links/usmba-node-0025.json",
+      "sha256": "ba0938ea5a867250cc03766394675e5f53e3e5ccfaf4e37439e9010edb37ab40"
+    },
+    {
+      "path": "run-links/usmba-node-0026.json",
+      "sha256": "b58308ef64a6e99f0590b52a393216981a465fdb2915163a618145e2a66b2a70"
+    },
+    {
+      "path": "run-links/usmba-node-0027.json",
+      "sha256": "d5263ed6f011313b66a6dea209801dacc09fc18877ccd41a47794c8588df5c65"
+    },
+    {
+      "path": "run-links/usmba-node-0028.json",
+      "sha256": "9563270dc3d49bfc094df39ca36c93828d483a62907e4f1bd8c78b2776d50f7a"
+    },
+    {
+      "path": "run-links/usmba-node-0029.json",
+      "sha256": "ee411b05e9a83bf086139005c18c85a0eed1d05fe3b8b674c0ff571283b66ae6"
+    },
+    {
+      "path": "run-links/usmba-node-0030.json",
+      "sha256": "2100aa078183d8e3dcaf4a9e1132c10b9f68bc35edf13e12b1631794408ab9e7"
+    },
+    {
+      "path": "run-links/usmba-node-0031.json",
+      "sha256": "576fc8654914523e16d106b21ae68820a1866e94f3c287eda84cb5bcb2289006"
+    },
+    {
+      "path": "run-links/usmba-node-0032.json",
+      "sha256": "9a182590fc034b187e7d23b27a6fd2bffa63c9de22644cd74d3a0391d4eb814f"
+    },
+    {
+      "path": "run-links/usmba-node-0033.json",
+      "sha256": "50333b8a454f8ab9226040aae7bdd0a05c59784d5d880868a3f78e6d2d343e82"
+    },
+    {
+      "path": "run-links/usmba-node-0034.json",
+      "sha256": "a86f61ed1ab7e0e8c05e25a058118291d2b1b88fe27fc70e74dfe07a4421dcaa"
+    },
+    {
+      "path": "run-links/usmba-node-0035.json",
+      "sha256": "3820f915975d0ec751c21659bfd1d8e19fae4a764c4f6d726d14458e29826df7"
+    },
+    {
+      "path": "run-links/usmba-node-0036.json",
+      "sha256": "2c6d4e3d5a5d49e4e9cf2eccdcbabdaabe3827490bcca8edef7763d8c318f1e1"
+    },
+    {
+      "path": "run-links/usmba-node-0037.json",
+      "sha256": "172ed1c025b1aa97c8f1c33e0183203f245a9c655b7286f36ced584acdfceeee"
+    },
+    {
+      "path": "run-links/usmba-node-0038.json",
+      "sha256": "b4397891d9bb813d34a4a22529482d156824511145b82514f5af6ef1ba1883e1"
+    },
+    {
+      "path": "run-links/usmba-node-0039.json",
+      "sha256": "c76a18b60c10c3d120cf1a55587c73dde88fadd80cc042c0950ef27e9352a1a3"
+    },
+    {
+      "path": "run-links/usmba-node-0040.json",
+      "sha256": "a80ca55299ab5113b48e01ece9026610239da312f595e2cec10bac8369743820"
+    },
+    {
+      "path": "run-links/usmba-node-0041.json",
+      "sha256": "ca4e6e3ede5b5565c6b7009b4536e1445001d08e6a245736f7eade1a64212be1"
+    },
+    {
+      "path": "run-links/usmba-node-0042.json",
+      "sha256": "3ed9194444e59a719e93c6adca6822284f840adcafbe6dc625a3c87aabd6dfac"
+    },
+    {
+      "path": "run-links/usmba-node-0043.json",
+      "sha256": "8f83032b66415a8d7c79faddc926596ac11aedb9e96b51451d3cc82c01534911"
+    },
+    {
+      "path": "run-links/usmba-node-0044.json",
+      "sha256": "4cf3f8220aaeb84320263353a40faf96ca2bfcf70bd3c3b5db3241bbd83356b0"
+    },
+    {
+      "path": "run-links/usmba-node-0045.json",
+      "sha256": "dd5f137f72dce5b18f074ca1ae6ee5d792bdead9da7d27eba55223221eb5ef19"
+    },
+    {
+      "path": "run-links/usmba-node-0046.json",
+      "sha256": "47320c5f9776851a10cb1a56b1944d1e83865cfeb587a49fa8033c30440c8e4a"
+    },
+    {
+      "path": "run-links/usmba-node-0047.json",
+      "sha256": "baf837da56042cbb6dcbd7f88ab029c84f9ee9b3896edd2036f7ff81a43c6cf9"
+    },
+    {
+      "path": "run-links/usmba-node-0048.json",
+      "sha256": "222730c0c1a8c54ddf8f9731c65db24e828babdc919ba7a80d4545b62ab3ab7a"
+    },
+    {
+      "path": "run-links/usmba-node-0049.json",
+      "sha256": "4d9dd9b9c3826ba67dfb7ce6fa68a5f3e1d6f2a8912c4a16fae59f4721af7c7b"
+    },
+    {
+      "path": "run-links/usmba-node-0050.json",
+      "sha256": "1c0fa08d5f2ac437f8b3bff35fdf6f0485b412af7d15cc457cc20d523cf94e50"
+    },
+    {
+      "path": "run-links/usmba-node-0051.json",
+      "sha256": "db5049f42c646775fdc4543343794972346433e46cf115c2e3887d290fb5976e"
+    },
+    {
+      "path": "run-links/usmba-node-0052.json",
+      "sha256": "f3d941ee0242eaa640272e0896304a9b961b0289b1963e07adeb32f9370e5a13"
+    },
+    {
+      "path": "run-links/usmba-node-0053.json",
+      "sha256": "b998230d637a8c7900a3b543f4f8b8b269c175bd458fb75b778fb8b1598e030e"
+    },
+    {
+      "path": "run-links/usmba-node-0054.json",
+      "sha256": "f9fec0f4f06eb4698eb77ff8f51d933bcfa8eac023ecdf88057f6f8e188b9493"
+    },
+    {
+      "path": "run-links/usmba-node-0055.json",
+      "sha256": "5b970c4d38a7540beebfa4eb2a807e431fea97b2bce22195ae2a235929c3f1f8"
+    },
+    {
+      "path": "run-links/usmba-node-0056.json",
+      "sha256": "ef05f4c0f3282ab4bf338a3e5f664d78dcf27fccacbfcdb1f0e213cc81120481"
+    },
+    {
+      "path": "run-links/usmba-node-0057.json",
+      "sha256": "5ff25337dac2818bf46f8f888b5f30a6850ef68957bfe335870f11bae558f04e"
+    },
+    {
+      "path": "run-links/usmba-node-0058.json",
+      "sha256": "49428b1fbdd99a47562197a6a2fa8716e647e3ffebc64574604f0339158c206f"
+    },
+    {
+      "path": "run-links/usmba-node-0059.json",
+      "sha256": "5e1f3cc90edce0ca85b4991591f1fd6512814af667dc1c7808fb7c00eb31cfb3"
+    },
+    {
+      "path": "run-links/usmba-node-0060.json",
+      "sha256": "aebdfe17cb371b323644822261129597dc4d662341411ba90cf1936e4ce87c5c"
+    },
+    {
+      "path": "run-links/usmba-node-0061.json",
+      "sha256": "47d3073796424894228d9ea1d8431bf7ba27633179a9b5c39ae6117ff554b5eb"
+    },
+    {
+      "path": "run-links/usmba-node-0062.json",
+      "sha256": "ebcbe704fd2552276e772e3bd9eb3c05bab60476291c97d446552595c50bee11"
+    },
+    {
+      "path": "run-links/usmba-node-0063.json",
+      "sha256": "2e30fc5dd5e6fd143d6f12a18367a208a91aa8cfcda13d7232759410dc9ffa0e"
+    },
+    {
+      "path": "run-links/usmba-node-0064.json",
+      "sha256": "a92e7d55645a767fe7b72eaeaa611870dcc3a679e0172e4994907fb6be5f4e6d"
+    },
+    {
+      "path": "run-links/usmba-node-0065.json",
+      "sha256": "70e89487ad6bbc2d4813b5817fc53981379c0d5682fbf924dda260983f571ad6"
+    },
+    {
+      "path": "run-links/usmba-node-0066.json",
+      "sha256": "82d5663dfe501475eccbb850889dfe634e75a07442cee028e8b51f2a636915b1"
+    },
+    {
+      "path": "run-links/usmba-node-0067.json",
+      "sha256": "210729644b4dd928ee0f4b6315f36448f2fcf504d9dabc02fe5b67936153c53a"
+    },
+    {
+      "path": "run-links/usmba-node-0068.json",
+      "sha256": "cedf905422c57306bd8b29321dee828ba94c00e0f4eab589a6f41ea22c6e146d"
+    },
+    {
+      "path": "run-links/usmba-node-0069.json",
+      "sha256": "7f194bc203d55ed6c60566b37250288324d69e46d09cfc38c36deb52fc50708c"
+    },
+    {
+      "path": "run-links/usmba-node-0070.json",
+      "sha256": "97fc0756e1b8e31534ea4796e109bc2efb1d38a88aa098f6850bc872068bb915"
+    },
+    {
+      "path": "run-links/usmba-node-0071.json",
+      "sha256": "07708e086e7682e8e61d3e7953f74a9ce01982873190a62d31b8d3955bad6d9d"
+    },
+    {
+      "path": "run-links/usmba-node-0072.json",
+      "sha256": "7bcb208fd65892c2aac0a36cfdf02acbd16bb3f1c478f62f19e3d4167b6c6a7d"
+    },
+    {
+      "path": "run-links/usmba-node-0073.json",
+      "sha256": "a7f7b3af6051482cb479ae828c8face06e4b50bcc48f60db9ae68b104e397d83"
+    },
+    {
+      "path": "run-links/usmba-node-0074.json",
+      "sha256": "749ba790ed45fda3ca810ae23fdf6bbae612cba31d9b50b5e870bc2606b9840d"
+    },
+    {
+      "path": "run-links/usmba-node-0075.json",
+      "sha256": "e63b43645f23c78115af7671e7e259a41dcdac9ce43cadc3a9adc768b8a42857"
+    },
+    {
+      "path": "run-links/usmba-node-0076.json",
+      "sha256": "15acc33a9bae2d64f5ff6799656bd709dce59d34967d664dcc59f110f5593223"
+    },
+    {
+      "path": "run-links/usmba-node-0077.json",
+      "sha256": "e1fe530a13b4cf4c2cbd8b88fa35323950e71ebaaada28338d2a70bb58e0118c"
+    },
+    {
+      "path": "run-links/usmba-node-0078.json",
+      "sha256": "ce622c7fe3821cd0e8daeff3952b35b7a64f9ff8e495368819c14b5e2a22594e"
+    },
+    {
+      "path": "run-links/usmba-node-0079.json",
+      "sha256": "8d97dabf3837b9c8c56fc39759766ad4dee83dd198bfd4addb5fa7d6e31b6fbe"
+    },
+    {
+      "path": "run-links/usmba-node-0080.json",
+      "sha256": "0ca12850327dfb0c7e12f17c182c14d416acac1e4b566644bfc25cf313b54fc7"
+    },
+    {
+      "path": "run-links/usmba-node-0081.json",
+      "sha256": "6f18a5a78f3f30b6782b2d815fa95d89d0bc800ad210c8398245c66a16755f88"
+    },
+    {
+      "path": "run-links/usmba-node-0082.json",
+      "sha256": "bd15f3aefd53398da935aee4d5d5e926d8ba91b577c0f096f3e3d191f9309a50"
+    },
+    {
+      "path": "run-links/usmba-node-0083.json",
+      "sha256": "a765282f47b663a515200d6e464e69a6d2a0b5c84202a6a71cbcee3de6d67cf5"
+    },
+    {
+      "path": "run-links/usmba-node-0084.json",
+      "sha256": "0e9b7b891cce83d54df4a0ef8453fda4eca9ac7123cbfe0c5f2a255538ce6fd1"
+    },
+    {
+      "path": "run-links/usmba-node-0085.json",
+      "sha256": "137a2a0050d47dd1ba0314808666e52b86e73681cf03474f8c465ed75579ed32"
+    },
+    {
+      "path": "run-links/usmba-node-0086.json",
+      "sha256": "d5c84331875f9bda9906b9d2e29101229002cf3e39ed422ac53e02b60a0f2740"
+    },
+    {
+      "path": "run-links/usmba-node-0087.json",
+      "sha256": "d11851a6bcdaf9f929054cd8b4a7efa2eecbf122197f06f849b50a13150a5013"
+    },
+    {
+      "path": "run-links/usmba-node-0088.json",
+      "sha256": "ce5580fd90bdeea809a04b67999a2c6a6a81030a647c76c52658f929225d65ad"
+    },
+    {
+      "path": "run-links/usmba-node-0089.json",
+      "sha256": "9645de4c8eabed2c6aff5d1a5a96af6387a6d9d78b833a66eb4e33bc6f02f52a"
+    },
+    {
+      "path": "run-links/usmba-node-0090.json",
+      "sha256": "b79cca237835bf07b2b439e17d0865bf545bcd8ecd27199e93dc674690f2d37b"
+    },
+    {
+      "path": "run-links/usmba-node-0091.json",
+      "sha256": "c438751c7e2d75e3aa19cb5eb94d06ff693ec3da58283bbc6925c0d459fa95f8"
+    },
+    {
+      "path": "run-links/usmba-node-0092.json",
+      "sha256": "b75538ee43a2dbc149a44f201f30285bfc6e176b7d5bd6771e76b7a868f6a941"
+    },
+    {
+      "path": "run-links/usmba-node-0093.json",
+      "sha256": "6f54deec259c90731ea8675f931ad3fdd342a71b951feda05d2a71cee6c9535d"
+    },
+    {
+      "path": "run-links/usmba-node-0094.json",
+      "sha256": "1aa8609988a7e64df4f34197607af67625b1f755ceb97faed362425e23bbee0c"
+    },
+    {
+      "path": "run-links/usmba-node-0095.json",
+      "sha256": "722cf6af227b0097b019c0d2276ae126ffa99dc7a6df3180f2347eb2b1886ed0"
+    },
+    {
+      "path": "run-links/usmba-node-0096.json",
+      "sha256": "172f6928cf1886511ccd2794e345efccfc3f16f03357333a77e961f63c902932"
+    },
+    {
+      "path": "run-links/usmba-node-0097.json",
+      "sha256": "3d02c257633038f7477104a709c1013764286bf251ceaec06a7a97554a067abb"
+    },
+    {
+      "path": "run-links/usmba-node-0098.json",
+      "sha256": "3805a5327f1821761189a8866e241bb44d5e1c6d80a6f762baa5bb3bd7b3d6f3"
+    },
+    {
+      "path": "run-links/usmba-node-0099.json",
+      "sha256": "541803c85dd09fde61bc30de4e90ad8c1a0f4e7ea3ab49c79e234990fe8d462c"
+    },
+    {
+      "path": "run-links/usmba-node-0100.json",
+      "sha256": "2ed98d557da1ee23aa91887d645d7ead39c6d36ffabafdfebd0a1345e375c9a4"
+    },
+    {
+      "path": "run-links/usmba-node-0101.json",
+      "sha256": "c7a1b39f58b35c764e3a315e64f0f7c02d893c6b3c53aede3a646ea14c5ecd99"
+    },
+    {
+      "path": "run-links/usmba-node-0102.json",
+      "sha256": "a64712f4ef7a50e8ee6c1bc4e5adb2b4f20974307e5322bfe55debf42161be62"
+    },
+    {
+      "path": "run-links/usmba-node-0103.json",
+      "sha256": "46f1e545d77b8aa383b194d744fccdbc6bdf09be470b6b59fb42cee32b5039bd"
+    },
+    {
+      "path": "run-links/usmba-node-0104.json",
+      "sha256": "2e47edd4db5dc449ce807838bd10dbbc2fc380ebf6faa971033c37f1750879ee"
+    },
+    {
+      "path": "run-links/usmba-node-0105.json",
+      "sha256": "6e6a75ec81be302f7acb4c1feed80d30217896bb545bab3dc4907f751c0fb81c"
+    },
+    {
+      "path": "run-links/usmba-node-0106.json",
+      "sha256": "0c8d1eb51d1ec4d6bff3acc175739ac7f382163f33f30d64e6d638ff5739e603"
+    },
+    {
+      "path": "run-links/usmba-node-0107.json",
+      "sha256": "02b95e352a0b8c8e3dffcc96ad1d8f20558a72a52481f4513d38e4e1123d8a1c"
+    },
+    {
+      "path": "run-links/usmba-node-0108.json",
+      "sha256": "3e0b5709445c502120b7c8362ea82a10b8e2645228efda2311a175bd846cc4c7"
+    },
+    {
+      "path": "run-links/usmba-node-0109.json",
+      "sha256": "f9a80e4ed675851f8ef5554848acc54fd775a018c6ba4cc078bcc916e618d832"
+    },
+    {
+      "path": "run-links/usmba-node-0110.json",
+      "sha256": "fd79be76fc4dd76faa946b490ffa943d79c556a13fe6b3aafa84780694d60c44"
+    },
+    {
+      "path": "run-links/usmba-node-0111.json",
+      "sha256": "1761d48feae6a31e024f2eef5e5d1336c1d5ef417a7b8b7452ab7b2d653626aa"
+    },
+    {
+      "path": "run-links/usmba-node-0112.json",
+      "sha256": "7e8ccf981391f843884777461899f6a1f4e9c107f3e0bb4b019cd29abd3374cb"
+    },
+    {
+      "path": "run-links/usmba-node-0113.json",
+      "sha256": "e73b5907ecce9804f874594ef831ee8cc3469301ec979a23f54c7bf1bc03395b"
+    },
+    {
+      "path": "run-links/usmba-node-0114.json",
+      "sha256": "4d82842b3a678bb989f115e62af0b0656a25a9c726fcb79542592f39a9e4835a"
+    },
+    {
+      "path": "run-links/usmba-node-0115.json",
+      "sha256": "160a70c31480bdecab246fb1a0651d9ffbb1706b972c456486d1061486d75245"
+    },
+    {
+      "path": "run-links/usmba-node-0116.json",
+      "sha256": "59afa4be8458531ea9aced52b94a84a92667d63c8f01194c60ba07efc8069a15"
+    },
+    {
+      "path": "run-links/usmba-node-0117.json",
+      "sha256": "11c43c1bfdab8f8d4262282f7921c45f2beffb2368f0e5cffb9aa81382f2cabd"
+    },
+    {
+      "path": "run-links/usmba-node-0118.json",
+      "sha256": "5a4f87eba1f817832e78f524c59f7b40818cfab8d5613081bd9391bad1a4b9f9"
+    },
+    {
+      "path": "run-links/usmba-node-0119.json",
+      "sha256": "12d9c37cb5136c2bb7e57724d5cea5dbb92f60aa9b4981eef4cb14e478e14bbd"
+    },
+    {
+      "path": "run-links/usmba-node-0120.json",
+      "sha256": "e7a290c175c9ea8179b72c727802c2d69b18d30eef46b0ebf8c5568a1ed1818d"
+    },
+    {
+      "path": "run-links/usmba-node-0121.json",
+      "sha256": "cf0419b859925df7f3c86a371e8866fbd08cad78802ad29a2568ad4a9b908a78"
+    },
+    {
+      "path": "run-links/usmba-node-0122.json",
+      "sha256": "74fc970ad5623427de7e92d9e04225fb73a58399a38a633a853086fd431b57b2"
+    },
+    {
+      "path": "run-links/usmba-node-0123.json",
+      "sha256": "9bb908b79dd227d468f969c1a308b8b0e4ec64fa1f6bea7fda5efb8428e01e9a"
+    },
+    {
+      "path": "run-links/usmba-node-0124.json",
+      "sha256": "761edeedf5835270900865b65ae8badf057c132c67300b3a84301755d69beb3b"
+    },
+    {
+      "path": "run-links/usmba-node-0125.json",
+      "sha256": "77b361b52003a83d8747deb98741ac01bf8dba3c837e23801f351912d27c4484"
+    },
+    {
+      "path": "run-links/usmba-node-0126.json",
+      "sha256": "72b0109bc63e908f74cd914dc8bdae77fde090116f8eb6e5454c5211d0dcac28"
+    },
+    {
+      "path": "run-links/usmba-node-0127.json",
+      "sha256": "41661a38ce79fbd674b6ca008a21b965fbd851616f22c250f3a536ca19279065"
+    },
+    {
+      "path": "run-links/usmba-node-0128.json",
+      "sha256": "c90406b78be93623dbb8cb7f3b69d747f61ff2fec2fd600d8696ea222cd09281"
+    },
+    {
+      "path": "run-links/usmba-node-0129.json",
+      "sha256": "8df3fe1ee8dff226dcc33a41ac2bf84c23490ad907e4dbc28da39a2de529cf92"
+    },
+    {
+      "path": "run-links/usmba-node-0130.json",
+      "sha256": "a047e023d48f38932fee2f30d6622a90fddd13a9a79889db1d6f23fcede2af6e"
+    },
+    {
+      "path": "run-links/usmba-node-0131.json",
+      "sha256": "fb10acf0a352431f0dc834523c76c3203cd96db8b88b642e7619f9d7c37a222e"
+    },
+    {
+      "path": "run-links/usmba-node-0132.json",
+      "sha256": "da9ad8640d551c47113f0f3da1a68a033d32f0caf44853f61d5a9a556c76a489"
+    },
+    {
+      "path": "run-links/usmba-node-0133.json",
+      "sha256": "18c3bb51dbd69c4c760451ab29d5751e3e26b0149edbb78694569f771f65519c"
+    },
+    {
+      "path": "run-links/usmba-node-0134.json",
+      "sha256": "e1d255daed0018ca7404f3fc35043fe3a07dd033c01d4800169ff6b20044753b"
+    },
+    {
+      "path": "run-links/usmba-node-0135.json",
+      "sha256": "1ab82a6c605145c84f5add0828ba44140ce5f8f3fc971c5d34ebfab554f2b4cf"
+    },
+    {
+      "path": "run-links/usmba-node-0136.json",
+      "sha256": "da7a547e5c4a1fa86d56195960488ad48f947480e5d6eda389b5ce3233223ee3"
+    },
+    {
+      "path": "run-links/usmba-node-0137.json",
+      "sha256": "80017355bdc06cff9a28d061df21f10d3fa95ab423f204356fe963d32ae5323e"
+    },
+    {
+      "path": "run-links/usmba-node-0138.json",
+      "sha256": "56b47866d81d4d70496a3ea813aafbfea6c115a40435f201d2becaa78c2ba26c"
+    },
+    {
+      "path": "run-links/usmba-node-0139.json",
+      "sha256": "22f2141ef7cacc2b862f897cbe9a3b45c02a9a037bd213c1450bb29533fd4a6f"
+    },
+    {
+      "path": "run-links/usmba-node-0140.json",
+      "sha256": "bdb4776323f9d67b00a38971639649cd7cbbe9fc4b6e608029b72855d03a79d9"
+    }
+  ]
+}

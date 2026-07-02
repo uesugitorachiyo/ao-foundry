@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.final-synthesis.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "result": "promote_narrow_class",
+  "new_proven_class": "public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts",
+  "highest_proven_live_class": "public_safe_bounded_sandboxed_self_change_applications_non_readback_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "unrestricted_self_modification": "denied",
+  "approved_public_wording": "AO has public-safe bounded sandboxed self-change application evidence across four non-readback exact-scope evidence tasks under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied."
+}

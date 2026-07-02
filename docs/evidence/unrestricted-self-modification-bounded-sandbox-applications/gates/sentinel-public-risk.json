@@ -1,0 +1,21 @@
+{
+  "schema": "ao.sentinel.public-risk.v0.1",
+  "mission": "unrestricted-self-modification-bounded-sandbox-applications",
+  "result": "clear_bounded_sandbox_non_readback_applications_hold_unrestricted_self_modification",
+  "public_risk": "clear_for_narrow_wording",
+  "hold_for": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "unrestricted_rsi_claim"
+  ]
+}

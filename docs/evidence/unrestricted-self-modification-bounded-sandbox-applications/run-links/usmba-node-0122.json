@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.run-link-detail.v0.1",
+  "node_id": "usmba-node-0122",
+  "completed": true,
+  "ci_required_before_merge": true,
+  "rollback_record": "rollback/attempt-d-rollback-evidence-link-integrity.json",
+  "measurement": "attempts/attempt-d-rollback-evidence-link-integrity/measurement.json"
+}
