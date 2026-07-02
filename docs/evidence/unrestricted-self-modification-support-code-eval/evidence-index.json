@@ -1,0 +1,29 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-support-code-eval",
+  "new_proven_class": "public_safe_bounded_sandboxed_self_change_support_code_eval_four_attempts",
+  "highest_proven_live_class": "public_safe_bounded_sandboxed_self_change_support_code_eval_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "public_safe_artifacts": [
+    "README.md",
+    "evidence-index.json",
+    "final-rollup.json",
+    "digest-manifest.json",
+    "attempts/attempt-a-support-code-fixture-validation/measurement.json",
+    "attempts/attempt-b-eval-harness-diagnostics/measurement.json",
+    "attempts/attempt-c-rollback-automation-evidence/measurement.json",
+    "attempts/attempt-d-sandbox-containment-trace/measurement.json",
+    "attempts/attempt-a-support-code-fixture-validation/reproducibility-runbook.md",
+    "attempts/attempt-b-eval-harness-diagnostics/reproducibility-runbook.md",
+    "attempts/attempt-c-rollback-automation-evidence/reproducibility-runbook.md",
+    "attempts/attempt-d-sandbox-containment-trace/reproducibility-runbook.md",
+    "gates/covenant-authority-gate.json",
+    "gates/architecture-wording.json",
+    "gates/sentinel-public-risk.json",
+    "gates/promoter-verdict.json",
+    "gates/command-readback.json"
+  ],
+  "node_count": 240,
+  "run_link_count": 240,
+  "rollback_count": 240
+}
