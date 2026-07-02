@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "gate": "pulse-reliability",
+  "result": "segment_02_passed",
+  "notes": "Pulse no-return-early continuation readback passed",
+  "broad_RSI": "denied"
+}

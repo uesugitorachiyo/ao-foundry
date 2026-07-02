@@ -1,0 +1,1098 @@
+{
+  "schema": "ao.foundry.digest-manifest.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "files": [
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/README.md",
+      "sha256": "a08361b238392b326517c6f22028b04618d5c4358ae543fc28d218f257a5d644"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-al/measurement.json",
+      "sha256": "c17f030a63b50d4db2cdc90b21f7274b73bece7f32253f0ea9db00983a274a22"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-al/reproducibility-runbook.md",
+      "sha256": "8f58b4774633034ed370ed2f5843df53491bcd696ca5ebb1360b80eabb7977e8"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-am/measurement.json",
+      "sha256": "6dc623966963aaeddb6d7bf5b0be09de3781bffcd81cb07e5a9b437ee5bc5e80"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-am/reproducibility-runbook.md",
+      "sha256": "390365920148db7e2fe8cc8466df8b8b6b0a1c19976983975901c838f733b8f7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-an/measurement.json",
+      "sha256": "490f6fad0f15315cc7a9635aa591d80fa5cdedad2bf2290d36e21452aa92b96e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-an/reproducibility-runbook.md",
+      "sha256": "8ce47f8cd2ab6fceee110f110ff36b00601cdcab686daf01441604a9619fa497"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-ao/measurement.json",
+      "sha256": "88717836f3c7d5caa5c4daf6af00906643ac3ec240a24a3e84e611c9f6f47165"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/attempts/attempt-ao/reproducibility-runbook.md",
+      "sha256": "1c82ca91182149f10015eb7cff63a882926bb9b9730716987000b7cf31a35036"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/daily/day-03-synthesis.json",
+      "sha256": "ffcf4e2ee091a0225568c71ccac6e0d87891890f06c4b3ca4d66cda783a515f4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/daily/day-04-synthesis.json",
+      "sha256": "686c2ec4efd7e7396f9429ef55af7a2856904999986d3ab52e4e0bb9a7b9863e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/evidence-index.json",
+      "sha256": "247392b1e097c4b654f41bcc6426f827dd788156ce399e89a4e3de0445bd0201"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/final-rollup.json",
+      "sha256": "5a8d46bcd4ac05fb0ef17df35a51d7a00d7af69b5954b38836b5842021702d07"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/adversarial-wording-results.json",
+      "sha256": "9ed99d8c93a6818c42a1e341f8d26e48ebd5317a67cef38744d5a1bd90ce77ed"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/architecture-wording-gate.json",
+      "sha256": "3a9122d2ea49bb676352eef388d0d9144415c7679ba5329504b563474e51b188"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/command-readback.json",
+      "sha256": "3c3e72bf1ac1437c1587a110047a4674b87f702ab8476945426b66b1139e919a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/context-repack-continuity.json",
+      "sha256": "b0cf06c4ec73f5c1ee01c9e2310a3ea3b5b2d78e7a53d2bd1cdea5305c580fe7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/covenant-publication-gate.json",
+      "sha256": "48745d0592caaa1433765a1d0c3513b77c3fb3932afa21ae612c318fc0f023d1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/eval-regression-results.json",
+      "sha256": "53f27d840c8dea8fa89967cdba833f1e6bff1047636189198c1552305c7f21cb"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/evidence-sufficiency-matrix.json",
+      "sha256": "89c825bdee83bdda3cc6d1f9ca4c40ac6fabcaa9deefa7a02eaba3c9c5e87622"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/no-abandonment-gate.json",
+      "sha256": "241f4a2268dfe622f1391e859b3701f381ab5e051f1b1c78d6f7b6b45c21c455"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/no-repeat-gate.json",
+      "sha256": "f4936b5826911723edb3d9129c311862a6fe8da8756747bea31b689d9a9d7352"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/promoter-verdict.json",
+      "sha256": "783552e174f20c81ffb429986fa99222f2a8af76810cf6dd96fd171534730f22"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/public-reader-results.json",
+      "sha256": "f9c751e46a882f19531e51ae1003e83348e15c00f690f151019d54d4062af77f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/pulse-reliability.json",
+      "sha256": "7db01560c34c9541b7349c3af904d1e354e50ea5ae316ccccf99f89788d5eb04"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/rollback-retraction-results.json",
+      "sha256": "2a9cd383e3d52ee5fbedfd15ee4175afde0b3ad29667bc908e516859e1c4abd2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/sentinel-public-risk.json",
+      "sha256": "ddb494cd0b194df782e6b049ca1e0a0a0426bca2140f673b25361d359939fc5c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/gates/stale-language-sweep.json",
+      "sha256": "430330c164ca1ece37ce4094d0e94d7142f48f3663f06bf4bce45c1c676eec40"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/mission-state/mission-state.json",
+      "sha256": "8ca85159c2f9c1504db3992e6289fb4d13201ec855847366d79b665141797b72"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0181.json",
+      "sha256": "7385d2894b9c275c13c87bb4070f03a322e670b1a327d2c8175f9a4f5375da3d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0182.json",
+      "sha256": "df1ed61244829b331c3bc47f116ee5ee650b461ecf5f84f7cf30b3b4db84a816"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0183.json",
+      "sha256": "f56416a0b8389a58a0c4a0b24492400e2f2c7d956d175f34f499e7c9d39a1eb3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0184.json",
+      "sha256": "0903b4dbff591ef7f4786f7f8f99110e2c22b7b17a19958c9ef7d6355f6a6bc5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0185.json",
+      "sha256": "58945b19e5426fa697933187b49e108057be7a0711e292f9d82c19e8f65f1409"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0186.json",
+      "sha256": "277feac20978e417dfcac2b600735fb29bf5e45de13aa3c6509d3fb5058d59b7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0187.json",
+      "sha256": "5905ac7c652db730c69b1430cde1fdcef1832fb169f739199109e061c71aea6a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0188.json",
+      "sha256": "e954faf00f950697ad1134cef5f4e119f8c914790923ce1069e36618c1ff8658"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0189.json",
+      "sha256": "775ff7f59d0cec4bd0477a68486e1c6f15520657eb231f0d3b0519ec10d3b508"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0190.json",
+      "sha256": "9d744a154988da90abb1c05249f0bae2e3b0094a5e68e9021a587a2a00f5a4e1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0191.json",
+      "sha256": "d23bbdcacd12bff2fae627c3d51647b4bb28da7bc5078d5496a5963bf38efea9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0192.json",
+      "sha256": "f8b70c42f6bdc5ca01811f14120fd4bb5ff595eeb1ca7bfe94ce95d0010b952f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0193.json",
+      "sha256": "0b6f1381aec9bdc781b3f5a01ff989abcb636ea13ca3413aa3b519c353963a59"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0194.json",
+      "sha256": "bef43f8ef3639552503f3a155999a496275055650131aeb2c6a3762b5acf1a39"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0195.json",
+      "sha256": "a0dab89ea7d628c1a86e43177a58339a5efc639922a6f939896231a639511edb"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0196.json",
+      "sha256": "21367528fd9df7388867f7afbe22bdb97fc145f96d37761c603d8745479c476b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0197.json",
+      "sha256": "3fead9e3612a603af24ac9d8abdb47431151a524875fd31dd8ab69fad4ad071a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0198.json",
+      "sha256": "6184e8c48d0951745d7954c65509d5e7b69bee9ea527e0338f5d80d65a75f278"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0199.json",
+      "sha256": "9f093d817f766e12f812916096d9ce14333e84a8b0dc527bfc02c5336c17f641"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0200.json",
+      "sha256": "2a804f679ecd2773c05f638a8c8ec1cc1a9ec884efe1d2fcdca086f62789e21a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0201.json",
+      "sha256": "f30a9741bd7521983451fbad10fb3ab566a4c9c4fa5d57dbdc0ac374daaa87b0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0202.json",
+      "sha256": "8494727967a17c1225018ee85222575b6dde8451fd7d5bc95926e7ef67dce91c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0203.json",
+      "sha256": "31f870b126c1725fc62c8b7d5d07c2a6662e680deb38c24410df14fbc8fb9ac7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0204.json",
+      "sha256": "c6d63655babba84c64fbfb3f64c828b1b525011e65cc1c9fb1aa00f5a1242891"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0205.json",
+      "sha256": "5d0fd7eb580fc551c27f1989efa57bf17d35fea658a44373b77f3de624c202f8"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0206.json",
+      "sha256": "ea13cceea4338b5f75706bf7c1b65b49d259a671d43f6ec2b377a6e6a3024234"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0207.json",
+      "sha256": "c8f0e70e8264ce5e57fbe3502a03e3a0d680b134f652157dd86319988cb3761a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0208.json",
+      "sha256": "9918578b09e31c6d93ca75b349768e7fc7db2d52708acccc5238b4aa9d6f76f1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0209.json",
+      "sha256": "10654ef3685327580dad45c41f7552bc819d1cca84ecf82db6b3d73e91ee9502"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0210.json",
+      "sha256": "095b12ab8b4f4207f4127c4d17712b2a6aad77c9db491b2a6a241b977b4e805a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0211.json",
+      "sha256": "464aff6a998b71429e7a17a759c30f305860985fe4d5c2d88b106fef3c55bcd3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0212.json",
+      "sha256": "1f57915a241333007ac455b6174a1e894b760da99074d90ef2f1335f86ab1d82"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0213.json",
+      "sha256": "3ce0b7a6b33281900bf4d7e500bd79dcd9ff275d1990c3f62a8aca9976dfb151"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0214.json",
+      "sha256": "819936c1b234a8d9ce2156e046e13df0cbc24993a73a6faf3e6be4f65f591941"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0215.json",
+      "sha256": "e4f004ad7194ca01a64054d35420c69d4fd48258fb2b2a6c139a3da348398a87"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0216.json",
+      "sha256": "7b5edc5d3f94ea506a8af72d8c7c32f61cb316490bffe49e4fb26d61ffa02cee"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0217.json",
+      "sha256": "644b23ef026bb82a097b2b2aae47cb02d813801f255de519a031b72b24a44ffc"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0218.json",
+      "sha256": "d3ed04a5edeecba7fc16be79156d99a5ce508f28f3ffe17402737162f2c2708b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0219.json",
+      "sha256": "9d9e9e375eda3229ea391cf164a204aa9569ddfd0dd0615f63fbc97eaef0dac5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0220.json",
+      "sha256": "816ec179eaedabd64c796139999fc70330af026e9b3bdf3f0fe8db3d55bdb68e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0221.json",
+      "sha256": "3c1b773518a2178329bb42b1518022b461c0b9f47363105354e048a6f37c4f27"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0222.json",
+      "sha256": "291996ad36c5029f27c119c3298b8dcafd7df874685011cbc3e2004af4729321"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0223.json",
+      "sha256": "63341e72cee2836aaf5de59739d60759934d9fd77160c070341381e9e079efd1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0224.json",
+      "sha256": "253222fcd9f7abed6fe4611a528837fa50d523d780397ff24535a79ebf86b969"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0225.json",
+      "sha256": "4aafe959aa89fa0ba3625cb9ed6cd3fb4a473684574404e35f8ca767571f1485"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0226.json",
+      "sha256": "0f9e35f969173e3b941b917dc0cb3e70fff2b200e8ac7fcf904107b9e92dc250"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0227.json",
+      "sha256": "e2f992aa843883fe9434d1ffdb33d4cbf710ffeb8367e08f81bb4d7f0a87a5d9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0228.json",
+      "sha256": "3fde44beea74fb1ae14f57a11c747b3ed3bcc293a14d48ade14ed68c2e00fb60"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0229.json",
+      "sha256": "3b93cc567ac9315913f0ed81e94e7f645fd5a0d89ac367a72bdc87fafca26ee1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0230.json",
+      "sha256": "6fc1de9854365fa54a0194f966958a0976b2fb5fe8431bfa233b41611cda67bb"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0231.json",
+      "sha256": "a217c5bae55a5fd1d26444748f9d810f2c36b74a3cf99ca6585702528db0d5fe"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0232.json",
+      "sha256": "f1e5a2d94e8bd8190b75d7e15b2ec179be69b304b209b2f14d9ab5a5f065cc0b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0233.json",
+      "sha256": "56e43f4f39a00fd3aa58ff51461c27ec4498289e1c978b288e105274a7a68102"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0234.json",
+      "sha256": "bd0939a6c094192d908563c9bbaeea4e234edc48aa4c726965408807401f62b2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0235.json",
+      "sha256": "ce9d6705a56a166f7b44dab80db694d04d63dc06acb6dab2f55a6fadac848736"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0236.json",
+      "sha256": "225462afd6aa2770a609176ec73123285df85ef70a39a58216e9490dd747e777"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0237.json",
+      "sha256": "ba4d314d94b2599b48c8150e5f6a13a1d03eecfd064c5227cd7f7b26028bf2db"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0238.json",
+      "sha256": "01806832b3c06a9e9f1eee04c70093b22a56a3213f038a7d6a5fc231af72ae7e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0239.json",
+      "sha256": "49f09d5052f4e310f8f38db04257752d051cf819785f568ac5d23e811cfb7044"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0240.json",
+      "sha256": "512fc3c419e11cd6e4a46d81d5ae4ed1507a1b2a1166e1f0e7714a59990d7d51"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0241.json",
+      "sha256": "f2de38d98d6073c30402909885655464babf67257c1351385add60d6aacc11a5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0242.json",
+      "sha256": "cf35f1be5c3a35dc40561e31a4fcbcd17b1d1e3657c7339e9a788b2b0707ffa2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0243.json",
+      "sha256": "f9f2d260ab2d57ad703c9d9df5ebc49a2fa82268310bddddd0a4139465bc77dc"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0244.json",
+      "sha256": "cc91e9f975679e0e4fcd888651ee835c8e7d69f597111ad6bb6b2baa0208a6a3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0245.json",
+      "sha256": "26c68e1d5ce37b525119b5dd67b506b5a64c78a8e29426a9e8ffe394e01db58f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0246.json",
+      "sha256": "8dcaac5b328bb49f4a7d6f899e57418c36e454ab9425c5fb1bbd33a1f01aa8b6"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0247.json",
+      "sha256": "e5ce21491c323031799a19d684e9bd2dccfb6f36072f2d36426ab23cb859d8ac"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0248.json",
+      "sha256": "bdc9c00040546e5e724348a9ccf98d367e3ba1b00f7317564ecd16a3f5fa1bf2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0249.json",
+      "sha256": "52742bce43d95fba0b786c6a8c9ba2a07d7c2b110096e4327b4147de379899a6"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0250.json",
+      "sha256": "1a4833336f0d033a6705b043a0981def4e9a159878752e264bcf3eaef9492062"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0251.json",
+      "sha256": "30de3be6b1d1f6aaccbd8bf1d0339dfadeff4d03197842eddd099b4038dc11d2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0252.json",
+      "sha256": "f0d86a5666c926c1afb5dda21ee17b89b7dde00ef79daf75674594dd7a60482b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0253.json",
+      "sha256": "e15969cc77f5fccac175028b3d3a6d0d7986e4f3d4e2e273b91976a3a5f0c3a9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0254.json",
+      "sha256": "6f057e3c5600d9b6a287b80d1762d625f6ae2e71f310ab577e683e529cd71f7e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0255.json",
+      "sha256": "37bd1915966b17b20dac200d727f3ad9e5c29344ab1d021932b284a1ec21817e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0256.json",
+      "sha256": "e62cd01dd0e73689d521144a56c0ad5dad14a309e40cd1f0f6108dd81eac9b79"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0257.json",
+      "sha256": "6d22e1ccc45e89a504391d0b6583da49ddbc814f6be45e7d29091d695ac03c55"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0258.json",
+      "sha256": "d6f7ea0a535e934fa294b8bff0b44c595e7a580ab7a06706634fd2bebbdef11c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0259.json",
+      "sha256": "688ab98b683e985bae4fcad041964fdbe711c341c29f20334c6baebb2bb149ec"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0260.json",
+      "sha256": "8be79d55b5e42c97368ed8fe06f2d80085fd144dd17aaa241b86d3a548a5472c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0261.json",
+      "sha256": "a74c84a5aea8701578fa2423d4ee0b4195a7143b679954692a0c4960e66129a5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0262.json",
+      "sha256": "c15b8c7fa0f4a58f3feaf06f8b5884cd7013a9d461607aaea7542be3cb39fae5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0263.json",
+      "sha256": "53d46a78d84c4283960e871cd9571989612224337ef495dd6ad17fa7646a9abe"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0264.json",
+      "sha256": "b64d364a31f4879a3da9fb44cbae46b80c2866c67de82e1bcf06deed3b55e59f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0265.json",
+      "sha256": "076c72dfac4ffff44218223d44a2a20a4e60c6f9b561557c06a33cf309df8f04"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0266.json",
+      "sha256": "f98089cf5d2dd51144c3876e28b636f4d88b65a79adbf702704036e5a7bbf8fa"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0267.json",
+      "sha256": "9a5b2765043e149059786cd53688360b329102096dae70551da75db168a5a7f7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0268.json",
+      "sha256": "28cb7bff2a91fdb912300b205bb070354a731b59b0b9d4058b4fdb694a26cb9f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0269.json",
+      "sha256": "12f56436317784c93858aa0fbc40a50ebb4c12ee9ad15024af77e881eca233c8"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0270.json",
+      "sha256": "595b17194158821cf6e100cd44ddd7b1237e725290c96b90524f50cb96a5d502"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0271.json",
+      "sha256": "13a3f6b3cc59ab104c848d0c8bb64f2495b232856527d08e9939166cf55417cc"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0272.json",
+      "sha256": "891e5a7a596c3221a61ffc7a68225b49e1ab8998883fa114ea83bb3924974aca"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0273.json",
+      "sha256": "0b9a0094840c20dd8851431c7ab4d913ffd2fcc7adf94fbf13abe582c25158ae"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0274.json",
+      "sha256": "a39fb9578c2fb1661a0f9193ee0b3616749c3c4ab713a5a170084c2e897af471"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0275.json",
+      "sha256": "3de6f2bd54df3c96c86d8cf359c131e944c35e1bcf54834b2b0b3f9ace7b5ddd"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0276.json",
+      "sha256": "ac6734e11d9ca0b89dc860ad32fe1adb2d7c49faf9722a12a2dddbd7a298c1fd"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0277.json",
+      "sha256": "f38e73602a55295e0dba0fc7d7288afbbecb878bf9d61152593f0262abe4d8ac"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0278.json",
+      "sha256": "dac52a9cc6aaaaaee267daaacc7165816566946560b3b1b5da5d74b2404082b0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0279.json",
+      "sha256": "f721c46a99bcb77a9b060c1d9c1b1c0cb5ee37d459c2305a3dc498b6ffdb348f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0280.json",
+      "sha256": "5ceb9497c23a3400c9f3da86140b1418ccf5f89df2371aa19c3238deaee6d7e5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0281.json",
+      "sha256": "3a1f593e1b0547d6f3b2e4860a01f4063154a85ce9ba539b0c13e11182466d36"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0282.json",
+      "sha256": "2d48092b9907b2e282386d6ee3a402386931e1d4f84341b8d53f29f097d3e409"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0283.json",
+      "sha256": "90fa03f5a57e3a208c36dec42aafafc95a249380781e673dc9a2a1f8995fcbb9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0284.json",
+      "sha256": "96ac1343faaa7e93f2021dec7f3c9e1e4bba95f4fbcb9edfe22b70a7c1fe88db"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0285.json",
+      "sha256": "4dc380ccea72c4be0eb2a7a30f33286243f9c4191ba9a1af1fdbae0e7555d841"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0286.json",
+      "sha256": "948d7319521e10d9cce8d2f57cc2fb1247947d4e5fe2c0cc723eb1b1864d43d2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0287.json",
+      "sha256": "753fe320ab19ce031099ac80b6a49b029e00ef2d14b16721788e7335d98f43e5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0288.json",
+      "sha256": "11f92df5a647e6eb101432cd3d75130556fd4d48897482d6d1fc359149c83e51"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0289.json",
+      "sha256": "acbfe7dcf7936c3710405d109624750732d7fe2a4b120aab304c47cae41b4678"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0290.json",
+      "sha256": "6f5fddbe18e4aaebd22f6ecaf4c8169a265776ba53e049b8c253f86a62c06a87"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0291.json",
+      "sha256": "8a545ca9032577600d5ea19c29236cbd9b69f2be53589a4fe41d0099ff3369c9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0292.json",
+      "sha256": "4d3854ed7b5059affdbf8ef769cc6d9d190782e8d610ea02627ea74e8f4aa809"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0293.json",
+      "sha256": "773c6262b6a2c79f8d484aaa7e334c170f67a60f338678aebd1550e737b55333"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0294.json",
+      "sha256": "645003a69085d5b9b5ccdc80af9418f3621dfdc88086e8fb63431c39c1de249b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0295.json",
+      "sha256": "c7d1039061f474a9db26340e6aece6d26053b10622b350016b854694dbe8bd02"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0296.json",
+      "sha256": "7fcc88cffcee00adcf24d3a492ab0937db25eda74aeceb7351bd7eec8e535a2a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0297.json",
+      "sha256": "f88bff0845653fdf511fe4933e3063977782a9610aac5ee61f3be705a97d85ee"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0298.json",
+      "sha256": "5262096432a75b74f5fcc937a260715389e3e80cea20bbb47f8c8219617d61a9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0299.json",
+      "sha256": "79b8088734b74d1c536b416b15e5137c644128e7088a81f1c6030a9fac966da4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0300.json",
+      "sha256": "77d161b3dab252cfcd8e31aff42fd3aba303ea25777308041fc3f2d1607f046b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0301.json",
+      "sha256": "1f4e702e11804c9ce58efa68389e02591d43579bfbe581871328f586ca7f4e9c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0302.json",
+      "sha256": "c03bc3a1a07cef5bab670fb1332c9a7746c99a002a491def2e7cffc901eb3ee4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0303.json",
+      "sha256": "d37e312c47e1d981cd71a87aff2a4bf5b632dc5b70372d7c6f36ee7925901b27"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0304.json",
+      "sha256": "b45350714f6a1da4f9cf2a57e06abb863f6dc4e843e2b792bd1f68097f63757e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0305.json",
+      "sha256": "de547c8be59377ffcd5243b18e015f92741a6d2d81ba386123ee65805e2de019"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0306.json",
+      "sha256": "9dcdcc52a8466c985011b2785764602d42e2c9eae3a79ecc7091e17cd23ae0df"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0307.json",
+      "sha256": "fb5d3b25ec88a188252053b1b25bdf03c1499449920c28d1abee5778292be3f2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0308.json",
+      "sha256": "d3716a083fa79041784c457fa8b878417b7c2fa7268cad1035fdcee2b238bd46"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0309.json",
+      "sha256": "96817ecef47cf2b50e917dc57a7746f99ba576bf2c7ba4e1df92901d58dccbfd"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0310.json",
+      "sha256": "7c8979f6cf8083e67c2c7bbeadfb9c9c261db6e06618765a4f4700915e8413fb"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0311.json",
+      "sha256": "8986243b57d4d5769e982db54502a7b4b1b01010bdd9709b6b1b5790d6e0ff0e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0312.json",
+      "sha256": "ca9cafa7ccad5786de812acdd2c39e10f7083c80118fdbf7e6a354971af438f0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0313.json",
+      "sha256": "9376dc7a497f8c27c3c514d3d1ee1b3247ffd2ffab35f1d74ec782f5a4ac9358"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0314.json",
+      "sha256": "9a2c038d9404832f014823a185526ad29a939a8f081d9c35d1923b8c56b16479"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0315.json",
+      "sha256": "577d182626cf4b43a37bdb5bbb694a3047ca84e2d78ca1f371b786ee9f213e60"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0316.json",
+      "sha256": "1cecc1dcc52a20046f9092be4384cba2419ffa998b950e8f50a72cf7b8c79581"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0317.json",
+      "sha256": "460234bf544a36605062ea79f76f2a910a44fa4e6274ef766a6f0e09528a1062"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0318.json",
+      "sha256": "bfba2016171234def0ca95d061db7ad4af4359813819fed7c25f46a299d78330"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0319.json",
+      "sha256": "33688dd27ba11916c64c21840a90e07e4f0eeff88c813635f48dd141a387d9b4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0320.json",
+      "sha256": "ec200324e06fe65e6bb66898a41066ab695fcb1de72881605151572bd1a116ba"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0321.json",
+      "sha256": "f4a491aaea28deab37e6291342ffaaf7df6ea76e78de71eed4ed97dc5ae5ab69"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0322.json",
+      "sha256": "7de82ece0c712458fbf9ce39d8b0c01ad9573eb9c8761053a4f2b6ace27bf546"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0323.json",
+      "sha256": "491e9e5dc0a9ab11f1a68e26e25398c0e7b5f1d58427aef9ce40dbe7d9e93a47"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0324.json",
+      "sha256": "be7939aeae97b34f5ece35ea25a9e3b26f974e29e4d4b5ac9a920615771d77f5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0325.json",
+      "sha256": "b4762b752c4e755e41fba3ffec9a1a8014fa859efca4655aaa313479752b1056"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0326.json",
+      "sha256": "7d04c91f518671dca043d31924c090992f1de0cec53bbc610bb85c39c1b62af7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0327.json",
+      "sha256": "fa3281da2daaccdd4e5a52e6ef45733bc77b1b720c97f68be66e7dc2017d8078"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0328.json",
+      "sha256": "7867aae5ca4e1d70d2c3fd8d51a98427cfbabd6f7990fa96070299240659fddd"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0329.json",
+      "sha256": "c82b4619582239af2ee7455e6d2f066257089dca655b5675da543a4c4001f126"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0330.json",
+      "sha256": "b56a1c6672b4d27e38e44ca994d80316b064a5241711d7c6096e604dd2149ee0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0331.json",
+      "sha256": "6a30c2dce33f252c367fff23a802574b9def2c8e525517c2d83c23925b7792ce"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0332.json",
+      "sha256": "b9d9a78ce62d9bfb0ec41986dd8aff3b10e5f82e0b47fc24a2f6aca7cb2b3eb0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0333.json",
+      "sha256": "907d9ccb64a730593fd6dbf121305506424c465e641011daf7ecda1ba2688bf4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0334.json",
+      "sha256": "050d80a851594efd3f613587383627029094a604dc58bce3025e21072abb84a3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0335.json",
+      "sha256": "4806a578ff7136be5033f1e3cab5920d0c91fb691de10e7b60d423118f3c4192"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0336.json",
+      "sha256": "2c7350962a4d38dfabd2c68595531374d6fb437a2ecc75eed897f4de3d95fe0a"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0337.json",
+      "sha256": "d78ba2f77ca236d494d1a18229730ccf80ebb8c30c16435b1a390eb59b8325cc"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0338.json",
+      "sha256": "fc61dca12e72b7c195e1dccd93ac9ae7aeaf17a71d37babb9d0796904994a520"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0339.json",
+      "sha256": "4a2990ace02f26b0f3427edb306b25054296a3313e63b0b79b913fdc977812f9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0340.json",
+      "sha256": "58846a5994a0fa32c95a0a879c23b82cc7feecd32bf281cfdcedc2b28659a4cd"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0341.json",
+      "sha256": "3fd69c5a0f3fb8244f137e37278e4e06dee441a825f9c35d88b850d3139b2750"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0342.json",
+      "sha256": "758dc5552d84750192aef850174a1ef13f2c39cf11a6b6ab0ea8bc5989dd50d0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0343.json",
+      "sha256": "7f3909026e9fec52cb4db46bfb2c070dcd0924fc8c6fc0c8de55e28c99e8a86e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0344.json",
+      "sha256": "5706053eac79ff2ab1a9454130426341e67439dd212af42ae04188d543dcb31e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0345.json",
+      "sha256": "2cbc59baac82a950f59c37a629de6964e453c5f023e28b049277554a7c813cee"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0346.json",
+      "sha256": "291100a44e8898ce72c96522e7644e87c881980abc1983be72a8e6c1fa4b20d9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0347.json",
+      "sha256": "af6cd9629726ad0c390edfa1fd51c513d472864bb91fef94b466e334535db5a9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0348.json",
+      "sha256": "9e804f9baddbaed942ee2368ad8070d81a846454bd04bed334beaa18f195d71b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0349.json",
+      "sha256": "8d81192fe13e52635734d9f4c70a388461900ece4e347f18c8f76abec256b6bc"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0350.json",
+      "sha256": "8fc5ab88027820e1b524b5955e570b731fa5da068547dfe4cda4969c886c8331"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0351.json",
+      "sha256": "9d211947a9a9085b85ebd889686aec999d40fa8c6b7bf3a70fb1c3c0644a179c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0352.json",
+      "sha256": "e358d4fee0f6afee993c476a0f1ad8a4262a22f1db9794bd6244843b0db7f3e3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0353.json",
+      "sha256": "1a64a323661789dd99ea30471ad8969297f2b144422659f48a3d85da36ba8f09"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0354.json",
+      "sha256": "75e8aa7e725e8770196810c751166f8c5d377011b2d7f810ccc9d5dd14a6084d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0355.json",
+      "sha256": "caabb971e5643bdf696d6d69e53d6de235e26d3efa672d1fe4a98ad8b57f83fa"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0356.json",
+      "sha256": "22dfe6049d255c92b0341831a5020537539c0ab35f540fbe32e0e39f365bf256"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0357.json",
+      "sha256": "867bfe2fa6a635cb46cf5b64744c9548b38e67e0c39d34f3e8edc9a36123eb27"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0358.json",
+      "sha256": "8544bcdcbdac49394131d4121c022408572b8b6e9995a32daf104d8a2adbd97f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0359.json",
+      "sha256": "38e2f65b84b271ccd43f254d956a270cb72094598fe3ad7558940a65d5e401e5"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0360.json",
+      "sha256": "9d8011c0deacc5ee38903f25be0e5ee4361960f872694405e781ff66dac5fcbb"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0361.json",
+      "sha256": "ca666fdefd4e5a59b919d832070e644ea605833fcea5580881b0a37b60999ee7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0362.json",
+      "sha256": "d632b0d3164bdaf17e77f3ae939637bdf0943d280ec55ea6613ed11a67f61f17"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0363.json",
+      "sha256": "4018b03789a7e3fa5634ebcd7759627524dc770e6c305750fff9e70305d9f612"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0364.json",
+      "sha256": "f67323b457a4256ce644e3123f10170ef6cb6861dbd04de60ef485cdef12216d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0365.json",
+      "sha256": "e416cde39d9283ba849dee0f32f8d79f6ea8a83fadcb5ee815fc0fc69bc0268e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0366.json",
+      "sha256": "2f0c4d8a54e41f42c7557e8c61922d48e9429f691f1b9bfa2b5b23e1636afcc2"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0367.json",
+      "sha256": "594467812501e816ce71c2bfb4fec0967ce75b62978f4f1285f8bacb85e5a155"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0368.json",
+      "sha256": "b54284b3bbb6b536d7499c75db8a00086416629968911caba0915a8ed40f2830"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0369.json",
+      "sha256": "af8ab06394462ceb29668eb6dea2c9cded9eefe35faaba4e01dc52e7a4084f2f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0370.json",
+      "sha256": "6c2726f8e2b7be29dd1d089e61717ef0697571d33bfadeb9d8482c0315e62766"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0371.json",
+      "sha256": "9602d8c3a095b938994cec322ae47f4542694fdf23bd33666b5f35593ce7029e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0372.json",
+      "sha256": "073c5f0fb31cdc0d9b39052a184b95972b8c139989c3af76624a7de50abc9004"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0373.json",
+      "sha256": "d458d02944801d37571e101a5bf1e611f2c132869e55b81203cc5dad94b21623"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0374.json",
+      "sha256": "8a19e43015ee5a7488218eb5733bff0c751f5e212eb055de24c2aa5a44448ad0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0375.json",
+      "sha256": "19aa61c393ed5790680cddd766b7e518d681342ae37a48bb56525e4147cdf56d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0376.json",
+      "sha256": "d15e5541245e92459fa2482f9dc447fa1fb30e26794851169c2f5d98e3d93fb0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0377.json",
+      "sha256": "fb89472601be2fcd8eb3674781faaafd088132dec027e829a0bb1b0ff90d4e02"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0378.json",
+      "sha256": "f0e1586858bd0b82fc775b6d973fd8b33c59d5226c94de0144ad1277678e437c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0379.json",
+      "sha256": "d400f4723044a8103b2cd22abbadf3eec5ff9349ad5c97ceb9d1ac87096a6292"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0380.json",
+      "sha256": "91b15e40b780011f337b30117e0c7760f6b8e5cea123b54ffdb32c6da48345bf"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0381.json",
+      "sha256": "5a1d82cda81de54716a81cfd09031c3ecbe53f9e168c2c2a9bbe5d4429a77be7"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0382.json",
+      "sha256": "d652edae0925161e16929dfc6f1ec9753f9df13e88e84a5b06977a19a65afad0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0383.json",
+      "sha256": "445989ea8119b2a99508de2ffe814979de985cb3d8ce7c83421ebcef9cc64ed6"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0384.json",
+      "sha256": "2db0b5ce3498e7025573d165febacdd043a96cb5e1942819bba6e4eef4ed709b"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0385.json",
+      "sha256": "cdf218c290e77be737b301468e078072326923a508e66bdf76ed8d553484c534"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0386.json",
+      "sha256": "e1813b869aa18eb0cd4e62260b8e79a9551477bac3a3faf318853335ad1a5804"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0387.json",
+      "sha256": "718a3acbfd4177cf979efe8d3b4b08c5e1d6131893526518685edc93e6d5756d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0388.json",
+      "sha256": "adbe1754643f6f1cc602818202dc523ef5fd627072760c22b0e4edf4e4ed3d52"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0389.json",
+      "sha256": "634cda9b7d7f2f7c530650f228c2c22e203b47d242bdb9a584f62e8abe943e13"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0390.json",
+      "sha256": "7e64bbc429556bfb98a4f86bc5cd1476af1c5e224c679b20d657f4015c0a621e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0391.json",
+      "sha256": "14f29fa08244ea285c88e0ec23fe297271530e742df3aa8349a197bdf7f6082e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0392.json",
+      "sha256": "e920172ba95063fff6a1b4662f19c6cd670dc035cc9bdad066876f8febc1bca4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0393.json",
+      "sha256": "4fa98730f872c73c871cc360dac28243fa3bbeac31aa17014daf695774f1b0cf"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0394.json",
+      "sha256": "fb9ec3aa87dc27f7ea2157cb1b6ad0d3d903c87707b4c0df5fb992d103d306d1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0395.json",
+      "sha256": "f786408dbf029ce2a9d9c8adc27f0b56d42fdedb235e010c4adfe9584bfbce88"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0396.json",
+      "sha256": "6cd57719d9f8ea4c5de4919bab812b14553206401605298e0b1f3cd4e2cf7f4e"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0397.json",
+      "sha256": "af4c3706c7a4bd508d4d12d9244c13516a9aaf372e0e25160954bc7b65a45676"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0398.json",
+      "sha256": "1e526e65af72bc806a907c30bae7df082fb41ed158e5d20fc7e8b543d3ffb4bf"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0399.json",
+      "sha256": "4fc1778a598abe8a33733a3782efab6ca737e1e9ee677c6fbc1ffd04efc4da28"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0400.json",
+      "sha256": "7b21b22e12855f907445a54eb0bb46afc2027b83842236e43114810b8b8abacf"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0401.json",
+      "sha256": "bfd5f4691e7d0f8ed9e7d76325ed18b1e3e374fd426ec001758e8cc0d149c312"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0402.json",
+      "sha256": "7d25934f811fb921a65f8a7cf9f5773a69756c5d78848650b9826ba14c0c75d1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0403.json",
+      "sha256": "29b88824fb29da1f5081d4950cffa5d0c6173c5916234d22b226ef7ece338986"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0404.json",
+      "sha256": "d91f022eed85695c33c4156e8c12fff1b2ad25a9a959bc3fbbb08ac2ff46d1f0"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0405.json",
+      "sha256": "45df2a92a28a8f1275b1d9642e5bedd316663d22c9cb61bfa539a215110e6819"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0406.json",
+      "sha256": "f8106cacf1a9e64ccee377e54d2d141ae3a84c4778585d8329ee474c2d014530"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0407.json",
+      "sha256": "5472ac3298908e42dc9462d07c3be478169d52469a31138f8ca0933ef5bc9482"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0408.json",
+      "sha256": "51dde1c7ed322d5d0a786bb6fb06fefc810f553fbac8c22f691245bf36b378b9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0409.json",
+      "sha256": "70b0834b16e693297ad5c2d1dfda1154f115315c7ada36a20f90a9c3f965eed4"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0410.json",
+      "sha256": "f407e64dbf964055ff22b8b557155cb34339a6e5ed734d69fa098b549c8a5a63"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0411.json",
+      "sha256": "825ba0d425d0dd728375f976f422b1eecb818188ba5f15ac613f3f15a77326e1"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0412.json",
+      "sha256": "a3c2c0cbcf08d478cc2ade33b696b47245965ac3592be1bdc1f7e8fbec024ab9"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0413.json",
+      "sha256": "827e7a8885953edcc391bb6f8fa6813600d67737f8bd340b6fd8d808db7c21a8"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0414.json",
+      "sha256": "9b11141ce7e326f5122c02985716b2c59f86a7349a78e9e3fbac6acdfe22246d"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0415.json",
+      "sha256": "a8a32c446a3f58d1ed4a59d4d0bb1ba459998202e09c4a96c27746ec6854f972"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0416.json",
+      "sha256": "effa91a3f3c9f2c24e67a23c41931f3a4b64e53ebd65211a47478d01d0913931"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0417.json",
+      "sha256": "84dcc66b7f229d9f0f7e3f5d97c87756c3252cf78b31b398c4e3d1cee920f87c"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0418.json",
+      "sha256": "c9cc6648fa2d8674a3ba2252e45359568d53848633cd0a26b3acde545ec388ae"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0419.json",
+      "sha256": "40642f672988bc17c5d37db42d3c3bf2e6a0ac69ed7ca77a99f2b5306290677f"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/nodes/br10-node-0420.json",
+      "sha256": "596691ce8452f97ac1522bab7b899975cb086622562e6f574b496ca1d7e76462"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/rollback/attempt-al-rollback.json",
+      "sha256": "d5c0a6ef6a03b480fd1bf2171db889d26d5c6efdee587f6f4ed475bd5a74d944"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/rollback/attempt-am-rollback.json",
+      "sha256": "c4e5427665264baf1430e4893eb1285b11b41aaf67ba2c6e42d9b66844ab5697"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/rollback/attempt-an-rollback.json",
+      "sha256": "e9d6d1ea8150f7a3bb92f9ca9d351dd5c337a31e0d85e63eada0f8e629da13e3"
+    },
+    {
+      "path": "docs/evidence/broad-rsi-ten-day-campaign-segment-02/rollback/attempt-ao-rollback.json",
+      "sha256": "c6c2ace4bc7012b2dfa830eb4074199689351d928bb55ffa146911645b866c00"
+    }
+  ]
+}

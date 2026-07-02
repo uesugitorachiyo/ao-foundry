@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.run-link-evidence.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "node_id": "br10-node-0244",
+  "segment": "02",
+  "phase": "command",
+  "safe_to_execute": true,
+  "status": "completed",
+  "previous_node": "br10-node-0243",
+  "next_node": "br10-node-0245",
+  "evidence": [
+    "mission-state update",
+    "public-safety check",
+    "rollback/readback check"
+  ],
+  "broad_RSI": "denied",
+  "denied_surfaces": [
+    "unrestricted self-modification",
+    "hidden instruction mutation",
+    "policy-changing autonomy",
+    "policy/auth/secret/provider/deploy/release/config/dependency expansion",
+    "release/deploy/publish/upload/tag/provider calls",
+    "credential use",
+    "direct main mutation",
+    "concurrent mutation"
+  ]
+}

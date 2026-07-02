@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "class": "public_safe_broad_RSI_governed_campaign_segment_02_evidence",
+  "prior_highest": "public_safe_broad_RSI_governed_campaign_first_segment_state_evidence",
+  "next_denied_class": "broad_RSI",
+  "nodes_completed": 240,
+  "total_completed_nodes": 420,
+  "total_campaign_nodes": 2800,
+  "attempts": [
+    "attempt-al",
+    "attempt-am",
+    "attempt-an",
+    "attempt-ao"
+  ],
+  "public_safe": true,
+  "broad_RSI": "denied"
+}
