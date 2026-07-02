@@ -1,0 +1,9 @@
+atlas import valid
+id=complex-refactor-workgraph-safe-node-foundry-import
+workgraph=complex-refactor-workgraph
+target_instance=ao-stack-shared-toolchain
+source_artifacts=2
+tasks=1
+schedules_work=false
+executes_work=false
+approves_work=false

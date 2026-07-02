@@ -1,0 +1,236 @@
+{
+  "schema_version": "ao.foundry.pulse-event.v0.1",
+  "pulse_id": "pulse-1f3752634ed9",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "goal_id": "ao-foundry-production-readiness",
+  "artifacts": [
+    {
+      "name": "production_readiness_audit",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/production-readiness-audit.json",
+      "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4",
+      "schema_version": "ao.foundry.production-readiness-audit.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "goal_readiness_audit",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/goal-readiness-audit.json",
+      "sha256": "97bf18a880b9d58fc9eeb66670fd316492da6cbcb7b1aeea1abe01a28dffe1c5",
+      "schema_version": "ao.foundry.goal-readiness-audit.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "forge_brief",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/forge-brief.json",
+      "sha256": "78614fd218bacf245ec0e7242437cf16779d24e7e5b11b91b3f57d8fc21309cb",
+      "schema_version": "ao.forge.factory-brief.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "forge_packet",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/forge-packet.json",
+      "sha256": "eab654abb47b0b54cbdc09d8cc6f7b6e06c344ff77d2686481e819bcc6711e28",
+      "schema_version": "ao.forge.factory-packet.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "policy_gate",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/policy-gate.json",
+      "sha256": "2bebea425ed662bb46c5c5af0254e880cd9f04ef63a4c6e000f4cedb53f4a882",
+      "schema_version": "ao.foundry.policy-gate-summary.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "forge_live_attempt",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/forge-live-attempt.json",
+      "sha256": "7d2eb9ff3f10c8098bf13150175623ba6c67eacde4cad32b5ed2af9393c259fb",
+      "schema_version": "ao.foundry.forge-live-attempt.v0.1",
+      "status": "blocked"
+    },
+    {
+      "name": "control_plane_readback",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/control-plane-readback.json",
+      "sha256": "21ffd37c8171f34916c6d781c8acc6b106c94ff08f06d94aa8bcc22815f16e07",
+      "schema_version": "ao.foundry.control-plane-readback.v0.1",
+      "status": "unavailable"
+    },
+    {
+      "name": "foundry_run",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/foundry-run.json",
+      "sha256": "23892318ab49448d17c782de08c87e9dc8cd4fdb473947049026cf69ece4ab71",
+      "schema_version": "ao.foundry.run.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "eval_result",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/eval-result.json",
+      "sha256": "cf3f99d1b1639ef2fd2ba24cb75481211c0c4b0ad8e81605be5fbd6e3f7f39ec",
+      "schema_version": "ao.foundry.eval-result.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "rsi_candidate",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/rsi-candidate.json",
+      "sha256": "660204c9640ffaeda5fefe78a631503484795604039d35445f896fdc49ded8a5",
+      "schema_version": "ao.foundry.rsi-candidate.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "rsi_improvement_gate",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/rsi-improvement-gate.json",
+      "sha256": "ad1b6eee66621bbb1a7314145f4e6f57a978cf77918e2f72ac91680dd6028cde",
+      "schema_version": "ao.foundry.rsi-improvement-gate.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "rsi_next_improvement_task",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/rsi-next-improvement-task.json",
+      "sha256": "5f6d2f4c579d800b9c48830aa86d79f774fc94f42a0f54d9b197ab7eea3f4547",
+      "schema_version": "ao.foundry.rsi-next-improvement-task.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "demo_status",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/demo-status.json",
+      "sha256": "4d85f744e47528527a539dd05d2548898c675c27ca202e3740929919037ae965",
+      "schema_version": "ao.foundry.demo-status.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "release_manifest",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/release-manifest.json",
+      "sha256": "c1325422ff393a5f736835fe5e5d6d6ccd2a03f5dab1d25f2b200faf94c18d20",
+      "schema_version": "ao.foundry.release-manifest.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "competitive_readiness_audit",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/competitive-readiness-audit.json",
+      "sha256": "b86611d6fea6ed099438185d5c49e52ac3e5883c97a4aaa0e725ce48a962c438",
+      "schema_version": "ao.foundry.competitive-readiness-audit.v0.1",
+      "status": "ready"
+    },
+    {
+      "name": "pulse_trace",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/pulse.trace.jsonl",
+      "sha256": "35800e0eaee7e7836633ba4e1d607a875a258b5232c85eb94b2b308a3e223677",
+      "schema_version": "ao.foundry.trace.v0.1",
+      "status": "passed"
+    },
+    {
+      "name": "trace_inspect",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/trace-inspect.json",
+      "sha256": "117ee069ecdbb2b3d700611ce94173c7ced67fd38a669748b7ff604774758706",
+      "schema_version": "ao.foundry.trace-inspect.v0.1",
+      "status": "ready"
+    }
+  ],
+  "checks": [
+    {
+      "name": "registry_valid",
+      "status": "pass",
+      "reason": "registry contract is valid"
+    },
+    {
+      "name": "task_valid",
+      "status": "pass",
+      "reason": "task contract is valid"
+    },
+    {
+      "name": "goal_valid",
+      "status": "pass",
+      "reason": "GoalRun contract is valid"
+    },
+    {
+      "name": "production_readiness_ready",
+      "status": "pass",
+      "reason": "production readiness is 100/100"
+    },
+    {
+      "name": "goal_readiness_ready",
+      "status": "pass",
+      "reason": "goal readiness is 100/100"
+    },
+    {
+      "name": "forge_brief",
+      "status": "pass",
+      "reason": "Forge brief emitted for delegated governed execution"
+    },
+    {
+      "name": "forge_packet_passed",
+      "status": "pass",
+      "reason": "Forge packet is available as delegated execution evidence"
+    },
+    {
+      "name": "policy_gate_ready",
+      "status": "pass",
+      "reason": "policy gate has no denying decisions"
+    },
+    {
+      "name": "forge_live_attempt",
+      "status": "pass",
+      "reason": "AO Forge live execution is not attempted by the local public pulse"
+    },
+    {
+      "name": "control_plane_readback",
+      "status": "pass",
+      "reason": "control-plane readback is unavailable in the local public pulse"
+    },
+    {
+      "name": "foundry_run_passed",
+      "status": "pass",
+      "reason": "Foundry run ingested AO Forge packet evidence"
+    },
+    {
+      "name": "eval_threshold",
+      "status": "pass",
+      "reason": "eval score meets threshold"
+    },
+    {
+      "name": "rsi_candidate",
+      "status": "pass",
+      "reason": "RSI candidate eval result was generated by the local pulse"
+    },
+    {
+      "name": "rsi_improvement_gate",
+      "status": "pass",
+      "reason": "RSI improvement gate meets threshold"
+    },
+    {
+      "name": "rsi_next_improvement_task",
+      "status": "pass",
+      "reason": "RSI next improvement task was derived from candidate and gate evidence"
+    },
+    {
+      "name": "demo_status",
+      "status": "pass",
+      "reason": "operator demo status is ready"
+    },
+    {
+      "name": "release_manifest",
+      "status": "pass",
+      "reason": "release dry-run manifest is ready"
+    },
+    {
+      "name": "competitive_readiness_ready",
+      "status": "pass",
+      "reason": "competitive readiness is 100/100"
+    },
+    {
+      "name": "trace_inspect",
+      "status": "pass",
+      "reason": "pulse trace has a terminal passed span"
+    }
+  ],
+  "freshness_summary": {
+    "schema_version": "ao.foundry.pulse-freshness-summary.v0.1",
+    "status": "ready",
+    "forge_live_packet": "not_provided",
+    "control_plane_readback": "not_provided",
+    "explanation": "no operator-provided production freshness evidence was bundled; local public pulse remains runnable without live credentials"
+  },
+  "next_action": "stop autonomous readiness loop; live execution requires operator intent"
+}

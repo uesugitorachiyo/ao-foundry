@@ -5187,7 +5187,7 @@ func TestPulseAtlasSchedulerInputSelectsOnlyAtlasNextReadyNode(t *testing.T) {
 		importSummary["rejects_unselected_ready_nodes"] != true {
 		t.Fatalf("scheduler must bind exactly one Atlas-selected node: %#v", importSummary)
 	}
-	for _, field := range []string{"schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
+	for _, field := range []string{"schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "uploads_artifacts", "opens_pr", "merges_pr"} {
 		if result[field] != false {
 			t.Fatalf("scheduler input must not grant side-effect authority, %s=%#v in %#v", field, result[field], result)
 		}

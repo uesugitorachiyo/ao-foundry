@@ -1,0 +1,19 @@
+{
+  "schema_version": "ao.foundry.rsi-next-improvement-task.v0.1",
+  "status": "ready",
+  "generated_by": "foundry pulse run",
+  "goal_id": "ao-foundry-production-readiness",
+  "recommended_task_id": "rsi-next-41fc29115db9",
+  "recommended_action": "Stop autonomous production-readiness advancement and wait for explicit operator-directed release or live-execution work.",
+  "improvement_rationale": "The local pulse produced an RSI candidate and a passing improvement gate, so the next bounded task can be retained as governed evidence before delegation.",
+  "candidate_evidence_path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/ready/pulse-run/rsi-candidate.json",
+  "gate_evidence_path": "docs/evidence/pulse/overnight-rehearsal-runner-local/complex-refactor/pulse-gate/ready/pulse-run/rsi-improvement-gate.json",
+  "required_improvement_percent": 5,
+  "actual_improvement_percent": 10,
+  "autonomous_claim": "derived_local_next_improvement",
+  "mutates_repositories": false,
+  "next_actions": [
+    "retain rsi_next_improvement_task with RSI candidate and gate evidence",
+    "delegate any repository-changing implementation through governed AO Forge execution"
+  ]
+}

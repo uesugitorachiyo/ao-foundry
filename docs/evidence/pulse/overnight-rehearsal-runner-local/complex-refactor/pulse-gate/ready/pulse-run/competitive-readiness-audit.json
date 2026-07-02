@@ -1,0 +1,835 @@
+{
+  "schema_version": "ao.foundry.competitive-readiness-audit.v0.1",
+  "status": "ready",
+  "score": 100,
+  "max_score": 100,
+  "categories": [
+    {
+      "id": "clean_clone_public_readiness",
+      "status": "ready",
+      "score": 15,
+      "max_score": 15,
+      "checks": [
+        {
+          "name": "clean_clone_commands_documented",
+          "status": "pass",
+          "reason": "docs/operations/CLEAN-CLONE-SMOKE.md exists"
+        },
+        {
+          "name": "clean_clone_registry_fixture",
+          "status": "pass",
+          "reason": "examples/registry/clean-clone.foundry-registry.json exists"
+        },
+        {
+          "name": "clean_clone_task_fixture",
+          "status": "pass",
+          "reason": "examples/tasks/clean-clone-smoke.foundry-task.json exists"
+        },
+        {
+          "name": "public_release_checklist_has_no_sibling_dependency",
+          "status": "pass",
+          "reason": "release checklist avoids sibling repositories"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "contract_depth",
+      "status": "ready",
+      "score": 15,
+      "max_score": 15,
+      "checks": [
+        {
+          "name": "contract_fixture_index",
+          "status": "pass",
+          "reason": "docs/contracts/CONTRACT-FIXTURES.md exists"
+        },
+        {
+          "name": "valid_fixture_foundry-ao2-loop-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-ao2-loop-decision-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-ao2-loop-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-ao2-loop-decision-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-active-stack-production-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-active-stack-production-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-active-stack-production-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-active-stack-production-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-active-stack-readiness-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-active-stack-readiness-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-active-stack-readiness-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-active-stack-readiness-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-atlas-readback-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-atlas-readback-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-atlas-readback-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-atlas-readback-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-atlas-status-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-atlas-status-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-atlas-status-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-approval-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-approval-decision-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-approval-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-approval-decision-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-approval-request-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-approval-request-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-approval-request-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-approval-request-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-approved-live-docs-dry-run-chain-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-approved-live-docs-dry-run-chain-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-approved-live-docs-dry-run-chain-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-approved-live-docs-dry-run-chain-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-capability-matrix-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-capability-matrix-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-capability-matrix-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-capability-matrix-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-competitive-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-competitive-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-competitive-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-competitive-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-control-plane-readback-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-control-plane-readback-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-control-plane-readback-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-control-plane-readback-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-eval-result-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-eval-result-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-eval-result-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-eval-result-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-eval-scorecard-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-eval-scorecard-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-eval-scorecard-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-eval-scorecard-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-forge-live-attempt-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-forge-live-attempt-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-forge-live-attempt-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-forge-live-attempt-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-first-live-docs-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-first-live-docs-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-first-live-docs-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-first-live-docs-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-goal-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-goal-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-goal-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-goal-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-goal-run-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-goal-run-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-goal-run-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-goal-run-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-governed-live-mutation-dry-run-chain-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-governed-live-mutation-dry-run-chain-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-governed-live-mutation-dry-run-chain-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-governed-live-mutation-dry-run-chain-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-docs-approval-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-docs-approval-gate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-docs-approval-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-docs-approval-gate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-docs-pr-rehearsal-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-docs-pr-rehearsal-gate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-docs-pr-rehearsal-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-docs-pr-rehearsal-gate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-docs-rollback-execution-rehearsal-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-docs-rollback-execution-rehearsal-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-docs-worktree-prepare-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-docs-worktree-prepare-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-docs-worktree-prepare-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-docs-worktree-prepare-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-mutation-approval-request-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-mutation-approval-request-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-mutation-approval-request-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-mutation-approval-request-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-mutation-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-mutation-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-mutation-readiness-rollup-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-mutation-readiness-rollup-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-loop-event-log-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-loop-event-log-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-loop-event-log-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-loop-event-log-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-loop-lease-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-loop-lease-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-loop-lease-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-loop-lease-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-live-mutation-rollback-rehearsal-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-live-mutation-rollback-rehearsal-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-live-mutation-rollback-rehearsal-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-live-mutation-rollback-rehearsal-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-mutation-class-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-mutation-class-gate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-mutation-class-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-mutation-class-gate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-production-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-production-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-production-readiness-audit-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-production-readiness-audit-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-event-loop-policy-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-event-loop-policy-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-event-loop-policy-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-event-loop-policy-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-intake-preflight-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-intake-preflight-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-intake-preflight-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-intake-preflight-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-overnight-start-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-overnight-start-gate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-overnight-start-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-overnight-start-gate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-pr-lifecycle-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-pr-lifecycle-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-pr-lifecycle-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-pr-lifecycle-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-runner-start-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-runner-start-decision-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-runner-start-decision-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-runner-start-decision-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-pulse-event-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-pulse-event-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-pulse-event-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-pulse-event-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-registry-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-registry-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-registry-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-registry-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-release-candidate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-release-candidate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-release-candidate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-release-candidate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-release-manifest-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-release-manifest-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-release-manifest-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-release-manifest-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-release-promotion-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-release-promotion-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-release-promotion-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-release-promotion-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-repo-health-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-repo-health-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-repo-health-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-repo-health-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-rsi-candidate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-rsi-candidate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-rsi-candidate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-rsi-candidate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-rsi-control-surface-packet-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-rsi-control-surface-packet-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-rsi-control-surface-packet-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-rsi-control-surface-packet-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-rsi-improvement-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-rsi-improvement-gate-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-rsi-improvement-gate-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-rsi-improvement-gate-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-rsi-next-improvement-task-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-rsi-next-improvement-task-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-rsi-next-improvement-task-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-rsi-next-improvement-task-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-run-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-run-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-run-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-run-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-signed-smoke-ingest-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-signed-smoke-ingest-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-signed-smoke-ingest-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-signed-smoke-ingest-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-signed-smoke-preflight-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-signed-smoke-preflight-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-signed-smoke-preflight-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-signed-smoke-preflight-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-signed-smoke-result-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-signed-smoke-result-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-signed-smoke-result-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-signed-smoke-result-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-signed-smoke-summary-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-signed-smoke-summary-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-signed-smoke-summary-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-task-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-task-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-task-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-task-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-trace-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-trace-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-trace-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-trace-v0.1.json exists"
+        },
+        {
+          "name": "valid_fixture_foundry-worktree-isolation-proof-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/valid/foundry-worktree-isolation-proof-v0.1.json exists"
+        },
+        {
+          "name": "invalid_fixture_foundry-worktree-isolation-proof-v0.1",
+          "status": "pass",
+          "reason": "examples/contract-fixtures/invalid/foundry-worktree-isolation-proof-v0.1.json exists"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "real_delegated_forge_loop",
+      "status": "ready",
+      "score": 15,
+      "max_score": 15,
+      "checks": [
+        {
+          "name": "forge_brief_fixture",
+          "status": "pass",
+          "reason": "examples/briefs/ao-foundry-bootstrap.forge-brief.json exists"
+        },
+        {
+          "name": "forge_packet_fixture",
+          "status": "pass",
+          "reason": "examples/packets/ao-foundry-bootstrap.factory-packet.json exists"
+        },
+        {
+          "name": "foundry_run_record",
+          "status": "pass",
+          "reason": "examples/runs/ao-foundry-bootstrap.foundry-run.json exists"
+        },
+        {
+          "name": "bootstrap_eval_result",
+          "status": "pass",
+          "reason": "examples/evals/bootstrap.eval-result.json exists"
+        },
+        {
+          "name": "demo_status_fixture",
+          "status": "pass",
+          "reason": "examples/demo/ao-foundry-demo-status.json exists"
+        },
+        {
+          "name": "pulse_golden_loop_sdd",
+          "status": "pass",
+          "reason": "docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md exists"
+        },
+        {
+          "name": "pulse_production_adapters_sdd",
+          "status": "pass",
+          "reason": "docs/sdd/AO-FOUNDRY-PULSE-PRODUCTION-ADAPTERS-SDD.md exists"
+        },
+        {
+          "name": "pulse_golden_loop_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "pulse_blocked_event_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "forge_live_adapter_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "control_plane_readback_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "ao_surface_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "scheduler_safety",
+      "status": "ready",
+      "score": 10,
+      "max_score": 10,
+      "checks": [
+        {
+          "name": "lease_overlap_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "stale_lease_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "terminal_goal_blocks_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "budget_blocks_test",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "loop_emits_forge_brief",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "hitl_and_policy_safety",
+      "status": "ready",
+      "score": 10,
+      "max_score": 10,
+      "checks": [
+        {
+          "name": "approval_required_for_network",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "expired_approval_fails",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "digest_mismatch_approval_fails",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "broadened_approval_fails",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "approval_evidence_in_brief",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "observability_and_eval_coverage",
+      "status": "ready",
+      "score": 10,
+      "max_score": 10,
+      "checks": [
+        {
+          "name": "trace_next",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "trace_run_ingest",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "trace_loop",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "trace_approval",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "trace_eval",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        },
+        {
+          "name": "eval_threshold_failure",
+          "status": "pass",
+          "reason": "internal/cli/cli_test.go contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "release_hardening",
+      "status": "ready",
+      "score": 10,
+      "max_score": 10,
+      "checks": [
+        {
+          "name": "license",
+          "status": "pass",
+          "reason": "LICENSE exists"
+        },
+        {
+          "name": "notice",
+          "status": "pass",
+          "reason": "NOTICE exists"
+        },
+        {
+          "name": "security_policy",
+          "status": "pass",
+          "reason": "SECURITY.md exists"
+        },
+        {
+          "name": "contributing",
+          "status": "pass",
+          "reason": "CONTRIBUTING.md exists"
+        },
+        {
+          "name": "release_manifest_schema",
+          "status": "pass",
+          "reason": "docs/contracts/foundry-release-manifest-v0.1.schema.json exists"
+        },
+        {
+          "name": "ci_validates_release_manifest",
+          "status": "pass",
+          "reason": ".github/workflows/ci.yml contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "competitive_public_demo",
+      "status": "ready",
+      "score": 10,
+      "max_score": 10,
+      "checks": [
+        {
+          "name": "five_minute_demo",
+          "status": "pass",
+          "reason": "docs/operations/FIVE-MINUTE-DEMO.md exists"
+        },
+        {
+          "name": "demo_status_fixture",
+          "status": "pass",
+          "reason": "examples/demo/ao-foundry-demo-status.json exists"
+        },
+        {
+          "name": "capability_matrix",
+          "status": "pass",
+          "reason": "examples/capabilities/foundry-capability-matrix.json exists"
+        },
+        {
+          "name": "demo_no_unsupported_claims",
+          "status": "pass",
+          "reason": "examples/capabilities/foundry-capability-matrix.json contains required evidence"
+        }
+      ],
+      "next_actions": []
+    },
+    {
+      "id": "public_safety",
+      "status": "ready",
+      "score": 5,
+      "max_score": 5,
+      "checks": [
+        {
+          "name": "public_files_scan_clean",
+          "status": "pass",
+          "reason": "public safety scan has no matches"
+        },
+        {
+          "name": "security_contact_finalized",
+          "status": "pass",
+          "reason": "SECURITY.md contains required evidence"
+        }
+      ],
+      "next_actions": []
+    }
+  ],
+  "next_actions": []
+}

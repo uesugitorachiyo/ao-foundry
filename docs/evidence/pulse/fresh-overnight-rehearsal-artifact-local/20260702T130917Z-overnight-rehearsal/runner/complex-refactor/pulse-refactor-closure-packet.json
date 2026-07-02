@@ -1,0 +1,80 @@
+{
+  "schema_version": "ao.foundry.pulse-refactor-closure-packet.v0.1",
+  "status": "ready",
+  "allowed_next_action": "continue_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "blueprint_authorization_status": "ready",
+  "atlas_scheduler_input_status": "ready",
+  "atlas_scheduler_status": "ready",
+  "intake_preflight_status": "ready",
+  "start_gate_status": "ready",
+  "runner_decision_status": "ready",
+  "event_loop_policy_status": "ready",
+  "command_readback_status": "ready",
+  "selected_node_id": "pulse-runner-module-split",
+  "selected_task_id": "complex-refactor-pulse-runner-split-task",
+  "closes_refactor_slices": [
+    "D",
+    "E"
+  ],
+  "source_digests": [
+    {
+      "name": "blueprint_authorization",
+      "path": "examples/pulse-intake/blueprint-authorization.ready.json",
+      "schema_version": "ao.blueprint.build-authorization.v0.1",
+      "status": "ready",
+      "sha256": "1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+    },
+    {
+      "name": "atlas_scheduler_input",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-atlas-scheduler-input.json",
+      "schema_version": "ao.foundry.pulse-atlas-scheduler-input.v0.1",
+      "status": "ready",
+      "sha256": "61e3371b7d2f19ed2de219b0dd60135e77e9e12ce6503782ad97e2647857e00a"
+    },
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "status": "ready",
+      "sha256": "b27b61430fe16307790bc37edfd4b3d0210344fd17e76948393df0147776c966"
+    },
+    {
+      "name": "start_gate",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-overnight-start-gate.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "status": "ready",
+      "sha256": "4c4b732fb6ea6b7b237218a3237cca84a27e0315d8052c452dfbdef6c670b11e"
+    },
+    {
+      "name": "runner_decision",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json",
+      "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+      "status": "ready",
+      "sha256": "3310e865187212d2c99892adfb5c4c16cf4abe1cff72b19c27bd5bb58f6770bc"
+    },
+    {
+      "name": "event_loop_policy",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/pulse-event-loop-policy.json",
+      "schema_version": "ao.foundry.pulse-event-loop-policy.v0.1",
+      "status": "ready",
+      "sha256": "2aed609a67f75982561946aecc4d381489dfc1796926440c810cb28e460f650d"
+    },
+    {
+      "name": "command_readback",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsal-artifact-local/20260702T130917Z-overnight-rehearsal/runner/complex-refactor/ao-command-complex-refactor-status.json",
+      "schema_version": "ao.command.complex-refactor-status.v0.1",
+      "status": "ready",
+      "sha256": "d18f29e66e678f0e211f6a356ae62a2fc31835aad7b2602915fde4172d45c686"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "uploads_artifacts": false,
+  "opens_pr": false,
+  "merges_pr": false
+}
