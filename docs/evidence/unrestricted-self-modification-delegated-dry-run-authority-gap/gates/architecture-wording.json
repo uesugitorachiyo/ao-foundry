@@ -1,0 +1,6 @@
+{
+  "schema": "ao.architecture.wording.v0.1",
+  "result": "approve_delegated_dry_run_authority_gap_wording_deny_unrestricted_self_modification_claim",
+  "approved_public_wording": "AO has public-safe bounded sandboxed self-change delegated dry-run authority-gap evidence across four exact-scope reversible attempts under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, and sandbox containment bypass remain denied.",
+  "denied_class": "unrestricted_self_modification"
+}

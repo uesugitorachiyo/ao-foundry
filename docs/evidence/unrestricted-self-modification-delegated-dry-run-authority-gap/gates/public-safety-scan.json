@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.public-safety-scan.v0.1",
+  "result": "passed",
+  "local_paths": 0,
+  "secrets": 0,
+  "credentials": 0,
+  "provider_payloads": 0,
+  "forbidden_claims": 0
+}

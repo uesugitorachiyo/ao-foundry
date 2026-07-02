@@ -1,0 +1,14 @@
+{
+  "schema": "ao.forge-ao2.bounded-packet.v0.1",
+  "mission": "unrestricted-self-modification-delegated-dry-run-authority-gap",
+  "attempt_id": "attempt-c-foundry-atlas-no-authority-broadening",
+  "packet_scope": "exact_scope_reversible_public_safe_delegated_dry_run_evidence",
+  "sandbox_containment": "required",
+  "provider_calls": "disabled",
+  "credentials": "disabled",
+  "release_deploy_publish_upload_tag": "disabled",
+  "dependency_updates": "disabled",
+  "direct_main_mutation": "disabled",
+  "concurrent_mutation": "disabled",
+  "result": "passed"
+}
