@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.threshold-calibration-measurement.v0.1",
+  "attempt_id": "attempt-af",
+  "task_type": "Covenant/Sentinel threshold reproducibility",
+  "description": "reproduces policy publication and public-risk threshold decisions",
+  "baseline": 0.66,
+  "post_change": 0.92,
+  "improvement": 0.26,
+  "eval_regression": "passed",
+  "rollback_retraction": "passed",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

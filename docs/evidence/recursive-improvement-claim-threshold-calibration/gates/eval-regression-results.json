@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.threshold-calibration-gate.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "result": "passed",
+  "attempts": [
+    "attempt-ac",
+    "attempt-ad",
+    "attempt-ae",
+    "attempt-af"
+  ]
+}

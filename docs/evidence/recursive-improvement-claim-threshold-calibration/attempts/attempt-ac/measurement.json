@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.threshold-calibration-measurement.v0.1",
+  "attempt_id": "attempt-ac",
+  "task_type": "threshold rubric specificity",
+  "description": "calibrates exact threshold definitions for stronger bounded claim review",
+  "baseline": 0.7,
+  "post_change": 0.96,
+  "improvement": 0.26,
+  "eval_regression": "passed",
+  "rollback_retraction": "passed",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.threshold-calibration-rollback.v0.1",
+  "attempt_id": "attempt-ac",
+  "rollback": "revert tracked evidence artifacts for this attempt",
+  "retraction": "remove any threshold-calibration wording if a final gate fails",
+  "status": "passed",
+  "broad_RSI": "denied"
+}

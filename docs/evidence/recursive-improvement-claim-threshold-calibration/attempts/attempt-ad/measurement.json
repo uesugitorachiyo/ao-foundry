@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.threshold-calibration-measurement.v0.1",
+  "attempt_id": "attempt-ad",
+  "task_type": "public-reader threshold reproducibility",
+  "description": "reproduces reader approval/denial thresholds across public-safe evidence summaries",
+  "baseline": 0.68,
+  "post_change": 0.94,
+  "improvement": 0.26,
+  "eval_regression": "passed",
+  "rollback_retraction": "passed",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

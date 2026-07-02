@@ -1,0 +1,61 @@
+{
+  "schema": "ao.foundry.claim-threshold-calibration-final-rollup.v0.1",
+  "mission": "recursive-improvement-claim-threshold-calibration",
+  "prior_highest_proven_live_class": "public_safe_bounded_recursive_improvement_review_durability_evidence",
+  "new_narrow_class": "public_safe_recursive_improvement_claim_threshold_calibration_evidence",
+  "highest_proven_live_class": "public_safe_recursive_improvement_claim_threshold_calibration_evidence",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 1200,
+  "total_nodes": 1200,
+  "new_attempts_completed": 4,
+  "task_types_covered": [
+    "threshold rubric specificity",
+    "public-reader threshold reproducibility",
+    "adversarial threshold reproducibility",
+    "Covenant/Sentinel threshold reproducibility"
+  ],
+  "measurements": [
+    {
+      "attempt_id": "attempt-ac",
+      "baseline": 0.7,
+      "post_change": 0.96,
+      "improvement": 0.26
+    },
+    {
+      "attempt_id": "attempt-ad",
+      "baseline": 0.68,
+      "post_change": 0.94,
+      "improvement": 0.26
+    },
+    {
+      "attempt_id": "attempt-ae",
+      "baseline": 0.67,
+      "post_change": 0.93,
+      "improvement": 0.26
+    },
+    {
+      "attempt_id": "attempt-af",
+      "baseline": 0.66,
+      "post_change": 0.92,
+      "improvement": 0.26
+    }
+  ],
+  "strongest_approved_wording": "AO has public-safe recursive-improvement claim threshold calibration evidence showing stronger bounded recursive-improvement claims can be evaluated against reproducible threshold, public-reader, adversarial wording, Covenant, Sentinel, rollback, and retraction gates; broad_RSI remains denied.",
+  "public_reader_result": "approved_exact_threshold_calibration_wording_only",
+  "adversarial_wording_result": "pass_for_threshold_calibration_hold_for_broad_RSI",
+  "covenant_result": "approved_threshold_calibration_broad_RSI_denied",
+  "architecture_result": "approved_threshold_calibration_wording_broad_RSI_denied",
+  "sentinel_result": "clear_for_threshold_calibration_hold_for_broad_RSI",
+  "promoter_verdict": "promote_public_safe_recursive_improvement_claim_threshold_calibration_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_recursive_improvement_claim_threshold_calibration_evidence_proven_broad_RSI_denied",
+  "eval_regression_result": "passed",
+  "rollback_retraction_result": "passed",
+  "stale_language_sweep": "passed",
+  "final_decision": "public_safe_recursive_improvement_claim_threshold_calibration_evidence_proven_broad_RSI_denied",
+  "broad_RSI": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "policy_auth_secret_provider_deploy_release_config_dependency_expansion": "denied",
+  "docs_alignment_recommended": true
+}
