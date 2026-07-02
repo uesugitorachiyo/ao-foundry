@@ -1,0 +1,32 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-adversarial-negative-controls",
+  "highest_prior": "public_safe_unrestricted_self_modification_sandbox_containment_rehearsal",
+  "new_proven_class": "public_safe_unrestricted_self_modification_adversarial_negative_controls",
+  "highest_proven_live_class": "public_safe_unrestricted_self_modification_adversarial_negative_controls",
+  "next_denied_class": "unrestricted_self_modification",
+  "node_count": 560,
+  "completed_nodes": 560,
+  "scenario_count": 12,
+  "approved_public_wording": "AO has public-safe adversarial negative-control evidence that unsafe dry-run self-change proposals are rejected under sandbox containment gates; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied.",
+  "evidence_paths": [
+    "nodes/",
+    "run-links/",
+    "scenarios/",
+    "gates/"
+  ],
+  "denied_boundaries": [
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "secret_env_exposure"
+  ]
+}
