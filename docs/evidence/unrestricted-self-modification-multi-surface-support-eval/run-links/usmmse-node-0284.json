@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-multi-surface-support-eval",
+  "node_id": "usmmse-node-0284",
+  "status": "completed",
+  "serialized_after": "usmmse-node-0283",
+  "no_concurrent_execution": true,
+  "public_safe": true
+}
