@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-05",
+  "attempt": "attempt-ay",
+  "task_type": "public reproducibility rerun evidence",
+  "baseline": 0.7,
+  "post_change": 0.95,
+  "improvement": 0.25,
+  "result": "improved",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}

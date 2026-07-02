@@ -1,0 +1,72 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-05",
+  "new_narrow_class": "public_safe_broad_RSI_governed_campaign_segment_05_evidence",
+  "highest_proven_live_class": "public_safe_broad_RSI_governed_campaign_segment_05_evidence",
+  "prior_highest_proven_live_class": "public_safe_broad_RSI_governed_campaign_segment_04_evidence",
+  "next_denied_class": "broad_RSI",
+  "completed_nodes": 420,
+  "total_completed_nodes": 1500,
+  "total_campaign_nodes": 2800,
+  "attempts_completed": 4,
+  "measurements": [
+    {
+      "attempt": "attempt-ax",
+      "task_type": "multi-repo evidence linkage stress",
+      "baseline": 0.72,
+      "post_change": 0.96,
+      "improvement": 0.24
+    },
+    {
+      "attempt": "attempt-ay",
+      "task_type": "public reproducibility rerun evidence",
+      "baseline": 0.7,
+      "post_change": 0.95,
+      "improvement": 0.25
+    },
+    {
+      "attempt": "attempt-az",
+      "task_type": "long-horizon drift and stale-language evidence",
+      "baseline": 0.69,
+      "post_change": 0.94,
+      "improvement": 0.25
+    },
+    {
+      "attempt": "attempt-ba",
+      "task_type": "refactoring pulse support-debt containment evidence",
+      "baseline": 0.68,
+      "post_change": 0.93,
+      "improvement": 0.25
+    }
+  ],
+  "approved_public_wording": "AO has public-safe broad_RSI governed campaign segment-05 evidence extending the 10-day campaign through multi-repo evidence linkage stress, reproducibility reruns, long-horizon drift checks, refactoring pulse support-debt containment, context-repack, rollback, and claim-gate readbacks while broad_RSI remains denied.",
+  "public_reader_result": "approved_segment_05_wording_only_broad_RSI_denied",
+  "adversarial_wording_result": "pass_for_segment_05_wording_hold_for_broad_RSI",
+  "covenant_result": "approved_segment_05_wording_broad_RSI_denied",
+  "architecture_result": "approved_segment_05_wording_broad_RSI_denied",
+  "sentinel_result": "clear_for_segment_05_hold_for_broad_RSI",
+  "promoter_verdict": "promote_public_safe_broad_RSI_governed_campaign_segment_05_evidence_broad_RSI_denied",
+  "command_readback": "public_safe_broad_RSI_governed_campaign_segment_05_evidence_proven_broad_RSI_denied",
+  "pulse_reliability": "segment_05_passed",
+  "refactoring_pulse": "passed_without_scope_expansion",
+  "context_repack_continuity": "passed",
+  "multi_repo_linkage_stress": "passed",
+  "reproducibility_rerun": "passed",
+  "long_horizon_drift": "passed",
+  "no_repeat_gate": "passed",
+  "no_abandonment_gate": "passed",
+  "eval_regression_result": "passed",
+  "rollback_retraction_result": "passed",
+  "stale_language_sweep": "passed",
+  "final_decision": "public_safe_broad_RSI_governed_campaign_segment_05_evidence_proven_broad_RSI_denied",
+  "broad_RSI": "denied",
+  "remaining_broad_RSI_blockers": [
+    "full 10-day campaign not complete",
+    "missing final repeated independent broad evidence",
+    "missing final cross-repo generality proof for broad_RSI",
+    "missing exact broad_RSI public-reader approval",
+    "missing exact broad_RSI Covenant and Architecture approval",
+    "Sentinel holds exact broad_RSI public-risk wording"
+  ],
+  "docs_alignment_recommended": true
+}
