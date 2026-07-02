@@ -1,0 +1,63 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-multi-surface-support-eval",
+  "target_class": "public_safe_bounded_sandboxed_self_change_multi_surface_support_eval_negative_controls_four_attempts",
+  "prior_highest": "public_safe_bounded_sandboxed_self_change_support_code_eval_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "public_safe": true,
+  "completed_nodes": 300,
+  "total_nodes": 300,
+  "attempts": [
+    {
+      "id": "attempt-a-cross-repo-support-fixture-consistency",
+      "label": "Attempt A",
+      "task_type": "cross-repo support fixture consistency",
+      "measurement": "attempts/attempt-a-cross-repo-support-fixture-consistency/measurement.json",
+      "runbook": "attempts/attempt-a-cross-repo-support-fixture-consistency/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-a-cross-repo-support-fixture-consistency.json",
+      "negative_control": "negative-controls/attempt-a-cross-repo-support-fixture-consistency.json"
+    },
+    {
+      "id": "attempt-b-eval-negative-control-coverage",
+      "label": "Attempt B",
+      "task_type": "evaluation harness negative-control coverage",
+      "measurement": "attempts/attempt-b-eval-negative-control-coverage/measurement.json",
+      "runbook": "attempts/attempt-b-eval-negative-control-coverage/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-b-eval-negative-control-coverage.json",
+      "negative_control": "negative-controls/attempt-b-eval-negative-control-coverage.json"
+    },
+    {
+      "id": "attempt-c-sandbox-bypass-rejection-evidence",
+      "label": "Attempt C",
+      "task_type": "sandbox containment bypass rejection evidence",
+      "measurement": "attempts/attempt-c-sandbox-bypass-rejection-evidence/measurement.json",
+      "runbook": "attempts/attempt-c-sandbox-bypass-rejection-evidence/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-c-sandbox-bypass-rejection-evidence.json",
+      "negative_control": "negative-controls/attempt-c-sandbox-bypass-rejection-evidence.json"
+    },
+    {
+      "id": "attempt-d-cross-surface-rollback-traceability",
+      "label": "Attempt D",
+      "task_type": "cross-surface rollback/readiness traceability",
+      "measurement": "attempts/attempt-d-cross-surface-rollback-traceability/measurement.json",
+      "runbook": "attempts/attempt-d-cross-surface-rollback-traceability/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-d-cross-surface-rollback-traceability.json",
+      "negative_control": "negative-controls/attempt-d-cross-surface-rollback-traceability.json"
+    }
+  ],
+  "gates": {
+    "architecture-wording.json": "gates/architecture-wording.json",
+    "command-readback.json": "gates/command-readback.json",
+    "covenant-authority-gate.json": "gates/covenant-authority-gate.json",
+    "cross-attempt-reproducibility.json": "gates/cross-attempt-reproducibility.json",
+    "eval-regression-results.json": "gates/eval-regression-results.json",
+    "forge-ao2-bounded-packet.json": "gates/forge-ao2-bounded-packet.json",
+    "kill-switch-results.json": "gates/kill-switch-results.json",
+    "promoter-verdict.json": "gates/promoter-verdict.json",
+    "public-safety-scan.json": "gates/public-safety-scan.json",
+    "rollback-retraction-results.json": "gates/rollback-retraction-results.json",
+    "sentinel-public-risk.json": "gates/sentinel-public-risk.json",
+    "stale-language-sweep.json": "gates/stale-language-sweep.json"
+  },
+  "digest_manifest": "digest-manifest.json"
+}
