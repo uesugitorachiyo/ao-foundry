@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.usm-boundary.gate.v0.1",
+  "mission": "unrestricted-self-modification-readiness-boundary",
+  "result": "approve_readiness_boundary_wording_deny_unrestricted_self_modification_claim",
+  "approved_wording": "AO has public-safe readiness-boundary evidence for evaluating unrestricted self-modification; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied."
+}

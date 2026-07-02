@@ -1,0 +1,10 @@
+{
+  "attempt": "USM-C",
+  "task_type": "kill-switch and rollback readiness mapping",
+  "baseline": 0.63,
+  "post_change": 0.92,
+  "improvement": 0.29,
+  "schema": "ao.foundry.usm-boundary.measurement.v0.1",
+  "public_safe": true,
+  "denied_class": "unrestricted_self_modification"
+}

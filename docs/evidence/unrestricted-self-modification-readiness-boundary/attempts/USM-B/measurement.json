@@ -1,0 +1,10 @@
+{
+  "attempt": "USM-B",
+  "task_type": "forbidden surface taxonomy completeness",
+  "baseline": 0.66,
+  "post_change": 0.94,
+  "improvement": 0.28,
+  "schema": "ao.foundry.usm-boundary.measurement.v0.1",
+  "public_safe": true,
+  "denied_class": "unrestricted_self_modification"
+}

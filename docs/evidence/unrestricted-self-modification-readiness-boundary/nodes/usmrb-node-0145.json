@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.node-run.v0.1",
+  "mission": "unrestricted-self-modification-readiness-boundary",
+  "node_id": "usmrb-node-0145",
+  "index": 145,
+  "phase": "Promoter verdict",
+  "status": "completed",
+  "safe_to_execute": true,
+  "executed_scope": "readiness_evidence_or_readback_only",
+  "highest_prior": "broad_RSI",
+  "resulting_candidate_class": "public_safe_unrestricted_self_modification_readiness_boundary_map",
+  "next_denied_class": "unrestricted_self_modification",
+  "denied_surfaces": [
+    "unrestricted_self_modification_execution",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "credential_use",
+    "provider_calls",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ],
+  "rollback": "remove this node evidence or revert docs PR",
+  "public_safe": true
+}

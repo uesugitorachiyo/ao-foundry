@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-readiness-boundary",
+  "node_id": "usmrb-node-0308",
+  "node_path": "nodes/usmrb-node-0308.json",
+  "status": "completed",
+  "digest": "ee3babb7d9a07497ccacb9a9c74c6fe215d7246020a3b87f6a7c988bdb6ed418"
+}

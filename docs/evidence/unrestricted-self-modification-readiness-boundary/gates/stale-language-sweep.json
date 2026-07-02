@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.usm-boundary.gate.v0.1",
+  "mission": "unrestricted-self-modification-readiness-boundary",
+  "result": "passed_with_historical_context_findings",
+  "current_authority_statement": "broad_RSI proven; unrestricted_self_modification denied"
+}

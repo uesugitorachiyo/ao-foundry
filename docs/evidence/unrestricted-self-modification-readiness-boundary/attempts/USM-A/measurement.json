@@ -1,0 +1,10 @@
+{
+  "attempt": "USM-A",
+  "task_type": "stale current-state readback classification",
+  "baseline": 0.7,
+  "post_change": 0.96,
+  "improvement": 0.26,
+  "schema": "ao.foundry.usm-boundary.measurement.v0.1",
+  "public_safe": true,
+  "denied_class": "unrestricted_self_modification"
+}
