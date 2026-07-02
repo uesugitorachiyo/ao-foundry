@@ -1,0 +1,25 @@
+{
+  "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+  "status": "ready",
+  "allowed_next_action": "start_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "run this gate before autonomous overnight/event-loop advancement",
+    "the gate only decides readiness; it must not schedule, execute, approve, upload, publish, or mutate repositories"
+  ],
+  "source_hashes": [
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "639e4fc3d3b3e24ed3e80623c96eb84be447c1236ac23317a287da0e756720fb"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}

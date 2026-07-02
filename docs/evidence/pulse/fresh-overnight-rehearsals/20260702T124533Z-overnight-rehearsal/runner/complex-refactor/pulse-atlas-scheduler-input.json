@@ -1,0 +1,47 @@
+{
+  "allowed_next_action": "start_next_slice",
+  "approves_work": false,
+  "atlas_compile_only": true,
+  "blocking_next_actions": [],
+  "calls_providers": false,
+  "executes_work": false,
+  "first_failing_check": "",
+  "merges_pr": false,
+  "mutates_repositories": false,
+  "opens_pr": false,
+  "safe_node_foundry_import": {
+    "imported_task_count": 1,
+    "rejects_unselected_ready_nodes": true,
+    "selected_node_id": "pulse-runner-module-split",
+    "selected_task_id": "complex-refactor-pulse-runner-split-task",
+    "status": "ready"
+  },
+  "schedules_work": false,
+  "schema_version": "ao.foundry.pulse-atlas-scheduler-input.v0.1",
+  "selected_node_id": "pulse-runner-module-split",
+  "selected_task_id": "complex-refactor-pulse-runner-split-task",
+  "source_digests": [
+    {
+      "name": "atlas_workgraph",
+      "path": "examples/complex-refactor-workgraph/workgraph.json",
+      "schema_version": "ao.atlas.workgraph.v0.1",
+      "sha256": "5477929f0020224686bab155e8581c65d57ccc3c23ba0e7ca9ddc589aaded18e",
+      "status": ""
+    },
+    {
+      "name": "foundry_import",
+      "path": "examples/complex-refactor-workgraph/foundry-import.json",
+      "schema_version": "ao.atlas.foundry-import.v0.1",
+      "sha256": "165d275283d999e98164acdbaac7435c8646a74e03994acf987d8fd6fac52418",
+      "status": "ready_for_foundry_fixture_import"
+    }
+  ],
+  "status": "ready",
+  "task_counts": {
+    "blocked": 2,
+    "completed": 1,
+    "failed": 0,
+    "ready": 2,
+    "total": 5
+  }
+}

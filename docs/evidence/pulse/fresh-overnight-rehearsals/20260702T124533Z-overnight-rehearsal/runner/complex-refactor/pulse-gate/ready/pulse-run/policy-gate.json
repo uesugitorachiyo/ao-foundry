@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.foundry.policy-gate-summary.v0.1",
+  "status": "ready",
+  "decisions": [
+    {
+      "decision_id": "covenant-local-allow",
+      "target": "factory-plan",
+      "decision": "allow",
+      "explanation": "Covenant gate allowed the local-only AO Foundry bootstrap plan.",
+      "source": "ao-forge"
+    }
+  ],
+  "explanation": "all policy decisions allow delegated execution"
+}

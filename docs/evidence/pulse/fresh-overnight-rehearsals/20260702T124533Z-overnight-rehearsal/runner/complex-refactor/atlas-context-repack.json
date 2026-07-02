@@ -1,0 +1,26 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "complex-refactor-command-readback-task-context-repack",
+  "task_id": "complex-refactor-command-readback-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "examples/complex-refactor-workgraph/context-packs/command-readback.context-pack.json",
+      "digest": "sha256:77760f818d48bdb15f5d44ea7209b96cb46d41f239d93f1336305439b3f2e89a"
+    }
+  ],
+  "summaries": [
+    "Repacked bounded context requested by a needs_context run-link."
+  ],
+  "assumptions": [
+    "Only referenced public-safe sources are included."
+  ],
+  "exclusions": [
+    "whole source repositories",
+    "private local state",
+    "credentials",
+    "provider transcripts"
+  ],
+  "missing_context_reason": "run-link evidence needs_context=evidence/foundry/complex-refactor/command-readback-needs-context.json",
+  "missing_context_protocol": "Ask AO Blueprint or the operator for missing requirements before widening scope."
+}

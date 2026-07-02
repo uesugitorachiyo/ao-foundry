@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.atlas-readback.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_readback",
+  "atlas_import_id": "complex-refactor-workgraph-foundry-import",
+  "workgraph_id": "complex-refactor-workgraph",
+  "target_instance": "ao-stack-shared-toolchain",
+  "task_id": "complex-refactor-pulse-runner-split-task",
+  "task_digest": "sha256:df3eb11e7b4b24cb98e58b83adf7a7ff3b57057ecdf1e1874f137048e4ad9a22",
+  "run_link_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "evidence": {
+    "ao2": "evidence/ao2/complex-refactor/pulse-runner-split.json",
+    "forge": "evidence/forge/complex-refactor/pulse-runner-split.json",
+    "foundry": "evidence/foundry/complex-refactor/pulse-runner-split.json"
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "next_actions": [
+    "keep Atlas scheduling and execution outside Foundry readback"
+  ]
+}

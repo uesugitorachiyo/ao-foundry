@@ -1,0 +1,3 @@
+ready=2
+blocked=2
+completed=1

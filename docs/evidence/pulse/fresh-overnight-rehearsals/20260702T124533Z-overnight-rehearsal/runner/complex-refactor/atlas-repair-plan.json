@@ -1,0 +1,52 @@
+{
+  "contract_version": "ao.atlas.workgraph-repair-plan.v0.1",
+  "id": "complex-refactor-workgraph-complex-refactor-command-readback-task-repair-plan",
+  "task_id": "complex-refactor-command-readback-task",
+  "status": "repair_required",
+  "source_run_link_status": "blocked",
+  "reason": "run-link status blocked did not complete the task; emit a bounded repair task for Foundry scheduling",
+  "repair_tasks": [
+    {
+      "contract_version": "ao.atlas.factory-task.v0.1",
+      "id": "repair-complex-refactor-command-readback-task",
+      "objective": "Repair blocked Atlas factory task: Update AO Command readback after the upstream refactor slices complete.",
+      "target_factory_repo": "ao-command",
+      "factory_folder": "factory/complex-refactor/command-readback-repair",
+      "acceptance_criteria": [
+        "a follow-up run-link for complex-refactor-command-readback-task validates with status completed"
+      ],
+      "non_goals": [
+        "do not schedule work from Atlas",
+        "do not execute work from Atlas",
+        "do not approve work from Atlas"
+      ],
+      "write_scope": [
+        "cmd",
+        "internal",
+        "README.md"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/ao-command"
+      ],
+      "required_evidence": [
+        "target/complex-refactor/ao-command-readback.json"
+      ],
+      "safety_limits": [
+        "read-only operator mode",
+        "no provider calls",
+        "repair plan is readback only"
+      ],
+      "dependency_refs": [
+        "complex-refactor-command-readback-task"
+      ],
+      "context_pack_refs": [
+        "examples/complex-refactor-workgraph/context-packs/command-readback.context-pack.json"
+      ]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

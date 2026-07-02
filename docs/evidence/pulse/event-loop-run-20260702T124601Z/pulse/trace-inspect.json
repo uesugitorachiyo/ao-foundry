@@ -1,0 +1,7 @@
+{
+  "schema_version": "ao.foundry.trace-inspect.v0.1",
+  "status": "ready",
+  "spans": 1,
+  "failed_spans": 0,
+  "evidence_refs": 15
+}

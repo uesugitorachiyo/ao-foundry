@@ -1,0 +1,4 @@
+blueprint_atlas_pulse_e2e=docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/summary.json
+status=ready
+ready_path=start_allowed
+blocked_blueprint_path=start_denied

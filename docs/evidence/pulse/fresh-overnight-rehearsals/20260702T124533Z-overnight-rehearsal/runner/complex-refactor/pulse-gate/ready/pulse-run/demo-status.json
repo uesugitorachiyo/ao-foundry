@@ -1,0 +1,17 @@
+{
+  "schema_version": "ao.foundry.demo-status.v0.1",
+  "registry_id": "local-ao-stack",
+  "task_id": "ao-foundry-bootstrap",
+  "run_id": "foundry-run-ao-foundry-bootstrap-35af7ff60b32",
+  "status": "ready",
+  "story": [
+    "Foundry knows the AO stack registry.",
+    "Foundry validates the task and readiness gates.",
+    "Foundry emits an AO Forge brief instead of executing directly.",
+    "AO Forge governs execution and returns packet evidence.",
+    "Foundry ingests the packet into a run record.",
+    "Foundry scores the run with local evals.",
+    "Foundry reports the next safe delegated action."
+  ],
+  "next_action": "delegate governed implementation to AO Forge"
+}

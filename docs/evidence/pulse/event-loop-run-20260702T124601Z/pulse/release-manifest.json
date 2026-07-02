@@ -1,0 +1,1516 @@
+{
+  "schema_version": "ao.foundry.release-manifest.v0.1",
+  "status": "ready",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "309f9bcf90a8d96cfa8aac298dda5213ee5598f5c2cf28909694e6c76fcfd14e"
+    },
+    {
+      "path": ".github/workflows/production-readiness-ops.yml",
+      "sha256": "4cb90eab7061364ddfecf4a1f98457185168cf0a936c0b95f8da978ca8efe40a"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "726b4828d90faee9fa0c02d5b84703eefe000a404a004bb20456d7b3bf5bb4c2"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "ba234712b380c2bc045df368a48679ea092101ff26a1acd64c44d60e9cf8b4b2"
+    },
+    {
+      "path": "README.md",
+      "sha256": "86633586f095602f4e0efa35d19d58e76622a4d8f0b8186e642cbc46a68efb24"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "9eacc74bdbb92b78aeede84f1a37bc6b7d31e49f3fb7e54cce9c44303ca5f108"
+    },
+    {
+      "path": "cmd/ao/main.go",
+      "sha256": "b4394a3d91e286fb791394b7d88d00934fe99015ed1b7e2c97a353845392061e"
+    },
+    {
+      "path": "cmd/foundry/main.go",
+      "sha256": "afa50e8c17c5fba246acebebce3c52a0501b82d1efd84b96856446038c049623"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "9b5ed0bc84b0ca34982b3ff62717e2c638917bee30ee01b0df5f169aa343996e"
+    },
+    {
+      "path": "docs/contracts/CONTRACT-FIXTURES.md",
+      "sha256": "db5728259c11d2c353f3190bf34fc7a20531b8573b8b70327d428d49fc9279d3"
+    },
+    {
+      "path": "docs/contracts/foundry-active-stack-production-readiness-rollup-v0.1.schema.json",
+      "sha256": "840f617bcab319cdd00a3b25c1cea4a1c9136566780da8c7032f87d0193d3553"
+    },
+    {
+      "path": "docs/contracts/foundry-active-stack-readiness-v0.1.schema.json",
+      "sha256": "90c8bf0ac4393990eb1051ae526d89f8d5252b169084add085e62e4aa4f76380"
+    },
+    {
+      "path": "docs/contracts/foundry-ao2-loop-decision-v0.1.schema.json",
+      "sha256": "008418d0bbb19cd88894a4b1cbccbc68e68e72ddce853ce54c0989bcd854d870"
+    },
+    {
+      "path": "docs/contracts/foundry-approval-decision-v0.1.schema.json",
+      "sha256": "1f97f6870bb856e57a9723627639d17e5bd63344424696ebf8f1537edec27158"
+    },
+    {
+      "path": "docs/contracts/foundry-approval-request-v0.1.schema.json",
+      "sha256": "2c8003e4c0464de4b2a165459c62535d92a653588598ca3459315ff2898ba55b"
+    },
+    {
+      "path": "docs/contracts/foundry-approved-live-docs-dry-run-chain-v0.1.schema.json",
+      "sha256": "d186559f08163069db842aefe6bb5c1bcbd327be8eb6bcd57dc5a30bfaa015b9"
+    },
+    {
+      "path": "docs/contracts/foundry-atlas-readback-v0.1.schema.json",
+      "sha256": "89d04fc66e183d6952ac3cf2747731fc0792b8b508d35c0662fac79f70e87bef"
+    },
+    {
+      "path": "docs/contracts/foundry-atlas-status-v0.1.schema.json",
+      "sha256": "99613ea2b7aecb64c6feaae490efbab314e06060749a2dea9cd9600afd6cbfda"
+    },
+    {
+      "path": "docs/contracts/foundry-capability-matrix-v0.1.schema.json",
+      "sha256": "cc212b6b3d58ef19b51a2830a4356897ed4e7f38aa64d0269331d301b4fa3756"
+    },
+    {
+      "path": "docs/contracts/foundry-competitive-readiness-audit-v0.1.schema.json",
+      "sha256": "84459d4241a734936c4a49d9aabbdb1ea3d4090f534f006c660511d06f46745d"
+    },
+    {
+      "path": "docs/contracts/foundry-control-plane-readback-v0.1.schema.json",
+      "sha256": "7e21d9aa78e0d80a5dbff20a253f332af36c4a6f039361d67c29047d375c73c1"
+    },
+    {
+      "path": "docs/contracts/foundry-eval-result-v0.1.schema.json",
+      "sha256": "9ab3397b6530bdf572e64301e22f3e877c0795c4a1e671fbce47bba4cc4123d6"
+    },
+    {
+      "path": "docs/contracts/foundry-eval-scorecard-v0.1.schema.json",
+      "sha256": "860e54e322c28911d485e7d1bf18a524fa4c603619cfcc4c79be9e118e38f2ad"
+    },
+    {
+      "path": "docs/contracts/foundry-first-live-docs-readiness-rollup-v0.1.schema.json",
+      "sha256": "d6405a54503b734ddfc6fd4d4932370c09b9d9a7c74aabfb11c45b1ccb4abea6"
+    },
+    {
+      "path": "docs/contracts/foundry-forge-live-attempt-v0.1.schema.json",
+      "sha256": "817b09a608a3779d22fe2efdbe234adde29dd5973c5dfc1cd3a5f9ce703f4039"
+    },
+    {
+      "path": "docs/contracts/foundry-goal-readiness-audit-v0.1.schema.json",
+      "sha256": "9c8fca60ea4f521fd59efe6d2f3378fcd944df9ff93e7c385579965228686f89"
+    },
+    {
+      "path": "docs/contracts/foundry-goal-run-v0.1.schema.json",
+      "sha256": "0548e230991a4682c4f67eaa90aa0aafe5546b19102ce7cd7f411ca81c41837d"
+    },
+    {
+      "path": "docs/contracts/foundry-governed-live-mutation-dry-run-chain-v0.1.schema.json",
+      "sha256": "85befd7d59a92f0e4cd86648dc4c0a9bb37af6dcb74aaf59b35ee71f45434dca"
+    },
+    {
+      "path": "docs/contracts/foundry-live-docs-approval-gate-v0.1.schema.json",
+      "sha256": "9575eb8c2a4604195535ea1d991f0e45af2727e9448a4facc33153923c803b70"
+    },
+    {
+      "path": "docs/contracts/foundry-live-docs-pr-rehearsal-gate-v0.1.schema.json",
+      "sha256": "565260806aa8e1f2ac4e7fb349abf1496be23ee169cb61500e928b46e07924de"
+    },
+    {
+      "path": "docs/contracts/foundry-live-docs-rollback-execution-rehearsal-v0.1.schema.json",
+      "sha256": "bdb6654f38d68fa3d2b371f44bb3daf6a9bd5068cc22d2f51616041335c576df"
+    },
+    {
+      "path": "docs/contracts/foundry-live-docs-worktree-prepare-v0.1.schema.json",
+      "sha256": "216fd0d7e0f8b8f67610160f5dc5b04f04aa810db48090be4fccc6ab2888daf6"
+    },
+    {
+      "path": "docs/contracts/foundry-live-mutation-approval-request-v0.1.schema.json",
+      "sha256": "1b583ef571531a1afd6cb669519e04cd5b4274bb753a4f7b10ed50915a31ce87"
+    },
+    {
+      "path": "docs/contracts/foundry-live-mutation-readiness-rollup-v0.1.schema.json",
+      "sha256": "11da87fcfec38dc6231b2f051c8412a001b0aba610d732ff4c3599778a6cde19"
+    },
+    {
+      "path": "docs/contracts/foundry-live-mutation-request-v0.1.schema.json",
+      "sha256": "67a4dbb3299e4b55c2713e1ac523ca0ab4b347cb2eeb0959985d44d6496cce69"
+    },
+    {
+      "path": "docs/contracts/foundry-live-mutation-rollback-rehearsal-v0.1.schema.json",
+      "sha256": "eb2dc25c805c41589de8b372f938c89a81a35cdcfbd359ba8c3a486db90809e2"
+    },
+    {
+      "path": "docs/contracts/foundry-loop-event-log-v0.1.schema.json",
+      "sha256": "7e2be9b9363ba2be344b66148ec08055201786e631c95cf0cd4eac3b71bca302"
+    },
+    {
+      "path": "docs/contracts/foundry-loop-lease-v0.1.schema.json",
+      "sha256": "4c5ac49ce411a702f7619f4d902b72aa40a0f9912791fb31e6f54debf5352d45"
+    },
+    {
+      "path": "docs/contracts/foundry-mutation-class-gate-v0.1.schema.json",
+      "sha256": "c3b46e320ff70df78e8be82e799c49517f1acfceb2025dc6e1ddb927cb9cf96f"
+    },
+    {
+      "path": "docs/contracts/foundry-production-readiness-audit-v0.1.schema.json",
+      "sha256": "697169d71b40a3eefc98fc9aee601c01b7d39b32ab58e23313f8c501d95c9f9b"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-event-loop-policy-v0.1.schema.json",
+      "sha256": "6c09ea5525f5e1df1521d72674d51675e57ae38d20f002627785bbe90054bc40"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-event-v0.1.schema.json",
+      "sha256": "92f2147b7e6979541b3c26664f13aed7f3386745d23fc2b47f3e00a5c5bbfac6"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-intake-preflight-v0.1.schema.json",
+      "sha256": "440c2165986d6ae9b4737f7053cf7fd0650ccd57be6e7374ff9d40098c28b271"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-overnight-start-gate-v0.1.schema.json",
+      "sha256": "798dabf67ac1adc159903d138a08549999a54231db83a5ff19f2854947c3e255"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-pr-lifecycle-v0.1.schema.json",
+      "sha256": "552ce12c8f88cfe934e425c74754fd2fbf735b112809b97ccfd08560c79c2bf2"
+    },
+    {
+      "path": "docs/contracts/foundry-pulse-runner-start-decision-v0.1.schema.json",
+      "sha256": "a22836810c2128fee3d82d3183cb7b53c49ca5db732ad959a4f4a4cc1112ceec"
+    },
+    {
+      "path": "docs/contracts/foundry-registry-v0.1.schema.json",
+      "sha256": "5595ef9d593248f24d23be615c5334fed34fb03ae280c3b4173560e755a42d98"
+    },
+    {
+      "path": "docs/contracts/foundry-release-candidate-v0.1.schema.json",
+      "sha256": "9ebf303179a31444b51e38f43368a4d1261d8bea49612818b4f69966ddb24876"
+    },
+    {
+      "path": "docs/contracts/foundry-release-manifest-v0.1.schema.json",
+      "sha256": "dfc964bba952c891e9d95196fe6a3ae521cfdc395c87ce0c5b762366ece709b4"
+    },
+    {
+      "path": "docs/contracts/foundry-release-promotion-v0.1.schema.json",
+      "sha256": "8c4e4557c267b49f62b589e26432d6d33127cb19e7f758e0bd77d2efe2d87d67"
+    },
+    {
+      "path": "docs/contracts/foundry-repo-health-v0.1.schema.json",
+      "sha256": "723e67063f649c3642c8d676401520f2b5376d2d513ba236fed75650145f762b"
+    },
+    {
+      "path": "docs/contracts/foundry-rsi-candidate-v0.1.schema.json",
+      "sha256": "6e09aa0f5c94ecb507013292dd023044e840fdd999327b22ef09037aab5c9e8a"
+    },
+    {
+      "path": "docs/contracts/foundry-rsi-control-surface-packet-v0.1.schema.json",
+      "sha256": "cb676d178b3e3fc617adaf7ab396f0e8155607106a4a265f1917279608cf6dd3"
+    },
+    {
+      "path": "docs/contracts/foundry-rsi-improvement-gate-v0.1.schema.json",
+      "sha256": "0f5dfd162b7a8cd6a86323553ae67a3c3b3e7ebe0efeafad444197487e55498e"
+    },
+    {
+      "path": "docs/contracts/foundry-rsi-next-improvement-task-v0.1.schema.json",
+      "sha256": "20bf4c56b3f7a2114f51584956e7311eaad63dba2cd240b01ab24ba7edf72df3"
+    },
+    {
+      "path": "docs/contracts/foundry-run-v0.1.schema.json",
+      "sha256": "9b6fdea9240f92cd8f1f3abf33e27f1b0ca1bade9d810c4f75ed7b86b0eab75c"
+    },
+    {
+      "path": "docs/contracts/foundry-signed-smoke-ingest-v0.1.schema.json",
+      "sha256": "45ca4222e60ba864df2bcdfffaed3f933585942d73222b8b0c1a205fb48b9f28"
+    },
+    {
+      "path": "docs/contracts/foundry-signed-smoke-preflight-v0.1.schema.json",
+      "sha256": "6fca05929e7785892a0c963e9339fe5629f816bed2bc7c7175246d4093e6afb8"
+    },
+    {
+      "path": "docs/contracts/foundry-signed-smoke-result-v0.1.schema.json",
+      "sha256": "74009622d5bb19cc83b545f9a7bb1d710cf5544593233ccb385b475ca82bdf0f"
+    },
+    {
+      "path": "docs/contracts/foundry-signed-smoke-summary-v0.1.schema.json",
+      "sha256": "fc98a053c9d09ca94e7fdb917bcca3b9571158c72de0305e22eb4cfb67fd302c"
+    },
+    {
+      "path": "docs/contracts/foundry-task-v0.1.schema.json",
+      "sha256": "0208baa6110f7d24d6c1adbc6daea695d0f66438fb7eb59b6c1578e5e0191646"
+    },
+    {
+      "path": "docs/contracts/foundry-trace-v0.1.schema.json",
+      "sha256": "2b28158ce42f73abfd8156e84a1633764dfb7df139088d2f10d4e09956b44100"
+    },
+    {
+      "path": "docs/contracts/foundry-worktree-isolation-proof-v0.1.schema.json",
+      "sha256": "6719d6366a77c7ee233eb76c1d4fffa3e1e1e2d512ce2badd198fdf38fc414b9"
+    },
+    {
+      "path": "docs/design/AO-FOUNDRY-V0.1.md",
+      "sha256": "7f657d88fbf171b130cb1f2809f6cc94369137ecdca5f105c6602c6f47cd8303"
+    },
+    {
+      "path": "docs/operations/ACTIVE-SPINE-2026-06-23-RELEASE-CANDIDATE.md",
+      "sha256": "eed8792be9c9eeeb7d02e1c60ff70c3cf1a5955e139bd73eb3d56913745b9290"
+    },
+    {
+      "path": "docs/operations/AO-OPERATOR-DEPRECATION.md",
+      "sha256": "2a362763a1c307e344f22650814544a6720fd0afcabf52e47699d224952cf71d"
+    },
+    {
+      "path": "docs/operations/AO2-PULSE-EVENT-LOOP.md",
+      "sha256": "08d25cbc461e17c4f6cebff549d2b2fed3fa6a8aa0d57eca6db7b6426a17d7c7"
+    },
+    {
+      "path": "docs/operations/BRANCH-PROTECTION.md",
+      "sha256": "1b8c5da44a0740c4f607126e455cf29f598a4956780a6c833b88268e2edaf6d6"
+    },
+    {
+      "path": "docs/operations/CLEAN-CLONE-SMOKE.md",
+      "sha256": "96733b1945a516a8354247c95ca930886f887656d8be31acdd9bc3658feca483"
+    },
+    {
+      "path": "docs/operations/FIVE-MINUTE-DEMO.md",
+      "sha256": "f04d9489aa0eced7a96ddfcd9bf58a6ccd2a57ef531fc9effb42d97f5d1a55b9"
+    },
+    {
+      "path": "docs/operations/ONE-SHOT-FACTORY-RUN.md",
+      "sha256": "cde4ea7a7fda18ba6da8a1dd5ef47be36c92ca5d03b180036c6abd0f7b03994c"
+    },
+    {
+      "path": "docs/operations/OVERNIGHT-REFRACTOR-REHEARSAL-RUNBOOK.md",
+      "sha256": "3b6eb1cc77195131e1acc103b5c9a57102f07470840a38dc95eea566df477864"
+    },
+    {
+      "path": "docs/operations/READINESS-EXIT-GATE.md",
+      "sha256": "e2739569a729ac40bcf57f472a58f24eb7f9b722943185494eed8442c85973c9"
+    },
+    {
+      "path": "docs/operations/RELEASE-CHECKLIST.md",
+      "sha256": "d9d25ecb8486399bf690c22f6b770705ec2bf7cac02a32acd0f48e7e54e7ab17"
+    },
+    {
+      "path": "docs/operations/SIGNED-SMOKE-EVIDENCE-RETENTION.md",
+      "sha256": "27ca748f62901a8686e13024ef0dde108e14c4b19b4384fec7beb503a531719b"
+    },
+    {
+      "path": "docs/operations/SIGNED-SMOKE-RELEASE-GATE.md",
+      "sha256": "8d6404ecb8bde2b6799be500ddd11cb93afdaf3714a40b69a15f79f863bc1425"
+    },
+    {
+      "path": "docs/operations/THREAT-MODEL.md",
+      "sha256": "83cdf1dfc9714cc51b409580c00808bae439a4e9919294a1ae2865a7768edc6e"
+    },
+    {
+      "path": "docs/sdd/AO-FOUNDRY-GOAL-RUN-READINESS-SDD.md",
+      "sha256": "e30670f497242088b305781bc3faa715cf86ecb96273d099efe42f94fba48a1a"
+    },
+    {
+      "path": "docs/sdd/AO-FOUNDRY-PRODUCTION-READINESS-SDD.md",
+      "sha256": "6df86d5d6bc3e74d975702cc59e40470baba7e2efc8ddbc6126702898a862a38"
+    },
+    {
+      "path": "docs/sdd/AO-FOUNDRY-PULSE-BLUEPRINT-ATLAS-REFACTOR.md",
+      "sha256": "9d4675b870f1bb3ad6f5290019dd01963170825282d17f42410ab20ab2d3834a"
+    },
+    {
+      "path": "docs/sdd/AO-FOUNDRY-PULSE-GOLDEN-LOOP-SDD.md",
+      "sha256": "c96237a46936d71af36908764b3a37419cf61f75d7bd85f5690146588e4df17c"
+    },
+    {
+      "path": "docs/sdd/AO-FOUNDRY-PULSE-PRODUCTION-ADAPTERS-SDD.md",
+      "sha256": "7cf1d6c3c6c489d11a71d1f263f99e0a3541a86025dc347d96c197a73d658c85"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-22-ao-pulse-golden-loop.md",
+      "sha256": "4bc7ed53d9977bde933509bd9d47f0718f1f1ce5a9902c370b60180519e11d81"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-22-foundry-repo-board.md",
+      "sha256": "83b527c5de2d71989db1e4eac09b0b790717a5dc5607bcaebf6a41cfa627c6b7"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-22-pulse-production-adapters.md",
+      "sha256": "60e5dc4ecb7a91f414a2739ef5ddd2d2bce21830c78bb8391b19ccca39bcead2"
+    },
+    {
+      "path": "examples/approvals/network-read.approval-decision.json",
+      "sha256": "12415589e9afa255b79d060bfdeecb394cabf95cd6e82653ac4afcf87356287a"
+    },
+    {
+      "path": "examples/atlas/blueprint-import.low-risk-code.json",
+      "sha256": "2301c40533dfc196931b532bc4310dad0727fbe5a6a956b1596b6c3a1a2847b1"
+    },
+    {
+      "path": "examples/atlas/foundry-import.json",
+      "sha256": "6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+    },
+    {
+      "path": "examples/atlas/run-link.completed.json",
+      "sha256": "03c321806976efc51b2f1623bf0164452644ab37032d0a7215dc9d6d2b2921ba"
+    },
+    {
+      "path": "examples/blueprint-atlas-pulse-e2e/fixture-manifest.json",
+      "sha256": "568ca3cbd17b77cf52c840c741ce5ad6c221a90bfcca39d84e68f727461ad335"
+    },
+    {
+      "path": "examples/briefs/ao-foundry-bootstrap.forge-brief.json",
+      "sha256": "78614fd218bacf245ec0e7242437cf16779d24e7e5b11b91b3f57d8fc21309cb"
+    },
+    {
+      "path": "examples/capabilities/foundry-capability-matrix.json",
+      "sha256": "480219e0279a53ac1b2755763673e2dcc0cfe9941af3d1bbcaa9b525618b33da"
+    },
+    {
+      "path": "examples/ci/signed-smoke-freshness.pulse-event.json",
+      "sha256": "1d861994b0fc3395a4bfc62eac412c3906c2be9a6008e4c506cb765244533d18"
+    },
+    {
+      "path": "examples/ci/stale-control-plane-readback.ao2-loop-decision.json",
+      "sha256": "778d262e35d79da9847111d3cbf198b257d577f5dc7b6bde0879f76735569ac5"
+    },
+    {
+      "path": "examples/ci/stale-control-plane-readback.pulse-event.json",
+      "sha256": "9097c6b7912030cfeb66cef274f94394f114df7d22b0ef82eb772fb7946adc6f"
+    },
+    {
+      "path": "examples/ci/stale-freshness.ao2-loop-decision.json",
+      "sha256": "13b1385842f9abebcd671d92a0ee5e7d7305f91b2d39aff53c9e805bbc7fd89e"
+    },
+    {
+      "path": "examples/class-gate/atlas-classification.docs-multi.json",
+      "sha256": "a24dbb34d0a6c9453e0c65df60c5ecc8a99f1912358c764439c349099abbdecc"
+    },
+    {
+      "path": "examples/class-gate/atlas-classification.low-risk-code.json",
+      "sha256": "4101f9545384e2dec4004d8b106d4528fd52b723ab46de927ea89bff3e111ab0"
+    },
+    {
+      "path": "examples/class-gate/atlas-classification.multi-repo-low-risk.atlas-first.json",
+      "sha256": "bb8033db34ae9d6368ddd448f9fbe888fcbf8f4b18cbf1aa1984f6877368f6bc"
+    },
+    {
+      "path": "examples/class-gate/atlas-classification.multi-repo-low-risk.json",
+      "sha256": "7b3a0331abaa1e7fb157632b6381b13bf5b2093f5b431f0dbc0eef0a3985793f"
+    },
+    {
+      "path": "examples/class-gate/atlas-classification.test-only.json",
+      "sha256": "698f9a18191190ae7e64f8c2051fa72cd6c8e0c450f0bf91afa98c154ca41c81"
+    },
+    {
+      "path": "examples/class-gate/ci.partial.multi-repo-low-risk.json",
+      "sha256": "06f53ca8855bd39af521d73827c1b6d7ab03fbfcb4221d41a44ba2ccc5562ab4"
+    },
+    {
+      "path": "examples/class-gate/ci.passed.docs-multi.json",
+      "sha256": "999fa9ec26ebcb060e0f72fee1eaf7b31c28227af22ef6ecbcb165f7bae3ab1f"
+    },
+    {
+      "path": "examples/class-gate/ci.passed.low-risk-code.json",
+      "sha256": "2a9f3d05b84a728bc4ab6c04c6af1fab14f2c223042d2b483780d3171e2c39d8"
+    },
+    {
+      "path": "examples/class-gate/ci.passed.multi-repo-low-risk.atlas-first.json",
+      "sha256": "69070ea52d3565f99564381c6f93f090c1ff56a405d8c1e1fd65c57d7c39733d"
+    },
+    {
+      "path": "examples/class-gate/ci.passed.multi-repo-low-risk.json",
+      "sha256": "027e32039cebff271b616ae85e9bf76581a21b731153357cb84ac8033c4f5145"
+    },
+    {
+      "path": "examples/class-gate/ci.passed.test-only.json",
+      "sha256": "4d648ab77ddbff03e7ba63790f3358ef2e620bbe4a35c4fe0b266a9aef7abaf0"
+    },
+    {
+      "path": "examples/class-gate/command-readback.docs-multi.json",
+      "sha256": "aa613eb3e8c80718665c65e54dde16d5ed03485cccd65cc3673cee201c0e3e2a"
+    },
+    {
+      "path": "examples/class-gate/command-readback.low-risk-code.json",
+      "sha256": "4af44aaad94c081cd294cbbe95591b7cf65758837041ab1320072fef019caef8"
+    },
+    {
+      "path": "examples/class-gate/command-readback.multi-repo-low-risk.json",
+      "sha256": "4dff1871fb6247025a6e118c6fc80f8e868e19d4271d1a731ab0e4241abda987"
+    },
+    {
+      "path": "examples/class-gate/command-readback.test-only.json",
+      "sha256": "261a0396e6fe8cc0c01fcb5ba792f7d1b957de1f8320909143556b3157fedb2c"
+    },
+    {
+      "path": "examples/class-gate/covenant-ticket.docs-multi.json",
+      "sha256": "8034a7a1f13ecaab697374323233c156e6d5b0fe31ab4e45f9cefa89ebeeba0c"
+    },
+    {
+      "path": "examples/class-gate/covenant-ticket.low-risk-code.json",
+      "sha256": "f70c0783ceeb4a91b1f82aa5374a5ecc9c8c7756a8c6fd3ef7afa6a532c51afb"
+    },
+    {
+      "path": "examples/class-gate/covenant-ticket.multi-repo-low-risk.json",
+      "sha256": "474c647c7041d0a5d80442ca0d153702c26f58891d81655dc1efb73e5cc328d5"
+    },
+    {
+      "path": "examples/class-gate/covenant-ticket.test-only.json",
+      "sha256": "e4e69a1305c2b4f921bf196db9e7d2f223fa45441a503494bfb333eae85aed77"
+    },
+    {
+      "path": "examples/class-gate/gate.blocked.low-risk-code.json",
+      "sha256": "b7561bfdd1296d88c55e3072febafb177b09208d37e65100ac6c255f66843f35"
+    },
+    {
+      "path": "examples/class-gate/gate.dry-run.low-risk-code.json",
+      "sha256": "b7cc75ca45bc1fbcb68f181e98f74bb013d86105a5c8b59b85327e2981355a89"
+    },
+    {
+      "path": "examples/class-gate/gate.ready.test-only.json",
+      "sha256": "5c63a79a8bd83500e0b4fed455bf20b85f403414174da7876f7f3591e785f082"
+    },
+    {
+      "path": "examples/class-gate/low-risk-code-denial-audit.json",
+      "sha256": "fdbc60d42d891fe55c003ec764bbfe53b8b2aaf9f0adecdff714d6538b076a9d"
+    },
+    {
+      "path": "examples/class-gate/low-risk-code-live-success.atlas-pr37.json",
+      "sha256": "f781e3be5495baabf0d4ed416a85aa534d2b861efded9ffefb35577a5d5b8126"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.atlas-first.json",
+      "sha256": "d76e8d81ce4334f49de7ce5cccd505255506bc155565b1661017408ee25ad0a3"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.kill-switch-disarmed.json",
+      "sha256": "2354a86780e09dd8e7a1f010808aa0484239e359c76782be9b16c0899d1ace2b"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.safe.json",
+      "sha256": "efb68c747a90b495a039e8723f8011dfe98a28481d16122b35df48ff1cb9c1ff"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.stale-repo-state.json",
+      "sha256": "3ecaf0a1c0ab923d3dc1d04bb555580afbf5f3d85f6a714a1f118bca36df3300"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.unordered-dependency.json",
+      "sha256": "7ca26d01e6e198351e46a72f25733a6616eb1e94285281303b6db6a7a2aab8f8"
+    },
+    {
+      "path": "examples/class-gate/multi-repo-plan.unsafe-concurrent.json",
+      "sha256": "fac251921afb629a55e2819f5ef662c93415380f3ab6392401f5b994fba62f3d"
+    },
+    {
+      "path": "examples/class-gate/promoter.ready.docs-multi.json",
+      "sha256": "b36074cd64a4ab81fc03fb217859077d846fd661b03476158fa697f0104d5981"
+    },
+    {
+      "path": "examples/class-gate/promoter.ready.low-risk-code.json",
+      "sha256": "00abc89f70bc266c0be64261bc10d668c731db11ee6502f51ead445d678751b0"
+    },
+    {
+      "path": "examples/class-gate/promoter.ready.multi-repo-low-risk.json",
+      "sha256": "c02ad07877531bbea00604eb97343fa1be2c44c79038ad7fd560a2f870a85a76"
+    },
+    {
+      "path": "examples/class-gate/promoter.ready.test-only.json",
+      "sha256": "f2caf1dcb9bf999d6a297d9b5b533c09cd0a94a5aa09aa29b8e2ecd01a3a2a02"
+    },
+    {
+      "path": "examples/class-gate/rollback.low-risk-code.patch",
+      "sha256": "388f628218b67902fdb1c9b0ead0fb5ec0dac79642a9075792a356bac0c97a4a"
+    },
+    {
+      "path": "examples/class-gate/rollback.partial.multi-repo-low-risk.json",
+      "sha256": "da7b9ecd4b690644381f68dfb4bcef9815c6c02ea1955d350ca0f2bfe1ade4af"
+    },
+    {
+      "path": "examples/class-gate/rollback.passed.docs-multi.json",
+      "sha256": "887f5bae1af6f9d69ce095d6f41b967f8b4d1a4d530fbeb43d934272d7e546df"
+    },
+    {
+      "path": "examples/class-gate/rollback.passed.low-risk-code.json",
+      "sha256": "21ba0a25b27ab5d5e3b6554f56124c0aad2c8d5ca844f1d388b0fbcd38732011"
+    },
+    {
+      "path": "examples/class-gate/rollback.passed.multi-repo-low-risk.atlas-first.json",
+      "sha256": "bb0f1373d83433b6df0a73a2cad0dd2691cb87789cc5a46757eace17fa5626a5"
+    },
+    {
+      "path": "examples/class-gate/rollback.passed.multi-repo-low-risk.json",
+      "sha256": "2c19b6daf841d3893857a358daf6a0327805adebf7dbdc7c62a6c4592f62878e"
+    },
+    {
+      "path": "examples/class-gate/rollback.passed.test-only.json",
+      "sha256": "aa0266fecd4346478a769940018028fdd57f4c64099905a958d0b346056f9128"
+    },
+    {
+      "path": "examples/class-gate/rollback.test-only.patch",
+      "sha256": "c5a62e64599853d172be164112a14e5458d34087ec8d28e1280b832c3bd73c99"
+    },
+    {
+      "path": "examples/class-gate/sentinel.no-hold.docs-multi.json",
+      "sha256": "8e4981133b6b7b41854cb2e587b768c12956a954a20660339aaeebb2600dc519"
+    },
+    {
+      "path": "examples/class-gate/sentinel.no-hold.low-risk-code.json",
+      "sha256": "a849b9c86ea9476a5cd9a98a60bc4b055263d8367480253e321aa2ea4e3d5ff3"
+    },
+    {
+      "path": "examples/class-gate/sentinel.no-hold.multi-repo-low-risk.json",
+      "sha256": "9ee7ded22b8b1275f41d90aecb6a80497c7890eb8ca4071669df266811d242be"
+    },
+    {
+      "path": "examples/class-gate/sentinel.no-hold.test-only.json",
+      "sha256": "caecbab4b733b69e724d13038296ba6391044ca6199318d496ca70e134984c74"
+    },
+    {
+      "path": "examples/class-gate/test-only-success.low-risk-code.json",
+      "sha256": "178d83a4f29ba94e27fe33e4e3fd0edb4a2c333c61dd73a52b77625e6c2b1641"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/README.md",
+      "sha256": "8e1be567ec2b1f5f0899dee36f8088eb3e7281aa8550ce86435efe6d40941e61"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/context-packs/atlas-foundry-path.context-pack.json",
+      "sha256": "969874b09ad8b3e39f7128347cdabc652d0158ee91021949cb53e8d9ae9aec29"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/context-packs/command-readback.context-pack.json",
+      "sha256": "77760f818d48bdb15f5d44ea7209b96cb46d41f239d93f1336305439b3f2e89a"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/context-packs/pulse-runner-split.context-pack.json",
+      "sha256": "7b8dacae8843674308a96e94287e5ff21840414b5608a69bcac05763afdb1786"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/context-packs/stitch-integration.context-pack.json",
+      "sha256": "b1cd60f19420c2ba9b2ef0405990e39304546ae7fde8ba47d35a747ffc75bfc8"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/foundry-import.json",
+      "sha256": "165d275283d999e98164acdbaac7435c8646a74e03994acf987d8fd6fac52418"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/intake.json",
+      "sha256": "65039610939351d4ee50d7e692da7ea0f9431558783d0ebf8327ad39c9a98f9a"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.blocked.json",
+      "sha256": "ecd87b3e435575743786fc966411f32b18a4cdebeec45410d4d559d72bc42ba1"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.needs-context.json",
+      "sha256": "ca8f80330db9d7c2ee36f076d988e33a7b51abb18df7b6e781fbbbb1cbc9ee73"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/run-link.pulse-runner-split.completed.json",
+      "sha256": "1c9f02863b69947623df066dbe8f177d14b13e0f26561e5ba034d7494f2a26e8"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/stack-instance.json",
+      "sha256": "d1ab44a9d1cc31f0909339e14fc6f897a22ba6d46ae353b6f30f44ac52a2cf72"
+    },
+    {
+      "path": "examples/complex-refactor-workgraph/workgraph.json",
+      "sha256": "5477929f0020224686bab155e8581c65d57ccc3c23ba0e7ca9ddc589aaded18e"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-active-stack-production-readiness-rollup-v0.1.json",
+      "sha256": "0667914b0c509975f99189abe7d8f0b4090577ee6c846e16011a3ccea69974fe"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-active-stack-readiness-v0.1.json",
+      "sha256": "b188e9a911d4894f0f34c5f710b6879b3bae7f7fcb81e30da2f12220eddfc604"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-ao2-loop-decision-v0.1.json",
+      "sha256": "5cee1bb058a4f911a800196b5d74e42eae7b8a20ce9a517b577df1e4e374b2d0"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-approval-decision-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-approval-request-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-approved-live-docs-dry-run-chain-v0.1.json",
+      "sha256": "a0038cfae786d0022dd9faf6c3b8b0d200d342c6aeeefbf5df98270a2c7bbb09"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-atlas-readback-v0.1.json",
+      "sha256": "dea9028a3e1ecb7accd007e10c6bc4179f2d03924024acd6e40fe6f0c6628c9c"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-atlas-status-v0.1.json",
+      "sha256": "7b0fca8148f16ceb0cd7176663aa729773307c288bc1ceaae4022e6024ee5a03"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-capability-matrix-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-competitive-readiness-audit-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-control-plane-readback-v0.1.json",
+      "sha256": "e9ce51cc6dbb39ffc8a0a890055aa68983d83786aeb4299693a495336e70b58a"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-eval-result-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-eval-scorecard-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-first-live-docs-readiness-rollup-v0.1.json",
+      "sha256": "27e366bbf5e07090d5d70ce100b05de49dd104b4d4c67b963d3c126208f01fa4"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-forge-live-attempt-v0.1.json",
+      "sha256": "0562258a5b07f747e2c4626ae591a6896e8b4bcf11f5a640d7f1579feb2644e2"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-goal-readiness-audit-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-goal-run-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-governed-live-mutation-dry-run-chain-v0.1.json",
+      "sha256": "1b5079a88d6c1b0becc58936089007785698c2494c5d0e064bcd58ec751a069f"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-docs-approval-gate-v0.1.json",
+      "sha256": "320f270a8d9d7a9dc918861f16b0f641adbccd33e0ca5cd7b5a050e1d43b5bd0"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-docs-pr-rehearsal-gate-v0.1.json",
+      "sha256": "9b328ea2ce62ac7829b0090eaece205f8fd3e9f9b9d0c18ed5b6f43488d0e99d"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json",
+      "sha256": "7fb92fbc0a93391cb6115dd08fa1d44cfb0056cb3c1f785039a824d0e3850443"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-docs-worktree-prepare-v0.1.json",
+      "sha256": "f35150dff10b5d365102db22b19122c2b1a89e56fe4d65b30c750cf8cec4b48c"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-mutation-approval-request-v0.1.json",
+      "sha256": "852ea6f8d4719f5e5d89158814fcba2c40ac87d995f1aee6de79064bd140edf0"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-mutation-readiness-rollup-v0.1.json",
+      "sha256": "6eae917d9ee6473de06a188cd334fe49fd90c68b94514e5ebd790c4c7d82fdfd"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-mutation-request-v0.1.json",
+      "sha256": "50044d44dda855a5b259c21996ff58c2f0e04ed9fe5e8f546b88bd230c008fe4"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-live-mutation-rollback-rehearsal-v0.1.json",
+      "sha256": "3dba68ed66ccddb8700e9808037b1d28fb20c184f2057face2c46460015452c3"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-loop-event-log-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-loop-lease-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-mutation-class-gate-v0.1.json",
+      "sha256": "2ddd97986f4917a516670318a0ba3f380fc87d77fd45ec9e0f5dbeb04e36f646"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-production-readiness-audit-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-event-loop-policy-v0.1.json",
+      "sha256": "48464ca7f7879087a3d23ed5a80f558539d894660f7586c310b01e0ceacf6295"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-event-v0.1.json",
+      "sha256": "e9ce51cc6dbb39ffc8a0a890055aa68983d83786aeb4299693a495336e70b58a"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-intake-preflight-v0.1.json",
+      "sha256": "a4e0350a14836f040f2758e30109180003264bbc63bb90d5586e2a5645666ae6"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-overnight-start-gate-v0.1.json",
+      "sha256": "31d269dffcf316816505aea58ee7a1528fe0e75520723cb7368b7b3e60d61e71"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-pr-lifecycle-v0.1.json",
+      "sha256": "65f6a06f1b6addd34a33e085cac4f6306e8593258ee158993cf26fbcf2d7459b"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-pulse-runner-start-decision-v0.1.json",
+      "sha256": "22aaebf01283c824d582e448c570c9ef7a889bc0b8102811d6ad642d45db6031"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-registry-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-release-candidate-v0.1.json",
+      "sha256": "58390d0c8d6e73b9fe545ae5d123bdf8406874f5a8c6e99d144d7e54772c76e1"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-release-manifest-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-release-promotion-v0.1.json",
+      "sha256": "401df136e616578430893f3558902fe3b0d0ece0a1999e42f84a490ce759193d"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-repo-health-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-rsi-candidate-v0.1.json",
+      "sha256": "297b1198e89dae639815d946bdc7fbee302c01831aa0469f78f8b92038a604d8"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-rsi-control-surface-packet-v0.1.json",
+      "sha256": "a035e9312c1ef3261fa2a1a9518d57c3abdef7f68ef42e43d7db8cbd63c0a7cf"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-rsi-improvement-gate-v0.1.json",
+      "sha256": "0562258a5b07f747e2c4626ae591a6896e8b4bcf11f5a640d7f1579feb2644e2"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-rsi-next-improvement-task-v0.1.json",
+      "sha256": "f98caeacd5d475180dde8bf14dd4321418da50faa730ccdf0ecfc2753b73a38c"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-run-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-signed-smoke-ingest-v0.1.json",
+      "sha256": "020f745add760d92f1e9e9046f6e14f687e0f9a4acdd84e31360a361218eda01"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-signed-smoke-preflight-v0.1.json",
+      "sha256": "6f7230542b96bf48bd00c0f5409468fb4c704e09bbcc90e43d9a7e60f46caf28"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-signed-smoke-result-v0.1.json",
+      "sha256": "5d1e89904bbead3ad6117f1d2282011b6ce4cf84355d24bbb6d9adeda6d6792e"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-signed-smoke-summary-v0.1.json",
+      "sha256": "7cca30ae4306e88ef0ffc5f76f024d5e7c642bfd58fd699f4c7a2b8327cdf039"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-task-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-trace-v0.1.json",
+      "sha256": "e138a55084fc1945605bfc3c16774025566e06718214458a489cf59f77681d11"
+    },
+    {
+      "path": "examples/contract-fixtures/invalid/foundry-worktree-isolation-proof-v0.1.json",
+      "sha256": "ec505b2603dcb5cc986cca50993dff82dae0831be66528d1becc2e0d1f508d14"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-active-stack-production-readiness-rollup-v0.1.json",
+      "sha256": "bc58999aa44302ebeb9722042d8e908a0d7e2382033975c752c97274a448bdaa"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-active-stack-readiness-v0.1.json",
+      "sha256": "6142482717598be7568212a56171d79e86aa13e0ebbe28ac80f4ba66fab642bd"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-ao2-loop-decision-v0.1.json",
+      "sha256": "4fc15b8cad1dab8c4353d536fac301d159bbd072fbfe9e26fca7e419f6945222"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-approval-decision-v0.1.json",
+      "sha256": "12415589e9afa255b79d060bfdeecb394cabf95cd6e82653ac4afcf87356287a"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-approval-request-v0.1.json",
+      "sha256": "f5091d27399794965498ad0d7e389b4fedf81deb9761be0ec1cf3b012bb78e98"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-approved-live-docs-dry-run-chain-v0.1.json",
+      "sha256": "d614a40990d02f4dcceeab29aac38a830e7fb8c0bb0195c9c9417337ca3dc175"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-atlas-readback-v0.1.json",
+      "sha256": "329fe7b45d32a7cfa2e798b4f803b5d89e96ce690d595f0f1acb6743d916fdb5"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+      "sha256": "a075b7d86294733b65c4fc409f173f714e3a1d8a3b50da9ce9086e54c8571b08"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-capability-matrix-v0.1.json",
+      "sha256": "55bca9462dab1b26e91d44f66f02aea190e174a85d086ffb328907ab0f87f601"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-competitive-readiness-audit-v0.1.json",
+      "sha256": "0137ec71740bd512b3f0166423066be2f7765d7428b9438960867feadf1bf713"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-control-plane-readback-v0.1.json",
+      "sha256": "f12fd7c67276010d1ee92f50e3ff6e6d431bdf797aad5c05c03f01c36c75cf38"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-eval-result-v0.1.json",
+      "sha256": "c0d337439d16cc0e3ebe25ad23633fa247f477b17c87e8245fa7de8074215c35"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-eval-scorecard-v0.1.json",
+      "sha256": "003e9f983669d8fe51238ebbe91345b7ba597426d7b4fbb326eff99cc59910de"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-first-live-docs-readiness-rollup-v0.1.json",
+      "sha256": "2364de1207a71b60fa518bbff857f1144cb61bc251ae1b351647b81d9ec96a46"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-forge-live-attempt-v0.1.json",
+      "sha256": "43b040ec77a80fe35ee8f3d91bf0d696ef6d67976da8791ab05be64b4c7cc7e6"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-goal-readiness-audit-v0.1.json",
+      "sha256": "9cbfa2e0de022989e5a77a88f6ea4bf008571ce76ab437ddf8311153eae94fcc"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-goal-run-v0.1.json",
+      "sha256": "216ea03fae53e5a078e4b136a430226b2c8cd20afd0fd7e342e74917dc865c2d"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-governed-live-mutation-dry-run-chain-v0.1.json",
+      "sha256": "88128ce861d1885fdff779184aa816f44bde71774b13b3400c0f5509f127eb4c"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-docs-approval-gate-v0.1.json",
+      "sha256": "d0bca228257638fa02263b715b16ca9b94837866d1e58026587bef183b0e6cfc"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-docs-pr-rehearsal-gate-v0.1.json",
+      "sha256": "411457efa6c64379a97bd43c7ad5ec0fc03866f588974f614c7023355559995a"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-docs-rollback-execution-rehearsal-v0.1.json",
+      "sha256": "e9f4c7b168b9e8ce4960eb843806892e7f55c87207d873f12a6fabac43771231"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-docs-worktree-prepare-v0.1.json",
+      "sha256": "959f894184cb7995b0f2cfdc92d0363d6b2f70e8dbf3c89191fc9a296a015ba9"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-mutation-approval-request-v0.1.json",
+      "sha256": "58c2da898d37d2e6ffe33cbbb7ef38b50b95164e6eba89276809944f32047970"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-mutation-readiness-rollup-v0.1.json",
+      "sha256": "e3dcc7fe2b0a16963ce37ee877fde01e60d6ca4dc230a4dc63f6da18ac3309d8"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-mutation-request-v0.1.json",
+      "sha256": "c953803d6837a789e98ac8bbab97e3b2b901de99c15e63c8ea4d81f8538166c3"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-live-mutation-rollback-rehearsal-v0.1.json",
+      "sha256": "e55eca287e174cdd9c931d14e32c0957b98ecbefff09b89d7534b283d9bbb427"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-loop-event-log-v0.1.json",
+      "sha256": "03b1025fdb35d9e4505558f21632ea270b26106ccee6895c28ed13b7d641a9e8"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-loop-lease-v0.1.json",
+      "sha256": "f747d8964b5f999c4b72eb80fe0ec9b006a96d8a1fd20f3f6849833e2fa86160"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-mutation-class-gate-v0.1.json",
+      "sha256": "690c143d09acb20492e0756e30947cdf2a06e5a9403ca8865c98e7abf68a58bf"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-production-readiness-audit-v0.1.json",
+      "sha256": "86b7970f9984b296cb6720943224f23748f1526409baf3cd40987f702537a896"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-event-loop-policy-v0.1.json",
+      "sha256": "f238c628d38c0af6193d23091bff9ea2dbb2c714fae804f681eba6b3666a716b"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-event-v0.1.json",
+      "sha256": "746e1e3b15c5314b70453a0619861cc11072c574ec021f21ac2e5b1d2b8930f1"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-intake-preflight-v0.1.json",
+      "sha256": "a1a7d8df29a050420a664594fd538b78258c8c559c05c010524e4c2d6223851b"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-overnight-start-gate-v0.1.json",
+      "sha256": "821d980b34f965ed7e47454c07e6289915a8cae72bbfbc1e3720e6bcc2c996a2"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-pr-lifecycle-v0.1.json",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-pulse-runner-start-decision-v0.1.json",
+      "sha256": "ed58b3ac19faeb331750374fc1f8b532a4f1af7065d817403f8776fff1bf02b2"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-registry-v0.1.json",
+      "sha256": "e8503b18053d710dc71861912ec2a3c93d6562fdec5cecb42b687789961a9130"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-release-candidate-v0.1.json",
+      "sha256": "8444ed6fed79e0cdf7eae5f7629ce5231addaa356382c204a65fef5898ff244e"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-release-manifest-v0.1.json",
+      "sha256": "97ff7ccf9715d4b1ac855af11fa00749fa06359f2f7f20eb9d48825caff1fa7b"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-release-promotion-v0.1.json",
+      "sha256": "5baa21181d5477f4d38cec2f6ccbdae2d5738da6446d17d74bd3ae82f14f0fc9"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-repo-health-v0.1.json",
+      "sha256": "03a4f7cbcb0ecd27761cb8c2f922992b91335bba957159df5eb58a4160345b3f"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-rsi-candidate-v0.1.json",
+      "sha256": "af319cc38d7f6a30aa16c7d2eab7900b8581d1281d8216b94d557f7d2f816304"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-rsi-control-surface-packet-v0.1.json",
+      "sha256": "62cbd57a26225dd621b466b0596fc01ea4008922a135ce8309b3d85b30eb692f"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-rsi-improvement-gate-v0.1.json",
+      "sha256": "3dce88a3bbbb28428f59b55595a59b7f5d01867b3c686a900aea78289b87ed7a"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-rsi-next-improvement-task-v0.1.json",
+      "sha256": "3cf3adeb261cbf3c56e5b08f6651ed755b2a2a10b2f95423f4631918be80de49"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-run-v0.1.json",
+      "sha256": "4cfc548d51de682efd8b360b36af66b2f669f6011694ef4ee19738c671e3ff35"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-signed-smoke-ingest-v0.1.json",
+      "sha256": "c7ceb2d459f28adf13be8881713189363eea5e0943e073c504d8fae11afb7404"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-signed-smoke-preflight-v0.1.json",
+      "sha256": "5c9cc3bc32e929e454185f52f840db3208f1309d64dc03923ab5a9e0040e3bd2"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-signed-smoke-result-v0.1.json",
+      "sha256": "0a10ea1d1709e73377bece4dfd8ed44602e78b7bc120d6178d8235c978c07aba"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-signed-smoke-summary-v0.1.json",
+      "sha256": "d07541377fa51b1eb4df7e5384bfc612c349bd3540524cc453db3b0b7cf0cf78"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-task-v0.1.json",
+      "sha256": "80fcc6691ab6758950913cbf1448f5e001b23eada2737fffe080ce4ab083546b"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-trace-v0.1.json",
+      "sha256": "05717ae66d81ca7054ec84a5420b27bfa6ff7eb3e9ba17fe67f2541c36215445"
+    },
+    {
+      "path": "examples/contract-fixtures/valid/foundry-worktree-isolation-proof-v0.1.json",
+      "sha256": "8c765a213822d669f0be831a0e3429719baf042d5d72e9ff803d46fa504edbbb"
+    },
+    {
+      "path": "examples/demo/ao-foundry-demo-status.json",
+      "sha256": "4d85f744e47528527a539dd05d2548898c675c27ca202e3740929919037ae965"
+    },
+    {
+      "path": "examples/evals/bootstrap.eval-result.json",
+      "sha256": "cf3f99d1b1639ef2fd2ba24cb75481211c0c4b0ad8e81605be5fbd6e3f7f39ec"
+    },
+    {
+      "path": "examples/evals/bootstrap.scorecard.json",
+      "sha256": "4709c420333027c8933fac4356892df8be8005359975ff9e6807565e4ebb681d"
+    },
+    {
+      "path": "examples/evals/release-readiness.scorecard.json",
+      "sha256": "373b627743c35f79a131f6ea8d4834bdf615bfd7049c934957b12b5cfe9ce071"
+    },
+    {
+      "path": "examples/evals/repo-health.scorecard.json",
+      "sha256": "f84c5433282b2462e3de6c910bbbe3f370bad72a45b01eba57d5ef173b058db5"
+    },
+    {
+      "path": "examples/evals/rsi-baseline.eval-result.json",
+      "sha256": "e5824cee9ef1455fcdc74dfecc7e30710edb5ef67cb939eff92d57283dfdc52e"
+    },
+    {
+      "path": "examples/evals/scheduler.scorecard.json",
+      "sha256": "88adf90f3b94c5e3b90117faa1dc6e321f55d7cefd43ba4b772505b88416af4a"
+    },
+    {
+      "path": "examples/evidence/ao-foundry-bootstrap.verification.txt",
+      "sha256": "f5788f802016a5ec6e48ba2762b41cceb9da12c5ba82b133ffa47d81534d9626"
+    },
+    {
+      "path": "examples/goals/ao-foundry-production-readiness.goal-run.json",
+      "sha256": "f4d54244fc2de0012bfa18dcd6b59a3c4cd7d6e8498edfca480376ac7f85301f"
+    },
+    {
+      "path": "examples/live-docs-approval/request.json",
+      "sha256": "5be8e1df26d93faa720052c6f1dc584ce0de9f7cd88fa34ee56264a933788ee7"
+    },
+    {
+      "path": "examples/live-docs-approval/ticket-approved.json",
+      "sha256": "e25d629743188b1b8afdf47c845300f70be49c15a79618283fc33394e3df2ead"
+    },
+    {
+      "path": "examples/live-docs-approval/ticket-pending.json",
+      "sha256": "355a1053a82987bdb762a2c3de3309bc5788c9c676d325b23131f743c861e7b7"
+    },
+    {
+      "path": "examples/live-docs-rollback-execution/docs-only-proposed.patch",
+      "sha256": "5a811ee9dd68babcaa797505bf1eab42fb237216943aeb5ec2afbeee26c31b20"
+    },
+    {
+      "path": "examples/live-docs-rollback-execution/docs-only-rollback.patch",
+      "sha256": "a08670ea0657842b56094d6f3dbbd295e5704ebe3492b339b9dcc048039db4e6"
+    },
+    {
+      "path": "examples/live-docs-rollback-execution/docs-only.candidate.json",
+      "sha256": "0e34c83ab6b6e24c373c141955ae1d746f3c6f215218e9305ec510b2e2552c15"
+    },
+    {
+      "path": "examples/live-docs-rollback-execution/missing-rollback.candidate.json",
+      "sha256": "9e08b5a12bcb3aa0d0976d90404f6946d989903a0165c1a22569b1a88bd91cdf"
+    },
+    {
+      "path": "examples/live-docs-rollback-execution/unsafe-path.candidate.json",
+      "sha256": "1ef1f9d63b3703ff7399043a235bad52b96bf0dde2b33ab255c60309ca4cf96f"
+    },
+    {
+      "path": "examples/live-docs-worktree-prepare/dirty-worktree.candidate.json",
+      "sha256": "15d1f74afac3d37ac55578bf0d4814fa984fe0e691f7e0f1665ba71c85c76d7c"
+    },
+    {
+      "path": "examples/live-docs-worktree-prepare/ready.candidate.json",
+      "sha256": "ab85fe943bda3122b221c92950cc808143813a0976821909c3ee169dde6dd847"
+    },
+    {
+      "path": "examples/live-docs-worktree-prepare/reused-branch.candidate.json",
+      "sha256": "e746bc0a5f3f96bda59750cba16801f9afa95c411dbca7775796013693b938f7"
+    },
+    {
+      "path": "examples/live-docs-worktree-prepare/unsafe-path.candidate.json",
+      "sha256": "3765f82177c4ff78300827af903f7d6f4912ca516c1d0a53be4a5f0f914d5523"
+    },
+    {
+      "path": "examples/live-docs-worktree-prepare/wrong-branch.candidate.json",
+      "sha256": "b3e796c45db771ba43fcfb5221aa5a409000e43ad84ff2b5133e31480ac666ad"
+    },
+    {
+      "path": "examples/live-mutation-rollback/docs-only-proposed.patch",
+      "sha256": "27f86e38b61a1b40019c2e71f7a8961f865481b7391df27e014f497af87ba8ea"
+    },
+    {
+      "path": "examples/live-mutation-rollback/docs-only-rollback.candidate.json",
+      "sha256": "7b3153d248cf3033add3d063bf2b7bd5c653aef37c0e7e5ab300b7990cf5a690"
+    },
+    {
+      "path": "examples/live-mutation-rollback/docs-only-rollback.patch",
+      "sha256": "0a04bef2ed48e30639dcf33774bffe8bb38ac5eff7272d320d2b1166db958fd8"
+    },
+    {
+      "path": "examples/live-mutation-rollback/missing-rollback.candidate.json",
+      "sha256": "d6df8bc0866c5853134fdc8e9ee8d2e77ce33278e89e57eb2001bf18f34f3144"
+    },
+    {
+      "path": "examples/live-mutation-rollback/unsafe-authority.candidate.json",
+      "sha256": "7f033d6670fbdf167bd5720390fb0e1d3cfd5bb50a995c611bf026495c9eecde"
+    },
+    {
+      "path": "examples/live-mutation-worktree-isolation/clean-isolated.candidate.json",
+      "sha256": "c0e3f3edf73c30a2194a0ef71c9227295632bc66269e6b640c7ff98bbd5ccc25"
+    },
+    {
+      "path": "examples/live-mutation-worktree-isolation/dirty-worktree.candidate.json",
+      "sha256": "b7695317d532afec6d6c64759652d7681390f97243186b6a04130d57002c56a8"
+    },
+    {
+      "path": "examples/live-mutation-worktree-isolation/reused-worktree.candidate.json",
+      "sha256": "51e512637e0949419b2adfc2af8f5eedbeb7185fd4506264ba9edbfe867c7193"
+    },
+    {
+      "path": "examples/packets/ao-foundry-bootstrap.factory-packet.json",
+      "sha256": "4c4e341a7757d4f8931cf4149851d11f533099b2992b2db3cac4b9dc40ab1f76"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/branch-cleanup.failed.json",
+      "sha256": "9c76b3f568467fd1c71c4c56fcdc8023e8572bde96b8b102934b8177dd434233"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
+      "sha256": "990d4b780bff231c43f230bcfed1ecb6f5ccfd6f22a50db18cef746d6224240f"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/ci.failed.json",
+      "sha256": "d72723f5744164dfa20274af94877fc2cbac49971464310c7d50630d8f8086c3"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/ci.passed.json",
+      "sha256": "e5e2d4059c2cb55256096cd5b2488400c18b1208ce7825744ffc3b2055340b8d"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/evidence.fresh.json",
+      "sha256": "579e7b37df4f21e8d5093309790442c1fff392eb5f95fe883316d1193d14ac25"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/evidence.stale.json",
+      "sha256": "50aa9ff0caca3214c2e8ecb7bcddeafbef0376c79be8beb0bf52b78b9d4aafcc"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/promoter.denied.json",
+      "sha256": "c8564b7303e8cc9689157cd0b67be1508fe31eb8cbc55d9ed7b5f9d362856d9c"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/promoter.ready.json",
+      "sha256": "338531d8df0d3083becef3498e19958a688ff9cf06084b2ac0961426934e06cc"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/promotion-state.class-jump.json",
+      "sha256": "7ad2413561ddb126f71d7d92e3f3d6ca787130fcf0d14c76b75485e5dab85939"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/promotion-state.proven-test-only.json",
+      "sha256": "2651abd88b7e36f39912e8baf45d272cf30e3ccfeda2e57adee941277bf5bd19"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/repo.clean.json",
+      "sha256": "b7b72dd8f77c16cda64218aa9ff4798953ad485daf2b39db110861c38317682a"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/repo.dirty.json",
+      "sha256": "608a625c9f1a10a3dede625ce3b7aad8bf35b509bd6350d92d69036be4647673"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/rollback.failed.json",
+      "sha256": "656be508ec9d83a6d7fcdb4037d955e8f543b74a6f5d7911eeb58807713c20a2"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/rollback.passed.json",
+      "sha256": "74e24b8cf2eed4bdaa09b9b3b519bcfe125f5a6a94d7300cf9112e5bd6f131d4"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/scope.broadened.json",
+      "sha256": "9154e6975d59b0c2a5cd1e599db019434d0319b271eebc7fd3d77d22c404c29b"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/scope.passed.json",
+      "sha256": "7b65e23421f4a1a311b5a457c7dca3ef0393513cd4d340391ad239365594ca72"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/sentinel.hold.json",
+      "sha256": "c1578b1496828e6bdb76ad5ee262bc5bd18549d4a1c8b6fa34bb04a853b83c1f"
+    },
+    {
+      "path": "examples/pulse-event-loop-policy/sentinel.no-hold.json",
+      "sha256": "27ce490381973a8bbb9be251fc9b7d94b02a7373f861b8e01b2f565ebf89d4e0"
+    },
+    {
+      "path": "examples/pulse-intake/blueprint-authorization.blocked.json",
+      "sha256": "ca49e0efe7db8e851240018c97dfec49f92dff90c3c92f23bfebd817c8c7bb50"
+    },
+    {
+      "path": "examples/pulse-intake/blueprint-authorization.ready.json",
+      "sha256": "1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+    },
+    {
+      "path": "examples/pulse-intake/blueprint-request.blocked.json",
+      "sha256": "71fcbef3bd9530e495aeae744cce3bd9a720cd889ffedf8369c6014d4c2dec42"
+    },
+    {
+      "path": "examples/pulse-intake/invalid-atlas-authority.preflight.json",
+      "sha256": "9cdf10988b5da9ec11e2dfac242bb4586a36c467845061e2557c8d656329639b"
+    },
+    {
+      "path": "examples/pulse-intake/invalid-blocked-marked-ready.preflight.json",
+      "sha256": "b846f566449f9283283123488db23bdb9264ef8255f3ad9fa769cb1552609383"
+    },
+    {
+      "path": "examples/pulse-intake/invalid-missing-atlas.preflight.json",
+      "sha256": "a6bbc8c80af966a32a8d8375ba23468018026021b91b1339b7299d3120183b0b"
+    },
+    {
+      "path": "examples/pulse-intake/invalid-missing-blueprint.preflight.json",
+      "sha256": "885de5cba220e8c267c222f7d29e992c6331f3a4dc14c33521bb6ee6c3e2f1f8"
+    },
+    {
+      "path": "examples/pulse-lifecycle/checks-failed.json",
+      "sha256": "fafa31316b9c5a17687a0cad1fe24b602e335e5e581316eac4cc966b0745c7b9"
+    },
+    {
+      "path": "examples/pulse-lifecycle/dirty-worktree-blocked.json",
+      "sha256": "ee733300642194df21bc3665acbf21623303c293b153106a93e61a0b0dea40e5"
+    },
+    {
+      "path": "examples/pulse-lifecycle/local-main-not-synced.json",
+      "sha256": "295fa217ed62485b0b53495da85f7a980788842d222588da5293083afe01c11a"
+    },
+    {
+      "path": "examples/pulse-lifecycle/merged-cleanup-incomplete.json",
+      "sha256": "72ef99284cf0c0f132c76bdc84d4eb01d87acbb8bd88473ba38f3646fcfb379f"
+    },
+    {
+      "path": "examples/pulse-lifecycle/multiple-active-branches.json",
+      "sha256": "21d78200d9fb2898f1e2d999641f90c2d5af5d8b1299862fe9f5414753056c9e"
+    },
+    {
+      "path": "examples/pulse-lifecycle/open-pr-pending-checks.json",
+      "sha256": "88ab1dce61ddcac3cc403d5cf234370aad98fd851690966811eef39e70bca465"
+    },
+    {
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/blocked-blueprint-clarification.json",
+      "sha256": "275e8e67ef2c96ce59738e2e8443248f9bd8ca67ee7a6a030b4c14a89e4019da"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/blocked.intake-preflight.json",
+      "sha256": "33ed37d22ca8ef8979cfcaac9f06a1d74e6d0bc56a4d42159f8d641a74473399"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/failed-preflight.json",
+      "sha256": "a93716d26c1b35a0a95060e4f07963002b990edbe9446a2d62c1ecd05feca145"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/failed.intake-preflight.json",
+      "sha256": "2d0ee325b5cf4010886590f935f2fb6ac561ef946d722122baa735b835974258"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/lifecycle-cleanup-incomplete.json",
+      "sha256": "28e6e342c80853e988aadb49ed0a85a58022cedbc2ad5f6e419b6c36864b91c9"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/lifecycle-pending-pr.json",
+      "sha256": "54a5a7dcc5e8415df901ab3cb1dbe4629796c9aa26e43568072ffb389cc837ea"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/ready.intake-preflight.json",
+      "sha256": "e401e5692d385db71687088e226617cd8ef4ea33e3c0845750d42469006a07da"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/ready.json",
+      "sha256": "821d980b34f965ed7e47454c07e6289915a8cae72bbfbc1e3720e6bcc2c996a2"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/stale-digest.intake-preflight.json",
+      "sha256": "cf3e09fa57f50378dcb5d8a132d2131f49ce89a071073b301abb108149b03fe9"
+    },
+    {
+      "path": "examples/pulse-overnight-start-gate/stale-digest.json",
+      "sha256": "222973f58f51bc737f506d9459ac35b8f3d57409b59629d1e689a9d627444ea8"
+    },
+    {
+      "path": "examples/pulse-runner-start-decision/blocked-blueprint.json",
+      "sha256": "1e6e51524033f965ccab1273d69b6248b8b4894395610bc16832d268734b6bc4"
+    },
+    {
+      "path": "examples/pulse-runner-start-decision/failed-preflight.json",
+      "sha256": "db8a4ea4cc13811a117e49f0ece6a045ee12853a2474ec035659d77bf36d6ad5"
+    },
+    {
+      "path": "examples/pulse-runner-start-decision/ready.json",
+      "sha256": "ed58b3ac19faeb331750374fc1f8b532a4f1af7065d817403f8776fff1bf02b2"
+    },
+    {
+      "path": "examples/pulse-runner-start-decision/stale-lifecycle.json",
+      "sha256": "ea51bc9fc985801bcd5968a83601156cf69e98bb9701b76b77989f5f9b49a9b6"
+    },
+    {
+      "path": "examples/readiness/active-spine-release-candidate.ledger.json",
+      "sha256": "96e967108d72a8b74a9a93e1141cbaad77a4c3d8071dccc7ee0ba40cf611645a"
+    },
+    {
+      "path": "examples/readiness/active-stack-readiness.ledger.json",
+      "sha256": "b3360280ba5fe2b88cd971ac7eb7de7f503a1a0dc286da8803aeb6e4b975073f"
+    },
+    {
+      "path": "examples/readiness/ao-foundry-bootstrap.production-readiness-audit.json",
+      "sha256": "d951cd042c604d3b0be31f3effa06f5c6aa67267b342254ce1f6b3db2dd591a4"
+    },
+    {
+      "path": "examples/readiness/ao-foundry-production-readiness.goal-readiness-audit.json",
+      "sha256": "97bf18a880b9d58fc9eeb66670fd316492da6cbcb7b1aeea1abe01a28dffe1c5"
+    },
+    {
+      "path": "examples/registry/atlas-demo.foundry-registry.json",
+      "sha256": "007458f7a8b797b2ca94fb76d780dbd59da5c8a30ce59eb44587c3ba37e3605c"
+    },
+    {
+      "path": "examples/registry/clean-clone.foundry-registry.json",
+      "sha256": "264fcc998010d0c2deb40e4c6f9e668eb669c7e8319d4dfabecbb705ffdf4b6a"
+    },
+    {
+      "path": "examples/registry/local-ao-stack.foundry-registry.json",
+      "sha256": "2639ad18c68dc4c9d64ffd812823bc4b9d424edca4aea533a444c5a668233636"
+    },
+    {
+      "path": "examples/runs/ao-foundry-bootstrap.foundry-run.json",
+      "sha256": "23892318ab49448d17c782de08c87e9dc8cd4fdb473947049026cf69ece4ab71"
+    },
+    {
+      "path": "examples/tasks/ao-foundry-bootstrap.foundry-task.json",
+      "sha256": "e3d93eaf9689ed3520fb5f31174d63ccd4896e68d2a52ab04a431b9194464feb"
+    },
+    {
+      "path": "examples/tasks/clean-clone-smoke.foundry-task.json",
+      "sha256": "ee2d9f2d3a032e3bf94953de851a41644ecd575aa3bec6a3614e9f4a56ad622e"
+    },
+    {
+      "path": "examples/tasks/network-read-task.foundry-task.json",
+      "sha256": "99c0592382147b18497d245f2fe576310d9f365c367c7868f56a6dcf2870cf8d"
+    },
+    {
+      "path": "go.mod",
+      "sha256": "afbe22e43c06a6de9d1c051b24416f025ce9730d3d6500d1dc9c3e1c2547dfa4"
+    },
+    {
+      "path": "internal/cli/cli.go",
+      "sha256": "a4e2d1e55bac44e39f779debd730a096ee43a9fef281339d026a591629d1dd38"
+    },
+    {
+      "path": "internal/cli/cli_test.go",
+      "sha256": "7a1b8e5c69d47b017aa846e296d4d24cc2fa1d62fceccc6a138c93adb9af4434"
+    },
+    {
+      "path": "internal/cli/testdata/atlas-foundry-import-executes-work.json",
+      "sha256": "1cf994b68adfd004e6c75e37c3ed696bb0180e961b88f94ab35e9b7342ae919c"
+    },
+    {
+      "path": "internal/cli/testdata/atlas-foundry-import-missing-metadata.json",
+      "sha256": "4401ea5b02c61e3d07f6ae365dc5570b62fee808ec7371dd682cb264a902b370"
+    },
+    {
+      "path": "internal/cli/testdata/atlas-foundry-import-mutation-metadata.json",
+      "sha256": "6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+    },
+    {
+      "path": "internal/cli/testdata/atlas-run-link-blocked.json",
+      "sha256": "24bac4e6e11561c8aa3853aa1ae56ccb71b5c30874f0e2b816e2cddf9778e480"
+    },
+    {
+      "path": "internal/cli/testdata/atlas-run-link-missing-task.json",
+      "sha256": "88fb5084bebade4e13e48c56d8ddfcfb24395c4660090ea945739d5953f89ef0"
+    },
+    {
+      "path": "internal/cli/testdata/blocked-registry.json",
+      "sha256": "338831973421ae4e45bb6600ec39f3e4dbb07b6205a112ee19ecb20e9b37a7fc"
+    },
+    {
+      "path": "internal/cli/testdata/blocked-task.json",
+      "sha256": "ddd0decdb2a99c88d2480463a7ea5f022e6ddaa77588601affef06bc9e020755"
+    },
+    {
+      "path": "internal/cli/testdata/broadened-approval-decision.json",
+      "sha256": "40203505a261b25768080b3671cb36543df1a34e49457d65b8fcfaa534eb10e6"
+    },
+    {
+      "path": "internal/cli/testdata/digest-mismatch-approval-decision.json",
+      "sha256": "acd933fd43b03c8d0ff76599aced60b46d861bde97ad3538d4e523a5d512ba96"
+    },
+    {
+      "path": "internal/cli/testdata/digest-mismatch.goal-run.json",
+      "sha256": "e0309e3da13b2dca4ca27117a3adc5f610bceaf4cc5ef486b06c93bad498d10b"
+    },
+    {
+      "path": "internal/cli/testdata/expired-approval-decision.json",
+      "sha256": "0b0b3cf2d9e18d228367c8b5ab7c83055fddcf713da8ff52652f918f3f8d5098"
+    },
+    {
+      "path": "internal/cli/testdata/invalid-registry.json",
+      "sha256": "95c715cf35606345a69efdf6798bdf7d44e30f7788f090c9c7d24734bf0efbf5"
+    },
+    {
+      "path": "internal/cli/testdata/invalid-task.json",
+      "sha256": "f3977398c7127aef673073197fb3d5a44d03633cd353c9023161e4dfa055f5d6"
+    },
+    {
+      "path": "internal/cli/testdata/missing-forge-delegation-task.json",
+      "sha256": "496860263c10a09413c19021ac8a4908dd315c55d5b6d6398f68aee305045606"
+    },
+    {
+      "path": "internal/cli/testdata/run-evidence.txt",
+      "sha256": "4773ecd66884d0ccddf4be899d01bcfbf3abdd64d232c61fa36a8e7d5b1a232f"
+    },
+    {
+      "path": "internal/cli/testdata/schema-invalid-registry.json",
+      "sha256": "47d8a851a2d0de42745ec628ca1df992c6b811eaf2e0127519a70e223c33b4d2"
+    },
+    {
+      "path": "internal/cli/testdata/schema-invalid-task.json",
+      "sha256": "33bb3f0e06f1d5ca888c85979d27f9a21ec31bd88cdbc0a6c10bcf52a7e0d1ba"
+    },
+    {
+      "path": "internal/cli/testdata/terminal.goal-run.json",
+      "sha256": "d8d45cca8113c7336ad4385368cbea4893cef74933b8d631d20303e074ae06e8"
+    },
+    {
+      "path": "internal/cli/testdata/unsafe-evidence-forge-packet.json",
+      "sha256": "f077835fef7150d24a2d9c42987dc921882e8b9c8fc35a6c708066831d567891"
+    },
+    {
+      "path": "internal/cli/testdata/unsafe-evidence.goal-run.json",
+      "sha256": "fe35b7d611ad63084f3409039919621deb6fc19e1118d262303df745ffdcd295"
+    },
+    {
+      "path": "internal/cli/testdata/unsafe-guard.goal-run.json",
+      "sha256": "c03b26a8b1ef9aab82d58929ddaad9d61fa9027e15cf8af66b91a7a8a00bb3a7"
+    },
+    {
+      "path": "internal/cli/testdata/unsafe-task.json",
+      "sha256": "eb65f1b7ed40079cb1c0e03b20945c08d3ee2c30862bdd7211aa62b6e84049dd"
+    },
+    {
+      "path": "internal/cli/testdata/valid-forge-packet.json",
+      "sha256": "6be76ea0941a10f7c9522e9142e0bfac19226d45862f5caec0b333ff49feb73b"
+    }
+  ],
+  "checks": [
+    "registry fixture valid",
+    "task fixture valid",
+    "run fixture valid",
+    "contract fixtures valid"
+  ]
+}

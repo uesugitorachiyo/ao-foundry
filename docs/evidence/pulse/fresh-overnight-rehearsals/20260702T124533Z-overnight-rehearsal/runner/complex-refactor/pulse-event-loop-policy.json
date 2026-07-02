@@ -1,0 +1,106 @@
+{
+  "schema_version": "ao.foundry.pulse-event-loop-policy.v0.1",
+  "status": "ready",
+  "mutation_class": "test_only",
+  "proven_live_class": "test_only",
+  "approved_mutation_class": "test_only",
+  "allowed_next_action": "continue_next_slice",
+  "safe_to_continue": true,
+  "safe_to_request": true,
+  "safe_to_execute": true,
+  "operator_prompt_required": false,
+  "first_failing_check": "",
+  "required_checks": [
+    "class_gate",
+    "promotion_state",
+    "ci_status",
+    "repo_cleanliness",
+    "evidence_freshness",
+    "sentinel_hold",
+    "promoter_readiness",
+    "rollback_integrity",
+    "branch_cleanup",
+    "scope_boundary"
+  ],
+  "source_evidence": [
+    {
+      "name": "class_gate",
+      "path": "examples/class-gate/gate.ready.test-only.json",
+      "schema_version": "ao.foundry.mutation-class-gate.v0.1",
+      "status": "ready",
+      "sha256": "5c63a79a8bd83500e0b4fed455bf20b85f403414174da7876f7f3591e785f082"
+    },
+    {
+      "name": "promotion_state",
+      "path": "examples/pulse-event-loop-policy/promotion-state.proven-test-only.json",
+      "schema_version": "ao.foundry.mutation-class-promotion-state.v0.1",
+      "status": "ready",
+      "sha256": "2651abd88b7e36f39912e8baf45d272cf30e3ccfeda2e57adee941277bf5bd19"
+    },
+    {
+      "name": "ci_status",
+      "path": "examples/pulse-event-loop-policy/ci.passed.json",
+      "schema_version": "ao.foundry.ci-readiness.v0.1",
+      "status": "passed",
+      "sha256": "e5e2d4059c2cb55256096cd5b2488400c18b1208ce7825744ffc3b2055340b8d"
+    },
+    {
+      "name": "repo_cleanliness",
+      "path": "examples/pulse-event-loop-policy/repo.clean.json",
+      "schema_version": "ao.foundry.repo-cleanliness.v0.1",
+      "status": "clean",
+      "sha256": "b7b72dd8f77c16cda64218aa9ff4798953ad485daf2b39db110861c38317682a"
+    },
+    {
+      "name": "evidence_freshness",
+      "path": "examples/pulse-event-loop-policy/evidence.fresh.json",
+      "schema_version": "ao.foundry.evidence-freshness.v0.1",
+      "status": "fresh",
+      "sha256": "579e7b37df4f21e8d5093309790442c1fff392eb5f95fe883316d1193d14ac25"
+    },
+    {
+      "name": "sentinel_hold",
+      "path": "examples/pulse-event-loop-policy/sentinel.no-hold.json",
+      "schema_version": "ao.sentinel.mutation-class-hold.v0.1",
+      "status": "no_hold",
+      "sha256": "27ce490381973a8bbb9be251fc9b7d94b02a7373f861b8e01b2f565ebf89d4e0"
+    },
+    {
+      "name": "promoter_readiness",
+      "path": "examples/pulse-event-loop-policy/promoter.ready.json",
+      "schema_version": "ao.promoter.mutation-class-promotion.v0.1",
+      "status": "ready",
+      "sha256": "338531d8df0d3083becef3498e19958a688ff9cf06084b2ac0961426934e06cc"
+    },
+    {
+      "name": "rollback_integrity",
+      "path": "examples/pulse-event-loop-policy/rollback.passed.json",
+      "schema_version": "ao.foundry.mutation-class-rollback.v0.1",
+      "status": "passed",
+      "sha256": "74e24b8cf2eed4bdaa09b9b3b519bcfe125f5a6a94d7300cf9112e5bd6f131d4"
+    },
+    {
+      "name": "branch_cleanup",
+      "path": "examples/pulse-event-loop-policy/branch-cleanup.passed.json",
+      "schema_version": "ao.foundry.branch-cleanup.v0.1",
+      "status": "passed",
+      "sha256": "990d4b780bff231c43f230bcfed1ecb6f5ccfd6f22a50db18cef746d6224240f"
+    },
+    {
+      "name": "scope_boundary",
+      "path": "examples/pulse-event-loop-policy/scope.passed.json",
+      "schema_version": "ao.foundry.scope-boundary.v0.1",
+      "status": "passed",
+      "sha256": "7b65e23421f4a1a311b5a457c7dca3ef0393513cd4d340391ad239365594ca72"
+    }
+  ],
+  "blocking_next_actions": [],
+  "authority_boundary": "policy_approved_class_only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "opens_pr": false,
+  "merges_pr": false
+}

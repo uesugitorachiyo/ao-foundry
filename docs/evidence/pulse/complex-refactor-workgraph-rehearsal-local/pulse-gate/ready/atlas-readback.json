@@ -1,0 +1,22 @@
+{
+  "schema_version": "ao.foundry.atlas-readback.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_readback",
+  "atlas_import_id": "atlas-readiness-workgraph-foundry-import",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "target_instance": "demo-stack",
+  "task_id": "atlas-readiness-task",
+  "task_digest": "sha256:1d49e1952c8db016899a8f3f054bff4ab92eca3b45c291b5f3498e734e857396",
+  "run_link_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "evidence": {
+    "ao2": "evidence/ao2/atlas-readiness.json",
+    "forge": "evidence/forge/atlas-readiness.json",
+    "foundry": "evidence/foundry/atlas-readiness.json"
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "next_actions": [
+    "keep Atlas scheduling and execution outside Foundry readback"
+  ]
+}

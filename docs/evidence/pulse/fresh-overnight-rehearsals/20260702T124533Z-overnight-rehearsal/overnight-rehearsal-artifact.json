@@ -1,0 +1,43 @@
+{
+  "schema_version": "ao.foundry.overnight-rehearsal-artifact.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_fresh_rehearsal",
+  "fresh_output_root": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal",
+  "runner_summary": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/overnight-rehearsal-runner.json",
+  "command_readback": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/ao-command-complex-refactor-status.json",
+  "complex_refactor_summary": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/summary.json",
+  "closure_packet": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json",
+  "allowed_next_action": "start_next_ready_task",
+  "source_digests": [
+    {
+      "name": "runner_summary",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/overnight-rehearsal-runner.json",
+      "schema_version": "ao.foundry.overnight-rehearsal-runner.v0.1",
+      "sha256": "8578bc2f71f8abd466d61cfeab7365d2301f8b6853e4f40b1293944ccd6480c0"
+    },
+    {
+      "name": "command_readback",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/ao-command-complex-refactor-status.json",
+      "schema_version": "ao.command.complex-refactor-status.v0.1",
+      "sha256": "554c3704f302791b8ed44215f77aad493d2a6a1e63ed9735ce88f34fd16874e8"
+    },
+    {
+      "name": "complex_refactor_summary",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/summary.json",
+      "schema_version": "ao.foundry.complex-refactor-workgraph-rehearsal.v0.1",
+      "sha256": "81d4131d6fefcc071ba6c8a62066f5fd6e768ce9e73f8520dcfa889ebe863a42"
+    },
+    {
+      "name": "closure_packet",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json",
+      "schema_version": "ao.foundry.pulse-refactor-closure-packet.v0.1",
+      "sha256": "315c56683ae8303edb026694698a88148481ac9f7f7f134bd18126a98a41de50"
+    }
+  ],
+  "mutates_repositories": false,
+  "executes_work": false,
+  "schedules_work": false,
+  "approves_work": false,
+  "uploads_artifacts": false,
+  "calls_providers": false
+}

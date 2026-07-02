@@ -1,0 +1,28 @@
+{
+  "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+  "status": "ready",
+  "start_gate_path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-overnight-start-gate.json",
+  "allowed_next_action": "start_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "source_digests": [
+    {
+      "name": "pulse_overnight_start_gate",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-overnight-start-gate.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "sha256": "1d5ac6bf77154e60904f33a8b0e0d5bed930e58e38a2ecba7442ab13d496073e"
+    },
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/ready/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "639e4fc3d3b3e24ed3e80623c96eb84be447c1236ac23317a287da0e756720fb"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}
