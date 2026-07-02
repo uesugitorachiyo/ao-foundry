@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-evidence.v0.1",
+  "mission": "unrestricted-self-modification-bounded-reversible-application",
+  "result": "passed",
+  "unrestricted_self_modification_claim": "denied_only",
+  "hidden_instruction_mutation": "denied_only",
+  "policy_changing_autonomy": "denied_only"
+}

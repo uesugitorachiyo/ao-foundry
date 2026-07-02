@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.measurement-scenario.v0.1",
+  "scenario_id": "KS-1",
+  "name": "kill-switch during bounded application",
+  "baseline": 0.7,
+  "post_change": 0.95,
+  "improvement": 0.25,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "reversible": true,
+  "denied_surfaces_clear": true
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.measurement-scenario.v0.1",
+  "scenario_id": "EV-1",
+  "name": "eval regression comparison",
+  "baseline": 0.72,
+  "post_change": 0.95,
+  "improvement": 0.23,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "reversible": true,
+  "denied_surfaces_clear": true
+}

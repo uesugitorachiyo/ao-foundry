@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.measurement-scenario.v0.1",
+  "scenario_id": "CR-1",
+  "name": "Command readback specificity",
+  "baseline": 0.69,
+  "post_change": 0.93,
+  "improvement": 0.24,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "reversible": true,
+  "denied_surfaces_clear": true
+}

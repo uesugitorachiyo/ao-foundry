@@ -792,3 +792,26 @@ calls, direct-main mutation, concurrent mutation, release/deploy/publish/upload/
 tag authority, or dependency update authority. The highest proven live class is
 `public_safe_unrestricted_self_modification_adversarial_negative_controls`; the
 next denied class is `unrestricted_self_modification`.
+
+## Unrestricted Self-Modification Bounded Reversible Application
+
+`public_safe_bounded_reversible_self_change_application_rehearsal` is proven
+from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-bounded-reversible-application/`.
+The approved public wording is exactly: "AO has public-safe bounded reversible
+self-change application evidence for one exact-scope support/readback
+improvement under sandbox containment gates; unrestricted self-modification,
+hidden instruction mutation, policy-changing autonomy, and forbidden surface
+expansion remain denied." Completed application nodes: `640 / 640`. Baseline
+score: `0.70`; post-change score: `0.94`; measured improvement: `0.24`.
+
+This proves only one exact-scope reversible support/readback evidence
+improvement under sandbox containment gates. It does not prove unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy,
+policy/auth/secret/provider/deploy/release/config/dependency expansion,
+credential use, provider calls, direct-main mutation, concurrent mutation,
+release/deploy/publish/upload/tag authority, dependency update authority,
+hidden instruction changes, forbidden surface expansion, or any unrestricted
+RSI claim. The highest proven live class is
+`public_safe_bounded_reversible_self_change_application_rehearsal`; the next
+denied class is `unrestricted_self_modification`.

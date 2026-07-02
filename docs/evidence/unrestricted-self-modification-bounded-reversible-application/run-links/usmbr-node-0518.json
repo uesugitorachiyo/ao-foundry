@@ -1,0 +1,12 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-bounded-reversible-application",
+  "node_id": "usmbr-node-0518",
+  "status": "complete",
+  "started_after_previous": true,
+  "completed_before_next": true,
+  "ci_required": false,
+  "rollback_available": true,
+  "kill_switch_armed": true,
+  "public_safe": true
+}

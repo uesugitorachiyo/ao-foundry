@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.measurement-scenario.v0.1",
+  "scenario_id": "CA-1",
+  "name": "candidate exact-scope support/readback application",
+  "baseline": 0.68,
+  "post_change": 0.93,
+  "improvement": 0.25,
+  "threshold": 0.2,
+  "result": "passed",
+  "public_safe": true,
+  "reversible": true,
+  "denied_surfaces_clear": true
+}
