@@ -1,0 +1,4 @@
+pulse_atlas_scheduler_input=ready
+allowed_next_action=start_next_slice
+selected_node_id=pulse-runner-module-split
+scheduler_input=docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-atlas-scheduler-input.json

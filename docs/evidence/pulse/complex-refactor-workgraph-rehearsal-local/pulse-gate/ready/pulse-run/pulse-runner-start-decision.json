@@ -1,0 +1,28 @@
+{
+  "schema_version": "ao.foundry.pulse-runner-start-decision.v0.1",
+  "status": "ready",
+  "start_gate_path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json",
+  "allowed_next_action": "start_next_slice",
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "source_digests": [
+    {
+      "name": "pulse_overnight_start_gate",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json",
+      "schema_version": "ao.foundry.pulse-overnight-start-gate.v0.1",
+      "sha256": "6b47ff2eefae683da59a1a88a8affa827894f3351d537937f0d7dc8dcc50b792"
+    },
+    {
+      "name": "intake_preflight",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-intake-preflight.json",
+      "schema_version": "ao.foundry.pulse-intake-preflight.v0.1",
+      "sha256": "946b8621a1e3e28f3c3972dd26bbb65da7c7ece9f8d5c51b79bc0306e1fae8bc"
+    },
+    {
+      "name": "pulse_pr_lifecycle",
+      "path": "examples/pulse-lifecycle/ready-to-start-next-slice.json",
+      "schema_version": "ao.foundry.pulse-pr-lifecycle.v0.1",
+      "sha256": "fc65107da38a280c8966f6130406b272c8dd066c676eedce5a7b18a0f805e4ad"
+    }
+  ]
+}

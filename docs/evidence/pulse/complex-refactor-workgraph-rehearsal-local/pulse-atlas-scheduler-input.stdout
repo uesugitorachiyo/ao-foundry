@@ -1,0 +1,4 @@
+pulse_atlas_scheduler_input=ready
+allowed_next_action=start_next_slice
+selected_node_id=pulse-runner-module-split
+scheduler_input=docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-atlas-scheduler-input.json

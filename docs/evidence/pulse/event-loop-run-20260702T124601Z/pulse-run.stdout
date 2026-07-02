@@ -1,0 +1,7 @@
+pulse_runner_start_decision=docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/pulse-runner-start-decision.json
+runner_start_status=ready
+pulse_event=docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/pulse-event.json
+status=ready
+score=100/100
+freshness=ready forge_live_packet=not_provided control_plane_readback=not_provided
+next_action=stop autonomous readiness loop; live execution requires operator intent

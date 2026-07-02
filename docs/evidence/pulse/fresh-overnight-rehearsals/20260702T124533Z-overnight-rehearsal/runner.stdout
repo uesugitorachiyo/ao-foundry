@@ -1,0 +1,3 @@
+overnight_rehearsal_runner=ready
+summary=docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/overnight-rehearsal-runner.json
+allowed_next_action=start_next_ready_task

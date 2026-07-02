@@ -1,0 +1,112 @@
+{
+  "schema_version": "ao.command.complex-refactor-status.v0.1",
+  "command_schema_version": "ao.command.v0.1",
+  "status": "ready",
+  "summary": "../ao-foundry/docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/summary.json",
+  "mode": "fixture_only_rehearsal",
+  "next_action": "start_next_ready_task",
+  "next_recommended_factory_task": "complex-refactor-pulse-runner-split-task",
+  "next_recommended_node": "pulse-runner-module-split",
+  "target_factory_repo": "ao-foundry",
+  "task_counts": {
+    "total": 5,
+    "ready": 2,
+    "blocked": 2,
+    "completed": 1,
+    "failed": 0
+  },
+  "repair_plan": {
+    "status": "repair_required",
+    "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-repair-plan.json",
+    "repair_task_id": "repair-complex-refactor-command-readback-task",
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  },
+  "context_repack": {
+    "status": "ready",
+    "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-context-repack.json",
+    "missing_context_reason": "run-link evidence needs_context=evidence/foundry/complex-refactor/command-readback-needs-context.json",
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  },
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [],
+  "source_digests": [
+    {
+      "name": "workgraph",
+      "path": "examples/complex-refactor-workgraph/workgraph.json",
+      "sha256": "5477929f0020224686bab155e8581c65d57ccc3c23ba0e7ca9ddc589aaded18e"
+    },
+    {
+      "name": "foundry_import",
+      "path": "examples/complex-refactor-workgraph/foundry-import.json",
+      "sha256": "165d275283d999e98164acdbaac7435c8646a74e03994acf987d8fd6fac52418"
+    },
+    {
+      "name": "safe_node_foundry_import",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/safe-node-foundry-import/foundry-import.json",
+      "sha256": "45cd8d3c5abbe3dba1a8e6cc5d641d999bda975f97e2d4343abe8e2a427daff6"
+    },
+    {
+      "name": "run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.pulse-runner-split.completed.json",
+      "sha256": "1c9f02863b69947623df066dbe8f177d14b13e0f26561e5ba034d7494f2a26e8"
+    },
+    {
+      "name": "blocked_run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.blocked.json",
+      "sha256": "ecd87b3e435575743786fc966411f32b18a4cdebeec45410d4d559d72bc42ba1"
+    },
+    {
+      "name": "needs_context_run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.needs-context.json",
+      "sha256": "ca8f80330db9d7c2ee36f076d988e33a7b51abb18df7b6e781fbbbb1cbc9ee73"
+    },
+    {
+      "name": "repair_plan",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-repair-plan.json",
+      "sha256": "9320b69ae926094d820599e0380a69015e5e7234998724f3eb0e454fcad6c91a"
+    },
+    {
+      "name": "context_repack",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-context-repack.json",
+      "sha256": "3b4b9a8b7a53f392629fc90dfdece25c1a7e8f64631cbe45ea5206205861b2d2"
+    },
+    {
+      "name": "pulse_gate_summary",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/summary.json",
+      "sha256": "1b85c57c89166797696572d1dfa14caff9a47345863efe9e2725679e0e266107"
+    },
+    {
+      "name": "atlas_scheduler_input",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-atlas-scheduler-input.json",
+      "sha256": "ab0c946fb6bc2a7e15eb4c205bcd830e854c24a76fa28c70aa6cdb334a0a0ad2"
+    },
+    {
+      "name": "pulse_event_loop_policy",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-event-loop-policy.json",
+      "sha256": "2aed609a67f75982561946aecc4d381489dfc1796926440c810cb28e460f650d"
+    }
+  ],
+  "artifacts": {
+    "atlas_mission_status": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-mission-status.json",
+    "atlas_next_ready": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-next-ready.json",
+    "atlas_scheduler_input": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-atlas-scheduler-input.json",
+    "command_readback": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/ao-command-complex-refactor-status.json",
+    "context_repack": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-context-repack.json",
+    "foundry_atlas_readback": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/foundry-atlas-readback.json",
+    "pulse_event_loop_policy": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-event-loop-policy.json",
+    "pulse_gate_summary": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/summary.json",
+    "repair_plan": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/atlas-repair-plan.json",
+    "safe_node_foundry_import": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/safe-node-foundry-import/foundry-import.json"
+  },
+  "operator_mode": "read_only",
+  "mutates_repositories": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "calls_providers": false
+}

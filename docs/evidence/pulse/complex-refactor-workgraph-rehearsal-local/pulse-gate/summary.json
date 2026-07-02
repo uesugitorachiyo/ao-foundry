@@ -1,0 +1,94 @@
+{
+  "schema_version": "ao.foundry.blueprint-atlas-pulse-e2e-dry-run.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_dry_run",
+  "mutates_repositories": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "calls_providers": false,
+  "ready_path": {
+    "starts_runner": true,
+    "allowed_next_action": "start_next_slice",
+    "command_allowed_next_action": "start_next_slice"
+  },
+  "blocked_blueprint_path": {
+    "starts_runner": false,
+    "allowed_next_action": "request_blueprint_clarification",
+    "command_allowed_next_action": "request_blueprint_clarification"
+  },
+  "source_digests": [
+    {
+      "name": "blueprint_ready",
+      "path": "examples/pulse-intake/blueprint-authorization.ready.json",
+      "sha256": "1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+    },
+    {
+      "name": "blueprint_blocked",
+      "path": "examples/pulse-intake/blueprint-request.blocked.json",
+      "sha256": "71fcbef3bd9530e495aeae744cce3bd9a720cd889ffedf8369c6014d4c2dec42"
+    },
+    {
+      "name": "atlas_blueprint_import",
+      "path": "examples/atlas/blueprint-import.low-risk-code.json",
+      "sha256": "2301c40533dfc196931b532bc4310dad0727fbe5a6a956b1596b6c3a1a2847b1"
+    },
+    {
+      "name": "atlas_import",
+      "path": "examples/atlas/foundry-import.json",
+      "sha256": "6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+    },
+    {
+      "name": "atlas_run_link",
+      "path": "examples/atlas/run-link.completed.json",
+      "sha256": "03c321806976efc51b2f1623bf0164452644ab37032d0a7215dc9d6d2b2921ba"
+    },
+    {
+      "name": "ready_start_gate",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json",
+      "sha256": "6b47ff2eefae683da59a1a88a8affa827894f3351d537937f0d7dc8dcc50b792"
+    },
+    {
+      "name": "ready_runner_decision",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json",
+      "sha256": "80cbac0d2b5ebc46cf897eead4c73515d4f11522ecddf6156d10dcf76778a0fe"
+    },
+    {
+      "name": "ready_command_status",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/ao-command-pulse-status.json",
+      "sha256": "7a6a3eb1e472c8508b648eefcb63fc77f9f19f99c5613c8b6bc703a01adb9462"
+    },
+    {
+      "name": "blocked_start_gate",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/pulse-overnight-start-gate.json",
+      "sha256": "ba9882610c4e74ae8bd56f9f0d80b7f4c61db8e354d94040ffee39a6f5b115e8"
+    },
+    {
+      "name": "blocked_runner_decision",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/pulse-run/pulse-runner-start-decision.json",
+      "sha256": "36422e10ce4dd7cba4a6f5b271a47d1114bcd4ccc33dc8deb3c3ecff964cd8ce"
+    },
+    {
+      "name": "blocked_command_status",
+      "path": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/ao-command-pulse-status.json",
+      "sha256": "313985ee4f3a83d78668937aebd750200b710c2e2f04bd3ab1dc462413f2728d"
+    }
+  ],
+  "artifacts": {
+    "ready": {
+      "atlas_readback": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/atlas-readback.json",
+      "atlas_status": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/atlas-status.json",
+      "pulse_intake_preflight": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-intake-preflight.json",
+      "pulse_overnight_start_gate": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json",
+      "pulse_runner_start_decision": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json",
+      "pulse_event": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-event.json",
+      "ao_command_pulse_status": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/ao-command-pulse-status.json"
+    },
+    "blocked": {
+      "pulse_intake_preflight": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/pulse-intake-preflight.json",
+      "pulse_overnight_start_gate": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/pulse-overnight-start-gate.json",
+      "pulse_runner_start_decision": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/pulse-run/pulse-runner-start-decision.json",
+      "ao_command_pulse_status": "docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/blocked/ao-command-pulse-status.json"
+    }
+  }
+}

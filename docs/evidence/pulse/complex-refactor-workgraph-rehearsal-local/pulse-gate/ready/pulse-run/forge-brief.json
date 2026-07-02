@@ -1,0 +1,40 @@
+{
+  "schema_version": "ao.forge.factory-brief.v0.1",
+  "objective": {
+    "text": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+    "workspace": "../ao-foundry",
+    "release_mode": false
+  },
+  "constraints": {
+    "local_first": true,
+    "allow_network": false,
+    "allow_release_mutation": false,
+    "require_control_plane_readback": false
+  },
+  "expected_workcells": [
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-execute",
+      "kind": "execute",
+      "workspace": "../ao-foundry",
+      "executor": "ao2",
+      "task": "Create the first public-safe AO Foundry SDD package, contracts, examples, minimal Go CLI, and verification evidence.",
+      "max_repairs": 1,
+      "depends_on": []
+    },
+    {
+      "workcell_id": "foundry-ao-foundry-bootstrap-verify",
+      "kind": "verify",
+      "workspace": "../ao-foundry",
+      "executor": "ao2",
+      "task": "go test ./...",
+      "depends_on": [
+        "foundry-ao-foundry-bootstrap-execute"
+      ]
+    }
+  ],
+  "expected_evidence": [
+    "AO Forge factory packet",
+    "AO Foundry verification output",
+    "public-safety scan"
+  ]
+}

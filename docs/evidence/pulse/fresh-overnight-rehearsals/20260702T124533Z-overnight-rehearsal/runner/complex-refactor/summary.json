@@ -1,0 +1,149 @@
+{
+  "schema_version": "ao.foundry.complex-refactor-workgraph-rehearsal.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_rehearsal",
+  "mutates_repositories": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "calls_providers": false,
+  "no_duplicated_stack_folders": true,
+  "task_counts": {
+    "total": 5,
+    "ready": 2,
+    "blocked": 2,
+    "completed": 1,
+    "failed": 0
+  },
+  "next_recommended_factory_task": {
+    "node_id": "pulse-runner-module-split",
+    "task_id": "complex-refactor-pulse-runner-split-task",
+    "target_factory_repo": "ao-foundry"
+  },
+  "safe_node_selection": {
+    "status": "ready",
+    "policy": "atlas_next_ready_only",
+    "selected_node_id": "pulse-runner-module-split",
+    "selected_task_id": "complex-refactor-pulse-runner-split-task",
+    "selected_import_path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/safe-node-foundry-import/foundry-import.json",
+    "imported_task_count": 1,
+    "ready_node_ids": [
+      "pulse-runner-module-split",
+      "atlas-foundry-fixture-path"
+    ],
+    "rejects_unselected_ready_nodes": true,
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false
+  },
+  "loop_decision": {
+    "may_start_next_ready_task": true,
+    "must_not_start_blocked_tasks": true,
+    "ready_gate_action": "start_next_slice",
+    "blocked_blueprint_action": "request_blueprint_clarification",
+    "why": "A dependency-ready factory task exists and the ready Pulse gate allows start_next_slice; blocked tasks remain blocked until upstream run-link evidence is completed."
+  },
+  "repair_plan": {
+    "status": "repair_required",
+    "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-repair-plan.json",
+    "repair_task_id": "repair-complex-refactor-command-readback-task",
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  },
+  "context_repack": {
+    "status": "ready",
+    "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-context-repack.json",
+    "missing_context_reason": "run-link evidence needs_context=evidence/foundry/complex-refactor/command-readback-needs-context.json",
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  },
+  "source_digests": [
+    {
+      "name": "workgraph",
+      "path": "examples/complex-refactor-workgraph/workgraph.json",
+      "sha256": "5477929f0020224686bab155e8581c65d57ccc3c23ba0e7ca9ddc589aaded18e"
+    },
+    {
+      "name": "foundry_import",
+      "path": "examples/complex-refactor-workgraph/foundry-import.json",
+      "sha256": "165d275283d999e98164acdbaac7435c8646a74e03994acf987d8fd6fac52418"
+    },
+    {
+      "name": "safe_node_foundry_import",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/safe-node-foundry-import/foundry-import.json",
+      "sha256": "45cd8d3c5abbe3dba1a8e6cc5d641d999bda975f97e2d4343abe8e2a427daff6"
+    },
+    {
+      "name": "run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.pulse-runner-split.completed.json",
+      "sha256": "1c9f02863b69947623df066dbe8f177d14b13e0f26561e5ba034d7494f2a26e8"
+    },
+    {
+      "name": "blocked_run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.blocked.json",
+      "sha256": "ecd87b3e435575743786fc966411f32b18a4cdebeec45410d4d559d72bc42ba1"
+    },
+    {
+      "name": "needs_context_run_link",
+      "path": "examples/complex-refactor-workgraph/run-link.command-readback.needs-context.json",
+      "sha256": "ca8f80330db9d7c2ee36f076d988e33a7b51abb18df7b6e781fbbbb1cbc9ee73"
+    },
+    {
+      "name": "repair_plan",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-repair-plan.json",
+      "sha256": "9320b69ae926094d820599e0380a69015e5e7234998724f3eb0e454fcad6c91a"
+    },
+    {
+      "name": "context_repack",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-context-repack.json",
+      "sha256": "3b4b9a8b7a53f392629fc90dfdece25c1a7e8f64631cbe45ea5206205861b2d2"
+    },
+    {
+      "name": "pulse_gate_summary",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/summary.json",
+      "sha256": "23e5f3e7808679efba7d13ff42855dc19514bf91e642c1dc50631d8610de0d14"
+    },
+    {
+      "name": "atlas_scheduler_input",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-atlas-scheduler-input.json",
+      "sha256": "ab0c946fb6bc2a7e15eb4c205bcd830e854c24a76fa28c70aa6cdb334a0a0ad2"
+    },
+    {
+      "name": "pulse_event_loop_policy",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-event-loop-policy.json",
+      "sha256": "2aed609a67f75982561946aecc4d381489dfc1796926440c810cb28e460f650d"
+    },
+    {
+      "name": "pulse_refactor_closure_packet",
+      "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json",
+      "sha256": "315c56683ae8303edb026694698a88148481ac9f7f7f134bd18126a98a41de50"
+    }
+  ],
+  "artifacts": {
+    "atlas_next_ready": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-next-ready.json",
+    "atlas_mission_status": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-mission-status.json",
+    "atlas_scheduler_input": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-atlas-scheduler-input.json",
+    "safe_node_foundry_import": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/safe-node-foundry-import/foundry-import.json",
+    "repair_plan": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-repair-plan.json",
+    "context_repack": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/atlas-context-repack.json",
+    "foundry_atlas_readback": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/foundry-atlas-readback.json",
+    "pulse_gate_summary": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-gate/summary.json",
+    "pulse_event_loop_policy": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-event-loop-policy.json",
+    "command_readback": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/ao-command-complex-refactor-status.json",
+    "pulse_refactor_closure_packet": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json"
+  },
+  "closure_packet": {
+    "status": "ready",
+    "path": "docs/evidence/pulse/fresh-overnight-rehearsals/20260702T124533Z-overnight-rehearsal/runner/complex-refactor/pulse-refactor-closure-packet.json",
+    "closes_refactor_slices": [
+      "D",
+      "E"
+    ],
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  }
+}

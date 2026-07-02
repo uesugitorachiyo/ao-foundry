@@ -1,0 +1,35 @@
+[
+  {
+    "schema_version": "ao.foundry.trace.v0.1",
+    "trace_id": "trace-d7939bede677",
+    "span_id": "span-1bb9633061a1",
+    "component": "pulse",
+    "operation": "pulse.run",
+    "status": "passed",
+    "started_at": "2026-07-02T12:46:01Z",
+    "ended_at": "2026-07-02T12:46:01Z",
+    "duration_ms": 0,
+    "attributes": {
+      "goal_run": "examples/goals/ao-foundry-production-readiness.goal-run.json",
+      "registry": "examples/registry/local-ao-stack.foundry-registry.json",
+      "task": "examples/tasks/ao-foundry-bootstrap.foundry-task.json"
+    },
+    "evidence_refs": [
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/production-readiness-audit.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/goal-readiness-audit.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/forge-brief.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/forge-packet.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/policy-gate.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/forge-live-attempt.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/control-plane-readback.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/foundry-run.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/eval-result.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/rsi-candidate.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/rsi-improvement-gate.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/rsi-next-improvement-task.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/demo-status.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/release-manifest.json",
+      "docs/evidence/pulse/event-loop-run-20260702T124601Z/pulse/competitive-readiness-audit.json"
+    ]
+  }
+]
