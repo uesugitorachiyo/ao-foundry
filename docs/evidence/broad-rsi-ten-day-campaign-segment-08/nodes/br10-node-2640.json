@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-08",
+  "node": "br10-node-2640",
+  "segment": "08",
+  "phase": "final-synthesis",
+  "status": "completed",
+  "safe_to_execute": true,
+  "run_link": "run-links/br10-node-2640.json",
+  "evidence": [
+    "public_safe",
+    "tracked",
+    "rollbackable",
+    "digest_bound"
+  ],
+  "broad_RSI_claim_allowed": "only_after_final_gate_node_2800"
+}

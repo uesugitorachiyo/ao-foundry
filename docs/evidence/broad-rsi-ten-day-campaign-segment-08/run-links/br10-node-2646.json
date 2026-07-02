@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "node": "br10-node-2646",
+  "status": "completed",
+  "executed_task": "bounded evidence/readback artifact generation",
+  "no_forbidden_surfaces": true,
+  "rollback_ready": true
+}

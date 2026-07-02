@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-08",
+  "result": "passed",
+  "forbidden_claims_absent": [
+    "unrestricted self-modification permission",
+    "hidden instruction mutation permission",
+    "policy-changing autonomy permission",
+    "forbidden surface expansion permission"
+  ]
+}

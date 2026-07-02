@@ -1,0 +1,6 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-08",
+  "result": "passed",
+  "summary": "exact governed broad_RSI wording does not imply unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, credentials, providers, releases, deploys, dependencies, auth, policy, config, secrets, direct main mutation, or concurrent mutation"
+}
