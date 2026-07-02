@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-06",
+  "attempt": "attempt-be",
+  "task_type": "public-reader reproducibility and retraction clarity evidence",
+  "baseline": 0.69,
+  "post_change": 0.93,
+  "improvement": 0.24,
+  "result": "passed",
+  "regression_result": "passed",
+  "rollback_result": "passed",
+  "public_safe": true,
+  "broad_RSI": "denied"
+}
