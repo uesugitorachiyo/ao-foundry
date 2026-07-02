@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "gate": "rollback-retraction-results",
+  "result": "passed",
+  "notes": "all rollback and retraction rehearsals passed",
+  "broad_RSI": "denied"
+}

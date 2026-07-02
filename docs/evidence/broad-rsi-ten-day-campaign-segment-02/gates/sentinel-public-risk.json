@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "broad-rsi-ten-day-campaign-segment-02",
+  "gate": "sentinel-public-risk",
+  "result": "clear_for_segment_02_hold_for_broad_RSI",
+  "notes": "public-risk hold remains for exact broad_RSI",
+  "broad_RSI": "denied"
+}
