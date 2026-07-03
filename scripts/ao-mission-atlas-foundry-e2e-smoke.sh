@@ -7,7 +7,20 @@ OUT_ABS="$ROOT/$OUT"
 mkdir -p "$OUT_ABS"
 
 sha256_file() {
-  shasum -a 256 "$ROOT/$1" | awk '{print "sha256:" $1}'
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$ROOT/$1" | awk '{print "sha256:" $1}'
+    return
+  fi
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$ROOT/$1" | awk '{print "sha256:" $1}'
+    return
+  fi
+  if command -v openssl >/dev/null 2>&1; then
+    openssl dgst -sha256 "$ROOT/$1" | awk '{print "sha256:" $NF}'
+    return
+  fi
+  echo "no SHA-256 tool available" >&2
+  exit 1
 }
 
 ROUTE="examples/ao-mission-smoke/mission-route-readback.json"
@@ -78,7 +91,7 @@ if go run ./cmd/foundry ao-mission e2e-smoke \
   exit 1
 fi
 
-if ! rg -q "digest mismatch" /tmp/ao-mission-e2e-negative.err; then
+if ! grep -q "digest mismatch" /tmp/ao-mission-e2e-negative.err; then
   cat /tmp/ao-mission-e2e-negative.err >&2
   echo "negative smoke did not report digest mismatch" >&2
   exit 1
