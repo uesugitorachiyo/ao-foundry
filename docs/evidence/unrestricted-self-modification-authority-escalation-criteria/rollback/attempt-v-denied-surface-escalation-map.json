@@ -1,0 +1,26 @@
+{
+  "schema": "ao.foundry.rollback.v0.1",
+  "mission": "unrestricted-self-modification-authority-escalation-criteria",
+  "attempt_id": "attempt-v-denied-surface-escalation-map",
+  "passed": true,
+  "baseline": 0.76,
+  "post_change": 0.97,
+  "rollback_rehearsed": true,
+  "denied": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "auth_policy_config_expansion",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ]
+}

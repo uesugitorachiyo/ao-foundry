@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-authority-escalation-criteria",
+  "node_id": "aec-node-7142",
+  "status": "completed",
+  "safe_to_execute": true,
+  "attempt_id": "attempt-v-denied-surface-escalation-map",
+  "task_type": "denied-surface escalation mapping quality",
+  "baseline": 0.76,
+  "post_change": 0.97,
+  "rollback_record": "rollback/attempt-v-denied-surface-escalation-map.json",
+  "eval_regression_record": "eval-regression/attempt-v-denied-surface-escalation-map.json",
+  "public_safe": true,
+  "denied": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "auth_policy_config_expansion",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ]
+}

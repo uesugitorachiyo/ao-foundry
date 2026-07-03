@@ -1,0 +1,10 @@
+{
+  "schema": "ao.sentinel.result.v0.1",
+  "mission": "unrestricted-self-modification-authority-escalation-criteria",
+  "result": "clear_authority_escalation_criteria_hold_unrestricted_self_modification_and_bypass_authority",
+  "hold_for": [
+    "unrestricted_self_modification",
+    "sandbox_containment_bypass_authority",
+    "real_sandbox_escape"
+  ]
+}
