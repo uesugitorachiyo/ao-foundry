@@ -1365,6 +1365,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		return runContract(args[1:], stdout, stderr)
 	case "ao":
 		return runAO(args[1:], stdout, stderr)
+	case "ao-mission":
+		return runAOMission(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "foundry: unknown command %q\n", args[0])
 		printHelp(stderr)
@@ -1444,6 +1446,94 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse derive-next --pulse <pulse-event.json> [--audit <audit.json>] --out <decision.json>")
 	fmt.Fprintln(w, "  foundry pulse freshness --pulse <pulse-event.json>")
 	fmt.Fprintln(w, "  foundry ao status|next|run|audit|demo")
+	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
+}
+
+func runAOMission(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "foundry ao-mission requires smoke")
+		return 2
+	}
+	switch args[0] {
+	case "smoke":
+		return runAOMissionSmoke(args[1:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "foundry ao-mission: unknown command %q\n", strings.Join(args, " "))
+		return 2
+	}
+}
+
+func runAOMissionSmoke(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("ao-mission smoke", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	routePath := fs.String("route", "", "ao-mission route readback fixture")
+	snapshotPath := fs.String("snapshot", "", "ao-mission governance snapshot fixture")
+	outPath := fs.String("out", "", "smoke readback output path")
+	if err := fs.Parse(args); err != nil {
+		return 2
+	}
+	if *routePath == "" || *snapshotPath == "" || *outPath == "" {
+		fmt.Fprintln(stderr, "ao-mission smoke requires --route, --snapshot, and --out")
+		return 2
+	}
+	var route map[string]any
+	if err := readJSONFile(*routePath, &route); err != nil {
+		fmt.Fprintf(stderr, "ao-mission smoke: read route: %v\n", err)
+		return 1
+	}
+	var snapshot map[string]any
+	if err := readJSONFile(*snapshotPath, &snapshot); err != nil {
+		fmt.Fprintf(stderr, "ao-mission smoke: read snapshot: %v\n", err)
+		return 1
+	}
+	for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories"} {
+		if route[field] != false {
+			fmt.Fprintf(stderr, "ao-mission smoke: route %s must be false\n", field)
+			return 1
+		}
+		if snapshot[field] != false {
+			fmt.Fprintf(stderr, "ao-mission smoke: snapshot %s must be false\n", field)
+			return 1
+		}
+	}
+	if route["status"] != "ready" || snapshot["status"] != "ready" {
+		fmt.Fprintln(stderr, "ao-mission smoke: route and snapshot status must be ready")
+		return 1
+	}
+	readback := map[string]any{
+		"schema":                      "ao.foundry.ao-mission-smoke-readback.v0.1",
+		"status":                      "ready",
+		"mission_id":                  route["mission_id"],
+		"route":                       route["route"],
+		"current_owner":               snapshot["current_owner"],
+		"current_phase":               snapshot["current_phase"],
+		"safe_to_execute":             false,
+		"executes_work":               false,
+		"approves_work":               false,
+		"mutates_repositories":        false,
+		"provider_calls":              false,
+		"credential_use":              false,
+		"exact_next_action":           "ao-mission fixtures validated; use Atlas/Foundry gates for implementation work",
+		"route_readback":              *routePath,
+		"governance_snapshot":         *snapshotPath,
+		"generated_at_utc":            time.Now().UTC().Format(time.RFC3339),
+		"mutation_authority":          false,
+		"gateway_authority":           "intent_readback_only",
+		"scheduler_authority":         "wakeup_adapter_only",
+		"public_safe_readback":        true,
+		"direct_main_mutation":        false,
+		"concurrent_mutation":         false,
+		"release_or_publish":          false,
+		"dependency_updates":          false,
+		"policy_auth_expansion":       false,
+		"hidden_instruction_mutation": false,
+	}
+	if err := writeJSONFile(*outPath, readback); err != nil {
+		fmt.Fprintf(stderr, "ao-mission smoke: write output: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "ao_mission_smoke=%s\n", *outPath)
+	return 0
 }
 
 func runStatus(args []string, stdout, stderr io.Writer) int {
