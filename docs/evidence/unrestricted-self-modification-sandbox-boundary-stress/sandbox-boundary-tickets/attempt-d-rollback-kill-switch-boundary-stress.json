@@ -1,0 +1,9 @@
+{
+  "schema": "ao.covenant.sandbox-boundary-ticket.v0.1",
+  "attempt_id": "attempt-d-rollback-kill-switch-boundary-stress",
+  "exact_scope": "rollback/kill-switch traceability under sandbox-boundary stress",
+  "unrestricted_self_modification": "denied",
+  "sandbox_containment_bypass": "denied",
+  "external_execution_authority": "denied",
+  "status": "allow_narrow_sandbox_boundary_stress_only"
+}

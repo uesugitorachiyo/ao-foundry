@@ -1,0 +1,67 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-boundary-stress",
+  "target_class": "public_safe_bounded_sandboxed_self_change_sandbox_boundary_stress_four_attempts",
+  "prior_highest": "public_safe_bounded_sandboxed_self_change_delegated_dry_run_authority_gap_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "public_safe": true,
+  "completed_nodes": 420,
+  "total_nodes": 420,
+  "attempts": [
+    {
+      "id": "attempt-a-sandbox-boundary-fixture-denial-consistency",
+      "label": "Attempt A",
+      "task_type": "sandbox boundary fixture denial consistency",
+      "measurement": "attempts/attempt-a-sandbox-boundary-fixture-denial-consistency/measurement.json",
+      "runbook": "attempts/attempt-a-sandbox-boundary-fixture-denial-consistency/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-a-sandbox-boundary-fixture-denial-consistency.json",
+      "sandbox_boundary_ticket": "sandbox-boundary-tickets/attempt-a-sandbox-boundary-fixture-denial-consistency.json",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-a-sandbox-boundary-fixture-denial-consistency.json"
+    },
+    {
+      "id": "attempt-b-containment-escape-negative-control-coverage",
+      "label": "Attempt B",
+      "task_type": "containment escape negative-control coverage",
+      "measurement": "attempts/attempt-b-containment-escape-negative-control-coverage/measurement.json",
+      "runbook": "attempts/attempt-b-containment-escape-negative-control-coverage/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-b-containment-escape-negative-control-coverage.json",
+      "sandbox_boundary_ticket": "sandbox-boundary-tickets/attempt-b-containment-escape-negative-control-coverage.json",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-b-containment-escape-negative-control-coverage.json"
+    },
+    {
+      "id": "attempt-c-delegated-packet-boundary-drift-detection",
+      "label": "Attempt C",
+      "task_type": "delegated packet boundary drift detection",
+      "measurement": "attempts/attempt-c-delegated-packet-boundary-drift-detection/measurement.json",
+      "runbook": "attempts/attempt-c-delegated-packet-boundary-drift-detection/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-c-delegated-packet-boundary-drift-detection.json",
+      "sandbox_boundary_ticket": "sandbox-boundary-tickets/attempt-c-delegated-packet-boundary-drift-detection.json",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-c-delegated-packet-boundary-drift-detection.json"
+    },
+    {
+      "id": "attempt-d-rollback-kill-switch-boundary-stress",
+      "label": "Attempt D",
+      "task_type": "rollback/kill-switch traceability under sandbox-boundary stress",
+      "measurement": "attempts/attempt-d-rollback-kill-switch-boundary-stress/measurement.json",
+      "runbook": "attempts/attempt-d-rollback-kill-switch-boundary-stress/reproducibility-runbook.md",
+      "rollback": "rollback/attempt-d-rollback-kill-switch-boundary-stress.json",
+      "sandbox_boundary_ticket": "sandbox-boundary-tickets/attempt-d-rollback-kill-switch-boundary-stress.json",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-d-rollback-kill-switch-boundary-stress.json"
+    }
+  ],
+  "gates": {
+    "architecture-wording.json": "gates/architecture-wording.json",
+    "command-readback.json": "gates/command-readback.json",
+    "covenant-authority-gate.json": "gates/covenant-authority-gate.json",
+    "cross-attempt-reproducibility.json": "gates/cross-attempt-reproducibility.json",
+    "eval-regression-results.json": "gates/eval-regression-results.json",
+    "forge-ao2-bounded-packet.json": "gates/forge-ao2-bounded-packet.json",
+    "kill-switch-results.json": "gates/kill-switch-results.json",
+    "promoter-verdict.json": "gates/promoter-verdict.json",
+    "public-safety-scan.json": "gates/public-safety-scan.json",
+    "rollback-retraction-results.json": "gates/rollback-retraction-results.json",
+    "sentinel-public-risk.json": "gates/sentinel-public-risk.json",
+    "stale-language-sweep.json": "gates/stale-language-sweep.json"
+  },
+  "digest_manifest": "digest-manifest.json"
+}

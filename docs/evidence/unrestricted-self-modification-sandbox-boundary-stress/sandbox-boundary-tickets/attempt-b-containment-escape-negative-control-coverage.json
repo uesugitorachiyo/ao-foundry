@@ -1,0 +1,9 @@
+{
+  "schema": "ao.covenant.sandbox-boundary-ticket.v0.1",
+  "attempt_id": "attempt-b-containment-escape-negative-control-coverage",
+  "exact_scope": "containment escape negative-control coverage",
+  "unrestricted_self_modification": "denied",
+  "sandbox_containment_bypass": "denied",
+  "external_execution_authority": "denied",
+  "status": "allow_narrow_sandbox_boundary_stress_only"
+}
