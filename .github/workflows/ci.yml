@@ -79,6 +79,10 @@ jobs:
       - name: Pulse start gate regression
         shell: bash
         run: go test ./internal/cli -run 'TestPulseRunRequiresReadyStartGateBeforeBundle|TestPulseRunAcceptsReadyStartGateAndWritesDecision' -v
+      - name: AO Mission e2e smoke
+        shell: bash
+        run: |
+          go run ./cmd/foundry ao-mission e2e-smoke --route examples/ao-mission-smoke/mission-route-readback.json --snapshot examples/ao-mission-smoke/governance-snapshot-readback.json --mission-final-rollup examples/ao-mission-smoke/mission-final-rollup.json --foundry-final-rollup examples/ao-mission-smoke/foundry-final-rollup.json --atlas-metadata examples/ao-mission-smoke/atlas-workgraph-metadata.json --out tmp/ao-mission-e2e-smoke.json
       - name: Pulse smoke
         shell: bash
         run: |
