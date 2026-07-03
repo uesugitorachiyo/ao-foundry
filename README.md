@@ -1111,3 +1111,39 @@ forbidden surface expansion, or any unrestricted RSI claim. The highest proven
 live class is
 `public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Sandboxed External-Execution Dry-Run Packet Evidence
+
+`public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/sandboxed-external-execution-dry-run-packet/` and final rollup
+`docs/evidence/sandboxed-external-execution-dry-run-packet/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe sandboxed
+external-execution dry-run authority packet evidence across four exact-scope
+reversible attempts under sandbox containment gates; actual external execution
+authority, provider calls, credential use, sandbox containment bypass,
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, and forbidden surface expansion remain denied." Completed nodes:
+`520 / 520`. Attempts completed: `4 / 4`.
+
+Attempt I covers provider-call dry-run ticket fixture quality (`0.77` to
+`0.97`), Attempt J covers credential-use denial packet quality (`0.75` to
+`0.96`), Attempt K covers external-command dry-run allowlist packet quality
+(`0.74` to `0.95`), and Attempt L covers sandbox containment bypass
+negative-control packet quality (`0.73` to `0.94`). Eval/regression, rollback,
+retraction, kill-switch, negative-control, Covenant, Forge/AO2, Sentinel,
+Promoter, Command, Architecture wording, public-safety, and stale-language
+gates passed.
+
+This proves only four serialized, exact-scope, reversible sandboxed
+external-execution dry-run packet evidence applications under sandbox
+containment gates. It does not prove actual external execution authority,
+provider calls, credential use, sandbox containment bypass, unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy,
+policy/auth/secret/provider/deploy/release/config/dependency expansion,
+direct-main mutation, concurrent mutation, release/deploy/publish/upload/tag
+authority, dependency update authority, hidden instruction changes, forbidden
+surface expansion, or any unrestricted RSI claim. The highest proven live class
+is
+`public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

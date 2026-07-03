@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "attempt_id": "attempt-i-provider-call-dry-run-ticket-fixture-quality",
+  "label": "Attempt I",
+  "task_type": "provider-call dry-run ticket fixture quality",
+  "packet_type": "provider_call_dry_run_ticket",
+  "baseline": 0.77,
+  "post_change": 0.97,
+  "improvement": 0.2,
+  "threshold": 0.18,
+  "result": "improved",
+  "decisive_evidence_public_safe": true,
+  "actual_external_execution_performed": false,
+  "provider_calls_performed": false,
+  "credential_use_performed": false,
+  "sandbox_containment_bypass_performed": false,
+  "denied_surfaces": [
+    "provider_calls",
+    "actual_external_execution_authority"
+  ]
+}

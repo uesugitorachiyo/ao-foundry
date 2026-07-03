@@ -1,0 +1,30 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "allowed_class": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts",
+  "denied_surfaces": [
+    "actual_external_execution_authority",
+    "provider_calls",
+    "credential_use",
+    "sandbox_containment_bypass",
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ],
+  "actual_external_execution_authority": "denied",
+  "provider_calls": "denied",
+  "credential_use": "denied",
+  "sandbox_containment_bypass": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "forbidden_surface_expansion": "denied",
+  "result": "approve_sandboxed_external_execution_dry_run_packet_wording_deny_actual_external_execution_authority",
+  "approved_public_wording": "AO has public-safe sandboxed external-execution dry-run authority packet evidence across four exact-scope reversible attempts under sandbox containment gates; actual external execution authority, provider calls, credential use, sandbox containment bypass, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied."
+}
