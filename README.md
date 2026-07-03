@@ -1001,3 +1001,39 @@ sandbox containment bypass, or any unrestricted RSI claim. The highest proven
 live class is
 `public_safe_bounded_sandboxed_self_change_delegated_dry_run_authority_gap_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Sandbox-Boundary Stress Sandboxed Self-Change
+
+`public_safe_bounded_sandboxed_self_change_sandbox_boundary_stress_four_attempts`
+is proven from AO Foundry PR #225, commit
+`8297e87cb32b8889a205ac6d38736e32004ba824`, with tracked public evidence under
+`docs/evidence/unrestricted-self-modification-sandbox-boundary-stress/` and
+final rollup
+`docs/evidence/unrestricted-self-modification-sandbox-boundary-stress/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed
+self-change sandbox-boundary stress evidence across four exact-scope reversible
+attempts under sandbox containment gates; unrestricted self-modification, hidden
+instruction mutation, policy-changing autonomy, forbidden surface expansion,
+sandbox containment bypass, and external execution authority remain denied."
+Completed nodes: `420 / 420`. Attempts completed: `4 / 4`.
+
+Attempt A covers sandbox boundary fixture denial consistency (`0.74` to
+`0.97`), Attempt B covers containment escape negative-control coverage (`0.72`
+to `0.96`), Attempt C covers delegated packet boundary drift detection (`0.71`
+to `0.95`), and Attempt D covers rollback/kill-switch traceability under
+sandbox-boundary stress (`0.70` to `0.94`). Eval/regression, rollback,
+retraction, kill-switch, cross-attempt reproducibility, Covenant, Forge/AO2,
+Sentinel, Promoter, Command, Architecture wording, public-safety, and
+stale-language gates passed.
+
+This proves only four serialized, exact-scope, reversible sandbox-boundary
+stress evidence applications under sandbox containment gates. It does not prove
+unrestricted self-modification, sandbox containment bypass, external execution
+authority, hidden instruction mutation, policy-changing autonomy,
+policy/auth/secret/provider/deploy/release/config/dependency expansion,
+credential use, provider calls, direct-main mutation, concurrent mutation,
+release/deploy/publish/upload/tag authority, dependency update authority, hidden
+instruction changes, forbidden surface expansion, or any unrestricted RSI claim.
+The highest proven live class is
+`public_safe_bounded_sandboxed_self_change_sandbox_boundary_stress_four_attempts`;
+the next denied class is `unrestricted_self_modification`.
