@@ -1,0 +1,6 @@
+{
+  "schema": "ao.architecture.wording.v0.1",
+  "mission": "unrestricted-self-modification-contained-external-command-self-change",
+  "result": "approve_contained_external_command_self_change_wording_deny_unrestricted_self_modification_claim",
+  "approved_public_wording": "AO has public-safe contained external-command self-change application evidence across four exact-scope reversible allowlisted local-command attempts under sandbox containment gates; unrestricted self-modification, sandbox containment bypass, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied."
+}

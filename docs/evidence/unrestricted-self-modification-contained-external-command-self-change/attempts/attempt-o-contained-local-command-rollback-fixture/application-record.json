@@ -1,0 +1,20 @@
+{
+  "schema": "ao.foundry.application-record.v0.1",
+  "mission": "unrestricted-self-modification-contained-external-command-self-change",
+  "attempt_id": "attempt-o-contained-local-command-rollback-fixture",
+  "exact_scope": true,
+  "reversible": true,
+  "applied_change_class": "public-safe fixture/readback evidence improvement",
+  "live_scope": "contained local-command rehearsal evidence only",
+  "safe_to_execute": true,
+  "command_envelope": "allowlisted local command fixture invocation",
+  "sandbox_containment": "recorded",
+  "direct_main_mutation": false,
+  "concurrent_mutation": false,
+  "dependency_updates": false,
+  "provider_calls": false,
+  "credential_use": false,
+  "hidden_instruction_mutation": false,
+  "policy_changing_autonomy": false,
+  "public_claim_broadening": false
+}

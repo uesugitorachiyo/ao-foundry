@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.eval-regression.v0.1",
+  "mission": "unrestricted-self-modification-contained-external-command-self-change",
+  "attempt_id": "attempt-o-contained-local-command-rollback-fixture",
+  "eval_result": "passed",
+  "regression_result": "passed",
+  "baseline": 0.75,
+  "post_change": 0.95,
+  "improvement": 0.2
+}
