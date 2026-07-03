@@ -1,0 +1,13 @@
+{
+  "schema": "ao.mission.final-rollup.v0.1",
+  "mission_id": "mission-other",
+  "status": "done",
+  "completed_nodes": 3,
+  "total_nodes": 3,
+  "artifact_refs": [],
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "exact_next_action": "mission complete; no generated tasks remain"
+}

@@ -166,6 +166,46 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	}
 }
 
+func TestAOMissionE2ESmokeRejectsMissionIDMismatchFixture(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "invalid-mission-final-rollup-mission-id.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected mission_id mismatch fixture to fail")
+	}
+	if !strings.Contains(stderr.String(), "mission_final_rollup mission_id mismatch") {
+		t.Fatalf("expected mission_id mismatch error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+}
+
+func TestAOMissionE2ESmokeRejectsAtlasNodeCountMismatchFixture(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "invalid-atlas-workgraph-metadata-node-count.json"),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected Atlas node count mismatch fixture to fail")
+	}
+	if !strings.Contains(stderr.String(), "Atlas metadata node total must match final rollup total") {
+		t.Fatalf("expected Atlas node-count mismatch error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+}
+
 func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", atlasRegistryFixture()}, &stdout, &stderr)
@@ -5519,6 +5559,28 @@ func TestCIWorkflowRunsPulseStartGateRegression(t *testing.T) {
 	} {
 		if !strings.Contains(text, want) {
 			t.Fatalf("CI workflow missing %q", want)
+		}
+	}
+}
+
+func TestCIWorkflowRunsAOMissionE2ESmokeFixture(t *testing.T) {
+	workflow, err := os.ReadFile(repoPath(".github/workflows/ci.yml"))
+	if err != nil {
+		t.Fatalf("read CI workflow: %v", err)
+	}
+	text := string(workflow)
+	for _, want := range []string{
+		"AO Mission e2e smoke",
+		"go run ./cmd/foundry ao-mission e2e-smoke",
+		"--route examples/ao-mission-smoke/mission-route-readback.json",
+		"--snapshot examples/ao-mission-smoke/governance-snapshot-readback.json",
+		"--mission-final-rollup examples/ao-mission-smoke/mission-final-rollup.json",
+		"--foundry-final-rollup examples/ao-mission-smoke/foundry-final-rollup.json",
+		"--atlas-metadata examples/ao-mission-smoke/atlas-workgraph-metadata.json",
+		"--out tmp/ao-mission-e2e-smoke.json",
+	} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("CI workflow missing AO Mission e2e smoke detail %q", want)
 		}
 	}
 }
