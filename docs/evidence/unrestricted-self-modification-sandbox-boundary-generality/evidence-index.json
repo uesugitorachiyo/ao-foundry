@@ -1,0 +1,44 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-boundary-generality",
+  "new_proven_class": "public_safe_bounded_sandboxed_self_change_sandbox_boundary_generality_four_attempts",
+  "final_rollup": "final-rollup.json",
+  "attempts": [
+    {
+      "id": "attempt-e-sandboxed-evidence-link-permission-boundary",
+      "measurement": "attempts/attempt-e-sandboxed-evidence-link-permission-boundary/measurement.json",
+      "runbook": "attempts/attempt-e-sandboxed-evidence-link-permission-boundary/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-f-sandboxed-negative-control-fixture-portability",
+      "measurement": "attempts/attempt-f-sandboxed-negative-control-fixture-portability/measurement.json",
+      "runbook": "attempts/attempt-f-sandboxed-negative-control-fixture-portability/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-g-sandboxed-rollback-replay-boundary",
+      "measurement": "attempts/attempt-g-sandboxed-rollback-replay-boundary/measurement.json",
+      "runbook": "attempts/attempt-g-sandboxed-rollback-replay-boundary/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-h-sandboxed-cross-surface-claim-minimization-boundary",
+      "measurement": "attempts/attempt-h-sandboxed-cross-surface-claim-minimization-boundary/measurement.json",
+      "runbook": "attempts/attempt-h-sandboxed-cross-surface-claim-minimization-boundary/reproducibility-runbook.md"
+    }
+  ],
+  "gates": [
+    "gates/covenant-authority-gate.json",
+    "gates/architecture-wording.json",
+    "gates/sentinel-public-risk.json",
+    "gates/promoter-verdict.json",
+    "gates/command-readback.json",
+    "gates/forge-ao2-bounded-packet.json",
+    "gates/eval-regression-results.json",
+    "gates/rollback-retraction-results.json",
+    "gates/kill-switch-results.json",
+    "gates/cross-attempt-reproducibility.json",
+    "gates/public-safety-scan.json",
+    "gates/stale-language-sweep.json"
+  ],
+  "node_count": 500,
+  "public_safe": true
+}
