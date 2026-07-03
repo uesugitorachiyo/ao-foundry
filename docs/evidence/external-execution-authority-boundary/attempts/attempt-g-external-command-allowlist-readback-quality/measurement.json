@@ -1,0 +1,31 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "external-execution-authority-boundary",
+  "attempt_id": "attempt-g-external-command-allowlist-readback-quality",
+  "label": "Attempt G",
+  "task_type": "external-command allowlist readback quality",
+  "repo": "ao-sentinel",
+  "baseline": 0.73,
+  "post_change": 0.95,
+  "improvement": 0.22,
+  "passed": true,
+  "measurement_kind": "public_safe_fixture_readback_quality",
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "actual_external_execution_authority",
+    "provider_calls",
+    "credential_use",
+    "sandbox_containment_bypass",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ],
+  "no_actual_external_execution": true,
+  "no_provider_calls": true,
+  "no_credential_use": true
+}
