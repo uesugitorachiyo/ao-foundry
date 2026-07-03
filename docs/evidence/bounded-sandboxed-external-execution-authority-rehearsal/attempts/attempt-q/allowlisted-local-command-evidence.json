@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.allowlisted-local-command-evidence.v0.1",
+  "command": "printf",
+  "argv_digest": "b7c8ea88934f1108bfd7a7349e87a8031bf7522e6c63648a0d9d80d5f93bc3b0",
+  "stdout_sha256": "4f1267f71a74c214b2b90e9a9b016058fd89609a486f32167b37e9218a0ece91",
+  "exit_code": 0,
+  "network_used": false,
+  "provider_call_used": false,
+  "credential_used": false,
+  "env_supplied": "empty",
+  "sandbox_bypass_attempted": false,
+  "public_safe": true
+}

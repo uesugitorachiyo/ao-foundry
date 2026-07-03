@@ -1182,3 +1182,39 @@ instruction changes, forbidden surface expansion, or any unrestricted RSI claim.
 The highest proven live class is
 `public_safe_external_execution_authority_readiness_boundary_map`; the next
 denied class is `unrestricted_self_modification`.
+
+## Bounded Sandboxed External-Execution Authority Rehearsal Evidence
+
+`public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`
+is proven from tracked public evidence under
+`docs/evidence/bounded-sandboxed-external-execution-authority-rehearsal/` and
+final rollup
+`docs/evidence/bounded-sandboxed-external-execution-authority-rehearsal/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed
+external-execution authority rehearsal evidence across four exact-scope
+reversible allowlisted local-command attempts under sandbox containment gates;
+provider calls, credential use, sandbox containment bypass, unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy,
+forbidden surface expansion, release/deploy/publish/upload/tag authority,
+dependency updates, direct-main mutation, concurrent mutation, and broad public
+claims remain denied." Completed nodes: `720 / 720`. Attempts completed: `4 /
+4`.
+
+Attempt Q covers allowlisted local command sandbox rehearsal quality (`0.79` to
+`0.98`), Attempt R covers sandbox environment isolation evidence quality
+(`0.77` to `0.97`), Attempt S covers provider and credential quarantine during
+sandboxed execution quality (`0.76` to `0.96`), and Attempt T covers
+kill-switch rollback and retraction evidence quality (`0.75` to `0.95`).
+Eval/regression, rollback, retraction, kill-switch, Covenant, Forge/AO2,
+Sentinel, Promoter, Command, Architecture wording, public-safety, and
+stale-language gates passed.
+
+This proves only the bounded sandbox-contained allowlisted local-command
+rehearsal class. It does not prove unrestricted self-modification, provider-call
+authority, credential authority, sandbox containment bypass, hidden instruction
+mutation, policy-changing autonomy, forbidden surface expansion,
+release/deploy/publish/upload/tag authority, dependency updates, direct-main
+mutation, concurrent mutation, broad public claims, or any unrestricted RSI
+claim. The highest proven live class is
+`public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`;
+the next denied class is `unrestricted_self_modification`.

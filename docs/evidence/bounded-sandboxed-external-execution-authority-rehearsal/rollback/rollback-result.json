@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.rollback.result.v0.1",
+  "project": "bounded-sandboxed-external-execution-authority-rehearsal",
+  "result": "all_attempts_reversible_retraction_ready_no_external_provider_state_to_revert",
+  "target_class": "public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts",
+  "public_safe": true,
+  "denied_surfaces_preserved": true
+}
