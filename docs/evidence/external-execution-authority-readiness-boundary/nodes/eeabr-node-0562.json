@@ -1,0 +1,33 @@
+{
+  "schema": "ao.foundry.evidence-node.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0562",
+  "sequence": 562,
+  "total_nodes": 640,
+  "phase": "Command readback",
+  "attempt_id": "attempt-n",
+  "task_type": "provider-call quarantine readiness quality",
+  "status": "completed",
+  "safe_to_execute": true,
+  "exact_scope": true,
+  "reversible": true,
+  "public_safe": true,
+  "operation_kind": "dry_run_readback_evidence",
+  "executed_external_authority": false,
+  "provider_calls": false,
+  "credential_use": false,
+  "sandbox_bypass": false,
+  "direct_main_mutation": false,
+  "dependency_updates": false,
+  "release_deploy_publish_upload_tag": false,
+  "hidden_instruction_mutation": false,
+  "policy_changing_autonomy": false,
+  "broad_public_claim": false,
+  "evidence": [
+    "attempts/attempt-n/measurement.json",
+    "attempts/attempt-n/reproducibility-runbook.md"
+  ],
+  "rollback_record": "rollback/eeabr-node-0562.json",
+  "context_pack": "context-packs/eeabr-node-0562.json",
+  "redaction_record": "redaction/eeabr-node-0562.json"
+}

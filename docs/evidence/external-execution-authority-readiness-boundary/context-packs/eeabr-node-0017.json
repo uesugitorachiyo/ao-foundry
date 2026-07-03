@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.context-pack.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0017",
+  "public_safe": true,
+  "context_summary": "sandbox bypass stop-readiness boundary map for execution-authority denial readiness-map quality.",
+  "excluded_private_paths": true,
+  "sanitized_relative_paths_only": true
+}

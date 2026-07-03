@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.context-pack.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0626",
+  "public_safe": true,
+  "context_summary": "external execution authority denial audit for provider-call quarantine readiness quality.",
+  "excluded_private_paths": true,
+  "sanitized_relative_paths_only": true
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "previous_highest": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts",
+  "new_proven_class": "public_safe_external_execution_authority_readiness_boundary_map",
+  "highest_proven_live_class": "public_safe_external_execution_authority_readiness_boundary_map",
+  "next_denied_class": "unrestricted_self_modification",
+  "final_rollup": "final-rollup.json",
+  "node_count": 640,
+  "run_link_count": 640,
+  "attempts": [
+    {
+      "id": "attempt-m",
+      "label": "Attempt M",
+      "type": "execution-authority denial readiness-map quality",
+      "baseline": 0.78,
+      "post": 0.98,
+      "improvement": 0.2,
+      "measurement": "attempts/attempt-m/measurement.json",
+      "runbook": "attempts/attempt-m/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-n",
+      "label": "Attempt N",
+      "type": "provider-call quarantine readiness quality",
+      "baseline": 0.76,
+      "post": 0.97,
+      "improvement": 0.21,
+      "measurement": "attempts/attempt-n/measurement.json",
+      "runbook": "attempts/attempt-n/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-o",
+      "label": "Attempt O",
+      "type": "credential non-use readiness quality",
+      "baseline": 0.75,
+      "post": 0.96,
+      "improvement": 0.21,
+      "measurement": "attempts/attempt-o/measurement.json",
+      "runbook": "attempts/attempt-o/reproducibility-runbook.md"
+    },
+    {
+      "id": "attempt-p",
+      "label": "Attempt P",
+      "type": "sandbox bypass stop-readiness quality",
+      "baseline": 0.74,
+      "post": 0.95,
+      "improvement": 0.21,
+      "measurement": "attempts/attempt-p/measurement.json",
+      "runbook": "attempts/attempt-p/reproducibility-runbook.md"
+    }
+  ],
+  "gates": {
+    "covenant_authority_gate": "gates/covenant-authority-gate.json",
+    "sentinel_public_risk": "gates/sentinel-public-risk.json",
+    "promoter_verdict": "gates/promoter-verdict.json",
+    "command_readback": "gates/command-readback.json",
+    "architecture_wording": "gates/architecture-wording.json",
+    "forge_ao2_bounded_packet": "gates/forge-ao2-bounded-packet.json",
+    "rollback_retraction_results": "gates/rollback-retraction-results.json",
+    "eval_regression_results": "gates/eval-regression-results.json",
+    "public_safety_scan": "gates/public-safety-scan.json",
+    "stale_language_sweep": "gates/stale-language-sweep.json",
+    "atlas_foundry_import_validation": "gates/atlas-foundry-import-validation.json",
+    "cross_attempt_reproducibility": "gates/cross-attempt-reproducibility.json"
+  },
+  "public_safe": true,
+  "tracked_public_evidence": true,
+  "sanitized_relative_paths_only": true,
+  "actual_external_execution_performed": false,
+  "provider_calls": false,
+  "credential_use": false,
+  "sandbox_bypass": false,
+  "unrestricted_self_modification": false,
+  "hidden_instruction_mutation": false,
+  "policy_changing_autonomy": false
+}

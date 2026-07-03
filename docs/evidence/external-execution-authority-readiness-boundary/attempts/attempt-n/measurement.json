@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.external-execution-readiness.measurement.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "attempt_id": "attempt-n",
+  "task_type": "provider-call quarantine readiness quality",
+  "baseline": 0.76,
+  "post_change": 0.97,
+  "improvement": 0.21,
+  "threshold": 0.1,
+  "result": "passed",
+  "public_safe": true,
+  "executed_external_authority": false,
+  "provider_calls": false,
+  "credential_use": false,
+  "sandbox_bypass": false,
+  "evidence_summary": "Attempt N improved provider-call quarantine readiness quality from 0.76 to 0.97 using dry-run/readback artifacts only."
+}

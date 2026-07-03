@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.context-pack.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0143",
+  "public_safe": true,
+  "context_summary": "rollback and retraction evidence for credential non-use readiness quality.",
+  "excluded_private_paths": true,
+  "sanitized_relative_paths_only": true
+}
