@@ -1447,6 +1447,9 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse freshness --pulse <pulse-event.json>")
 	fmt.Fprintln(w, "  foundry ao status|next|run|audit|demo")
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
+	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> --out <smoke.json>")
 }
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
@@ -1455,8 +1458,12 @@ func runAOMission(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	switch args[0] {
+	case "e2e-smoke":
+		return runAOMissionE2ESmoke(args[1:], stdout, stderr)
 	case "final-rollup-smoke":
 		return runAOMissionFinalRollupSmoke(args[1:], stdout, stderr)
+	case "readiness-ledger":
+		return runAOMissionReadinessLedger(args[1:], stdout, stderr)
 	case "smoke":
 		return runAOMissionSmoke(args[1:], stdout, stderr)
 	default:
@@ -1614,6 +1621,183 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 	}
 	fmt.Fprintf(stdout, "ao_mission_final_rollup_smoke=%s\n", *outPath)
 	return 0
+}
+
+func runAOMissionReadinessLedger(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("ao-mission readiness-ledger", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	smokePath := fs.String("final-rollup-smoke", "", "ao-mission final-rollup smoke readback")
+	outPath := fs.String("out", "", "readiness ledger output path")
+	if err := fs.Parse(args); err != nil {
+		return 2
+	}
+	if *smokePath == "" || *outPath == "" {
+		fmt.Fprintln(stderr, "ao-mission readiness-ledger requires --final-rollup-smoke and --out")
+		return 2
+	}
+	var smoke map[string]any
+	if err := readJSONFile(*smokePath, &smoke); err != nil {
+		fmt.Fprintf(stderr, "ao-mission readiness-ledger: read final-rollup smoke: %v\n", err)
+		return 1
+	}
+	if smoke["schema"] != "ao.foundry.ao-mission-final-rollup-smoke.v0.1" || smoke["status"] != "ready" {
+		fmt.Fprintln(stderr, "ao-mission readiness-ledger: final-rollup smoke must be ready")
+		return 1
+	}
+	if aoMissionAuthorityClaimed(smoke) {
+		fmt.Fprintln(stderr, "ao-mission readiness-ledger: final-rollup smoke must not claim authority")
+		return 1
+	}
+	ledger := map[string]any{
+		"schema":                "ao.foundry.ao-mission-readiness-ledger.v0.1",
+		"status":                "ready",
+		"mission_id":            smoke["mission_id"],
+		"completed_nodes":       intFromJSONNumber(smoke["completed_nodes"]),
+		"total_nodes":           intFromJSONNumber(smoke["total_nodes"]),
+		"final_rollup_smoke":    *smokePath,
+		"safe_to_execute":       false,
+		"executes_work":         false,
+		"approves_work":         false,
+		"mutates_repositories":  false,
+		"exact_next_action":     "AO Mission final-rollup smoke is ready; keep execution behind Atlas and Foundry gates",
+		"generated_at_utc":      time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":  true,
+		"claims_readiness_only": true,
+		"scheduler_authority":   "none",
+		"gateway_authority":     "none",
+		"direct_main_mutation":  false,
+		"concurrent_mutation":   false,
+		"release_or_publish":    false,
+		"dependency_updates":    false,
+		"policy_auth_expansion": false,
+		"provider_calls":        false,
+		"credential_use":        false,
+	}
+	if err := writeJSONFile(*outPath, ledger); err != nil {
+		fmt.Fprintf(stderr, "ao-mission readiness-ledger: write output: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "ao_mission_readiness_ledger=%s\n", *outPath)
+	return 0
+}
+
+func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("ao-mission e2e-smoke", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	routePath := fs.String("route", "", "ao-mission route readback fixture")
+	snapshotPath := fs.String("snapshot", "", "ao-mission governance snapshot fixture")
+	missionRollupPath := fs.String("mission-final-rollup", "", "ao-mission final rollup fixture")
+	foundryRollupPath := fs.String("foundry-final-rollup", "", "ao-foundry final rollup fixture")
+	atlasMetadataPath := fs.String("atlas-metadata", "", "ao-atlas mission workgraph metadata fixture")
+	outPath := fs.String("out", "", "e2e smoke output path")
+	if err := fs.Parse(args); err != nil {
+		return 2
+	}
+	if *routePath == "" || *snapshotPath == "" || *missionRollupPath == "" || *foundryRollupPath == "" || *atlasMetadataPath == "" || *outPath == "" {
+		fmt.Fprintln(stderr, "ao-mission e2e-smoke requires --route, --snapshot, --mission-final-rollup, --foundry-final-rollup, --atlas-metadata, and --out")
+		return 2
+	}
+	artifacts := map[string]map[string]any{}
+	for name, path := range map[string]string{
+		"route":                *routePath,
+		"snapshot":             *snapshotPath,
+		"mission_final_rollup": *missionRollupPath,
+		"foundry_final_rollup": *foundryRollupPath,
+		"atlas_workgraph_meta": *atlasMetadataPath,
+	} {
+		var doc map[string]any
+		if err := readJSONFile(path, &doc); err != nil {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: read %s: %v\n", name, err)
+			return 1
+		}
+		if aoMissionAuthorityClaimed(doc) {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %s must not claim authority\n", name)
+			return 1
+		}
+		artifacts[name] = doc
+	}
+	missionID := artifacts["route"]["mission_id"]
+	for name, doc := range artifacts {
+		if doc["mission_id"] != missionID {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %s mission_id mismatch\n", name)
+			return 1
+		}
+	}
+	if artifacts["route"]["status"] != "ready" || artifacts["snapshot"]["status"] != "ready" {
+		fmt.Fprintln(stderr, "ao-mission e2e-smoke: route and snapshot must be ready")
+		return 1
+	}
+	missionCompleted, missionTotal := intFromJSONNumber(artifacts["mission_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["mission_final_rollup"]["total_nodes"])
+	foundryCompleted, foundryTotal := intFromJSONNumber(artifacts["foundry_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["foundry_final_rollup"]["total_nodes"])
+	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+		fmt.Fprintln(stderr, "ao-mission e2e-smoke: final rollup node counts must be complete and equal")
+		return 1
+	}
+	atlasCounts, _ := artifacts["atlas_workgraph_meta"]["node_counts"].(map[string]any)
+	if atlasTotal := intFromJSONNumber(atlasCounts["total"]); atlasTotal != missionTotal {
+		fmt.Fprintln(stderr, "ao-mission e2e-smoke: Atlas metadata node total must match final rollup total")
+		return 1
+	}
+	smoke := map[string]any{
+		"schema":                "ao.foundry.ao-mission-e2e-smoke.v0.1",
+		"status":                "ready",
+		"mission_id":            missionID,
+		"route":                 artifacts["route"]["route"],
+		"current_owner":         artifacts["snapshot"]["current_owner"],
+		"atlas_workgraph_id":    artifacts["atlas_workgraph_meta"]["workgraph_id"],
+		"target_instance":       artifacts["atlas_workgraph_meta"]["target_instance"],
+		"completed_nodes":       missionCompleted,
+		"total_nodes":           missionTotal,
+		"route_readback":        *routePath,
+		"governance_snapshot":   *snapshotPath,
+		"mission_final_rollup":  *missionRollupPath,
+		"foundry_final_rollup":  *foundryRollupPath,
+		"atlas_metadata":        *atlasMetadataPath,
+		"safe_to_execute":       false,
+		"executes_work":         false,
+		"approves_work":         false,
+		"mutates_repositories":  false,
+		"exact_next_action":     "AO Mission, Atlas, and Foundry smoke artifacts agree; no execution authority is granted",
+		"generated_at_utc":      time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":  true,
+		"gateway_authority":     "intent_readback_only",
+		"scheduler_authority":   "wakeup_adapter_only",
+		"direct_main_mutation":  false,
+		"concurrent_mutation":   false,
+		"release_or_publish":    false,
+		"dependency_updates":    false,
+		"policy_auth_expansion": false,
+		"provider_calls":        false,
+		"credential_use":        false,
+	}
+	if err := writeJSONFile(*outPath, smoke); err != nil {
+		fmt.Fprintf(stderr, "ao-mission e2e-smoke: write output: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "ao_mission_e2e_smoke=%s\n", *outPath)
+	return 0
+}
+
+func aoMissionAuthorityClaimed(doc map[string]any) bool {
+	for _, field := range []string{
+		"safe_to_execute",
+		"executes_work",
+		"approves_work",
+		"mutates_repositories",
+		"provider_calls",
+		"credential_use",
+		"release_or_publish",
+		"direct_main_mutation",
+		"concurrent_mutation",
+		"dependency_updates",
+		"policy_auth_expansion",
+		"hidden_instruction_mutation",
+	} {
+		if doc[field] == true {
+			return true
+		}
+	}
+	return false
 }
 
 func intFromJSONNumber(value any) int {

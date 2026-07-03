@@ -87,6 +87,85 @@ func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
 	}
 }
 
+func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
+	smokePath := filepath.Join(t.TempDir(), "ao-mission-final-rollup-smoke.json")
+	ledgerPath := filepath.Join(t.TempDir(), "ao-mission-readiness-ledger.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "final-rollup-smoke",
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--out", smokePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("final-rollup smoke failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"ao-mission", "readiness-ledger",
+		"--final-rollup-smoke", smokePath,
+		"--out", ledgerPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("readiness ledger failed: %s", stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_readiness_ledger="+ledgerPath) {
+		t.Fatalf("expected readiness ledger output path, got %q", stdout.String())
+	}
+	var ledger map[string]any
+	data, err := os.ReadFile(ledgerPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &ledger); err != nil {
+		t.Fatal(err)
+	}
+	if ledger["schema"] != "ao.foundry.ao-mission-readiness-ledger.v0.1" || ledger["status"] != "ready" {
+		t.Fatalf("bad readiness ledger: %#v", ledger)
+	}
+	if ledger["executes_work"] != false || ledger["approves_work"] != false || ledger["mutates_repositories"] != false {
+		t.Fatalf("readiness ledger widened authority: %#v", ledger)
+	}
+}
+
+func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("e2e smoke failed: %s", stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_e2e_smoke="+outPath) {
+		t.Fatalf("expected e2e smoke output path, got %q", stdout.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["schema"] != "ao.foundry.ao-mission-e2e-smoke.v0.1" || smoke["status"] != "ready" {
+		t.Fatalf("bad e2e smoke: %#v", smoke)
+	}
+	if smoke["atlas_workgraph_id"] != "atlas-readiness-workgraph" || smoke["mission_id"] != "mission-demo" {
+		t.Fatalf("bad mission/atlas binding: %#v", smoke)
+	}
+	if smoke["executes_work"] != false || smoke["approves_work"] != false || smoke["mutates_repositories"] != false {
+		t.Fatalf("e2e smoke widened authority: %#v", smoke)
+	}
+}
+
 func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", atlasRegistryFixture()}, &stdout, &stderr)

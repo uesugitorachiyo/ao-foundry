@@ -9,3 +9,8 @@ fixture does not grant execution authority, provider calls, credential use,
 release/deploy/publish/upload/tag authority, dependency updates, direct-main
 mutation, concurrent mutation, unrestricted self-modification, hidden
 instruction mutation, policy-changing autonomy, unrestricted RSI, or `broad_RSI`.
+
+The fixture also includes Atlas mission workgraph metadata so `foundry
+ao-mission e2e-smoke` can bind AO Mission route/snapshot readbacks, Atlas
+workgraph metadata, and Mission/Foundry final rollups into one readiness-only
+smoke artifact.
