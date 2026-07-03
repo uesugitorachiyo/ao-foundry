@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.application-record.v0.1",
+  "mission": "unrestricted-self-modification-authority-request-dry-run",
+  "attempt_id": "attempt-aa-sentinel-hold-kill-switch",
+  "change_class": "dry_run_readback_evidence",
+  "safe_to_execute": true,
+  "executed_live_unrestricted_self_modification": false,
+  "rollback_available": true,
+  "kill_switch_available": true
+}

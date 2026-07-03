@@ -1,0 +1,33 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-authority-request-dry-run",
+  "node_id": "ard-node-8567",
+  "status": "completed",
+  "safe_to_execute": true,
+  "executed_live_unrestricted_self_modification": false,
+  "attempt_id": "attempt-aa-sentinel-hold-kill-switch",
+  "task_type": "Sentinel hold and kill-switch request trace quality",
+  "evidence": [
+    "measurement",
+    "rollback",
+    "eval-regression",
+    "gate-readback"
+  ],
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ],
+  "digest": "286058fd24e41c30833d407aeec351e52b710582a1c52fb5065b20d7d8f8c57b"
+}
