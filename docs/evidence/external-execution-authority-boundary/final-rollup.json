@@ -1,0 +1,64 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "external-execution-authority-boundary",
+  "previous_highest": "public_safe_bounded_sandboxed_self_change_sandbox_boundary_generality_four_attempts",
+  "new_proven_class": "public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts",
+  "highest_proven_live_class": "public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "approved_public_wording": "AO has public-safe external-execution-authority boundary fixture evidence across four exact-scope reversible attempts under sandbox containment gates; actual external execution authority, provider calls, credential use, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, and sandbox containment bypass remain denied.",
+  "completed_nodes": 260,
+  "total_nodes": 260,
+  "attempts_completed": 4,
+  "total_attempts": 4,
+  "attempts": [
+    {
+      "id": "attempt-e-provider-call-denial-fixture-quality",
+      "label": "Attempt E",
+      "task_type": "provider-call denial fixture quality",
+      "baseline": 0.76,
+      "post_change": 0.97,
+      "improvement": 0.21
+    },
+    {
+      "id": "attempt-f-credential-use-denial-fixture-quality",
+      "label": "Attempt F",
+      "task_type": "credential-use denial fixture quality",
+      "baseline": 0.74,
+      "post_change": 0.96,
+      "improvement": 0.22
+    },
+    {
+      "id": "attempt-g-external-command-allowlist-readback-quality",
+      "label": "Attempt G",
+      "task_type": "external-command allowlist readback quality",
+      "baseline": 0.73,
+      "post_change": 0.95,
+      "improvement": 0.22
+    },
+    {
+      "id": "attempt-h-rollback-retraction-evidence-quality",
+      "label": "Attempt H",
+      "task_type": "rollback/retraction evidence quality",
+      "baseline": 0.72,
+      "post_change": 0.94,
+      "improvement": 0.22
+    }
+  ],
+  "gates": {
+    "covenant": "deny_actual_external_execution_authority_allow_fixture_boundary_evidence",
+    "architecture": "approve_external_execution_boundary_fixture_wording_deny_actual_external_execution_authority",
+    "sentinel": "clear_external_execution_boundary_fixture_evidence_hold_actual_external_execution_authority",
+    "promoter": "promote_public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts_keep_unrestricted_self_modification_denied",
+    "command": "public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts_proven_external_execution_authority_denied"
+  },
+  "actual_external_execution_authority": "denied",
+  "provider_calls": "denied",
+  "credential_use": "denied",
+  "unrestricted_self_modification": "denied",
+  "sandbox_containment_bypass": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "forbidden_surface_expansion": "denied",
+  "atlas_workgraph": "ao-atlas/.atlas-local/external-execution-authority-boundary-20260703/atlas-first-phase/workgraph.json",
+  "blueprint_pack_public_ref": "private_blueprint_pack_redacted_from_public_evidence"
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.negative-control.v0.1",
+  "mission": "external-execution-authority-boundary",
+  "attempt_id": "attempt-e-provider-call-denial-fixture-quality",
+  "provider_call_attempt_rejected": true,
+  "credential_use_attempt_rejected": true,
+  "external_command_without_allowlist_rejected": true,
+  "sandbox_bypass_rejected": true,
+  "actual_external_execution_performed": false
+}

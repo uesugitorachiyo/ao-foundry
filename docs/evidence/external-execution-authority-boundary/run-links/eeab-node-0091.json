@@ -1,0 +1,7 @@
+{
+  "schema": "ao.foundry.run-link-pointer.v0.1",
+  "node_id": "eeab-node-0091",
+  "node": "nodes/eeab-node-0091.json",
+  "status": "completed",
+  "no_actual_external_execution": true
+}
