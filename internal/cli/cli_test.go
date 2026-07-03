@@ -25,6 +25,37 @@ func TestRegistryValidateAcceptsExample(t *testing.T) {
 	}
 }
 
+func TestAOMissionSmokeValidatesFixtureReadbacks(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ao-mission-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_smoke="+outPath) {
+		t.Fatalf("expected smoke output path, got %q", stdout.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "ready" || smoke["executes_work"] != false || smoke["approves_work"] != false {
+		t.Fatalf("bad smoke readback: %#v", smoke)
+	}
+	if smoke["route"] != "ao-atlas" || smoke["current_owner"] != "ao-mission" {
+		t.Fatalf("bad route/current owner: %#v", smoke)
+	}
+}
+
 func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", atlasRegistryFixture()}, &stdout, &stderr)
