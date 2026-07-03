@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.node-run-link.v0.1",
+  "node_id": "usmsbs-node-0273",
+  "mission": "unrestricted-self-modification-sandbox-boundary-stress",
+  "attempt_id": "attempt-a-sandbox-boundary-fixture-denial-consistency",
+  "completed": true,
+  "safe_to_execute": true,
+  "run_link_evidence": "public_safe_tracked",
+  "denied_surfaces_clean": true
+}

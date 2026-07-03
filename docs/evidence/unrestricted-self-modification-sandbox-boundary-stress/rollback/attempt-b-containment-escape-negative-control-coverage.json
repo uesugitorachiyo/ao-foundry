@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.rollback.v0.1",
+  "attempt_id": "attempt-b-containment-escape-negative-control-coverage",
+  "rollback_rehearsal": "passed",
+  "retraction_rehearsal": "passed",
+  "kill_switch_readback": "passed",
+  "direct_main_mutation": false,
+  "public_safe": true
+}
