@@ -1,0 +1,17 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "external-execution-authority-readiness-boundary-candidate-task",
+  "status": "completed",
+  "evidence": {
+    "mission": "external-execution-authority-readiness-boundary",
+    "node_id": "eeabr-node-0219",
+    "sequence": "219",
+    "result": "completed_public_safe_dry_run_readback",
+    "node_record": "nodes/eeabr-node-0219.json",
+    "executed_external_authority": "false",
+    "provider_calls": "false",
+    "credential_use": "false",
+    "sandbox_bypass": "false"
+  },
+  "digest": "sha256:58c1fa061f0c6494d5f75d6a7384d271107c0f03f75848a333f54d61c8b529db"
+}

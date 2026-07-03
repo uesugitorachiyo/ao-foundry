@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.redaction-record.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0095",
+  "public_safe": true,
+  "private_paths_removed": true,
+  "secrets_removed": true,
+  "credentials_removed": true,
+  "env_values_removed": true,
+  "result": "passed"
+}

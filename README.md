@@ -1147,3 +1147,38 @@ surface expansion, or any unrestricted RSI claim. The highest proven live class
 is
 `public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## External-Execution Authority Readiness Boundary Evidence
+
+`public_safe_external_execution_authority_readiness_boundary_map` is proven from
+tracked public evidence under
+`docs/evidence/external-execution-authority-readiness-boundary/` and final
+rollup
+`docs/evidence/external-execution-authority-readiness-boundary/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe external-execution
+authority readiness-boundary evidence across four exact-scope reversible dry-run
+attempts under sandbox containment gates; actual external execution authority,
+provider calls, credential use, sandbox containment bypass, unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy, and
+forbidden surface expansion remain denied." Completed nodes: `640 / 640`.
+Attempts completed: `4 / 4`.
+
+Attempt M covers execution-authority denial readiness-map quality (`0.78` to
+`0.98`), Attempt N covers provider-call quarantine readiness quality (`0.76` to
+`0.97`), Attempt O covers credential non-use readiness quality (`0.75` to
+`0.96`), and Attempt P covers sandbox bypass stop-readiness quality (`0.74` to
+`0.95`). Eval/regression, rollback, retraction, negative-control, Covenant,
+Forge/AO2, Sentinel, Promoter, Command, Architecture wording, public-safety, and
+stale-language gates passed.
+
+This proves only public-safe readiness-boundary evidence for evaluating future
+external-execution authority. It does not prove actual external execution
+authority, provider calls, credential use, sandbox containment bypass,
+unrestricted self-modification, hidden instruction mutation, policy-changing
+autonomy, policy/auth/secret/provider/deploy/release/config/dependency
+expansion, direct-main mutation, concurrent mutation,
+release/deploy/publish/upload/tag authority, dependency update authority, hidden
+instruction changes, forbidden surface expansion, or any unrestricted RSI claim.
+The highest proven live class is
+`public_safe_external_execution_authority_readiness_boundary_map`; the next
+denied class is `unrestricted_self_modification`.

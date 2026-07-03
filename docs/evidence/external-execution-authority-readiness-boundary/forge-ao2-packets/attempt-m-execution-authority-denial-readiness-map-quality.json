@@ -1,0 +1,31 @@
+{
+  "schema": "ao.forge-ao2.bounded-packet.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "attempt_id": "attempt-m",
+  "task_type": "execution-authority denial readiness-map quality",
+  "bounded": true,
+  "exact_scope": true,
+  "reversible": true,
+  "safe_to_execute": true,
+  "performs_actual_external_execution": false,
+  "calls_providers": false,
+  "uses_credentials": false,
+  "bypasses_sandbox": false,
+  "denied_surfaces": [
+    "release",
+    "deploy",
+    "publish",
+    "upload",
+    "tag",
+    "provider_call",
+    "credential_use",
+    "dependency_update",
+    "auth_widening",
+    "policy_widening",
+    "config_widening",
+    "secret_exposure",
+    "direct_main_mutation",
+    "hidden_instruction_mutation",
+    "broad_public_claim"
+  ]
+}

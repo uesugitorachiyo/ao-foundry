@@ -1,0 +1,42 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "target_class": "public_safe_external_execution_authority_readiness_boundary_map",
+  "public_safe": true,
+  "gate": "eval-regression",
+  "result": "passed",
+  "attempts": [
+    {
+      "attempt_id": "attempt-m",
+      "baseline": 0.78,
+      "post_change": 0.98,
+      "improvement": 0.2,
+      "threshold": 0.1,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-n",
+      "baseline": 0.76,
+      "post_change": 0.97,
+      "improvement": 0.21,
+      "threshold": 0.1,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-o",
+      "baseline": 0.75,
+      "post_change": 0.96,
+      "improvement": 0.21,
+      "threshold": 0.1,
+      "result": "passed"
+    },
+    {
+      "attempt_id": "attempt-p",
+      "baseline": 0.74,
+      "post_change": 0.95,
+      "improvement": 0.21,
+      "threshold": 0.1,
+      "result": "passed"
+    }
+  ]
+}

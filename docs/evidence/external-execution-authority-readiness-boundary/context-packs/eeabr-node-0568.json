@@ -1,0 +1,9 @@
+{
+  "schema": "ao.foundry.context-pack.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "node_id": "eeabr-node-0568",
+  "public_safe": true,
+  "context_summary": "credential non-use boundary map for sandbox bypass stop-readiness quality.",
+  "excluded_private_paths": true,
+  "sanitized_relative_paths_only": true
+}

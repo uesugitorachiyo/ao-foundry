@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.gate-result.v0.1",
+  "mission": "external-execution-authority-readiness-boundary",
+  "target_class": "public_safe_external_execution_authority_readiness_boundary_map",
+  "public_safe": true,
+  "gate": "atlas-foundry-import",
+  "result": "valid_single_ready_import_no_scheduling_no_execution_authority"
+}
