@@ -1218,3 +1218,12 @@ mutation, concurrent mutation, broad public claims, or any unrestricted RSI
 claim. The highest proven live class is
 `public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Contained External-Command Self-Change Application Evidence
+
+`public_safe_contained_external_command_self_change_application_four_attempts` is proven from tracked public evidence under
+`docs/evidence/unrestricted-self-modification-contained-external-command-self-change/`. The approved public wording is exactly: "AO has public-safe contained external-command self-change application evidence across four exact-scope reversible allowlisted local-command attempts under sandbox containment gates; unrestricted self-modification, sandbox containment bypass, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied." Completed application nodes: `720 / 720`. Attempts completed: `4 / 4`.
+
+Attempt M covers contained local-command readback fixture improvement (`0.78` to `0.97`), Attempt N covers contained local-command eval fixture improvement (`0.76` to `0.96`), Attempt O covers contained local-command rollback fixture improvement (`0.75` to `0.95`), and Attempt P covers contained local-command stale-language fixture improvement (`0.74` to `0.94`). Covenant, Forge/AO2, Sentinel, Promoter, Command, Architecture wording, rollback, sandbox containment, public-safety, and stale-language gates passed for the narrow class.
+
+This proves only four serialized, exact-scope, reversible contained external-command self-change application evidence attempts under sandbox containment gates. It does not prove unrestricted self-modification, sandbox containment bypass, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/dependency expansion, direct-main mutation, concurrent mutation, release/deploy/publish/upload/tag authority, dependency update authority, or broad public claims. The highest proven live class is `public_safe_contained_external_command_self_change_application_four_attempts`; the next denied class is `unrestricted_self_modification`.

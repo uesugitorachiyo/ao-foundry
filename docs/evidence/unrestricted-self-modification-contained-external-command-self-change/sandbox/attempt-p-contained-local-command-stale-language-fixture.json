@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.sandbox-containment.v0.1",
+  "mission": "unrestricted-self-modification-contained-external-command-self-change",
+  "attempt_id": "attempt-p-contained-local-command-stale-language-fixture",
+  "sandbox_containment": "passed",
+  "allowlisted_local_command_only": true,
+  "sandbox_bypass": false,
+  "provider_calls": false,
+  "credential_use": false,
+  "file_scope": "tracked public evidence fixtures only"
+}
