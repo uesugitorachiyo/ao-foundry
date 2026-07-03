@@ -57,6 +57,7 @@ This first slice provides:
   - `foundry pulse overnight-start-gate --intake-preflight <path> --lifecycle <path> --out <path> [--start-implementation] [--json]`
   - `foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]`
   - `foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>`
+  - `foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>`
   - `foundry class-gate evaluate --atlas <path> --covenant <path> --sentinel <path> --promoter <path> --rollback <path> --command <path> --ci <path> [--test-only-success <path>] [--multi-repo-plan <path>] --out <path>`
   - `scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out <public-safe-relative-dir>`
   - `scripts/complex-refactor-workgraph-rehearsal.sh --out <public-safe-relative-dir>`

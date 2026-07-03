@@ -1451,10 +1451,12 @@ func printHelp(w io.Writer) {
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprintln(stderr, "foundry ao-mission requires smoke")
+		fmt.Fprintln(stderr, "foundry ao-mission requires smoke or final-rollup-smoke")
 		return 2
 	}
 	switch args[0] {
+	case "final-rollup-smoke":
+		return runAOMissionFinalRollupSmoke(args[1:], stdout, stderr)
 	case "smoke":
 		return runAOMissionSmoke(args[1:], stdout, stderr)
 	default:
@@ -1534,6 +1536,95 @@ func runAOMissionSmoke(args []string, stdout, stderr io.Writer) int {
 	}
 	fmt.Fprintf(stdout, "ao_mission_smoke=%s\n", *outPath)
 	return 0
+}
+
+func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("ao-mission final-rollup-smoke", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	missionRollupPath := fs.String("mission-final-rollup", "", "ao-mission final rollup fixture")
+	foundryRollupPath := fs.String("foundry-final-rollup", "", "ao-foundry final rollup fixture")
+	outPath := fs.String("out", "", "smoke readback output path")
+	if err := fs.Parse(args); err != nil {
+		return 2
+	}
+	if *missionRollupPath == "" || *foundryRollupPath == "" || *outPath == "" {
+		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke requires --mission-final-rollup, --foundry-final-rollup, and --out")
+		return 2
+	}
+	var missionRollup map[string]any
+	if err := readJSONFile(*missionRollupPath, &missionRollup); err != nil {
+		fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: read mission rollup: %v\n", err)
+		return 1
+	}
+	var foundryRollup map[string]any
+	if err := readJSONFile(*foundryRollupPath, &foundryRollup); err != nil {
+		fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: read foundry rollup: %v\n", err)
+		return 1
+	}
+	if missionRollup["mission_id"] != foundryRollup["mission_id"] {
+		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: mission_id mismatch")
+		return 1
+	}
+	for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories"} {
+		if missionRollup[field] != false {
+			fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: mission rollup %s must be false\n", field)
+			return 1
+		}
+		if foundryRollup[field] != false {
+			fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: foundry rollup %s must be false\n", field)
+			return 1
+		}
+	}
+	missionCompleted, missionTotal := intFromJSONNumber(missionRollup["completed_nodes"]), intFromJSONNumber(missionRollup["total_nodes"])
+	foundryCompleted, foundryTotal := intFromJSONNumber(foundryRollup["completed_nodes"]), intFromJSONNumber(foundryRollup["total_nodes"])
+	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: completed and total node counts must match and be complete")
+		return 1
+	}
+	readback := map[string]any{
+		"schema":                 "ao.foundry.ao-mission-final-rollup-smoke.v0.1",
+		"status":                 "ready",
+		"mission_id":             missionRollup["mission_id"],
+		"completed_nodes":        missionCompleted,
+		"total_nodes":            missionTotal,
+		"safe_to_execute":        false,
+		"executes_work":          false,
+		"approves_work":          false,
+		"mutates_repositories":   false,
+		"mission_final_rollup":   *missionRollupPath,
+		"foundry_final_rollup":   *foundryRollupPath,
+		"exact_next_action":      "AO Mission and AO Foundry final rollups agree; no execution authority is granted",
+		"generated_at_utc":       time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":   true,
+		"mutation_authority":     false,
+		"scheduler_authority":    "none",
+		"gateway_authority":      "none",
+		"direct_main_mutation":   false,
+		"concurrent_mutation":    false,
+		"release_or_publish":     false,
+		"dependency_updates":     false,
+		"policy_auth_expansion":  false,
+		"provider_calls":         false,
+		"credential_use":         false,
+		"claims_completion_only": true,
+	}
+	if err := writeJSONFile(*outPath, readback); err != nil {
+		fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: write output: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "ao_mission_final_rollup_smoke=%s\n", *outPath)
+	return 0
+}
+
+func intFromJSONNumber(value any) int {
+	switch v := value.(type) {
+	case float64:
+		return int(v)
+	case int:
+		return v
+	default:
+		return 0
+	}
 }
 
 func runStatus(args []string, stdout, stderr io.Writer) int {

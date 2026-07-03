@@ -56,6 +56,37 @@ func TestAOMissionSmokeValidatesFixtureReadbacks(t *testing.T) {
 	}
 }
 
+func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "ao-mission-final-rollup-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "final-rollup-smoke",
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_final_rollup_smoke="+outPath) {
+		t.Fatalf("expected final-rollup smoke output path, got %q", stdout.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "ready" || smoke["completed_nodes"].(float64) != smoke["total_nodes"].(float64) {
+		t.Fatalf("bad final-rollup smoke readback: %#v", smoke)
+	}
+	if smoke["executes_work"] != false || smoke["approves_work"] != false || smoke["mutates_repositories"] != false {
+		t.Fatalf("final-rollup smoke widened authority: %#v", smoke)
+	}
+}
+
 func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", atlasRegistryFixture()}, &stdout, &stderr)
