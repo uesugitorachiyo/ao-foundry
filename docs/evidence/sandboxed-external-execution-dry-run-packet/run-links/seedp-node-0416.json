@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "sandboxed-external-execution-dry-run-packet-candidate-task",
+  "status": "completed",
+  "evidence": {
+    "foundry": "docs/evidence/sandboxed-external-execution-dry-run-packet/nodes/seedp-node-0416.json",
+    "forge": "docs/evidence/sandboxed-external-execution-dry-run-packet/forge-ao2-packets/attempt-l-sandbox-containment-bypass-negative-control-packet-quality.json",
+    "ao2": "docs/evidence/sandboxed-external-execution-dry-run-packet/gates/forge-ao2-bounded-packet.json"
+  },
+  "digest": "sha256:d33bcafeaf24555d62d85f418ef5c9b86dcfa607cb2de46c9d4b38c11899f2aa"
+}

@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "sandboxed-external-execution-dry-run-packet-candidate-task",
+  "status": "completed",
+  "evidence": {
+    "foundry": "docs/evidence/sandboxed-external-execution-dry-run-packet/nodes/seedp-node-0205.json",
+    "forge": "docs/evidence/sandboxed-external-execution-dry-run-packet/forge-ao2-packets/attempt-i-provider-call-dry-run-ticket-fixture-quality.json",
+    "ao2": "docs/evidence/sandboxed-external-execution-dry-run-packet/gates/forge-ao2-bounded-packet.json"
+  },
+  "digest": "sha256:191b8c0361a25d8df4d6c370e9fcb57c4f356e844f837ba32aad9749a99eb6e1"
+}

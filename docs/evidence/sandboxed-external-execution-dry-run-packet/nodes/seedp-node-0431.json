@@ -1,0 +1,38 @@
+{
+  "schema": "ao.foundry.node-evidence.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "node_id": "seedp-node-0431",
+  "ordinal": 431,
+  "phase": 17,
+  "status": "completed",
+  "attempt_id": "attempt-k-external-command-dry-run-allowlist-packet-quality",
+  "task_type": "external-command dry-run allowlist packet quality",
+  "safe_to_execute": true,
+  "executed_scope": "public_safe_dry_run_packet_evidence_only",
+  "actual_external_execution_performed": false,
+  "provider_calls_performed": false,
+  "credential_use_performed": false,
+  "sandbox_containment_bypass_performed": false,
+  "direct_main_mutation": false,
+  "concurrent_mutation": false,
+  "evidence_refs": [
+    "attempts/attempt-k-external-command-dry-run-allowlist-packet-quality/measurement.json",
+    "forge-ao2-packets/attempt-k-external-command-dry-run-allowlist-packet-quality.json",
+    "negative-controls/attempt-k-external-command-dry-run-allowlist-packet-quality.json"
+  ],
+  "gates": [
+    "gates/covenant-authority-gate.json",
+    "gates/architecture-wording.json",
+    "gates/sentinel-public-risk.json",
+    "gates/promoter-verdict.json",
+    "gates/command-readback.json",
+    "gates/forge-ao2-bounded-packet.json",
+    "gates/eval-regression-results.json",
+    "gates/rollback-retraction-results.json",
+    "gates/kill-switch-results.json",
+    "gates/cross-attempt-reproducibility.json",
+    "gates/public-safety-scan.json",
+    "gates/stale-language-sweep.json",
+    "gates/atlas-foundry-import-validation.json"
+  ]
+}

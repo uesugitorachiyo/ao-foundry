@@ -1,0 +1,70 @@
+{
+  "schema": "ao.foundry.final-rollup.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "previous_highest": "public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts",
+  "new_proven_class": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts",
+  "highest_proven_live_class": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts",
+  "next_denied_class": "unrestricted_self_modification",
+  "approved_public_wording": "AO has public-safe sandboxed external-execution dry-run authority packet evidence across four exact-scope reversible attempts under sandbox containment gates; actual external execution authority, provider calls, credential use, sandbox containment bypass, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied.",
+  "completed_nodes": 520,
+  "total_nodes": 520,
+  "atlas_ready_nodes_imported": 1,
+  "blueprint_sdd_slices": 6500,
+  "attempts_completed": 4,
+  "total_attempts": 4,
+  "attempts": [
+    {
+      "id": "attempt-i-provider-call-dry-run-ticket-fixture-quality",
+      "label": "Attempt I",
+      "task_type": "provider-call dry-run ticket fixture quality",
+      "baseline": 0.77,
+      "post_change": 0.97,
+      "improvement": 0.2
+    },
+    {
+      "id": "attempt-j-credential-use-denial-packet-quality",
+      "label": "Attempt J",
+      "task_type": "credential-use denial packet quality",
+      "baseline": 0.75,
+      "post_change": 0.96,
+      "improvement": 0.21
+    },
+    {
+      "id": "attempt-k-external-command-dry-run-allowlist-packet-quality",
+      "label": "Attempt K",
+      "task_type": "external-command dry-run allowlist packet quality",
+      "baseline": 0.74,
+      "post_change": 0.95,
+      "improvement": 0.21
+    },
+    {
+      "id": "attempt-l-sandbox-containment-bypass-negative-control-packet-quality",
+      "label": "Attempt L",
+      "task_type": "sandbox containment bypass negative-control packet quality",
+      "baseline": 0.73,
+      "post_change": 0.94,
+      "improvement": 0.21
+    }
+  ],
+  "gates": {
+    "covenant": "deny_actual_external_execution_authority_allow_dry_run_packet_evidence",
+    "architecture": "approve_sandboxed_external_execution_dry_run_packet_wording_deny_actual_external_execution_authority",
+    "sentinel": "clear_sandboxed_external_execution_dry_run_packet_hold_actual_external_execution_authority",
+    "promoter": "promote_public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts_keep_unrestricted_self_modification_denied",
+    "command": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts_proven_external_execution_authority_denied",
+    "forge_ao2": "bounded_packet_enforced_for_dry_run_authority_evidence_only",
+    "rollback": "passed",
+    "public_safety": "passed",
+    "stale_language": "passed"
+  },
+  "actual_external_execution_authority": "denied",
+  "provider_calls": "denied",
+  "credential_use": "denied",
+  "sandbox_containment_bypass": "denied",
+  "unrestricted_self_modification": "denied",
+  "hidden_instruction_mutation": "denied",
+  "policy_changing_autonomy": "denied",
+  "forbidden_surface_expansion": "denied",
+  "atlas_workgraph": "ao-atlas/.atlas-local/sandboxed-external-execution-dry-run-packet-20260703/atlas-first-phase/workgraph.json",
+  "blueprint_pack_public_ref": "private_blueprint_pack_redacted_from_public_evidence"
+}

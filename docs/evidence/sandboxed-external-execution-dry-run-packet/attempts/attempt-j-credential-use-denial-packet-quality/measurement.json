@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.measurement.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "attempt_id": "attempt-j-credential-use-denial-packet-quality",
+  "label": "Attempt J",
+  "task_type": "credential-use denial packet quality",
+  "packet_type": "credential_use_denial_packet",
+  "baseline": 0.75,
+  "post_change": 0.96,
+  "improvement": 0.21,
+  "threshold": 0.18,
+  "result": "improved",
+  "decisive_evidence_public_safe": true,
+  "actual_external_execution_performed": false,
+  "provider_calls_performed": false,
+  "credential_use_performed": false,
+  "sandbox_containment_bypass_performed": false,
+  "denied_surfaces": [
+    "credential_use",
+    "actual_external_execution_authority"
+  ]
+}

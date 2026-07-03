@@ -1,0 +1,14 @@
+{
+  "schema": "ao.foundry.rollback-rehearsal.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "result": "passed",
+  "rollback_scope": [
+    "docs/evidence/sandboxed-external-execution-dry-run-packet",
+    "README.md"
+  ],
+  "retraction_scope": [
+    "approved_public_wording_for_this_narrow_class"
+  ],
+  "no_actual_external_execution_to_rollback": true,
+  "forbidden_surface_changes": "absent"
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "ao.foundry.evidence-index.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "previous_highest": "public_safe_external_execution_authority_boundary_fixture_evidence_four_attempts",
+  "new_proven_class": "public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts",
+  "final_rollup": "final-rollup.json",
+  "attempts": [
+    {
+      "id": "attempt-i-provider-call-dry-run-ticket-fixture-quality",
+      "measurement": "attempts/attempt-i-provider-call-dry-run-ticket-fixture-quality/measurement.json",
+      "runbook": "attempts/attempt-i-provider-call-dry-run-ticket-fixture-quality/reproducibility-runbook.md",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-i-provider-call-dry-run-ticket-fixture-quality.json",
+      "negative_control": "negative-controls/attempt-i-provider-call-dry-run-ticket-fixture-quality.json"
+    },
+    {
+      "id": "attempt-j-credential-use-denial-packet-quality",
+      "measurement": "attempts/attempt-j-credential-use-denial-packet-quality/measurement.json",
+      "runbook": "attempts/attempt-j-credential-use-denial-packet-quality/reproducibility-runbook.md",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-j-credential-use-denial-packet-quality.json",
+      "negative_control": "negative-controls/attempt-j-credential-use-denial-packet-quality.json"
+    },
+    {
+      "id": "attempt-k-external-command-dry-run-allowlist-packet-quality",
+      "measurement": "attempts/attempt-k-external-command-dry-run-allowlist-packet-quality/measurement.json",
+      "runbook": "attempts/attempt-k-external-command-dry-run-allowlist-packet-quality/reproducibility-runbook.md",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-k-external-command-dry-run-allowlist-packet-quality.json",
+      "negative_control": "negative-controls/attempt-k-external-command-dry-run-allowlist-packet-quality.json"
+    },
+    {
+      "id": "attempt-l-sandbox-containment-bypass-negative-control-packet-quality",
+      "measurement": "attempts/attempt-l-sandbox-containment-bypass-negative-control-packet-quality/measurement.json",
+      "runbook": "attempts/attempt-l-sandbox-containment-bypass-negative-control-packet-quality/reproducibility-runbook.md",
+      "forge_ao2_packet": "forge-ao2-packets/attempt-l-sandbox-containment-bypass-negative-control-packet-quality.json",
+      "negative_control": "negative-controls/attempt-l-sandbox-containment-bypass-negative-control-packet-quality.json"
+    }
+  ],
+  "gates": [
+    "gates/covenant-authority-gate.json",
+    "gates/architecture-wording.json",
+    "gates/sentinel-public-risk.json",
+    "gates/promoter-verdict.json",
+    "gates/command-readback.json",
+    "gates/forge-ao2-bounded-packet.json",
+    "gates/eval-regression-results.json",
+    "gates/rollback-retraction-results.json",
+    "gates/kill-switch-results.json",
+    "gates/cross-attempt-reproducibility.json",
+    "gates/public-safety-scan.json",
+    "gates/stale-language-sweep.json",
+    "gates/atlas-foundry-import-validation.json"
+  ],
+  "rollback": "rollback/rollback-rehearsal.json",
+  "node_count": 520,
+  "run_link_count": 520,
+  "public_safe": true,
+  "actual_external_execution_performed": false,
+  "provider_calls_performed": false,
+  "credential_use_performed": false,
+  "sandbox_containment_bypass_performed": false
+}

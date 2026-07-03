@@ -1,0 +1,27 @@
+{
+  "schema": "ao.foundry.forge-ao2-bounded-packet.v0.1",
+  "mission": "sandboxed-external-execution-dry-run-packet",
+  "attempt_id": "attempt-l-sandbox-containment-bypass-negative-control-packet-quality",
+  "packet_type": "sandbox_containment_bypass_negative_control_packet",
+  "exact_scope": "dry_run_authority_packet_evidence_only",
+  "safe_to_execute_actual_external_work": false,
+  "allowed_writes": [
+    "docs/evidence/sandboxed-external-execution-dry-run-packet"
+  ],
+  "denied_surfaces": [
+    "actual_external_execution_authority",
+    "provider_calls",
+    "credential_use",
+    "sandbox_containment_bypass",
+    "unrestricted_self_modification",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "policy_auth_secret_provider_deploy_release_config_dependency_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation"
+  ],
+  "result": "bounded_packet_enforced"
+}
