@@ -134,11 +134,11 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{
 		"ao-mission", "e2e-smoke",
-		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
-		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
-		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
-		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
-		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--route", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json")),
+		"--snapshot", repoPath(filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json")),
+		"--mission-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json")),
+		"--foundry-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json")),
+		"--atlas-metadata", repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
 		"--out", outPath,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -204,6 +204,124 @@ func TestAOMissionE2ESmokeRejectsAtlasNodeCountMismatchFixture(t *testing.T) {
 	if !strings.Contains(stderr.String(), "Atlas metadata node total must match final rollup total") {
 		t.Fatalf("expected Atlas node-count mismatch error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
+}
+
+func TestAOMissionE2ESmokeValidatesArtifactManifestDigests(t *testing.T) {
+	manifestPath := writeAOMissionArtifactManifestFixture(t, digestOverride{})
+	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--artifact-manifest", manifestPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("e2e smoke with artifact manifest failed: %s", stderr.String())
+	}
+	var smoke map[string]any
+	body, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(body, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["artifact_manifest"] != manifestPath || smoke["executes_work"] != false {
+		t.Fatalf("bad e2e smoke artifact manifest binding: %#v", smoke)
+	}
+}
+
+func TestAOMissionE2ESmokeRejectsArtifactManifestDigestMismatch(t *testing.T) {
+	manifestPath := writeAOMissionArtifactManifestFixture(t, digestOverride{
+		Path:   repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json")),
+		Digest: "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	})
+	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json")),
+		"--snapshot", repoPath(filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json")),
+		"--mission-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json")),
+		"--foundry-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json")),
+		"--atlas-metadata", repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
+		"--artifact-manifest", manifestPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected artifact manifest digest mismatch to fail")
+	}
+	if !strings.Contains(stderr.String(), "digest mismatch") {
+		t.Fatalf("expected digest mismatch error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+}
+
+type digestOverride struct {
+	Path   string
+	Digest string
+}
+
+func writeAOMissionArtifactManifestFixture(t *testing.T, override digestOverride) string {
+	t.Helper()
+	artifactPaths := []string{
+		repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json")),
+		repoPath(filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json")),
+		repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
+	}
+	refs := make([]map[string]any, 0, len(artifactPaths))
+	for _, path := range artifactPaths {
+		digest, err := digestPath(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if override.Path == path {
+			digest = override.Digest
+		}
+		refs = append(refs, map[string]any{
+			"schema": "ao.mission.artifact-ref.v0.1",
+			"ref":    path,
+			"digest": digest,
+			"kind":   "readback",
+		})
+	}
+	manifest := map[string]any{
+		"schema":                "ao.mission.artifact-manifest.v0.1",
+		"mission_id":            "mission-demo",
+		"status":                "ready",
+		"operator_mode":         "read_only",
+		"artifact_refs":         refs,
+		"safe_to_execute":       false,
+		"executes_work":         false,
+		"approves_work":         false,
+		"mutates_repositories":  false,
+		"exact_next_action":     "AO Foundry validates manifest digests before implementation handoff",
+		"manifest_digest":       "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"generated_at_utc":      "2026-07-03T00:00:00Z",
+		"mutation_authority":    false,
+		"gateway_authority":     "intent_readback_only",
+		"scheduler_authority":   "wakeup_adapter_only",
+		"release_or_publish":    false,
+		"provider_calls":        false,
+		"credential_use":        false,
+		"direct_main_mutation":  false,
+		"concurrent_mutation":   false,
+		"dependency_updates":    false,
+		"policy_auth_expansion": false,
+	}
+	path := filepath.Join(t.TempDir(), "artifact-manifest.json")
+	body, err := json.MarshalIndent(manifest, "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, append(body, '\n'), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return path
 }
 
 func TestRegistryValidateAcceptsAtlasDemoFixture(t *testing.T) {
