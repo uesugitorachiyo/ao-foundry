@@ -1,0 +1,33 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-authority-request-dry-run",
+  "node_id": "ard-node-5106",
+  "status": "completed",
+  "safe_to_execute": true,
+  "executed_live_unrestricted_self_modification": false,
+  "attempt_id": "attempt-z-covenant-denial-ticket",
+  "task_type": "Covenant denial ticket readback quality",
+  "evidence": [
+    "measurement",
+    "rollback",
+    "eval-regression",
+    "gate-readback"
+  ],
+  "denied_surfaces": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ],
+  "digest": "632d3612da7f0c1b9b90ffb27f5ddcf24ce0c49a53e904936daf0db6a3bfa4b0"
+}

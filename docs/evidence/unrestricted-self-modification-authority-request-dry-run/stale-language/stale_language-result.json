@@ -1,0 +1,10 @@
+{
+  "schema": "ao.stale-language.result.v0.1",
+  "mission": "unrestricted-self-modification-authority-request-dry-run",
+  "status": "passed",
+  "rejected_claims": [
+    "unrestricted_self_modification_proven",
+    "sandbox_bypass_authority_allowed",
+    "real_sandbox_escape_allowed"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "ao.promoter.result.v0.1",
+  "mission": "unrestricted-self-modification-authority-request-dry-run",
+  "verdict": "promote_public_safe_unrestricted_self_modification_authority_request_dry_run_four_attempts_keep_unrestricted_self_modification_denied",
+  "promoted_class": "public_safe_unrestricted_self_modification_authority_request_dry_run_four_attempts",
+  "next_denied_class": "unrestricted_self_modification"
+}
