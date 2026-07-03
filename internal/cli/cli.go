@@ -1449,7 +1449,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
-	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] --out <smoke.json>")
 }
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
@@ -1689,6 +1689,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	missionRollupPath := fs.String("mission-final-rollup", "", "ao-mission final rollup fixture")
 	foundryRollupPath := fs.String("foundry-final-rollup", "", "ao-foundry final rollup fixture")
 	atlasMetadataPath := fs.String("atlas-metadata", "", "ao-atlas mission workgraph metadata fixture")
+	artifactManifestPath := fs.String("artifact-manifest", "", "optional ao-mission artifact manifest fixture")
 	outPath := fs.String("out", "", "e2e smoke output path")
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -1727,6 +1728,26 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "ao-mission e2e-smoke: route and snapshot must be ready")
 		return 1
 	}
+	if *artifactManifestPath != "" {
+		var manifest map[string]any
+		if err := readJSONFile(*artifactManifestPath, &manifest); err != nil {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: read artifact manifest: %v\n", err)
+			return 1
+		}
+		if aoMissionAuthorityClaimed(manifest) {
+			fmt.Fprintln(stderr, "ao-mission e2e-smoke: artifact manifest must not claim authority")
+			return 1
+		}
+		if manifest["mission_id"] != missionID {
+			fmt.Fprintln(stderr, "ao-mission e2e-smoke: artifact manifest mission_id mismatch")
+			return 1
+		}
+		if err := validateAOMissionArtifactManifestDigests(*artifactManifestPath, manifest); err != nil {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %v\n", err)
+			return 1
+		}
+		artifacts["artifact_manifest"] = manifest
+	}
 	missionCompleted, missionTotal := intFromJSONNumber(artifacts["mission_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["mission_final_rollup"]["total_nodes"])
 	foundryCompleted, foundryTotal := intFromJSONNumber(artifacts["foundry_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["foundry_final_rollup"]["total_nodes"])
 	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
@@ -1753,6 +1774,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"mission_final_rollup":  *missionRollupPath,
 		"foundry_final_rollup":  *foundryRollupPath,
 		"atlas_metadata":        *atlasMetadataPath,
+		"artifact_manifest":     *artifactManifestPath,
 		"safe_to_execute":       false,
 		"executes_work":         false,
 		"approves_work":         false,
@@ -1798,6 +1820,71 @@ func aoMissionAuthorityClaimed(doc map[string]any) bool {
 		}
 	}
 	return false
+}
+
+func validateAOMissionArtifactManifestDigests(manifestPath string, manifest map[string]any) error {
+	refs, ok := manifest["artifact_refs"].([]any)
+	if !ok {
+		return nil
+	}
+	for i, raw := range refs {
+		ref, ok := raw.(map[string]any)
+		if !ok {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] must be an object", i)
+		}
+		path, _ := ref["ref"].(string)
+		if path == "" {
+			path, _ = ref["path"].(string)
+		}
+		want, _ := ref["digest"].(string)
+		if want == "" {
+			want, _ = ref["sha256"].(string)
+		}
+		if strings.TrimSpace(path) == "" || strings.TrimSpace(want) == "" {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] requires ref/path and digest/sha256", i)
+		}
+		if !strings.HasPrefix(want, "sha256:") {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] digest must start with sha256:", i)
+		}
+		actualPath, err := resolveAOMissionArtifactRef(manifestPath, path)
+		if err != nil {
+			return fmt.Errorf("artifact manifest ref %q: %w", path, err)
+		}
+		got, err := digestPath(actualPath)
+		if err != nil {
+			return fmt.Errorf("artifact manifest ref %q: %w", path, err)
+		}
+		if got != want {
+			return fmt.Errorf("artifact manifest ref %q digest mismatch", path)
+		}
+	}
+	return nil
+}
+
+func resolveAOMissionArtifactRef(manifestPath, ref string) (string, error) {
+	if filepath.IsAbs(ref) {
+		if _, err := os.Stat(ref); err != nil {
+			return "", err
+		}
+		return ref, nil
+	}
+	if _, err := os.Stat(ref); err == nil {
+		return ref, nil
+	}
+	candidate := filepath.Join(filepath.Dir(manifestPath), ref)
+	if _, err := os.Stat(candidate); err != nil {
+		return "", err
+	}
+	return candidate, nil
+}
+
+func digestPath(path string) (string, error) {
+	body, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	sum := sha256.Sum256(body)
+	return "sha256:" + fmt.Sprintf("%x", sum[:]), nil
 }
 
 func intFromJSONNumber(value any) int {
