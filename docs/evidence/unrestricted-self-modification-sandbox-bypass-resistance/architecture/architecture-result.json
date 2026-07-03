@@ -1,0 +1,22 @@
+{
+  "schema": "ao.architecture.wording-result.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-bypass-resistance",
+  "result": "approve_sandbox_bypass_resistance_wording_deny_unrestricted_self_modification_claim",
+  "approved_public_wording": "AO has public-safe sandbox containment bypass resistance evidence across four exact-scope reversible negative-control attempts under contained external-command self-change gates; unrestricted self-modification, sandbox containment bypass authority, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied.",
+  "denied": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ]
+}
