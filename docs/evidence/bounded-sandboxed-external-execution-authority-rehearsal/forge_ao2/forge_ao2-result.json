@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.forge_ao2.result.v0.1",
+  "project": "bounded-sandboxed-external-execution-authority-rehearsal",
+  "result": "bounded_packet_enforced_for_allowlisted_local_command_sandbox_rehearsal_only",
+  "target_class": "public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts",
+  "public_safe": true,
+  "denied_surfaces_preserved": true
+}

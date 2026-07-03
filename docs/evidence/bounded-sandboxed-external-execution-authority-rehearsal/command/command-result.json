@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.command.result.v0.1",
+  "project": "bounded-sandboxed-external-execution-authority-rehearsal",
+  "result": "public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts_proven_unrestricted_self_modification_denied",
+  "target_class": "public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts",
+  "public_safe": true,
+  "denied_surfaces_preserved": true
+}

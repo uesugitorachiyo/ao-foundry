@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.sentinel.result.v0.1",
+  "project": "bounded-sandboxed-external-execution-authority-rehearsal",
+  "result": "clear_bounded_sandboxed_external_execution_authority_rehearsal_hold_unrestricted_self_modification_and_sandbox_bypass",
+  "target_class": "public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts",
+  "public_safe": true,
+  "denied_surfaces_preserved": true
+}
