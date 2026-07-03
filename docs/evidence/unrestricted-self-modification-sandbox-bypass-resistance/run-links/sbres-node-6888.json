@@ -1,0 +1,33 @@
+{
+  "schema": "ao.foundry.run-link.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-bypass-resistance",
+  "node_id": "sbres-node-6888",
+  "status": "completed",
+  "attempt_id": "attempt-t-stale-language-public-claim-bypass-denial",
+  "task_type": "stale-language and public-claim bypass denial quality",
+  "safe_to_execute": true,
+  "serialized_order": 6888,
+  "total_nodes": 9000,
+  "previous_node": "sbres-node-6887",
+  "next_node": "sbres-node-6889",
+  "evidence_refs": [
+    "docs/evidence/unrestricted-self-modification-sandbox-bypass-resistance/attempts/attempt-t-stale-language-public-claim-bypass-denial/measurement.json",
+    "docs/evidence/unrestricted-self-modification-sandbox-bypass-resistance/rollback/attempt-t-stale-language-public-claim-bypass-denial.json"
+  ],
+  "denied_boundaries": [
+    "unrestricted_self_modification",
+    "real_sandbox_escape",
+    "sandbox_containment_bypass_authority",
+    "provider_calls",
+    "credential_use",
+    "hidden_instruction_mutation",
+    "policy_changing_autonomy",
+    "forbidden_surface_expansion",
+    "release_deploy_publish_upload_tag_authority",
+    "dependency_updates",
+    "direct_main_mutation",
+    "concurrent_mutation",
+    "broad_public_claims",
+    "unrestricted_RSI"
+  ]
+}

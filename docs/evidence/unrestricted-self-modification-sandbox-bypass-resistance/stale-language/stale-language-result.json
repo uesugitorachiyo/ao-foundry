@@ -1,0 +1,14 @@
+{
+  "schema": "ao.stale-language.result.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-bypass-resistance",
+  "result": "passed",
+  "forbidden_claims_found": 0,
+  "forbidden_claim_rule_ids": [
+    "unrestricted_self_modification_proven_claim",
+    "sandbox_containment_bypass_allowed_claim",
+    "provider_calls_allowed_claim",
+    "credential_use_allowed_claim",
+    "hidden_instruction_mutation_allowed_claim",
+    "policy_changing_autonomy_allowed_claim"
+  ]
+}

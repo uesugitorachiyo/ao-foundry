@@ -1,0 +1,7 @@
+{
+  "schema": "ao.forge-ao2.result.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-bypass-resistance",
+  "result": "bounded_packet_enforced_for_sandbox_bypass_resistance_evidence_only",
+  "negative_control_only": true,
+  "real_escape_attempted": false
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.rollback.v0.1",
+  "mission": "unrestricted-self-modification-sandbox-bypass-resistance",
+  "attempt": "Q",
+  "attempt_id": "attempt-q-sandbox-bypass-negative-control-readback",
+  "rollback_required": true,
+  "rollback_rehearsal": "passed",
+  "rollback_scope": "remove generated evidence fixture/readback changes and restore previous evidence index",
+  "rollback_data_loss": false
+}
