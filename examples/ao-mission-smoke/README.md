@@ -21,6 +21,13 @@ or grant direct-main/concurrent mutation authority. Gateway readiness rollups ma
 carry a `correlation_id` to connect replay evidence across AO Mission, Atlas,
 Foundry, and Command without creating execution authority.
 
+`foundry ao-mission final-rollup-smoke` accepts completed and promoted Foundry
+terminal rollups only when Mission and Foundry node counts match. Denied or
+blocked terminal rollups produce a blocked no-authority readback with an exact
+repair or support next action through AO Atlas; they are not treated as
+malformed closure and they do not grant execution, approval, release, provider,
+credential, dependency, direct-main, or concurrent-mutation authority.
+
 Negative fixtures are included for regression coverage:
 
 - `invalid-mission-final-rollup-mission-id.json` proves the e2e smoke rejects

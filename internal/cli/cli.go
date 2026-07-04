@@ -1611,16 +1611,37 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 	}
 	missionCompleted, missionTotal := intFromJSONNumber(missionRollup["completed_nodes"]), intFromJSONNumber(missionRollup["total_nodes"])
 	foundryCompleted, foundryTotal := intFromJSONNumber(foundryRollup["completed_nodes"]), intFromJSONNumber(foundryRollup["total_nodes"])
-	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+	foundryTerminalStatus := normalizeAOMissionTerminalStatus(stringFromJSONValue(foundryRollup["status"]))
+	switch foundryTerminalStatus {
+	case "completed", "promoted":
+		if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: completed and total node counts must match and be complete")
+			return 1
+		}
+	case "denied", "blocked":
+		if missionCompleted == 0 || missionTotal == 0 || foundryCompleted != missionCompleted || foundryTotal != missionTotal {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: denied or blocked terminal rollups must carry matching node counts")
+			return 1
+		}
+	default:
 		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: completed and total node counts must match and be complete")
 		return 1
 	}
+	readbackStatus := "ready"
+	exactNextAction := "AO Mission and AO Foundry final rollups agree; no execution authority is granted"
+	claimsCompletionOnly := true
+	if foundryTerminalStatus == "denied" || foundryTerminalStatus == "blocked" {
+		readbackStatus = "blocked"
+		exactNextAction = "AO Mission and AO Foundry terminal rollups agree on " + foundryTerminalStatus + "; route repair or support work through AO Atlas before retry"
+		claimsCompletionOnly = false
+	}
 	readback := map[string]any{
 		"schema":                         "ao.foundry.ao-mission-final-rollup-smoke.v0.1",
-		"status":                         "ready",
+		"status":                         readbackStatus,
 		"mission_id":                     missionRollup["mission_id"],
 		"completed_nodes":                missionCompleted,
 		"total_nodes":                    missionTotal,
+		"foundry_terminal_status":        foundryTerminalStatus,
 		"safe_to_execute":                false,
 		"executes_work":                  false,
 		"approves_work":                  false,
@@ -1629,7 +1650,7 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		"foundry_final_rollup":           *foundryRollupPath,
 		"gateway_readiness_rollup":       *gatewayReadinessRollupPath,
 		"gateway_readiness_rollup_bound": *gatewayReadinessRollupPath != "",
-		"exact_next_action":              "AO Mission and AO Foundry final rollups agree; no execution authority is granted",
+		"exact_next_action":              exactNextAction,
 		"generated_at_utc":               time.Now().UTC().Format(time.RFC3339),
 		"public_safe_readback":           true,
 		"mutation_authority":             false,
@@ -1642,7 +1663,7 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		"policy_auth_expansion":          false,
 		"provider_calls":                 false,
 		"credential_use":                 false,
-		"claims_completion_only":         true,
+		"claims_completion_only":         claimsCompletionOnly,
 	}
 	if value, ok := gatewayReadinessRollup["correlation_id"].(string); ok && strings.TrimSpace(value) != "" {
 		readback["correlation_id"] = strings.TrimSpace(value)
@@ -1997,6 +2018,26 @@ func aoMissionAuthorityClaimed(doc map[string]any) bool {
 		}
 	}
 	return false
+}
+
+func stringFromJSONValue(value any) string {
+	text, _ := value.(string)
+	return strings.TrimSpace(text)
+}
+
+func normalizeAOMissionTerminalStatus(status string) string {
+	switch strings.ToLower(strings.TrimSpace(status)) {
+	case "complete", "completed", "done":
+		return "completed"
+	case "promote", "promoted", "promotion_ready":
+		return "promoted"
+	case "deny", "denied":
+		return "denied"
+	case "block", "blocked":
+		return "blocked"
+	default:
+		return strings.ToLower(strings.TrimSpace(status))
+	}
 }
 
 func validateAOMissionArtifactManifestDigests(manifestPath string, manifest map[string]any) error {

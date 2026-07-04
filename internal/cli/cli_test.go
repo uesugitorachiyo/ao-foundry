@@ -91,6 +91,67 @@ func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
 	}
 }
 
+func TestAOMissionFinalRollupSmokeAcceptsPromotedTerminalStatus(t *testing.T) {
+	dir := t.TempDir()
+	missionPath := filepath.Join(dir, "mission-final-rollup.json")
+	foundryPath := filepath.Join(dir, "foundry-final-rollup.json")
+	outPath := filepath.Join(dir, "smoke.json")
+	if err := os.WriteFile(missionPath, []byte(`{"schema":"ao.mission.final-rollup.v0.1","mission_id":"mission-promoted","status":"done","completed_nodes":2,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(foundryPath, []byte(`{"schema":"ao.foundry.final-rollup.v0.1","mission_id":"mission-promoted","status":"promoted","completed_nodes":2,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "final-rollup-smoke", "--mission-final-rollup", missionPath, "--foundry-final-rollup", foundryPath, "--out", outPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("promoted final-rollup smoke failed: %s", stderr.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "ready" || smoke["foundry_terminal_status"] != "promoted" || smoke["executes_work"] != false {
+		t.Fatalf("bad promoted terminal smoke: %#v", smoke)
+	}
+}
+
+func TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus(t *testing.T) {
+	dir := t.TempDir()
+	missionPath := filepath.Join(dir, "mission-final-rollup.json")
+	foundryPath := filepath.Join(dir, "foundry-final-rollup.json")
+	outPath := filepath.Join(dir, "smoke.json")
+	if err := os.WriteFile(missionPath, []byte(`{"schema":"ao.mission.final-rollup.v0.1","mission_id":"mission-denied","status":"blocked","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(foundryPath, []byte(`{"schema":"ao.foundry.final-rollup.v0.1","mission_id":"mission-denied","status":"denied","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "final-rollup-smoke", "--mission-final-rollup", missionPath, "--foundry-final-rollup", foundryPath, "--out", outPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("denied final-rollup smoke failed: %s", stderr.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "blocked" || smoke["foundry_terminal_status"] != "denied" || smoke["safe_to_execute"] != false {
+		t.Fatalf("bad denied terminal smoke: %#v", smoke)
+	}
+	if !strings.Contains(fmt.Sprint(smoke["exact_next_action"]), "repair") {
+		t.Fatalf("denied terminal smoke missing repair next action: %#v", smoke)
+	}
+}
+
 func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
 	smokePath := filepath.Join(t.TempDir(), "ao-mission-final-rollup-smoke.json")
 	ledgerPath := filepath.Join(t.TempDir(), "ao-mission-readiness-ledger.json")
