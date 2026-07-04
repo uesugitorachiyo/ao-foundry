@@ -1,0 +1,11 @@
+{
+  "schema": "ao.mission.archive-validation.v0.1",
+  "status": "ready",
+  "mission_id": "mission-demo",
+  "archive_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "artifact_count": 3,
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "generated_at_utc": "2026-07-03T00:00:00Z"
+}

@@ -1449,7 +1449,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
-	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] [--mission-archive-validation <readback.json>] --out <smoke.json>")
 }
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
@@ -1696,6 +1696,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	artifactManifestPath := fs.String("artifact-manifest", "", "optional ao-mission artifact manifest fixture")
 	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional ao-mission scheduler recovery readback fixture")
 	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional ao-mission ledger compaction readback fixture")
+	missionArchiveValidationPath := fs.String("mission-archive-validation", "", "optional ao-mission archive validation fixture")
 	outPath := fs.String("out", "", "e2e smoke output path")
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -1758,8 +1759,9 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		path   string
 		schema string
 	}{
-		"scheduler_recovery": {path: *schedulerRecoveryPath, schema: "ao.mission.scheduler-recovery-readback.v0.1"},
-		"ledger_compaction":  {path: *ledgerCompactionPath, schema: "ao.mission.ledger-compaction-readback.v0.1"},
+		"scheduler_recovery":         {path: *schedulerRecoveryPath, schema: "ao.mission.scheduler-recovery-readback.v0.1"},
+		"ledger_compaction":          {path: *ledgerCompactionPath, schema: "ao.mission.ledger-compaction-readback.v0.1"},
+		"mission_archive_validation": {path: *missionArchiveValidationPath, schema: "ao.mission.archive-validation.v0.1"},
 	} {
 		if input.path == "" {
 			continue
@@ -1803,46 +1805,48 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	atlasSourceArtifacts, _ := artifacts["atlas_workgraph_meta"]["source_artifacts"].(map[string]any)
 	missionProvenance, _ := artifacts["atlas_workgraph_meta"]["mission_provenance"].(map[string]any)
 	smoke := map[string]any{
-		"schema":                      "ao.foundry.ao-mission-e2e-smoke.v0.1",
-		"status":                      "ready",
-		"mission_id":                  missionID,
-		"route":                       artifacts["route"]["route"],
-		"current_owner":               artifacts["snapshot"]["current_owner"],
-		"atlas_workgraph_id":          artifacts["atlas_workgraph_meta"]["workgraph_id"],
-		"target_instance":             artifacts["atlas_workgraph_meta"]["target_instance"],
-		"completed_nodes":             missionCompleted,
-		"total_nodes":                 missionTotal,
-		"route_readback":              *routePath,
-		"governance_snapshot":         *snapshotPath,
-		"mission_final_rollup":        *missionRollupPath,
-		"foundry_final_rollup":        *foundryRollupPath,
-		"atlas_metadata":              *atlasMetadataPath,
-		"atlas_source_artifact_count": len(atlasSourceArtifacts),
-		"mission_provenance":          missionProvenance,
-		"primary_mission_provenance":  artifacts["atlas_workgraph_meta"]["primary_mission_provenance"],
-		"provenance_diagnostics":      artifacts["atlas_workgraph_meta"]["provenance_diagnostics"],
-		"artifact_manifest":           *artifactManifestPath,
-		"scheduler_recovery":          *schedulerRecoveryPath,
-		"ledger_compaction":           *ledgerCompactionPath,
-		"scheduler_recovery_bound":    *schedulerRecoveryPath != "",
-		"ledger_compaction_bound":     *ledgerCompactionPath != "",
-		"safe_to_execute":             false,
-		"executes_work":               false,
-		"approves_work":               false,
-		"mutates_repositories":        false,
-		"exact_next_action":           "AO Mission, Atlas, and Foundry smoke artifacts agree; no execution authority is granted",
-		"generated_at_utc":            time.Now().UTC().Format(time.RFC3339),
-		"public_safe_readback":        true,
-		"gateway_authority":           "intent_readback_only",
-		"scheduler_authority":         "wakeup_adapter_only",
-		"ledger_compaction_authority": "readback_only",
-		"direct_main_mutation":        false,
-		"concurrent_mutation":         false,
-		"release_or_publish":          false,
-		"dependency_updates":          false,
-		"policy_auth_expansion":       false,
-		"provider_calls":              false,
-		"credential_use":              false,
+		"schema":                           "ao.foundry.ao-mission-e2e-smoke.v0.1",
+		"status":                           "ready",
+		"mission_id":                       missionID,
+		"route":                            artifacts["route"]["route"],
+		"current_owner":                    artifacts["snapshot"]["current_owner"],
+		"atlas_workgraph_id":               artifacts["atlas_workgraph_meta"]["workgraph_id"],
+		"target_instance":                  artifacts["atlas_workgraph_meta"]["target_instance"],
+		"completed_nodes":                  missionCompleted,
+		"total_nodes":                      missionTotal,
+		"route_readback":                   *routePath,
+		"governance_snapshot":              *snapshotPath,
+		"mission_final_rollup":             *missionRollupPath,
+		"foundry_final_rollup":             *foundryRollupPath,
+		"atlas_metadata":                   *atlasMetadataPath,
+		"atlas_source_artifact_count":      len(atlasSourceArtifacts),
+		"mission_provenance":               missionProvenance,
+		"primary_mission_provenance":       artifacts["atlas_workgraph_meta"]["primary_mission_provenance"],
+		"provenance_diagnostics":           artifacts["atlas_workgraph_meta"]["provenance_diagnostics"],
+		"artifact_manifest":                *artifactManifestPath,
+		"scheduler_recovery":               *schedulerRecoveryPath,
+		"ledger_compaction":                *ledgerCompactionPath,
+		"mission_archive_validation":       *missionArchiveValidationPath,
+		"scheduler_recovery_bound":         *schedulerRecoveryPath != "",
+		"ledger_compaction_bound":          *ledgerCompactionPath != "",
+		"mission_archive_validation_bound": *missionArchiveValidationPath != "",
+		"safe_to_execute":                  false,
+		"executes_work":                    false,
+		"approves_work":                    false,
+		"mutates_repositories":             false,
+		"exact_next_action":                "AO Mission, Atlas, and Foundry smoke artifacts agree; no execution authority is granted",
+		"generated_at_utc":                 time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":             true,
+		"gateway_authority":                "intent_readback_only",
+		"scheduler_authority":              "wakeup_adapter_only",
+		"ledger_compaction_authority":      "readback_only",
+		"direct_main_mutation":             false,
+		"concurrent_mutation":              false,
+		"release_or_publish":               false,
+		"dependency_updates":               false,
+		"policy_auth_expansion":            false,
+		"provider_calls":                   false,
+		"credential_use":                   false,
 	}
 	if err := writeJSONFile(*outPath, smoke); err != nil {
 		fmt.Fprintf(stderr, "ao-mission e2e-smoke: write output: %v\n", err)

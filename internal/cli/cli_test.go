@@ -190,6 +190,7 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 		"--atlas-metadata", repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
 		"--scheduler-recovery", repoPath(filepath.Join("examples", "ao-mission-smoke", "scheduler-recovery-readback.json")),
 		"--ledger-compaction", repoPath(filepath.Join("examples", "ao-mission-smoke", "ledger-compaction-readback.json")),
+		"--mission-archive-validation", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-archive-validation.json")),
 		"--out", outPath,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -218,6 +219,9 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	if smoke["scheduler_recovery_bound"] != true || smoke["ledger_compaction_bound"] != true {
 		t.Fatalf("e2e smoke did not bind recovery/compaction readbacks: %#v", smoke)
 	}
+	if smoke["mission_archive_validation_bound"] != true {
+		t.Fatalf("e2e smoke did not bind archive validation readback: %#v", smoke)
+	}
 	if smoke["atlas_source_artifact_count"] != float64(2) {
 		t.Fatalf("e2e smoke missing Atlas source artifact count: %#v", smoke)
 	}
@@ -227,6 +231,37 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	}
 	if smoke["primary_mission_provenance"] != "artifact_manifest" || !strings.Contains(fmt.Sprint(smoke["provenance_diagnostics"]), "route_history=1") {
 		t.Fatalf("e2e smoke missing Mission provenance diagnostics: %#v", smoke)
+	}
+}
+
+func TestAOMissionE2ESmokeRejectsUnsafeMissionArchiveValidationFixture(t *testing.T) {
+	dir := t.TempDir()
+	archiveValidationPath := filepath.Join(dir, "mission-archive-validation.json")
+	if err := os.WriteFile(archiveValidationPath, []byte(`{
+  "schema": "ao.mission.archive-validation.v0.1",
+  "mission_id": "mission-demo",
+  "status": "ready",
+  "safe_to_execute": true
+}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	outPath := filepath.Join(dir, "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--mission-archive-validation", archiveValidationPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected unsafe mission archive validation fixture to fail")
+	}
+	if !strings.Contains(stderr.String(), "mission_archive_validation must not claim authority") {
+		t.Fatalf("expected archive validation authority error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
 }
 
