@@ -171,6 +171,7 @@ func TestAOMissionHelpListsRecoveryAndCompactionInputs(t *testing.T) {
 	for _, want := range []string{
 		"[--scheduler-recovery <readback.json>]",
 		"[--ledger-compaction <readback.json>]",
+		"[--timeline-compaction <readback.json>]",
 	} {
 		if !strings.Contains(help, want) {
 			t.Fatalf("ao-mission help missing %q:\n%s", want, help)
@@ -190,6 +191,7 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 		"--atlas-metadata", repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
 		"--scheduler-recovery", repoPath(filepath.Join("examples", "ao-mission-smoke", "scheduler-recovery-readback.json")),
 		"--ledger-compaction", repoPath(filepath.Join("examples", "ao-mission-smoke", "ledger-compaction-readback.json")),
+		"--timeline-compaction", repoPath(filepath.Join("examples", "ao-mission-smoke", "timeline-compaction-readback.json")),
 		"--mission-archive-validation", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-archive-validation.json")),
 		"--gateway-readiness-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "gateway-readiness-rollup.json")),
 		"--out", outPath,
@@ -217,7 +219,7 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	if smoke["executes_work"] != false || smoke["approves_work"] != false || smoke["mutates_repositories"] != false {
 		t.Fatalf("e2e smoke widened authority: %#v", smoke)
 	}
-	if smoke["scheduler_recovery_bound"] != true || smoke["ledger_compaction_bound"] != true {
+	if smoke["scheduler_recovery_bound"] != true || smoke["ledger_compaction_bound"] != true || smoke["timeline_compaction_bound"] != true {
 		t.Fatalf("e2e smoke did not bind recovery/compaction readbacks: %#v", smoke)
 	}
 	if smoke["mission_archive_validation_bound"] != true {
@@ -230,7 +232,7 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 		t.Fatalf("e2e smoke missing Atlas source artifact count: %#v", smoke)
 	}
 	provenance, ok := smoke["mission_provenance"].(map[string]any)
-	if !ok || provenance["scheduler_recovery"] != float64(1) || provenance["ledger_compaction"] != float64(1) {
+	if !ok || provenance["scheduler_recovery"] != float64(1) || provenance["ledger_compaction"] != float64(1) || provenance["timeline_compaction"] != float64(1) {
 		t.Fatalf("e2e smoke missing Mission provenance summary: %#v", smoke)
 	}
 	if smoke["primary_mission_provenance"] != "artifact_manifest" || !strings.Contains(fmt.Sprint(smoke["provenance_diagnostics"]), "route_history=1") {
