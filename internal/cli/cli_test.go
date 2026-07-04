@@ -218,6 +218,13 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	if smoke["scheduler_recovery_bound"] != true || smoke["ledger_compaction_bound"] != true {
 		t.Fatalf("e2e smoke did not bind recovery/compaction readbacks: %#v", smoke)
 	}
+	if smoke["atlas_source_artifact_count"] != float64(2) {
+		t.Fatalf("e2e smoke missing Atlas source artifact count: %#v", smoke)
+	}
+	provenance, ok := smoke["mission_provenance"].(map[string]any)
+	if !ok || provenance["scheduler_recovery"] != float64(1) || provenance["ledger_compaction"] != float64(1) {
+		t.Fatalf("e2e smoke missing Mission provenance summary: %#v", smoke)
+	}
 }
 
 func TestAOMissionE2ESmokeRejectsUnsafeSchedulerRecoveryFixture(t *testing.T) {

@@ -1794,6 +1794,8 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "ao-mission e2e-smoke: Atlas metadata node total must match final rollup total")
 		return 1
 	}
+	atlasSourceArtifacts, _ := artifacts["atlas_workgraph_meta"]["source_artifacts"].(map[string]any)
+	missionProvenance, _ := artifacts["atlas_workgraph_meta"]["mission_provenance"].(map[string]any)
 	smoke := map[string]any{
 		"schema":                      "ao.foundry.ao-mission-e2e-smoke.v0.1",
 		"status":                      "ready",
@@ -1809,6 +1811,8 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"mission_final_rollup":        *missionRollupPath,
 		"foundry_final_rollup":        *foundryRollupPath,
 		"atlas_metadata":              *atlasMetadataPath,
+		"atlas_source_artifact_count": len(atlasSourceArtifacts),
+		"mission_provenance":          missionProvenance,
 		"artifact_manifest":           *artifactManifestPath,
 		"scheduler_recovery":          *schedulerRecoveryPath,
 		"ledger_compaction":           *ledgerCompactionPath,
