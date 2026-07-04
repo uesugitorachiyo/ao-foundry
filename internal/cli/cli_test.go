@@ -300,6 +300,39 @@ func TestAOMissionE2ESmokeRejectsAtlasNodeCountMismatchFixture(t *testing.T) {
 	}
 }
 
+func TestAOMissionE2ESmokeRejectsAtlasMetadataWithoutProvenanceDiagnostics(t *testing.T) {
+	dir := t.TempDir()
+	var metadata map[string]any
+	body, err := os.ReadFile(filepath.Join("..", "..", "examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(body, &metadata); err != nil {
+		t.Fatal(err)
+	}
+	delete(metadata, "primary_mission_provenance")
+	delete(metadata, "provenance_diagnostics")
+	metadataPath := filepath.Join(dir, "atlas-workgraph-metadata-missing-provenance.json")
+	writeJSONFixtureForTest(t, metadataPath, metadata)
+	outPath := filepath.Join(dir, "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", metadataPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected missing provenance diagnostics to fail")
+	}
+	if !strings.Contains(stderr.String(), "Atlas metadata requires Mission provenance diagnostics") {
+		t.Fatalf("expected provenance diagnostics error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+}
+
 func TestAOMissionE2ESmokeValidatesArtifactManifestDigests(t *testing.T) {
 	manifestPath := writeAOMissionArtifactManifestFixture(t, digestOverride{})
 	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")

@@ -1794,6 +1794,12 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "ao-mission e2e-smoke: Atlas metadata node total must match final rollup total")
 		return 1
 	}
+	primaryProvenance, _ := artifacts["atlas_workgraph_meta"]["primary_mission_provenance"].(string)
+	provenanceDiagnostics, _ := artifacts["atlas_workgraph_meta"]["provenance_diagnostics"].(string)
+	if strings.TrimSpace(primaryProvenance) == "" || strings.TrimSpace(provenanceDiagnostics) == "" {
+		fmt.Fprintln(stderr, "ao-mission e2e-smoke: Atlas metadata requires Mission provenance diagnostics")
+		return 1
+	}
 	atlasSourceArtifacts, _ := artifacts["atlas_workgraph_meta"]["source_artifacts"].(map[string]any)
 	missionProvenance, _ := artifacts["atlas_workgraph_meta"]["mission_provenance"].(map[string]any)
 	smoke := map[string]any{
