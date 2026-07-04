@@ -1813,6 +1813,8 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"atlas_metadata":              *atlasMetadataPath,
 		"atlas_source_artifact_count": len(atlasSourceArtifacts),
 		"mission_provenance":          missionProvenance,
+		"primary_mission_provenance":  artifacts["atlas_workgraph_meta"]["primary_mission_provenance"],
+		"provenance_diagnostics":      artifacts["atlas_workgraph_meta"]["provenance_diagnostics"],
 		"artifact_manifest":           *artifactManifestPath,
 		"scheduler_recovery":          *schedulerRecoveryPath,
 		"ledger_compaction":           *ledgerCompactionPath,

@@ -225,6 +225,9 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	if !ok || provenance["scheduler_recovery"] != float64(1) || provenance["ledger_compaction"] != float64(1) {
 		t.Fatalf("e2e smoke missing Mission provenance summary: %#v", smoke)
 	}
+	if smoke["primary_mission_provenance"] != "artifact_manifest" || !strings.Contains(fmt.Sprint(smoke["provenance_diagnostics"]), "route_history=1") {
+		t.Fatalf("e2e smoke missing Mission provenance diagnostics: %#v", smoke)
+	}
 }
 
 func TestAOMissionE2ESmokeRejectsUnsafeSchedulerRecoveryFixture(t *testing.T) {
