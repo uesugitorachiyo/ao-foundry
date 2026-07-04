@@ -1690,6 +1690,8 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	foundryRollupPath := fs.String("foundry-final-rollup", "", "ao-foundry final rollup fixture")
 	atlasMetadataPath := fs.String("atlas-metadata", "", "ao-atlas mission workgraph metadata fixture")
 	artifactManifestPath := fs.String("artifact-manifest", "", "optional ao-mission artifact manifest fixture")
+	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional ao-mission scheduler recovery readback fixture")
+	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional ao-mission ledger compaction readback fixture")
 	outPath := fs.String("out", "", "e2e smoke output path")
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -1748,6 +1750,35 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		}
 		artifacts["artifact_manifest"] = manifest
 	}
+	for name, input := range map[string]struct {
+		path   string
+		schema string
+	}{
+		"scheduler_recovery": {path: *schedulerRecoveryPath, schema: "ao.mission.scheduler-recovery-readback.v0.1"},
+		"ledger_compaction":  {path: *ledgerCompactionPath, schema: "ao.mission.ledger-compaction-readback.v0.1"},
+	} {
+		if input.path == "" {
+			continue
+		}
+		var doc map[string]any
+		if err := readJSONFile(input.path, &doc); err != nil {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: read %s: %v\n", name, err)
+			return 1
+		}
+		if doc["schema"] != input.schema {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %s schema mismatch\n", name)
+			return 1
+		}
+		if aoMissionAuthorityClaimed(doc) {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %s must not claim authority\n", name)
+			return 1
+		}
+		if doc["mission_id"] != missionID {
+			fmt.Fprintf(stderr, "ao-mission e2e-smoke: %s mission_id mismatch\n", name)
+			return 1
+		}
+		artifacts[name] = doc
+	}
 	missionCompleted, missionTotal := intFromJSONNumber(artifacts["mission_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["mission_final_rollup"]["total_nodes"])
 	foundryCompleted, foundryTotal := intFromJSONNumber(artifacts["foundry_final_rollup"]["completed_nodes"]), intFromJSONNumber(artifacts["foundry_final_rollup"]["total_nodes"])
 	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
@@ -1760,37 +1791,42 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	smoke := map[string]any{
-		"schema":                "ao.foundry.ao-mission-e2e-smoke.v0.1",
-		"status":                "ready",
-		"mission_id":            missionID,
-		"route":                 artifacts["route"]["route"],
-		"current_owner":         artifacts["snapshot"]["current_owner"],
-		"atlas_workgraph_id":    artifacts["atlas_workgraph_meta"]["workgraph_id"],
-		"target_instance":       artifacts["atlas_workgraph_meta"]["target_instance"],
-		"completed_nodes":       missionCompleted,
-		"total_nodes":           missionTotal,
-		"route_readback":        *routePath,
-		"governance_snapshot":   *snapshotPath,
-		"mission_final_rollup":  *missionRollupPath,
-		"foundry_final_rollup":  *foundryRollupPath,
-		"atlas_metadata":        *atlasMetadataPath,
-		"artifact_manifest":     *artifactManifestPath,
-		"safe_to_execute":       false,
-		"executes_work":         false,
-		"approves_work":         false,
-		"mutates_repositories":  false,
-		"exact_next_action":     "AO Mission, Atlas, and Foundry smoke artifacts agree; no execution authority is granted",
-		"generated_at_utc":      time.Now().UTC().Format(time.RFC3339),
-		"public_safe_readback":  true,
-		"gateway_authority":     "intent_readback_only",
-		"scheduler_authority":   "wakeup_adapter_only",
-		"direct_main_mutation":  false,
-		"concurrent_mutation":   false,
-		"release_or_publish":    false,
-		"dependency_updates":    false,
-		"policy_auth_expansion": false,
-		"provider_calls":        false,
-		"credential_use":        false,
+		"schema":                      "ao.foundry.ao-mission-e2e-smoke.v0.1",
+		"status":                      "ready",
+		"mission_id":                  missionID,
+		"route":                       artifacts["route"]["route"],
+		"current_owner":               artifacts["snapshot"]["current_owner"],
+		"atlas_workgraph_id":          artifacts["atlas_workgraph_meta"]["workgraph_id"],
+		"target_instance":             artifacts["atlas_workgraph_meta"]["target_instance"],
+		"completed_nodes":             missionCompleted,
+		"total_nodes":                 missionTotal,
+		"route_readback":              *routePath,
+		"governance_snapshot":         *snapshotPath,
+		"mission_final_rollup":        *missionRollupPath,
+		"foundry_final_rollup":        *foundryRollupPath,
+		"atlas_metadata":              *atlasMetadataPath,
+		"artifact_manifest":           *artifactManifestPath,
+		"scheduler_recovery":          *schedulerRecoveryPath,
+		"ledger_compaction":           *ledgerCompactionPath,
+		"scheduler_recovery_bound":    *schedulerRecoveryPath != "",
+		"ledger_compaction_bound":     *ledgerCompactionPath != "",
+		"safe_to_execute":             false,
+		"executes_work":               false,
+		"approves_work":               false,
+		"mutates_repositories":        false,
+		"exact_next_action":           "AO Mission, Atlas, and Foundry smoke artifacts agree; no execution authority is granted",
+		"generated_at_utc":            time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":        true,
+		"gateway_authority":           "intent_readback_only",
+		"scheduler_authority":         "wakeup_adapter_only",
+		"ledger_compaction_authority": "readback_only",
+		"direct_main_mutation":        false,
+		"concurrent_mutation":         false,
+		"release_or_publish":          false,
+		"dependency_updates":          false,
+		"policy_auth_expansion":       false,
+		"provider_calls":              false,
+		"credential_use":              false,
 	}
 	if err := writeJSONFile(*outPath, smoke); err != nil {
 		fmt.Fprintf(stderr, "ao-mission e2e-smoke: write output: %v\n", err)
@@ -1814,6 +1850,7 @@ func aoMissionAuthorityClaimed(doc map[string]any) bool {
 		"dependency_updates",
 		"policy_auth_expansion",
 		"hidden_instruction_mutation",
+		"schedules_work",
 	} {
 		if doc[field] == true {
 			return true
