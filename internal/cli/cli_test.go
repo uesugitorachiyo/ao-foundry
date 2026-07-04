@@ -191,6 +191,7 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 		"--scheduler-recovery", repoPath(filepath.Join("examples", "ao-mission-smoke", "scheduler-recovery-readback.json")),
 		"--ledger-compaction", repoPath(filepath.Join("examples", "ao-mission-smoke", "ledger-compaction-readback.json")),
 		"--mission-archive-validation", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-archive-validation.json")),
+		"--gateway-readiness-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "gateway-readiness-rollup.json")),
 		"--out", outPath,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -222,6 +223,9 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	if smoke["mission_archive_validation_bound"] != true {
 		t.Fatalf("e2e smoke did not bind archive validation readback: %#v", smoke)
 	}
+	if smoke["gateway_readiness_rollup_bound"] != true {
+		t.Fatalf("e2e smoke did not bind gateway readiness rollup: %#v", smoke)
+	}
 	if smoke["atlas_source_artifact_count"] != float64(2) {
 		t.Fatalf("e2e smoke missing Atlas source artifact count: %#v", smoke)
 	}
@@ -231,6 +235,37 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	}
 	if smoke["primary_mission_provenance"] != "artifact_manifest" || !strings.Contains(fmt.Sprint(smoke["provenance_diagnostics"]), "route_history=1") {
 		t.Fatalf("e2e smoke missing Mission provenance diagnostics: %#v", smoke)
+	}
+}
+
+func TestAOMissionE2ESmokeRejectsUnsafeGatewayReadinessRollup(t *testing.T) {
+	dir := t.TempDir()
+	rollupPath := filepath.Join(dir, "gateway-readiness-rollup.json")
+	if err := os.WriteFile(rollupPath, []byte(`{
+  "schema": "ao.mission.gateway-readiness-rollup.v0.1",
+  "mission_id": "mission-demo",
+  "status": "ready",
+  "safe_to_execute": true
+}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	outPath := filepath.Join(dir, "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--gateway-readiness-rollup", rollupPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected unsafe gateway readiness rollup to fail")
+	}
+	if !strings.Contains(stderr.String(), "gateway_readiness_rollup must not claim authority") {
+		t.Fatalf("expected gateway rollup authority error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
 }
 

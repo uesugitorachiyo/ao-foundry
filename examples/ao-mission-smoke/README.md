@@ -13,10 +13,13 @@ instruction mutation, policy-changing autonomy, unrestricted RSI, or `broad_RSI`
 The fixture also includes Atlas mission workgraph metadata so `foundry
 ao-mission e2e-smoke` can bind AO Mission route/snapshot readbacks, Atlas
 workgraph metadata, and Mission/Foundry final rollups into one readiness-only
-smoke artifact. Scheduler-recovery and ledger-compaction readbacks are included
-as provenance-only evidence; they must remain read-only and cannot schedule,
+smoke artifact. Scheduler-recovery, ledger-compaction, Mission archive
+validation, and gateway readiness rollup readbacks are included as
+provenance-only evidence; they must remain read-only and cannot schedule,
 execute, approve, mutate repositories, call providers, use credentials, publish,
-or grant direct-main/concurrent mutation authority.
+or grant direct-main/concurrent mutation authority. Gateway readiness rollups may
+carry a `correlation_id` to connect replay evidence across AO Mission, Atlas,
+Foundry, and Command without creating execution authority.
 
 Negative fixtures are included for regression coverage:
 
