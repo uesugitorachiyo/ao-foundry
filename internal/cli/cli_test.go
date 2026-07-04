@@ -150,6 +150,8 @@ func TestAOMissionE2ESmokeIsLockedIntoCI(t *testing.T) {
 	}
 	for _, want := range []string{
 		"artifact-manifest.json",
+		"scheduler-recovery-readback.json",
+		"ledger-compaction-readback.json",
 		"digest_negative_smoke=passed",
 		"expected digest-mismatch manifest to fail",
 	} {
@@ -169,6 +171,8 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 		"--mission-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json")),
 		"--foundry-final-rollup", repoPath(filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json")),
 		"--atlas-metadata", repoPath(filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json")),
+		"--scheduler-recovery", repoPath(filepath.Join("examples", "ao-mission-smoke", "scheduler-recovery-readback.json")),
+		"--ledger-compaction", repoPath(filepath.Join("examples", "ao-mission-smoke", "ledger-compaction-readback.json")),
 		"--out", outPath,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -193,6 +197,39 @@ func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	}
 	if smoke["executes_work"] != false || smoke["approves_work"] != false || smoke["mutates_repositories"] != false {
 		t.Fatalf("e2e smoke widened authority: %#v", smoke)
+	}
+	if smoke["scheduler_recovery_bound"] != true || smoke["ledger_compaction_bound"] != true {
+		t.Fatalf("e2e smoke did not bind recovery/compaction readbacks: %#v", smoke)
+	}
+}
+
+func TestAOMissionE2ESmokeRejectsUnsafeSchedulerRecoveryFixture(t *testing.T) {
+	dir := t.TempDir()
+	schedulerRecoveryPath := filepath.Join(dir, "scheduler-recovery-readback.json")
+	if err := os.WriteFile(schedulerRecoveryPath, []byte(`{
+  "schema": "ao.mission.scheduler-recovery-readback.v0.1",
+  "mission_id": "mission-demo",
+  "safe_to_execute": true
+}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	outPath := filepath.Join(dir, "ao-mission-e2e-smoke.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "e2e-smoke",
+		"--route", filepath.Join("examples", "ao-mission-smoke", "mission-route-readback.json"),
+		"--snapshot", filepath.Join("examples", "ao-mission-smoke", "governance-snapshot-readback.json"),
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--atlas-metadata", filepath.Join("examples", "ao-mission-smoke", "atlas-workgraph-metadata.json"),
+		"--scheduler-recovery", schedulerRecoveryPath,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatal("expected unsafe scheduler recovery fixture to fail")
+	}
+	if !strings.Contains(stderr.String(), "scheduler_recovery must not claim authority") {
+		t.Fatalf("expected scheduler recovery authority error, got stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
 }
 
