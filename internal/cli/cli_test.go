@@ -63,6 +63,7 @@ func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
 		"ao-mission", "final-rollup-smoke",
 		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
 		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--gateway-readiness-rollup", filepath.Join("examples", "ao-mission-smoke", "gateway-readiness-rollup.json"),
 		"--out", outPath,
 	}, &stdout, &stderr)
 	if code != 0 {
@@ -84,6 +85,9 @@ func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
 	}
 	if smoke["executes_work"] != false || smoke["approves_work"] != false || smoke["mutates_repositories"] != false {
 		t.Fatalf("final-rollup smoke widened authority: %#v", smoke)
+	}
+	if smoke["gateway_readiness_rollup_bound"] != true || smoke["correlation_id"] != "corr-gateway-001" {
+		t.Fatalf("final-rollup smoke did not bind gateway readiness correlation: %#v", smoke)
 	}
 }
 
