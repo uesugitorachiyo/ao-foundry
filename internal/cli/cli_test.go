@@ -129,6 +129,36 @@ func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
 	}
 }
 
+func TestAOMissionE2ESmokeIsLockedIntoCI(t *testing.T) {
+	body, err := os.ReadFile(filepath.Join("..", "..", ".github", "workflows", "ci.yml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	workflow := string(body)
+	for _, want := range []string{
+		"name: AO Mission e2e smoke",
+		"shell: bash",
+		"scripts/ao-mission-atlas-foundry-e2e-smoke.sh",
+	} {
+		if !strings.Contains(workflow, want) {
+			t.Fatalf("CI workflow missing %q", want)
+		}
+	}
+	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "ao-mission-atlas-foundry-e2e-smoke.sh"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		"artifact-manifest.json",
+		"digest_negative_smoke=passed",
+		"expected digest-mismatch manifest to fail",
+	} {
+		if !strings.Contains(string(script), want) {
+			t.Fatalf("AO Mission e2e smoke script missing %q", want)
+		}
+	}
+}
+
 func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
 	var stdout, stderr bytes.Buffer
@@ -5689,13 +5719,8 @@ func TestCIWorkflowRunsAOMissionE2ESmokeFixture(t *testing.T) {
 	text := string(workflow)
 	for _, want := range []string{
 		"AO Mission e2e smoke",
-		"go run ./cmd/foundry ao-mission e2e-smoke",
-		"--route examples/ao-mission-smoke/mission-route-readback.json",
-		"--snapshot examples/ao-mission-smoke/governance-snapshot-readback.json",
-		"--mission-final-rollup examples/ao-mission-smoke/mission-final-rollup.json",
-		"--foundry-final-rollup examples/ao-mission-smoke/foundry-final-rollup.json",
-		"--atlas-metadata examples/ao-mission-smoke/atlas-workgraph-metadata.json",
-		"--out tmp/ao-mission-e2e-smoke.json",
+		"shell: bash",
+		"scripts/ao-mission-atlas-foundry-e2e-smoke.sh tmp/ao-mission-atlas-foundry-e2e-ci",
 	} {
 		if !strings.Contains(text, want) {
 			t.Fatalf("CI workflow missing AO Mission e2e smoke detail %q", want)
