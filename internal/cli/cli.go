@@ -1697,6 +1697,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional ao-mission scheduler recovery readback fixture")
 	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional ao-mission ledger compaction readback fixture")
 	missionArchiveValidationPath := fs.String("mission-archive-validation", "", "optional ao-mission archive validation fixture")
+	gatewayReadinessRollupPath := fs.String("gateway-readiness-rollup", "", "optional ao-mission gateway readiness rollup fixture")
 	outPath := fs.String("out", "", "e2e smoke output path")
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -1762,6 +1763,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"scheduler_recovery":         {path: *schedulerRecoveryPath, schema: "ao.mission.scheduler-recovery-readback.v0.1"},
 		"ledger_compaction":          {path: *ledgerCompactionPath, schema: "ao.mission.ledger-compaction-readback.v0.1"},
 		"mission_archive_validation": {path: *missionArchiveValidationPath, schema: "ao.mission.archive-validation.v0.1"},
+		"gateway_readiness_rollup":   {path: *gatewayReadinessRollupPath, schema: "ao.mission.gateway-readiness-rollup.v0.1"},
 	} {
 		if input.path == "" {
 			continue
@@ -1827,9 +1829,11 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"scheduler_recovery":               *schedulerRecoveryPath,
 		"ledger_compaction":                *ledgerCompactionPath,
 		"mission_archive_validation":       *missionArchiveValidationPath,
+		"gateway_readiness_rollup":         *gatewayReadinessRollupPath,
 		"scheduler_recovery_bound":         *schedulerRecoveryPath != "",
 		"ledger_compaction_bound":          *ledgerCompactionPath != "",
 		"mission_archive_validation_bound": *missionArchiveValidationPath != "",
+		"gateway_readiness_rollup_bound":   *gatewayReadinessRollupPath != "",
 		"safe_to_execute":                  false,
 		"executes_work":                    false,
 		"approves_work":                    false,
