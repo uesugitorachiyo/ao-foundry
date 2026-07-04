@@ -1449,6 +1449,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
+	fmt.Fprintln(w, "  foundry ao-mission rollup-summary --final-rollup-smoke <smoke.json> --readiness-ledger <ledger.json> --out <summary.json>")
 	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] [--timeline-compaction <readback.json>] [--mission-archive-validation <readback.json>] [--gateway-readiness-rollup <readback.json>] --out <smoke.json>")
 }
 
@@ -1468,6 +1469,8 @@ func runAOMission(args []string, stdout, stderr io.Writer) int {
 		return runAOMissionFinalRollupSmoke(args[1:], stdout, stderr)
 	case "readiness-ledger":
 		return runAOMissionReadinessLedger(args[1:], stdout, stderr)
+	case "rollup-summary":
+		return runAOMissionRollupSummary(args[1:], stdout, stderr)
 	case "smoke":
 		return runAOMissionSmoke(args[1:], stdout, stderr)
 	default:
@@ -1608,16 +1611,37 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 	}
 	missionCompleted, missionTotal := intFromJSONNumber(missionRollup["completed_nodes"]), intFromJSONNumber(missionRollup["total_nodes"])
 	foundryCompleted, foundryTotal := intFromJSONNumber(foundryRollup["completed_nodes"]), intFromJSONNumber(foundryRollup["total_nodes"])
-	if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+	foundryTerminalStatus := normalizeAOMissionTerminalStatus(stringFromJSONValue(foundryRollup["status"]))
+	switch foundryTerminalStatus {
+	case "completed", "promoted":
+		if missionCompleted == 0 || missionTotal == 0 || missionCompleted != missionTotal || foundryCompleted != foundryTotal || missionCompleted != foundryCompleted || missionTotal != foundryTotal {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: completed and total node counts must match and be complete")
+			return 1
+		}
+	case "denied", "blocked":
+		if missionCompleted == 0 || missionTotal == 0 || foundryCompleted != missionCompleted || foundryTotal != missionTotal {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: denied or blocked terminal rollups must carry matching node counts")
+			return 1
+		}
+	default:
 		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: completed and total node counts must match and be complete")
 		return 1
 	}
+	readbackStatus := "ready"
+	exactNextAction := "AO Mission and AO Foundry final rollups agree; no execution authority is granted"
+	claimsCompletionOnly := true
+	if foundryTerminalStatus == "denied" || foundryTerminalStatus == "blocked" {
+		readbackStatus = "blocked"
+		exactNextAction = "AO Mission and AO Foundry terminal rollups agree on " + foundryTerminalStatus + "; route repair or support work through AO Atlas before retry"
+		claimsCompletionOnly = false
+	}
 	readback := map[string]any{
 		"schema":                         "ao.foundry.ao-mission-final-rollup-smoke.v0.1",
-		"status":                         "ready",
+		"status":                         readbackStatus,
 		"mission_id":                     missionRollup["mission_id"],
 		"completed_nodes":                missionCompleted,
 		"total_nodes":                    missionTotal,
+		"foundry_terminal_status":        foundryTerminalStatus,
 		"safe_to_execute":                false,
 		"executes_work":                  false,
 		"approves_work":                  false,
@@ -1626,7 +1650,7 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		"foundry_final_rollup":           *foundryRollupPath,
 		"gateway_readiness_rollup":       *gatewayReadinessRollupPath,
 		"gateway_readiness_rollup_bound": *gatewayReadinessRollupPath != "",
-		"exact_next_action":              "AO Mission and AO Foundry final rollups agree; no execution authority is granted",
+		"exact_next_action":              exactNextAction,
 		"generated_at_utc":               time.Now().UTC().Format(time.RFC3339),
 		"public_safe_readback":           true,
 		"mutation_authority":             false,
@@ -1639,7 +1663,7 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		"policy_auth_expansion":          false,
 		"provider_calls":                 false,
 		"credential_use":                 false,
-		"claims_completion_only":         true,
+		"claims_completion_only":         claimsCompletionOnly,
 	}
 	if value, ok := gatewayReadinessRollup["correlation_id"].(string); ok && strings.TrimSpace(value) != "" {
 		readback["correlation_id"] = strings.TrimSpace(value)
@@ -1707,6 +1731,90 @@ func runAOMissionReadinessLedger(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	fmt.Fprintf(stdout, "ao_mission_readiness_ledger=%s\n", *outPath)
+	return 0
+}
+
+func runAOMissionRollupSummary(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("ao-mission rollup-summary", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	smokePath := fs.String("final-rollup-smoke", "", "ao-mission final-rollup smoke readback")
+	ledgerPath := fs.String("readiness-ledger", "", "ao-mission readiness ledger")
+	outPath := fs.String("out", "", "rollup summary output path")
+	if err := fs.Parse(args); err != nil {
+		return 2
+	}
+	if *smokePath == "" || *ledgerPath == "" || *outPath == "" {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary requires --final-rollup-smoke, --readiness-ledger, and --out")
+		return 2
+	}
+	var smoke map[string]any
+	if err := readJSONFile(*smokePath, &smoke); err != nil {
+		fmt.Fprintf(stderr, "ao-mission rollup-summary: read final-rollup smoke: %v\n", err)
+		return 1
+	}
+	if smoke["schema"] != "ao.foundry.ao-mission-final-rollup-smoke.v0.1" || smoke["status"] != "ready" {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary: final-rollup smoke must be ready")
+		return 1
+	}
+	var ledger map[string]any
+	if err := readJSONFile(*ledgerPath, &ledger); err != nil {
+		fmt.Fprintf(stderr, "ao-mission rollup-summary: read readiness ledger: %v\n", err)
+		return 1
+	}
+	if ledger["schema"] != "ao.foundry.ao-mission-readiness-ledger.v0.1" || ledger["status"] != "ready" {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary: readiness ledger must be ready")
+		return 1
+	}
+	if smoke["mission_id"] != ledger["mission_id"] {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary: mission_id mismatch")
+		return 1
+	}
+	if aoMissionAuthorityClaimed(smoke) || aoMissionAuthorityClaimed(ledger) {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary: inputs must not claim authority")
+		return 1
+	}
+	smokeCompleted, smokeTotal := intFromJSONNumber(smoke["completed_nodes"]), intFromJSONNumber(smoke["total_nodes"])
+	ledgerCompleted, ledgerTotal := intFromJSONNumber(ledger["completed_nodes"]), intFromJSONNumber(ledger["total_nodes"])
+	if smokeCompleted == 0 || smokeTotal == 0 || smokeCompleted != smokeTotal || ledgerCompleted != ledgerTotal || smokeCompleted != ledgerCompleted || smokeTotal != ledgerTotal {
+		fmt.Fprintln(stderr, "ao-mission rollup-summary: completed and total node counts must match and be complete")
+		return 1
+	}
+	summary := map[string]any{
+		"schema":                      "ao.foundry.ao-mission-rollup-summary.v0.1",
+		"status":                      "ready",
+		"mission_id":                  smoke["mission_id"],
+		"portfolio_binding":           "active_stack_readiness",
+		"readiness_bound":             true,
+		"final_rollup_smoke_bound":    true,
+		"readiness_ledger_bound":      true,
+		"completed_nodes":             smokeCompleted,
+		"total_nodes":                 smokeTotal,
+		"final_rollup_smoke":          *smokePath,
+		"readiness_ledger":            *ledgerPath,
+		"safe_to_execute":             false,
+		"executes_work":               false,
+		"approves_work":               false,
+		"mutates_repositories":        false,
+		"provider_calls":              false,
+		"credential_use":              false,
+		"direct_main_mutation":        false,
+		"concurrent_mutation":         false,
+		"release_or_publish":          false,
+		"dependency_updates":          false,
+		"policy_auth_expansion":       false,
+		"hidden_instruction_mutation": false,
+		"claims_readiness_only":       true,
+		"public_safe_readback":        true,
+		"scheduler_authority":         "none",
+		"gateway_authority":           "none",
+		"generated_at_utc":            time.Now().UTC().Format(time.RFC3339),
+		"exact_next_action":           "AO Mission rollup is bound to active-stack readiness; keep execution behind Foundry gates",
+	}
+	if err := writeJSONFile(*outPath, summary); err != nil {
+		fmt.Fprintf(stderr, "ao-mission rollup-summary: write output: %v\n", err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "ao_mission_rollup_summary=%s\n", *outPath)
 	return 0
 }
 
@@ -1910,6 +2018,26 @@ func aoMissionAuthorityClaimed(doc map[string]any) bool {
 		}
 	}
 	return false
+}
+
+func stringFromJSONValue(value any) string {
+	text, _ := value.(string)
+	return strings.TrimSpace(text)
+}
+
+func normalizeAOMissionTerminalStatus(status string) string {
+	switch strings.ToLower(strings.TrimSpace(status)) {
+	case "complete", "completed", "done":
+		return "completed"
+	case "promote", "promoted", "promotion_ready":
+		return "promoted"
+	case "deny", "denied":
+		return "denied"
+	case "block", "blocked":
+		return "blocked"
+	default:
+		return strings.ToLower(strings.TrimSpace(status))
+	}
 }
 
 func validateAOMissionArtifactManifestDigests(manifestPath string, manifest map[string]any) error {

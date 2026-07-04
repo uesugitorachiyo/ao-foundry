@@ -91,6 +91,67 @@ func TestAOMissionFinalRollupSmokeValidatesClosure(t *testing.T) {
 	}
 }
 
+func TestAOMissionFinalRollupSmokeAcceptsPromotedTerminalStatus(t *testing.T) {
+	dir := t.TempDir()
+	missionPath := filepath.Join(dir, "mission-final-rollup.json")
+	foundryPath := filepath.Join(dir, "foundry-final-rollup.json")
+	outPath := filepath.Join(dir, "smoke.json")
+	if err := os.WriteFile(missionPath, []byte(`{"schema":"ao.mission.final-rollup.v0.1","mission_id":"mission-promoted","status":"done","completed_nodes":2,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(foundryPath, []byte(`{"schema":"ao.foundry.final-rollup.v0.1","mission_id":"mission-promoted","status":"promoted","completed_nodes":2,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "final-rollup-smoke", "--mission-final-rollup", missionPath, "--foundry-final-rollup", foundryPath, "--out", outPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("promoted final-rollup smoke failed: %s", stderr.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "ready" || smoke["foundry_terminal_status"] != "promoted" || smoke["executes_work"] != false {
+		t.Fatalf("bad promoted terminal smoke: %#v", smoke)
+	}
+}
+
+func TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus(t *testing.T) {
+	dir := t.TempDir()
+	missionPath := filepath.Join(dir, "mission-final-rollup.json")
+	foundryPath := filepath.Join(dir, "foundry-final-rollup.json")
+	outPath := filepath.Join(dir, "smoke.json")
+	if err := os.WriteFile(missionPath, []byte(`{"schema":"ao.mission.final-rollup.v0.1","mission_id":"mission-denied","status":"blocked","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(foundryPath, []byte(`{"schema":"ao.foundry.final-rollup.v0.1","mission_id":"mission-denied","status":"denied","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "final-rollup-smoke", "--mission-final-rollup", missionPath, "--foundry-final-rollup", foundryPath, "--out", outPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("denied final-rollup smoke failed: %s", stderr.String())
+	}
+	var smoke map[string]any
+	data, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &smoke); err != nil {
+		t.Fatal(err)
+	}
+	if smoke["status"] != "blocked" || smoke["foundry_terminal_status"] != "denied" || smoke["safe_to_execute"] != false {
+		t.Fatalf("bad denied terminal smoke: %#v", smoke)
+	}
+	if !strings.Contains(fmt.Sprint(smoke["exact_next_action"]), "repair") {
+		t.Fatalf("denied terminal smoke missing repair next action: %#v", smoke)
+	}
+}
+
 func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
 	smokePath := filepath.Join(t.TempDir(), "ao-mission-final-rollup-smoke.json")
 	ledgerPath := filepath.Join(t.TempDir(), "ao-mission-readiness-ledger.json")
@@ -130,6 +191,70 @@ func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
 	}
 	if ledger["executes_work"] != false || ledger["approves_work"] != false || ledger["mutates_repositories"] != false {
 		t.Fatalf("readiness ledger widened authority: %#v", ledger)
+	}
+}
+
+func TestAOMissionRollupSummaryBindsPortfolioAndReadiness(t *testing.T) {
+	dir := t.TempDir()
+	smokePath := filepath.Join(dir, "ao-mission-final-rollup-smoke.json")
+	ledgerPath := filepath.Join(dir, "ao-mission-readiness-ledger.json")
+	summaryPath := filepath.Join(dir, "ao-mission-rollup-summary.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "final-rollup-smoke",
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--out", smokePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("final-rollup smoke failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"ao-mission", "readiness-ledger",
+		"--final-rollup-smoke", smokePath,
+		"--out", ledgerPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("readiness ledger failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"ao-mission", "rollup-summary",
+		"--final-rollup-smoke", smokePath,
+		"--readiness-ledger", ledgerPath,
+		"--out", summaryPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("rollup summary failed: %s", stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_rollup_summary="+summaryPath) {
+		t.Fatalf("expected rollup summary output path, got %q", stdout.String())
+	}
+	var summary map[string]any
+	data, err := os.ReadFile(summaryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &summary); err != nil {
+		t.Fatal(err)
+	}
+	if summary["schema"] != "ao.foundry.ao-mission-rollup-summary.v0.1" || summary["status"] != "ready" {
+		t.Fatalf("bad rollup summary: %#v", summary)
+	}
+	if summary["portfolio_binding"] != "active_stack_readiness" || summary["readiness_bound"] != true {
+		t.Fatalf("summary did not bind portfolio readiness: %#v", summary)
+	}
+	if summary["final_rollup_smoke_bound"] != true || summary["readiness_ledger_bound"] != true {
+		t.Fatalf("summary did not bind both inputs: %#v", summary)
+	}
+	if summary["completed_nodes"].(float64) != summary["total_nodes"].(float64) {
+		t.Fatalf("summary did not preserve complete node counts: %#v", summary)
+	}
+	if summary["safe_to_execute"] != false || summary["executes_work"] != false || summary["approves_work"] != false || summary["mutates_repositories"] != false {
+		t.Fatalf("rollup summary widened authority: %#v", summary)
 	}
 }
 
