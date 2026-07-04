@@ -133,6 +133,70 @@ func TestAOMissionReadinessLedgerConsumesFinalRollupSmoke(t *testing.T) {
 	}
 }
 
+func TestAOMissionRollupSummaryBindsPortfolioAndReadiness(t *testing.T) {
+	dir := t.TempDir()
+	smokePath := filepath.Join(dir, "ao-mission-final-rollup-smoke.json")
+	ledgerPath := filepath.Join(dir, "ao-mission-readiness-ledger.json")
+	summaryPath := filepath.Join(dir, "ao-mission-rollup-summary.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"ao-mission", "final-rollup-smoke",
+		"--mission-final-rollup", filepath.Join("examples", "ao-mission-smoke", "mission-final-rollup.json"),
+		"--foundry-final-rollup", filepath.Join("examples", "ao-mission-smoke", "foundry-final-rollup.json"),
+		"--out", smokePath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("final-rollup smoke failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"ao-mission", "readiness-ledger",
+		"--final-rollup-smoke", smokePath,
+		"--out", ledgerPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("readiness ledger failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{
+		"ao-mission", "rollup-summary",
+		"--final-rollup-smoke", smokePath,
+		"--readiness-ledger", ledgerPath,
+		"--out", summaryPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("rollup summary failed: %s", stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "ao_mission_rollup_summary="+summaryPath) {
+		t.Fatalf("expected rollup summary output path, got %q", stdout.String())
+	}
+	var summary map[string]any
+	data, err := os.ReadFile(summaryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &summary); err != nil {
+		t.Fatal(err)
+	}
+	if summary["schema"] != "ao.foundry.ao-mission-rollup-summary.v0.1" || summary["status"] != "ready" {
+		t.Fatalf("bad rollup summary: %#v", summary)
+	}
+	if summary["portfolio_binding"] != "active_stack_readiness" || summary["readiness_bound"] != true {
+		t.Fatalf("summary did not bind portfolio readiness: %#v", summary)
+	}
+	if summary["final_rollup_smoke_bound"] != true || summary["readiness_ledger_bound"] != true {
+		t.Fatalf("summary did not bind both inputs: %#v", summary)
+	}
+	if summary["completed_nodes"].(float64) != summary["total_nodes"].(float64) {
+		t.Fatalf("summary did not preserve complete node counts: %#v", summary)
+	}
+	if summary["safe_to_execute"] != false || summary["executes_work"] != false || summary["approves_work"] != false || summary["mutates_repositories"] != false {
+		t.Fatalf("rollup summary widened authority: %#v", summary)
+	}
+}
+
 func TestAOMissionE2ESmokeIsLockedIntoCI(t *testing.T) {
 	body, err := os.ReadFile(filepath.Join("..", "..", ".github", "workflows", "ci.yml"))
 	if err != nil {
