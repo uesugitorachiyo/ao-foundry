@@ -1554,6 +1554,7 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 	fs.SetOutput(stderr)
 	missionRollupPath := fs.String("mission-final-rollup", "", "ao-mission final rollup fixture")
 	foundryRollupPath := fs.String("foundry-final-rollup", "", "ao-foundry final rollup fixture")
+	gatewayReadinessRollupPath := fs.String("gateway-readiness-rollup", "", "optional ao-mission gateway readiness rollup fixture")
 	outPath := fs.String("out", "", "smoke readback output path")
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -1576,6 +1577,25 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: mission_id mismatch")
 		return 1
 	}
+	var gatewayReadinessRollup map[string]any
+	if *gatewayReadinessRollupPath != "" {
+		if err := readJSONFile(*gatewayReadinessRollupPath, &gatewayReadinessRollup); err != nil {
+			fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: read gateway readiness rollup: %v\n", err)
+			return 1
+		}
+		if gatewayReadinessRollup["schema"] != "ao.mission.gateway-readiness-rollup.v0.1" || gatewayReadinessRollup["status"] != "ready" {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: gateway readiness rollup must be ready")
+			return 1
+		}
+		if gatewayReadinessRollup["mission_id"] != nil && gatewayReadinessRollup["mission_id"] != missionRollup["mission_id"] {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: gateway readiness rollup mission_id mismatch")
+			return 1
+		}
+		if aoMissionAuthorityClaimed(gatewayReadinessRollup) {
+			fmt.Fprintln(stderr, "ao-mission final-rollup-smoke: gateway readiness rollup must not claim authority")
+			return 1
+		}
+	}
 	for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories"} {
 		if missionRollup[field] != false {
 			fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: mission rollup %s must be false\n", field)
@@ -1593,31 +1613,36 @@ func runAOMissionFinalRollupSmoke(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	readback := map[string]any{
-		"schema":                 "ao.foundry.ao-mission-final-rollup-smoke.v0.1",
-		"status":                 "ready",
-		"mission_id":             missionRollup["mission_id"],
-		"completed_nodes":        missionCompleted,
-		"total_nodes":            missionTotal,
-		"safe_to_execute":        false,
-		"executes_work":          false,
-		"approves_work":          false,
-		"mutates_repositories":   false,
-		"mission_final_rollup":   *missionRollupPath,
-		"foundry_final_rollup":   *foundryRollupPath,
-		"exact_next_action":      "AO Mission and AO Foundry final rollups agree; no execution authority is granted",
-		"generated_at_utc":       time.Now().UTC().Format(time.RFC3339),
-		"public_safe_readback":   true,
-		"mutation_authority":     false,
-		"scheduler_authority":    "none",
-		"gateway_authority":      "none",
-		"direct_main_mutation":   false,
-		"concurrent_mutation":    false,
-		"release_or_publish":     false,
-		"dependency_updates":     false,
-		"policy_auth_expansion":  false,
-		"provider_calls":         false,
-		"credential_use":         false,
-		"claims_completion_only": true,
+		"schema":                         "ao.foundry.ao-mission-final-rollup-smoke.v0.1",
+		"status":                         "ready",
+		"mission_id":                     missionRollup["mission_id"],
+		"completed_nodes":                missionCompleted,
+		"total_nodes":                    missionTotal,
+		"safe_to_execute":                false,
+		"executes_work":                  false,
+		"approves_work":                  false,
+		"mutates_repositories":           false,
+		"mission_final_rollup":           *missionRollupPath,
+		"foundry_final_rollup":           *foundryRollupPath,
+		"gateway_readiness_rollup":       *gatewayReadinessRollupPath,
+		"gateway_readiness_rollup_bound": *gatewayReadinessRollupPath != "",
+		"exact_next_action":              "AO Mission and AO Foundry final rollups agree; no execution authority is granted",
+		"generated_at_utc":               time.Now().UTC().Format(time.RFC3339),
+		"public_safe_readback":           true,
+		"mutation_authority":             false,
+		"scheduler_authority":            "none",
+		"gateway_authority":              "none",
+		"direct_main_mutation":           false,
+		"concurrent_mutation":            false,
+		"release_or_publish":             false,
+		"dependency_updates":             false,
+		"policy_auth_expansion":          false,
+		"provider_calls":                 false,
+		"credential_use":                 false,
+		"claims_completion_only":         true,
+	}
+	if value, ok := gatewayReadinessRollup["correlation_id"].(string); ok && strings.TrimSpace(value) != "" {
+		readback["correlation_id"] = strings.TrimSpace(value)
 	}
 	if err := writeJSONFile(*outPath, readback); err != nil {
 		fmt.Fprintf(stderr, "ao-mission final-rollup-smoke: write output: %v\n", err)
