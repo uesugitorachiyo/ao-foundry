@@ -1449,13 +1449,17 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
-	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] --out <smoke.json>")
 }
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
 		fmt.Fprintln(stderr, "foundry ao-mission requires smoke or final-rollup-smoke")
 		return 2
+	}
+	if args[0] == "--help" || args[0] == "help" {
+		printHelp(stdout)
+		return 0
 	}
 	switch args[0] {
 	case "e2e-smoke":

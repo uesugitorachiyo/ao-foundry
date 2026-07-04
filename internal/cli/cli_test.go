@@ -161,6 +161,23 @@ func TestAOMissionE2ESmokeIsLockedIntoCI(t *testing.T) {
 	}
 }
 
+func TestAOMissionHelpListsRecoveryAndCompactionInputs(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "--help"}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("ao-mission help failed: stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+	help := stdout.String()
+	for _, want := range []string{
+		"[--scheduler-recovery <readback.json>]",
+		"[--ledger-compaction <readback.json>]",
+	} {
+		if !strings.Contains(help, want) {
+			t.Fatalf("ao-mission help missing %q:\n%s", want, help)
+		}
+	}
+}
+
 func TestAOMissionE2ESmokeBindsMissionAtlasAndFoundryArtifacts(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "ao-mission-e2e-smoke.json")
 	var stdout, stderr bytes.Buffer
