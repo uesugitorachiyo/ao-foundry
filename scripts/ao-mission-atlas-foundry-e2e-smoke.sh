@@ -30,6 +30,7 @@ FOUNDRY_ROLLUP="examples/ao-mission-smoke/foundry-final-rollup.json"
 ATLAS_METADATA="examples/ao-mission-smoke/atlas-workgraph-metadata.json"
 SCHEDULER_RECOVERY="examples/ao-mission-smoke/scheduler-recovery-readback.json"
 LEDGER_COMPACTION="examples/ao-mission-smoke/ledger-compaction-readback.json"
+TIMELINE_COMPACTION="examples/ao-mission-smoke/timeline-compaction-readback.json"
 GATEWAY_READINESS_ROLLUP="examples/ao-mission-smoke/gateway-readiness-rollup.json"
 MANIFEST="$OUT_ABS/artifact-manifest.json"
 BAD_MANIFEST="$OUT_ABS/artifact-manifest.digest-mismatch.json"
@@ -74,6 +75,12 @@ cat > "$MANIFEST" <<JSON
 	    },
 	    {
 	      "schema": "ao.mission.artifact-ref.v0.1",
+	      "ref": "$TIMELINE_COMPACTION",
+	      "digest": "$(sha256_file "$TIMELINE_COMPACTION")",
+	      "kind": "timeline_compaction"
+	    },
+	    {
+	      "schema": "ao.mission.artifact-ref.v0.1",
 	      "ref": "$GATEWAY_READINESS_ROLLUP",
 	      "digest": "$(sha256_file "$GATEWAY_READINESS_ROLLUP")",
 	      "kind": "gateway_readiness_rollup"
@@ -96,6 +103,7 @@ go run ./cmd/foundry ao-mission e2e-smoke \
   --artifact-manifest "$MANIFEST" \
   --scheduler-recovery "$SCHEDULER_RECOVERY" \
   --ledger-compaction "$LEDGER_COMPACTION" \
+  --timeline-compaction "$TIMELINE_COMPACTION" \
   --gateway-readiness-rollup "$GATEWAY_READINESS_ROLLUP" \
   --out "$SMOKE"
 
@@ -110,6 +118,7 @@ if go run ./cmd/foundry ao-mission e2e-smoke \
   --artifact-manifest "$BAD_MANIFEST" \
   --scheduler-recovery "$SCHEDULER_RECOVERY" \
   --ledger-compaction "$LEDGER_COMPACTION" \
+  --timeline-compaction "$TIMELINE_COMPACTION" \
   --out "$OUT_ABS/should-not-exist.json" >/tmp/ao-mission-e2e-negative.out 2>/tmp/ao-mission-e2e-negative.err; then
   cat /tmp/ao-mission-e2e-negative.out
   cat /tmp/ao-mission-e2e-negative.err >&2

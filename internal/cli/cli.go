@@ -1449,7 +1449,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry ao-mission smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission final-rollup-smoke --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --out <smoke.json>")
 	fmt.Fprintln(w, "  foundry ao-mission readiness-ledger --final-rollup-smoke <smoke.json> --out <ledger.json>")
-	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] [--mission-archive-validation <readback.json>] --out <smoke.json>")
+	fmt.Fprintln(w, "  foundry ao-mission e2e-smoke --route <route-readback.json> --snapshot <governance-snapshot.json> --mission-final-rollup <mission-rollup.json> --foundry-final-rollup <foundry-rollup.json> --atlas-metadata <metadata.json> [--artifact-manifest <manifest.json>] [--scheduler-recovery <readback.json>] [--ledger-compaction <readback.json>] [--timeline-compaction <readback.json>] [--mission-archive-validation <readback.json>] [--gateway-readiness-rollup <readback.json>] --out <smoke.json>")
 }
 
 func runAOMission(args []string, stdout, stderr io.Writer) int {
@@ -1696,6 +1696,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	artifactManifestPath := fs.String("artifact-manifest", "", "optional ao-mission artifact manifest fixture")
 	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional ao-mission scheduler recovery readback fixture")
 	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional ao-mission ledger compaction readback fixture")
+	timelineCompactionPath := fs.String("timeline-compaction", "", "optional ao-mission timeline compaction readback fixture")
 	missionArchiveValidationPath := fs.String("mission-archive-validation", "", "optional ao-mission archive validation fixture")
 	gatewayReadinessRollupPath := fs.String("gateway-readiness-rollup", "", "optional ao-mission gateway readiness rollup fixture")
 	outPath := fs.String("out", "", "e2e smoke output path")
@@ -1762,6 +1763,7 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 	}{
 		"scheduler_recovery":         {path: *schedulerRecoveryPath, schema: "ao.mission.scheduler-recovery-readback.v0.1"},
 		"ledger_compaction":          {path: *ledgerCompactionPath, schema: "ao.mission.ledger-compaction-readback.v0.1"},
+		"timeline_compaction":        {path: *timelineCompactionPath, schema: "ao.mission.timeline-compaction-readback.v0.1"},
 		"mission_archive_validation": {path: *missionArchiveValidationPath, schema: "ao.mission.archive-validation.v0.1"},
 		"gateway_readiness_rollup":   {path: *gatewayReadinessRollupPath, schema: "ao.mission.gateway-readiness-rollup.v0.1"},
 	} {
@@ -1828,10 +1830,12 @@ func runAOMissionE2ESmoke(args []string, stdout, stderr io.Writer) int {
 		"artifact_manifest":                *artifactManifestPath,
 		"scheduler_recovery":               *schedulerRecoveryPath,
 		"ledger_compaction":                *ledgerCompactionPath,
+		"timeline_compaction":              *timelineCompactionPath,
 		"mission_archive_validation":       *missionArchiveValidationPath,
 		"gateway_readiness_rollup":         *gatewayReadinessRollupPath,
 		"scheduler_recovery_bound":         *schedulerRecoveryPath != "",
 		"ledger_compaction_bound":          *ledgerCompactionPath != "",
+		"timeline_compaction_bound":        *timelineCompactionPath != "",
 		"mission_archive_validation_bound": *missionArchiveValidationPath != "",
 		"gateway_readiness_rollup_bound":   *gatewayReadinessRollupPath != "",
 		"safe_to_execute":                  false,
