@@ -1,0 +1,8 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "ready_for_pr",
+  "summary": "Foundry AO Mission rollup summary now distinguishes promoted terminal closure from denied terminal repair readback.",
+  "exact_next_action": "Open PR for node 13, wait for CI, merge, sync, and continue to node 14."
+}

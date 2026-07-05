@@ -118,6 +118,14 @@ func TestAOMissionFinalRollupSmokeAcceptsPromotedTerminalStatus(t *testing.T) {
 	if smoke["status"] != "ready" || smoke["foundry_terminal_status"] != "promoted" || smoke["executes_work"] != false {
 		t.Fatalf("bad promoted terminal smoke: %#v", smoke)
 	}
+	summary, ok := smoke["terminal_readiness_summary"].(map[string]any)
+	if !ok ||
+		summary["foundry_terminal_status"] != "promoted" ||
+		summary["status"] != "ready" ||
+		summary["can_close_mission"] != true ||
+		summary["requires_repair"] != false {
+		t.Fatalf("promoted terminal smoke missing readiness summary: %#v", smoke)
+	}
 }
 
 func TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus(t *testing.T) {
@@ -149,6 +157,77 @@ func TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus(t *testing.T) {
 	}
 	if !strings.Contains(fmt.Sprint(smoke["exact_next_action"]), "repair") {
 		t.Fatalf("denied terminal smoke missing repair next action: %#v", smoke)
+	}
+	summary, ok := smoke["terminal_readiness_summary"].(map[string]any)
+	if !ok ||
+		summary["foundry_terminal_status"] != "denied" ||
+		summary["status"] != "blocked" ||
+		summary["can_close_mission"] != false ||
+		summary["requires_repair"] != true {
+		t.Fatalf("denied terminal smoke missing readiness summary: %#v", smoke)
+	}
+}
+
+func TestAOMissionReadinessLedgerAndSummaryBindDeniedTerminalStatus(t *testing.T) {
+	dir := t.TempDir()
+	missionPath := filepath.Join(dir, "mission-final-rollup.json")
+	foundryPath := filepath.Join(dir, "foundry-final-rollup.json")
+	smokePath := filepath.Join(dir, "smoke.json")
+	ledgerPath := filepath.Join(dir, "ledger.json")
+	summaryPath := filepath.Join(dir, "summary.json")
+	if err := os.WriteFile(missionPath, []byte(`{"schema":"ao.mission.final-rollup.v0.1","mission_id":"mission-denied","status":"blocked","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(foundryPath, []byte(`{"schema":"ao.foundry.final-rollup.v0.1","mission_id":"mission-denied","status":"denied","completed_nodes":1,"total_nodes":2,"safe_to_execute":false,"executes_work":false,"approves_work":false,"mutates_repositories":false}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"ao-mission", "final-rollup-smoke", "--mission-final-rollup", missionPath, "--foundry-final-rollup", foundryPath, "--out", smokePath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("denied final-rollup smoke failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"ao-mission", "readiness-ledger", "--final-rollup-smoke", smokePath, "--out", ledgerPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("denied readiness ledger failed: %s", stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"ao-mission", "rollup-summary", "--final-rollup-smoke", smokePath, "--readiness-ledger", ledgerPath, "--out", summaryPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("denied rollup summary failed: %s", stderr.String())
+	}
+	var ledger map[string]any
+	data, err := os.ReadFile(ledgerPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &ledger); err != nil {
+		t.Fatal(err)
+	}
+	if ledger["status"] != "blocked" || ledger["foundry_terminal_status"] != "denied" ||
+		ledger["terminal_readiness_summary_bound"] != true ||
+		ledger["safe_to_execute"] != false ||
+		!strings.Contains(fmt.Sprint(ledger["exact_next_action"]), "repair") {
+		t.Fatalf("denied readiness ledger missing terminal binding: %#v", ledger)
+	}
+	var rollupSummary map[string]any
+	data, err = os.ReadFile(summaryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &rollupSummary); err != nil {
+		t.Fatal(err)
+	}
+	if rollupSummary["status"] != "blocked" ||
+		rollupSummary["foundry_terminal_status"] != "denied" ||
+		rollupSummary["completed_nodes"].(float64) != 1 ||
+		rollupSummary["total_nodes"].(float64) != 2 ||
+		rollupSummary["terminal_readiness_summary_bound"] != true ||
+		rollupSummary["safe_to_execute"] != false ||
+		!strings.Contains(fmt.Sprint(rollupSummary["exact_next_action"]), "repair") {
+		t.Fatalf("denied rollup summary missing terminal binding: %#v", rollupSummary)
 	}
 }
 

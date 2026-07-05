@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "owner": "ao-foundry",
+  "status": "open",
+  "gate": "Bind Foundry promoted and denied terminal final-rollup states into AO Mission readiness-ledger and rollup-summary readbacks.",
+  "active_mutation_node": "node-13-foundry-terminal-rollup-readiness-binding",
+  "blueprint_required": false,
+  "one_executable_mutation_node": true,
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

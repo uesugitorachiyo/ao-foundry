@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.import-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "owner": "ao-foundry",
+  "status": "imported_for_single_node",
+  "task": "Implement terminal promoted/denied rollup readiness binding for one AO Foundry node.",
+  "one_executable_mutation_node": true,
+  "atlas_owned_sequencing": true
+}
