@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "safe_rollback": true,
+  "rollback_scope": [
+    "Remove AO Mission terminal readiness summary helper functions.",
+    "Restore readiness-ledger and rollup-summary to accept only ready final-rollup smoke.",
+    "Remove promoted/denied terminal readiness assertions and evidence fixtures."
+  ]
+}

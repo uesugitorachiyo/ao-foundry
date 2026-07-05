@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "candidate": "Extend AO Mission final-rollup readiness-ledger and rollup-summary to preserve promoted and denied terminal state readbacks.",
+  "selected_files": [
+    "internal/cli/cli.go",
+    "internal/cli/cli_test.go"
+  ],
+  "reason": "The final-rollup smoke accepted promoted and denied statuses, but downstream readiness and summary artifacts only accepted ready smoke output."
+}

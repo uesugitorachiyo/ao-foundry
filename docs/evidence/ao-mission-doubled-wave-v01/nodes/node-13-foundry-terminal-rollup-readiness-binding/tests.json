@@ -1,0 +1,19 @@
+{
+  "schema": "ao.foundry.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "passed",
+  "focused_tests": [
+    "TestAOMissionFinalRollupSmokeAcceptsPromotedTerminalStatus",
+    "TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus",
+    "TestAOMissionReadinessLedgerAndSummaryBindDeniedTerminalStatus",
+    "TestAOMissionReadinessLedgerConsumesFinalRollupSmoke",
+    "TestAOMissionRollupSummaryBindsPortfolioAndReadiness"
+  ],
+  "regression_coverage": [
+    "Promoted terminal rollup has closable readiness summary.",
+    "Denied terminal rollup has blocked repair summary.",
+    "Denied terminal smoke can produce readiness ledger and rollup summary without claiming readiness or execution authority.",
+    "Existing ready completion paths remain ready and bound to active-stack readiness."
+  ]
+}

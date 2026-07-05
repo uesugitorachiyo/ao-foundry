@@ -1,0 +1,34 @@
+{
+  "schema": "ao.foundry.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/cli -run 'TestAOMissionFinalRollupSmokeAcceptsPromotedTerminalStatus|TestAOMissionFinalRollupSmokeBindsDeniedTerminalStatus|TestAOMissionReadinessLedgerAndSummaryBindDeniedTerminalStatus|TestAOMissionReadinessLedgerConsumesFinalRollupSmoke|TestAOMissionRollupSummaryBindsPortfolioAndReadiness' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/foundry ./cmd/ao",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/foundry readiness audit --registry examples/registry/local-ao-stack.foundry-registry.json --task examples/tasks/ao-foundry-bootstrap.foundry-task.json --out target/ao-mission-doubled-wave-node-13/readiness-audit.json",
+      "status": "passed",
+      "summary": "production readiness: 100/100 status=ready"
+    },
+    {
+      "command": "scripts/active-stack-readiness-loop.sh --out target/ao-mission-doubled-wave-node-13/active-stack-readiness-loop.json",
+      "status": "passed",
+      "summary": "Clean-worktree rerun after committing node 13 reports status=passed."
+    }
+  ]
+}

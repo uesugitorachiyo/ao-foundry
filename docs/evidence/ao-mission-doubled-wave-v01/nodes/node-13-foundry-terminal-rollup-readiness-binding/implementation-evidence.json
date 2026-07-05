@@ -1,0 +1,13 @@
+{
+  "schema": "ao.foundry.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "implemented",
+  "base_commit": "70d6774c5598f73dbdbab8993ec0bfcdf259664d",
+  "implementation_summary": [
+    "Final-rollup smoke now emits terminal_readiness_summary for promoted, completed, denied, and blocked statuses.",
+    "Readiness ledger accepts ready promoted/completed terminal smoke and blocked denied/blocked terminal smoke.",
+    "Rollup summary accepts blocked denied terminal state when counts match and carries exact repair action.",
+    "Promoted/completed terminal summaries still require complete node counts before readiness closure."
+  ]
+}

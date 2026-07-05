@@ -1,0 +1,9 @@
+{
+  "schema": "ao.promoter.no-promotion.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "no_promotion",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "reason": "This node binds terminal rollup readbacks and does not advance mutation authority."
+}

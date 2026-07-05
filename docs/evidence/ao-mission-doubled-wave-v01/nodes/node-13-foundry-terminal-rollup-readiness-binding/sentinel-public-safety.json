@@ -1,0 +1,17 @@
+{
+  "schema": "ao.sentinel.public-safety-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-13-foundry-terminal-rollup-readiness-binding",
+  "status": "passed",
+  "scope": [
+    "internal/cli/cli.go",
+    "internal/cli/cli_test.go",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-13-foundry-terminal-rollup-readiness-binding"
+  ],
+  "provider_calls": false,
+  "credential_inspection": false,
+  "release_or_publish": false,
+  "direct_main_mutation": false,
+  "rsi_claim": false,
+  "rsi_remains_denied": true
+}
