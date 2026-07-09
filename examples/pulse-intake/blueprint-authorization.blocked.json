@@ -1,9 +1,13 @@
 {
-  "schema_version": "ao.blueprint.build-authorization.v0.1",
-  "authorization_id": "blueprint-auth-pulse-intake-blocked",
+  "schema": "ao.blueprint.build-authorization.v0.1",
+  "project_id": "low-risk-code-rehearsal-public-placeholder",
   "status": "blocked",
-  "target": "ao-foundry-pulse-intake-preflight",
-  "build_ready": false,
-  "requires_atlas": false,
-  "reason": "Blueprint readiness is blocked, so Pulse must not treat this as ready."
+  "score": 100,
+  "approved_by_user": true,
+  "blocking_assumptions": ["Blueprint readiness is blocked."],
+  "blueprint_pack_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "requirements_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "traceability_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "sdd_plan_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "next_allowed_action": "ao-atlas"
 }

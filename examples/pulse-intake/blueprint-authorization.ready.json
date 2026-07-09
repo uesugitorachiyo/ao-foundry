@@ -1,20 +1,13 @@
 {
-  "schema_version": "ao.blueprint.build-authorization.v0.1",
-  "authorization_id": "blueprint-auth-pulse-intake-ready",
+  "schema": "ao.blueprint.build-authorization.v0.1",
+  "project_id": "low-risk-code-rehearsal-public-placeholder",
   "status": "ready",
-  "target": "ao-foundry-pulse-intake-preflight",
-  "build_ready": true,
-  "requires_atlas": true,
-  "objective": "Run a fixture-local Pulse intake preflight over Blueprint and Atlas evidence.",
-  "authorized_scope": [
-    "validate Blueprint build authorization",
-    "validate Atlas handoff and readback evidence",
-    "emit preflight result"
-  ],
-  "non_goals": [
-    "do not schedule work",
-    "do not execute AO2",
-    "do not approve policy",
-    "do not publish releases"
-  ]
+  "score": 100,
+  "approved_by_user": true,
+  "blocking_assumptions": [],
+  "blueprint_pack_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "requirements_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "traceability_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "sdd_plan_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "next_allowed_action": "ao-atlas"
 }

@@ -5343,6 +5343,48 @@ func TestPulseIntakePreflightReadyRequiresBlueprintAndAtlasEvidence(t *testing.T
 	}
 }
 
+func TestPulseIntakePreflightAcceptsCanonicalBlueprintAuthorization(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-import", "examples/atlas/foundry-import.json",
+		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
+		"--requires-atlas",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "ready" || result["blueprint_status"] != "ready" || result["first_failing_check"] != "" {
+		t.Fatalf("unexpected canonical Blueprint preflight result: %#v", result)
+	}
+}
+
+func TestPulseIntakePreflightAcceptsAtlasMissionStatusBeforeExecution(t *testing.T) {
+	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "intake-preflight",
+		"--blueprint-authorization", "examples/pulse-intake/blueprint-authorization.ready.json",
+		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
+		"--atlas-import", "examples/atlas/foundry-import.json",
+		"--atlas-status", "examples/atlas/mission-status.ready.json",
+		"--requires-atlas",
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["status"] != "ready" || result["atlas_status"] != "ready" || result["first_failing_check"] != "" {
+		t.Fatalf("unexpected Atlas Mission status preflight result: %#v", result)
+	}
+}
+
 func TestPulseIntakePreflightRequiresAtlasBlueprintImportWhenAtlasRequired(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "pulse-intake-preflight.json")
 	var stdout, stderr bytes.Buffer
@@ -5408,7 +5450,7 @@ func TestPulseIntakePreflightFailsClosedForBlockedBlueprintMarkedReady(t *testin
 	if code == 0 {
 		t.Fatalf("Run returned success for blocked Blueprint authorization; stdout=%s stderr=%s", stdout.String(), stderr.String())
 	}
-	if !strings.Contains(stderr.String(), "Blueprint authorization is blocked") {
+	if !strings.Contains(stderr.String(), "canonical Blueprint authorization status must be ready") {
 		t.Fatalf("expected blocked Blueprint authorization error, got %q", stderr.String())
 	}
 }

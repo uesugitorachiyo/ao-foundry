@@ -143,28 +143,53 @@ type AtlasFoundryImport struct {
 }
 
 type AtlasBlueprintImport struct {
-	ContractVersion         string              `json:"contract_version"`
-	ID                      string              `json:"id"`
-	ProjectID               string              `json:"project_id"`
-	Status                  string              `json:"status"`
-	Reason                  string              `json:"reason"`
-	BlueprintPack           AtlasSourceArtifact `json:"blueprint_pack"`
-	BuildAuthorization      AtlasSourceArtifact `json:"build_authorization"`
-	TargetInstance          string              `json:"target_instance"`
-	WorkgraphID             string              `json:"workgraph_id"`
-	MutationClass           string              `json:"mutation_class"`
-	DownstreamFoundryImport AtlasSourceArtifact `json:"downstream_foundry_import"`
-	Digests                 map[string]string   `json:"digests"`
-	SafetyLimits            []string            `json:"safety_limits"`
-	ReadyForFoundry         bool                `json:"ready_for_foundry"`
-	SafeToExecute           bool                `json:"safe_to_execute"`
-	LiveExecutionProven     bool                `json:"live_execution_proven"`
-	SchedulesWork           bool                `json:"schedules_work"`
-	ExecutesWork            bool                `json:"executes_work"`
-	ApprovesWork            bool                `json:"approves_work"`
-	MutatesRepositories     bool                `json:"mutates_repositories"`
-	CallsProviders          bool                `json:"calls_providers"`
-	ReleaseOrPublishAllowed bool                `json:"release_or_publish_allowed"`
+	ContractVersion                      string                            `json:"contract_version"`
+	ID                                   string                            `json:"id"`
+	ProjectID                            string                            `json:"project_id"`
+	Status                               string                            `json:"status"`
+	Reason                               string                            `json:"reason"`
+	BlueprintPack                        AtlasSourceArtifact               `json:"blueprint_pack"`
+	BuildAuthorization                   AtlasSourceArtifact               `json:"build_authorization"`
+	TargetInstance                       string                            `json:"target_instance"`
+	WorkgraphID                          string                            `json:"workgraph_id"`
+	MutationClass                        string                            `json:"mutation_class"`
+	DownstreamFoundryImport              AtlasSourceArtifact               `json:"downstream_foundry_import"`
+	DownstreamFoundryContinuationHandoff AtlasSourceArtifact               `json:"downstream_foundry_continuation_handoff"`
+	Digests                              map[string]string                 `json:"digests"`
+	SafetyLimits                         []string                          `json:"safety_limits"`
+	ReadyForFoundry                      bool                              `json:"ready_for_foundry"`
+	SafeToExecute                        bool                              `json:"safe_to_execute"`
+	LiveExecutionProven                  bool                              `json:"live_execution_proven"`
+	SchedulesWork                        bool                              `json:"schedules_work"`
+	ExecutesWork                         bool                              `json:"executes_work"`
+	ApprovesWork                         bool                              `json:"approves_work"`
+	MutatesRepositories                  bool                              `json:"mutates_repositories"`
+	CallsProviders                       bool                              `json:"calls_providers"`
+	ReleaseOrPublishAllowed              bool                              `json:"release_or_publish_allowed"`
+	CandidateSelection                   *AtlasBlueprintCandidateSelection `json:"candidate_selection,omitempty"`
+}
+
+type AtlasBlueprintCandidateSelection struct {
+	ContractVersion     string            `json:"contract_version"`
+	ID                  string            `json:"id"`
+	ProjectID           string            `json:"project_id"`
+	Status              string            `json:"status"`
+	SelectedCandidateID string            `json:"selected_candidate_id"`
+	MutationClass       string            `json:"mutation_class"`
+	TargetFactoryRepo   string            `json:"target_factory_repo"`
+	WorkgraphID         string            `json:"workgraph_id"`
+	NodeID              string            `json:"node_id"`
+	TaskID              string            `json:"task_id"`
+	RequiredGates       []string          `json:"required_gates"`
+	RequiredEvidence    []string          `json:"required_evidence"`
+	SafetyLimits        []string          `json:"safety_limits"`
+	Digests             map[string]string `json:"digests"`
+	SchedulesWork       bool              `json:"schedules_work"`
+	ExecutesWork        bool              `json:"executes_work"`
+	ApprovesWork        bool              `json:"approves_work"`
+	MutatesRepositories bool              `json:"mutates_repositories"`
+	SafeToExecute       bool              `json:"safe_to_execute"`
+	LiveExecutionProven bool              `json:"live_execution_proven"`
 }
 
 type AtlasSourceArtifact struct {
@@ -248,6 +273,23 @@ type AtlasStatus struct {
 	ApprovesWork   bool              `json:"approves_work"`
 	Evidence       map[string]string `json:"evidence"`
 	NextActions    []string          `json:"next_actions"`
+}
+
+type AtlasMissionStatus struct {
+	ContractVersion       string         `json:"contract_version"`
+	IntakeID              string         `json:"intake_id"`
+	WorkgraphID           string         `json:"workgraph_id"`
+	TargetInstance        string         `json:"target_instance"`
+	CompletionStatus      string         `json:"completion_status"`
+	NodeCounts            map[string]int `json:"node_counts"`
+	MissingContextPacks   []string       `json:"missing_context_packs"`
+	MissingHandoffs       []string       `json:"missing_handoffs"`
+	NextRecommendedAction string         `json:"next_recommended_action"`
+	NextActions           []string       `json:"next_actions"`
+	FinalResponseAllowed  bool           `json:"final_response_allowed"`
+	FinalResponseReason   string         `json:"final_response_reason"`
+	SchedulesWork         bool           `json:"schedules_work"`
+	ExecutesWork          bool           `json:"executes_work"`
 }
 
 type MutationClassGate struct {
@@ -9131,22 +9173,21 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 		MaintenanceSuggestions: []string{"keep pulse intake preflight fixture/local; do not schedule, execute, approve, upload, or mutate sibling repositories"},
 		SourceArtifacts:        []PulseIntakeSource{},
 	}
+	var blueprintAuthorization canonicalBlueprintAuthorizationSource
 	var blueprintSource PulseIntakeSource
 	if strings.TrimSpace(blueprintAuthorizationPath) != "" && strings.TrimSpace(blueprintRequestPath) != "" {
 		return failPulseIntake(result, "blueprint_build_authorization", "failed", "provide either Blueprint authorization or Blueprint request, not both", "Use exactly one Blueprint intake artifact.")
 	}
 	switch {
 	case strings.TrimSpace(blueprintAuthorizationPath) != "":
-		source, status, err := loadPulseIntakeSource("blueprint_authorization", blueprintAuthorizationPath, "ao.blueprint.build-authorization.v0.1")
+		authorization, err := loadCanonicalBlueprintAuthorization(blueprintAuthorizationPath)
 		if err != nil {
 			return failPulseIntake(result, "blueprint_build_authorization", "failed", err.Error(), "Regenerate the Blueprint build authorization artifact.")
 		}
-		result.SourceArtifacts = append(result.SourceArtifacts, source)
-		blueprintSource = source
-		result.BlueprintStatus = status
-		if status != "ready" {
-			return failPulseIntake(result, "blueprint_build_authorization", "failed", "Blueprint authorization is blocked; Pulse must not proceed as ready", "Return to AO Blueprint for requirements clarification.")
-		}
+		blueprintAuthorization = authorization
+		blueprintSource = authorization.PulseSource
+		result.SourceArtifacts = append(result.SourceArtifacts, blueprintSource)
+		result.BlueprintStatus = blueprintSource.Status
 		result.Checks = append(result.Checks, PulseIntakeCheck{Name: "blueprint_build_authorization", Status: "pass", Reason: "Blueprint build authorization is ready."})
 	case strings.TrimSpace(blueprintRequestPath) != "":
 		source, status, err := loadPulseIntakeSource("blueprint_request", blueprintRequestPath, "ao.blueprint.request.v0.1")
@@ -9192,7 +9233,7 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 			}
 			return failPulseIntake(result, "atlas_blueprint_import", "failed", err.Error(), "Regenerate the Atlas Blueprint import artifact.")
 		}
-		if err := validateAtlasBlueprintImportForFoundry(blueprintImport, importArtifact, blueprintSource, importSource); err != nil {
+		if err := validateAtlasBlueprintImportForFoundry(blueprintImport, importArtifact, blueprintAuthorization, importSource); err != nil {
 			if isAtlasAuthorityError(err) {
 				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas Blueprint import claims forbidden authority", "Regenerate Atlas Blueprint import with schedules_work=false, executes_work=false, and approves_work=false.")
 			}
@@ -9204,17 +9245,14 @@ func buildPulseIntakePreflight(blueprintAuthorizationPath, blueprintRequestPath,
 		}
 		result.SourceArtifacts = append(result.SourceArtifacts, blueprintImportSource)
 
-		var atlasStatus AtlasStatus
-		if err := readJSONFile(atlasStatusPath, &atlasStatus); err != nil {
-			return failPulseIntake(result, "atlas_handoff_readback", "failed", fmt.Sprintf("read Atlas status: %v", err), "Regenerate the Foundry Atlas status/readback artifact.")
-		}
-		if err := validatePulseAtlasStatus(atlasStatus, importArtifact); err != nil {
+		atlasStatusSchemaVersion, atlasStatusValue, err := loadPulseAtlasStatus(atlasStatusPath, importArtifact)
+		if err != nil {
 			if isAtlasAuthorityError(err) {
 				return failPulseIntake(result, "atlas_authority_boundary", "failed", "Atlas artifact claims forbidden authority", "Regenerate Atlas status with schedules_work=false, executes_work=false, and approves_work=false.")
 			}
-			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Regenerate the Foundry Atlas status/readback artifact.")
+			return failPulseIntake(result, "atlas_handoff_readback", "failed", fmt.Sprintf("read Atlas status: %v", err), "Regenerate the Atlas preflight status or Foundry readback artifact.")
 		}
-		statusSource, err := pulseIntakeSourceFromFile("atlas_status", atlasStatusPath, atlasStatus.SchemaVersion, atlasStatus.Status)
+		statusSource, err := pulseIntakeSourceFromFile("atlas_status", atlasStatusPath, atlasStatusSchemaVersion, atlasStatusValue)
 		if err != nil {
 			return failPulseIntake(result, "atlas_handoff_readback", "failed", err.Error(), "Use a public-safe Atlas status path.")
 		}
@@ -9308,6 +9346,62 @@ func validatePulseAtlasStatus(status AtlasStatus, artifact AtlasFoundryImport) e
 		if err := validateEvidencePath(path); err != nil {
 			return fmt.Errorf("Atlas status evidence %s: %w", label, err)
 		}
+	}
+	return validatePublicSafeJSONStrings(status)
+}
+
+func loadPulseAtlasStatus(path string, artifact AtlasFoundryImport) (string, string, error) {
+	document, err := readArbitraryJSON(path)
+	if err != nil {
+		return "", "", err
+	}
+	object, ok := document.(map[string]any)
+	if !ok {
+		return "", "", errors.New("Atlas status must be a JSON object")
+	}
+	if err := validatePublicSafeJSONStrings(object); err != nil {
+		return "", "", err
+	}
+	contractVersion, _ := object["contract_version"].(string)
+	if contractVersion == "ao.atlas.mission-status.v0.1" {
+		data, err := json.Marshal(object)
+		if err != nil {
+			return "", "", err
+		}
+		var status AtlasMissionStatus
+		if err := json.Unmarshal(data, &status); err != nil {
+			return "", "", err
+		}
+		if err := validateAtlasMissionStatusForPulse(status, artifact); err != nil {
+			return "", "", err
+		}
+		return status.ContractVersion, "ready", nil
+	}
+	var status AtlasStatus
+	if err := readJSONFile(path, &status); err != nil {
+		return "", "", err
+	}
+	if err := validatePulseAtlasStatus(status, artifact); err != nil {
+		return "", "", err
+	}
+	return status.SchemaVersion, status.Status, nil
+}
+
+func validateAtlasMissionStatusForPulse(status AtlasMissionStatus, artifact AtlasFoundryImport) error {
+	if status.ContractVersion != "ao.atlas.mission-status.v0.1" {
+		return errors.New("Atlas Mission status contract_version must be ao.atlas.mission-status.v0.1")
+	}
+	if status.IntakeID == "" || status.WorkgraphID != artifact.WorkgraphID || status.TargetInstance != artifact.TargetInstance {
+		return errors.New("Atlas Mission status must match Atlas import identity")
+	}
+	if status.CompletionStatus != "in_progress" || status.NodeCounts["ready"] < 1 {
+		return errors.New("Atlas Mission status must report an in-progress workgraph with a ready node")
+	}
+	if status.SchedulesWork || status.ExecutesWork {
+		return errors.New("Atlas Mission status must preserve compile-only authority")
+	}
+	if status.FinalResponseAllowed || strings.TrimSpace(status.NextRecommendedAction) == "" || len(status.NextActions) == 0 {
+		return errors.New("Atlas Mission status must preserve continuation state")
 	}
 	return validatePublicSafeJSONStrings(status)
 }
@@ -11879,9 +11973,10 @@ func validateAtlasBlueprintImport(artifact AtlasBlueprintImport) error {
 		return errors.New("release_or_publish_allowed must be false")
 	}
 	for name, source := range map[string]AtlasSourceArtifact{
-		"blueprint_pack":            artifact.BlueprintPack,
-		"build_authorization":       artifact.BuildAuthorization,
-		"downstream_foundry_import": artifact.DownstreamFoundryImport,
+		"blueprint_pack":                          artifact.BlueprintPack,
+		"build_authorization":                     artifact.BuildAuthorization,
+		"downstream_foundry_import":               artifact.DownstreamFoundryImport,
+		"downstream_foundry_continuation_handoff": artifact.DownstreamFoundryContinuationHandoff,
 	} {
 		if strings.TrimSpace(source.Ref) == "" {
 			return fmt.Errorf("%s.ref must not be empty", name)
@@ -11906,6 +12001,7 @@ func validateAtlasBlueprintImport(artifact AtlasBlueprintImport) error {
 		"candidate_selection",
 		"workgraph",
 		"downstream_foundry_import",
+		"downstream_foundry_continuation_handoff",
 	}
 	for _, key := range requiredDigests {
 		digest := artifact.Digests[key]
@@ -11922,6 +12018,9 @@ func validateAtlasBlueprintImport(artifact AtlasBlueprintImport) error {
 	if artifact.Digests["downstream_foundry_import"] != artifact.DownstreamFoundryImport.Digest {
 		return errors.New("Atlas Blueprint import downstream Foundry import digest must match digests.downstream_foundry_import")
 	}
+	if artifact.Digests["downstream_foundry_continuation_handoff"] != artifact.DownstreamFoundryContinuationHandoff.Digest {
+		return errors.New("Atlas Blueprint import downstream Foundry continuation handoff digest must match digests.downstream_foundry_continuation_handoff")
+	}
 	if artifact.MutationClass == "" || !validAtlasMutationClass(artifact.MutationClass) {
 		return errors.New("Atlas Blueprint import mutation_class must be supported")
 	}
@@ -11933,15 +12032,88 @@ func validateAtlasBlueprintImport(artifact AtlasBlueprintImport) error {
 			return fmt.Errorf("safety_limits: %w", err)
 		}
 	}
+	if err := validateAtlasBlueprintCandidateSelection(artifact.CandidateSelection, artifact); err != nil {
+		return err
+	}
 	return validatePublicSafeJSONStrings(artifact)
 }
 
-func validateAtlasBlueprintImportForFoundry(blueprintImport AtlasBlueprintImport, foundryImport AtlasFoundryImport, blueprintSource, importSource PulseIntakeSource) error {
+func validateAtlasBlueprintCandidateSelection(selection *AtlasBlueprintCandidateSelection, blueprintImport AtlasBlueprintImport) error {
+	if selection == nil {
+		return nil
+	}
+	if selection.ContractVersion != "ao.atlas.blueprint-candidate-selection.v0.1" {
+		return errors.New("candidate_selection contract_version must be ao.atlas.blueprint-candidate-selection.v0.1")
+	}
+	if selection.ID == "" || selection.ProjectID == "" || selection.SelectedCandidateID == "" || selection.TargetFactoryRepo == "" || selection.WorkgraphID == "" || selection.NodeID == "" || selection.TaskID == "" {
+		return errors.New("candidate_selection identity fields are required")
+	}
+	if selection.Status != "ready" {
+		return errors.New("candidate_selection status must be ready")
+	}
+	if selection.ProjectID != blueprintImport.ProjectID || selection.WorkgraphID != blueprintImport.WorkgraphID || selection.MutationClass != blueprintImport.MutationClass {
+		return errors.New("candidate_selection must match Atlas Blueprint import identity")
+	}
+	if !validAtlasMutationClass(selection.MutationClass) {
+		return errors.New("candidate_selection mutation_class must be supported")
+	}
+	if selection.SchedulesWork || selection.ExecutesWork || selection.ApprovesWork || selection.MutatesRepositories || selection.SafeToExecute || selection.LiveExecutionProven {
+		return errors.New("candidate_selection must preserve compile-only authority")
+	}
+	for name, values := range map[string][]string{
+		"required_gates":    selection.RequiredGates,
+		"required_evidence": selection.RequiredEvidence,
+		"safety_limits":     selection.SafetyLimits,
+	} {
+		if len(values) == 0 {
+			return fmt.Errorf("candidate_selection %s must not be empty", name)
+		}
+		for _, value := range values {
+			if err := validateAtlasPublicString(value); err != nil {
+				return fmt.Errorf("candidate_selection %s: %w", name, err)
+			}
+		}
+	}
+	for _, key := range []string{
+		"blueprint_pack",
+		"build_authorization",
+		"candidate_rules",
+		"context_pack",
+		"implementation_spec",
+		"mutation_class_model",
+		"quality_profile",
+		"stack_instance",
+		"workgraph",
+	} {
+		digest := selection.Digests[key]
+		if !strings.HasPrefix(digest, "sha256:") {
+			return fmt.Errorf("candidate_selection digests.%s must start with sha256:", key)
+		}
+		if err := validateSHA256(strings.TrimPrefix(digest, "sha256:"), "candidate_selection digests."+key); err != nil {
+			return err
+		}
+		if blueprintImport.Digests[key] != digest {
+			return fmt.Errorf("candidate_selection digests.%s must match Atlas Blueprint import", key)
+		}
+	}
+	if digest := blueprintImport.Digests["candidate_selection"]; !strings.HasPrefix(digest, "sha256:") || validateSHA256(strings.TrimPrefix(digest, "sha256:"), "digests.candidate_selection") != nil {
+		return errors.New("Atlas Blueprint import digests.candidate_selection must be a SHA-256 digest")
+	}
+	return validatePublicSafeJSONStrings(selection)
+}
+
+func validateAtlasBlueprintImportForFoundry(blueprintImport AtlasBlueprintImport, foundryImport AtlasFoundryImport, blueprintAuthorization canonicalBlueprintAuthorizationSource, importSource PulseIntakeSource) error {
 	if blueprintImport.WorkgraphID != foundryImport.WorkgraphID || blueprintImport.TargetInstance != foundryImport.TargetInstance {
 		return errors.New("Atlas Blueprint import must match downstream Foundry import identity")
 	}
-	if blueprintImport.BuildAuthorization.Digest != "sha256:"+blueprintSource.SHA256 {
+	if blueprintImport.BuildAuthorization.Digest != "sha256:"+blueprintAuthorization.PulseSource.SHA256 {
 		return errors.New("Atlas Blueprint import build authorization digest must match provided Blueprint authorization")
+	}
+	if blueprintImport.ProjectID != blueprintAuthorization.ProjectID {
+		return errors.New("Atlas Blueprint import project_id must match canonical Blueprint authorization")
+	}
+	if blueprintImport.BlueprintPack.Digest != blueprintAuthorization.PackDigest || blueprintImport.Digests["blueprint_pack"] != blueprintAuthorization.PackDigest {
+		return errors.New("Atlas Blueprint import Blueprint pack digest must match canonical Blueprint authorization")
 	}
 	if blueprintImport.DownstreamFoundryImport.Digest != blueprintImport.Digests["downstream_foundry_import"] {
 		return errors.New("Atlas Blueprint import downstream digest binding is inconsistent")

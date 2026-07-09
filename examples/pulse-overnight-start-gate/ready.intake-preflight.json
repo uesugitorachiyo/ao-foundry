@@ -31,7 +31,7 @@
       "path": "examples/pulse-intake/blueprint-authorization.ready.json",
       "schema_version": "ao.blueprint.build-authorization.v0.1",
       "status": "ready",
-      "sha256": "1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+      "sha256": "73c0304cf8fe8c5965c6d0bc0f94d32f33f4d440a3855bf6830acc9202493fd4"
     },
     {
       "name": "atlas_import",
