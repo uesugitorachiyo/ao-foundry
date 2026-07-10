@@ -1,0 +1,24 @@
+{
+  "contract_version": "ao.atlas.mission-status.v0.1",
+  "intake_id": "atlas-readiness-workgraph-intake",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "target_instance": "demo-stack",
+  "completion_status": "in_progress",
+  "node_counts": {
+    "blocked": 0,
+    "completed": 0,
+    "failed": 0,
+    "ready": 1
+  },
+  "run_links": {},
+  "missing_context_packs": [],
+  "missing_handoffs": [],
+  "next_recommended_action": "emit Foundry handoff for ready nodes",
+  "next_actions": [
+    "emit Foundry handoff/import material for ready nodes"
+  ],
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "schedules_work": false,
+  "executes_work": false
+}

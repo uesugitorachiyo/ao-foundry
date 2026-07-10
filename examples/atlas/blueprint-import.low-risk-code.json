@@ -10,7 +10,7 @@
   },
   "build_authorization": {
     "ref": "examples/pulse-intake/blueprint-authorization.ready.json",
-    "digest": "sha256:1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597"
+    "digest": "sha256:73c0304cf8fe8c5965c6d0bc0f94d32f33f4d440a3855bf6830acc9202493fd4"
   },
   "target_instance": "demo-stack",
   "workgraph_id": "atlas-readiness-workgraph",
@@ -19,16 +19,55 @@
     "ref": "examples/atlas/foundry-import.json",
     "digest": "sha256:6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
   },
+  "downstream_foundry_continuation_handoff": {
+    "ref": "examples/atlas/foundry-continuation-handoff.json",
+    "digest": "sha256:1212121212121212121212121212121212121212121212121212121212121212"
+  },
+  "candidate_selection": {
+    "contract_version": "ao.atlas.blueprint-candidate-selection.v0.1",
+    "id": "low-risk-code-rehearsal-candidate-selection",
+    "project_id": "low-risk-code-rehearsal-public-placeholder",
+    "status": "ready",
+    "selected_candidate_id": "low-risk-code-rehearsal-candidate",
+    "mutation_class": "low_risk_code",
+    "target_factory_repo": "ao-foundry",
+    "workgraph_id": "atlas-readiness-workgraph",
+    "node_id": "low-risk-code-rehearsal-node",
+    "task_id": "low-risk-code-rehearsal-task",
+    "required_gates": ["atlas_blueprint_import", "foundry_intake_preflight"],
+    "required_evidence": ["blueprint_authorization:digest_bound", "atlas_import:ready"],
+    "safety_limits": ["safe_to_execute:false", "provider_calls:false", "rsi_remains_denied"],
+    "digests": {
+      "blueprint_pack": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "build_authorization": "sha256:73c0304cf8fe8c5965c6d0bc0f94d32f33f4d440a3855bf6830acc9202493fd4",
+      "candidate_rules": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "context_pack": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "implementation_spec": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "mutation_class_model": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "quality_profile": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "stack_instance": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+      "workgraph": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false,
+    "safe_to_execute": false,
+    "live_execution_proven": false
+  },
   "digests": {
     "blueprint_pack": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "build_authorization": "sha256:1bdfb6ed72a2afef2996fc8d4f2cded8ac4ebf247caf08d280b11b6a9dc57597",
+    "build_authorization": "sha256:73c0304cf8fe8c5965c6d0bc0f94d32f33f4d440a3855bf6830acc9202493fd4",
     "implementation_spec": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "quality_profile": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
     "candidate_rules": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
     "mutation_class_model": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     "candidate_selection": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "context_pack": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "stack_instance": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
     "workgraph": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
-    "downstream_foundry_import": "sha256:6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d"
+    "downstream_foundry_import": "sha256:6f0283b39af9ce32ed395fc731cc869b671c0900918d3fbc21fc20d30d0a6d3d",
+    "downstream_foundry_continuation_handoff": "sha256:1212121212121212121212121212121212121212121212121212121212121212"
   },
   "safety_limits": [
     "fixture only",
