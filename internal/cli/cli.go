@@ -15188,6 +15188,7 @@ func publicSchemaNames() []string {
 		"foundry-approval-decision-v0.1",
 		"foundry-approval-request-v0.1",
 		"foundry-approved-live-docs-dry-run-chain-v0.1",
+		"foundry-beta-rollback-drill-runbook-v0.1",
 		"foundry-capability-matrix-v0.1",
 		"foundry-competitive-readiness-audit-v0.1",
 		"foundry-control-plane-readback-v0.1",

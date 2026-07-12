@@ -10902,6 +10902,39 @@ func TestLiveMutationReadinessRollupContractFixtureValidates(t *testing.T) {
 	}
 }
 
+func TestBetaRollbackDrillRunbookContractFixtureValidates(t *testing.T) {
+	schema, err := readArbitraryJSON("docs/contracts/foundry-beta-rollback-drill-runbook-v0.1.schema.json")
+	if err != nil {
+		t.Fatalf("read beta rollback drill runbook schema: %v", err)
+	}
+	root, ok := schema.(map[string]any)
+	if !ok {
+		t.Fatalf("beta rollback drill runbook schema is not an object: %#v", schema)
+	}
+	validFixture, err := readArbitraryJSON("examples/contract-fixtures/valid/foundry-beta-rollback-drill-runbook-v0.1.json")
+	if err != nil {
+		t.Fatalf("read valid beta rollback drill runbook fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, validFixture, "$"); err != nil {
+		t.Fatalf("valid beta rollback drill runbook fixture failed schema: %v", err)
+	}
+	fixture := validFixture.(map[string]any)
+	if fixture["mode"] != "fixture_only_dry_run" || fixture["safe_to_execute"] != false {
+		t.Fatalf("beta rollback drill runbook must stay fixture-only and non-executing: %#v", fixture)
+	}
+	boundaries := fixture["authority_boundaries"].(map[string]any)
+	if boundaries["provider_calls_allowed"] != false || boundaries["release_or_publish_allowed"] != false || boundaries["mutates_repositories"] != false {
+		t.Fatalf("beta rollback drill runbook widened authority: %#v", boundaries)
+	}
+	invalidFixture, err := readArbitraryJSON("examples/contract-fixtures/invalid/foundry-beta-rollback-drill-runbook-v0.1.json")
+	if err != nil {
+		t.Fatalf("read invalid beta rollback drill runbook fixture: %v", err)
+	}
+	if err := validateJSONSchemaValue(root, root, invalidFixture, "$"); err == nil {
+		t.Fatalf("invalid beta rollback drill runbook fixture unexpectedly passed schema")
+	}
+}
+
 func TestPulseRunRecordsBlockedForgeLiveAttemptByDefault(t *testing.T) {
 	event := runPulseForEvent(t, []string{"pulse", "run", "--out", t.TempDir()})
 	artifact := pulseArtifact(t, event, "forge_live_attempt")

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/uesugitorachiyo/ao-foundry/docs/contracts/foundry-beta-rollback-drill-runbook-v0.1.schema.json",
+  "title": "AO Foundry Beta Rollback Drill Runbook v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "mode",
+    "drill_id",
+    "target_phase",
+    "source_recommendation",
+    "safe_to_execute",
+    "runbook_path",
+    "rehearsal_inputs",
+    "rollback_drill_phases",
+    "pass_fail_gates",
+    "evidence_outputs",
+    "operator_readback",
+    "authority_boundaries",
+    "no_promotion",
+    "rsi"
+  ],
+  "properties": {
+    "schema_version": { "const": "ao.foundry.beta-rollback-drill-runbook.v0.1" },
+    "status": { "enum": ["ready_for_operator_rehearsal", "blocked"] },
+    "mode": { "const": "fixture_only_dry_run" },
+    "drill_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+    "target_phase": { "const": "month6_beta_launch" },
+    "source_recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rank", "title", "scope", "safety_gate"],
+      "properties": {
+        "rank": { "const": 10 },
+        "title": { "const": "Create beta rollback drill runbook fixture" },
+        "scope": { "const": "ao-foundry" },
+        "safety_gate": { "const": "planning_only_no_provider_no_release" }
+      }
+    },
+    "safe_to_execute": { "const": false },
+    "runbook_path": { "const": "docs/operations/BETA-ROLLBACK-DRILL-RUNBOOK.md" },
+    "rehearsal_inputs": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "purpose"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "pattern": "^(examples|docs|scripts)/[A-Za-z0-9._/-]+$" },
+          "purpose": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "rollback_drill_phases": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "operator_action", "expected_evidence"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "operator_action": { "type": "string", "minLength": 1 },
+          "expected_evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "pass_fail_gates": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "required_status"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "required_status": { "enum": ["passed", "blocked_if_missing"] }
+        }
+      }
+    },
+    "evidence_outputs": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "string",
+        "pattern": "^(target|tmp|docs)/[A-Za-z0-9._/-]+$"
+      }
+    },
+    "operator_readback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary_status", "next_action"],
+      "properties": {
+        "summary_status": { "const": "rollback_drill_planned_not_executed" },
+        "next_action": { "const": "run_fixture_only_rollback_drill_after_operator_schedules_beta_rehearsal" }
+      }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planning_only",
+        "provider_calls_allowed",
+        "credential_inspection_allowed",
+        "mutates_repositories",
+        "opens_pr",
+        "merges_pr",
+        "release_or_publish_allowed",
+        "deploy_allowed",
+        "tag_allowed"
+      ],
+      "properties": {
+        "planning_only": { "const": true },
+        "provider_calls_allowed": { "const": false },
+        "credential_inspection_allowed": { "const": false },
+        "mutates_repositories": { "const": false },
+        "opens_pr": { "const": false },
+        "merges_pr": { "const": false },
+        "release_or_publish_allowed": { "const": false },
+        "deploy_allowed": { "const": false },
+        "tag_allowed": { "const": false }
+      }
+    },
+    "no_promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["promotion_requested", "promoter_status"],
+      "properties": {
+        "promotion_requested": { "const": false },
+        "promoter_status": { "const": "no_promotion_requested" }
+      }
+    },
+    "rsi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unrestricted_rsi_denied", "broad_rsi_claim"],
+      "properties": {
+        "unrestricted_rsi_denied": { "const": true },
+        "broad_rsi_claim": { "const": false }
+      }
+    }
+  }
+}
