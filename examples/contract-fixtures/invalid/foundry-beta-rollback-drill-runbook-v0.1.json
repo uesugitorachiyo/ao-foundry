@@ -1,0 +1,61 @@
+{
+  "schema_version": "ao.foundry.beta-rollback-drill-runbook.v0.1",
+  "status": "ready_for_operator_rehearsal",
+  "mode": "fixture_only_dry_run",
+  "drill_id": "month6_beta_rollback_drill",
+  "target_phase": "month6_beta_launch",
+  "source_recommendation": {
+    "rank": 10,
+    "title": "Create beta rollback drill runbook fixture",
+    "scope": "ao-foundry",
+    "safety_gate": "planning_only_no_provider_no_release"
+  },
+  "safe_to_execute": true,
+  "runbook_path": "docs/operations/BETA-ROLLBACK-DRILL-RUNBOOK.md",
+  "rehearsal_inputs": [
+    {
+      "name": "rollback_rehearsal_contract",
+      "path": "examples/contract-fixtures/valid/foundry-live-mutation-rollback-rehearsal-v0.1.json",
+      "purpose": "Bind the existing rollback rehearsal evidence shape."
+    }
+  ],
+  "rollback_drill_phases": [
+    {
+      "name": "preflight",
+      "operator_action": "Verify clean checkout.",
+      "expected_evidence": "preflight status"
+    }
+  ],
+  "pass_fail_gates": [
+    {
+      "name": "clean_checkout_recorded",
+      "required_status": "passed"
+    }
+  ],
+  "evidence_outputs": [
+    "target/month6-beta/rollback-drill/preflight.json"
+  ],
+  "operator_readback": {
+    "summary_status": "rollback_drill_planned_not_executed",
+    "next_action": "run_fixture_only_rollback_drill_after_operator_schedules_beta_rehearsal"
+  },
+  "authority_boundaries": {
+    "planning_only": true,
+    "provider_calls_allowed": false,
+    "credential_inspection_allowed": false,
+    "mutates_repositories": true,
+    "opens_pr": false,
+    "merges_pr": false,
+    "release_or_publish_allowed": false,
+    "deploy_allowed": false,
+    "tag_allowed": false
+  },
+  "no_promotion": {
+    "promotion_requested": false,
+    "promoter_status": "no_promotion_requested"
+  },
+  "rsi": {
+    "unrestricted_rsi_denied": true,
+    "broad_rsi_claim": false
+  }
+}
