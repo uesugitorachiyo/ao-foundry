@@ -1,0 +1,53 @@
+{
+  "schema_version": "ao.foundry.safe-next-work-resume-rehearsal.v0.1",
+  "status": "ready",
+  "mission": "ao-stack-month6-recommendations",
+  "resume_from_checkpoint": true,
+  "checkpoint_source": "latest_readback",
+  "latest_readback": {
+    "completed_nodes": 23,
+    "ready_nodes": 1,
+    "blocked_nodes": 0,
+    "failed_nodes": 0,
+    "final_response_allowed": false
+  },
+  "ready_nodes_before_resume": 1,
+  "blocked_nodes_before_resume": 0,
+  "final_response_allowed_before_resume": false,
+  "selected_next_work": {
+    "node_id": "mission-recommendation-month6-24",
+    "rank": 24,
+    "task": "Add registry compatibility CI handoff prompt",
+    "source": "latest_readback_ready_nodes",
+    "foundry_import_count": 1,
+    "active_node_count": 1
+  },
+  "resume_rehearsal_checks": [
+    {
+      "name": "latest_readback_loaded",
+      "status": "passed"
+    },
+    {
+      "name": "single_ready_node_selected",
+      "status": "passed"
+    },
+    {
+      "name": "final_response_denied_while_ready_work_remains",
+      "status": "passed"
+    },
+    {
+      "name": "no_execution_authority_granted",
+      "status": "passed"
+    }
+  ],
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "provider_calls": false,
+  "release_or_publish": false,
+  "credential_use": false,
+  "direct_main_mutation": false,
+  "rsi_remains_denied": true,
+  "exact_next_action": "emit Foundry import for exactly one active node, then continue the serialized PR/CI/merge loop before any final response"
+}
