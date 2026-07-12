@@ -1128,6 +1128,38 @@ func TestNextJSONReportsReadyAction(t *testing.T) {
 	}
 }
 
+func TestSafeNextWorkResumeRehearsalFixture(t *testing.T) {
+	fixture := readObjectFixture(t, "examples/safe-next-work-resume/ready.json")
+	if fixture["schema_version"] != "ao.foundry.safe-next-work-resume-rehearsal.v0.1" ||
+		fixture["status"] != "ready" ||
+		fixture["resume_from_checkpoint"] != true {
+		t.Fatalf("bad safe-next-work resume fixture header: %#v", fixture)
+	}
+	selected, ok := fixture["selected_next_work"].(map[string]any)
+	if !ok {
+		t.Fatalf("fixture missing selected_next_work: %#v", fixture)
+	}
+	if selected["node_id"] != "mission-recommendation-month6-24" ||
+		selected["source"] != "latest_readback_ready_nodes" ||
+		fmt.Sprint(selected["foundry_import_count"]) != "1" {
+		t.Fatalf("fixture did not bind exactly one resumed next work item: %#v", selected)
+	}
+	if fmt.Sprint(fixture["ready_nodes_before_resume"]) != "1" ||
+		fmt.Sprint(fixture["blocked_nodes_before_resume"]) != "0" ||
+		fixture["final_response_allowed_before_resume"] != false {
+		t.Fatalf("fixture should preserve nonterminal resume gate: %#v", fixture)
+	}
+	for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories", "provider_calls", "release_or_publish", "credential_use", "direct_main_mutation"} {
+		if fixture[field] != false {
+			t.Fatalf("fixture %s = %#v, want false", field, fixture[field])
+		}
+	}
+	if fixture["rsi_remains_denied"] != true ||
+		!strings.Contains(fmt.Sprint(fixture["exact_next_action"]), "emit Foundry import for exactly one active node") {
+		t.Fatalf("fixture missing RSI denial or exact next action: %#v", fixture)
+	}
+}
+
 func TestNextRefusesBlockedReadiness(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "blocked.forge-brief.json")
 	var stdout, stderr bytes.Buffer
