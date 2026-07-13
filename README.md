@@ -1,40 +1,5 @@
 # AO Foundry
 
-## Role
-
-AO Foundry owns portfolio readiness, safe-next-work selection, and bounded
-implementation imports. It coordinates eligible work but delegates each
-governed run to Forge. See [AO Architecture](https://github.com/uesugitorachiyo/ao-architecture)
-and the [canonical AO Foundry component page](https://github.com/uesugitorachiyo/ao-architecture/blob/main/components/ao-foundry.md).
-
-## Maturity
-
-Pre-alpha orchestrator. Evidence validation and scheduling are `implemented`
-and `executable-tested`; normal Pulse-to-live-execution closure is `fixture-only`.
-
-## Install
-
-```sh
-go build -o bin/foundry ./cmd/foundry
-go build -o bin/ao ./cmd/ao
-```
-
-## Quickstart
-
-```sh
-bin/foundry --help
-```
-
-## Safety
-
-Foundry schedules bounded eligible work. It does not grant Covenant approval,
-call providers, use credentials, mutate `main` directly, or publish releases.
-
-## External Beta
-
-External beta has not launched. No promotion is requested. RSI remains denied.
-Portfolio evidence remains preflight evidence until separate launch gates pass.
-
 AO Foundry is the engineering operations factory above AO Forge. It does not
 replace AO Forge. Foundry coordinates many repositories, goals, branches, CI
 signals, release trains, evidence queues, and overnight advancement loops, then
