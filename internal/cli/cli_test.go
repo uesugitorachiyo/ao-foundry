@@ -6063,6 +6063,46 @@ func TestPulseAtlasSchedulerInputConsumesAtlasWorkgraphCompatibilityVector(t *te
 	}
 }
 
+func TestFoundrySafeNextWorkCompatibilityVectorProducesForgeGoalRun(t *testing.T) {
+	vector := readObjectFixture(t, "examples/contract-fixtures/valid/foundry-safe-next-work-to-forge-goal-run-v0.1.json")
+	producer, ok := vector["producer"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing producer section: %#v", vector)
+	}
+	consumer, ok := vector["consumer"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing consumer section: %#v", vector)
+	}
+	expected, ok := vector["expected_forge_goal_run"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing expected_forge_goal_run section: %#v", vector)
+	}
+	if vector["schema_version"] != "ao.compatibility.foundry-safe-next-work-to-forge-goal-run-vector.v1" ||
+		vector["edge"] != "ao-foundry.safe_next_work_schedule -> ao-forge.goal_run_request" ||
+		producer["repository"] != "ao-foundry" ||
+		consumer["repository"] != "ao-forge" ||
+		consumer["expected_command"] != "forge goal validate" {
+		t.Fatalf("bad Foundry to Forge vector identity: %#v", vector)
+	}
+	if expected["schema_version"] != "ao.forge.goal-run.v0.1" ||
+		expected["repo"] != "ao2" ||
+		expected["current_phase"] != "planning" {
+		t.Fatalf("bad expected Forge GoalRun: %#v", expected)
+	}
+	boundaries, ok := vector["boundaries"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing boundaries section: %#v", vector)
+	}
+	for _, field := range []string{"release_or_publish", "creates_tag", "uploads_assets", "deploys", "contacts_external_users", "provider_pilot", "promotion_requested", "promotion_granted", "schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
+		if boundaries[field] != false {
+			t.Fatalf("compatibility vector must not grant %s: %#v", field, boundaries)
+		}
+	}
+	if boundaries["rsi_remains_denied"] != true {
+		t.Fatalf("compatibility vector must keep RSI denied: %#v", boundaries)
+	}
+}
+
 func TestPulseAtlasSchedulerInputBlocksImportMissingSelectedNode(t *testing.T) {
 	tempDir := t.TempDir()
 	importPath := filepath.Join(tempDir, "foundry-import.json")
