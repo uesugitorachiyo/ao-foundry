@@ -5977,6 +5977,92 @@ func TestPulseAtlasSchedulerInputSelectsOnlyAtlasNextReadyNode(t *testing.T) {
 	}
 }
 
+func TestPulseAtlasSchedulerInputConsumesAtlasWorkgraphCompatibilityVector(t *testing.T) {
+	vector := readObjectFixture(t, "examples/contract-fixtures/valid/foundry-atlas-workgraph-to-safe-next-work-v0.1.json")
+	producer, ok := vector["producer"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing producer section: %#v", vector)
+	}
+	consumer, ok := vector["consumer"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing consumer section: %#v", vector)
+	}
+	expected, ok := vector["expected_foundry"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing expected_foundry section: %#v", vector)
+	}
+	if vector["schema_version"] != "ao.compatibility.atlas-workgraph-to-foundry-safe-next-work-vector.v1" ||
+		vector["edge"] != "ao-atlas.workgraph_context_pack -> ao-foundry.safe_next_work_schedule" ||
+		producer["repository"] != "ao-atlas" ||
+		consumer["repository"] != "ao-foundry" ||
+		consumer["expected_command"] != "foundry pulse atlas-scheduler-input" {
+		t.Fatalf("bad Atlas to Foundry vector identity: %#v", vector)
+	}
+	boundaries, ok := vector["boundaries"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing boundaries section: %#v", vector)
+	}
+	for _, field := range []string{"release_or_publish", "creates_tag", "uploads_assets", "deploys", "contacts_external_users", "provider_pilot", "promotion_requested", "promotion_granted", "schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "opens_pr", "merges_pr"} {
+		if boundaries[field] != false {
+			t.Fatalf("compatibility vector must not grant %s: %#v", field, boundaries)
+		}
+	}
+	if boundaries["rsi_remains_denied"] != true {
+		t.Fatalf("compatibility vector must keep RSI denied: %#v", boundaries)
+	}
+
+	outPath := filepath.Join(t.TempDir(), "pulse-atlas-scheduler-input.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{
+		"pulse", "atlas-scheduler-input",
+		"--workgraph", classGateString(producer, "workgraph"),
+		"--foundry-import", classGateString(producer, "foundry_import"),
+		"--out", outPath,
+		"--json",
+	}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	result := readObjectFixture(t, outPath)
+	if result["schema_version"] != expected["scheduler_input_schema"] ||
+		result["status"] != expected["status"] ||
+		result["allowed_next_action"] != expected["allowed_next_action"] ||
+		result["atlas_compile_only"] != expected["atlas_compile_only"] ||
+		result["selected_node_id"] != expected["selected_node_id"] ||
+		result["selected_task_id"] != expected["selected_task_id"] {
+		t.Fatalf("scheduler output does not match compatibility vector: result=%#v expected=%#v", result, expected)
+	}
+	importSummary, ok := result["safe_node_foundry_import"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing safe_node_foundry_import: %#v", result)
+	}
+	if importSummary["status"] != expected["safe_node_foundry_import_status"] ||
+		importSummary["selected_node_id"] != expected["selected_node_id"] ||
+		importSummary["selected_task_id"] != expected["selected_task_id"] ||
+		classGateInt(importSummary, "imported_task_count") != classGateInt(expected, "imported_task_count") ||
+		importSummary["rejects_unselected_ready_nodes"] != expected["rejects_unselected_ready_nodes"] {
+		t.Fatalf("safe node import does not match compatibility vector: result=%#v expected=%#v", importSummary, expected)
+	}
+	expectedCounts, ok := expected["task_counts"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing expected task counts: %#v", expected)
+	}
+	resultCounts, ok := result["task_counts"].(map[string]any)
+	if !ok {
+		t.Fatalf("missing result task counts: %#v", result)
+	}
+	for _, field := range []string{"total", "ready", "blocked", "completed", "failed"} {
+		if classGateInt(resultCounts, field) != classGateInt(expectedCounts, field) {
+			t.Fatalf("task count %s mismatch: result=%#v expected=%#v", field, resultCounts, expectedCounts)
+		}
+	}
+	for _, field := range []string{"schedules_work", "executes_work", "approves_work", "mutates_repositories", "calls_providers", "uploads_artifacts", "opens_pr", "merges_pr"} {
+		if result[field] != false {
+			t.Fatalf("scheduler input must not grant side-effect authority, %s=%#v in %#v", field, result[field], result)
+		}
+	}
+}
+
 func TestPulseAtlasSchedulerInputBlocksImportMissingSelectedNode(t *testing.T) {
 	tempDir := t.TempDir()
 	importPath := filepath.Join(tempDir, "foundry-import.json")
