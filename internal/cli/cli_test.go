@@ -1160,6 +1160,49 @@ func TestSafeNextWorkResumeRehearsalFixture(t *testing.T) {
 	}
 }
 
+func TestMonth5SafeNextWorkOperatorFixture(t *testing.T) {
+	fixture := readObjectFixture(t, "examples/operator/month5-safe-next-work.ready.json")
+	if fixture["schema_version"] != "ao.foundry.month5-safe-next-work.v0.1" ||
+		fixture["status"] != "ready" ||
+		fixture["current_month"] != "month5" {
+		t.Fatalf("bad Month 5 safe-next-work fixture header: %#v", fixture)
+	}
+	currentStack, ok := fixture["current_stack_state"].(map[string]any)
+	if !ok {
+		t.Fatalf("fixture missing current_stack_state: %#v", fixture)
+	}
+	if currentStack["ao2_version"] != "v0.5.1" ||
+		currentStack["control_plane_version"] != "v0.1.15" ||
+		fmt.Sprint(currentStack["compatibility_tested_edges"]) != "16" ||
+		currentStack["compatibility_gate_complete"] != false {
+		t.Fatalf("fixture does not bind current stack state: %#v", currentStack)
+	}
+	selected, ok := fixture["selected_next_work"].(map[string]any)
+	if !ok {
+		t.Fatalf("fixture missing selected_next_work: %#v", fixture)
+	}
+	if selected["work_id"] != "month5-operator-workflow-hardening" ||
+		selected["ready_status"] != "ready" ||
+		selected["feeds"] != "ao-forge.run-state and ao-command.operator-readback" {
+		t.Fatalf("fixture selected wrong next work: %#v", selected)
+	}
+	for _, field := range []string{"release_recommended", "tag_recommended", "upload_recommended", "deployment_recommended", "provider_pilot_recommended", "live_self_modification_recommended", "rsi_recommended", "promotion_recommended"} {
+		if selected[field] != false {
+			t.Fatalf("selected next work must not recommend %s: %#v", field, selected)
+		}
+	}
+	for _, sectionName := range []string{"evidence_prerequisites", "policy_gates"} {
+		section, ok := selected[sectionName].([]any)
+		if !ok || len(section) == 0 {
+			t.Fatalf("selected next work missing %s: %#v", sectionName, selected)
+		}
+	}
+	if fixture["rsi_remains_denied"] != true ||
+		fixture["operator_next_action"] != "handoff selected safe-next-work to AO Forge run-state without release, provider, promotion, or RSI authority" {
+		t.Fatalf("fixture missing denied RSI state or exact next action: %#v", fixture)
+	}
+}
+
 func TestNextRefusesBlockedReadiness(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "blocked.forge-brief.json")
 	var stdout, stderr bytes.Buffer

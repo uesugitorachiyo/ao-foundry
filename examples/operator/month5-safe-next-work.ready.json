@@ -1,0 +1,54 @@
+{
+  "schema_version": "ao.foundry.month5-safe-next-work.v0.1",
+  "status": "ready",
+  "current_month": "month5",
+  "current_stack_state": {
+    "ao2_version": "v0.5.1",
+    "control_plane_version": "v0.1.15",
+    "compatibility_tested_edges": 16,
+    "canonical_vector_count": 16,
+    "consumer_test_count": 16,
+    "compatibility_gate_complete": false,
+    "external_beta_launched": false,
+    "promotion_requested": false,
+    "promotion_granted": false,
+    "rsi_authorized": false
+  },
+  "selected_next_work": {
+    "work_id": "month5-operator-workflow-hardening",
+    "title": "Harden operator workflow readback across current stack evidence",
+    "ready_status": "ready",
+    "candidate_work": "multi-repo product coordination and operator workflow hardening",
+    "prerequisites_status": "satisfied",
+    "blocked_reason": null,
+    "evidence_prerequisites": [
+      "Month 3 compatibility matrix: 16 tested edges, 0 proposed edges",
+      "Month 4 dry-run evidence: dry_run_only, rollback_verified, observation_readback=true",
+      "Current public release pair: AO2 v0.5.1 and Control Plane v0.1.15"
+    ],
+    "policy_gates": [
+      "human approval remains required for governed action",
+      "live self-modification authority is denied",
+      "provider-pilot authority is denied",
+      "release/tag/upload/deployment authority is denied for this workflow"
+    ],
+    "feeds": "ao-forge.run-state and ao-command.operator-readback",
+    "release_recommended": false,
+    "tag_recommended": false,
+    "upload_recommended": false,
+    "deployment_recommended": false,
+    "provider_pilot_recommended": false,
+    "live_self_modification_recommended": false,
+    "rsi_recommended": false,
+    "promotion_recommended": false
+  },
+  "support_evidence_needed": [
+    "current stack state readback",
+    "policy gate status",
+    "dry-run evidence path",
+    "rollback and observation status",
+    "sanitized command and expected/actual result"
+  ],
+  "operator_next_action": "handoff selected safe-next-work to AO Forge run-state without release, provider, promotion, or RSI authority",
+  "rsi_remains_denied": true
+}
