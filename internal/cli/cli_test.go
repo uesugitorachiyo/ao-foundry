@@ -826,6 +826,51 @@ func TestAtlasImportValidateRejectsExecutionAuthority(t *testing.T) {
 	}
 }
 
+func TestGitHubIssueMonth3RepairWorkgraphRequiresBoundedEvidence(t *testing.T) {
+	root, err := repoRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	body, err := os.ReadFile(filepath.Join(root, "examples", "github-issue", "month3-repair-workgraph.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fixture map[string]any
+	if err := json.Unmarshal(body, &fixture); err != nil {
+		t.Fatal(err)
+	}
+	if fixture["schema_version"] != "ao.foundry.github-issue-month3-repair-workgraph.v0.1" ||
+		fixture["status"] != "ready" ||
+		fixture["terminal_state"] != "authentic_bug_deterministic" {
+		t.Fatalf("unexpected repair workgraph identity: %#v", fixture)
+	}
+	prePatch := fixture["pre_patch"].(map[string]any)
+	if prePatch["regression_required"] != true ||
+		prePatch["expected_result"] != "failed_expected" ||
+		prePatch["negative_control"] != "passed" {
+		t.Fatalf("pre-patch evidence gate drifted: %#v", prePatch)
+	}
+	repair := fixture["repair"].(map[string]any)
+	if repair["smallest_sufficient_repair"] != true || repair["unrelated_file_changes"] != false {
+		t.Fatalf("repair scope is not bounded: %#v", repair)
+	}
+	for _, key := range []string{"test_deleted_or_weakened", "lint_or_policy_disabled", "security_sensitive_public_repair", "provider_execution_required"} {
+		if fixture["rejections"].(map[string]any)[key] != true {
+			t.Fatalf("missing rejection gate %s: %#v", key, fixture["rejections"])
+		}
+	}
+	for _, key := range []string{"post_patch_verification", "rollback_exact_digest", "replay_digest_match", "resume_without_duplicate_edits", "control_plane_observation", "command_readback", "sentinel_false_fix_check"} {
+		if fixture["required_evidence"].(map[string]any)[key] != true {
+			t.Fatalf("missing required evidence %s: %#v", key, fixture["required_evidence"])
+		}
+	}
+	for _, key := range []string{"feature_generated_draft_pr_opened", "issue_write_performed", "upstream_push_performed"} {
+		if fixture["github_actions"].(map[string]any)[key] != false {
+			t.Fatalf("github action %s must remain false: %#v", key, fixture["github_actions"])
+		}
+	}
+}
+
 func TestAtlasReadbackWritesObserverReport(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "atlas-readback.json")
 	var stdout, stderr bytes.Buffer

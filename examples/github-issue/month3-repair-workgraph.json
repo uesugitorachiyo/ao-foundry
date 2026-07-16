@@ -1,0 +1,47 @@
+{
+  "schema_version": "ao.foundry.github-issue-month3-repair-workgraph.v0.1",
+  "status": "ready",
+  "workgraph_id": "github-issue-month3-deterministic-repair",
+  "source_fixture": "deterministic_authentic_bug",
+  "terminal_state": "authentic_bug_deterministic",
+  "base_commit": "80ec5321f42d4bab17d5e64fdae6aa099ba59d4a",
+  "allowed_repositories": ["fixture-repair-worktree"],
+  "denied_repositories": ["tt", "modules", "provider-pilot", "private-app-material"],
+  "allowed_paths": ["fixture/src/bug.txt", "fixture/tests/regression.txt"],
+  "denied_paths": ["credentials", "release-assets", "generated-binaries", "models"],
+  "pre_patch": {
+    "regression_required": true,
+    "expected_result": "failed_expected",
+    "negative_control": "passed"
+  },
+  "repair": {
+    "max_candidates": 2,
+    "selected_candidate": "candidate_minimal_fixture_patch",
+    "smallest_sufficient_repair": true,
+    "unrelated_file_changes": false
+  },
+  "rejections": {
+    "test_deleted_or_weakened": true,
+    "lint_or_policy_disabled": true,
+    "security_sensitive_public_repair": true,
+    "provider_execution_required": true
+  },
+  "required_evidence": {
+    "post_patch_verification": true,
+    "rollback_exact_digest": true,
+    "replay_digest_match": true,
+    "resume_without_duplicate_edits": true,
+    "control_plane_observation": true,
+    "command_readback": true,
+    "sentinel_false_fix_check": true
+  },
+  "github_actions": {
+    "feature_generated_draft_pr_opened": false,
+    "issue_write_performed": false,
+    "upstream_push_performed": false
+  },
+  "continuation": {
+    "month4_unlock_allowed_after_green_ci": true,
+    "exact_next_action": "Run isolated repair evidence checks and merge implementation PRs before Month 4."
+  }
+}
