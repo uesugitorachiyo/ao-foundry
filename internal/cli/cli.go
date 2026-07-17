@@ -15,6 +15,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -15684,7 +15685,20 @@ func fileSHA256(path string) (string, error) {
 	return fmt.Sprintf("%x", sum[:]), nil
 }
 
+var repoRootCache struct {
+	sync.Once
+	root string
+	err  error
+}
+
 func repoRoot() (string, error) {
+	repoRootCache.Do(func() {
+		repoRootCache.root, repoRootCache.err = discoverRepoRoot()
+	})
+	return repoRootCache.root, repoRootCache.err
+}
+
+func discoverRepoRoot() (string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		return "", err

@@ -14,6 +14,20 @@ import (
 	"time"
 )
 
+func foundryScriptCommand(t *testing.T, script string, args ...string) *exec.Cmd {
+	t.Helper()
+	if _, err := exec.LookPath("bash"); err == nil {
+		return exec.Command("bash", append([]string{script}, args...)...)
+	}
+	python := "python"
+	if path, err := exec.LookPath("python3"); err == nil {
+		python = path
+	}
+	runner := repoPath("scripts/foundry_fixture_runner.py")
+	runnerArgs := append([]string{runner, "--script", filepath.Base(script)}, args...)
+	return exec.Command(python, runnerArgs...)
+}
+
 func TestRegistryValidateAcceptsExample(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"registry", "validate", "--registry", registryFixture()}, &stdout, &stderr)
@@ -1930,7 +1944,7 @@ func TestGovernedLiveMutationDryRunChainScript(t *testing.T) {
 	}
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	cmd := exec.Command("bash", script, "--out", outDir)
+	cmd := foundryScriptCommand(t, script, "--out", outDir)
 	cmd.Dir = repoPath(".")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -1990,7 +2004,7 @@ func TestGovernedLiveMutationDryRunChainScriptLowRiskCode(t *testing.T) {
 	}
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	cmd := exec.Command("bash", script, "--mutation-class", "low_risk_code", "--out", outDir)
+	cmd := foundryScriptCommand(t, script, "--mutation-class", "low_risk_code", "--out", outDir)
 	cmd.Dir = repoPath(".")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -2049,13 +2063,13 @@ func TestLowRiskCodeLiveRehearsalGateBlocksWithoutPolicyEvidence(t *testing.T) {
 
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
 	}
 	gatePath := filepath.Join(outDir, "gate.json")
-	gateCmd := exec.Command("bash", gateScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", gatePath)
+	gateCmd := foundryScriptCommand(t, gateScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", gatePath)
 	gateCmd.Dir = repoPath(".")
 	if out, err := gateCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk live rehearsal gate failed: %v\n%s", err, string(out))
@@ -2083,7 +2097,7 @@ func TestLowRiskCodeLiveRehearsalGateRejectsWeakPolicyEvidenceAfterAtlasImport(t
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
 	chainPath := filepath.Join(outDir, "chain", "summary.json")
-	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
@@ -2092,7 +2106,7 @@ func TestLowRiskCodeLiveRehearsalGateRejectsWeakPolicyEvidenceAfterAtlasImport(t
 	writeWeakLowRiskLivePolicyFixture(t, repoPath(policyPath), fileSHA256HexForTest(t, repoPath(chainPath)))
 
 	gatePath := filepath.Join(outDir, "gate.json")
-	gateCmd := exec.Command("bash", gateScript,
+	gateCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainPath,
 		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
@@ -2121,7 +2135,7 @@ func TestLowRiskCodeLiveRehearsalGateRequiresDownstreamProofsAfterExpandedPolicy
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
 	chainPath := filepath.Join(outDir, "chain", "summary.json")
-	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
@@ -2130,7 +2144,7 @@ func TestLowRiskCodeLiveRehearsalGateRequiresDownstreamProofsAfterExpandedPolicy
 	writeExpandedLowRiskLivePolicyFixture(t, repoPath(policyPath), repoPath(chainPath))
 
 	gatePath := filepath.Join(outDir, "gate.json")
-	gateCmd := exec.Command("bash", gateScript,
+	gateCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainPath,
 		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
@@ -2159,7 +2173,7 @@ func TestLowRiskCodeLiveRehearsalGateAcceptsExactAtlasFirstRewiredProofs(t *test
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
 	chainPath := filepath.Join(outDir, "chain", "summary.json")
-	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
@@ -2177,7 +2191,7 @@ func TestLowRiskCodeLiveRehearsalGateAcceptsExactAtlasFirstRewiredProofs(t *test
 	writeLowRiskLiveDownstreamProofFixture(t, repoPath(commandPath), "ao.command.low-risk-code-live-readback.v0.1", "ready", chainSHA, "codex/low-risk-code-rehearsal-one")
 
 	gatePath := filepath.Join(outDir, "gate.json")
-	gateCmd := exec.Command("bash", gateScript,
+	gateCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainPath,
 		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
@@ -2212,7 +2226,7 @@ func TestLowRiskCodeLiveRehearsalGateFailsClosedOnMismatchedRewiredProof(t *test
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
 	chainPath := filepath.Join(outDir, "chain", "summary.json")
-	chainCmd := exec.Command("bash", chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--mutation-class", "low_risk_code", "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("low-risk governed chain failed: %v\n%s", err, string(out))
@@ -2224,7 +2238,7 @@ func TestLowRiskCodeLiveRehearsalGateFailsClosedOnMismatchedRewiredProof(t *test
 	writeLowRiskLiveDownstreamProofFixture(t, repoPath(boundedPath), "ao.forge_ao2.low-risk-code-bounded-packet-enforcement.v0.1", "ready", chainSHA, "codex/other-branch")
 
 	gatePath := filepath.Join(outDir, "gate.json")
-	gateCmd := exec.Command("bash", gateScript,
+	gateCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainPath,
 		"--atlas-blueprint-import", "examples/atlas/blueprint-import.low-risk-code.json",
 		"--atlas-status", "examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json",
@@ -2272,13 +2286,13 @@ func TestLiveMutationReadinessRollupScript(t *testing.T) {
 	}
 	outDir := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	chainCmd := exec.Command("bash", chainScript, "--out", filepath.Join(outDir, "chain"))
+	chainCmd := foundryScriptCommand(t, chainScript, "--out", filepath.Join(outDir, "chain"))
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("governed chain failed: %v\n%s", err, string(out))
 	}
 	rollupPath := filepath.Join(outDir, "rollup.json")
-	rollupCmd := exec.Command("bash", rollupScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", rollupPath)
+	rollupCmd := foundryScriptCommand(t, rollupScript, "--chain", filepath.Join(outDir, "chain", "summary.json"), "--out", rollupPath)
 	rollupCmd.Dir = repoPath(".")
 	if out, err := rollupCmd.CombinedOutput(); err != nil {
 		t.Fatalf("readiness rollup failed: %v\n%s", err, string(out))
@@ -6516,7 +6530,7 @@ func TestLiveDocsApprovalGateScript(t *testing.T) {
 	script := repoPath("scripts/live-docs-approval-gate.sh")
 	outDir := t.TempDir()
 	readyOut := filepath.Join(outDir, "ready.json")
-	readyCmd := exec.Command("bash", script,
+	readyCmd := foundryScriptCommand(t, script,
 		"--request", repoPath("examples/live-docs-approval/request.json"),
 		"--ticket", repoPath("examples/live-docs-approval/ticket-approved.json"),
 		"--out", readyOut,
@@ -6531,7 +6545,7 @@ func TestLiveDocsApprovalGateScript(t *testing.T) {
 	}
 
 	blockedOut := filepath.Join(outDir, "blocked.json")
-	blockedCmd := exec.Command("bash", script,
+	blockedCmd := foundryScriptCommand(t, script,
 		"--request", repoPath("examples/live-docs-approval/request.json"),
 		"--ticket", repoPath("examples/live-docs-approval/ticket-pending.json"),
 		"--out", blockedOut,
@@ -10374,8 +10388,8 @@ func TestWorktreeIsolationProofScriptBlocksDirtyAndReusedCandidates(t *testing.T
 		t.Helper()
 		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
 		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
-		cmd := exec.Command(
-			"bash",
+		cmd := foundryScriptCommand(
+			t,
 			script,
 			"--candidate", candidate,
 			"--out", outPath,
@@ -10476,8 +10490,8 @@ func TestLiveDocsWorktreePrepareScriptBlocksUnsafeCandidates(t *testing.T) {
 		t.Helper()
 		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
 		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
-		cmd := exec.Command(
-			"bash",
+		cmd := foundryScriptCommand(
+			t,
 			script,
 			"--candidate", candidate,
 			"--approval-gate", gate,
@@ -10591,8 +10605,8 @@ func TestLiveDocsRollbackExecutionRehearsalScriptExecutesAndRollsBackInFixtureWo
 		t.Helper()
 		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
 		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
-		cmd := exec.Command(
-			"bash",
+		cmd := foundryScriptCommand(
+			t,
 			script,
 			"--candidate", candidate,
 			"--out", outPath,
@@ -10699,7 +10713,7 @@ func TestApprovedLiveDocsDryRunChainScript(t *testing.T) {
 
 	outDir := filepath.ToSlash(filepath.Join("target", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())))
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	cmd := exec.Command("bash", script, "--out", outDir)
+	cmd := foundryScriptCommand(t, script, "--out", outDir)
 	cmd.Dir = repoPath(".")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -10797,13 +10811,13 @@ func TestLiveDocsPRRehearsalGateScriptRequiresExplicitApprovalArtifact(t *testin
 	blockedPath := outDir + "/blocked-gate.json"
 	readyPath := outDir + "/ready-gate.json"
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	chainCmd := exec.Command("bash", chainScript, "--out", chainDir)
+	chainCmd := foundryScriptCommand(t, chainScript, "--out", chainDir)
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("approved live docs chain failed: %v\n%s", err, string(out))
 	}
 
-	blockedCmd := exec.Command("bash", gateScript,
+	blockedCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainSummary,
 		"--out", blockedPath,
 		"--json",
@@ -10820,7 +10834,7 @@ func TestLiveDocsPRRehearsalGateScriptRequiresExplicitApprovalArtifact(t *testin
 		t.Fatalf("missing approval artifact should block execution: %#v", blocked)
 	}
 
-	readyCmd := exec.Command("bash", gateScript,
+	readyCmd := foundryScriptCommand(t, gateScript,
 		"--chain", chainSummary,
 		"--approval-artifact", "examples/live-docs-approval/ticket-approved.json",
 		"--out", readyPath,
@@ -10910,17 +10924,17 @@ func TestFirstLiveDocsReadinessRollupScript(t *testing.T) {
 	blockedRollup := outDir + "/blocked-rollup.json"
 	readyRollup := outDir + "/ready-rollup.json"
 	t.Cleanup(func() { _ = os.RemoveAll(repoPath(outDir)) })
-	chainCmd := exec.Command("bash", chainScript, "--out", chainDir)
+	chainCmd := foundryScriptCommand(t, chainScript, "--out", chainDir)
 	chainCmd.Dir = repoPath(".")
 	if out, err := chainCmd.CombinedOutput(); err != nil {
 		t.Fatalf("approved live docs chain failed: %v\n%s", err, string(out))
 	}
-	blockedGateCmd := exec.Command("bash", gateScript, "--chain", chainDir+"/summary.json", "--out", blockedGate)
+	blockedGateCmd := foundryScriptCommand(t, gateScript, "--chain", chainDir+"/summary.json", "--out", blockedGate)
 	blockedGateCmd.Dir = repoPath(".")
 	if out, err := blockedGateCmd.CombinedOutput(); err != nil {
 		t.Fatalf("blocked PR gate failed: %v\n%s", err, string(out))
 	}
-	readyGateCmd := exec.Command("bash", gateScript, "--chain", chainDir+"/summary.json", "--approval-artifact", "examples/live-docs-approval/ticket-approved.json", "--out", readyGate)
+	readyGateCmd := foundryScriptCommand(t, gateScript, "--chain", chainDir+"/summary.json", "--approval-artifact", "examples/live-docs-approval/ticket-approved.json", "--out", readyGate)
 	readyGateCmd.Dir = repoPath(".")
 	if out, err := readyGateCmd.CombinedOutput(); err != nil {
 		t.Fatalf("ready PR gate failed: %v\n%s", err, string(out))
@@ -10928,7 +10942,7 @@ func TestFirstLiveDocsReadinessRollupScript(t *testing.T) {
 
 	runRollup := func(path string, gate string) map[string]any {
 		t.Helper()
-		cmd := exec.Command("bash", rollupScript, "--chain", chainDir+"/summary.json", "--pr-gate", gate, "--out", path)
+		cmd := foundryScriptCommand(t, rollupScript, "--chain", chainDir+"/summary.json", "--pr-gate", gate, "--out", path)
 		cmd.Dir = repoPath(".")
 		if out, err := cmd.CombinedOutput(); err != nil {
 			t.Fatalf("first live docs readiness rollup failed: %v\n%s", err, string(out))
@@ -11016,8 +11030,8 @@ func TestLiveMutationRollbackRehearsalScriptBlocksMissingRollbackAndUnsafeAuthor
 		t.Helper()
 		outPath := filepath.ToSlash(filepath.Join("tmp", strings.NewReplacer("/", "-", " ", "-").Replace(t.Name())+".json"))
 		t.Cleanup(func() { _ = os.Remove(repoPath(outPath)) })
-		cmd := exec.Command(
-			"bash",
+		cmd := foundryScriptCommand(
+			t,
 			script,
 			"--candidate", candidate,
 			"--out", outPath,
