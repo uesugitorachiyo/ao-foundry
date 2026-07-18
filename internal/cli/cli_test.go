@@ -3712,6 +3712,34 @@ func TestCompetitiveAuditIgnoresScratchRuntimeBinaries(t *testing.T) {
 	}
 }
 
+func TestCompetitiveAuditIgnoresUntrackedEvidenceScratch(t *testing.T) {
+	scratchDir := repoPath("docs/evidence/local-windows-scratch")
+	if err := os.MkdirAll(scratchDir, 0o755); err != nil {
+		t.Fatalf("mkdir scratch dir: %v", err)
+	}
+	scratchFile := filepath.Join(scratchDir, "operator-path.txt")
+	marker := "/" + "Users/example/private " + "handoff"
+	if err := os.WriteFile(scratchFile, []byte(marker), 0o644); err != nil {
+		t.Fatalf("write scratch file: %v", err)
+	}
+	defer func() {
+		_ = os.RemoveAll(scratchDir)
+	}()
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"competitive", "audit", "--json"}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
+	}
+	var audit CompetitiveReadinessAudit
+	if err := json.Unmarshal(stdout.Bytes(), &audit); err != nil {
+		t.Fatalf("audit JSON output is not JSON: %v; output=%s", err, stdout.String())
+	}
+	if audit.Score != 100 || audit.Status != "ready" {
+		t.Fatalf("local evidence scratch should not block public readiness: %#v", audit)
+	}
+}
+
 func TestCIWorkflowRunsPulseSmoke(t *testing.T) {
 	data, err := os.ReadFile(repoPath(".github/workflows/ci.yml"))
 	if err != nil {

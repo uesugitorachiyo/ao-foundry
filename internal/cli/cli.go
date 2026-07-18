@@ -15284,12 +15284,63 @@ func checkPublicSafety(name string) CompetitiveAuditCheck {
 	if err != nil {
 		return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: err.Error()}
 	}
-	for _, dir := range []string{"README.md", "docs", "examples", "internal", "cmd"} {
+	paths := []string{"README.md", "docs", "examples", "internal", "cmd"}
+	if err := scanTrackedPublicSafety(root, paths); err == nil {
+		return CompetitiveAuditCheck{Name: name, Status: "pass", Reason: "public safety scan has no matches"}
+	} else if !isGitScanUnavailable(err) {
+		return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: err.Error()}
+	}
+	for _, dir := range paths {
 		if err := scanPublicSafetyPath(filepath.Join(root, dir)); err != nil {
 			return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: err.Error()}
 		}
 	}
 	return CompetitiveAuditCheck{Name: name, Status: "pass", Reason: "public safety scan has no matches"}
+}
+
+func scanTrackedPublicSafety(root string, paths []string) error {
+	if _, err := os.Stat(filepath.Join(root, ".git")); err != nil {
+		return errGitScanUnavailable
+	}
+	args := []string{"-C", root, "grep", "-I", "-n", "-F"}
+	for _, marker := range publicSafetyMarkers() {
+		args = append(args, "-e", marker)
+	}
+	args = append(args, "--")
+	args = append(args, paths...)
+	output, err := exec.Command("git", args...).CombinedOutput()
+	if err == nil {
+		return publicSafetyGitGrepError(output)
+	}
+	var exitErr *exec.ExitError
+	if errors.As(err, &exitErr) {
+		if exitErr.ExitCode() == 1 {
+			return nil
+		}
+		return fmt.Errorf("git public-safety scan failed with exit %d", exitErr.ExitCode())
+	}
+	return errGitScanUnavailable
+}
+
+var errGitScanUnavailable = errors.New("git public-safety scan unavailable")
+
+func isGitScanUnavailable(err error) bool {
+	return errors.Is(err, errGitScanUnavailable)
+}
+
+func publicSafetyGitGrepError(output []byte) error {
+	line := strings.TrimSpace(string(output))
+	if newline := strings.IndexByte(line, '\n'); newline >= 0 {
+		line = line[:newline]
+	}
+	path := line
+	if colon := strings.IndexByte(line, ':'); colon >= 0 {
+		path = line[:colon]
+	}
+	if strings.TrimSpace(path) == "" {
+		path = "tracked public file"
+	}
+	return fmt.Errorf("%s contains public-safety marker", path)
 }
 
 func scanPublicSafetyPath(path string) error {
