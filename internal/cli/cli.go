@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/json"
 	"errors"
@@ -37,6 +38,7 @@ const (
 	atlasRunLinkSchema                      = "ao.atlas.run-link.v0.1"
 	atlasReadbackSchema                     = "ao.foundry.atlas-readback.v0.1"
 	atlasStatusSchema                       = "ao.foundry.atlas-status.v0.1"
+	compactEvidenceManifestSchema           = "ao.foundry.compact-evidence-manifest.v0.1"
 	pulseIntakeSchema                       = "ao.foundry.pulse-intake-preflight.v0.1"
 	pulseLifecycleSchema                    = "ao.foundry.pulse-pr-lifecycle.v0.1"
 	pulseStartGateSchema                    = "ao.foundry.pulse-overnight-start-gate.v0.1"
@@ -1304,6 +1306,42 @@ type RunDecision struct {
 	Decision    string `json:"decision"`
 	Explanation string `json:"explanation"`
 	Source      string `json:"source,omitempty"`
+}
+
+type CompactEvidenceManifest struct {
+	Schema         string                 `json:"schema"`
+	FormatVersion  string                 `json:"format_version"`
+	SourceRun      string                 `json:"source_run"`
+	ChunkOrder     []string               `json:"chunk_order"`
+	TotalRecords   int                    `json:"total_record_count"`
+	Chunks         []CompactEvidenceChunk `json:"chunks"`
+	Lookup         CompactEvidenceLookup  `json:"lookup"`
+	ManifestDigest string                 `json:"manifest_digest"`
+}
+
+type CompactEvidenceChunk struct {
+	Path          string `json:"path"`
+	RecordCount   int    `json:"record_count"`
+	FirstRecordID string `json:"first_record_id"`
+	LastRecordID  string `json:"last_record_id"`
+	SHA256        string `json:"sha256"`
+}
+
+type CompactEvidenceLookup struct {
+	Strategy string                       `json:"strategy"`
+	Ranges   []CompactEvidenceLookupRange `json:"ranges"`
+}
+
+type CompactEvidenceLookupRange struct {
+	Chunk         string `json:"chunk"`
+	FirstRecordID string `json:"first_record_id"`
+	LastRecordID  string `json:"last_record_id"`
+}
+
+type CompactEvidenceRecord struct {
+	RecordID string `json:"record_id"`
+	Kind     string `json:"kind"`
+	Payload  any    `json:"payload"`
 }
 
 type RunNextAction struct {
@@ -2701,8 +2739,26 @@ func runRun(args []string, stdout, stderr io.Writer) int {
 		return runRunIngest(args[1:], stdout, stderr)
 	case "inspect":
 		return runRunInspect(args[1:], stdout, stderr)
+	case "compact":
+		return runRunCompact(args[1:], stdout, stderr)
 	default:
 		fmt.Fprintf(stderr, "run: unknown subcommand %q\n", args[0])
+		return 2
+	}
+}
+
+func runRunCompact(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 0 {
+		fmt.Fprintln(stderr, "run compact: expected subcommand generate or verify")
+		return 2
+	}
+	switch args[0] {
+	case "generate":
+		return runRunCompactGenerate(args[1:], stdout, stderr)
+	case "verify":
+		return runRunCompactVerify(args[1:], stdout, stderr)
+	default:
+		fmt.Fprintf(stderr, "run compact: unknown subcommand %q\n", args[0])
 		return 2
 	}
 }
@@ -2784,6 +2840,56 @@ func runRunInspect(args []string, stdout, stderr io.Writer) int {
 	fmt.Fprintf(stdout, "delegated_to=%s\n", run.DelegatedTo)
 	fmt.Fprintf(stdout, "packet_sha256=%s\n", run.ForgePacket.SHA256)
 	fmt.Fprintf(stdout, "evidence_count=%d\n", len(run.Evidence))
+	return 0
+}
+
+func runRunCompactGenerate(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("run compact generate", stderr)
+	runPath := fs.String("run", "", "Foundry run path")
+	outDir := fs.String("out-dir", "", "compact evidence output directory")
+	chunkSize := fs.Int("chunk-size", 1000, "maximum records per chunk")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	if *outDir == "" {
+		fmt.Fprintln(stderr, "run compact generate: missing --out-dir")
+		return 2
+	}
+	if *chunkSize < 1 || *chunkSize > 1000 {
+		fmt.Fprintln(stderr, "run compact generate: --chunk-size must be between 1 and 1000")
+		return 2
+	}
+	run, err := loadFoundryRun(*runPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "run compact generate: %v\n", err)
+		return 2
+	}
+	manifest, err := writeCompactEvidenceRun(*runPath, run, *outDir, *chunkSize)
+	if err != nil {
+		fmt.Fprintf(stderr, "run compact generate: %v\n", err)
+		return 2
+	}
+	manifestPath := filepath.Join(*outDir, "manifest.json")
+	fmt.Fprintf(stdout, "compact_manifest=%s\n", manifestPath)
+	fmt.Fprintf(stdout, "record_count=%d\n", manifest.TotalRecords)
+	fmt.Fprintf(stdout, "chunks=%d\n", len(manifest.Chunks))
+	return 0
+}
+
+func runRunCompactVerify(args []string, stdout, stderr io.Writer) int {
+	fs := newFlagSet("run compact verify", stderr)
+	manifestPath := fs.String("manifest", "", "compact evidence manifest path")
+	if !parseFlags(fs, args, stderr) {
+		return 2
+	}
+	manifest, errors := verifyCompactEvidenceManifest(*manifestPath)
+	if len(errors) > 0 {
+		for _, err := range errors {
+			fmt.Fprintf(stderr, "run compact verify: %s\n", err)
+		}
+		return 1
+	}
+	fmt.Fprintf(stdout, "compact_evidence_verified record_count=%d chunks=%d\n", manifest.TotalRecords, len(manifest.Chunks))
 	return 0
 }
 
@@ -10598,6 +10704,286 @@ func loadFoundryRun(path string) (FoundryRun, error) {
 		return run, err
 	}
 	return run, validateFoundryRun(run)
+}
+
+func writeCompactEvidenceRun(runPath string, run FoundryRun, outDir string, chunkSize int) (CompactEvidenceManifest, error) {
+	records := compactEvidenceRecordsForRun(run)
+	if err := os.MkdirAll(filepath.Join(outDir, "chunks"), 0o755); err != nil {
+		return CompactEvidenceManifest{}, err
+	}
+	manifest := CompactEvidenceManifest{
+		Schema:        compactEvidenceManifestSchema,
+		FormatVersion: "v0.1",
+		SourceRun:     runPath,
+		ChunkOrder:    []string{},
+		TotalRecords:  len(records),
+		Chunks:        []CompactEvidenceChunk{},
+		Lookup: CompactEvidenceLookup{
+			Strategy: "ordered_chunk_ranges",
+			Ranges:   []CompactEvidenceLookupRange{},
+		},
+		ManifestDigest: "",
+	}
+	for offset, chunkIndex := 0, 1; offset < len(records); offset, chunkIndex = offset+chunkSize, chunkIndex+1 {
+		end := offset + chunkSize
+		if end > len(records) {
+			end = len(records)
+		}
+		chunkRecords := records[offset:end]
+		body, err := compactRecordsJSONL(chunkRecords)
+		if err != nil {
+			return CompactEvidenceManifest{}, err
+		}
+		chunkPath := fmt.Sprintf("chunks/%06d.jsonl", chunkIndex)
+		if err := os.WriteFile(filepath.Join(outDir, chunkPath), body, 0o644); err != nil {
+			return CompactEvidenceManifest{}, err
+		}
+		sum := sha256.Sum256(body)
+		firstRecordID := chunkRecords[0].RecordID
+		lastRecordID := chunkRecords[len(chunkRecords)-1].RecordID
+		manifest.ChunkOrder = append(manifest.ChunkOrder, chunkPath)
+		manifest.Chunks = append(manifest.Chunks, CompactEvidenceChunk{
+			Path:          chunkPath,
+			RecordCount:   len(chunkRecords),
+			FirstRecordID: firstRecordID,
+			LastRecordID:  lastRecordID,
+			SHA256:        fmt.Sprintf("%x", sum[:]),
+		})
+		manifest.Lookup.Ranges = append(manifest.Lookup.Ranges, CompactEvidenceLookupRange{
+			Chunk:         chunkPath,
+			FirstRecordID: firstRecordID,
+			LastRecordID:  lastRecordID,
+		})
+	}
+	digest, err := compactManifestDigest(manifest)
+	if err != nil {
+		return CompactEvidenceManifest{}, err
+	}
+	manifest.ManifestDigest = digest
+	if err := writeJSONFile(filepath.Join(outDir, "manifest.json"), manifest); err != nil {
+		return CompactEvidenceManifest{}, err
+	}
+	return manifest, nil
+}
+
+func compactEvidenceRecordsForRun(run FoundryRun) []CompactEvidenceRecord {
+	records := []CompactEvidenceRecord{
+		{
+			RecordID: "run:" + run.RunID,
+			Kind:     "run",
+			Payload: map[string]any{
+				"run_id":       run.RunID,
+				"task_id":      run.TaskID,
+				"registry_id":  run.RegistryID,
+				"status":       run.Status,
+				"delegated_to": run.DelegatedTo,
+			},
+		},
+	}
+	for _, evidence := range run.Evidence {
+		records = append(records, CompactEvidenceRecord{
+			RecordID: "evidence:" + compactRecordIDToken(evidence.Label),
+			Kind:     "evidence",
+			Payload:  evidence,
+		})
+	}
+	for _, decision := range run.Decisions {
+		records = append(records, CompactEvidenceRecord{
+			RecordID: "decision:" + compactRecordIDToken(decision.DecisionID),
+			Kind:     "decision",
+			Payload:  decision,
+		})
+	}
+	sort.Slice(records, func(i, j int) bool {
+		return records[i].RecordID < records[j].RecordID
+	})
+	return records
+}
+
+func compactRecordIDToken(value string) string {
+	value = strings.ToLower(strings.TrimSpace(value))
+	var b strings.Builder
+	lastDash := false
+	for _, r := range value {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
+			b.WriteRune(r)
+			lastDash = false
+			continue
+		}
+		if !lastDash {
+			b.WriteByte('-')
+			lastDash = true
+		}
+	}
+	return strings.Trim(b.String(), "-")
+}
+
+func compactRecordsJSONL(records []CompactEvidenceRecord) ([]byte, error) {
+	var body []byte
+	for _, record := range records {
+		line, err := json.Marshal(record)
+		if err != nil {
+			return nil, err
+		}
+		body = append(body, line...)
+		body = append(body, '\n')
+	}
+	return body, nil
+}
+
+func compactManifestDigest(manifest CompactEvidenceManifest) (string, error) {
+	copy := manifest
+	copy.ManifestDigest = ""
+	body, err := json.Marshal(copy)
+	if err != nil {
+		return "", err
+	}
+	sum := sha256.Sum256(body)
+	return fmt.Sprintf("%x", sum[:]), nil
+}
+
+func verifyCompactEvidenceManifest(manifestPath string) (CompactEvidenceManifest, []string) {
+	var manifest CompactEvidenceManifest
+	if manifestPath == "" {
+		return manifest, []string{"missing --manifest"}
+	}
+	if err := readJSONFile(manifestPath, &manifest); err != nil {
+		return manifest, []string{err.Error()}
+	}
+	errors := validateCompactEvidenceManifest(manifest, filepath.Dir(manifestPath))
+	return manifest, errors
+}
+
+func validateCompactEvidenceManifest(manifest CompactEvidenceManifest, manifestDir string) []string {
+	var errors []string
+	if manifest.Schema != compactEvidenceManifestSchema {
+		errors = append(errors, "schema must be "+compactEvidenceManifestSchema)
+	}
+	if manifest.FormatVersion != "v0.1" {
+		errors = append(errors, "format_version must be v0.1")
+	}
+	declaredOrder := make([]string, 0, len(manifest.Chunks))
+	for index, chunk := range manifest.Chunks {
+		if !safeCompactChunkPath(chunk.Path) {
+			errors = append(errors, fmt.Sprintf("chunks[%d].path must be a safe relative path", index))
+			continue
+		}
+		declaredOrder = append(declaredOrder, chunk.Path)
+	}
+	if !reflect.DeepEqual(manifest.ChunkOrder, declaredOrder) {
+		errors = append(errors, "chunk_order must match manifest chunk order")
+	}
+	if manifest.Lookup.Strategy != "ordered_chunk_ranges" {
+		errors = append(errors, "lookup.strategy must be ordered_chunk_ranges")
+	}
+	if len(manifest.Lookup.Ranges) != len(manifest.Chunks) {
+		errors = append(errors, "lookup.ranges must match chunk count")
+	}
+
+	totalRecords := 0
+	seen := map[string]bool{}
+	previousRecordID := ""
+	for index, chunk := range manifest.Chunks {
+		if !safeCompactChunkPath(chunk.Path) {
+			continue
+		}
+		body, err := os.ReadFile(filepath.Join(manifestDir, chunk.Path))
+		if err != nil {
+			errors = append(errors, chunk.Path+" is missing")
+			continue
+		}
+		sum := sha256.Sum256(body)
+		if fmt.Sprintf("%x", sum[:]) != chunk.SHA256 {
+			errors = append(errors, chunk.Path+" sha256 mismatch")
+		}
+		records, parseErrors := parseCompactChunkRecords(chunk.Path, body)
+		errors = append(errors, parseErrors...)
+		if len(parseErrors) > 0 {
+			continue
+		}
+		totalRecords += len(records)
+		if chunk.RecordCount != len(records) {
+			errors = append(errors, chunk.Path+" record_count mismatch")
+		}
+		firstRecordID, lastRecordID := "", ""
+		if len(records) > 0 {
+			firstRecordID = records[0].RecordID
+			lastRecordID = records[len(records)-1].RecordID
+		}
+		if chunk.FirstRecordID != firstRecordID {
+			errors = append(errors, chunk.Path+" first_record_id mismatch")
+		}
+		if chunk.LastRecordID != lastRecordID {
+			errors = append(errors, chunk.Path+" last_record_id mismatch")
+		}
+		if index < len(manifest.Lookup.Ranges) {
+			lookup := manifest.Lookup.Ranges[index]
+			if lookup.Chunk != chunk.Path {
+				errors = append(errors, fmt.Sprintf("lookup.ranges[%d].chunk mismatch", index))
+			}
+			if lookup.FirstRecordID != chunk.FirstRecordID {
+				errors = append(errors, fmt.Sprintf("lookup.ranges[%d].first_record_id mismatch", index))
+			}
+			if lookup.LastRecordID != chunk.LastRecordID {
+				errors = append(errors, fmt.Sprintf("lookup.ranges[%d].last_record_id mismatch", index))
+			}
+		}
+		for _, record := range records {
+			if seen[record.RecordID] {
+				errors = append(errors, "duplicate record_id "+record.RecordID)
+			}
+			if previousRecordID != "" && record.RecordID <= previousRecordID {
+				errors = append(errors, "record_id "+record.RecordID+" is out of order")
+			}
+			seen[record.RecordID] = true
+			previousRecordID = record.RecordID
+		}
+	}
+	if manifest.TotalRecords != totalRecords {
+		errors = append(errors, "total_record_count mismatch")
+	}
+	if manifest.ManifestDigest == "" {
+		errors = append(errors, "manifest_digest is required")
+	} else if digest, err := compactManifestDigest(manifest); err != nil {
+		errors = append(errors, "manifest_digest could not be calculated: "+err.Error())
+	} else if digest != manifest.ManifestDigest {
+		errors = append(errors, "manifest_digest mismatch")
+	}
+	return errors
+}
+
+func parseCompactChunkRecords(path string, body []byte) ([]CompactEvidenceRecord, []string) {
+	var records []CompactEvidenceRecord
+	var errors []string
+	lines := bytes.Split(body, []byte{'\n'})
+	for index, raw := range lines {
+		if len(bytes.TrimSpace(raw)) == 0 {
+			continue
+		}
+		var record CompactEvidenceRecord
+		if err := json.Unmarshal(raw, &record); err != nil {
+			errors = append(errors, fmt.Sprintf("%s line %d malformed JSON", path, index+1))
+			continue
+		}
+		if record.RecordID == "" {
+			errors = append(errors, fmt.Sprintf("%s line %d record_id is required", path, index+1))
+			continue
+		}
+		records = append(records, record)
+	}
+	return records, errors
+}
+
+func safeCompactChunkPath(path string) bool {
+	if path == "" || filepath.IsAbs(path) || strings.Contains(path, "\\") {
+		return false
+	}
+	for _, part := range strings.Split(path, "/") {
+		if part == ".." {
+			return false
+		}
+	}
+	return true
 }
 
 func loadAtlasFoundryImport(path string) (AtlasFoundryImport, error) {
