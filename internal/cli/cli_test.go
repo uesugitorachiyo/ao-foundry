@@ -1530,6 +1530,112 @@ func TestRunInspectJSON(t *testing.T) {
 	}
 }
 
+func TestRunCompactGenerateWritesVerifiableManifest(t *testing.T) {
+	runPath := filepath.Join(t.TempDir(), "ao-foundry-bootstrap.foundry-run.json")
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"run", "ingest", "--registry", registryFixture(), "--task", taskFixture(), "--packet", validPacketFixture(), "--out", runPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("ingest returned %d; stderr=%s", code, stderr.String())
+	}
+
+	outDir := filepath.Join(t.TempDir(), "compact")
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"run", "compact", "generate", "--run", runPath, "--out-dir", outDir, "--chunk-size", "2"}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("compact generate returned %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	manifestPath := filepath.Join(outDir, "manifest.json")
+	if !strings.Contains(stdout.String(), "compact_manifest="+manifestPath) {
+		t.Fatalf("expected compact manifest path, got %q", stdout.String())
+	}
+	var manifest map[string]any
+	readJSONForTest(t, manifestPath, &manifest)
+	if manifest["schema"] != "ao.foundry.compact-evidence-manifest.v0.1" || manifest["format_version"] != "v0.1" {
+		t.Fatalf("unexpected compact manifest identity: %#v", manifest)
+	}
+	if manifest["source_run"] != runPath || manifest["total_record_count"] != float64(3) {
+		t.Fatalf("compact manifest must bind source run and logical record count: %#v", manifest)
+	}
+	chunks := manifest["chunks"].([]any)
+	if len(chunks) != 2 {
+		t.Fatalf("chunk-size=2 should create two ordered chunks, got %#v", chunks)
+	}
+	first := chunks[0].(map[string]any)
+	second := chunks[1].(map[string]any)
+	if first["record_count"] != float64(2) || first["first_record_id"] != "decision:covenant-local-allow" || first["last_record_id"] != "evidence:verification-output" {
+		t.Fatalf("bad first chunk range: %#v", first)
+	}
+	if second["record_count"] != float64(1) || !strings.HasPrefix(fmt.Sprint(second["first_record_id"]), "run:foundry-run-ao-foundry-bootstrap-") {
+		t.Fatalf("bad second chunk range: %#v", second)
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"run", "compact", "verify", "--manifest", manifestPath}, &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("compact verify returned %d; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "compact_evidence_verified record_count=3 chunks=2") {
+		t.Fatalf("expected verification summary, got %q", stdout.String())
+	}
+}
+
+func TestRunCompactVerifyRejectsUnsafeOrDuplicateRecords(t *testing.T) {
+	dir := t.TempDir()
+	chunkDir := filepath.Join(dir, "chunks")
+	if err := os.MkdirAll(chunkDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	chunkBody := []byte("{\"kind\":\"run\",\"record_id\":\"run:duplicate\",\"payload\":{}}\n{\"kind\":\"evidence\",\"record_id\":\"run:duplicate\",\"payload\":{}}\n")
+	if err := os.WriteFile(filepath.Join(chunkDir, "000001.jsonl"), chunkBody, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	sum := sha256.Sum256(chunkBody)
+	manifest := map[string]any{
+		"schema":             "ao.foundry.compact-evidence-manifest.v0.1",
+		"format_version":     "v0.1",
+		"source_run":         "runs/example.foundry-run.json",
+		"chunk_order":        []string{"../escape.jsonl", "chunks/000001.jsonl"},
+		"total_record_count": 2,
+		"chunks": []map[string]any{
+			{
+				"path":            "../escape.jsonl",
+				"record_count":    0,
+				"first_record_id": "",
+				"last_record_id":  "",
+				"sha256":          strings.Repeat("0", 64),
+			},
+			{
+				"path":            "chunks/000001.jsonl",
+				"record_count":    2,
+				"first_record_id": "run:duplicate",
+				"last_record_id":  "run:duplicate",
+				"sha256":          fmt.Sprintf("%x", sum[:]),
+			},
+		},
+		"lookup": map[string]any{
+			"strategy": "ordered_chunk_ranges",
+			"ranges": []map[string]any{
+				{"chunk": "../escape.jsonl", "first_record_id": "", "last_record_id": ""},
+				{"chunk": "chunks/000001.jsonl", "first_record_id": "run:duplicate", "last_record_id": "run:duplicate"},
+			},
+		},
+	}
+	manifestPath := filepath.Join(dir, "manifest.json")
+	mustWriteJSONForTest(t, manifestPath, manifest)
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"run", "compact", "verify", "--manifest", manifestPath}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("compact verify accepted unsafe duplicate manifest; stdout=%s", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "chunks[0].path must be a safe relative path") ||
+		!strings.Contains(stderr.String(), "duplicate record_id run:duplicate") {
+		t.Fatalf("expected unsafe path and duplicate ID errors, got %q", stderr.String())
+	}
+}
+
 func TestRunIngestRejectsMissingPacket(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"run", "ingest", "--registry", registryFixture(), "--task", taskFixture(), "--packet", filepath.Join("testdata", "missing-packet.json"), "--out", filepath.Join(t.TempDir(), "run.json")}, &stdout, &stderr)
@@ -13102,6 +13208,17 @@ func mustWriteJSONForTest(t *testing.T, path string, value any) {
 	}
 	if err := os.WriteFile(path, append(data, '\n'), 0o644); err != nil {
 		t.Fatalf("write JSON: %v", err)
+	}
+}
+
+func readJSONForTest(t *testing.T, path string, value any) {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read JSON: %v", err)
+	}
+	if err := json.Unmarshal(data, value); err != nil {
+		t.Fatalf("unmarshal JSON: %v", err)
 	}
 }
 
