@@ -109,7 +109,7 @@ check_readiness_snapshot_parity() {
   if output="$(
     cd "$ROOT" &&
     go run ./cmd/foundry readiness snapshot --ledger "$LEDGER" > "$snapshot" &&
-    sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md > "$readme_snapshot" &&
+    sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' REFERENCE.md > "$readme_snapshot" &&
     diff -u "$readme_snapshot" "$snapshot"
   )"; then
     add_check "readiness_snapshot_parity" "passed" "README active-stack snapshot matches the readiness ledger" "$output"

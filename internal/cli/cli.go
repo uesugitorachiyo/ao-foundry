@@ -15024,6 +15024,7 @@ func buildReleaseManifest(dryRun bool) (ReleaseManifest, error) {
 	includeDirs := map[string]bool{"cmd": true, "docs": true, "examples": true, "internal": true}
 	includeFiles := map[string]bool{
 		"README.md":       true,
+		"REFERENCE.md":    true,
 		"go.mod":          true,
 		"LICENSE":         true,
 		"NOTICE":          true,
@@ -15670,7 +15671,7 @@ func checkPublicSafety(name string) CompetitiveAuditCheck {
 	if err != nil {
 		return CompetitiveAuditCheck{Name: name, Status: "fail", Reason: err.Error()}
 	}
-	paths := []string{"README.md", "docs", "examples", "internal", "cmd"}
+	paths := []string{"README.md", "REFERENCE.md", "docs", "examples", "internal", "cmd"}
 	if err := scanTrackedPublicSafety(root, paths); err == nil {
 		return CompetitiveAuditCheck{Name: name, Status: "pass", Reason: "public safety scan has no matches"}
 	} else if !isGitScanUnavailable(err) {
