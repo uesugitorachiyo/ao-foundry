@@ -39,7 +39,7 @@ jobs:
         shell: bash
         run: |
           pattern="ghp""_|github""_pat_|BEGIN ""RSA|BEGIN ""OPENSSH|ANTI""GRAVITY|private ""handoff"
-          ! rg -n "$pattern" README.md docs examples internal cmd
+          ! rg -n "$pattern" README.md REFERENCE.md docs examples internal cmd
       - name: Release dry-run
         run: go run ./cmd/foundry release dry-run --out tmp/release-manifest.json
       - name: Release manifest schema validation
@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir -p tmp
           go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json > tmp/readiness-snapshot.md
-          sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md > tmp/readme-readiness-snapshot.md
+          sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' REFERENCE.md > tmp/readme-readiness-snapshot.md
           diff -u tmp/readme-readiness-snapshot.md tmp/readiness-snapshot.md
       - name: Freshness regression tests
         shell: bash

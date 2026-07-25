@@ -1883,7 +1883,7 @@ func TestActiveStackReadinessLoopScriptDocumentsLocalAuditChain(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read active stack readiness loop script: %v", err)
 	}
-	readme, err := os.ReadFile(repoPath("README.md"))
+	readme, err := os.ReadFile(repoPath("REFERENCE.md"))
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
@@ -2472,7 +2472,7 @@ func TestActiveStackGitHubRunsReportScriptDocumentsRemoteEvidenceChain(t *testin
 	if err != nil {
 		t.Fatalf("read active stack GitHub runs report script: %v", err)
 	}
-	readme, err := os.ReadFile(repoPath("README.md"))
+	readme, err := os.ReadFile(repoPath("REFERENCE.md"))
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
@@ -2518,7 +2518,7 @@ func TestBranchProtectionVerifierDocumentsRequiredChecks(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read branch protection docs: %v", err)
 	}
-	readme, err := os.ReadFile(repoPath("README.md"))
+	readme, err := os.ReadFile(repoPath("REFERENCE.md"))
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
@@ -2724,7 +2724,7 @@ func TestReadinessSnapshotRendersReadmeBlockFromLedger(t *testing.T) {
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stderr=%s", code, stderr.String())
 	}
-	readme, err := os.ReadFile(repoPath("README.md"))
+	readme, err := os.ReadFile(repoPath("REFERENCE.md"))
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
@@ -2880,7 +2880,7 @@ func TestReadinessLedgerRefreshProposalApplyUpdatesLedgerAndReadme(t *testing.T)
 	readmePath := filepath.Join(dir, "README.md")
 	reportPath := filepath.Join(dir, "active-stack-github-runs-report.json")
 	copyFileForTest(t, repoPath("examples/readiness/active-stack-readiness.ledger.json"), ledgerPath)
-	copyFileForTest(t, repoPath("README.md"), readmePath)
+	copyFileForTest(t, repoPath("REFERENCE.md"), readmePath)
 	report := `{
   "schema_version": "ao.foundry.active-stack-github-runs-report.v0.1",
   "status": "ready",
@@ -3955,7 +3955,7 @@ func TestSignedSmokeReleaseGatePolicyExists(t *testing.T) {
 			t.Fatalf("signed-smoke release gate policy missing %q", want)
 		}
 	}
-	readme, err := os.ReadFile(repoPath("README.md"))
+	readme, err := os.ReadFile(repoPath("REFERENCE.md"))
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
@@ -4203,8 +4203,8 @@ func TestPulseDocsDeclareRSIClaimBoundary(t *testing.T) {
 		want []string
 	}{
 		{
-			name: "README",
-			path: "README.md",
+			name: "reference",
+			path: "REFERENCE.md",
 			want: []string{
 				"claim_level=bounded_governed_rsi decision=allowed",
 				"claim_level=full_autonomous_self_mutating_rsi decision=denied",
