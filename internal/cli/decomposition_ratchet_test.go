@@ -22,7 +22,7 @@ type architectureBaseline struct {
 }
 
 func TestFullyUnsupervisedArchitectureRatchet(t *testing.T) {
-	const sourceMovementCommit = "09815999913d42f128bffb225cd93b038cb113c3"
+	const sourceMovementCommit = "d84012307e9853b409cc01242ec2ff05f803baaa"
 
 	root := repoPath(".")
 	baselinePath := filepath.Join(root, ".github", "architecture-baseline.json")
