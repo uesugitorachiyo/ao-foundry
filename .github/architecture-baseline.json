@@ -1,23 +1,131 @@
 {
-  "schema_version": "ao-foundry.go-architecture-baseline.v1",
-  "source_commit": "d84012307e9853b409cc01242ec2ff05f803baaa",
+  "schema_version": "ao-foundry.go-architecture-baseline.v2",
+  "source_tree": "6d6d9aa029d6523748855be9c964c2733c9b9ef1",
+  "prior_sources": {
+    "fully_unsupervised_merged_commit": "d84012307e9853b409cc01242ec2ff05f803baaa"
+  },
   "measurements": {
+    "internal/cli/class_gate_evaluation.go": {
+      "lines": 334,
+      "owned_declarations": [
+        "func:classGateFirstNonEmpty",
+        "func:classGateFirstNonEmptyStringSlice",
+        "func:classGateNestedStringSlice",
+        "func:classGateObject",
+        "func:classGateObjectSlice",
+        "func:classGateStringSliceEqual",
+        "func:evaluateClassGateCheck",
+        "func:evaluateMutationClassGate",
+        "func:multiRepoLiveRehearsalDecision",
+        "type:classGateCheck",
+        "type:classGateEvidencePaths"
+      ]
+    },
+    "internal/cli/class_gate_live_evidence.go": {
+      "lines": 412,
+      "owned_declarations": [
+        "func:evaluateLowRiskCodeBoundaryChecks",
+        "func:evaluateLowRiskCodeLiveSuccessEvidence",
+        "func:evaluateMultiRepoAuthorityEvidence",
+        "func:evaluateMultiRepoPlanEvidence",
+        "func:evaluateTestOnlySuccessEvidence",
+        "func:lowRiskCodeDenialAudit",
+        "func:lowRiskLiveCommandAccepted",
+        "func:lowRiskLivePromoterAccepted",
+        "func:lowRiskLivePublicSafetyAccepted",
+        "func:lowRiskLiveRollbackAccepted",
+        "func:lowRiskLiveSentinelAccepted",
+        "func:validateLowRiskLiveSourceArtifactDigests"
+      ]
+    },
     "internal/cli/cli.go": {
-      "lines": 14259,
-      "fully_unsupervised_declarations": [
+      "lines": 12141,
+      "owned_declarations": [
+        "func:classGateBool",
+        "func:classGateContainsAll",
+        "func:classGateEvidenceContainsName",
+        "func:classGateInt",
+        "func:classGateMapSliceByRepo",
+        "func:classGateNestedBool",
+        "func:classGateNestedString",
+        "func:classGateNumber",
+        "func:classGateString",
+        "func:classGateStringSlice",
+        "func:classGateStringSliceContains",
+        "func:classGateTimestampExpired",
         "func:readFullyUnsupervisedClosureObject"
+      ]
+    },
+    "internal/cli/complex_repo_closure.go": {
+      "lines": 184,
+      "owned_declarations": [
+        "func:buildComplexRepoClosureEvidence",
+        "func:complexClosureRoleSpecs",
+        "type:complexClosureRoleSpec"
+      ]
+    },
+    "internal/cli/complex_repo_command.go": {
+      "lines": 316,
+      "owned_declarations": [
+        "func:runClassGate",
+        "func:runClassGateEvaluate",
+        "func:runComplexRepo",
+        "func:runComplexRepoClosureBackfill",
+        "func:runComplexRepoNodeExecute",
+        "func:runComplexRepoNodeGateEvaluate",
+        "func:runComplexRepoPromotionRollupEvaluate"
+      ]
+    },
+    "internal/cli/complex_repo_node_gate.go": {
+      "lines": 329,
+      "owned_declarations": [
+        "func:buildComplexNodeRecord",
+        "func:buildComplexNodeRunLink",
+        "func:buildComplexRepoMutationNodeGate",
+        "func:digestAtlasRunLink",
+        "func:evaluateComplexNodeGateEvidence",
+        "func:findWorkgraphNode",
+        "func:loadComplexRepoMutationNodeGate",
+        "func:readComplexNodeGateObject",
+        "type:complexNodeGatePaths"
+      ]
+    },
+    "internal/cli/complex_repo_promotion.go": {
+      "lines": 370,
+      "owned_declarations": [
+        "func:buildComplexRepoMutationPromotionRollup",
+        "func:loadComplexPromotionClosureEvidence",
+        "func:loadComplexPromotionNodeGate",
+        "func:loadComplexPromotionNodeGateOverrides",
+        "type:complexPromotionRollupPaths"
+      ]
+    },
+    "internal/cli/complex_repo_types.go": {
+      "lines": 222,
+      "owned_declarations": [
+        "type:ComplexRepoMutationNodeGate",
+        "type:ComplexRepoMutationPromotionRollup",
+        "type:ComplexRepoMutationRollupNode",
+        "type:LowRiskCodeDenialAudit",
+        "type:LowRiskCodeLiveSuccessReadback",
+        "type:MultiRepoLiveRehearsalDecision",
+        "type:MutationClassBoundaryChecks",
+        "type:MutationClassGate",
+        "type:MutationClassGateEvidence",
+        "type:MutationClassRepoSafety",
+        "type:MutationClassRepoState"
       ]
     },
     "internal/cli/fully_unsupervised_authority.go": {
       "lines": 372,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:buildFullyUnsupervisedAuthorityGatesRollup",
         "func:evaluateFullyUnsupervisedAuthorityGateNode"
       ]
     },
     "internal/cli/fully_unsupervised_command.go": {
       "lines": 511,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:runFullyUnsupervised",
         "func:runFullyUnsupervisedAuthorityGatesEvaluate",
         "func:runFullyUnsupervisedFirstNonPlanningFinalClosureEvaluate",
@@ -33,34 +141,35 @@
     },
     "internal/cli/fully_unsupervised_final_closure.go": {
       "lines": 306,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:buildFullyUnsupervisedFirstNonPlanningFinalClosure",
         "func:mapStatus"
       ]
     },
     "internal/cli/fully_unsupervised_node_gate.go": {
       "lines": 282,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:buildFullyUnsupervisedFirstNonPlanningGate"
       ]
     },
     "internal/cli/fully_unsupervised_readiness.go": {
       "lines": 324,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:buildFullyUnsupervisedReadinessRollup",
         "func:evaluateFullyUnsupervisedNodeReadiness"
       ]
     },
     "internal/cli/fully_unsupervised_stop_gate.go": {
       "lines": 193,
-      "fully_unsupervised_declarations": [
+      "owned_declarations": [
         "func:buildFullyUnsupervisedFirstNonPlanningStopGateClearance"
       ]
     }
   },
   "notes": [
-    "Generated after the fully-unsupervised source-movement commit.",
+    "Generated after the complex-repository source-movement commit.",
+    "The source tree remains stable when repository policy rewrites commit IDs during rebase merge.",
     "Measured file sizes may decrease but must not increase before another explicit decomposition.",
-    "Fully-unsupervised declarations are bound to their measured owner files."
+    "Fully-unsupervised and complex-repository declarations are bound to their measured owner files."
   ]
 }
