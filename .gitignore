@@ -17,3 +17,5 @@ excluded/
 id_rsa
 id_ed25519
 .ao2-local/
+CLAUDE.local.md
+.claude/settings.local.json
