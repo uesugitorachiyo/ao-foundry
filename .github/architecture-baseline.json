@@ -1,10 +1,32 @@
 {
   "schema_version": "ao-foundry.go-architecture-baseline.v2",
-  "source_tree": "6d6d9aa029d6523748855be9c964c2733c9b9ef1",
+  "source_tree": "cb20aa954635f3f70f6f4e122bc42a7b2769947c",
   "prior_sources": {
     "fully_unsupervised_merged_commit": "d84012307e9853b409cc01242ec2ff05f803baaa"
   },
   "measurements": {
+    "internal/cli/ao_mission.go": {
+      "lines": 760,
+      "owned_declarations": [
+        "func:aoMissionAuthorityClaimed",
+        "func:aoMissionTerminalCanClose",
+        "func:aoMissionTerminalRequiresRepair",
+        "func:aoMissionTerminalSmokeStatusAllowed",
+        "func:buildAOMissionTerminalReadinessSummary",
+        "func:digestPath",
+        "func:intFromJSONNumber",
+        "func:normalizeAOMissionTerminalStatus",
+        "func:resolveAOMissionArtifactRef",
+        "func:runAOMission",
+        "func:runAOMissionE2ESmoke",
+        "func:runAOMissionFinalRollupSmoke",
+        "func:runAOMissionReadinessLedger",
+        "func:runAOMissionRollupSummary",
+        "func:runAOMissionSmoke",
+        "func:stringFromJSONValue",
+        "func:validateAOMissionArtifactManifestDigests"
+      ]
+    },
     "internal/cli/class_gate_evaluation.go": {
       "lines": 334,
       "owned_declarations": [
@@ -39,7 +61,7 @@
       ]
     },
     "internal/cli/cli.go": {
-      "lines": 12141,
+      "lines": 11393,
       "owned_declarations": [
         "func:classGateBool",
         "func:classGateContainsAll",
@@ -170,6 +192,7 @@
     "Generated after the complex-repository source-movement commit.",
     "The source tree remains stable when repository policy rewrites commit IDs during rebase merge.",
     "Measured file sizes may decrease but must not increase before another explicit decomposition.",
-    "Fully-unsupervised and complex-repository declarations are bound to their measured owner files."
+    "Fully-unsupervised and complex-repository declarations are bound to their measured owner files.",
+    "AO Mission smoke/readback declarations are bound to internal/cli/ao_mission.go and the cli.go ceiling reflects their mechanical movement."
   ]
 }

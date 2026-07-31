@@ -24,7 +24,7 @@ type architectureBaseline struct {
 
 func TestArchitectureOwnershipRatchet(t *testing.T) {
 	const (
-		sourceMovementTree            = "6d6d9aa029d6523748855be9c964c2733c9b9ef1"
+		sourceMovementTree            = "cb20aa954635f3f70f6f4e122bc42a7b2769947c"
 		fullyUnsupervisedMergedCommit = "d84012307e9853b409cc01242ec2ff05f803baaa"
 	)
 
@@ -94,6 +94,41 @@ func TestArchitectureOwnershipRatchet(t *testing.T) {
 	if !equalOwnership(actualOwnership, expectedOwnership) {
 		t.Errorf("architecture ownership drifted:\nactual:   %v\nexpected: %v", actualOwnership, expectedOwnership)
 	}
+
+	for _, name := range []string{
+		"runAOMission",
+		"runAOMissionSmoke",
+		"runAOMissionFinalRollupSmoke",
+		"runAOMissionReadinessLedger",
+		"runAOMissionRollupSummary",
+		"runAOMissionE2ESmoke",
+		"aoMissionAuthorityClaimed",
+		"stringFromJSONValue",
+		"normalizeAOMissionTerminalStatus",
+		"aoMissionTerminalCanClose",
+		"aoMissionTerminalRequiresRepair",
+		"aoMissionTerminalSmokeStatusAllowed",
+		"buildAOMissionTerminalReadinessSummary",
+		"validateAOMissionArtifactManifestDigests",
+		"resolveAOMissionArtifactRef",
+		"digestPath",
+		"intFromJSONNumber",
+	} {
+		if !measuredArchitectureName(name) {
+			t.Errorf("AO Mission declaration %q is not measured", name)
+		}
+	}
+	for _, name := range []string{
+		"AtlasMissionStatus",
+		"loadPulseAtlasStatus",
+		"validateAtlasMissionStatusForPulse",
+		"TestAOMissionSmokeValidatesFixtureReadbacks",
+		"MissionUnrelatedName",
+	} {
+		if measuredArchitectureName(name) {
+			t.Errorf("unrelated Mission declaration %q is measured", name)
+		}
+	}
 }
 
 func measuredArchitectureDeclarations(file *ast.File) []string {
@@ -118,6 +153,26 @@ func measuredArchitectureDeclarations(file *ast.File) []string {
 }
 
 func measuredArchitectureName(name string) bool {
+	switch name {
+	case "runAOMission",
+		"runAOMissionSmoke",
+		"runAOMissionFinalRollupSmoke",
+		"runAOMissionReadinessLedger",
+		"runAOMissionRollupSummary",
+		"runAOMissionE2ESmoke",
+		"aoMissionAuthorityClaimed",
+		"stringFromJSONValue",
+		"normalizeAOMissionTerminalStatus",
+		"aoMissionTerminalCanClose",
+		"aoMissionTerminalRequiresRepair",
+		"aoMissionTerminalSmokeStatusAllowed",
+		"buildAOMissionTerminalReadinessSummary",
+		"validateAOMissionArtifactManifestDigests",
+		"resolveAOMissionArtifactRef",
+		"digestPath",
+		"intFromJSONNumber":
+		return true
+	}
 	if strings.Contains(strings.ToLower(name), "fullyunsupervised") || name == "mapStatus" {
 		return true
 	}
