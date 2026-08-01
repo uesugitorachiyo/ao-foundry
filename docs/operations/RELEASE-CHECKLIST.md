@@ -22,15 +22,15 @@
     `go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --out tmp/active-stack-ledger-refresh-proposal.md`.
 13. Fail on sibling ledger drift and apply current-repo refreshes:
     `go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --fail-on-non-current-update`,
-    then `go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --apply --readme README.md`.
+    then `go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json --github-runs-report tmp/active-stack-github-runs-report.json --apply --readme REFERENCE.md`.
 14. Confirm AO Forge can validate its release-candidate handoff fixture:
    `forge release-candidate validate --candidate examples/release-preview/release-candidate.v0.1.example.json`.
 15. Confirm AO Covenant can emit the AO2-first policy-spine artifact:
    `covenant policy spine --json`; validate the captured output against
    `covenant.policy-spine-result.v1`.
-16. Regenerate and compare the active-stack README snapshot:
+16. Regenerate and compare the active-stack reference snapshot:
     `go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json > tmp/readiness-snapshot.md`,
-    then `diff -u tmp/readiness-snapshot.md <(sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' README.md)`.
+    then `diff -u tmp/readiness-snapshot.md <(sed -n '/<!-- foundry:active-stack-readiness:start -->/,/<!-- foundry:active-stack-readiness:end -->/p' REFERENCE.md)`.
 17. Confirm the readiness exit gate before starting new work:
     `scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json`.
     If the loop passes with no `blocking_next_actions`, stop autonomous

@@ -3280,7 +3280,7 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"covenant.policy-spine-result.v1",
 		"go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json",
 		"go run ./cmd/foundry readiness ledger-refresh-proposal --ledger examples/readiness/active-stack-readiness.ledger.json",
-		"--apply --readme README.md",
+		"--apply --readme REFERENCE.md",
 		"--fail-on-non-current-update",
 		"go run ./cmd/foundry release candidate notes --ledger examples/readiness/active-spine-release-candidate.ledger.json",
 		"diff -u",
