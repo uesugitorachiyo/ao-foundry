@@ -36,7 +36,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30613866838"
+        "run_id": "30956775511"
       },
       "verification_evidence": [
         "go test ./...",
@@ -49,8 +49,8 @@
         "schedules_work=false",
         "executes_work=false",
         "approves_work=false",
-        "Production Readiness Ops run 30613866848",
-        "PR #15 merged"
+        "Production Readiness Ops run 30956775480",
+        "PR #760 merged"
       ]
     },
     {
@@ -60,7 +60,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30648748930"
+        "run_id": "31017677133"
       },
       "verification_evidence": [
         "license policy",
@@ -72,7 +72,7 @@
         "production-readiness schemas",
         "actionlint",
         "Release Preview run 28066645263",
-        "Production Readiness Ops run 30696417551",
+        "Production Readiness Ops run 31172789285",
         "PR #135 merged"
       ]
     },
@@ -83,7 +83,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30615001193"
+        "run_id": "31027012970"
       },
       "verification_evidence": [
         "AO2-first boundary audit",
@@ -94,7 +94,7 @@
         "production readiness 100",
         "36/36 gates",
         "license policy required in branch protection",
-        "Production Readiness Ops run 30696805947",
+        "Production Readiness Ops run 31173234616",
         "PR #36 merged",
         "ao-command atlas status --status ../ao-foundry/examples/contract-fixtures/valid/foundry-atlas-status-v0.1.json"
       ]
@@ -106,13 +106,13 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30688598585"
+        "run_id": "31187008934"
       },
       "verification_evidence": [
         "npm run release:readiness:static",
         "npm run verify",
         "native AO2 runtime evidence tests",
-        "Production Readiness Ops run 30697116326",
+        "Production Readiness Ops run 31174328265",
         "PR #606 merged"
       ]
     },
@@ -123,7 +123,7 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30687560778"
+        "run_id": "30968880090"
       },
       "verification_evidence": [
         "license policy",
@@ -135,7 +135,7 @@
         "cargo audit --deny warnings",
         "cargo build --release -p ao2-cp-server",
         "active stack handoff readback gate",
-        "Production Readiness Ops run 30696553332",
+        "Production Readiness Ops run 31172929879",
         "PR #133 merged"
       ]
     },
@@ -146,14 +146,14 @@
       "status": "ready",
       "ci": {
         "status": "success",
-        "run_id": "30615137762"
+        "run_id": "31026633959"
       },
       "verification_evidence": [
         "covenant policy spine --json",
         "covenant.policy-spine-result.v1",
         "Release Readiness run 28067529569",
         "branch protection verifier",
-        "Production Readiness Ops run 30696788461",
+        "Production Readiness Ops run 31173669247",
         "PR #59 merged"
       ]
     }
