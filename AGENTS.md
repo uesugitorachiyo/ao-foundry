@@ -17,8 +17,8 @@ Foundry consumes Blueprint authorization, Atlas imports, repository and CI state
 
 - Keep every next-work decision bound to exact repository state, task scope, approvals, policy, source heads, and evidence digests. Missing, stale, mismatched, or over-authority inputs must block.
 - Coordinate one bounded run at a time. A readiness audit, dry run, observer readback, generated prompt, or historical completion does not grant target mutation, live execution, release, or publication authority.
-- Preserve `docs/evidence/`, release records, committed readiness ledgers, and contract fixtures as historical or source-owned material. Do not rewrite them to make a current claim pass.
-- Keep generated snapshots, reports, tools, and run output in ignored `tmp/`, `bin/`, or `dist/`. Never hand-edit generated evidence to satisfy a gate.
+- Preserve release records, committed readiness ledgers, and contract fixtures as historical or source-owned material. Do not rewrite them to make a current claim pass.
+- Keep generated snapshots, evidence, reports, tools, and run output in ignored `tmp/`, `bin/`, `dist/`, or an operator-supplied external root. Never hand-edit generated evidence to satisfy a gate.
 - Do not record credentials, bearer values, private logs, account identifiers, machine-local paths, or non-public operational notes. Provider, credential, permission, and target-repository authority remain explicit and bounded.
 - Release, deployment, publication, live mutation, credentialed operation, and direct-main changes require separate explicit authority and all executable gates.
 

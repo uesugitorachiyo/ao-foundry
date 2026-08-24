@@ -200,7 +200,7 @@ Add a fixture-only end-to-end script:
 
 ```sh
 scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
-  --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
+  --out dist/pulse/blueprint-atlas-pulse-e2e-local
 ```
 
 The script proves the intended control chain without live execution:
@@ -216,7 +216,7 @@ Add a realistic fixture-only oversized-task rehearsal:
 
 ```sh
 scripts/complex-refactor-workgraph-rehearsal.sh \
-  --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+  --out dist/pulse/complex-refactor-workgraph-rehearsal-local
 ```
 
 The rehearsal uses `examples/complex-refactor-workgraph/` to model a complex AO
@@ -264,11 +264,11 @@ The executable slice is:
 go run ./cmd/foundry pulse closure-packet \
   --blueprint-authorization examples/pulse-intake/blueprint-authorization.ready.json \
   --atlas-scheduler-input tmp/pulse-atlas-scheduler-input.json \
-  --intake-preflight docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-intake-preflight.json \
-  --start-gate docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json \
-  --runner-decision docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json \
-  --event-loop-policy docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/pulse-event-loop-policy.json \
-  --command-readback docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local/ao-command-complex-refactor-status.json \
+  --intake-preflight dist/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-intake-preflight.json \
+  --start-gate dist/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-overnight-start-gate.json \
+  --runner-decision dist/pulse/complex-refactor-workgraph-rehearsal-local/pulse-gate/ready/pulse-run/pulse-runner-start-decision.json \
+  --event-loop-policy dist/pulse/complex-refactor-workgraph-rehearsal-local/pulse-event-loop-policy.json \
+  --command-readback dist/pulse/complex-refactor-workgraph-rehearsal-local/ao-command-complex-refactor-status.json \
   --out tmp/pulse-refactor-closure-packet.json
 ```
 

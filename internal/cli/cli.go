@@ -1297,7 +1297,7 @@ func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "  foundry pulse event-loop-policy --class-gate <path> --promotion-state <path> --ci <path> --repo-state <path> --evidence-freshness <path> --sentinel <path> --promoter <path> --rollback <path> --branch-cleanup <path> --scope <path> --out <path> [--json]")
 	fmt.Fprintln(w, "  foundry pulse atlas-scheduler-input --workgraph <atlas-workgraph.json> --foundry-import <atlas-foundry-import.json> --out <path> [--json]")
 	fmt.Fprintln(w, "  foundry pulse closure-packet --blueprint-authorization <path> --atlas-scheduler-input <path> --intake-preflight <path> --start-gate <path> --runner-decision <path> --event-loop-policy <path> --out <path> [--command-readback <path>] [--json]")
-	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --out <script.sh>")
+	fmt.Fprintln(w, "  foundry pulse signed-smoke-script --artifact-root <external-dir> --out <script.sh>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-preflight --workspace <path> --out <preflight.json>")
 	fmt.Fprintln(w, "  foundry pulse signed-smoke-cleanup")
 	fmt.Fprintln(w, "  foundry pulse ingest-signed-smoke --result <signed-smoke-result.json> --out <ingest.json>")
@@ -5555,14 +5555,20 @@ func buildPulseRunnerStartDecision(startGatePath string) (PulseRunnerStartDecisi
 func runPulseSignedSmokeScript(args []string, stdout, stderr io.Writer) int {
 	fs := newFlagSet("pulse signed-smoke-script", stderr)
 	outPath := fs.String("out", "", "signed control-plane smoke shell script output path")
+	artifactRoot := fs.String("artifact-root", "", "existing external directory for live signed-smoke artifacts")
 	if !parseFlags(fs, args, stderr) {
 		return 2
 	}
-	if *outPath == "" {
-		fmt.Fprintln(stderr, "pulse: missing --out")
+	if *outPath == "" || *artifactRoot == "" {
+		fmt.Fprintln(stderr, "pulse: missing --out or --artifact-root")
 		return 2
 	}
-	if err := writeSignedSmokeScript(*outPath); err != nil {
+	externalRoot, err := validateExternalArtifactRoot(*artifactRoot)
+	if err != nil {
+		fmt.Fprintf(stderr, "pulse: invalid signed smoke artifact root: %v\n", err)
+		return 2
+	}
+	if err := writeSignedSmokeScript(*outPath, externalRoot); err != nil {
 		fmt.Fprintf(stderr, "pulse: write signed smoke script: %v\n", err)
 		return 2
 	}
@@ -9737,84 +9743,6 @@ AO Foundry is the engineering operations factory above AO Forge. It coordinates 
 		return err
 	}
 	return os.WriteFile(path, []byte(script), 0o644)
-}
-
-func writeSignedSmokeScript(path string) error {
-	script := `#!/usr/bin/env bash
-set -euo pipefail
-
-: "${AO2_CP_API_TOKEN:?set AO2_CP_API_TOKEN}"
-if [ "${#AO2_CP_API_TOKEN}" -lt 32 ]; then
-  printf 'AO2_CP_API_TOKEN must be at least 32 characters\n' >&2
-  exit 2
-fi
-
-mkdir -p tmp/live-tools tmp/control-plane docs/evidence/pulse/local-live-smoke
-
-AO2_CP_API_TOKEN="$AO2_CP_API_TOKEN" ../ao2-control-plane/target/debug/ao2-cp-server --bind 127.0.0.1:18746 \
-  --data-dir tmp/control-plane &
-AO2_CP_PID="$!"
-trap 'kill "$AO2_CP_PID" 2>/dev/null || true' EXIT
-
-sleep 1
-
-(cd ../ao-forge && go build -o ../ao-foundry/tmp/live-tools/forge ./cmd/forge)
-(cd ../ao-covenant && go build -o ../ao-foundry/tmp/live-tools/covenant ./cmd/covenant)
-
-go run ./cmd/foundry pulse run --out tmp/pulse
-
-tmp/live-tools/forge plan \
-  --brief tmp/pulse/forge-brief.json \
-  --out docs/evidence/pulse/local-live-smoke/factory-plan.json
-
-tmp/live-tools/forge gate \
-  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
-  --covenant tmp/live-tools/covenant \
-  --out docs/evidence/pulse/local-live-smoke/gate-result.json
-
-AO2_CP_API_TOKEN="$AO2_CP_API_TOKEN" tmp/live-tools/forge run \
-  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
-  --gate-result docs/evidence/pulse/local-live-smoke/gate-result.json \
-  --out docs/evidence/pulse/local-live-smoke/factory-packet.json \
-  --control-plane http://127.0.0.1:18746 \
-  --live --non-interactive --no-dashboard
-
-go run ./cmd/foundry pulse run \
-  --out tmp/pulse-live \
-  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json
-
-go run ./cmd/foundry trace inspect --trace tmp/pulse-live/pulse.trace.jsonl
-
-cat > tmp/pulse-live/signed-smoke-result.json <<'JSON'
-{
-  "schema_version": "ao.foundry.signed-smoke-result.v0.1",
-  "status": "ready",
-  "pulse_event": "tmp/pulse-live/pulse-event.json",
-  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
-  "control_plane_readback": "ready"
-}
-JSON
-
-go run ./cmd/foundry pulse run \
-  --out tmp/pulse-live \
-  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json \
-  --signed-smoke-result tmp/pulse-live/signed-smoke-result.json
-
-go run ./cmd/foundry pulse summarize-signed-smoke --pulse tmp/pulse-live/pulse-event.json --out tmp/pulse-live/signed-smoke-summary.json
-
-go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary tmp/pulse-live/signed-smoke-summary.json --out tmp/release-promotion.live.json
-
-printf 'signed_smoke_result=tmp/pulse-live/signed-smoke-result.json\n'
-printf 'signed_smoke_summary=tmp/pulse-live/signed-smoke-summary.json\n'
-printf 'release_promotion=tmp/release-promotion.live.json\n'
-`
-	if err := os.MkdirAll(parentDir(path), 0o755); err != nil {
-		return err
-	}
-	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
-		return err
-	}
-	return nil
 }
 
 func buildSignedSmokePreflight(workspace string) SignedSmokePreflight {

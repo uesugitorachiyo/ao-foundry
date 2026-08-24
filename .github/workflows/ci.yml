@@ -34,7 +34,7 @@ jobs:
         run: go test ./...
       - name: JSON fixtures
         shell: bash
-        run: jq empty docs/contracts/*.json examples/**/*.json docs/evidence/pulse/**/*.json
+        run: jq empty docs/contracts/*.json examples/**/*.json
       - name: Public safety scan
         shell: bash
         run: |
@@ -127,7 +127,9 @@ jobs:
           test -x ../ao2-control-plane/target/debug/ao2-cp-server
       - name: Generate signed smoke script
         shell: bash
-        run: go run ./cmd/foundry pulse signed-smoke-script --out tmp/signed-smoke.sh
+        run: |
+          mkdir -p "$RUNNER_TEMP/ao-foundry-signed-smoke"
+          go run ./cmd/foundry pulse signed-smoke-script --artifact-root "$RUNNER_TEMP/ao-foundry-signed-smoke" --out tmp/signed-smoke.sh
       - name: Run signed smoke
         shell: bash
         run: bash tmp/signed-smoke.sh

@@ -1,5 +1,0 @@
-{
-  "schema": "ao.architecture.wording-retest.v0.1",
-  "result": "approve_narrow_evidence_expansion_deny_stronger_recursive_improvement",
-  "reason": "Tracked evidence supports a bounded evidence-expansion class only."
-}

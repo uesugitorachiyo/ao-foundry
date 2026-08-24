@@ -113,7 +113,7 @@
         "rollback_plan"
       ],
       "required_evidence": [
-        "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+        "dist/complex-refactor/atlas-foundry-readback.json"
       ],
       "authority_boundary": "atlas_classification_only",
       "task": {
@@ -148,10 +148,10 @@
         ],
         "verification_commands": [
           "go run ./cmd/foundry atlas import validate --import examples/complex-refactor-workgraph/foundry-import.json",
-          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out dist/pulse/complex-refactor-workgraph-rehearsal-local"
         ],
         "required_evidence": [
-          "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+          "dist/complex-refactor/atlas-foundry-readback.json"
         ],
         "safety_limits": [
           "no copied stack folders",

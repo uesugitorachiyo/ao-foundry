@@ -19,7 +19,7 @@ Pulse status: ready
 
 | Gate | Status | Required before promotion | Evidence |
 | --- | --- | --- | --- |
-| signed_smoke_release_gate | manual_required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, freshness_summary.status=ready, signed_smoke_summary=ready, release_safe=true, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json --out tmp/release-promotion.final.json` |
+| signed_smoke_release_gate | manual_required | Yes | `docs/operations/SIGNED-SMOKE-RELEASE-GATE.md`, workflow_dispatch signed_smoke=true, freshness_summary.status=ready, signed_smoke_summary=ready, release_safe=true, `go run ./cmd/foundry release promotion validate --candidate examples/readiness/active-spine-release-candidate.ledger.json --signed-smoke-summary examples/release-evidence/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json --out tmp/release-promotion.final.json` |
 | release_manifest_dry_run | ready | No | `go run ./cmd/foundry release dry-run --out tmp/release-manifest.json`, `go run ./cmd/foundry release validate-manifest --manifest tmp/release-manifest.json` |
 | readiness_snapshot_parity | ready | No | `go run ./cmd/foundry readiness snapshot --ledger examples/readiness/active-stack-readiness.ledger.json` |
 
