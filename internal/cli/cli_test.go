@@ -3564,7 +3564,8 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 			t.Fatalf("signed smoke script missing %q", want)
 		}
 	}
-	if strings.Contains(script, "/"+"Users/") || strings.Contains(script, "ghp"+"_") || strings.Contains(script, "github"+"_pat_") {
+	scriptForSafetyScan := strings.ReplaceAll(script, filepath.ToSlash(resolvedArtifactRoot), "")
+	if strings.Contains(scriptForSafetyScan, "/"+"Users/") || strings.Contains(scriptForSafetyScan, "ghp"+"_") || strings.Contains(scriptForSafetyScan, "github"+"_pat_") {
 		t.Fatalf("signed smoke script contains unsafe local/private content: %s", script)
 	}
 	if strings.Contains(script, "docs/evidence/") {
