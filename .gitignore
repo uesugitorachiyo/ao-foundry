@@ -1,6 +1,8 @@
 tmp/
 bin/
 dist/
+docs/evidence/
+docs/superpowers/
 coverage.out
 *.test
 *.trace.jsonl

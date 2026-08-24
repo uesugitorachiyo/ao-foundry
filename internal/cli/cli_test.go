@@ -3147,7 +3147,7 @@ func TestCIWorkflowRunsPulseSmoke(t *testing.T) {
 	}
 	workflow := string(data)
 	for _, want := range []string{
-		"jq empty docs/contracts/*.json examples/**/*.json docs/evidence/pulse/**/*.json",
+		"jq empty docs/contracts/*.json examples/**/*.json",
 		"go run ./cmd/foundry contract fixtures validate",
 		"go run ./cmd/foundry release handoff --candidate examples/readiness/active-spine-release-candidate.ledger.json",
 		"go test ./internal/cli -run 'TestPulseRunBlocksStaleForgeLivePacket|TestPulseRunBlocksStaleControlPlaneReadback|TestPulseRunBlocksControlPlaneReadbackDigestMismatch' -v",
@@ -3214,7 +3214,7 @@ func TestSignedSmokeEvidenceRetentionPolicyExists(t *testing.T) {
 	}
 	policy := string(data)
 	for _, want := range []string{
-		"docs/evidence/pulse/local-live-smoke",
+		"operator-supplied external `--artifact-root`",
 		"not included in the release manifest",
 		"tmp/",
 		"public-safe summaries",
@@ -3286,8 +3286,8 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 		"diff -u",
 		"workflow_dispatch signed_smoke=true",
 		"release_safe=true",
-		"docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate",
-		"--signed-smoke-summary docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json",
+		"examples/release-evidence/20260623T213426Z-signed-smoke-release-gate",
+		"--signed-smoke-summary examples/release-evidence/20260623T213426Z-signed-smoke-release-gate/signed-smoke-summary.json",
 		"--promotion-out tmp/release-promotion.final.json",
 		"--notes-out docs/operations/ACTIVE-SPINE-2026-06-23-RELEASE-CANDIDATE.md",
 		"--manifest-out tmp/release-manifest.final.json",
@@ -3303,31 +3303,8 @@ func TestReleaseChecklistCoversActiveStackHandoff(t *testing.T) {
 	}
 }
 
-func TestFreshSignedSmokeRunSummaryIsPublicSafe(t *testing.T) {
-	data, err := os.ReadFile(repoPath("docs/evidence/pulse/local-live-smoke/FRESH-SIGNED-SMOKE-SUMMARY.md"))
-	if err != nil {
-		t.Fatalf("read fresh signed-smoke summary: %v", err)
-	}
-	summary := string(data)
-	for _, want := range []string{
-		"freshness=ready",
-		"forge_live_packet=ready",
-		"control_plane_readback=ready",
-		"signed_smoke_summary=ready",
-	} {
-		if !strings.Contains(summary, want) {
-			t.Fatalf("fresh signed-smoke summary missing %q", want)
-		}
-	}
-	for _, unsafe := range []string{"/" + "Users/", "ghp" + "_", "github" + "_pat_", "api" + "_key", "access" + "_token", strings.Repeat("x", 32)} {
-		if strings.Contains(summary, unsafe) {
-			t.Fatalf("fresh signed-smoke summary contains unsafe content %q", unsafe)
-		}
-	}
-}
-
 func TestDurableSignedSmokeReleaseEvidenceIsPublicSafe(t *testing.T) {
-	dir := repoPath("docs/evidence/pulse/20260623T213426Z-signed-smoke-release-gate")
+	dir := repoPath("examples/release-evidence/20260623T213426Z-signed-smoke-release-gate")
 	readme, err := os.ReadFile(filepath.Join(dir, "README.md"))
 	if err != nil {
 		t.Fatalf("read durable signed-smoke evidence README: %v", err)
@@ -3395,7 +3372,7 @@ func TestCIWorkflowHasManualSignedSmoke(t *testing.T) {
 		"git clone --depth 1 https://github.com/uesugitorachiyo/ao2-control-plane.git ../ao2-control-plane",
 		"cargo build -p ao2-cli",
 		"cargo build -p ao2-cp-server",
-		"go run ./cmd/foundry pulse signed-smoke-script --out tmp/signed-smoke.sh",
+		"go run ./cmd/foundry pulse signed-smoke-script --artifact-root \"$RUNNER_TEMP/ao-foundry-signed-smoke\" --out tmp/signed-smoke.sh",
 		"bash tmp/signed-smoke.sh",
 		"Upload signed-smoke release evidence",
 		"actions/upload-artifact@v7.0.1",
@@ -3454,7 +3431,7 @@ func TestPulseEventLoopDocsIncludeSignedControlPlaneSmoke(t *testing.T) {
 	for _, want := range []string{
 		"ao2-cp-server --bind 127.0.0.1:",
 		"--control-plane http://127.0.0.1:",
-		"--forge-live-packet docs/evidence/pulse/",
+		"--forge-live-packet \"$AO_FOUNDRY_SIGNED_SMOKE_ROOT/",
 		"control_plane_readback",
 		"--signed-smoke-result tmp/pulse-live/signed-smoke-result.json",
 		"signed_smoke_ingest",
@@ -3543,8 +3520,16 @@ func TestPulseDocsDeclareRSIClaimBoundary(t *testing.T) {
 
 func TestPulseWritesSignedSmokeScript(t *testing.T) {
 	outPath := filepath.Join(t.TempDir(), "signed-pulse-smoke.sh")
+	artifactRoot := filepath.Join(t.TempDir(), "signed smoke artifacts")
+	if err := os.MkdirAll(artifactRoot, 0o755); err != nil {
+		t.Fatalf("mkdir artifact root: %v", err)
+	}
+	resolvedArtifactRoot, err := filepath.EvalSymlinks(artifactRoot)
+	if err != nil {
+		t.Fatalf("resolve artifact root: %v", err)
+	}
 	var stdout, stderr bytes.Buffer
-	code := Run([]string{"pulse", "signed-smoke-script", "--out", outPath}, &stdout, &stderr)
+	code := Run([]string{"pulse", "signed-smoke-script", "--out", outPath, "--artifact-root", artifactRoot}, &stdout, &stderr)
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stdout=%s stderr=%s", code, stdout.String(), stderr.String())
 	}
@@ -3561,9 +3546,10 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 		": \"${AO2_CP_API_TOKEN:?set AO2_CP_API_TOKEN}\"",
 		"\"${#AO2_CP_API_TOKEN}\" -lt 32",
 		"AO2_CP_API_TOKEN must be at least 32 characters",
+		"ARTIFACT_ROOT='" + filepath.ToSlash(resolvedArtifactRoot) + "'",
 		"ao2-cp-server --bind 127.0.0.1:18746",
 		"--control-plane http://127.0.0.1:18746",
-		"--forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json",
+		"--forge-live-packet \"$ARTIFACT_ROOT/factory-packet.json\"",
 		"tmp/pulse-live/signed-smoke-result.json",
 		"ao.foundry.signed-smoke-result.v0.1",
 		"--signed-smoke-result tmp/pulse-live/signed-smoke-result.json",
@@ -3578,8 +3564,96 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 			t.Fatalf("signed smoke script missing %q", want)
 		}
 	}
-	if strings.Contains(script, "/"+"Users/") || strings.Contains(script, "ghp"+"_") || strings.Contains(script, "github"+"_pat_") {
+	scriptForSafetyScan := signedSmokeScriptForSafetyScan(t, script, resolvedArtifactRoot)
+	if strings.Contains(scriptForSafetyScan, "/"+"Users/") || strings.Contains(scriptForSafetyScan, "ghp"+"_") || strings.Contains(scriptForSafetyScan, "github"+"_pat_") {
 		t.Fatalf("signed smoke script contains unsafe local/private content: %s", script)
+	}
+	if strings.Contains(script, "docs/evidence/") {
+		t.Fatalf("signed smoke script writes into tracked documentation: %s", script)
+	}
+}
+
+func TestSignedSmokeScriptSafetyScanPreservesUnrelatedPrivatePaths(t *testing.T) {
+	windowsUsersRoot := "C:/" + "Users/"
+	resolvedArtifactRoot := windowsUsersRoot + "antho/AppData/Local/Temp/TestPulse/signed smoke artifacts"
+	artifactRootAssignment := "ARTIFACT_ROOT=" + shellSingleQuote(resolvedArtifactRoot)
+	for _, tc := range []struct {
+		name string
+		path string
+	}{
+		{name: "independent", path: windowsUsersRoot + "unrelated-private-path"},
+		{name: "root-prefixed sibling", path: resolvedArtifactRoot + "-shadow/private.txt"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			script := artifactRootAssignment + "\nUNRELATED=" + shellSingleQuote(tc.path)
+			scriptForSafetyScan := signedSmokeScriptForSafetyScan(t, script, resolvedArtifactRoot)
+			if !strings.Contains(scriptForSafetyScan, tc.path) || !strings.Contains(scriptForSafetyScan, "/"+"Users/") {
+				t.Fatalf("safety copy masked unrelated private path %q: %q", tc.path, scriptForSafetyScan)
+			}
+		})
+	}
+}
+
+func signedSmokeScriptForSafetyScan(t *testing.T, script, resolvedArtifactRoot string) string {
+	t.Helper()
+	artifactRootAssignment := "ARTIFACT_ROOT=" + shellSingleQuote(filepath.ToSlash(resolvedArtifactRoot))
+	if count := strings.Count(script, artifactRootAssignment); count != 1 {
+		t.Fatalf("signed smoke script should contain exactly one artifact-root assignment, got %d", count)
+	}
+	return strings.Replace(script, artifactRootAssignment, "ARTIFACT_ROOT='<external-artifact-root>'", 1)
+}
+
+func TestPulseSignedSmokeScriptRejectsRepositoryArtifactRoots(t *testing.T) {
+	artifactRoot := repoPath("tmp/signed-smoke-artifacts")
+	if err := os.MkdirAll(artifactRoot, 0o755); err != nil {
+		t.Fatalf("mkdir artifact root: %v", err)
+	}
+	t.Cleanup(func() { _ = os.RemoveAll(artifactRoot) })
+
+	t.Run("exact path", func(t *testing.T) {
+		assertSignedSmokeArtifactRootRejected(t, repoPath("."))
+	})
+	t.Run("descendant", func(t *testing.T) {
+		assertSignedSmokeArtifactRootRejected(t, artifactRoot)
+	})
+	t.Run("symlink descendant", func(t *testing.T) {
+		alias := filepath.Join(t.TempDir(), "repository-artifact-root")
+		if err := os.Symlink(artifactRoot, alias); err != nil {
+			t.Skipf("directory symlink unavailable: %v", err)
+		}
+		assertSignedSmokeArtifactRootRejected(t, alias)
+	})
+}
+
+func TestPulseSignedSmokeScriptRejectsRepositoryCaseAlias(t *testing.T) {
+	root := repoPath(".")
+	alias := strings.ToLower(root)
+	if alias == root {
+		alias = strings.ToUpper(root)
+	}
+	rootInfo, err := os.Stat(root)
+	if err != nil {
+		t.Fatalf("stat repository root: %v", err)
+	}
+	aliasInfo, err := os.Stat(alias)
+	if err != nil {
+		t.Skipf("case aliases unavailable: %v", err)
+	}
+	if !os.SameFile(rootInfo, aliasInfo) {
+		t.Skip("differently cased path is not the repository filesystem object")
+	}
+	assertSignedSmokeArtifactRootRejected(t, alias)
+}
+
+func assertSignedSmokeArtifactRootRejected(t *testing.T, artifactRoot string) {
+	t.Helper()
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"pulse", "signed-smoke-script", "--out", filepath.Join(t.TempDir(), "signed-pulse-smoke.sh"), "--artifact-root", artifactRoot}, &stdout, &stderr)
+	if code == 0 {
+		t.Fatalf("Run returned success for repository artifact root %q; stdout=%s", artifactRoot, stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "artifact root must be outside repository") {
+		t.Fatalf("expected external-root error, got %q", stderr.String())
 	}
 }
 
@@ -3601,10 +3675,7 @@ func TestPulseSignedSmokeCleanupRemovesScratchAndKeepsEvidence(t *testing.T) {
 			t.Fatalf("write scratch %s: %v", path, err)
 		}
 	}
-	evidencePath := repoPath("docs/evidence/pulse/local-live-smoke/cleanup-keep.json")
-	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
-		t.Fatalf("mkdir evidence parent: %v", err)
-	}
+	evidencePath := filepath.Join(t.TempDir(), "cleanup-keep.json")
 	if err := os.WriteFile(evidencePath, []byte("{}\n"), 0o644); err != nil {
 		t.Fatalf("write evidence marker: %v", err)
 	}
@@ -3700,7 +3771,7 @@ func TestPulseIngestsSignedSmokeResult(t *testing.T) {
   "schema_version": "ao.foundry.signed-smoke-result.v0.1",
   "status": "ready",
   "pulse_event": "tmp/pulse-live/pulse-event.json",
-  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "forge_live_packet": "signed-smoke/factory-packet.json",
   "control_plane_readback": "ready"
 }
 `
@@ -3786,7 +3857,7 @@ func TestPulseRunBundlesSignedSmokeResult(t *testing.T) {
   "schema_version": "ao.foundry.signed-smoke-result.v0.1",
   "status": "ready",
   "pulse_event": "tmp/pulse-live/pulse-event.json",
-  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "forge_live_packet": "signed-smoke/factory-packet.json",
   "control_plane_readback": "ready"
 }
 `
@@ -3816,7 +3887,7 @@ func TestPulseRejectsMalformedSignedSmokeResult(t *testing.T) {
   "schema_version": "ao.foundry.signed-smoke-result.v0.1",
   "status": "blocked",
   "pulse_event": "tmp/pulse-live/pulse-event.json",
-  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "forge_live_packet": "signed-smoke/factory-packet.json",
   "control_plane_readback": "ready"
 }
 `,
@@ -3828,7 +3899,7 @@ func TestPulseRejectsMalformedSignedSmokeResult(t *testing.T) {
   "schema_version": "ao.foundry.signed-smoke-result.v0.1",
   "status": "ready",
   "pulse_event": "/tmp/pulse-live/pulse-event.json",
-  "forge_live_packet": "docs/evidence/pulse/local-live-smoke/factory-packet.json",
+  "forge_live_packet": "signed-smoke/factory-packet.json",
   "control_plane_readback": "ready"
 }
 `,
@@ -4254,9 +4325,6 @@ func TestReleaseDryRunExcludesRuntimeScratchAndEvidence(t *testing.T) {
 		if strings.HasPrefix(file.Path, ".ao2/") || strings.HasPrefix(file.Path, "tmp/") || strings.HasPrefix(file.Path, "docs/evidence/") {
 			t.Fatalf("release manifest included runtime scratch path: %s", file.Path)
 		}
-	}
-	if manifestFiles["docs/evidence/pulse/local-live-smoke/FRESH-SIGNED-SMOKE-SUMMARY.md"] {
-		t.Fatalf("release manifest included public evidence summary that should remain outside release payload")
 	}
 	for _, want := range []string{
 		"docs/contracts/foundry-ao2-loop-decision-v0.1.schema.json",

@@ -53,9 +53,9 @@ go run ./cmd/foundry release promotion validate \
 
 ## Retention
 
-Keep runtime scratch under `tmp/` and local live evidence under
-`docs/evidence/pulse/local-live-smoke`. Publish only reviewed public-safe
-summaries. The GitHub artifact keeps only the public-safe signed-smoke summary
+Keep runtime scratch under `tmp/` and local live evidence under the external
+artifact root supplied to `pulse signed-smoke-script`. Publish only reviewed
+public-safe summaries. The GitHub artifact keeps only the public-safe signed-smoke summary
 and release-promotion JSON for seven days. Follow
 `docs/operations/SIGNED-SMOKE-EVIDENCE-RETENTION.md` for what may be retained or
 copied into release notes.

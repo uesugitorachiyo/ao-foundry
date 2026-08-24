@@ -32,7 +32,7 @@
           "scripts/active-stack-readiness-loop.sh --out tmp/active-stack-readiness-loop.json"
         ],
         "required_evidence": [
-          "docs/evidence/complex-refactor/boundary-audit.json"
+          "dist/complex-refactor/boundary-audit.json"
         ],
         "safety_limits": [
           "public-safe paths only",
@@ -143,10 +143,10 @@
         ],
         "verification_commands": [
           "go run ./cmd/foundry atlas import validate --import examples/complex-refactor-workgraph/foundry-import.json",
-          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out dist/pulse/complex-refactor-workgraph-rehearsal-local"
         ],
         "required_evidence": [
-          "docs/evidence/complex-refactor/atlas-foundry-readback.json"
+          "dist/complex-refactor/atlas-foundry-readback.json"
         ],
         "safety_limits": [
           "no copied stack folders",
@@ -245,11 +245,11 @@
           "scripts"
         ],
         "verification_commands": [
-          "scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local",
-          "scripts/complex-refactor-workgraph-rehearsal.sh --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local"
+          "scripts/blueprint-atlas-pulse-e2e-dry-run.sh --out dist/pulse/blueprint-atlas-pulse-e2e-local",
+          "scripts/complex-refactor-workgraph-rehearsal.sh --out dist/pulse/complex-refactor-workgraph-rehearsal-local"
         ],
         "required_evidence": [
-          "docs/evidence/complex-refactor/stitch-summary.json"
+          "dist/complex-refactor/stitch-summary.json"
         ],
         "safety_limits": [
           "no live execution",

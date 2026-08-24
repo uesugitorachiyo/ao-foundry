@@ -1,7 +1,0 @@
-{
-  "schema": "ao.foundry.eval-regression.v0.1",
-  "result": "passed",
-  "attempts_passed": 4,
-  "regressions": [],
-  "denied_surface_regressions": []
-}

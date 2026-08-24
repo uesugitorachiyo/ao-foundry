@@ -76,7 +76,7 @@ To prove the full dry-run control path with AO Command readback, run:
 
 ```sh
 scripts/blueprint-atlas-pulse-e2e-dry-run.sh \
-  --out docs/evidence/pulse/blueprint-atlas-pulse-e2e-local
+  --out dist/pulse/blueprint-atlas-pulse-e2e-local
 ```
 
 The script consumes public fixtures for Blueprint ready authorization,
@@ -91,9 +91,9 @@ To rehearse a larger refactor as bounded Atlas factory tasks, run:
 
 ```sh
 scripts/complex-refactor-workgraph-rehearsal.sh \
-  --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+  --out dist/pulse/complex-refactor-workgraph-rehearsal-local
 scripts/overnight-rehearsal-runner.sh \
-  --out docs/evidence/pulse/overnight-rehearsal-runner-local
+  --out dist/pulse/overnight-rehearsal-runner-local
 ```
 
 The rehearsal validates `examples/complex-refactor-workgraph/workgraph.json`,
@@ -250,31 +250,32 @@ pulse from the live packet:
 go run ./cmd/foundry pulse signed-smoke-preflight --workspace .. \
   --out tmp/signed-smoke-preflight.json
 go run ./cmd/foundry pulse run --out tmp/pulse
-mkdir -p tmp/live-tools
+: "${AO_FOUNDRY_SIGNED_SMOKE_ROOT:?set an absolute external artifact root}"
+mkdir -p tmp/live-tools "$AO_FOUNDRY_SIGNED_SMOKE_ROOT"
 (cd ../ao-forge && go build -o ../ao-foundry/tmp/live-tools/forge ./cmd/forge)
 (cd ../ao-covenant && go build -o ../ao-foundry/tmp/live-tools/covenant ./cmd/covenant)
 tmp/live-tools/forge plan \
   --brief tmp/pulse/forge-brief.json \
-  --out docs/evidence/pulse/local-live-smoke/factory-plan.json
+  --out "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-plan.json"
 tmp/live-tools/forge gate \
-  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
+  --plan "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-plan.json" \
   --covenant tmp/live-tools/covenant \
-  --out docs/evidence/pulse/local-live-smoke/gate-result.json
+  --out "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/gate-result.json"
 AO2_CP_API_TOKEN=<local-token> tmp/live-tools/forge run \
-  --plan docs/evidence/pulse/local-live-smoke/factory-plan.json \
-  --gate-result docs/evidence/pulse/local-live-smoke/gate-result.json \
-  --out docs/evidence/pulse/local-live-smoke/factory-packet.json \
+  --plan "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-plan.json" \
+  --gate-result "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/gate-result.json" \
+  --out "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-packet.json" \
   --control-plane http://127.0.0.1:18746 \
   --live --non-interactive --no-dashboard
 go run ./cmd/foundry pulse run \
   --out tmp/pulse-live \
-  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json
+  --forge-live-packet "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-packet.json"
 go run ./cmd/foundry pulse ingest-signed-smoke \
   --result tmp/pulse-live/signed-smoke-result.json \
   --out tmp/pulse-live/signed-smoke-ingest.json
 go run ./cmd/foundry pulse run \
   --out tmp/pulse-live-bundled \
-  --forge-live-packet docs/evidence/pulse/local-live-smoke/factory-packet.json \
+  --forge-live-packet "$AO_FOUNDRY_SIGNED_SMOKE_ROOT/factory-packet.json" \
   --signed-smoke-result tmp/pulse-live/signed-smoke-result.json
 go run ./cmd/foundry pulse summarize-signed-smoke \
   --pulse tmp/pulse-live-bundled/pulse-event.json \
@@ -289,8 +290,8 @@ The final `tmp/pulse-live/pulse-event.json` should report
 `signed_smoke_ingest` artifact. The summary omits source paths, digests, tokens,
 server logs, and runtime scratch details. Stop the local control-plane server
 after the smoke completes. `foundry pulse signed-smoke-cleanup` removes signed
-smoke scratch under `tmp/` while preserving local audit evidence under
-`docs/evidence/pulse/local-live-smoke`.
+smoke scratch under `tmp/` while preserving the operator-owned external
+artifact root.
 
 CI keeps a public-safe fixture for the successful signed-smoke freshness shape
 at `examples/ci/signed-smoke-freshness.pulse-event.json`. Validate it locally

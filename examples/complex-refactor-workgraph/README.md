@@ -14,7 +14,7 @@ Run the rehearsal from the AO Foundry repo root:
 
 ```sh
 scripts/complex-refactor-workgraph-rehearsal.sh \
-  --out docs/evidence/pulse/complex-refactor-workgraph-rehearsal-local
+  --out dist/pulse/complex-refactor-workgraph-rehearsal-local
 ```
 
 The output summary reports task counts, next recommended factory task, and why
