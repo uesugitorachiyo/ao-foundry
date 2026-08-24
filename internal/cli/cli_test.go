@@ -3564,13 +3564,43 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 			t.Fatalf("signed smoke script missing %q", want)
 		}
 	}
-	scriptForSafetyScan := strings.ReplaceAll(script, filepath.ToSlash(resolvedArtifactRoot), "")
+	scriptForSafetyScan := signedSmokeScriptForSafetyScan(t, script, resolvedArtifactRoot)
 	if strings.Contains(scriptForSafetyScan, "/"+"Users/") || strings.Contains(scriptForSafetyScan, "ghp"+"_") || strings.Contains(scriptForSafetyScan, "github"+"_pat_") {
 		t.Fatalf("signed smoke script contains unsafe local/private content: %s", script)
 	}
 	if strings.Contains(script, "docs/evidence/") {
 		t.Fatalf("signed smoke script writes into tracked documentation: %s", script)
 	}
+}
+
+func TestSignedSmokeScriptSafetyScanPreservesUnrelatedPrivatePaths(t *testing.T) {
+	windowsUsersRoot := "C:/" + "Users/"
+	resolvedArtifactRoot := windowsUsersRoot + "antho/AppData/Local/Temp/TestPulse/signed smoke artifacts"
+	artifactRootAssignment := "ARTIFACT_ROOT=" + shellSingleQuote(resolvedArtifactRoot)
+	for _, tc := range []struct {
+		name string
+		path string
+	}{
+		{name: "independent", path: windowsUsersRoot + "unrelated-private-path"},
+		{name: "root-prefixed sibling", path: resolvedArtifactRoot + "-shadow/private.txt"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			script := artifactRootAssignment + "\nUNRELATED=" + shellSingleQuote(tc.path)
+			scriptForSafetyScan := signedSmokeScriptForSafetyScan(t, script, resolvedArtifactRoot)
+			if !strings.Contains(scriptForSafetyScan, tc.path) || !strings.Contains(scriptForSafetyScan, "/"+"Users/") {
+				t.Fatalf("safety copy masked unrelated private path %q: %q", tc.path, scriptForSafetyScan)
+			}
+		})
+	}
+}
+
+func signedSmokeScriptForSafetyScan(t *testing.T, script, resolvedArtifactRoot string) string {
+	t.Helper()
+	artifactRootAssignment := "ARTIFACT_ROOT=" + shellSingleQuote(filepath.ToSlash(resolvedArtifactRoot))
+	if count := strings.Count(script, artifactRootAssignment); count != 1 {
+		t.Fatalf("signed smoke script should contain exactly one artifact-root assignment, got %d", count)
+	}
+	return strings.Replace(script, artifactRootAssignment, "ARTIFACT_ROOT='<external-artifact-root>'", 1)
 }
 
 func TestPulseSignedSmokeScriptRejectsRepositoryArtifactRoots(t *testing.T) {
