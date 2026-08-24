@@ -35,8 +35,21 @@ func validateExternalArtifactRoot(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if rel, err := filepath.Rel(root, resolved); err == nil && rel != ".." && !strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
-		return "", errors.New("artifact root must be outside repository")
+	rootInfo, err := os.Stat(root)
+	if err != nil {
+		return "", err
+	}
+	for ancestor := resolved; ; ancestor = filepath.Dir(ancestor) {
+		ancestorInfo, err := os.Stat(ancestor)
+		if err != nil {
+			return "", err
+		}
+		if os.SameFile(rootInfo, ancestorInfo) {
+			return "", errors.New("artifact root must be outside repository")
+		}
+		if filepath.Dir(ancestor) == ancestor {
+			break
+		}
 	}
 	return resolved, nil
 }

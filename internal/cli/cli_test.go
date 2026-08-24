@@ -3572,17 +3572,54 @@ func TestPulseWritesSignedSmokeScript(t *testing.T) {
 	}
 }
 
-func TestPulseSignedSmokeScriptRejectsRepositoryArtifactRoot(t *testing.T) {
+func TestPulseSignedSmokeScriptRejectsRepositoryArtifactRoots(t *testing.T) {
 	artifactRoot := repoPath("tmp/signed-smoke-artifacts")
 	if err := os.MkdirAll(artifactRoot, 0o755); err != nil {
 		t.Fatalf("mkdir artifact root: %v", err)
 	}
 	t.Cleanup(func() { _ = os.RemoveAll(artifactRoot) })
 
+	t.Run("exact path", func(t *testing.T) {
+		assertSignedSmokeArtifactRootRejected(t, repoPath("."))
+	})
+	t.Run("descendant", func(t *testing.T) {
+		assertSignedSmokeArtifactRootRejected(t, artifactRoot)
+	})
+	t.Run("symlink descendant", func(t *testing.T) {
+		alias := filepath.Join(t.TempDir(), "repository-artifact-root")
+		if err := os.Symlink(artifactRoot, alias); err != nil {
+			t.Skipf("directory symlink unavailable: %v", err)
+		}
+		assertSignedSmokeArtifactRootRejected(t, alias)
+	})
+}
+
+func TestPulseSignedSmokeScriptRejectsRepositoryCaseAlias(t *testing.T) {
+	root := repoPath(".")
+	alias := strings.ToLower(root)
+	if alias == root {
+		alias = strings.ToUpper(root)
+	}
+	rootInfo, err := os.Stat(root)
+	if err != nil {
+		t.Fatalf("stat repository root: %v", err)
+	}
+	aliasInfo, err := os.Stat(alias)
+	if err != nil {
+		t.Skipf("case aliases unavailable: %v", err)
+	}
+	if !os.SameFile(rootInfo, aliasInfo) {
+		t.Skip("differently cased path is not the repository filesystem object")
+	}
+	assertSignedSmokeArtifactRootRejected(t, alias)
+}
+
+func assertSignedSmokeArtifactRootRejected(t *testing.T, artifactRoot string) {
+	t.Helper()
 	var stdout, stderr bytes.Buffer
 	code := Run([]string{"pulse", "signed-smoke-script", "--out", filepath.Join(t.TempDir(), "signed-pulse-smoke.sh"), "--artifact-root", artifactRoot}, &stdout, &stderr)
 	if code == 0 {
-		t.Fatalf("Run returned success for repository artifact root; stdout=%s", stdout.String())
+		t.Fatalf("Run returned success for repository artifact root %q; stdout=%s", artifactRoot, stdout.String())
 	}
 	if !strings.Contains(stderr.String(), "artifact root must be outside repository") {
 		t.Fatalf("expected external-root error, got %q", stderr.String())
