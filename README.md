@@ -19,6 +19,10 @@ and the
 [AO Foundry component page](https://github.com/uesugitorachiyo/ao-architecture/blob/main/components/ao-foundry.md)
 for the cross-repository flow.
 
+## Build and run from source
+
+Requires Go 1.23 or later.
+
 ## Quick Start
 
 ```sh
